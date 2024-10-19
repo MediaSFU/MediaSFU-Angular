@@ -1982,16 +1982,16 @@ To implement your custom UI for media display:
 
 1. **Custom MainGrid (Host's Video)**: 
    - Modify the UI in the `prepopulateUserMedia` function. 
-   - Example link to MediaSFU's default implementation: [`prepopulateUserMedia`](https://github.com/MediaSFU/MediaSFU-Angular/src/lib/consumers/prepopulate-user-media.service.ts).
+   - Example link to MediaSFU's default implementation: [`prepopulateUserMedia`](https://github.com/MediaSFU/MediaSFU-Angular/tree/main/src/lib/consumers/prepopulate-user-media.service.ts).
 
 2. **Custom MiniGrid (Participants' Media)**:
    - Modify the UI in the `addVideosGrid` function.
-   - Example link to MediaSFU's default implementation: [`addVideosGrid`](https://github.com/MediaSFU/MediaSFU-Angular/src/lib/consumers/add-videos-grid.service.ts).
+   - Example link to MediaSFU's default implementation: [`addVideosGrid`](https://github.com/MediaSFU/MediaSFU-Angular/tree/main/src/lib/consumers/add-videos-grid.service.ts).
 
 To create a custom UI, you can refer to existing MediaSFU implementations like:
 
-- [MediasfuGeneric](https://github.com/MediaSFU/MediaSFU-Angular/src/lib/components/mediasfu-components/mediasfu-generic.component.ts)
-- [MediasfuBroadcast](https://github.com/MediaSFU/MediaSFU-Angular/src/lib/components/mediasfu-components/mediasfu-broadcast.component.ts)
+- [MediasfuGeneric](https://github.com/MediaSFU/MediaSFU-Angular/tree/main/src/lib/components/mediasfu-components/mediasfu-generic.component.ts)
+- [MediasfuBroadcast](https://github.com/MediaSFU/MediaSFU-Angular/tree/main/src/lib/components/mediasfu-components/mediasfu-broadcast.component.ts)
 
 Once your custom components are built, modify the imports of `prepopulateUserMedia` and `addVideosGrid` to point to your custom implementations instead of the default MediaSFU ones.
 
