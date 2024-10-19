@@ -1,0 +1,112 @@
+import { OnChanges, SimpleChanges, ElementRef, OnInit } from '@angular/core';
+import { Socket } from 'socket.io-client';
+import { Participant, ShowAlert, BreakoutParticipant } from '../../@types/types';
+import * as i0 from "@angular/core";
+export interface BreakoutRoomsModalParameters {
+    participants: Participant[];
+    showAlert?: ShowAlert;
+    socket: Socket;
+    itemPageLimit: number;
+    meetingDisplayType: string;
+    prevMeetingDisplayType: string;
+    roomName: string;
+    shareScreenStarted: boolean;
+    shared: boolean;
+    breakOutRoomStarted: boolean;
+    breakOutRoomEnded: boolean;
+    isBreakoutRoomsModalVisible: boolean;
+    currentRoomIndex: number | null;
+    canStartBreakout: boolean;
+    breakoutRooms: BreakoutParticipant[][];
+    updateBreakOutRoomStarted: (started: boolean) => void;
+    updateBreakOutRoomEnded: (ended: boolean) => void;
+    updateCurrentRoomIndex: (roomIndex: number) => void;
+    updateCanStartBreakout: (canStart: boolean) => void;
+    updateBreakoutRooms: (breakoutRooms: BreakoutParticipant[][]) => void;
+    updateMeetingDisplayType: (displayType: string) => void;
+    getUpdatedAllParams: () => BreakoutRoomsModalParameters;
+    [key: string]: any;
+}
+export type BreakoutRoomsModalType = (options: BreakoutRoomsModalOptions) => HTMLElement;
+export interface BreakoutRoomsModalOptions {
+    isVisible: boolean;
+    parameters: BreakoutRoomsModalParameters;
+    position?: 'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft';
+    backgroundColor?: string;
+    onBreakoutRoomsClose: () => void;
+}
+export declare class BreakoutRoomsModal implements OnChanges, OnInit {
+    isVisible: boolean;
+    parameters: BreakoutRoomsModalParameters;
+    position: string;
+    backgroundColor: string;
+    onBreakoutRoomsClose: () => void;
+    roomsContainerRef: ElementRef;
+    faDoorOpen: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faRandom: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faHandPointer: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faPlus: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faSave: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faPlay: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faSyncAlt: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faStop: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faUsers: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    participantsRef: Participant[];
+    breakoutRoomsRef: BreakoutParticipant[][];
+    numRooms: string;
+    newParticipantAction: string;
+    currentRoom: BreakoutParticipant[] | null;
+    editRoomModalVisible: boolean;
+    startBreakoutButtonVisible: boolean;
+    stopBreakoutButtonVisible: boolean;
+    modalWidth: number;
+    calculateModalWidth(): void;
+    modalContainerStyle(): {
+        display: string;
+        position: string;
+        top: string;
+        left: string;
+        width: string;
+        height: string;
+        backgroundColor: string;
+        zIndex: string;
+    };
+    modalContentStyle(): {
+        backgroundColor: string;
+        borderRadius: string;
+        padding: string;
+        width: string;
+        maxHeight: string;
+        overflowX: string;
+        overflowY: string;
+        position: string;
+        top: string;
+        bottom: string;
+        left: string;
+        right: string;
+    };
+    ngOnChanges(changes: SimpleChanges): void;
+    ngOnInit(): void;
+    initializeBreakoutRooms: () => void;
+    handleRandomAssign(): void;
+    handleManualAssign(): void;
+    handleAddRoom(): void;
+    handleSaveRooms(): void;
+    validateRooms(): boolean;
+    checkCanStartBreakout: () => void;
+    handleStartBreakout: () => void;
+    handleStopBreakout(): void;
+    handleEditRoom(roomIndex: number): void;
+    handleDeleteRoom(roomIndex: number): void;
+    handleAddParticipant(event: {
+        roomIndex: number;
+        participant: BreakoutParticipant;
+    }): void;
+    handleRemoveParticipant(event: {
+        roomIndex: number;
+        participant: BreakoutParticipant;
+    }): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<BreakoutRoomsModal, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BreakoutRoomsModal, "app-breakout-rooms-modal", never, { "isVisible": { "alias": "isVisible"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "onBreakoutRoomsClose": { "alias": "onBreakoutRoomsClose"; "required": false; }; }, {}, never, never, true, never>;
+}

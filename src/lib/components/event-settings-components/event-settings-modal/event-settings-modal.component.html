@@ -1,0 +1,52 @@
+<!-- event-settings-modal.component.html -->
+
+<div *ngIf="isEventSettingsModalVisible" class="modal-container">
+  <div class="modal-content" [ngStyle]="getModalContentStyle()">
+    <div class="modal-header">
+      <div class="modal-title">Event Settings</div>
+      <div (click)="closeModal()" class="icon-close">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="label">User audio:</label>
+        <select class="picker-select" [(ngModel)]="audioState">
+          <option value="disallow">Disallow</option>
+          <option value="allow">Allow</option>
+          <option value="approval">Upon approval</option>
+        </select>
+      </div>
+      <div class="sep"></div>
+      <div class="form-group">
+        <label class="label">User video:</label>
+        <select class="picker-select" [(ngModel)]="videoState">
+          <option value="disallow">Disallow</option>
+          <option value="allow">Allow</option>
+          <option value="approval">Upon approval</option>
+        </select>
+      </div>
+      <div class="sep"></div>
+      <div class="form-group">
+        <label class="label">User screenshare:</label>
+        <select class="picker-select" [(ngModel)]="screenshareState">
+          <option value="disallow">Disallow</option>
+          <option value="allow">Allow</option>
+          <option value="approval">Upon approval</option>
+        </select>
+      </div>
+      <div class="sep"></div>
+      <div class="form-group">
+        <label class="label">User chat:</label>
+        <select class="picker-select" [(ngModel)]="chatState">
+          <option value="disallow">Disallow</option>
+          <option value="allow">Allow</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-apply-settings" (click)="handleSaveSettings()">Save</button>
+    </div>
+  </div>
+</div>

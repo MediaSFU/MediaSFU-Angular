@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="name-container">
+    <span class="name-text">
+      {{ getParticipantDisplayName() }}
+    </span>
+  </div>
+  <div class="icon-container">
+    <fa-icon [icon]="faCircle" [style.color]="participant.muted ? 'red' : 'green'"></fa-icon>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.share-buttons-container {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+}
+
+.share-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+}

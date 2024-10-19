@@ -1,0 +1,30 @@
+<div class="customButtonsContainer">
+  <button
+    *ngFor="let button of buttons; let i = index"
+    (click)="button.action()"
+    class="customButton"
+    [ngStyle]="{
+      'background-color': button.show ? button.backgroundColor : 'transparent',
+      'display': button.show ? 'flex' : 'none'
+    }"
+    [disabled]="button.disabled"
+  >
+    <div class="buttonContent">
+      <ng-container *ngIf="button.icon; else customOrSpinner">
+        <fa-icon [icon]="button.icon" [ngStyle]="mergeStyles(customButtonIcon, button.iconStyle)"></fa-icon>
+        <span *ngIf="button.text" class="customButtonText" [ngStyle]="button.textStyle">{{ button.text }}</span>
+      </ng-container>
+      <ng-template #customOrSpinner>
+        <ng-container *ngIf="isCustomComponentConfig(button.customComponent)">
+          <ng-container *ngComponentOutlet="button.customComponent.component; injector: button.customComponent.injector"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="button.customComponent && !isCustomComponentConfig(button.customComponent)">
+          <div #customElementContainer></div>
+        </ng-container>
+        <ng-container *ngIf="!button.customComponent">
+          <fa-icon [icon]="faSpinner"></fa-icon>
+        </ng-container>
+      </ng-template>
+    </div>
+  </button>
+</div>

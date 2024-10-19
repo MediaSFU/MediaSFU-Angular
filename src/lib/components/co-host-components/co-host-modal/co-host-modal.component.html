@@ -1,0 +1,50 @@
+<!-- co-host-modal.component.html -->
+<div [ngStyle]="modalContainerStyle()">
+  <div [ngStyle]="modalContentStyle()">
+    <div class="modal-header">
+      <div class="modal-title">Manage Co-Host</div>
+      <div class="btn-close-settings" (click)="handleClose()">
+        <fa-icon [icon]="faTimes" class="icon"></fa-icon>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="font-weight-bold">Current Co-host:</label>
+        <input class="form-control" [value]="currentCohost" readonly />
+      </div>
+      <div class="form-group">
+        <label class="font-weight-bold">Select New Co-host:</label>
+        <select class="form-control" [(ngModel)]="selectedCohost">
+          <option value="">Select a participant</option>
+          <option *ngFor="let participant of filteredParticipants" [value]="participant.name">
+            {{ participant.name }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-5">
+          <label style="font-weight: bold">Responsibility</label>
+        </div>
+        <div class="col-3">
+          <label style="font-weight: bold">Select</label>
+        </div>
+        <div class="col-4">
+          <label style="font-weight: bold">Dedicated</label>
+        </div>
+      </div>
+      <div *ngFor="let key of responsibilityKeys" class="row" style="margin-bottom: 10px;">
+        <div class="col-5" style="font-weight: bold">{{ key.manageKey.replace('manage', '') }}</div>
+        <div class="col-3">
+          <input type="checkbox" [(ngModel)]="responsibilities[key.manageKey]" (change)="handleToggleSwitch(key.manageKey)">
+        </div>
+        <div class="col-4">
+          <input type="checkbox" [(ngModel)]="responsibilities[key.dedicateKey]" (change)="handleToggleSwitch(key.dedicateKey)" [disabled]="!responsibilities[key.manageKey]">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-apply-settings" (click)="handleSave()">Save</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div>
+  <!-- Media Options -->
+  <div>
+    <label style="margin-right:10px; font-weight: bold;">Media Options:</label>
+    <select [(ngModel)]="selectedRecordingMediaOptions" (change)="handleMediaOptionsChange($event)">
+      <option value="video">Record Video</option>
+      <option value="audio">Record Audio Only</option>
+    </select>
+  </div>
+  <hr />
+
+  <!-- Specific Audios -->
+  <div *ngIf="parameters.eventType !== 'broadcast'">
+    <div>
+      <label style="margin-right:10px; font-weight: bold;">Specific Audios:</label>
+      <select [(ngModel)]="selectedRecordingAudioOptions" (change)="handleAudioOptionsChange($event)">
+        <option value="all">Add All</option>
+        <option value="onScreen">Add All On Screen</option>
+        <option value="host">Add Host Only</option>
+      </select>
+    </div>
+    <hr />
+
+    <!-- Specific Videos -->
+    <div id="conditionalConference">
+      <label style="margin-right:10px; font-weight: bold;">Specific Videos:</label>
+      <select [(ngModel)]="selectedRecordingVideoOptions" (change)="handleVideoOptionsChange($event)">
+        <option value="all">Add All</option>
+        <option value="mainScreen">Big Screen Only (includes screenshare)</option>
+      </select>
+    </div>
+    <hr />
+  </div>
+
+  <!-- Add HLS -->
+  <div id="addHLSPart">
+    <label style="margin-right:10px; font-weight: bold;">Add HLS:</label>
+    <select [(ngModel)]="selectedRecordingAddHLS" (change)="handleAddHLSChange($event)">
+      <option [ngValue]="true">True</option>
+      <option [ngValue]="false">False</option>
+    </select>
+  </div>
+  <hr />
+</div>

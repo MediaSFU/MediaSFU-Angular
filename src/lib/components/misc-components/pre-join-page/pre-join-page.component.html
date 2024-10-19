@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="logo-container">
+    <img [src]="imgSrc || 'https://mediasfu.com/images/logo192.png'" class="logo-image" alt="Logo" />
+  </div>
+  <div class="input-container">
+    <form [formGroup]="preJoinForm">
+      <input type="text" placeholder="Display Name" formControlName="name" class="input-field" />
+      <div *ngIf="isCreateMode">
+        <input type="text" placeholder="Duration (minutes)" formControlName="duration" class="input-field" />
+        <select formControlName="eventType" class="select-field">
+          <option value="">Select Event Type</option>
+          <option value="chat">Chat</option>
+          <option value="broadcast">Broadcast</option>
+          <option value="webinar">Webinar</option>
+          <option value="conference">Conference</option>
+        </select>
+        <input type="text" placeholder="Room Capacity" formControlName="capacity" class="input-field" />
+        <button type="button" (click)="handleCreateRoom()" class="action-button">Create Room</button>
+      </div>
+      <div *ngIf="!isCreateMode">
+        <input type="text" placeholder="Event ID" formControlName="eventID" class="input-field" />
+        <button type="button" (click)="handleJoinRoom()" class="action-button">Join Room</button>
+      </div>
+      <p *ngIf="error" class="error">{{ error }}</p>
+    </form>
+  </div>
+  <div class="or-container">
+    <span class="or-text">OR</span>
+  </div>
+  <div class="toggle-container">
+    <button type="button" (click)="toggleMode()" class="toggle-button">
+      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}
+    </button>
+  </div>
+</div>

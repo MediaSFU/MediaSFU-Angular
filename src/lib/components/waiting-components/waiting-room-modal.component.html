@@ -1,0 +1,42 @@
+<div *ngIf="isWaitingModalVisible" [ngStyle]="modalContainerStyle">
+  <div [ngStyle]="modalContentStyle">
+    <div class="modal-header">
+      <div class="modal-title">
+        Waiting <span class="badge">{{ waitingRoomCounter_s }}</span>
+      </div>
+      <div (click)="handleModalClose()" class="btn-close-waitings">
+        <fa-icon [icon]="faTimes" class="icon"></fa-icon>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="modal-body">
+      <div class="form-group">
+        <input
+          class="form-control"
+          [ngStyle]="inputStyle"
+          placeholder="Search ..."
+          (input)="handleFilterChange($event)"
+        />
+      </div>
+      <div class="waiting-list">
+        <div
+          *ngFor="let participant of waitingRoomList_s"
+          class="waiting-item"
+        >
+          <div class="col7">{{ participant.name }}</div>
+          <div class="col2">
+            <button (click)="handleItemPress(participant, true)">
+              <fa-icon [icon]="faCheck" size="lg" color="green"></fa-icon>
+            </button>
+          </div>
+          <div class="col2">
+            <button (click)="handleItemPress(participant, false)">
+              <fa-icon [icon]="faTimes" size="lg" color="red"></fa-icon>
+            </button>
+          </div>
+          <div class="col1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

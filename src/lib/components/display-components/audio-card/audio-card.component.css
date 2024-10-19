@@ -1,0 +1,110 @@
+.card {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  position: relative;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.backgroundImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.overlayWeb {
+  position: absolute;
+  min-width: 50%;
+  min-height: 5%;
+  max-height: 100%;
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+  grid-gap: 3px;
+}
+
+.overlayWebAlt {
+  position: absolute;
+  min-width: 50%;
+  min-height: 5%;
+  max-height: 100%;
+  display: grid;
+  grid-template-columns: 4fr;
+  grid-gap: 0px;
+  top: 0;
+  right: 0;
+}
+
+.overlayControls {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.controlButton {
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0px 5px;
+  margin-right: 2px;
+  font-size: medium;
+  border: none;
+  cursor: pointer;
+}
+
+.nameColumn {
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0px;
+  padding-top: 5px;
+  margin-right: 2px;
+  font-size: small;
+  text-align: center;
+  min-height: 4%;
+  max-height: 70%;
+}
+
+.nameText {
+  font-size: small;
+  font-weight: bolder;
+}
+
+.waveformWeb {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0px;
+  flex-direction: row;
+  min-height: 4%;
+  max-height: 70%;
+}
+
+.waveformMobile {
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0px;
+  margin-left: 5px;
+  max-width: 25%;
+  margin: 0px;
+}
+
+.bar {
+  flex: 1;
+  opacity: 0.75;
+  margin: 0 1px;
+  transition: height 0.5s ease;
+}

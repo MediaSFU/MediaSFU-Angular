@@ -1,0 +1,36 @@
+<div [ngStyle]="modalContainerStyle">
+  <div [ngStyle]="modalContentStyle">
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="font-size: x-large; font-weight: bold; color: black;">
+          Recording Settings
+        </h2>
+        <button (click)="onClose()" style="border: none; background: none; cursor: pointer;">
+          <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>
+        </button>
+      </div>
+      <hr style="height: 1px; background-color: black; margin: 5px 0;" />
+      <div style="flex: 1;">
+        <div style="overflow-y: auto; max-height: calc(100% - 120px); padding: 0;">
+          <div style="margin: 0; padding: 0;">
+            <app-standard-panel-component [parameters]="parameters"></app-standard-panel-component>
+            <app-advanced-panel-component [parameters]="parameters"></app-advanced-panel-component>
+          </div>
+        </div>
+        <div style="height: 1px; background-color: white; "></div>
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+          <button
+            (click)="confirm()"
+            style="flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #4CAF50; cursor: pointer;">
+            <span style="color: black; font-size: 14px;">Confirm</span>
+          </button>
+          <button *ngIf="!parameters.recordPaused"
+            (click)="start()"
+            style="flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #f44336; cursor: pointer;">
+            <span style="color: black; font-size: 14px;">Start <fa-icon [icon]="faPlay"></fa-icon></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

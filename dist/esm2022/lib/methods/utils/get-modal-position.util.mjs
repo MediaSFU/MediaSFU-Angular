@@ -1,0 +1,22 @@
+/**
+ * Gets the style for positioning a modal based on the specified position.
+ * @function
+ * @param {string} position - The desired position for the modal ('center', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight').
+ * @returns {ModalPositionStyle} - The style object for positioning the modal.
+ */
+export function getModalPosition({ position }) {
+    switch (position) {
+        case 'center':
+            return { justifyContent: 'center', alignItems: 'center' };
+        case 'topLeft':
+            return { justifyContent: 'flex-start', alignItems: 'flex-start' };
+        case 'topRight':
+            return { justifyContent: 'flex-start', alignItems: 'flex-end' };
+        case 'bottomLeft':
+            return { justifyContent: 'flex-end', alignItems: 'flex-start' };
+        case 'bottomRight':
+        default:
+            return { justifyContent: 'flex-end', alignItems: 'flex-end' };
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2V0LW1vZGFsLXBvc2l0aW9uLnV0aWwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9tZWRpYXNmdS1hbmd1bGFyL3NyYy9saWIvbWV0aG9kcy91dGlscy9nZXQtbW9kYWwtcG9zaXRpb24udXRpbC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFZQTs7Ozs7R0FLRztBQUVILE1BQU0sVUFBVSxnQkFBZ0IsQ0FBQyxFQUFFLFFBQVEsRUFBMkI7SUFDcEUsUUFBUSxRQUFRLEVBQUUsQ0FBQztRQUNqQixLQUFLLFFBQVE7WUFDWCxPQUFPLEVBQUUsY0FBYyxFQUFFLFFBQVEsRUFBRSxVQUFVLEVBQUUsUUFBUSxFQUFFLENBQUM7UUFDNUQsS0FBSyxTQUFTO1lBQ1osT0FBTyxFQUFFLGNBQWMsRUFBRSxZQUFZLEVBQUUsVUFBVSxFQUFFLFlBQVksRUFBRSxDQUFDO1FBQ3BFLEtBQUssVUFBVTtZQUNiLE9BQU8sRUFBRSxjQUFjLEVBQUUsWUFBWSxFQUFFLFVBQVUsRUFBRSxVQUFVLEVBQUUsQ0FBQztRQUNsRSxLQUFLLFlBQVk7WUFDZixPQUFPLEVBQUUsY0FBYyxFQUFFLFVBQVUsRUFBRSxVQUFVLEVBQUUsWUFBWSxFQUFFLENBQUM7UUFDbEUsS0FBSyxhQUFhLENBQUM7UUFDbkI7WUFDRSxPQUFPLEVBQUUsY0FBYyxFQUFFLFVBQVUsRUFBRSxVQUFVLEVBQUUsVUFBVSxFQUFFLENBQUM7SUFDbEUsQ0FBQztBQUNILENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIERlZmluZXMgdGhlIHN0eWxlIG9iamVjdCBmb3IgcG9zaXRpb25pbmcgdGhlIG1vZGFsLlxuICovXG5pbXBvcnQgeyBNb2RhbFBvc2l0aW9uU3R5bGUgfSBmcm9tICcuLi8uLi9AdHlwZXMvdHlwZXMnO1xuXG5leHBvcnQgaW50ZXJmYWNlIEdldE1vZGFsUG9zaXRpb25PcHRpb25zIHtcbiAgcG9zaXRpb246IHN0cmluZztcbn1cblxuLy8gRXhwb3J0IHRoZSB0eXBlIGRlZmluaXRpb24gZm9yIHRoZSBmdW5jdGlvblxuZXhwb3J0IHR5cGUgR2V0TW9kYWxQb3NpdGlvblR5cGUgPSAob3B0aW9uczogR2V0TW9kYWxQb3NpdGlvbk9wdGlvbnMpID0+IE1vZGFsUG9zaXRpb25TdHlsZTtcblxuLyoqXG4gKiBHZXRzIHRoZSBzdHlsZSBmb3IgcG9zaXRpb25pbmcgYSBtb2RhbCBiYXNlZCBvbiB0aGUgc3BlY2lmaWVkIHBvc2l0aW9uLlxuICogQGZ1bmN0aW9uXG4gKiBAcGFyYW0ge3N0cmluZ30gcG9zaXRpb24gLSBUaGUgZGVzaXJlZCBwb3NpdGlvbiBmb3IgdGhlIG1vZGFsICgnY2VudGVyJywgJ3RvcExlZnQnLCAndG9wUmlnaHQnLCAnYm90dG9tTGVmdCcsICdib3R0b21SaWdodCcpLlxuICogQHJldHVybnMge01vZGFsUG9zaXRpb25TdHlsZX0gLSBUaGUgc3R5bGUgb2JqZWN0IGZvciBwb3NpdGlvbmluZyB0aGUgbW9kYWwuXG4gKi9cblxuZXhwb3J0IGZ1bmN0aW9uIGdldE1vZGFsUG9zaXRpb24oeyBwb3NpdGlvbiB9OiBHZXRNb2RhbFBvc2l0aW9uT3B0aW9ucyk6IE1vZGFsUG9zaXRpb25TdHlsZSB7XG4gIHN3aXRjaCAocG9zaXRpb24pIHtcbiAgICBjYXNlICdjZW50ZXInOlxuICAgICAgcmV0dXJuIHsganVzdGlmeUNvbnRlbnQ6ICdjZW50ZXInLCBhbGlnbkl0ZW1zOiAnY2VudGVyJyB9O1xuICAgIGNhc2UgJ3RvcExlZnQnOlxuICAgICAgcmV0dXJuIHsganVzdGlmeUNvbnRlbnQ6ICdmbGV4LXN0YXJ0JywgYWxpZ25JdGVtczogJ2ZsZXgtc3RhcnQnIH07XG4gICAgY2FzZSAndG9wUmlnaHQnOlxuICAgICAgcmV0dXJuIHsganVzdGlmeUNvbnRlbnQ6ICdmbGV4LXN0YXJ0JywgYWxpZ25JdGVtczogJ2ZsZXgtZW5kJyB9O1xuICAgIGNhc2UgJ2JvdHRvbUxlZnQnOlxuICAgICAgcmV0dXJuIHsganVzdGlmeUNvbnRlbnQ6ICdmbGV4LWVuZCcsIGFsaWduSXRlbXM6ICdmbGV4LXN0YXJ0JyB9O1xuICAgIGNhc2UgJ2JvdHRvbVJpZ2h0JzpcbiAgICBkZWZhdWx0OlxuICAgICAgcmV0dXJuIHsganVzdGlmeUNvbnRlbnQ6ICdmbGV4LWVuZCcsIGFsaWduSXRlbXM6ICdmbGV4LWVuZCcgfTtcbiAgfVxufVxuIl19

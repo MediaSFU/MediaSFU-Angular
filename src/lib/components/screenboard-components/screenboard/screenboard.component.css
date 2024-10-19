@@ -1,0 +1,147 @@
+#whiteboardCanvas {
+  border: 1px solid #000;
+  cursor: crosshair;
+  background-color: white;
+}
+
+.resize-handle,
+.move-handle {
+  width: 8px;
+  height: 8px;
+  background: red;
+  position: absolute;
+}
+
+.move-handle {
+  background: blue;
+}
+
+#textInput {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 200px;
+}
+
+.shape-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.toolbar .btn-group button,
+.toolbar .dropdown-menu a {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.toolbar .dropdown-menu a {
+  background-color: transparent;
+  color: rgb(27, 26, 26);
+}
+
+.toolbar .btn-group button:hover,
+.toolbar .dropdown-menu a:hover {
+  background-color: #e3e7eb;
+}
+
+.toolbar .btn-group button.active {
+  background-color: #454d55;
+}
+
+.toolbarScreen .btn-group button,
+.toolbarScreen .dropdown-menu a {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  margin: 1px 2px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  background-color: transparent;
+  color: 'black';
+}
+
+.toolbarScreen .btn-group button {
+  color: rgb(6, 6, 6);
+  border: none;
+}
+
+.toolbarScreen .dropdown-menu a {
+  background-color: transparent;
+  color: rgb(27, 26, 26);
+}
+
+/* .toolbarScreen .btn-group button:hover,
+.toolbarScreen .dropdown-menu a:hover {
+  background-color: rgba(214, 209, 209, 0.4);
+  color: black;
+} */
+
+.toolbarScreen .btn-group button.active {
+  background-color: #454d55;
+}
+
+#toolbar,
+#toolbarScreen {
+  transition: display 0.3s ease-in-out;
+}
+
+#toolbarToggle,
+#toolbarToggleScreen {
+  cursor: pointer;
+  border: '2px solid black' !important;
+  font-size: 0.8rem;
+}
+
+#colorPicker,
+#colorPickerScreen {
+  font-size: 0.8rem;
+  padding: 2px 2px;
+  width: 32px;
+  height: 32px;
+}
+
+#lineTypePicker {
+  font-size: 0.8rem;
+  padding: 2px auto;
+  width: 32px;
+  height: 32px;
+}
+
+.btnBoard {
+  font-size: 1rem;
+  padding: 2px 2px;
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+}
+
+#lineTypePickerScreen {
+  font-size: 0.7rem;
+  padding: 2px auto;
+  width: 28px;
+  height: 28px;
+  background-color: rgba(214, 209, 209, 0.4);
+  color: #000;
+  border-radius: 4px;
+}
+
+.toggle-icon {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+#toggleBackground.active {
+  background-color: #fdfeff;
+}
+
+.annotateScreenBtn {
+  background-color: #2d2e2f !important;
+  border: 2px solid #000 !important;
+  color: green !important;
+  font-size: 0.75rem;
+}

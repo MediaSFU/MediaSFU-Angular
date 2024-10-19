@@ -1,0 +1,7 @@
+<div style="z-index: 9">
+  <ng-container *ngFor="let item of componentsToRender; let i = index">
+    <div style="z-index: 9" [attr.key]="i">
+      <ng-container *ngComponentOutlet="item.component; injector: createInjector(item.inputs)"></ng-container>
+    </div>
+  </ng-container>
+</div>

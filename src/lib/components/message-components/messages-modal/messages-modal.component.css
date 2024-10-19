@@ -1,0 +1,42 @@
+.modalContent {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.modalBody {
+  margin-top: 10px;
+}
+
+.tabText {
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.activeTabText {
+  color: #ffffff;
+  background-color: #2b7ce5;
+  border-radius: 4px;
+}
+
+.separator {
+  height: 1px;
+  background-color: black;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.btnCloseMessages {
+  padding: 5px;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.icon {
+  font-size: 24px;
+  color: black;
+}

@@ -1,0 +1,21 @@
+<div *ngFor="let participant of participants; let i = index">
+  <app-participant-list-item
+    [participant]="participant"
+    [isBroadcast]="isBroadcast"
+    [onMuteParticipants]="onMuteParticipants"
+    [onMessageParticipants]="onMessageParticipants"
+    [onRemoveParticipants]="onRemoveParticipants"
+    [socket]="socket"
+    [coHostResponsibility]="coHostResponsibility"
+    [coHost]="coHost"
+    [member]="member"
+    [islevel]="islevel"
+    [roomName]="roomName"
+    [participants]="participants"
+    [updateIsMessagesModalVisible]="updateIsMessagesModalVisible"
+    [updateStartDirectMessage]="updateStartDirectMessage"
+    [updateDirectMessageDetails]="updateDirectMessageDetails"
+    [updateParticipants]="updateParticipants"
+  ></app-participant-list-item>
+  <hr *ngIf="i < participants.length - 1" class="separator" />
+</div>

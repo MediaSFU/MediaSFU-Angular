@@ -1,0 +1,25 @@
+<div class="container" style="display: flex; flex-direction: row; align-items: center; margin-bottom: 0px; margin-top: 0px;">
+  <div class="nameContainer" style="flex: 4;">
+    <p class="nameText" style="font-size: 16px;">
+      {{ participant.islevel === '2' ? participant.name + ' (host)' : participant.name }}
+    </p>
+  </div>
+  <div *ngIf="!isBroadcast" class="iconContainer" style="flex: 1; align-items: center;">
+    <fa-icon [icon]="participant.muted ? faDotCircle : faDotCircle" [style.font-size.px]="20" [style.color]="participant.muted ? 'red' : 'green'"></fa-icon>
+  </div>
+  <div *ngIf="!isBroadcast" class="buttonContainer" style="flex: 2; align-items: flex-end;">
+    <button (click)="muteParticipant()" style="padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;">
+      <fa-icon [icon]="getIconName()" style="font-size: 20px;"></fa-icon>
+    </button>
+  </div>
+  <div *ngIf="!isBroadcast" class="buttonContainer" style="flex: 2; align-items: flex-end;">
+    <button (click)="messageParticipant()" style="padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;">
+      <fa-icon [icon]="faComment" style="font-size: 20px; color: white;"></fa-icon>
+    </button>
+  </div>
+  <div class="buttonContainer" style="flex: 2; align-items: flex-end;">
+    <button (click)="removeParticipant()" style="padding: 5px; border-radius: 5px; align-items: center; background-color: #dc3545; color: white;">
+      <fa-icon [icon]="faTrash" style="font-size: 20px; color: white;"></fa-icon>
+    </button>
+  </div>
+</div>

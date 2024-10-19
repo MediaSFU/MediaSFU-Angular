@@ -1,0 +1,110 @@
+<div id="screenboard-interface" *ngIf="showAspect" style="position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;" #screenboardRef>
+  <div id="screenboardContent" style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;" #screenboardContentRef>
+    <button id="annotateScreen" class="btn btn-primary btnBoardScreen annotateScreenBtn" style="position: absolute; top: 5px; right: 10px; z-index: 1000;" (click)="toggleAnnotate()">
+      <fa-icon [icon]="faPencilAlt" [ngStyle]="{'color': parameters.annotateScreenStream ? 'red' : 'green'}"></fa-icon>
+    </button>
+
+    <button id="toolbarToggleScreen" *ngIf="parameters.annotateScreenStream" class="btn btnBoardScreen btn-primary" style="position: absolute; top: 5px; right: 55px; z-index: 1000;" (click)="toggleToolbar()">
+      <fa-icon [icon]="toolbarVisible ? faChevronRight : faChevronLeft"></fa-icon>
+    </button>
+
+    <div class="toolbarScreen mb-3" id="toolbarScreen" style="position: absolute; top: 5px; right: 105px; z-index: 1000; background-color: transparent;" [style.display]="toolbarVisible ? 'block' : 'none'">
+      <!-- Draw Mode Dropdown -->
+      <div class="btn-group" role="group">
+        <button class="btn btnBoardScreen btn-secondary dropdown-toggle" id="drawModeScreen" (click)="handleDropdownClick('drawModeScreen')">
+          <fa-icon [icon]="faPencilAlt"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'drawModeScreen'" class="dropdown-menu show">
+          <button class="dropdown-item" (click)="setDrawMode(3)">XX-Small (3px)</button>
+          <button class="dropdown-item" (click)="setDrawMode(6)">X-Small (6px)</button>
+          <button class="dropdown-item" (click)="setDrawMode(12)">Small (12px)</button>
+          <button class="dropdown-item" (click)="setDrawMode(18)">Medium (18px)</button>
+          <button class="dropdown-item" (click)="setDrawMode(24)">Large (24px)</button>
+          <button class="dropdown-item" (click)="setDrawMode(36)">X-Large (36px)</button>
+        </div>
+      </div>
+
+      <!-- Freehand Mode Dropdown -->
+      <div class="btn-group" role="group">
+        <button class="btn btnBoardScreen btn-dark dropdown-toggle" id="freehandModeScreen" (click)="handleDropdownClick('freehandModeScreen')">
+          <fa-icon [icon]="faPaintBrush"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'freehandModeScreen'" class="dropdown-menu show">
+          <button class="dropdown-item" (click)="setFreehandMode(5)">X-Small (5px)</button>
+          <button class="dropdown-item" (click)="setFreehandMode(10)">Small (10px)</button>
+          <button class="dropdown-item" (click)="setFreehandMode(20)">Medium (20px)</button>
+          <button class="dropdown-item" (click)="setFreehandMode(40)">Large (40px)</button>
+          <button class="dropdown-item" (click)="setFreehandMode(60)">X-Large (60px)</button>
+        </div>
+      </div>
+
+      <!-- Shape Mode Dropdown with Images -->
+      <div class="btn-group" role="group">
+        <button class="btn btnBoardScreen btn-dark dropdown-toggle" id="shapeModeScreen" (click)="handleDropdownClick('shapeModeScreen')">
+          <fa-icon [icon]="faShapes"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'shapeModeScreen'" class="dropdown-menu show">
+          <button class="dropdown-item" (click)="setShapeMode('square')">
+            <img src="https://mediasfu.com/images/svg/square.svg" alt="Square" class="shape-icon" /> Square
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('rectangle')">
+            <img src="https://mediasfu.com/images/svg/rectangle.svg" alt="Rectangle" class="shape-icon" /> Rectangle
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('circle')">
+            <img src="https://mediasfu.com/images/svg/circle.svg" alt="Circle" class="shape-icon" /> Circle
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('triangle')">
+            <img src="https://mediasfu.com/images/svg/triangle.svg" alt="Triangle" class="shape-icon" /> Triangle
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('hexagon')">
+            <img src="https://mediasfu.com/images/svg/hexagon.svg" alt="Hexagon" class="shape-icon" /> Hexagon
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('pentagon')">
+            <img src="https://mediasfu.com/images/svg/pentagon.svg" alt="Pentagon" class="shape-icon" /> Pentagon
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('rhombus')">
+            <img src="https://mediasfu.com/images/svg/rhombus.svg" alt="Rhombus" class="shape-icon" /> Rhombus
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('octagon')">
+            <img src="https://mediasfu.com/images/svg/octagon.svg" alt="Octagon" class="shape-icon" /> Octagon
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('oval')">
+            <img src="https://mediasfu.com/images/svg/oval.svg" alt="Oval" class="shape-icon" /> Oval
+          </button>
+          <button class="dropdown-item" (click)="setShapeMode('parallelogram')">
+            <img src="https://mediasfu.com/images/svg/parallelogram.svg" alt="Parallelogram" class="shape-icon" /> Parallelogram
+          </button>
+        </div>
+      </div>
+
+      <!-- Erase Mode Dropdown -->
+      <div class="btn-group" role="group">
+        <button class="btn btnBoardScreen btn-danger dropdown-toggle" id="eraseModeScreen" (click)="handleDropdownClick('eraseModeScreen')">
+          <fa-icon [icon]="faEraser"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'eraseModeScreen'" class="dropdown-menu show">
+          <button class="dropdown-item" (click)="setEraseMode(5)">X-Small (5px)</button>
+          <button class="dropdown-item" (click)="setEraseMode(10)">Small (10px)</button>
+          <button class="dropdown-item" (click)="setEraseMode(20)">Medium (20px)</button>
+          <button class="dropdown-item" (click)="setEraseMode(30)">Large (30px)</button>
+          <button class="dropdown-item" (click)="setEraseMode(60)">X-Large (60px)</button>
+        </div>
+      </div>
+
+      <!-- Additional Toolbar Controls -->
+      <button class="btn btnBoard btn-success" id="zoomResetScreen" style="display: none;">
+        <fa-icon [icon]="faSearch"></fa-icon>
+      </button>
+
+      <input type="color" class="btn" id="colorPickerScreen" [(ngModel)]="color">
+      <select id="lineTypePickerScreen" class="custom-select" style="width: auto;" [(ngModel)]="lineType">
+        <option value="solid">Solid</option>
+        <option value="dashed">Dashed</option>
+        <option value="dotted">Dotted</option>
+        <option value="dashDot">Dash-Dot</option>
+      </select>
+    </div>
+
+    <canvas id="canvasRef" width="1280" height="720" [ngStyle]="{'display': parameters.annotateScreenStream ? 'block' : 'none'}" style="padding: 0; margin: 0;" #canvasRef></canvas>
+  </div>
+</div>

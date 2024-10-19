@@ -1,0 +1,21 @@
+<div [ngStyle]="modalContainerStyle">
+  <div [ngStyle]="modalContentStyle">
+    <div style="display: flex; flex-direction: row-reverse; margin-bottom: 15px;">
+      <div (click)="handleClose()" style="padding: 5px;">
+        <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>
+      </div>
+    </div>
+    <hr style="height: 1px; background-color: black; margin: 5px 0;" />
+    <div style="flex: 1;">
+      <div style="margin-bottom: 10px;" *ngIf="islevel === '2'">
+        <app-meeting-passcode-component [meetingPasscode]="adminPasscode"></app-meeting-passcode-component>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <app-meeting-id-component [meetingID]="roomName"></app-meeting-id-component>
+      </div>
+      <div *ngIf="shareButtons">
+        <app-share-buttons-component [meetingID]="roomName" [eventType]="eventType"></app-share-buttons-component>
+      </div>
+    </div>
+  </div>
+</div>

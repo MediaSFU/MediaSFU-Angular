@@ -1,0 +1,28 @@
+<div [ngStyle]="{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: isVisible ? 'block' : 'none', zIndex: 999 }">
+    <div [ngStyle]="{ position: 'fixed', backgroundColor: backgroundColor, borderRadius: '10px', padding: '10px', width: '80%', maxWidth: '500px', maxHeight: '75%', overflowY: 'auto', overflowX: 'hidden', top: position.includes('top') ? '10px' : 'auto', bottom: position.includes('bottom') ? '10px' : 'auto', left: position.includes('Left') ? '10px' : 'auto', right: position.includes('Right') ? '10px' : 'auto' }">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="font-size: x-large; font-weight: bold; color: black;">Background Settings</h2>
+        <button (click)="onClose()" style="border: none; background: none; cursor: pointer;">
+          <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>
+        </button>
+      </div>
+      <hr style="height: 1px; background-color: black; margin-top: 5px; margin-bottom: 5px;" />
+      <div style="max-width: 95%; overflow-x: auto;">
+        <div id="defaultImages" #defaultImagesContainer></div>
+        <div class="form-group" style="max-width: 70%; overflow-x: auto;">
+          <label for="uploadImage">Upload Custom Image</label>
+          <input type="file" class="form-control" id="uploadImage" #uploadImageInput (change)="handleImageUpload($event)" />
+        </div>
+        <canvas id="mainCanvas" #mainCanvas class="d-none"></canvas>
+        <canvas id="backgroundCanvas" #backgroundCanvas class="d-none" style="width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;"></canvas>
+        <video id="captureVideo" #captureVideo class="d-none" muted autoplay playsinline></video>
+        <video id="previewVideo" #videoPreview class="d-none" muted autoplay playsinline style="width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;"></video>
+        <div id="loadingOverlay" #loadingOverlay class="d-none" [ngStyle]="{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 'justify-content': 'center', 'align-items': 'center', zIndex: 1000 }">
+          <div [ngStyle]="{ width: '50px', height: '50px', border: '5px solid rgba(255, 255, 255, 0.3)', borderRadius: '50%', borderTop: '5px solid white', animation: 'spin 1s linear infinite' }"></div>
+        </div>
+        <br />
+        <button id="applyBackgroundButton" #applyBackgroundButton class="btn btn-primary" (click)="applyBackground()">Preview Background</button>
+        <button id="saveBackgroundButton" #saveBackgroundButton class="btn btn-success d-none" (click)="saveBackground()">Save Background</button>
+      </div>
+    </div>
+  </div>

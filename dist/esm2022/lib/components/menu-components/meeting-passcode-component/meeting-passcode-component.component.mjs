@@ -1,0 +1,22 @@
+import { Component, Input } from '@angular/core';
+import * as i0 from "@angular/core";
+/**
+ * Component for displaying and managing a meeting passcode.
+ *
+ * @selector app-meeting-passcode-component
+ * @standalone true
+ * @templateUrl ./meeting-passcode-component.component.html
+ * @styleUrls ./meeting-passcode-component.component.css
+ */
+export class MeetingPasscodeComponent {
+    meetingPasscode = '';
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: MeetingPasscodeComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.8", type: MeetingPasscodeComponent, isStandalone: true, selector: "app-meeting-passcode-component", inputs: { meetingPasscode: "meetingPasscode" }, ngImport: i0, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event Passcode (Host):</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingPasscode\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: MeetingPasscodeComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'app-meeting-passcode-component', standalone: true, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event Passcode (Host):</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingPasscode\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] }]
+        }], propDecorators: { meetingPasscode: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWVldGluZy1wYXNzY29kZS1jb21wb25lbnQuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvbWVkaWFzZnUtYW5ndWxhci9zcmMvbGliL2NvbXBvbmVudHMvbWVudS1jb21wb25lbnRzL21lZXRpbmctcGFzc2NvZGUtY29tcG9uZW50L21lZXRpbmctcGFzc2NvZGUtY29tcG9uZW50LmNvbXBvbmVudC50cyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL21lZGlhc2Z1LWFuZ3VsYXIvc3JjL2xpYi9jb21wb25lbnRzL21lbnUtY29tcG9uZW50cy9tZWV0aW5nLXBhc3Njb2RlLWNvbXBvbmVudC9tZWV0aW5nLXBhc3Njb2RlLWNvbXBvbmVudC5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxNQUFNLGVBQWUsQ0FBQzs7QUFVakQ7Ozs7Ozs7R0FPRztBQU9ILE1BQU0sT0FBTyx3QkFBd0I7SUFDMUIsZUFBZSxHQUFHLEVBQUUsQ0FBQzt1R0FEbkIsd0JBQXdCOzJGQUF4Qix3QkFBd0IsMElDeEJyQyw0TUFRQTs7MkZEZ0JhLHdCQUF3QjtrQkFOcEMsU0FBUzsrQkFDRSxnQ0FBZ0MsY0FDOUIsSUFBSTs4QkFLUCxlQUFlO3NCQUF2QixLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBJbnB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5leHBvcnQgaW50ZXJmYWNlIE1lZXRpbmdQYXNzY29kZUNvbXBvbmVudE9wdGlvbnMge1xuICBtZWV0aW5nUGFzc2NvZGU6IHN0cmluZztcbn1cblxuZXhwb3J0IHR5cGUgTWVldGluZ1Bhc3Njb2RlQ29tcG9uZW50VHlwZSA9IChcbiAgb3B0aW9uczogTWVldGluZ1Bhc3Njb2RlQ29tcG9uZW50T3B0aW9ucyxcbikgPT4gSFRNTEVsZW1lbnQ7XG5cbi8qKlxuICogQ29tcG9uZW50IGZvciBkaXNwbGF5aW5nIGFuZCBtYW5hZ2luZyBhIG1lZXRpbmcgcGFzc2NvZGUuXG4gKlxuICogQHNlbGVjdG9yIGFwcC1tZWV0aW5nLXBhc3Njb2RlLWNvbXBvbmVudFxuICogQHN0YW5kYWxvbmUgdHJ1ZVxuICogQHRlbXBsYXRlVXJsIC4vbWVldGluZy1wYXNzY29kZS1jb21wb25lbnQuY29tcG9uZW50Lmh0bWxcbiAqIEBzdHlsZVVybHMgLi9tZWV0aW5nLXBhc3Njb2RlLWNvbXBvbmVudC5jb21wb25lbnQuY3NzXG4gKi9cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ2FwcC1tZWV0aW5nLXBhc3Njb2RlLWNvbXBvbmVudCcsXG4gIHN0YW5kYWxvbmU6IHRydWUsXG4gIHRlbXBsYXRlVXJsOiAnLi9tZWV0aW5nLXBhc3Njb2RlLWNvbXBvbmVudC5jb21wb25lbnQuaHRtbCcsXG4gIHN0eWxlVXJsczogWycuL21lZXRpbmctcGFzc2NvZGUtY29tcG9uZW50LmNvbXBvbmVudC5jc3MnXSxcbn0pXG5leHBvcnQgY2xhc3MgTWVldGluZ1Bhc3Njb2RlQ29tcG9uZW50IHtcbiAgQElucHV0KCkgbWVldGluZ1Bhc3Njb2RlID0gJyc7XG59XG4iLCI8ZGl2IGNsYXNzPVwiZm9ybS1ncm91cFwiPlxyXG4gIDxsYWJlbCBjbGFzcz1cImxhYmVsXCI+RXZlbnQgUGFzc2NvZGUgKEhvc3QpOjwvbGFiZWw+XHJcbiAgPGlucHV0XHJcbiAgICBjbGFzcz1cImRpc2FibGVkLWlucHV0XCJcclxuICAgIFt2YWx1ZV09XCJtZWV0aW5nUGFzc2NvZGVcIlxyXG4gICAgcmVhZG9ubHlcclxuICAvPlxyXG48L2Rpdj5cclxuIl19

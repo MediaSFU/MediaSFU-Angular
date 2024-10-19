@@ -1,0 +1,5 @@
+<div *ngIf="visible" (click)="handlePress()" class="centeredView">
+  <div [ngStyle]="{ 'background-color': alertType === 'success' ? 'green' : 'red' }" class="modalView">
+    <p [ngStyle]="{ color: textColor }" class="modalText">{{ message }}</p>
+  </div>
+</div>

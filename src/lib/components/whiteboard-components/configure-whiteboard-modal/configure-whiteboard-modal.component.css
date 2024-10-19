@@ -1,0 +1,8 @@
+/* Add your custom styles here */
+.modal-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.list-group-item {
+  cursor: pointer;
+}

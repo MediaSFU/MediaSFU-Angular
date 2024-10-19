@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.nameContainer {
+  flex: 4;
+}
+
+.nameText {
+  font-size: 16px;
+}
+
+.iconContainer, .buttonContainer {
+  flex: 2;
+  align-items: center;
+}
+
+button {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+}
+
+button.remove {
+  background-color: #dc3545;
+}

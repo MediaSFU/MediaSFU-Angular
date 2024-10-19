@@ -1,0 +1,39 @@
+<div [style.maxHeight]="'100%'" [style.backgroundColor]="backgroundColor" style="overflow-y: auto;">
+  <!-- Message rendering logic -->
+  <div *ngFor="let message of messages; let index = index" [ngStyle]="{ marginBottom: '10px' }">
+    <div [ngStyle]="{ display: 'flex', flexDirection: 'column', alignItems: message.sender === username ? 'flex-end' : 'flex-start', marginBottom: '10px' }">
+      <div [ngStyle]="{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '3px' }">
+        <span *ngIf="message.sender === username && !message.group" [ngStyle]="{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginLeft: '6px' }">To: {{ message.receivers.join(', ') }}</span>
+        <span [ngStyle]="{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginRight: '10px' }">{{ message.sender === username ? '' : message.sender }}</span>
+        <span [ngStyle]="{ fontSize: '8px', color: '#0D0D0DFF' }">{{ message.timestamp }}</span>
+        <div *ngIf="message.sender !== username && !message.group" (click)="openReplyInput(message.sender)" [ngStyle]="{ padding: '1px', marginLeft: '5px', borderRadius: '2px', backgroundColor: 'transparent' }">
+          <fa-icon [icon]="faReply" size="xs" color="black"></fa-icon>
+        </div>
+      </div>
+      <div [ngStyle]="{ backgroundColor: message.sender === member ? '#DCF8C6' : '#1ce5c7', padding: '10px', borderRadius: '10px' }">
+        <span [ngStyle]="{ color: 'black' }">{{ message.message }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reply info -->
+  <div *ngIf="replyInfo" [ngStyle]="{ flexDirection: 'row', alignItems: 'center', padding: '2px', backgroundColor: '#e6e6e6', borderRadius: '5px', marginBottom: '1px' }">
+    <span [ngStyle]="{ fontWeight: 'bold', marginRight: '2px', fontSize: '8px' }">Replying to: </span>
+    <span [ngStyle]="{ color: 'red', fontSize: '8px' }">{{ replyInfo.username }}</span>
+  </div>
+
+  <!-- Input area -->
+  <div [ngStyle]="{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', marginTop: 'auto' }">
+    <input
+      type="text"
+      [ngStyle]="{ flex: 1, minHeight: '40px', maxHeight: '80px', resize: 'vertical', border: '1px solid gray', borderRadius: '5px', padding: '10px', overflowY: 'auto' }"
+      placeholder="{{ type === 'direct' ? (focusedInput && startDirectMessage && directMessageDetails ? 'Send a direct message to ' + directMessageDetails.name : 'Select a message to reply to') : (eventType === 'chat' ? 'Send a message' : 'Send a message to everyone') }}"
+      maxLength="350"
+      (input)="handleTextInputChange($event)"
+      [value]="type === 'direct' ? directMessageText : groupMessageText"
+    />
+    <button [ngStyle]="{ backgroundColor: '#83c0e9', padding: '10px', borderRadius: '5px', display: 'flex', alignItems: 'center' }" (click)="handleSendButton()">
+      <fa-icon [icon]="faPaperPlane" size="sm" color="white"></fa-icon>
+    </button>
+  </div>
+</div>

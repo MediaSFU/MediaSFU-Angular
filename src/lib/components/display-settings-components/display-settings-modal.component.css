@@ -1,0 +1,89 @@
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: block;
+  z-index: 999;
+}
+
+.modal-content {
+  position: fixed;
+  border-radius: 10px;
+  padding: 10px;
+  width: 80vw;
+  max-width: 350px;
+  max-height: 65%;
+  overflow-y: auto;
+  top: 10px;
+  right: 10px;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-divider {
+  height: 1px;
+  background-color: black;
+  margin: 5px 0;
+}
+
+.modal-body {
+  flex: 1;
+}
+
+.setting-group {
+  margin-bottom: 10px;
+}
+
+.setting-toggle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.select-control {
+  font-size: medium;
+  padding: 12px 10px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  color: black;
+  padding-right: 30px;
+  background-color: white;
+}
+
+.toggle-icon {
+  font-size: large;
+  font-weight: bolder;
+}
+
+.active {
+  color: green;
+}
+
+.inactive {
+  color: red;
+}
+
+.modal-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  font-size: medium;
+}

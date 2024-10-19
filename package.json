@@ -1,0 +1,89 @@
+{
+  "name": "mediasfu-angular",
+  "version": "1.0.0",
+  "author": "MediaSFU",
+  "license": "MIT",
+  "description": "MediaSFU Prebuilt Angular SDK",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MediaSFU/MediaSFU-Angular.git"
+  },
+  "homepage": "https://github.com/MediaSFU/MediaSFU-Angular#readme",
+  "bugs": {
+    "url": "https://github.com/MediaSFU/MediaSFU-Angular/issues",
+    "email": "info@mediasfu.com"
+  },
+  "peerDependencies": {
+    "@angular/animations": "^18.1.0",
+    "@angular/common": "^18.1.0",
+    "@angular/compiler": "^18.1.0",
+    "@angular/core": "^18.1.0",
+    "@angular/forms": "^18.1.0",
+    "@angular/platform-browser": "^18.1.0",
+    "@angular/platform-browser-dynamic": "^18.1.0",
+    "@angular/router": "^18.1.0",
+    "@fortawesome/angular-fontawesome": "^0.15.0",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@mediapipe/selfie_segmentation": "^0.1.1675465747",
+    "@zxing/ngx-scanner": "^18.0.1",
+    "bootstrap": "^5.3.3",
+    "ngx-cookie-service": "^18.0.0",
+    "rxjs": "~7.8.0",
+    "zone.js": "~0.14.3",
+    "mediasoup-client": "3.7.17",
+    "tslib": "^2.3.0",
+    "socket.io-client": "^4.3.2"
+  },
+  "dependencies": {
+  },
+  "module": "dist/fesm2022/mediasfu-angular.mjs",
+  "es2022": "dist/fesm2022/mediasfu-angular.mjs",
+  "esm2022": "dist/esm2022/mediasfu-angular.mjs",
+  "fesm2022": "dist/fesm2022/mediasfu-angular.mjs",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "esm2022": "./dist/esm2022/mediasfu-angular.mjs",
+      "es2022": "./dist/fesm2022/mediasfu-angular.mjs",
+      "node": "./dist/fesm2022/mediasfu-angular.mjs",
+      "default": "./dist/fesm2022/mediasfu-angular.mjs"
+    }
+  },
+  "keywords": [
+    "angular",
+    "typescript",
+    "library",
+    "sdk",
+    "mediasfu",
+    "component",
+    "service",
+    "mediasoup",
+    "screen sharing",
+    "screen sharing annotation",
+    "collaborative whiteboard",
+    "webRTC recording",
+    "prebuilt",
+    "webRTC",
+    "video",
+    "audio",
+    "chat",
+    "media",
+    "sfu",
+    "MediaSFU",
+    "cloud recording",
+    "meeting",
+    "conference",
+    "web"
+  ]
+}

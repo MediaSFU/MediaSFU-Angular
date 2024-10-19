@@ -1,0 +1,39 @@
+<div [ngStyle]="getContainerStyle()">
+  <div
+    *ngFor="let button of buttons; let i = index"
+    [ngStyle]="getButtonStyle(button)"
+    (click)="button.onPress && button.onPress()"
+  >
+    <ng-container *ngIf="button.icon">
+      <fa-icon
+        *ngIf="button.active"
+        [icon]="button.alternateIcon || button.icon"
+        [style.color]="button.inActiveColor || 'transparent'"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="!button.active"
+        [icon]="button.icon"
+        [style.color]="button.inActiveColor || 'transparent'"
+      ></fa-icon>
+    </ng-container>
+    <ng-container *ngIf="!button.icon">
+      <ng-container *ngIf="button.customComponent">
+        <ng-container *ngIf="isCustomComponent(button.customComponent)">
+          <ng-container
+            *ngComponentOutlet="
+              button.customComponent.component;
+              injector: button.customComponent.injector
+            "
+          ></ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isCustomComponent(button.customComponent) && !isFunctionComponent(button.customComponent)">
+          <!-- Handle the HTMLElement case, e.g., render it using [innerHTML] -->
+          <div [innerHTML]="button.customComponent.outerHTML"></div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <span *ngIf="button.name" [ngStyle]="getTextStyle(button)">{{
+      button.name
+    }}</span>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div *ngIf="editRoomModalVisible" class="modal-container" [ngStyle]="modalContainerStyle()">
+  <div class="modal-content text-dark" [ngStyle]="modalContentStyle()">
+    <div class="modal-header">
+      <h5 class="modal-title">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]="faPen"></fa-icon></h5>
+      <button type="button" class="close" (click)="closeModal()">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="list-container">
+        <h5>Assigned Participants <fa-icon [icon]="faUsers"></fa-icon></h5>
+        <ul class="list-group">
+          <li *ngFor="let participant of currentRoom; let i = index" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+            {{ participant.name }}
+            <button class="btn btn-danger btn-sm" (click)="handleRemoveParticipant(currentRoomIndex, participant)">
+              <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+          </li>
+          <li *ngIf="currentRoom.length === 0" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+            None assigned
+          </li>
+        </ul>
+      </div>
+      <div class="list-container">
+        <h5>Unassigned Participants <fa-icon [icon]="faUsers"></fa-icon></h5>
+        <ul class="list-group">
+          <li *ngFor="let participant of unassignedParticipants(); let i = index" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+            {{ participant.name }}
+            <button class="btn btn-primary btn-sm" (click)="handleAddParticipant(currentRoomIndex, participant)">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </li>
+          <li *ngIf="unassignedParticipants().length === 0" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+            None pending
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>

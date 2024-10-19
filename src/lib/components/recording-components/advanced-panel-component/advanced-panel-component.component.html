@@ -1,0 +1,106 @@
+<div>
+  <!-- Video Type -->
+  <div>
+    <label class="label">Video Type:</label>
+    <select [(ngModel)]="selectedRecordingVideoType" (change)="parameters.updateRecordingVideoType(selectedRecordingVideoType)">
+      <option value="fullDisplay">Full Display (no background)</option>
+      <option value="bestDisplay">Full Video</option>
+      <option value="all">All</option>
+    </select>
+  </div>
+  <hr />
+
+  <!-- Display Type -->
+  <div *ngIf="parameters.eventType !== 'broadcast'">
+    <label class="label">Display Type:</label>
+    <select [(ngModel)]="selectedRecordingDisplayType" (change)="parameters.updateRecordingDisplayType(selectedRecordingDisplayType)">
+      <option value="video">Only Video Participants</option>
+      <option value="videoOpt">Only Video Participants (optimized)</option>
+      <option value="media">Participants with media</option>
+      <option value="all">All Participants</option>
+    </select>
+  </div>
+  <hr />
+
+  <!-- Background Color -->
+  <div>
+    <label class="label">Background Color:</label>
+    <div class="color-preview" [ngStyle]="{'background-color': parameters.recordingBackgroundColor}">
+      {{ parameters.recordingBackgroundColor }}
+    </div>
+    <input type="color" [(ngModel)]="parameters.recordingBackgroundColor" (change)="handleColorChange('backgroundColor', $event)" />
+    <span class="label">Click to select color</span>
+  </div>
+  <hr />
+
+  <!-- Add Text -->
+  <div>
+    <label class="label">Add Text:</label>
+    <select [(ngModel)]="recordingText" (change)="handleTextChange(recordingText)">
+      <option [ngValue]="true">True</option>
+      <option [ngValue]="false">False</option>
+    </select>
+  </div>
+  <hr />
+
+  <!-- Custom Text -->
+  <div *ngIf="recordingText">
+    <label class="label">Custom Text:</label>
+    <input type="text" [(ngModel)]="customText" (input)="onChangeTextHandler(customText)" />
+    <hr />
+  </div>
+
+  <!-- Custom Text Position -->
+  <div *ngIf="recordingText">
+    <label class="label">Custom Text Position:</label>
+    <select [(ngModel)]="recordingPosition" (change)="parameters.updateRecordingCustomTextPosition(recordingPosition)">
+      <option value="top">Top</option>
+      <option value="middle">Middle</option>
+      <option value="bottom">Bottom</option>
+    </select>
+    <hr />
+  </div>
+
+  <!-- Custom Text Color -->
+  <div *ngIf="recordingText">
+    <label class="label">Custom Text Color:</label>
+    <div class="color-preview" [ngStyle]="{'background-color': parameters.recordingCustomTextColor}">
+      {{ parameters.recordingCustomTextColor }}
+    </div>
+    <input type="color" [(ngModel)]="parameters.recordingCustomTextColor" (change)="handleColorChange('customTextColor', $event)" />
+    <span class="label">Click to select color</span>
+    <hr />
+  </div>
+
+  <!-- Add Name Tags -->
+  <div>
+    <label class="label">Add Name Tags:</label>
+    <select [(ngModel)]="selectedRecordingNameTags" (change)="parameters.updateRecordingNameTags(selectedRecordingNameTags)">
+      <option [ngValue]="true">True</option>
+      <option [ngValue]="false">False</option>
+    </select>
+  </div>
+  <hr />
+
+  <!-- Name Tags Color -->
+  <div>
+    <label class="label">Name Tags Color:</label>
+    <div class="color-preview" [ngStyle]="{'background-color': parameters.recordingNameTagsColor}">
+      {{ parameters.recordingNameTagsColor }}
+    </div>
+    <input type="color" [(ngModel)]="parameters.recordingNameTagsColor" (change)="handleColorChange('nameTagsColor', $event)" />
+    <span class="label">Click to select color</span>
+  </div>
+  <hr />
+
+  <!-- Orientation (Video) -->
+  <div>
+    <label class="label">Orientation (Video):</label>
+    <select [(ngModel)]="selectedOrientationVideo" (change)="parameters.updateRecordingOrientationVideo(selectedOrientationVideo)">
+      <option value="landscape">Landscape</option>
+      <option value="portrait">Portrait</option>
+      <option value="all">All</option>
+    </select>
+  </div>
+  <hr />
+</div>

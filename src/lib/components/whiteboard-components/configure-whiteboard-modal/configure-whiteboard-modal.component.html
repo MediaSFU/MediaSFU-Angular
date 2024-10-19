@@ -1,0 +1,71 @@
+<div [ngStyle]="modalContainerStyle()">
+  <div [ngStyle]="modalContentStyle()">
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="font-size: x-large; font-weight: bold; color: black;">
+          Configure Whiteboard
+        </h2>
+        <button (click)="onConfigureWhiteboardClose()" style="border: none; background: none; cursor: pointer;">
+          <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <h6>Assigned</h6>
+            <ul class="list-group" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc;">
+              <ng-container *ngIf="assignedParticipants.length > 0; else noAssignedParticipants">
+                <li *ngFor="let participant of assignedParticipants" class="list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2">
+                  {{ participant.name }}
+                  <button class="btn btn-danger btn-sm mr-2 ml-2" (click)="toggleParticipant(participant, false)">
+                    <fa-icon [icon]="faTimes"></fa-icon>
+                  </button>
+                </li>
+              </ng-container>
+              <ng-template #noAssignedParticipants>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-dark">
+                  None
+                </li>
+              </ng-template>
+            </ul>
+          </div>
+          <div class="col-md-6 mt-xs-3 mb-3">
+            <h6>Pending</h6>
+            <ul class="list-group" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc;">
+              <ng-container *ngIf="unassignedParticipants.length > 0; else noPendingParticipants">
+                <li *ngFor="let participant of unassignedParticipants" class="list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2">
+                  {{ participant.name }}
+                  <button class="btn btn-primary btn-sm mr-2 ml-2" (click)="toggleParticipant(participant, true)">
+                    <fa-icon [icon]="faCheck"></fa-icon>
+                  </button>
+                </li>
+              </ng-container>
+              <ng-template #noPendingParticipants>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-dark">
+                  None
+                </li>
+              </ng-template>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="handleSaveWhiteboard()">
+          Save <fa-icon [icon]="faSave"></fa-icon>
+        </button>
+      </div>
+      <hr />
+      <div *ngIf="!isEditing">
+        <button *ngIf="canStartWhiteboard && whiteboardStarted && !whiteboardEnded" class="btn btn-warning mb-2 mr-2" (click)="handleStartWhiteboard()">
+          Update <fa-icon [icon]="faSyncAlt"></fa-icon>
+        </button>
+        <button *ngIf="canStartWhiteboard && !whiteboardStarted" class="btn btn-success mb-2 mr-2" (click)="handleStartWhiteboard()">
+          Start <fa-icon [icon]="faPlay"></fa-icon>
+        </button>
+        <button *ngIf="whiteboardStarted && !whiteboardEnded" class="btn btn-danger mb-2 ml-2" (click)="handleStopWhiteboard()">
+          Stop <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

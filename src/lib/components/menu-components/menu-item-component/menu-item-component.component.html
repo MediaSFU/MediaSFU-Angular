@@ -1,0 +1,4 @@
+<button class="list-item" (click)="handlePress()">
+  <fa-icon *ngIf="icon" [icon]="icon" class="list-icon"></fa-icon>
+  <span *ngIf="name" class="list-text">{{ name }}</span>
+</button>

@@ -1,0 +1,84 @@
+<div [ngStyle]="modalContainerStyle">
+  <div [ngStyle]="modalContentStyle">
+    <div
+      [ngStyle]="{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }"
+    >
+      <button
+        *ngIf="eventType === 'webinar' || eventType === 'conference'"
+        (click)="switchToDirectTab()"
+        [ngStyle]="getTabStyle('direct')"
+      >
+        Direct
+      </button>
+      <button
+        *ngIf="eventType === 'webinar' || eventType === 'conference'"
+        (click)="switchToGroupTab()"
+        [ngStyle]="getTabStyle('group')"
+      >
+        Group
+      </button>
+      <span (click)="closeMessagesModal()" [ngStyle]="getButtonCloseStyle()">
+        <fa-icon [icon]="faTimes" class="icon" size="xl"></fa-icon>
+      </span>
+    </div>
+    <hr [ngStyle]="styles.separator" />
+    <div [ngStyle]="styles.modalBody">
+      <app-message-panel
+        *ngIf="
+          activeTab === 'direct' &&
+          (eventType === 'webinar' || eventType === 'conference')
+        "
+        [messages]="directMessages"
+        [messagesLength]="messages.length"
+        type="direct"
+        [onSendMessagePress]="onSendMessagePress"
+        [username]="member"
+        [backgroundColor]="backgroundColor"
+        [focusedInput]="focusedInput"
+        [showAlert]="showAlert"
+        [eventType]="eventType"
+        [member]="member"
+        [islevel]="islevel"
+        [coHostResponsibility]="coHostResponsibility"
+        [coHost]="coHost"
+        [directMessageDetails]="directMessageDetails"
+        [updateStartDirectMessage]="updateStartDirectMessage"
+        [updateDirectMessageDetails]="updateDirectMessageDetails"
+        [roomName]="roomName"
+        [socket]="socket"
+        [chatSetting]="chatSetting"
+        [startDirectMessage]="startDirectMessage"
+      >
+      </app-message-panel>
+
+      <app-message-panel
+        *ngIf="activeTab === 'group'"
+        [messages]="groupMessages"
+        [messagesLength]="messages.length"
+        type="group"
+        [onSendMessagePress]="onSendMessagePress"
+        [username]="member"
+        [backgroundColor]="backgroundColor"
+        [focusedInput]="focusedInput"
+        [showAlert]="showAlert"
+        [eventType]="eventType"
+        [member]="member"
+        [islevel]="islevel"
+        [coHostResponsibility]="coHostResponsibility"
+        [coHost]="coHost"
+        [directMessageDetails]="directMessageDetails"
+        [updateStartDirectMessage]="updateStartDirectMessage"
+        [updateDirectMessageDetails]="updateDirectMessageDetails"
+        [roomName]="roomName"
+        [socket]="socket"
+        [chatSetting]="chatSetting"
+        [startDirectMessage]="startDirectMessage"
+      >
+      </app-message-panel>
+    </div>
+  </div>
+</div>

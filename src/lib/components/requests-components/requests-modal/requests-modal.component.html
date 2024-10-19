@@ -1,0 +1,28 @@
+<div *ngIf="isRequestsModalVisible" class="modal-container" [ngStyle]="{'background-color': 'rgba(0, 0, 0, 0.5)'}">
+  <div class="modal-content" [ngStyle]="{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}">
+    <div class="modal-header">
+      <div>
+        Requests <span class="badge text-dark">{{ requestCounter_s }}</span>
+      </div>
+      <div class="close-icon" (click)="handleModalClose()">
+        <fa-icon [icon]="faTimes" size="lg"></fa-icon>
+      </div>
+    </div>
+    <hr class="separator" />
+    <div class="modal-body">
+      <input type="text" class="filter-input" placeholder="Search ..." (input)="handleFilterChange($event)">
+      <div class="request-list">
+        <ng-container *ngFor="let requestItem of requestList_s; let i = index">
+          <app-render-request-component
+            [request]="requestItem"
+            [requestList]="requestList"
+            [roomName]="roomName"
+            [socket]="socket"
+            [onRequestItemPress]="onRequestItemPress"
+            [updateRequestList]="updateRequestList">
+          </app-render-request-component>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

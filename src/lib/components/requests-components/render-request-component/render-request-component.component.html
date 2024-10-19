@@ -1,0 +1,16 @@
+<div class="request-container" *ngIf="request">
+  <div class="request-name">{{ request.name }}</div>
+  <div class="request-icon">
+    <fa-icon [icon]="getIcon(request.icon)" size="lg" color="black"></fa-icon>
+  </div>
+  <div class="request-action accept">
+    <button (click)="handleRequestAction('accepted')">
+      <fa-icon [icon]="faCheck" size="lg" style="color: green;"></fa-icon>
+    </button>
+  </div>
+  <div class="request-action reject">
+    <button (click)="handleRequestAction('rejected')">
+      <fa-icon [icon]="faTimes" size="lg" style="color: red;"></fa-icon>
+    </button>
+  </div>
+</div>

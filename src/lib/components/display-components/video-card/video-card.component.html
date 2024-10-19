@@ -1,0 +1,72 @@
+<div
+  [ngStyle]="customStyle"
+  [style.backgroundColor]="backgroundColor"
+  class="video-card"
+>
+  <app-card-video-display
+    [remoteProducerId]="remoteProducerId"
+    [eventType]="eventType"
+    [forceFullDisplay]="forceFullDisplay"
+    [videoStream]="videoStream"
+    [backgroundColor]="backgroundColor"
+    [doMirror]="doMirror"
+  ></app-card-video-display>
+
+  <div
+    *ngIf="showInfo"
+    [ngClass]="showControls ? 'overlayWeb' : 'overlayWebAlt'"
+    [ngStyle]="getOverlayPosition(infoPosition)"
+  >
+    <div class="nameColumn">
+      <span class="nameText" [style.color]="textColor">{{
+        participant.name
+      }}</span>
+    </div>
+    <div *ngIf="showWaveform" class="waveformWeb">
+      <div
+        *ngFor="let animation of waveformAnimations; let i = index"
+        class="bar"
+        [ngStyle]="{
+          height: animation === 0 ? '1px' : '16px',
+          backgroundColor: barColor
+        }"
+      ></div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showControls"
+    class="overlayControls"
+    [ngStyle]="getOverlayPosition(controlsPosition)"
+  >
+    <ng-container *ngIf="!videoControlsComponent">
+      <div class="overlayControls">
+        <button class="controlButton" (click)="toggleAudio()">
+          <fa-icon
+            [icon]="participant.muted ? faMicrophoneSlash : faMicrophone"
+            [style.color]="participant.muted ? 'red' : 'green'"
+          ></fa-icon>
+        </button>
+        <button class="controlButton" (click)="toggleVideo()">
+          <fa-icon
+            [icon]="participant['videoOn'] ? faVideo : faVideoSlash"
+            [style.color]="participant['videoOn'] ? 'green' : 'red'"
+          ></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="videoControlsComponent">
+      <ng-container *ngIf="isCustomComponent(videoControlsComponent)">
+        <ng-container
+          *ngComponentOutlet="
+            videoControlsComponent.component;
+            injector: videoControlsComponent.injector
+          "
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngIf="!isCustomComponent(videoControlsComponent)">
+        <div [innerHTML]="videoControlsComponent.outerHTML"></div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

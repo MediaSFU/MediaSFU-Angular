@@ -1,0 +1,13 @@
+<div class="share-buttons-container">
+  <div
+    *ngFor="let button of filteredShareButtons; let i = index"
+    (click)="button.action()"
+    [ngStyle]="{
+      'background-color': button.color || 'black',
+      'margin-right': i !== filteredShareButtons.length - 1 ? '10px' : '0'
+    }"
+    class="share-button"
+  >
+    <fa-icon [icon]="button.icon" [ngStyle]="{ color: button.iconColor || '#ffffff', 'font-size': '24px' }"></fa-icon>
+  </div>
+</div>

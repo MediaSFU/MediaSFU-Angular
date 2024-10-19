@@ -1,0 +1,46 @@
+<div *ngIf="isParticipantsModalVisible" class="modal-container" [ngStyle]="{'background-color': 'rgba(0, 0, 0, 0.5)'}">
+  <div class="modal-content" [ngStyle]="{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}">
+    <div class="modal-header">
+      <div>
+        Participants <span class="badge">{{ participantsCounter_s }}</span>
+      </div>
+      <div class="close-icon" (click)="handleClose()">
+        <fa-icon [icon]="faTimes" size="xl"></fa-icon>
+      </div>
+    </div>
+    <div class="modal-body">
+      <input type="text" class="filter-input" placeholder="Search ..." (input)="handleFilterChange($event)">
+      <ng-container *ngIf="parameters.participants">
+        <ng-container *ngIf="canShowParticipantList()">
+          <app-participant-list
+            [participants]="participant_s"
+            [isBroadcast]="parameters.eventType === 'broadcast'"
+            [onMuteParticipants]="onMuteParticipants"
+            [onMessageParticipants]="onMessageParticipants"
+            [onRemoveParticipants]="onRemoveParticipants"
+            [socket]="parameters.socket"
+            [coHostResponsibility]="parameters.coHostResponsibility"
+            [coHost]="parameters.coHost"
+            [member]="parameters.member"
+            [islevel]="parameters.islevel"
+            [roomName]="parameters.roomName"
+            [updateIsMessagesModalVisible]="parameters.updateIsMessagesModalVisible"
+            [updateStartDirectMessage]="parameters.updateStartDirectMessage"
+            [updateDirectMessageDetails]="parameters.updateDirectMessageDetails"
+            [updateParticipants]="parameters.updateParticipants"
+          >
+          </app-participant-list>
+        </ng-container>
+        <ng-container *ngIf="!canShowParticipantList()">
+          <app-participant-list-others
+            [participants]="participant_s"
+            [coHost]="parameters.coHost"
+            [member]="parameters.member"
+            >
+          </app-participant-list-others>
+        </ng-container>
+      </ng-container>
+      <div *ngIf="!parameters.participants">No participants</div>
+    </div>
+  </div>
+</div>

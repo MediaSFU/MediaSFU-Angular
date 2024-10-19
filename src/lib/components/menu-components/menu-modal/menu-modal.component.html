@@ -1,0 +1,30 @@
+<div [ngStyle]="modalContainerStyle()">
+  <div class="modal-content" [ngStyle]="modalContentStyle()">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <div style="font-size: 18px; font-weight: bold; color: black;">
+        <fa-icon [icon]="faBars" style="font-size: 20px; color: black;"></fa-icon> Menu
+      </div>
+      <div (click)="handleClose()" style="padding: 5px;">
+        <fa-icon [icon]="faTimes" style="font-size: 20px; color: black;"></fa-icon>
+      </div>
+    </div>
+    <hr style="height: 1px; background-color: black; margin: 5px 0;" />
+    <div style="flex: 1;">
+      <div style="max-height: calc(70% - 70px); overflow-y: auto;">
+        <app-custom-buttons [buttons]="customButtons"></app-custom-buttons>
+        <div style="height: 1px; background-color: #ffffff; margin: 10px 0;"></div>
+        <ng-container *ngIf="islevel === '2'">
+          <app-meeting-passcode-component
+            [meetingPasscode]="adminPasscode"
+          ></app-meeting-passcode-component>
+        </ng-container>
+        <div style="margin-bottom: 10px;">
+          <app-meeting-id-component [meetingID]="roomName"></app-meeting-id-component>
+        </div>
+        <ng-container *ngIf="true">
+          <app-share-buttons-component [meetingID]="roomName" [eventType]="eventType"></app-share-buttons-component>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

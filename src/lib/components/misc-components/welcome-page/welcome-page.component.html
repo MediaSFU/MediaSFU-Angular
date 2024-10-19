@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="logo-container">
+    <img [src]="imgSrc || 'https://mediasfu.com/images/logo192.png'" class="logo-image" alt="Logo" />
+  </div>
+  <form [formGroup]="welcomeForm" (ngSubmit)="handleConfirm()">
+    <div class="input-container">
+      <input
+        formControlName="name"
+        type="text"
+        placeholder="Event Display Name"
+        class="input-field"
+      />
+      <input
+        formControlName="secret"
+        type="text"
+        placeholder="Event Token (Secret)"
+        class="input-field"
+      />
+      <input
+        formControlName="eventID"
+        type="text"
+        placeholder="Event ID"
+        class="input-field"
+      />
+      <input
+        formControlName="link"
+        type="text"
+        placeholder="Event Link"
+        class="input-field"
+      />
+    </div>
+    <button type="submit" class="confirm-button">Confirm</button>
+  </form>
+
+  <div class="scanner-container">
+    <div class="or-container">
+      <hr class="horizontal-line" />
+      <span class="or-text">OR</span>
+      <hr class="horizontal-line" />
+    </div>
+    <div *ngIf="isScannerVisible" class="scanner-wrapper">
+      <zxing-scanner
+        [device]="currentDevice!"
+        (scanSuccess)="handleScanSuccess($event)"
+        [tryHarder]="true"
+      ></zxing-scanner>
+    </div>
+    <div class="scan-button-container" *ngIf="!isScannerVisible">
+      <button (click)="toggleScanner()" class="scan-button">
+        <fa-icon [icon]="faQrcode" style="margin-right: 5px"></fa-icon>
+        Scan QR Code
+      </button>
+    </div>
+  </div>
+
+  <div class="additional-options-container">
+    <p>
+      Provide the event details either by typing manually or scanning the
+      QR-code to autofill.
+    </p>
+    <p>Don't have a secret?</p>
+    <a
+      href="https://meeting.mediasfu.com/meeting/start/"
+      target="_blank"
+      class="link"
+      >Get one from mediasfu.com</a
+    >
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<div [ngStyle]="{ ...miniCardStyle, 'font-size': fontSize + 'px', ...customStyle }">
+  <img *ngIf="imageSource" [src]="imageSource" alt="Profile" [ngStyle]="{ ...backgroundImageStyle, ...(roundedImage ? roundedImageStyle : {}), ...imageStyle }" />
+  <div *ngIf="!imageSource" [ngStyle]="{ ...initialsStyle, 'font-size': fontSize + 'px' }">{{ initials }}</div>
+</div>

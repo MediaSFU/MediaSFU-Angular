@@ -1,0 +1,34 @@
+.customButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: left;
+}
+
+.customButton {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  align-items: left;
+  justify-content: left;
+  border: none;
+}
+
+.buttonContent {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+.customButtonIcon {
+  font-size: 20px;
+  color: #000000; /* Default color for the button icon */
+  margin-right: 4px;
+}
+
+.customButtonText {
+  color: #000000; /* Default color for the button text */
+}

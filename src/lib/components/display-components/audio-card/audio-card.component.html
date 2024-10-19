@@ -1,0 +1,81 @@
+<div
+  class="card"
+  [ngStyle]="customStyle"
+  [style.backgroundColor]="backgroundColor"
+>
+  <ng-container *ngIf="imageSource; else noImage">
+    <div class="imageContainer">
+      <img
+        [src]="imageSource"
+        [ngStyle]="
+          combineStyles(imageStyle, {
+            'border-radius': roundedImage ? '20%' : '0'
+          })
+        "
+        class="backgroundImage"
+      />
+    </div>
+  </ng-container>
+  <ng-template #noImage>
+    <div style="width: 100%; height: 100%">
+      <app-mini-card [initials]="name" [fontSize]="20" [ngStyle]="{ 'border': parameters.eventType === 'broadcast' ? '2px solid black' : '0px solid black' }"></app-mini-card>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="showInfo">
+    <div
+      class="overlay"
+      [ngStyle]="getOverlayPosition(infoPosition)"
+      [ngClass]="showControls ? 'overlayWeb' : 'overlayWebAlt'"
+    >
+      <div class="nameColumn">
+        <p [ngStyle]="{ color: textColor }" class="nameText">{{ name }}</p>
+      </div>
+      <div *ngIf="showWaveform" class="waveformWeb">
+        <div
+          *ngFor="let animation of waveformAnimations"
+          [ngStyle]="{
+            height: animation === 0 ? '1px' : '12px',
+            backgroundColor: barColor
+          }"
+          class="bar"
+        ></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="renderControls()">
+    <div
+      class="overlayControls"
+      [ngStyle]="getOverlayPosition(controlsPosition)"
+    >
+      <ng-container *ngIf="!videoControlsComponent">
+        <button class="controlButton" (click)="toggleAudio()">
+          <fa-icon
+            [icon]="participant?.muted ? faMicrophoneSlash : faMicrophone"
+            [style.color]="participant?.muted ? 'red' : 'green'"
+          ></fa-icon>
+        </button>
+        <button class="controlButton" (click)="toggleVideo()">
+          <fa-icon
+            [icon]="participant?.['videoOn'] ? faVideo : faVideoSlash"
+            [style.color]="participant?.['videoOn'] ? 'green' : 'red'"
+          ></fa-icon>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="videoControlsComponent">
+        <ng-container *ngIf="isCustomComponent(videoControlsComponent)">
+          <ng-container
+            *ngComponentOutlet="
+              videoControlsComponent.component;
+              injector: videoControlsComponent.injector
+            "
+          ></ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isCustomComponent(videoControlsComponent)">
+          <div [innerHTML]="videoControlsComponent.outerHTML"></div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

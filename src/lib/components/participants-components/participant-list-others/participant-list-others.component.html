@@ -1,0 +1,8 @@
+<div *ngFor="let participant of participants; let i = index">
+  <app-participant-list-others-item
+    [participant]="participant"
+    [coHost]="coHost"
+    [member]="member"
+  ></app-participant-list-others-item>
+  <hr *ngIf="i < participants.length - 1" class="separator" />
+</div>

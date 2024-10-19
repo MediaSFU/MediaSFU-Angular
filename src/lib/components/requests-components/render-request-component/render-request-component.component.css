@@ -1,0 +1,30 @@
+.request-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
+  padding-bottom: 5px;
+}
+
+.request-name {
+  flex: 5;
+}
+
+.request-icon, .request-action {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.request-action {
+  padding-right: 10px;
+}
+
+.request-action.accept {
+  margin-right: 10px;
+}
+
+.request-action.reject {
+  margin-right: 10px;
+}

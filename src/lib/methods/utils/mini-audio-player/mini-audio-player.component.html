@@ -1,0 +1,7 @@
+<div class="container">
+  <audio *ngIf="stream" autoplay playsinline #audioElement [srcObject]="stream"></audio>
+
+  <ng-container *ngIf="MiniAudioComponent">
+    <ng-container *ngComponentOutlet="MiniAudioComponent; injector: createInjector(getMiniAudioProps())"></ng-container>
+  </ng-container>
+</div>

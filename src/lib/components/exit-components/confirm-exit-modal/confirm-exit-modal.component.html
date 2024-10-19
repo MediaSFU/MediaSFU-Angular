@@ -1,0 +1,23 @@
+<div *ngIf="isConfirmExitModalVisible" class="modal-container">
+  <div class="modal-content" [ngStyle]="modalContentStyle">
+    <div class="modal-header" style="display: flex; justify-content: space-between;">
+      <h2 class="modal-title">Confirm Exit</h2>
+      <span class="close-icon" (click)="onConfirmExitClose()">
+        <fa-icon [icon]="faTimes" size="lg"></fa-icon>
+      </span>
+    </div>
+    <hr />
+    <div class="modal-body">
+      <p class="confirm-exit-text">
+        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}
+      </p>
+    </div>
+    <hr />
+    <div class="modal-footer">
+      <button class="cancel-button" (click)="onConfirmExitClose()">Cancel</button>
+      <button class="confirm-button" (click)="handleConfirmExit()">
+        {{ islevel === '2' ? 'End Event' : 'Exit' }}
+      </button>
+    </div>
+  </div>
+</div>

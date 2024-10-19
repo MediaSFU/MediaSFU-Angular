@@ -1,0 +1,38 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.previous-polls,
+.create-poll,
+.current-poll {
+  overflow-y: auto;
+  max-height: 20%;
+}
+
+.poll {
+  margin-bottom: 15px;
+}
+
+.close-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.form-group {
+  max-width: 80%;
+  overflow-x: auto;
+}
+
+textarea.form-control {
+  resize: none;
+}

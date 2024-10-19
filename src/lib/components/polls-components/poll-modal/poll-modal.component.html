@@ -1,0 +1,168 @@
+<div [ngStyle]="modalContainerStyle">
+  <div [ngStyle]="modalContentStyle">
+    <div class="modal-header">
+      <h2>Polls</h2>
+      <button (click)="onClose()" class="close-button">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </div>
+    <hr />
+    <div class="modal-body">
+      <!-- Previous Polls Section -->
+      <div *ngIf="islevel === '2'">
+        <div class="previous-polls">
+          <h5>Previous Polls</h5>
+          <div *ngIf="polls.length === 0">No polls available</div>
+
+          <!-- Using ng-container to avoid multiple structural directives on the same element -->
+          <ng-container *ngFor="let polled of polls">
+            <div
+              *ngIf="!poll || polled.id !== poll.id || poll.status !== 'active'"
+              class="poll"
+            >
+              <h6>Question:</h6>
+              <textarea
+                class="form-control"
+                rows="3"
+                [disabled]="true"
+                [value]="polled.question"
+              ></textarea>
+              <br />
+              <h6>Options:</h6>
+              <div *ngFor="let option of polled.options; let i = index">
+                {{ option }}: {{ polled.votes[i] }} votes ({{
+                  calculatePercentage(polled.votes, i)
+                }}%)
+              </div>
+              <!-- End Poll Button (if poll is active) -->
+              <button
+                *ngIf="polled.status === 'active'"
+                class="btn btn-danger"
+                (click)="handledEndPoll(polled.id)"
+              >
+                End Poll
+              </button>
+            </div>
+          </ng-container>
+        </div>
+        <hr />
+
+        <!-- Create Poll Section -->
+        <div class="create-poll">
+          <h5>Create a New Poll</h5>
+          <form (ngSubmit)="validateAndCreatePoll()">
+            <div class="form-group">
+              <label for="pollQuestion">Poll Question</label>
+              <textarea
+                class="form-control"
+                id="pollQuestion"
+                rows="3"
+                maxLength="300"
+                required
+                [(ngModel)]="newPoll.question"
+                name="question"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="pollType">Select Poll Answer Type</label>
+              <select
+                class="form-control"
+                id="pollType"
+                required
+                (change)="handlePollTypeChange($event)"
+                [(ngModel)]="newPoll.type"
+                name="type"
+              >
+                <option value="">Choose...</option>
+                <option value="trueFalse">True/False</option>
+                <option value="yesNo">Yes/No</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+
+            <!-- Render Poll Options -->
+            <div
+              *ngIf="newPoll.type === 'trueFalse' || newPoll.type === 'yesNo'"
+            >
+              <div
+                *ngFor="let option of newPoll.options; let i = index"
+                class="form-check"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="pollOption"
+                  [value]="option.toLowerCase()"
+                  [id]="'option' + option"
+                />
+                <label class="form-check-label" [for]="'option' + option">{{
+                  option
+                }}</label>
+              </div>
+            </div>
+            <div *ngIf="newPoll.type === 'custom'">
+              <div
+                *ngFor="let option of newPoll.options; let i = index"
+                class="form-group"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Option {{ i + 1 }}"
+                  maxLength="50"
+                  [(ngModel)]="newPoll.options[i]"
+                  name="option{{ i }}"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Poll</button>
+          </form>
+        </div>
+        <hr />
+      </div>
+
+      <!-- Current Poll Section -->
+      <div class="current-poll">
+        <h5>Current Poll</h5>
+        <div *ngIf="poll && poll.status === 'active'">
+          <h6>Question:</h6>
+          <textarea
+            class="form-control"
+            rows="3"
+            [disabled]="true"
+            [value]="poll.question"
+          ></textarea>
+          <h6>Options:</h6>
+          <div
+            *ngFor="let option of poll.options; let i = index"
+            class="form-check"
+          >
+            <input
+              class="form-check-input"
+              type="radio"
+              name="pollOption"
+              [value]="i"
+              id="pollOption{{ i }}"
+              [checked]="poll.voters?.[member] === i"
+              (change)="handledVotePoll(poll.id, i)"
+            />
+            <label class="form-check-label" [for]="'pollOption' + i">{{
+              option
+            }}</label>
+          </div>
+          <button
+            *ngIf="poll.status === 'active' && islevel === '2'"
+            class="btn btn-danger"
+            (click)="handledEndPoll(poll.id)"
+          >
+            End Poll
+          </button>
+        </div>
+        <div *ngIf="!poll || poll.status !== 'active'">
+          <hr />
+          No active poll
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

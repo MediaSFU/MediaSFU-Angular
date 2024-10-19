@@ -1,0 +1,127 @@
+<div id="whiteboard-interface" [style.width.px]="customWidth" [style.height.px]="customHeight" [style.display]="showAspect ? 'block' : 'none'" style="position: relative; display: flex; justify-content: center; align-items: center; border: 2px solid #000; background-color: #f0f0f0;">
+  <div id="whiteboardContent" style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;">
+    <button id="toolbarToggle" class="btn btnBoard btn-primary" style="position: absolute; top: 5px; left: 55px; z-index: 10;" (click)="toggleToolbar()">
+      <fa-icon [icon]="toolbarVisible ? faChevronLeft : faChevronRight"></fa-icon>
+    </button>
+    <div *ngIf="toolbarVisible" class="toolbar mb-3" id="toolbar" style="position: absolute; top: 5px; left: 100px; z-index: 10; background-color: transparent;">
+      <div class="btn-group" role="group">
+        <button class="btn btnBoard btn-secondary dropdown-toggle" id="drawMode" (click)="handleDropdownClick('drawMode')">
+          <fa-icon [icon]="faPencilAlt"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'drawMode'" class="dropdown-menu show">
+          <button *ngFor="let item of [{ label: 'XX-Small (3px)', value: 3 }, { label: 'X-Small (6px)', value: 6 }, { label: 'Small (12px)', value: 12 }, { label: 'Medium (18px)', value: 18 }, { label: 'Large (24px)', value: 24 }, { label: 'X-Large (36px)', value: 36 }]" class="dropdown-item" (click)="handleItemClick(updateLineThickness, 'draw', item.value)" style="padding: 5px;">
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button class="btn btnBoard btn-secondary dropdown-toggle" id="freehandMode" (click)="handleDropdownClick('freehandMode')">
+          <fa-icon [icon]="faPaintBrush"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'freehandMode'" class="dropdown-menu show">
+          <button *ngFor="let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]" class="dropdown-item" (click)="handleItemClick(updateBrushThickness, 'freehand', item.value)" style="padding: 5px;">
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button class="btn btnBoard btn-secondary dropdown-toggle" id="shapeMode" (click)="handleDropdownClick('shapeMode')">
+          <fa-icon [icon]="faShapes"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'shapeMode'" class="dropdown-menu show">
+          <button *ngFor="let item of [
+            { label: '<img src=\'https://mediasfu.com/images/svg/square.svg\' alt=\'Square\' class=\'shape-icon\' />', value: 'square' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/rectangle.svg\' alt=\'Rectangle\' class=\'shape-icon\' />', value: 'rectangle' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/circle.svg\' alt=\'Circle\' class=\'shape-icon\' />', value: 'circle' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/triangle.svg\' alt=\'Triangle\' class=\'shape-icon\' />', value: 'triangle' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/hexagon.svg\' alt=\'Hexagon\' class=\'shape-icon\' />', value: 'hexagon' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/pentagon.svg\' alt=\'Pentagon\' class=\'shape-icon\' />', value: 'pentagon' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/rhombus.svg\' alt=\'Rhombus\' class=\'shape-icon\' />', value: 'rhombus' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/octagon.svg\' alt=\'Octagon\' class=\'shape-icon\' />', value: 'octagon' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/parallelogram.svg\' alt=\'Parallelogram\' class=\'shape-icon\' />', value: 'parallelogram' },
+            { label: '<img src=\'https://mediasfu.com/images/svg/oval.svg\' alt=\'Oval\' class=\'shape-icon\' />', value: 'oval' }
+          ]" class="dropdown-item" (click)="handleItemClick(updateShape, 'shape', item.value)" style="padding: 5px;" [innerHTML]="item.label">
+          </button>
+        </div>
+      </div>
+      <button class="btn btnBoard btn-secondary" id="selectMode" (click)="changeMode('select')">
+        <fa-icon [icon]="faMousePointer"></fa-icon>
+      </button>
+      <div class="btn-group" role="group">
+        <button class="btn btnBoard btn-danger dropdown-toggle" id="eraseMode" (click)="handleDropdownClick('eraseMode')">
+          <fa-icon [icon]="faEraser"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'eraseMode'" class="dropdown-menu show">
+          <button *ngFor="let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (30px)', value: 30 }, { label: 'X-Large (60px)', value: 60 }]" class="dropdown-item" (click)="handleItemClick(updateEraserThickness, 'erase', item.value)" style="padding: 5px;">
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+      <button class="btn btnBoard btn-info" id="panMode" (click)="changeMode('pan')">
+        <fa-icon [icon]="faHandPaper"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-success" id="zoomIn" (click)="zoomCanvas(1.2, $event)">
+        <fa-icon [icon]="faSearchPlus"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-success" id="zoomReset" (click)="zoomCanvas(10, $event)">
+        <fa-icon [icon]="faSearch"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-success" id="zoomOut" (click)="zoomCanvas(0.8, $event)">
+        <fa-icon [icon]="faSearchMinus"></fa-icon>
+      </button>
+      <div class="btn-group" role="group">
+        <button class="btn btnBoard btn-secondary dropdown-toggle" id="addText" (click)="handleDropdownClick('addText')">
+          <fa-icon [icon]="faFont"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'addText'" class="dropdown-menu show">
+          <button *ngFor="let item of [{ label: 'Arial', value: 'Arial' }, { label: 'Times New Roman', value: 'Times New Roman' }, { label: 'Courier New', value: 'Courier New' }, { label: 'Verdana', value: 'Verdana' }]" class="dropdown-item" (click)="handleItemClick(updateFont, 'text', item.value)" style="padding: 5px;">
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button class="btn btnBoard btn-secondary dropdown-toggle" id="fontSize" (click)="handleDropdownClick('fontSize')">
+          <fa-icon [icon]="faTextHeight"></fa-icon>
+        </button>
+        <div *ngIf="dropdownOpen === 'fontSize'" class="dropdown-menu show">
+          <button *ngFor="let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]" class="dropdown-item" (click)="handleItemClick(updateFontSize, '', item.value)" style="padding: 5px;">
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+      <button class="btn btnBoard btn-secondary" id="undo" (click)="undo()">
+        <fa-icon [icon]="faUndo"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-secondary" id="redo" (click)="redo()">
+        <fa-icon [icon]="faRedo"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-secondary" id="save" (click)="saveCanvas()">
+        <fa-icon [icon]="faSave"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-danger" id="delete" (click)="deleteShape()">
+        <fa-icon [icon]="faTrash"></fa-icon>
+      </button>
+      <button class="btn btnBoard btn-secondary" id="clearCanvas" (click)="clearCanvas()">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+      <button id="toggleBackgroundRef" #toggleBackgroundRef class="btn btnBoard btn-secondary" (click)="toggleBackground()">
+        <img src="https://mediasfu.com/images/svg/graph.jpg" alt="Background" class="toggle-icon" id="backgroundIcon" />
+      </button>
+      <input type="file" id="uploadBoardImage" accept="image/*" style="display: none;" (change)="uploadImage($event)" />
+      <label for="uploadBoardImage" class="btn btnBoard btn-primary">
+        <fa-icon [icon]="faUpload"></fa-icon>
+      </label>
+      <input type="color" id="colorPicker" class="btn" [(ngModel)]="color" />
+      <select id="lineTypePicker" class="custom-select" style="width: auto;" [(ngModel)]="lineType">
+        <option value="solid">Solid</option>
+        <option value="dashed">Dashed</option>
+        <option value="dotted">Dotted</option>
+        <option value="dashDot">Dash-Dot</option>
+      </select>
+    </div>
+    <canvas id="canvasRef" width="1280" height="720" style="border: 2px solid red;" #canvasRef></canvas>
+    <textarea id="textInputRef" class="form-control" #textInputRef style="display: none; position: absolute;"></textarea>
+    <a href="#" id="downloadLinkRef" #downloadLinkRef style="display: none;">Download</a>
+    <canvas id="tempCanvasRef" #tempCanvasRef style="display: none;"></canvas>
+  </div>
+</div>

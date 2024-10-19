@@ -1,0 +1,48 @@
+<div *ngIf="isDisplaySettingsModalVisible" class="modal-container">
+  <div class="modal-content" [ngStyle]="{ 'background-color': backgroundColor }">
+    <div class="modal-header">
+      <h2>Display Settings</h2>
+      <div class="btn-close-media-settings" (click)="onDisplaySettingsClose()">
+        <fa-icon [icon]="faTimes" size="xl"></fa-icon>
+      </div>
+    </div>
+    <hr class="modal-divider" />
+    <div class="modal-body">
+      <div class="setting-group">
+        <label>Display Option:</label>
+        <select [(ngModel)]="meetingDisplayTypeState" class="select-control">
+          <option value="video">Video Participants Only</option>
+          <option value="media">Media Participants Only</option>
+          <option value="all">Show All Participants</option>
+        </select>
+      </div>
+      <hr class="modal-divider" />
+      <div class="setting-group">
+        <div class="setting-toggle">
+          <label>Display Audiographs</label>
+          <button (click)="autoWaveState = !autoWaveState" [ngClass]="{ 'active': autoWaveState }">
+            <span class="toggle-icon">{{ autoWaveState ? '&#10003;' : '&#10007;' }}</span>
+          </button>
+        </div>
+        <hr class="modal-divider" />
+        <div class="setting-toggle">
+          <label>Force Full Display</label>
+          <button (click)="forceFullDisplayState = !forceFullDisplayState" [ngClass]="{ 'active': forceFullDisplayState }">
+            <span class="toggle-icon">{{ forceFullDisplayState ? '&#10003;' : '&#10007;' }}</span>
+          </button>
+        </div>
+        <hr class="modal-divider" />
+        <div class="setting-toggle">
+          <label>Force Video Participants</label>
+          <button (click)="meetingVideoOptimizedState = !meetingVideoOptimizedState" [ngClass]="{ 'active': meetingVideoOptimizedState }">
+            <span class="toggle-icon">{{ meetingVideoOptimizedState ? '&#10003;' : '&#10007;' }}</span>
+          </button>
+        </div>
+        <hr class="modal-divider" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="save-button" (click)="handleSaveSettings()">Save</button>
+    </div>
+  </div>
+</div>

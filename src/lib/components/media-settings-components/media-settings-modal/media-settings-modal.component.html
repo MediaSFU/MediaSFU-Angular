@@ -1,0 +1,45 @@
+<div *ngIf="isMediaSettingsModalVisible" class="modal-container">
+  <div class="modal-content" [ngStyle]="modalContentStyle()">
+    <div class="modal-header">
+      <div class="modal-title">Media Settings</div>
+      <div (click)="handleModalClose()">
+        <fa-icon [icon]="faTimes" class="icon"></fa-icon>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="modal-body">
+      <div class="form-group">
+        <label>
+          <fa-icon [icon]="faCamera" [ngStyle]="{'margin-right': '8px'}"></fa-icon> Select Camera:
+        </label>
+        <select [(ngModel)]="selectedVideoInput" (change)="handleVideoSwitch($event)" class="form-control">
+          <option *ngFor="let input of parameters.videoInputs" [value]="input.deviceId">
+            {{ input.label }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>
+          <fa-icon [icon]="faMicrophone" [ngStyle]="{'margin-right': '8px'}"></fa-icon> Select Microphone:
+        </label>
+        <select [(ngModel)]="selectedAudioInput" (change)="handleAudioSwitch($event)" class="form-control">
+          <option *ngFor="let input of parameters.audioInputs" [value]="input.deviceId">
+            {{ input.label }}
+          </option>
+        </select>
+      </div>
+      <hr class="hr" />
+      <div class="form-group">
+        <button (click)="handleSwitchCamera()" class="btn-switch">
+          <fa-icon [icon]="faSyncAlt" [ngStyle]="{'margin-right': '8px'}"></fa-icon> Switch Camera
+        </button>
+      </div>
+      <hr class="hr" />
+      <div class="form-group">
+        <button (click)="showVirtual()" class="btn-virtual">
+          <fa-icon [icon]="faPhotoFilm" [ngStyle]="{'margin-right': '8px'}"></fa-icon> Virtual Background
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

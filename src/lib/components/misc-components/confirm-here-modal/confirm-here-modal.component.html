@@ -1,0 +1,11 @@
+<div *ngIf="isConfirmHereModalVisible" [ngStyle]="modalContainerStyle" class="modal-container">
+  <div [ngStyle]="modalContentStyle" class="modal-content">
+    <div class="spinner" [ngStyle]="spinnerContainerStyle"></div>
+    <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: black;">Are you still there?</h2>
+    <p style="font-size: 1rem; color: black; margin-bottom: 1.5rem;">Please confirm if you are still present.</p>
+    <p style="font-size: 0.9rem; color: black; margin-bottom: 1rem;">Time remaining: <strong>{{ counter }}</strong></p>
+    <button (click)="handleConfirmHere()" style="background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; font-size: 1rem;">
+      Yes
+    </button>
+  </div>
+</div>
