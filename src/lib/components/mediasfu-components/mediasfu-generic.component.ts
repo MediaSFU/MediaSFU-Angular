@@ -4169,11 +4169,13 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.updateStreamNames([{ id: 'youyou', name: 'youyou', producerId: '' }]);
 
     if (this.validated.value) {
-      this.updateIsLoadingModalVisible(true);
 
       try {
         if (!this.localUIMode.value) {
           await this.connectAndAddSocketMethods();
+          this.updateIsLoadingModalVisible(true);
+        } else {
+          this.updateIsLoadingModalVisible(false);
         }
       } catch (error) {
         console.log('error connectAndaAddSocketMethods', error);
@@ -4184,7 +4186,6 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
       });
 
-      this.updateIsLoadingModalVisible(false);
     }
   }
 

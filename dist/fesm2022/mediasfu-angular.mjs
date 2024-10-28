@@ -195,8 +195,18 @@ const initialValuesState = {
     audioPaused: false,
     mainScreenPerson: '',
     adminOnMainScreen: false,
-    screenStates: [],
-    prevScreenStates: [],
+    screenStates: [{
+            mainScreenPerson: "",
+            mainScreenProducerId: "",
+            mainScreenFilled: false,
+            adminOnMainScreen: false,
+        }],
+    prevScreenStates: [{
+            mainScreenPerson: "",
+            mainScreenProducerId: "",
+            mainScreenFilled: false,
+            adminOnMainScreen: false,
+        }],
     updateDateState: null,
     lastUpdate: null,
     nForReadjustRecord: 0,
@@ -27732,10 +27742,13 @@ class MediasfuGeneric {
         ]);
         this.updateStreamNames([{ id: 'youyou', name: 'youyou', producerId: '' }]);
         if (this.validated.value) {
-            this.updateIsLoadingModalVisible(true);
             try {
                 if (!this.localUIMode.value) {
                     await this.connectAndAddSocketMethods();
+                    this.updateIsLoadingModalVisible(true);
+                }
+                else {
+                    this.updateIsLoadingModalVisible(false);
                 }
             }
             catch (error) {
@@ -27745,7 +27758,6 @@ class MediasfuGeneric {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
-            this.updateIsLoadingModalVisible(false);
         }
     }
     async handleResize() {
@@ -32713,10 +32725,13 @@ class MediasfuBroadcast {
         ]);
         this.updateStreamNames([{ id: 'youyou', name: 'youyou', producerId: '' }]);
         if (this.validated.value) {
-            this.updateIsLoadingModalVisible(true);
             try {
                 if (!this.localUIMode.value) {
                     await this.connectAndAddSocketMethods();
+                    this.updateIsLoadingModalVisible(true);
+                }
+                else {
+                    this.updateIsLoadingModalVisible(false);
                 }
             }
             catch (error) {
@@ -32726,7 +32741,6 @@ class MediasfuBroadcast {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
-            this.updateIsLoadingModalVisible(false);
         }
     }
     async handleResize() {
@@ -36942,10 +36956,13 @@ class MediasfuWebinar {
         ]);
         this.updateStreamNames([{ id: 'youyou', name: 'youyou', producerId: '' }]);
         if (this.validated.value) {
-            this.updateIsLoadingModalVisible(true);
             try {
                 if (!this.localUIMode.value) {
                     await this.connectAndAddSocketMethods();
+                    this.updateIsLoadingModalVisible(true);
+                }
+                else {
+                    this.updateIsLoadingModalVisible(false);
                 }
             }
             catch (error) {
@@ -36955,7 +36972,6 @@ class MediasfuWebinar {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
-            this.updateIsLoadingModalVisible(false);
         }
     }
     async handleResize() {
@@ -41796,10 +41812,13 @@ class MediasfuConference {
         ]);
         this.updateStreamNames([{ id: 'youyou', name: 'youyou', producerId: '' }]);
         if (this.validated.value) {
-            this.updateIsLoadingModalVisible(true);
             try {
                 if (!this.localUIMode.value) {
                     await this.connectAndAddSocketMethods();
+                    this.updateIsLoadingModalVisible(true);
+                }
+                else {
+                    this.updateIsLoadingModalVisible(false);
                 }
             }
             catch (error) {
@@ -41809,7 +41828,6 @@ class MediasfuConference {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
-            this.updateIsLoadingModalVisible(false);
         }
     }
     async handleResize() {
@@ -46419,10 +46437,13 @@ class MediasfuChat {
         ]);
         this.updateStreamNames([{ id: 'youyou', name: 'youyou', producerId: '' }]);
         if (this.validated.value) {
-            this.updateIsLoadingModalVisible(true);
             try {
                 if (!this.localUIMode.value) {
                     await this.connectAndAddSocketMethods();
+                    this.updateIsLoadingModalVisible(true);
+                }
+                else {
+                    this.updateIsLoadingModalVisible(false);
                 }
             }
             catch (error) {
@@ -46432,7 +46453,6 @@ class MediasfuChat {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
-            this.updateIsLoadingModalVisible(false);
         }
     }
     async handleResize() {

@@ -1,6 +1,6 @@
 {
   "name": "mediasfu-angular",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "MediaSFU",
   "license": "MIT",
   "description": "MediaSFU Prebuilt Angular SDK",
@@ -84,6 +84,15 @@
     "cloud recording",
     "meeting",
     "conference",
-    "web"
+    "web",
+    "mediasfu-angular",
+    "angular sdk",
+    "mediasfu angular",
+    "mediasfu angular sdk",
+    "mediasfu angular component",
+    "angular-sdk",
+    "mediasfu-angular",
+    "mediasfu-angular-sdk",
+    "mediasfu-angular-component"
   ]
 }
