@@ -54,25 +54,36 @@ export interface MediaSettingsModalOptions {
 export type MediaSettingsModalType = (options: MediaSettingsModalOptions) => HTMLElement;
 
 /**
- * Component for displaying and managing media settings in a modal.
+ * MediaSettingsModal component renders a modal interface for managing media settings.
+ * Users can switch between different audio and video input devices and adjust other settings.
  *
+ * @component
  * @selector app-media-settings-modal
- * @templateUrl ./media-settings-modal.component.html
- * @styleUrls ./media-settings-modal.component.css
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule, FormsModule]
  *
- * @class MediaSettingsModal
- * @implements OnInit, OnChanges
+ * @example
+ * ```html
+ * <app-media-settings-modal
+ *   [isMediaSettingsModalVisible]="true"
+ *   [onMediaSettingsClose]="closeModal"
+ *   [switchCameraOnPress]="handleCameraSwitch"
+ *   [switchVideoOnPress]="handleVideoSwitch"
+ *   [switchAudioOnPress]="handleAudioSwitch"
+ *   [parameters]="mediaSettingsParams"
+ *   position="topRight"
+ *   backgroundColor="#83c0e9">
+ * </app-media-settings-modal>
+ * ```
  *
- * @property {boolean} isMediaSettingsModalVisible - Determines if the media settings modal is visible.
- * @property {() => void} onMediaSettingsClose - Callback function to close the media settings modal.
- * @property {(params: any) => Promise<void>} switchCameraOnPress - Callback function to switch the camera.
- * @property {(params: any) => Promise<void>} switchVideoOnPress - Callback function to switch the video.
- * @property {(params: any) => Promise<void>} switchAudioOnPress - Callback function to switch the audio.
- * @property {MediaSettingsModalParameters} parameters - Parameters for the media settings modal.
- * @property {string} position - Position of the modal on the screen. Default is 'topRight'.
- * @property {string} backgroundColor - Background color of the modal. Default is '#83c0e9'.
+ * @input {boolean} isMediaSettingsModalVisible - Indicates whether the modal is visible.
+ * @input {() => void} onMediaSettingsClose - Function to close the modal.
+ * @input {(params: SwitchVideoAltOptions) => Promise<void>} switchCameraOnPress - Function to handle camera switching.
+ * @input {(params: SwitchVideoOptions) => Promise<void>} switchVideoOnPress - Function to handle video switching.
+ * @input {(params: SwitchAudioOptions) => Promise<void>} switchAudioOnPress - Function to handle audio switching.
+ * @input {MediaSettingsModalParameters} parameters - Parameters for the modal.
+ * @input {string} position - Position of the modal on the screen (default: 'topRight').
+ * @input {string} backgroundColor - Background color of the modal (default: '#83c0e9').
  *
  * @property {IconDefinition} faTimes - FontAwesome icon for closing the modal.
  * @property {IconDefinition} faSyncAlt - FontAwesome icon for sync.
@@ -90,19 +101,20 @@ export type MediaSettingsModalType = (options: MediaSettingsModalOptions) => HTM
  * @param {SwitchVideo} switchVideoService - Service for switching video.
  * @param {SwitchVideoAlt} switchVideoAltService - Alternative service for switching video.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method setupDefaultServices - Sets up default services for switching camera, video, and audio if not provided.
- * @method updateParameters - Updates the parameters for the modal.
- * @method ensureDefaultSelections - Ensures that default selections for video and audio inputs are set.
- * @method initializeModalSettings - Initializes settings for the modal.
+ * @method ngOnInit - Initializes the component and sets up default selections and services.
+ * @method ngOnChanges - Updates component state based on input changes.
+ * @method setupDefaultServices - Configures default services for switching camera, video, and audio.
+ * @method updateParameters - Updates the modal parameters.
+ * @method ensureDefaultSelections - Ensures default selections for video and audio inputs.
+ * @method initializeModalSettings - Initializes the modal settings.
  * @method modalContentStyle - Returns the style object for the modal content.
- * @method handleSwitchCamera - Handles the action to switch the camera.
- * @method handleVideoSwitch - Handles the action to switch the video input.
- * @method handleAudioSwitch - Handles the action to switch the audio input.
- * @method handleModalClose - Handles the action to close the modal.
- * @method showVirtual - Toggles the visibility of the virtual background modal.
+ * @method handleSwitchCamera - Initiates camera switching.
+ * @method handleVideoSwitch - Initiates video input switching.
+ * @method handleAudioSwitch - Initiates audio input switching.
+ * @method handleModalClose - Closes the modal.
+ * @method showVirtual - Toggles the virtual background modal.
  */
+
 @Component({
   selector: 'app-media-settings-modal',
   templateUrl: './media-settings-modal.component.html',

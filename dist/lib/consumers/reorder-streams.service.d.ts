@@ -31,6 +31,64 @@ export interface ReorderStreamsOptions {
     parameters: ReorderStreamsParameters;
 }
 export type ReorderStreamsType = (options: ReorderStreamsOptions) => Promise<void>;
+/**
+ * Reorders the video streams based on the provided options and updates the UI accordingly.
+ *
+ * This method handles the logic for reordering streams in a video conferencing application,
+ * managing the addition and arrangement of streams based on various conditions such as
+ * participant roles, screen sharing status, and current streams.
+ *
+ * @param {ReorderStreamsOptions} options - The options for reordering streams.
+ * @param {boolean} [options.add=false] - Whether to add new streams or not.
+ * @param {boolean} [options.screenChanged=false] - Whether the screen has changed or not.
+ * @param {ReorderStreamsParameters} options.parameters - The parameters required for reordering streams.
+ * @param {Array<Stream | Participant>} options.parameters.allVideoStreams - Array of all video streams.
+ * @param {Array<Participant>} options.parameters.participants - Array of participants.
+ * @param {Array<Stream | Participant>} options.parameters.oldAllStreams - Array of old streams.
+ * @param {string} [options.parameters.screenId] - ID of the screen.
+ * @param {string} [options.parameters.adminVidID] - ID of the admin video.
+ * @param {Array<Stream | Participant>} options.parameters.newLimitedStreams - Array of new limited streams.
+ * @param {Array<string>} options.parameters.newLimitedStreamsIDs - Array of new limited stream IDs.
+ * @param {Array<string>} options.parameters.activeSounds - Array of active sounds.
+ * @param {string} [options.parameters.screenShareIDStream] - ID of the screen share stream.
+ * @param {string} [options.parameters.screenShareNameStream] - Name of the screen share stream.
+ * @param {string} [options.parameters.adminIDStream] - ID of the admin stream.
+ * @param {string} [options.parameters.adminNameStream] - Name of the admin stream.
+ * @param {Function} options.parameters.updateNewLimitedStreams - Function to update new limited streams.
+ * @param {Function} options.parameters.updateNewLimitedStreamsIDs - Function to update new limited stream IDs.
+ * @param {Function} options.parameters.updateActiveSounds - Function to update active sounds.
+ * @param {Function} options.parameters.updateScreenShareIDStream - Function to update screen share ID stream.
+ * @param {Function} options.parameters.updateScreenShareNameStream - Function to update screen share name stream.
+ * @param {Function} options.parameters.updateAdminIDStream - Function to update admin ID stream.
+ * @param {Function} options.parameters.updateAdminNameStream - Function to update admin name stream.
+ * @param {Function} options.parameters.updateYouYouStream - Function to update YouYou stream.
+ * @param {Function} options.parameters.changeVids - Function to reflect changes on the UI.
+ *
+ * @returns {Promise<void>} A promise that resolves when the reordering is complete.
+ *
+ * @throws Will throw an error if there is an issue during the reordering process.
+ *
+ * @example
+ * ```typescript
+ * await reorderStreams({
+ *   add: true,
+ *   screenChanged: false,
+ *   parameters: {
+ *     allVideoStreams: [...],
+ *     participants: [...],
+ *     oldAllStreams: [...],
+ *     newLimitedStreams: [],
+ *     newLimitedStreamsIDs: [],
+ *     activeSounds: [],
+ *     updateNewLimitedStreams: (streams) => { console.log(updated) },
+ *     updateNewLimitedStreamsIDs: (ids) => { console.log(updated) },
+ *     updateActiveSounds: (sounds) => { console.log(updated) },
+ *     changeVids: async (options) => { },
+ *     // ...other parameters
+ *   },
+ * });
+ * ```
+ */
 export declare class ReorderStreams {
     /**
      * Reorders the video streams based on the provided options and updates the UI accordingly.

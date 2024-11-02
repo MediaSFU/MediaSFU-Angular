@@ -44,6 +44,47 @@ export interface NewPipeProducerOptions {
 
 // Export the type definition for the function
 export type NewPipeProducerType = (options: NewPipeProducerOptions) => Promise<void>;
+
+/**
+ * @service NewPipeProducer
+ * @description Service to manage new pipe producer events, update state, and handle screen orientation for optimal experience.
+ *
+ * @method newPipeProducer
+ * Handles the setup of a new pipe producer and manages user notifications or orientation changes as needed.
+ *
+ * @param {NewPipeProducerOptions} options - Options for setting up a new pipe producer.
+ * @param {string} options.producerId - Unique ID for the new producer.
+ * @param {string} options.islevel - Level designation for the producer.
+ * @param {Socket} options.nsock - The socket used for communication.
+ * @param {NewPipeProducerParameters} options.parameters - Parameters to configure the new pipe producer.
+ *
+ * @returns {Promise<void>} A promise that completes when the new pipe producer is set up.
+ *
+ * @example
+ * ```typescript
+ * await newPipeProducerService.newPipeProducer({
+ *   producerId: 'producer123',
+ *   islevel: '2',
+ *   nsock: mySocket,
+ *   parameters: {
+ *     first_round: true,
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     landScaped: false,
+ *     showAlert: alertFunction,
+ *     isWideScreen: true,
+ *     updateFirst_round: updateFirstRoundFunction,
+ *     updateLandScaped: updateLandScapedFunction,
+ *     device: myDevice,
+ *     consumingTransports: [],
+ *     connectRecvTransport: connectRecvTransportFunction,
+ *     reorderStreams: reorderStreamsFunction,
+ *     getUpdatedAllParams: getUpdatedParamsFunction,
+ *   }
+ * });
+ * ```
+ */
+
 @Injectable({
   providedIn: 'root',
 })

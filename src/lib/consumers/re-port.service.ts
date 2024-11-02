@@ -39,6 +39,55 @@ export interface RePortOptions {
 // Export the type definition for the function
 export type RePortType = (options: RePortOptions) => Promise<void>;
 
+/**
+ * RePort function that handles the reporting logic based on the provided parameters.
+ *
+ * This method checks the current state of the recording process and updates the screen states
+ * accordingly. It also compares active names and screen states based on the provided parameters.
+ *
+ * @param {RePortOptions} options - The options for the rePort function.
+ * @param {boolean} [options.restart=false] - Flag indicating whether to restart the process.
+ * @param {RePortParameters} options.parameters - The parameters object containing various states and functions.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {string} options.parameters.islevel - The current level of the process.
+ * @param {string} options.parameters.mainScreenPerson - The person on the main screen.
+ * @param {boolean} options.parameters.adminOnMainScreen - Flag indicating if admin is on the main screen.
+ * @param {boolean} options.parameters.mainScreenFilled - Flag indicating if the main screen is filled.
+ * @param {boolean} options.parameters.recordStarted - Flag indicating if recording has started.
+ * @param {boolean} options.parameters.recordStopped - Flag indicating if recording has stopped.
+ * @param {boolean} options.parameters.recordPaused - Flag indicating if recording is paused.
+ * @param {boolean} options.parameters.recordResumed - Flag indicating if recording has resumed.
+ * @param {Array<ScreenState>} options.parameters.screenStates - Array of current screen states.
+ * @param {Function} options.parameters.updateScreenStates - Function to update the current screen states.
+ * @param {Function} options.parameters.updatePrevScreenStates - Function to update the previous screen states.
+ * @param {Function} options.parameters.compareActiveNames - Function to compare active names.
+ * @param {Function} options.parameters.compareScreenStates - Function to compare screen states.
+ *
+ * @returns {Promise<void>} A promise that resolves when the reporting process is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the reporting process.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   restart: false,
+ *   parameters: {
+ *     islevel: '1',
+ *     mainScreenPerson: 'John Doe',
+ *     adminOnMainScreen: false,
+ *     mainScreenFilled: true,
+ *     recordStarted: true,
+ *     screenStates: [],
+ *     updateScreenStates: (states) => { console.log(updated) },
+ *     compareActiveNames: async (opts) => {  },
+ *     compareScreenStates: async (opts) => {  },
+ *   },
+ * };
+ *
+ * await rePort(options);
+ * ```
+ */
+
 @Injectable({
   providedIn: 'root',
 })

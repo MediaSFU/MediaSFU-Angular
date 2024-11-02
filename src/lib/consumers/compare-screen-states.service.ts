@@ -23,6 +23,43 @@ export interface CompareScreenStatesOptions {
 // Export the type definition for the function
 export type CompareScreenStatesType = (options: CompareScreenStatesOptions) => Promise<void>;
 
+/**
+   * Compares the current screen states with the previous screen states and triggers actions based on changes.
+   *
+   * @param {CompareScreenStatesOptions} options - The options for comparing screen states.
+   * @param {boolean} [options.restart=false] - Whether to restart the comparison process.
+   * @param {CompareScreenStatesParameters} options.parameters - The parameters for the comparison.
+   * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+   * @param {string} options.parameters.recordingDisplayType - The type of display being recorded.
+   * @param {boolean} options.parameters.recordingVideoOptimized - Whether the recording is optimized for video.
+   * @param {ScreenState[]} options.parameters.screenStates - The current screen states.
+   * @param {ScreenState[]} options.parameters.prevScreenStates - The previous screen states.
+   * @param {string[]} options.parameters.activeNames - The active names in the current context.
+   * @param {Function} options.parameters.trigger - Function to trigger actions based on changes.
+   *
+   * @returns {Promise<void>} A promise that resolves when the comparison and any triggered actions are complete.
+   *
+   * @throws Will log an error message if an error occurs during the comparison process.
+   *
+   * @example
+   * const options = {
+   *   restart: false,
+   *   parameters: {
+   *     getUpdatedAllParams: () => { /* Logic to get updated parameters *\/ },
+   *     recordingDisplayType: 'video',
+   *     recordingVideoOptimized: true,
+   *     screenStates: [{ state: 'active' }, { state: 'inactive' }],
+   *     prevScreenStates: [{ state: 'inactive' }, { state: 'active' }],
+   *     activeNames: ['Alice', 'Bob'],
+   *     trigger: async (data) => { /* Logic to handle the trigger *\/ },
+   *   },
+   * };
+   *
+   * await compareScreenStatesService.compareScreenStates(options);
+   * // If any screen state has changed, the trigger function will be called accordingly.
+   */
+
+
 @Injectable({
   providedIn: 'root',
 })

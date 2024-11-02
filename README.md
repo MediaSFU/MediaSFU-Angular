@@ -57,6 +57,11 @@ MediaSFU's Angular SDK comes with a host of powerful features out of the box:
 
 This section will guide users through the initial setup and installation of the npm module.
 
+### Documentation Reference
+
+For comprehensive documentation on the available methods, components, and functions, please visit [mediasfu.com](https://www.mediasfu.com/angular/). This resource provides detailed information for this guide and additional documentation.
+
+
 ## Installation
 
 Instructions on how to install the module using npm.
@@ -129,7 +134,7 @@ Instructions on how to install the module using npm.
 
     <div style="background-color:#f0f0f0; padding: 10px; border-radius: 5px;">
       <h4 style="color:#d9534f;">Important:</h4>
-      <p style="font-size: 1.2em;">You must obtain an API key from <a href="https://www.mediasfu.com/">mediasfu.com</a> to use this package.</p>
+      <p style="font-size: 1.2em; color: black;">You must obtain an API key from <a href="https://www.mediasfu.com/">mediasfu.com</a> to use this package.</p>
     </div>
 
 
@@ -139,18 +144,13 @@ Instructions on how to install the module using npm.
 A basic guide on how to use the module for common tasks.
 
 This section will guide users through the initial setup and installation of the npm module.
-
-*If users are interested in the Android/iOS (mobile) versions, they can refer to the Expo React Native project that is configured to produce both web and mobile apps. The source code for this project is available on GitHub at [*MediaSFU/MediaSFU*](https://github.com/MediaSFU/MediaSFU)*. 
-
-*For the community edition, users can visit the GitHub repository at [*MediaSFU/MediaSFUOpen*](https://github.com/MediaSFU/MediaSFUOpen)*.
-
-*Users can follow the instructions provided in the README of the respective GitHub repositories to set up and install the projects for both web and mobile platforms, ensuring a consistent user experience across different platforms*.
-
-*Users can follow the instructions provided here and in the README of the GitHub repository to set up and install the project for both web and mobile platforms using Expo. This allows for seamless development and deployment across multiple platforms, ensuring a consistent user experience*.
-
 ## Introduction
 
 MediaSFU is a 2-page application consisting of a prejoin/welcome page and the main events room page. This guide will walk you through the basic usage of the module for setting up these pages.
+
+### Documentation Reference
+
+For comprehensive documentation on the available methods, components, and functions, please visit [mediasfu.com](https://www.mediasfu.com/angular/). This resource provides detailed information for this guide and additional documentation.
 
 ## Prebuilt Event Rooms
 
@@ -1091,111 +1091,112 @@ Expands on the basic usage, covering more advanced features and scenarios.
 
 ### Intermediate Usage Guide
 
-In the Intermediate Usage Guide, we'll explore the core components and functionalities of the MediaSFU Angular module, focusing on media display, controls, and modal interactions.
+In the Intermediate Usage Guide, we'll explore the core components and functionalities of the MediaSFU Angular module, focusing on media display, controls, and modal interactions. **Click on any listed component/method to open the full documentation.**
+
 
 #### Core Components Overview
 
 The main items displayed on an event page are media components (such as video, audio, and blank cards) and control components (for pagination, navigation, etc.).
 
-##### Media Display Components:
+> ##### **Media Display Components**
 
 | Component Name           | Description                                                                                     |
 |--------------------------|-------------------------------------------------------------------------------------------------|
-| **Main Aspect Component**| Serves as a container for the primary aspect of the user interface, typically containing the main content or focus of the application. |
-| **Main Screen Component**| Responsible for rendering the main screen layout of the application, providing the foundation for displaying various elements and content. |
-| **Main Grid Component**  | Crucial part of the user interface, organizing and displaying primary content or elements in a grid layout format. |
-| **Sub Aspect Component** | Acts as a secondary container within the user interface, often housing additional elements or controls related to the main aspect. |
-| **Main Container Component** | Primary container for the application's content, encapsulating all major components and providing structural organization. |
-| **Other Grid Component** | Complements the Main Grid Component by offering additional grid layouts, typically used for displaying secondary or auxiliary content. |
+| **[MainAspectComponent](https://www.mediasfu.com/angular/classes/MainAspectComponent)** | Serves as a container for the primary aspect of the user interface, typically containing the main content or focus of the application. |
+| **[MainScreenComponent](https://www.mediasfu.com/angular/classes/MainScreenComponent)** | Responsible for rendering the main screen layout of the application, providing the foundation for displaying various elements and content. |
+| **[MainGridComponent](https://www.mediasfu.com/angular/classes/MainGridComponent)**  | Crucial part of the user interface, organizing and displaying primary content or elements in a grid layout format. |
+| **[SubAspectComponent](https://www.mediasfu.com/angular/classes/SubAspectComponent)** | Acts as a secondary container within the user interface, often housing additional elements or controls related to the main aspect. |
+| **[MainContainerComponent](https://www.mediasfu.com/angular/classes/MainContainerComponent)** | Primary container for the application's content, encapsulating all major components and providing structural organization. |
+| **[OtherGridComponent](https://www.mediasfu.com/angular/classes/OtherGridComponent)** | Complements the Main Grid Component by offering additional grid layouts, typically used for displaying secondary or auxiliary content. |
 
-### Control Components:
+> ##### **Control Components**
 
 | Component Name                | Description                                                                                     |
 |-------------------------------|-------------------------------------------------------------------------------------------------|
-| **Control Buttons Component** | Comprises a set of buttons or controls used for navigating, interacting, or managing various aspects of the application's functionality. |
-| **Control Buttons Alt Component** | Provides alternative button configurations or styles for controlling different aspects of the application. |
-| **Control Buttons Component Touch** | Specialized component designed for touch-enabled devices, offering floating buttons or controls for intuitive interaction with the application's features. |
+| **[ControlButtonsComponent](https://www.mediasfu.com/angular/classes/ControlButtonsComponent)** | Comprises a set of buttons or controls used for navigating, interacting, or managing various aspects of the application's functionality. |
+| **[ControlButtonsAltComponent](https://www.mediasfu.com/angular/classes/ControlButtonsAltComponent)** | Provides alternative button configurations or styles for controlling different aspects of the application. |
+| **[ControlButtonsComponentTouch](https://www.mediasfu.com/angular/classes/ControlButtonsComponentTouch)** | Specialized component designed for touch-enabled devices, offering floating buttons or controls for intuitive interaction with the application's features. |
+
 
 These components collectively contribute to the overall user interface, facilitating navigation, interaction, and content display within the application.
 
-##### Modal Components:
+> ##### **Modal Components**
 
 | Modal Component | Description |
 |-----------------|-------------|
-| LoadingModal | Modal for displaying loading indicator during data fetching or processing. |
-| MainAspectComponent | Component responsible for displaying the main aspect of the event page. |
-| ControlButtonsComponent | Component for displaying control buttons such as pagination controls. |
-| ControlButtonsAltComponent | Alternate control buttons component for specific use cases. |
-| ControlButtonsComponentTouch | Touch-enabled control buttons component for mobile devices. |
-| OthergridComponent | Component for displaying additional grid elements on the event page. |
-| MainScreenComponent | Component for rendering the main screen content of the event. |
-| MainGridComponent | Main grid component for displaying primary event content. |
-| SubAspectComponent | Component for displaying secondary aspects of the event page. |
-| MainContainerComponent | Main container component for the event page content. |
-| AlertComponent | Modal for displaying alert messages to the user. |
-| MenuModal | Modal for displaying a menu with various options. |
-| RecordingModal | Modal for managing recording functionality during the event. |
-| RequestsModal | Modal for handling requests from participants during the event. |
-| WaitingRoomModal | Modal for managing waiting room functionality during the event. |
-| DisplaySettingsModal | Modal for adjusting display settings during the event. |
-| EventSettingsModal | Modal for configuring event settings. |
-| CoHostModal | Modal for managing co-host functionality during the event. |
-| ParticipantsModal | Modal for displaying participant information and controls. |
-| MessagesModal | Modal for managing messages and chat functionality during the event. |
-| MediaSettingsModal | Modal for adjusting media settings during the event. |
-| ConfirmExitModal | Modal for confirming exit from the event. |
-| ConfirmHereModal | Modal for confirming certain actions or selections. |
-| ShareEventModal | Modal for sharing the event with others. |
-| WelcomePage | Welcome page modal for the event. |
-| PreJoinPage | Prejoin page modal for the event. |
-| PollModal | Modal for conducting polls or surveys during the event. |
-| BreakoutRoomsModal | Modal for managing breakout rooms during the event. |
-| ConfigureWhiteboardModal | Modal for configuring whiteboard settings during the event. |                      
-| BackgroundModal | Modal for managing background settings during the event. |
-| ScreenboardModal | Modal for managing screen share annotations during the event. |
+| **[LoadingModal](https://www.mediasfu.com/angular/classes/LoadingModal)** | Modal for displaying loading indicator during data fetching or processing. |
+| **[MainAspectComponent](https://www.mediasfu.com/angular/classes/MainAspectComponent)** | Component responsible for displaying the main aspect of the event page. |
+| **[ControlButtonsComponent](https://www.mediasfu.com/angular/classes/ControlButtonsComponent)** | Component for displaying control buttons such as pagination controls. |
+| **[ControlButtonsAltComponent](https://www.mediasfu.com/angular/classes/ControlButtonsAltComponent)** | Alternate control buttons component for specific use cases. |
+| **[ControlButtonsComponentTouch](https://www.mediasfu.com/angular/classes/ControlButtonsComponentTouch)** | Touch-enabled control buttons component for mobile devices. |
+| **[OtherGridComponent](https://www.mediasfu.com/angular/classes/OtherGridComponent)** | Component for displaying additional grid elements on the event page. |
+| **[MainScreenComponent](https://www.mediasfu.com/angular/classes/MainScreenComponent)** | Component for rendering the main screen content of the event. |
+| **[MainGridComponent](https://www.mediasfu.com/angular/classes/MainGridComponent)** | Main grid component for displaying primary event content. |
+| **[SubAspectComponent](https://www.mediasfu.com/angular/classes/SubAspectComponent)** | Component for displaying secondary aspects of the event page. |
+| **[MainContainerComponent](https://www.mediasfu.com/angular/classes/MainContainerComponent)** | Main container component for the event page content. |
+| **[AlertComponent](https://www.mediasfu.com/angular/classes/AlertComponent)** | Modal for displaying alert messages to the user. |
+| **[MenuModal](https://www.mediasfu.com/angular/classes/MenuModal)** | Modal for displaying a menu with various options. |
+| **[RecordingModal](https://www.mediasfu.com/angular/classes/RecordingModal)** | Modal for managing recording functionality during the event. |
+| **[RequestsModal](https://www.mediasfu.com/angular/classes/RequestsModal)** | Modal for handling requests from participants during the event. |
+| **[WaitingRoomModal](https://www.mediasfu.com/angular/classes/WaitingRoomModal)** | Modal for managing waiting room functionality during the event. |
+| **[DisplaySettingsModal](https://www.mediasfu.com/angular/classes/DisplaySettingsModal)** | Modal for adjusting display settings during the event. |
+| **[EventSettingsModal](https://www.mediasfu.com/angular/classes/EventSettingsModal)** | Modal for configuring event settings. |
+| **[CoHostModal](https://www.mediasfu.com/angular/classes/CoHostModal)** | Modal for managing co-host functionality during the event. |
+| **[ParticipantsModal](https://www.mediasfu.com/angular/classes/ParticipantsModal)** | Modal for displaying participant information and controls. |
+| **[MessagesModal](https://www.mediasfu.com/angular/classes/MessagesModal)** | Modal for managing messages and chat functionality during the event. |
+| **[MediaSettingsModal](https://www.mediasfu.com/angular/classes/MediaSettingsModal)** | Modal for adjusting media settings during the event. |
+| **[ConfirmExitModal](https://www.mediasfu.com/angular/classes/ConfirmExitModal)** | Modal for confirming exit from the event. |
+| **[ConfirmHereModal](https://www.mediasfu.com/angular/classes/ConfirmHereModal)** | Modal for confirming certain actions or selections. |
+| **[ShareEventModal](https://www.mediasfu.com/angular/classes/ShareEventModal)** | Modal for sharing the event with others. |
+| **[WelcomePage](https://www.mediasfu.com/angular/classes/WelcomePage)** | Welcome page modal for the event. |
+| **[PreJoinPage](https://www.mediasfu.com/angular/classes/PreJoinPage)** | Prejoin page modal for the event. |
+| **[PollModal](https://www.mediasfu.com/angular/classes/PollModal)** | Modal for conducting polls or surveys during the event. |
+| **[BreakoutRoomsModal](https://www.mediasfu.com/angular/classes/BreakoutRoomsModal)** | Modal for managing breakout rooms during the event. |
+| **[ConfigureWhiteboardModal](https://www.mediasfu.com/angular/classes/ConfigureWhiteboardModal)** | Modal for configuring whiteboard settings during the event. |                      
+| **[BackgroundModal](https://www.mediasfu.com/angular/classes/BackgroundModal)**  | Modal for managing background settings during the event. |
+| **[ScreenboardModal](https://www.mediasfu.com/angular/classes/ScreenboardModal)** | Modal for managing screen share annotations during the event. |
 
 #### Modal Interactions
 
 Each modal has corresponding functions to trigger its usage:
 
-1. `launchMenuModal`: Launches the menu modal for settings and configurations.
-2. `launchRecording`: Initiates the recording modal for recording functionalities.
-3. `startRecording`: Starts the recording process.
-4. `confirmRecording`: Confirms and finalizes the recording.
-5. `launchWaiting`: Opens the waiting room modal for managing waiting room interactions.
-6. `launchCoHost`: Opens the co-host modal for managing co-host functionalities.
-7. `launchMediaSettings`: Launches the media settings modal for adjusting media-related configurations.
-8. `launchDisplaySettings`: Opens the display settings modal for adjusting display configurations.
-9. `launchSettings`: Initiates the settings modal for general event settings and configurations.
-10. `launchRequests`: Opens the requests modal for managing user requests.
-11. `launchParticipants`: Displays the participants modal for viewing and managing event participants.
-12. `launchMessages`: Opens the messages modal for communication through chat messages.
-13. `launchConfirmExit`: Prompts users to confirm before exiting the event.
+1. [`launchMenuModal`](https://www.mediasfu.com/angular/classes/launchMenuModal): Launches the menu modal for settings and configurations.
+2. [`launchRecording`](https://www.mediasfu.com/angular/classes/launchRecording): Initiates the recording modal for recording functionalities.
+3. [`startRecording`](https://www.mediasfu.com/angular/classes/startRecording): Starts the recording process.
+4. [`confirmRecording`](https://www.mediasfu.com/angular/classes/confirmRecording): Confirms and finalizes the recording.
+5. [`launchWaiting`](https://www.mediasfu.com/angular/classes/launchWaiting): Opens the waiting room modal for managing waiting room interactions.
+6. [`launchCoHost`](https://www.mediasfu.com/angular/classes/launchCoHost): Opens the co-host modal for managing co-host functionalities.
+7. [`launchMediaSettings`](https://www.mediasfu.com/angular/classes/launchMediaSettings): Launches the media settings modal for adjusting media-related configurations.
+8. [`launchDisplaySettings`](https://www.mediasfu.com/angular/classes/launchDisplaySettings): Opens the display settings modal for adjusting display configurations.
+9. [`launchSettings`](https://www.mediasfu.com/angular/classes/launchSettings): Initiates the settings modal for general event settings and configurations.
+10. [`launchRequests`](https://www.mediasfu.com/angular/classes/launchRequests): Opens the requests modal for managing user requests.
+11. [`launchParticipants`](https://www.mediasfu.com/angular/classes/launchParticipants): Displays the participants modal for viewing and managing event participants.
+12. [`launchMessages`](https://www.mediasfu.com/angular/classes/launchMessages): Opens the messages modal for communication through chat messages.
+13. [`launchConfirmExit`](https://www.mediasfu.com/angular/classes/launchConfirmExit): Prompts users to confirm before exiting the event.
 
 #### Media Display and Controls
 
 These components facilitate media display and control functionalities:
 
-1. **Pagination**: Handles pagination and page switching.
-2. **FlexibleGrid**: Renders flexible grid layouts for media display.
-3. **FlexibleVideo**: Displays videos in a flexible manner within the grid.
-4. **AudioGrid**: Renders audio components within the grid layout.
-5. **Whiteboard**: Manages whiteboard functionalities for collaborative drawing.
-6. **Screenboard**: Controls screen share annotations and interactions.
+1. **[Pagination](https://www.mediasfu.com/angular/classes/Pagination)**: Handles pagination and page switching.
+2. **[FlexibleGrid](https://www.mediasfu.com/angular/classes/FlexibleGrid)**: Renders flexible grid layouts for media display.
+3. **[FlexibleVideo](https://www.mediasfu.com/angular/classes/FlexibleVideo)**: Displays videos in a flexible manner within the grid.
+4. **[AudioGrid](https://www.mediasfu.com/angular/classes/AudioGrid)**: Renders audio components within the grid layout.
+5. **[Whiteboard](https://www.mediasfu.com/angular/classes/Whiteboard)**: Manages whiteboard functionalities for collaborative drawing.
+6. **[Screenboard](https://www.mediasfu.com/angular/classes/Screenboard)**: Controls screen share annotations and interactions.
 
 These components enable seamless media presentation and interaction within the event environment, providing users with a rich and immersive experience.
 
 | UI Media Component | Description |
 |--------------|-------------|
-| MeetingProgressTimer | Component for displaying a timer indicating the progress of a meeting or event. |
-| MiniAudio | Component for rendering a compact audio player with basic controls. |
-| MiniCard | Component for displaying a minimized card view with essential information. |
-| AudioCard | Component for displaying audio content with control elements, details, and audio decibels. |
-| VideoCard | Component for displaying video content with control elements, details, and audio decibels. |
-| CardVideoDisplay | Video player component for displaying embedded videos with controls and details. |
-| MiniCardAudio | Component for rendering a compact card view with audio content and controls. |
-| MiniAudioPlayer | Utility method for playing audio and rendering a mini audio modal when the user is not actively displayed on the page. |
-
+| **[MeetingProgressTimer](https://www.mediasfu.com/angular/classes/MeetingProgressTimer)** | Component for displaying a timer indicating the progress of a meeting or event. |
+| **[MiniAudio](https://www.mediasfu.com/angular/classes/MiniAudio)** | Component for rendering a compact audio player with basic controls. |
+| **[MiniCard](https://www.mediasfu.com/angular/classes/MiniCard)** | Component for displaying a minimized card view with essential information. |
+| **[AudioCard](https://www.mediasfu.com/angular/classes/AudioCard)** | Component for displaying audio content with control elements, details, and audio decibels. |
+| **[VideoCard](https://www.mediasfu.com/angular/classes/VideoCard)** | Component for displaying video content with control elements, details, and audio decibels. |
+| **[CardVideoDisplay](https://www.mediasfu.com/angular/classes/CardVideoDisplay)** | Video player component for displaying embedded videos with controls and details. |
+| **[MiniCardAudio](https://www.mediasfu.com/angular/classes/MiniCardAudio)** | Component for rendering a compact card view with audio content and controls. |
+| **[MiniAudioPlayer](https://www.mediasfu.com/angular/classes/MiniAudioPlayer)** | Utility method for playing audio and rendering a mini audio modal when the user is not actively displayed on the page. |
 
 ---
 With the Intermediate Usage Guide, users can explore and leverage the core components and functionalities of the MediaSFU Angular module to enhance their event hosting and participation experiences.
@@ -1761,84 +1762,85 @@ These advanced media control functions encompass a wide range of functionalities
 
 This robust collection of functions empowers developers to tailor their applications to specific requirements, whether it involves intricate media streaming setups, real-time communication protocols, or sophisticated user interface interactions. With these tools at their disposal, developers can create rich and responsive media experiences that meet the demands of their users and applications.
 
-Here's a tabulated list of advanced control functions along with brief explanations:
+Here's a tabulated list of advanced control functions along with brief explanations (click the function(link) for full usage guide):
 
 | Function                         | Explanation                                                                                             |
 |----------------------------------|---------------------------------------------------------------------------------------------------------|
-| `connectSocket`                  | Connects to the WebSocket server.                                                                       |
-| `disconnectSocket`               | Disconnects from the WebSocket server.                                                                  |
-| `joinRoomClient`                 | Joins a room as a client.                                                                               |
-| `updateRoomParametersClient`     | Updates room parameters as a client.                                                                    |
-| `createDeviceClient`             | Creates a device as a client.                                                                           |
-| `switchVideoAlt`                 | Switches video/camera streams.                                                                          |
-| `clickVideo`                     | Handles clicking on video controls.                                                                     |
-| `clickAudio`                     | Handles clicking on audio controls.                                                                     |
-| `clickScreenShare`               | Handles clicking on screen share controls.                                                              |
-| `streamSuccessVideo`             | Handles successful video streaming.                                                                     |
-| `streamSuccessAudio`             | Handles successful audio streaming.                                                                     |
-| `streamSuccessScreen`            | Handles successful screen sharing.                                                                      |
-| `streamSuccessAudioSwitch`       | Handles successful audio switching.                                                                     |
-| `checkPermission`                | Checks for media access permissions.                                                                    |
-| `producerClosed`                 | Handles the closure of a producer.                                                                      |
-| `newPipeProducer`                | Creates receive transport for a new piped producer.                                                     |
-| `updateMiniCardsGrid`            | Updates the mini-grids (mini cards) grid.                                                               |
-| `mixStreams`                     | Mixes streams and prioritizes interesting ones together.                                                |
-| `dispStreams`                    | Displays streams (media).                                                                              |
-| `stopShareScreen`                | Stops screen sharing.                                                                                  |
-| `checkScreenShare`               | Checks for screen sharing availability.                                                                |
-| `startShareScreen`               | Starts screen sharing.                                                                                 |
-| `requestScreenShare`             | Requests permission for screen sharing.                                                                |
-| `reorderStreams`                 | Reorders streams (based on interest level).                                                            |
-| `prepopulateUserMedia`           | Populates user media (for main grid).                                                                  |
-| `getVideos`                      | Retrieves videos that are pending.                                                                     |
-| `rePort`                         | Handles re-porting (updates of changes in UI when recording).                                           |
-| `trigger`                        | Triggers actions (reports changes in UI to backend for recording).                                      |
-| `consumerResume`                 | Resumes consumers.                                                                                     |
-| `connectSendTransportAudio`      | Connects send transport for audio.                                                                     |
-| `connectSendTransportVideo`      | Connects send transport for video.                                                                     |
-| `connectSendTransportScreen`     | Connects send transport for screen sharing.                                                            |
-| `processConsumerTransports`      | Processes consumer transports to pause/resume based on the current active page.                         |
-| `resumePauseStreams`             | Resumes or pauses streams.                                                                             |
-| `readjust`                       | Readjusts display elements.                                                                            |
-| `checkGrid`                      | Checks the grid sizes to display.                                                                      |
-| `getEstimate`                    | Gets an estimate of grids to add.                                                                      |
-| `calculateRowsAndColumns`        | Calculates rows and columns for the grid.                                                              |
-| `addVideosGrid`                  | Adds videos to the grid.                                                                               |
-| `onScreenChanges`                | Handles screen changes (orientation and resize).                                                        |
-| `sleep`                          | Pauses execution for a specified duration.                                                             |
-| `changeVids`                     | Changes videos.                                                                                        |
-| `compareActiveNames`             | Compares active names (for recording UI changes reporting).                                             |
-| `compareScreenStates`            | Compares screen states (for recording changes in grid sizes reporting).                                 |
-| `createSendTransport`            | Creates a send transport.                                                                              |
-| `resumeSendTransportAudio`       | Resumes a send transport for audio.                                                                    |
-| `receiveAllPipedTransports`      | Receives all piped transports.                                                                         |
-| `disconnectSendTransportVideo`   | Disconnects send transport for video.                                                                  |
-| `disconnectSendTransportAudio`   | Disconnects send transport for audio.                                                                  |
-| `disconnectSendTransportScreen`  | Disconnects send transport for screen sharing.                                                         |
-| `connectSendTransport`           | Connects a send transport.                                                                             |
-| `getPipedProducersAlt`           | Gets piped producers.                                                                                  |
-| `signalNewConsumerTransport`     | Signals a new consumer transport.                                                                      |
-| `connectRecvTransport`           | Connects a receive transport.                                                                          |
-| `reUpdateInter`                   | Re-updates the interface based on audio decibels.                                                      |
-| `updateParticipantAudioDecibels` | Updates participant audio decibels.                                                                    |
-| `closeAndResize`                 | Closes and resizes the media elements.                                                                 |
-| `autoAdjust`                     | Automatically adjusts display elements.                                                                 |
-| `switchUserVideoAlt`             | Switches user video (alternate) (back/front).                                                          |
-| `switchUserVideo`                | Switches user video (specific video id).                                                               |
-| `switchUserAudio`                | Switches user audio.                                                                                   |
-| `receiveRoomMessages`            | Receives room messages.                                                                                |
-| `formatNumber`                   | Formats a number (for broadcast viewers).                                                              |
-| `connectIps`                     | Connects IPs (connect to consuming servers)
-| `startMeetingProgressTimer`      | Starts the meeting progress timer.       |
-| `stopRecording`                  | Stops the recording process. |
-| `pollUpdated`                    | Handles updated poll data. |
-| `handleVotePoll`                 | Handles voting in a poll. |
-| `handleCreatePoll`               | Handles creating a poll. |
-| `handleEndPoll`                  | Handles ending a poll. |
-| `breakoutRoomUpdated`           | Handles updated breakout room data. |
-| `captureCanvasStream`            | Captures a canvas stream. |
-| `resumePauseAudioStreams`        | Resumes or pauses audio streams. |
-|`processConsumerTransportsAudio`  | Processes consumer transports for audio. |
+| [`connectSocket`](https://www.mediasfu.com/angular/classes/connectSocket)                  | Connects to the WebSocket server.                                                                       |
+| [`disconnectSocket`](https://www.mediasfu.com/angular/classes/disconnectSocket)               | Disconnects from the WebSocket server.                                                                  |
+| [`joinRoomClient`](https://www.mediasfu.com/angular/classes/joinRoomClient)                 | Joins a room as a client.                                                                               |
+| [`updateRoomParametersClient`](https://www.mediasfu.com/angular/classes/updateRoomParametersClient)     | Updates room parameters as a client.                                                                    |
+| [`createDeviceClient`](https://www.mediasfu.com/angular/classes/createDeviceClient)             | Creates a device as a client.                                                                           |
+| [`switchVideoAlt`](https://www.mediasfu.com/angular/classes/switchVideoAlt)                 | Switches video/camera streams.                                                                          |
+| [`clickVideo`](https://www.mediasfu.com/angular/classes/clickVideo)                     | Handles clicking on video controls.                                                                     |
+| [`clickAudio`](https://www.mediasfu.com/angular/classes/clickAudio)                     | Handles clicking on audio controls.                                                                     |
+| [`clickScreenShare`](https://www.mediasfu.com/angular/classes/clickScreenShare)               | Handles clicking on screen share controls.                                                              |
+| [`streamSuccessVideo`](https://www.mediasfu.com/angular/classes/streamSuccessVideo)             | Handles successful video streaming.                                                                     |
+| [`streamSuccessAudio`](https://www.mediasfu.com/angular/classes/streamSuccessAudio)             | Handles successful audio streaming.                                                                     |
+| [`streamSuccessScreen`](https://www.mediasfu.com/angular/classes/streamSuccessScreen)            | Handles successful screen sharing.                                                                      |
+| [`streamSuccessAudioSwitch`](https://www.mediasfu.com/angular/classes/streamSuccessAudioSwitch)       | Handles successful audio switching.                                                                     |
+| [`checkPermission`](https://www.mediasfu.com/angular/classes/checkPermission)                | Checks for media access permissions.                                                                    |
+| [`producerClosed`](https://www.mediasfu.com/angular/classes/producerClosed)                 | Handles the closure of a producer.                                                                      |
+| [`newPipeProducer`](https://www.mediasfu.com/angular/classes/newPipeProducer)                | Creates receive transport for a new piped producer.                                                     |
+| [`updateMiniCardsGrid`](https://www.mediasfu.com/angular/classes/updateMiniCardsGrid)            | Updates the mini-grids (mini cards) grid.                                                               |
+| [`mixStreams`](https://www.mediasfu.com/angular/classes/mixStreams)                     | Mixes streams and prioritizes interesting ones together.                                                |
+| [`dispStreams`](https://www.mediasfu.com/angular/classes/dispStreams)                    | Displays streams (media).                                                                              |
+| [`stopShareScreen`](https://www.mediasfu.com/angular/classes/stopShareScreen)                | Stops screen sharing.                                                                                  |
+| [`checkScreenShare`](https://www.mediasfu.com/angular/classes/checkScreenShare)               | Checks for screen sharing availability.                                                                |
+| [`startShareScreen`](https://www.mediasfu.com/angular/classes/startShareScreen)               | Starts screen sharing.                                                                                 |
+| [`requestScreenShare`](https://www.mediasfu.com/angular/classes/requestScreenShare)             | Requests permission for screen sharing.                                                                |
+| [`reorderStreams`](https://www.mediasfu.com/angular/classes/reorderStreams)                 | Reorders streams (based on interest level).                                                            |
+| [`prepopulateUserMedia`](https://www.mediasfu.com/angular/classes/prepopulateUserMedia)           | Populates user media (for main grid).                                                                  |
+| [`getVideos`](https://www.mediasfu.com/angular/classes/getVideos)                      | Retrieves videos that are pending.                                                                     |
+| [`rePort`](https://www.mediasfu.com/angular/classes/rePort)                         | Handles re-porting (updates of changes in UI when recording).                                           |
+| [`trigger`](https://www.mediasfu.com/angular/classes/trigger)                        | Triggers actions (reports changes in UI to backend for recording).                                      |
+| [`consumerResume`](https://www.mediasfu.com/angular/classes/consumerResume)                 | Resumes consumers.                                                                                     |
+| [`connectSendTransportAudio`](https://www.mediasfu.com/angular/classes/connectSendTransportAudio)      | Connects send transport for audio.                                                                     |
+| [`connectSendTransportVideo`](https://www.mediasfu.com/angular/classes/connectSendTransportVideo)      | Connects send transport for video.                                                                     |
+| [`connectSendTransportScreen`](https://www.mediasfu.com/angular/classes/connectSendTransportScreen)    | Connects send transport for screen sharing.                                                            |
+| [`processConsumerTransports`](https://www.mediasfu.com/angular/classes/processConsumerTransports)      | Processes consumer transports to pause/resume based on the current active page.                         |
+| [`resumePauseStreams`](https://www.mediasfu.com/angular/classes/resumePauseStreams)             | Resumes or pauses streams.                                                                             |
+| [`readjust`](https://www.mediasfu.com/angular/classes/readjust)                       | Readjusts display elements.                                                                            |
+| [`checkGrid`](https://www.mediasfu.com/angular/classes/checkGrid)                      | Checks the grid sizes to display.                                                                      |
+| [`getEstimate`](https://www.mediasfu.com/angular/classes/getEstimate)                    | Gets an estimate of grids to add.                                                                      |
+| [`calculateRowsAndColumns`](https://www.mediasfu.com/angular/classes/calculateRowsAndColumns)        | Calculates rows and columns for the grid.                                                              |
+| [`addVideosGrid`](https://www.mediasfu.com/angular/classes/addVideosGrid)                  | Adds videos to the grid.                                                                               |
+| [`onScreenChanges`](https://www.mediasfu.com/angular/classes/onScreenChanges)                | Handles screen changes (orientation and resize).                                                        |
+| [`sleep`](https://www.mediasfu.com/angular/classes/sleep)                          | Pauses execution for a specified duration.                                                             |
+| [`changeVids`](https://www.mediasfu.com/angular/classes/changeVids)                     | Changes videos.                                                                                        |
+| [`compareActiveNames`](https://www.mediasfu.com/angular/classes/compareActiveNames)             | Compares active names (for recording UI changes reporting).                                             |
+| [`compareScreenStates`](https://www.mediasfu.com/angular/classes/compareScreenStates)           | Compares screen states (for recording changes in grid sizes reporting).                                 |
+| [`createSendTransport`](https://www.mediasfu.com/angular/classes/createSendTransport)            | Creates a send transport.                                                                              |
+| [`resumeSendTransportAudio`](https://www.mediasfu.com/angular/classes/resumeSendTransportAudio)       | Resumes a send transport for audio.                                                                    |
+| [`receiveAllPipedTransports`](https://www.mediasfu.com/angular/classes/receiveAllPipedTransports)      | Receives all piped transports.                                                                         |
+| [`disconnectSendTransportVideo`](https://www.mediasfu.com/angular/classes/disconnectSendTransportVideo)   | Disconnects send transport for video.                                                                  |
+| [`disconnectSendTransportAudio`](https://www.mediasfu.com/angular/classes/disconnectSendTransportAudio)   | Disconnects send transport for audio.                                                                  |
+| [`disconnectSendTransportScreen`](https://www.mediasfu.com/angular/classes/disconnectSendTransportScreen)  | Disconnects send transport for screen sharing.                                                         |
+| [`connectSendTransport`](https://www.mediasfu.com/angular/classes/connectSendTransport)           | Connects a send transport.                                                                             |
+| [`getPipedProducersAlt`](https://www.mediasfu.com/angular/classes/getPipedProducersAlt)           | Gets piped producers.                                                                                  |
+| [`signalNewConsumerTransport`](https://www.mediasfu.com/angular/classes/signalNewConsumerTransport)     | Signals a new consumer transport.                                                                      |
+| [`connectRecvTransport`](https://www.mediasfu.com/angular/classes/connectRecvTransport)           | Connects a receive transport.                                                                          |
+| [`reUpdateInter`](https://www.mediasfu.com/angular/classes/reUpdateInter)                   | Re-updates the interface based on audio decibels.                                                      |
+| [`updateParticipantAudioDecibels`](https://www.mediasfu.com/angular/classes/updateParticipantAudioDecibels) | Updates participant audio decibels.                                                                    |
+| [`closeAndResize`](https://www.mediasfu.com/angular/classes/closeAndResize)                 | Closes and resizes the media elements.                                                                 |
+| [`autoAdjust`](https://www.mediasfu.com/angular/classes/autoAdjust)                     | Automatically adjusts display elements.                                                                 |
+| [`switchUserVideoAlt`](https://www.mediasfu.com/angular/classes/switchUserVideoAlt)             | Switches user video (alternate) (back/front).                                                          |
+| [`switchUserVideo`](https://www.mediasfu.com/angular/classes/switchUserVideo)                | Switches user video (specific video id).                                                               |
+| [`switchUserAudio`](https://www.mediasfu.com/angular/classes/switchUserAudio)                | Switches user audio.                                                                                   |
+| [`receiveRoomMessages`](https://www.mediasfu.com/angular/classes/receiveRoomMessages)            | Receives room messages.                                                                                |
+| [`formatNumber`](https://www.mediasfu.com/angular/classes/formatNumber)                   | Formats a number (for broadcast viewers).                                                              |
+| [`connectIps`](https://www.mediasfu.com/angular/classes/connectIps)                     | Connects IPs (connect to consuming servers)                                                            |
+| [`startMeetingProgressTimer`](https://www.mediasfu.com/angular/classes/startMeetingProgressTimer)      | Starts the meeting progress timer.       |
+| [`stopRecording`](https://www.mediasfu.com/angular/classes/stopRecording)                  | Stops the recording process. |
+| [`pollUpdated`](https://www.mediasfu.com/angular/classes/pollUpdated)                    | Handles updated poll data. |
+| [`handleVotePoll`](https://www.mediasfu.com/angular/classes/handleVotePoll)                 | Handles voting in a poll. |
+| [`handleCreatePoll`](https://www.mediasfu.com/angular/classes/handleCreatePoll)               | Handles creating a poll. |
+| [`handleEndPoll`](https://www.mediasfu.com/angular/classes/handleEndPoll)                 | Handles ending a poll. |
+| [`breakoutRoomUpdated`](https://www.mediasfu.com/angular/classes/breakoutRoomUpdated)           | Handles updated breakout room data. |
+| [`captureCanvasStream`](https://www.mediasfu.com/angular/classes/captureCanvasStream)            | Captures a canvas stream. |
+| [`resumePauseAudioStreams`](https://www.mediasfu.com/angular/classes/resumePauseAudioStreams)        | Resumes or pauses audio streams. |
+| [`processConsumerTransportsAudio`](https://www.mediasfu.com/angular/classes/processConsumerTransportsAudio)  | Processes consumer transports for audio. |
+
 
 ### Room Socket Events
 
@@ -1848,41 +1850,41 @@ In the context of a room's real-time communication, various events occur, such a
 
 | Function                      | Explanation                                                                                             |
 |-------------------------------|---------------------------------------------------------------------------------------------------------|
-| `userWaiting`                 | Triggered when a user is waiting.                                                                       |
-| `personJoined`                | Triggered when a person joins the room.                                                                 |
-| `allWaitingRoomMembers`       | Triggered when information about all waiting room members is received.                                  |
-| `roomRecordParams`            | Triggered when room recording parameters are received.                                                  |
-| `banParticipant`              | Triggered when a participant is banned.                                                                 |
-| `updatedCoHost`               | Triggered when the co-host information is updated.                                                       |
-| `participantRequested`        | Triggered when a participant requests access.                                                            |
-| `screenProducerId`            | Triggered when the screen producer ID is received.                                                        |
-| `updateMediaSettings`         | Triggered when media settings are updated.                                                               |
-| `producerMediaPaused`         | Triggered when producer media is paused.                                                                 |
-| `producerMediaResumed`        | Triggered when producer media is resumed.                                                                |
-| `producerMediaClosed`         | Triggered when producer media is closed.                                                                 |
-| `controlMediaHost`            | Triggered when media control is hosted.                                                                  |
-| `meetingEnded`                | Triggered when the meeting ends.                                                                         |
-| `disconnectUserSelf`          | Triggered when a user disconnects.                                                                       |
-| `receiveMessage`              | Triggered when a message is received.                                                                    |
-| `meetingTimeRemaining`        | Triggered when meeting time remaining is received.                                                        |
-| `meetingStillThere`           | Triggered when the meeting is still active.                                                              |
-| `startRecords`                | Triggered when recording starts.                                                                         |
-| `reInitiateRecording`         | Triggered when recording needs to be re-initiated.                                                       |
-| `getDomains`                  | Triggered when domains are received.                                                                     |
-| `updateConsumingDomains`      | Triggered when consuming domains are updated.                                                            |
-| `recordingNotice`             | Triggered when a recording notice is received.                                                           |
-| `timeLeftRecording`           | Triggered when time left for recording is received.                                                       |
-| `stoppedRecording`            | Triggered when recording stops.                                                                          |
-| `hostRequestResponse`         | Triggered when the host request response is received.                                                    |
-| `allMembers`                  | Triggered when information about all members is received.                                                 |
-| `allMembersRest`              | Triggered when information about all members is received (rest of the members).                           |
-| `disconnect`                  | Triggered when a disconnect event occurs.                                                                |
-| `pollUpdated`                 | Triggered when a poll is updated.                                                                        |
-| `breakoutRoomUpdated`         | Triggered when a breakout room is updated.      
-| `whiteboardUpdated`            | Handles updated whiteboard data. 
-| `whiteboardAction`              | Handles whiteboard actions. |                                                       |
+| [`userWaiting`](https://www.mediasfu.com/angular/classes/userWaiting)                 | Triggered when a user is waiting.                                                                       |
+| [`personJoined`](https://www.mediasfu.com/angular/classes/personJoined)                | Triggered when a person joins the room.                                                                 |
+| [`allWaitingRoomMembers`](https://www.mediasfu.com/angular/classes/allWaitingRoomMembers)       | Triggered when information about all waiting room members is received.                                  |
+| [`roomRecordParams`](https://www.mediasfu.com/angular/classes/roomRecordParams)            | Triggered when room recording parameters are received.                                                  |
+| [`banParticipant`](https://www.mediasfu.com/angular/classes/banParticipant)              | Triggered when a participant is banned.                                                                 |
+| [`updatedCoHost`](https://www.mediasfu.com/angular/classes/updatedCoHost)               | Triggered when the co-host information is updated.                                                      |
+| [`participantRequested`](https://www.mediasfu.com/angular/classes/participantRequested)        | Triggered when a participant requests access.                                                            |
+| [`screenProducerId`](https://www.mediasfu.com/angular/classes/screenProducerId)            | Triggered when the screen producer ID is received.                                                       |
+| [`updateMediaSettings`](https://www.mediasfu.com/angular/classes/updateMediaSettings)         | Triggered when media settings are updated.                                                               |
+| [`producerMediaPaused`](https://www.mediasfu.com/angular/classes/producerMediaPaused)         | Triggered when producer media is paused.                                                                 |
+| [`producerMediaResumed`](https://www.mediasfu.com/angular/classes/producerMediaResumed)        | Triggered when producer media is resumed.                                                                |
+| [`producerMediaClosed`](https://www.mediasfu.com/angular/classes/producerMediaClosed)         | Triggered when producer media is closed.                                                                 |
+| [`controlMediaHost`](https://www.mediasfu.com/angular/classes/controlMediaHost)            | Triggered when media control is hosted.                                                                  |
+| [`meetingEnded`](https://www.mediasfu.com/angular/classes/meetingEnded)                | Triggered when the meeting ends.                                                                         |
+| [`disconnectUserSelf`](https://www.mediasfu.com/angular/classes/disconnectUserSelf)          | Triggered when a user disconnects.                                                                       |
+| [`receiveMessage`](https://www.mediasfu.com/angular/classes/receiveMessage)              | Triggered when a message is received.                                                                    |
+| [`meetingTimeRemaining`](https://www.mediasfu.com/angular/classes/meetingTimeRemaining)        | Triggered when meeting time remaining is received.                                                        |
+| [`meetingStillThere`](https://www.mediasfu.com/angular/classes/meetingStillThere)           | Triggered when the meeting is still active.                                                              |
+| [`startRecords`](https://www.mediasfu.com/angular/classes/startRecords)                | Triggered when recording starts.                                                                         |
+| [`reInitiateRecording`](https://www.mediasfu.com/angular/classes/reInitiateRecording)         | Triggered when recording needs to be re-initiated.                                                       |
+| [`getDomains`](https://www.mediasfu.com/angular/classes/getDomains)                  | Triggered when domains are received.                                                                     |
+| [`updateConsumingDomains`](https://www.mediasfu.com/angular/classes/updateConsumingDomains)      | Triggered when consuming domains are updated.                                                            |
+| [`recordingNotice`](https://www.mediasfu.com/angular/classes/recordingNotice)             | Triggered when a recording notice is received.                                                           |
+| [`timeLeftRecording`](https://www.mediasfu.com/angular/classes/timeLeftRecording)           | Triggered when time left for recording is received.                                                       |
+| [`stoppedRecording`](https://www.mediasfu.com/angular/classes/stoppedRecording)           | Triggered when recording stops.                                                                          |
+| [`hostRequestResponse`](https://www.mediasfu.com/angular/classes/hostRequestResponse)         | Triggered when the host request response is received.                                                    |
+| [`allMembers`](https://www.mediasfu.com/angular/classes/allMembers)                  | Triggered when information about all members is received.                                                 |
+| [`allMembersRest`](https://www.mediasfu.com/angular/classes/allMembersRest)              | Triggered when information about all members is received (rest of the members).                           |
+| [`disconnect`](https://www.mediasfu.com/angular/classes/disconnect)                  | Triggered when a disconnect event occurs.                                                                |
+| [`pollUpdated`](https://www.mediasfu.com/angular/classes/pollUpdated)                 | Triggered when a poll is updated.                                                                        |
+| [`breakoutRoomUpdated`](https://www.mediasfu.com/angular/classes/breakoutRoomUpdated)         | Triggered when a breakout room is updated.  
+| [`whiteboardUpdated`](https://www.mediasfu.com/angular/classes/whiteboardUpdated)            | Handles updated whiteboard data. 
+| [`whiteboardAction`](https://www.mediasfu.com/angular/classes/whiteboardAction)              | Handles whiteboard actions. |       
 
-#### Sample Usage:
+#### Sample Usage
 
 ```javascript
 // Example usage of provided socket event handling functions

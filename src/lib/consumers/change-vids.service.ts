@@ -80,10 +80,6 @@ export interface ChangeVidsOptions {
 // Export the type definition for the function
 export type ChangeVidsType = (options: ChangeVidsOptions) => Promise<void>;
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ChangeVids {
   /**
    * Asynchronously changes the video streams based on the provided options.
    *
@@ -149,7 +145,77 @@ export class ChangeVids {
    * @property {Function} updateMemberRoom - Function to update member room.
    * @property {Function} mixStreams - Function to mix streams.
    * @property {Function} dispStreams - Function to display streams.
+   *
+   *
+   * @example
+   * ```typescript
+   * await changeVidsService.changeVids({
+   *   screenChanged: true,
+   *   parameters: {
+   *     allVideoStreams: [], // Your array of video streams
+   *     p_activeNames: [], // Active participant names
+   *     activeNames: [], // Names of active streams
+   *     dispActiveNames: [], // Names of displayed active streams
+   *     shareScreenStarted: false,
+   *     shared: false,
+   *     newLimitedStreams: [], // New limited streams
+   *     non_alVideoStreams: [], // Non-audio video streams
+   *     ref_participants: [], // Reference participants
+   *     participants: [], // All participants
+   *     eventType: 'conference', // Type of event
+   *     islevel: '1', // Level of the participant
+   *     member: 'John Doe', // Member's name
+   *     sortAudioLoudness: true,
+   *     audioDecibels: [], // Audio decibel levels
+   *     mixed_alVideoStreams: [], // Mixed audio/video streams
+   *     non_alVideoStreams_muted: [], // Muted non-audio video streams
+   *     remoteProducerId: 'abc123',
+   *     localStreamVideo: null, // Local video stream
+   *     oldAllStreams: [], // Previous streams
+   *     screenPageLimit: 4, // Limit of streams per screen
+   *     meetingDisplayType: 'grid', // Type of display
+   *     meetingVideoOptimized: true, // Video optimization status
+   *     recordingVideoOptimized: false, // Recording optimization status
+   *     recordingDisplayType: 'video', // Recording display type
+   *     paginatedStreams: [], // Paginated streams
+   *     itemPageLimit: 2, // Items per page limit
+   *     doPaginate: true, // Pagination flag
+   *     prevDoPaginate: false, // Previous pagination state
+   *     currentUserPage: 1, // Current page number
+   *     breakoutRooms: [], // Breakout room information
+   *     hostNewRoom: 0, // Host room number
+   *     breakOutRoomStarted: false, // Breakout room status
+   *     breakOutRoomEnded: false, // Breakout room end status
+   *     virtualStream: null, // Virtual stream
+   *     mainRoomsLength: 3, // Number of main rooms
+   *     memberRoom: 1, // Member's room number
+   *     updateP_activeNames: (names) => {}, // Update function for active names
+   *     updateActiveNames: (names) => {}, // Update function for all names
+   *     updateDispActiveNames: (names) => {}, // Update function for displayed names
+   *     updateNewLimitedStreams: (streams) => {}, // Update function for limited streams
+   *     updateNon_alVideoStreams: (participants) => {}, // Update function for non-audio streams
+   *     updateRef_participants: (participants) => {}, // Update function for reference participants
+   *     updateSortAudioLoudness: (sort) => {}, // Update function for sorting audio
+   *     updateMixed_alVideoStreams: (streams) => {}, // Update function for mixed streams
+   *     updateNon_alVideoStreams_muted: (participants) => {}, // Update function for muted streams
+   *     updatePaginatedStreams: (streams) => {}, // Update function for paginated streams
+   *     updateDoPaginate: (paginate) => {}, // Update function for pagination
+   *     updatePrevDoPaginate: (paginate) => {}, // Update function for previous pagination
+   *     updateCurrentUserPage: (page) => {}, // Update function for current page
+   *     updateNumberPages: (pages) => {}, // Update function for number of pages
+   *     updateMainRoomsLength: (length) => {}, // Update function for main room length
+   *     updateMemberRoom: (room) => {}, // Update function for member's room
+   *     mixStreams: async ({ streams, displayType }) => {}, // Function to mix streams
+   *     dispStreams: async ({ streams, displayType }) => {}, // Function to display streams
+   *   },
+   * });
+   * ```
    */
+@Injectable({
+  providedIn: 'root',
+})
+export class ChangeVids {
+
   changeVids = async ({ screenChanged = false, parameters }: ChangeVidsOptions): Promise<void> => {
     let { getUpdatedAllParams } = parameters;
     parameters = getUpdatedAllParams();

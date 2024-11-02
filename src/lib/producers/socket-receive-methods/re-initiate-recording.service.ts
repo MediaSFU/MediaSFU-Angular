@@ -11,6 +11,37 @@ export interface ReInitiateRecordingOptions {
 // Export the type definition for the function
 export type ReInitiateRecordingType = (options: ReInitiateRecordingOptions) => Promise<void>;
 
+/**
+ * Service to re-initiate recording in a specific room, considering administrative restrictions.
+ *
+ * @class
+ * @name ReInitiateRecording
+ * @description Attempts to re-initiate recording if administrative restrictions permit.
+ *
+ * @method
+ * reInitiateRecording
+ *
+ * @param {ReInitiateRecordingOptions} options - Configuration options for re-initiating recording:
+ *   - `roomName` {string}: The name of the room to start recording in.
+ *   - `member` {string}: The name of the member initiating the recording.
+ *   - `socket` {Socket}: The socket instance for server communication.
+ *   - `adminRestrictSetting` {boolean}: Flag indicating if the admin restrict setting is active, preventing re-initiation.
+ *
+ * @returns {Promise<void>} Resolves if recording is successfully re-initiated; otherwise, it throws an error if re-initiation fails.
+ *
+ * @example
+ * const options = {
+ *   roomName: 'Room101',
+ *   member: 'Alice',
+ *   socket: mySocketInstance,
+ *   adminRestrictSetting: false
+ * };
+ * reInitiateRecordingService.reInitiateRecording(options)
+ *   .then(() => console.log('Recording re-initiated'))
+ *   .catch(error => console.error(error.message));
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

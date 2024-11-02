@@ -21,6 +21,39 @@ export interface ResumePauseStreamsOptions {
 // Export the type definition for the function
 export type ResumePauseStreamsType = (options: ResumePauseStreamsOptions) => Promise<void>;
 
+/**
+ * Resumes or pauses streams based on the provided parameters.
+ *
+ * This method processes the current participant states and the active display names to determine
+ * which audio and video streams should be resumed or paused. It communicates with the server
+ * to resume streams as necessary.
+ *
+ * @param {ResumePauseStreamsOptions} options - The options for resuming or pausing streams.
+ * @param {Object} options.parameters - The parameters for the function.
+ * @param {Array<Participant>} options.parameters.participants - The list of participants in the session.
+ * @param {Array<string>} options.parameters.dispActiveNames - The list of active display names.
+ * @param {Array<Transport>} options.parameters.consumerTransports - The list of consumer transports.
+ * @param {string} [options.parameters.screenId] - The screen producer ID if applicable.
+ * @param {string} options.parameters.islevel - The level of the user (e.g., participant or host).
+ *
+ * @returns {Promise<void>} A promise that resolves when the streams have been resumed or paused.
+ *
+ * @throws Will throw an error if there is an issue during the process of resuming or pausing streams.
+ *
+ * @example
+ * ```typescript
+ * await resumePauseStreams({
+ *   parameters: {
+ *     participants: [...], // Array of participants
+ *     dispActiveNames: ['Alice', 'Bob'], // Active display names
+ *     consumerTransports: [...], // Array of consumer transports
+ *     screenId: 'screen123', // Screen producer ID
+ *     islevel: '1', // User level
+ *     getUpdatedAllParams: myGetUpdatedFunction, // Function to get updated params
+ *   },
+ * });
+ * ```
+ */
 @Injectable({
   providedIn: 'root',
 })

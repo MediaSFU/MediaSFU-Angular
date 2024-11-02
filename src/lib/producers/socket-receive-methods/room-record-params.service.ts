@@ -52,6 +52,70 @@ export type RoomRecordParamsType = ({
   parameters,
 }: RoomRecordParamsOptions) => Promise<void>;
 
+/**
+ * Service to update recording parameters for a room.
+ *
+ * @class
+ * @name RoomRecordParams
+ * @description Updates multiple recording parameters at once, using provided functions for each specific setting.
+ *
+ * @method
+ * roomRecordParams
+ *
+ * @param {RoomRecordParamsOptions} options - The options for updating recording parameters:
+ *   - `recordParams` {RecordParams}: The new recording parameters to apply.
+ *   - `parameters` {RoomRecordParamsParameters}: The update functions for each recording parameter.
+ *     - `updateRecordingAudioPausesLimit` {Function}: Updates the audio pauses limit.
+ *     - `updateRecordingAudioPausesCount` {Function}: Updates the audio pauses count.
+ *     - `updateRecordingAudioSupport` {Function}: Updates the audio support status.
+ *     - `updateRecordingAudioPeopleLimit` {Function}: Updates the audio people limit.
+ *     - `updateRecordingAudioParticipantsTimeLimit` {Function}: Updates the audio participants time limit.
+ *     - `updateRecordingVideoPausesCount` {Function}: Updates the video pauses count.
+ *     - `updateRecordingVideoPausesLimit` {Function}: Updates the video pauses limit.
+ *     - `updateRecordingVideoSupport` {Function}: Updates the video support status.
+ *     - `updateRecordingVideoPeopleLimit` {Function}: Updates the video people limit.
+ *     - `updateRecordingVideoParticipantsTimeLimit` {Function}: Updates the video participants time limit.
+ *     - `updateRecordingAllParticipantsSupport` {Function}: Updates support for all participants.
+ *     - `updateRecordingVideoParticipantsSupport` {Function}: Updates video participants support.
+ *     - `updateRecordingAllParticipantsFullRoomSupport` {Function}: Updates full room support for all participants.
+ *     - `updateRecordingVideoParticipantsFullRoomSupport` {Function}: Updates full room support for video participants.
+ *     - `updateRecordingPreferredOrientation` {Function}: Updates the preferred recording orientation.
+ *     - `updateRecordingSupportForOtherOrientation` {Function}: Updates support for other orientations.
+ *     - `updateRecordingMultiFormatsSupport` {Function}: Updates support for multiple formats.
+ *
+ * @returns {Promise<void>} A promise that resolves after all parameters are updated.
+ *
+ * @example
+ * const recordParams = {
+ *   recordingAudioPausesLimit: 5,
+ *   recordingAudioPausesCount: 2,
+ *   recordingAudioSupport: true,
+ *   recordingAudioPeopleLimit: 10,
+ *   recordingAudioParticipantsTimeLimit: 60,
+ *   recordingVideoPausesCount: 1,
+ *   recordingVideoPausesLimit: 3,
+ *   recordingVideoSupport: true,
+ *   recordingVideoPeopleLimit: 8,
+ *   recordingVideoParticipantsTimeLimit: 90,
+ *   recordingAllParticipantsSupport: true,
+ *   recordingVideoParticipantsSupport: true,
+ *   recordingAllParticipantsFullRoomSupport: false,
+ *   recordingVideoParticipantsFullRoomSupport: true,
+ *   recordingPreferredOrientation: 'landscape',
+ *   recordingSupportForOtherOrientation: false,
+ *   recordingMultiFormatsSupport: true,
+ * };
+ *
+ * const parameters = {
+ *   updateRecordingAudioPausesLimit: (value) => console.log(`Audio pauses limit: ${value}`),
+ *   updateRecordingAudioPausesCount: (value) => console.log(`Audio pauses count: ${value}`),
+ *   // Define other update functions similarly
+ * };
+ *
+ * roomRecordParamsService.roomRecordParams({ recordParams, parameters });
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

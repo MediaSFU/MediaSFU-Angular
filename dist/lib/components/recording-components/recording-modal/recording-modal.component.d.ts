@@ -74,6 +74,18 @@ export type RecordingModalType = (options: RecordingModalOptions) => HTMLElement
  * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
  * @method confirm - Calls the confirmRecording callback with the current parameters.
  * @method start - Calls the startRecording callback with the current parameters.
+ * @example
+ * ```html
+ * <app-recording-modal
+ *   [isRecordingModalVisible]="true"
+ *   [onClose]="closeRecordingModal"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [position]="'bottomRight'"
+ *   [confirmRecording]="confirmRecording"
+ *   [startRecording]="startRecording"
+ *   [parameters]="recordingModalParams"
+ * ></app-recording-modal>
+ * ```
  */
 export declare class RecordingModal implements OnChanges {
     isRecordingModalVisible: boolean;

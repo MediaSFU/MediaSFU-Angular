@@ -15,7 +15,13 @@ export type MeetingPasscodeComponentType = (
  * @standalone true
  * @templateUrl ./meeting-passcode-component.component.html
  * @styleUrls ./meeting-passcode-component.component.css
+ *
+ * @example
+ * ```html
+ * <app-meeting-passcode-component [meetingPasscode]="'ABC123'"></app-meeting-passcode-component>
+ * ```
  */
+
 @Component({
   selector: 'app-meeting-passcode-component',
   standalone: true,

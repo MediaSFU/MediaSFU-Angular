@@ -222,6 +222,57 @@ export type MediasfuBroadcastOptions = {
   imgSrc?: string;
 };
 
+/**
+ * MediasfuBroadcast component provides a streaming broadcast interface with various UI components and settings.
+ * It handles conditional rendering of a prejoin page or main broadcast content, along with integrated modals and controls.
+ *
+ * @component
+ * @selector app-mediasfu-broadcast
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, AlertComponent, AudioGrid, ControlButtonsComponentTouch, FlexibleVideo, LoadingModal, ConfirmExitModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, RecordingModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget]
+ *
+ * @template
+ * The component's template contains:
+ * - Conditional rendering of the PrejoinPage component if the user is not validated.
+ * - The main broadcast content, including video, controls, and optional modals.
+ * - The `app-main-container-component` manages the main display.
+ * - Controls for video and audio grid display and interactive modals (Participants, Messages, Recording, etc.)
+ *
+ * @input {any} PrejoinPage - Component to display as the prejoin page.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for MediaSFU.
+ * @input {boolean} useLocalUIMode - Flag to toggle local UI mode.
+ * @input {SeedData} seedData - Optional seed data.
+ * @input {boolean} useSeed - Flag to use seed data.
+ * @input {string} imgSrc - Source for the logo image.
+ *
+ * @property {string} title - The title of the broadcast.
+ *
+ * @providers [CookieService] - Service for managing cookies within the component.
+ *
+ * @styles
+ * Custom styles specific to MediaSFU layout and interactions.
+ *
+ * @constructor
+ * @class MediasfuBroadcast
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes the component, sets up necessary configurations, and event listeners.
+ * @method ngOnDestroy - Cleanup on component destruction, including removal of event listeners and active intervals.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-broadcast
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'user', apiKey: 'key' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-broadcast>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-mediasfu-broadcast',
   standalone: true,

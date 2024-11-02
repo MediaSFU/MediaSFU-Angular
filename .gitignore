@@ -1,0 +1,5 @@
+assets/
+docs/
+node_modules
+dist/
+dev.json

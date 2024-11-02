@@ -13,9 +13,10 @@ export interface MainContainerComponentOptions {
 }
 
 export type MainContainerComponentType = (options: MainContainerComponentOptions) => HTMLElement;
+
 /**
- * MainContainerComponent is a standalone Angular component that dynamically adjusts its styles
- * based on the provided input properties and window size changes.
+ * MainContainerComponent dynamically adjusts its styles based on input properties and window size,
+ * providing a responsive container for content.
  *
  * @selector app-main-container-component
  * @standalone true
@@ -28,22 +29,35 @@ export type MainContainerComponentType = (options: MainContainerComponentOptions
  * </div>
  * ```
  *
- * @class MainContainerComponent
- * @implements OnInit, OnDestroy, OnChanges
+ * @inputs
+ * - `backgroundColor` (string): Background color of the container.
+ * - `containerWidthFraction` (number): Fraction of the window width the container should occupy. Default is 1.
+ * - `containerHeightFraction` (number): Fraction of the window height the container should occupy. Default is 1.
+ * - `marginLeft` (number): Left margin of the container in pixels.
+ * - `marginRight` (number): Right margin of the container in pixels.
+ * - `marginTop` (number): Top margin of the container in pixels.
+ * - `marginBottom` (number): Bottom margin of the container in pixels.
+ * - `padding` (number): Padding inside the container in pixels.
  *
- * @property {string} backgroundColor - The background color of the container.
- * @property {number} containerWidthFraction - The fraction of the window width the container should occupy.
- * @property {number} containerHeightFraction - The fraction of the window height the container should occupy.
- * @property {number} marginLeft - The left margin of the container in pixels.
- * @property {number} marginRight - The right margin of the container in pixels.
- * @property {number} marginTop - The top margin of the container in pixels.
- * @property {number} marginBottom - The bottom margin of the container in pixels.
+ * @methods
+ * - `ngOnInit()`: Initializes the component, sets up event listeners for resize and orientation changes, and updates container styles.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates container styles when input properties change.
+ * - `ngOnDestroy()`: Removes event listeners to avoid memory leaks.
+ * - `updateContainerStyles()`: Computes and applies styles to the container based on current window size and input properties.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized. Sets up event listeners for window resize and orientation change.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes. Updates the container styles accordingly.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed. Removes event listeners for window resize and orientation change.
- * @method updateContainerStyles - Updates the container styles based on the current input properties and window size.
- */
+ * @example
+ * ```html
+ * <app-main-container-component
+ *   [backgroundColor]="'lightgrey'"
+ *   [containerWidthFraction]="0.8"
+ *   [containerHeightFraction]="0.9"
+ *   [marginLeft]="10"
+ *   [marginTop]="15"
+ *   [padding]="5"
+ * ></app-main-container-component>
+ * ```
+ **/
+
 @Component({
   selector: 'app-main-container-component',
   standalone: true,

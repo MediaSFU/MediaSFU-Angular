@@ -275,17 +275,6 @@ import {
 } from 'mediasoup-client/lib/types';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
-/**
- * Options for configuring the MediasfuGeneric component.
- *
- * @typedef {Object} MediasfuGenericOptions
- * @property {(options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement} [PrejoinPage] - A function that returns an HTMLElement for the pre-join page.
- * @property {{ apiUserName: string; apiKey: string }} [credentials] - Credentials for API access, including username and API key.
- * @property {boolean} [useLocalUIMode] - Flag to determine if the local UI mode should be used.
- * @property {SeedData} [seedData] - Data used for seeding the component.
- * @property {boolean} [useSeed] - Flag to determine if seed data should be used.
- * @property {string} [imgSrc] - Source URL for an image to be used in the component.
- */
 export type MediasfuGenericOptions = {
   PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
   credentials?: { apiUserName: string; apiKey: string };
@@ -294,6 +283,55 @@ export type MediasfuGenericOptions = {
   useSeed?: boolean;
   imgSrc?: string;
 };
+
+/**
+ * MediasfuGeneric component provides a customizable interface with a full suite of modal windows and flexible layout options for interactive media applications.
+ *
+ * @component
+ * @selector app-mediasfu-generic
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponentTouch, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * The template structure:
+ * - Conditional rendering of a PrejoinPage or WelcomePage for introductory or pre-session screens.
+ * - Main content area with nested components for grid layouts, flexible video, and audio grids.
+ * - Modals for user interactions, including participant management, event settings, breakout rooms, whiteboarding, and media settings.
+ *
+ * @input {any} PrejoinPage - Component for the prejoin page, defaults to `WelcomePage`.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for secure access.
+ * @input {boolean} useLocalUIMode - Flag to toggle local UI settings.
+ * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
+ * @input {boolean} useSeed - Enable/disable use of seed data.
+ * @input {string} imgSrc - URL for branding images or logos.
+ *
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Generic".
+ *
+ * @styles
+ * Component-specific styles, including full-screen settings and customizable colors for backgrounds.
+ *
+ * @providers [CookieService] - Provides cookies service for session handling.
+ *
+ * @constructor
+ * @class MediasfuGeneric
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes the component and its configurations.
+ * @method ngOnDestroy - Performs cleanup, removing event listeners and intervals as needed.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-generic
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-generic>
+ * ```
+ */
+
 
 @Component({
   selector: 'app-mediasfu-generic',

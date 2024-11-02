@@ -129,17 +129,6 @@ import { ProcessConsumerTransportsAudio } from '../../consumers/process-consumer
 import { Device, Producer, ProducerOptions, RtpCapabilities, Transport } from 'mediasoup-client/lib/types';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import * as i0 from "@angular/core";
-/**
- * Options for configuring the MediasfuWebinar component.
- *
- * @typedef {Object} MediasfuWebinarOptions
- * @property {(options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement} [PrejoinPage] - A function that returns an HTMLElement for the pre-join page.
- * @property {{ apiUserName: string; apiKey: string }} [credentials] - Credentials for API access, including username and API key.
- * @property {boolean} [useLocalUIMode] - Flag to determine if the local UI mode should be used.
- * @property {SeedData} [seedData] - Data used for seeding the component.
- * @property {boolean} [useSeed] - Flag to determine if seed data should be used.
- * @property {string} [imgSrc] - Source URL for an image to be used in the component.
- */
 export type MediasfuWebinarOptions = {
     PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
     credentials?: {
@@ -151,6 +140,51 @@ export type MediasfuWebinarOptions = {
     useSeed?: boolean;
     imgSrc?: string;
 };
+/**
+ * Component for managing webinars in the MediaSFU environment.
+ *
+ * @selector app-mediasfu-webinar
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * This component's template includes:
+ * - A conditional PrejoinPage displayed before main content for user preparation.
+ * - The main screen layout with flexible configurations for video, control buttons, and layout grids.
+ * - Modals for participant, settings, polling, and media interactions.
+ *
+ * @input {any} PrejoinPage - Prejoin component that defaults to `WelcomePage`.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials.
+ * @input {boolean} useLocalUIMode - Determines whether to enable local UI settings.
+ * @input {SeedData} seedData - Optional seed data for initializing component states.
+ * @input {boolean} useSeed - Whether to utilize the provided seed data.
+ * @input {string} imgSrc - Image source for branding or customization.
+ *
+ * @property {string} title - Title of the component, defaulting to "MediaSFU-Webinar".
+ *
+ * @styles
+ * Component-specific styles with full-screen properties and customizable modal colors.
+ *
+ * @providers [CookieService] - Utilized for session or user state management within the component.
+ *
+ * @class MediasfuWebinar
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes session settings, user interfaces, and modals as necessary.
+ * @method ngOnDestroy - Cleans up event listeners and intervals to prevent memory leaks.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-webinar
+ *   [PrejoinPage]="CustomPrejoinPage"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="initialData"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-webinar>
+ * ```
+ */
 export declare class MediasfuWebinar implements OnInit, OnDestroy {
     private cdr;
     private injector;
@@ -444,15 +478,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     landScaped: BehaviorSubject<boolean>;
     lock_screen: BehaviorSubject<boolean>;
     screenId: BehaviorSubject<string>;
-    allVideoStreams: BehaviorSubject<(Participant | Stream)[]>;
-    newLimitedStreams: BehaviorSubject<(Participant | Stream)[]>;
+    allVideoStreams: BehaviorSubject<(Stream | Participant)[]>;
+    newLimitedStreams: BehaviorSubject<(Stream | Participant)[]>;
     newLimitedStreamsIDs: BehaviorSubject<string[]>;
     activeSounds: BehaviorSubject<string[]>;
     screenShareIDStream: BehaviorSubject<string>;
     screenShareNameStream: BehaviorSubject<string>;
     adminIDStream: BehaviorSubject<string>;
     adminNameStream: BehaviorSubject<string>;
-    youYouStream: BehaviorSubject<(Participant | Stream)[]>;
+    youYouStream: BehaviorSubject<(Stream | Participant)[]>;
     youYouStreamIDs: BehaviorSubject<string[]>;
     localStream: BehaviorSubject<MediaStream | null>;
     recordStarted: BehaviorSubject<boolean>;
@@ -494,15 +528,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     screenAlreadyOn: BehaviorSubject<boolean>;
     chatAlreadyOn: BehaviorSubject<boolean>;
     redirectURL: BehaviorSubject<string>;
-    oldAllStreams: BehaviorSubject<(Participant | Stream)[]>;
+    oldAllStreams: BehaviorSubject<(Stream | Participant)[]>;
     adminVidID: BehaviorSubject<string>;
     streamNames: BehaviorSubject<Stream[]>;
     non_alVideoStreams: BehaviorSubject<Participant[]>;
     sortAudioLoudness: BehaviorSubject<boolean>;
     audioDecibels: BehaviorSubject<AudioDecibels[]>;
-    mixed_alVideoStreams: BehaviorSubject<(Participant | Stream)[]>;
+    mixed_alVideoStreams: BehaviorSubject<(Stream | Participant)[]>;
     non_alVideoStreams_muted: BehaviorSubject<Participant[]>;
-    paginatedStreams: BehaviorSubject<(Participant | Stream)[][]>;
+    paginatedStreams: BehaviorSubject<(Stream | Participant)[][]>;
     localStreamAudio: BehaviorSubject<MediaStream | null>;
     defAudioID: BehaviorSubject<string>;
     userDefaultAudioInputDevice: BehaviorSubject<string>;
@@ -530,8 +564,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     prevDoPaginate: BehaviorSubject<boolean>;
     doPaginate: BehaviorSubject<boolean>;
     shareEnded: BehaviorSubject<boolean>;
-    lStreams: BehaviorSubject<(Participant | Stream)[]>;
-    chatRefStreams: BehaviorSubject<(Participant | Stream)[]>;
+    lStreams: BehaviorSubject<(Stream | Participant)[]>;
+    chatRefStreams: BehaviorSubject<(Stream | Participant)[]>;
     controlHeight: BehaviorSubject<number>;
     isWideScreen: BehaviorSubject<boolean>;
     isMediumScreen: BehaviorSubject<boolean>;
@@ -543,11 +577,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     altGridRows: BehaviorSubject<number>;
     altGridCols: BehaviorSubject<number>;
     numberPages: BehaviorSubject<number>;
-    currentStreams: BehaviorSubject<(Participant | Stream)[]>;
+    currentStreams: BehaviorSubject<(Stream | Participant)[]>;
     showMiniView: BehaviorSubject<boolean>;
     nStream: BehaviorSubject<MediaStream | null>;
     defer_receive: BehaviorSubject<boolean>;
-    allAudioStreams: BehaviorSubject<(Participant | Stream)[]>;
+    allAudioStreams: BehaviorSubject<(Stream | Participant)[]>;
     remoteScreenStream: BehaviorSubject<Stream[]>;
     screenProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
     gotAllVids: BehaviorSubject<boolean>;
@@ -1025,7 +1059,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "landscape" | "portrait";
+    checkOrientation: () => "portrait" | "landscape";
     showAlert: ({ message, type, duration, }: {
         message: string;
         type: "success" | "danger";
@@ -1103,15 +1137,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         landScaped: boolean;
         lock_screen: boolean;
         screenId: string;
-        allVideoStreams: (Participant | Stream)[];
-        newLimitedStreams: (Participant | Stream)[];
+        allVideoStreams: (Stream | Participant)[];
+        newLimitedStreams: (Stream | Participant)[];
         newLimitedStreamsIDs: string[];
         activeSounds: string[];
         screenShareIDStream: string;
         screenShareNameStream: string;
         adminIDStream: string;
         adminNameStream: string;
-        youYouStream: (Participant | Stream)[];
+        youYouStream: (Stream | Participant)[];
         youYouStreamIDs: string[];
         localStream: MediaStream | null;
         recordStarted: boolean;
@@ -1153,15 +1187,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         screenAlreadyOn: boolean;
         chatAlreadyOn: boolean;
         redirectURL: string;
-        oldAllStreams: (Participant | Stream)[];
+        oldAllStreams: (Stream | Participant)[];
         adminVidID: string;
         streamNames: Stream[];
         non_alVideoStreams: Participant[];
         sortAudioLoudness: boolean;
         audioDecibels: AudioDecibels[];
-        mixed_alVideoStreams: (Participant | Stream)[];
+        mixed_alVideoStreams: (Stream | Participant)[];
         non_alVideoStreams_muted: Participant[];
-        paginatedStreams: (Participant | Stream)[][];
+        paginatedStreams: (Stream | Participant)[][];
         localStreamAudio: MediaStream | null;
         defAudioID: string;
         userDefaultAudioInputDevice: string;
@@ -1189,8 +1223,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         prevDoPaginate: boolean;
         doPaginate: boolean;
         shareEnded: boolean;
-        lStreams: (Participant | Stream)[];
-        chatRefStreams: (Participant | Stream)[];
+        lStreams: (Stream | Participant)[];
+        chatRefStreams: (Stream | Participant)[];
         controlHeight: number;
         isWideScreen: boolean;
         isMediumScreen: boolean;
@@ -1202,11 +1236,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         altGridRows: number;
         altGridCols: number;
         numberPages: number;
-        currentStreams: (Participant | Stream)[];
+        currentStreams: (Stream | Participant)[];
         showMiniView: boolean;
         nStream: MediaStream | null;
         defer_receive: boolean;
-        allAudioStreams: (Participant | Stream)[];
+        allAudioStreams: (Stream | Participant)[];
         screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         remoteScreenStream: Stream[];
         gotAllVids: boolean;
@@ -1658,7 +1692,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateValidated: (value: boolean) => void;
@@ -1811,15 +1845,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             landScaped: boolean;
             lock_screen: boolean;
             screenId: string;
-            allVideoStreams: (Participant | Stream)[];
-            newLimitedStreams: (Participant | Stream)[];
+            allVideoStreams: (Stream | Participant)[];
+            newLimitedStreams: (Stream | Participant)[];
             newLimitedStreamsIDs: string[];
             activeSounds: string[];
             screenShareIDStream: string;
             screenShareNameStream: string;
             adminIDStream: string;
             adminNameStream: string;
-            youYouStream: (Participant | Stream)[];
+            youYouStream: (Stream | Participant)[];
             youYouStreamIDs: string[];
             localStream: MediaStream | null;
             recordStarted: boolean;
@@ -1861,15 +1895,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             screenAlreadyOn: boolean;
             chatAlreadyOn: boolean;
             redirectURL: string;
-            oldAllStreams: (Participant | Stream)[];
+            oldAllStreams: (Stream | Participant)[];
             adminVidID: string;
             streamNames: Stream[];
             non_alVideoStreams: Participant[];
             sortAudioLoudness: boolean;
             audioDecibels: AudioDecibels[];
-            mixed_alVideoStreams: (Participant | Stream)[];
+            mixed_alVideoStreams: (Stream | Participant)[];
             non_alVideoStreams_muted: Participant[];
-            paginatedStreams: (Participant | Stream)[][];
+            paginatedStreams: (Stream | Participant)[][];
             localStreamAudio: MediaStream | null;
             defAudioID: string;
             userDefaultAudioInputDevice: string;
@@ -1897,8 +1931,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             prevDoPaginate: boolean;
             doPaginate: boolean;
             shareEnded: boolean;
-            lStreams: (Participant | Stream)[];
-            chatRefStreams: (Participant | Stream)[];
+            lStreams: (Stream | Participant)[];
+            chatRefStreams: (Stream | Participant)[];
             controlHeight: number;
             isWideScreen: boolean;
             isMediumScreen: boolean;
@@ -1910,11 +1944,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             altGridRows: number;
             altGridCols: number;
             numberPages: number;
-            currentStreams: (Participant | Stream)[];
+            currentStreams: (Stream | Participant)[];
             showMiniView: boolean;
             nStream: MediaStream | null;
             defer_receive: boolean;
-            allAudioStreams: (Participant | Stream)[];
+            allAudioStreams: (Stream | Participant)[];
             screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             remoteScreenStream: Stream[];
             gotAllVids: boolean;
@@ -2366,7 +2400,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateValidated: (value: boolean) => void;
@@ -2522,15 +2556,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         landScaped: boolean;
         lock_screen: boolean;
         screenId: string;
-        allVideoStreams: (Participant | Stream)[];
-        newLimitedStreams: (Participant | Stream)[];
+        allVideoStreams: (Stream | Participant)[];
+        newLimitedStreams: (Stream | Participant)[];
         newLimitedStreamsIDs: string[];
         activeSounds: string[];
         screenShareIDStream: string;
         screenShareNameStream: string;
         adminIDStream: string;
         adminNameStream: string;
-        youYouStream: (Participant | Stream)[];
+        youYouStream: (Stream | Participant)[];
         youYouStreamIDs: string[];
         localStream: MediaStream | null;
         recordStarted: boolean;
@@ -2572,15 +2606,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         screenAlreadyOn: boolean;
         chatAlreadyOn: boolean;
         redirectURL: string;
-        oldAllStreams: (Participant | Stream)[];
+        oldAllStreams: (Stream | Participant)[];
         adminVidID: string;
         streamNames: Stream[];
         non_alVideoStreams: Participant[];
         sortAudioLoudness: boolean;
         audioDecibels: AudioDecibels[];
-        mixed_alVideoStreams: (Participant | Stream)[];
+        mixed_alVideoStreams: (Stream | Participant)[];
         non_alVideoStreams_muted: Participant[];
-        paginatedStreams: (Participant | Stream)[][];
+        paginatedStreams: (Stream | Participant)[][];
         localStreamAudio: MediaStream | null;
         defAudioID: string;
         userDefaultAudioInputDevice: string;
@@ -2608,8 +2642,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         prevDoPaginate: boolean;
         doPaginate: boolean;
         shareEnded: boolean;
-        lStreams: (Participant | Stream)[];
-        chatRefStreams: (Participant | Stream)[];
+        lStreams: (Stream | Participant)[];
+        chatRefStreams: (Stream | Participant)[];
         controlHeight: number;
         isWideScreen: boolean;
         isMediumScreen: boolean;
@@ -2621,11 +2655,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         altGridRows: number;
         altGridCols: number;
         numberPages: number;
-        currentStreams: (Participant | Stream)[];
+        currentStreams: (Stream | Participant)[];
         showMiniView: boolean;
         nStream: MediaStream | null;
         defer_receive: boolean;
-        allAudioStreams: (Participant | Stream)[];
+        allAudioStreams: (Stream | Participant)[];
         screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         remoteScreenStream: Stream[];
         gotAllVids: boolean;
@@ -3077,7 +3111,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateValidated: (value: boolean) => void;
@@ -3230,15 +3264,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             landScaped: boolean;
             lock_screen: boolean;
             screenId: string;
-            allVideoStreams: (Participant | Stream)[];
-            newLimitedStreams: (Participant | Stream)[];
+            allVideoStreams: (Stream | Participant)[];
+            newLimitedStreams: (Stream | Participant)[];
             newLimitedStreamsIDs: string[];
             activeSounds: string[];
             screenShareIDStream: string;
             screenShareNameStream: string;
             adminIDStream: string;
             adminNameStream: string;
-            youYouStream: (Participant | Stream)[];
+            youYouStream: (Stream | Participant)[];
             youYouStreamIDs: string[];
             localStream: MediaStream | null;
             recordStarted: boolean;
@@ -3280,15 +3314,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             screenAlreadyOn: boolean;
             chatAlreadyOn: boolean;
             redirectURL: string;
-            oldAllStreams: (Participant | Stream)[];
+            oldAllStreams: (Stream | Participant)[];
             adminVidID: string;
             streamNames: Stream[];
             non_alVideoStreams: Participant[];
             sortAudioLoudness: boolean;
             audioDecibels: AudioDecibels[];
-            mixed_alVideoStreams: (Participant | Stream)[];
+            mixed_alVideoStreams: (Stream | Participant)[];
             non_alVideoStreams_muted: Participant[];
-            paginatedStreams: (Participant | Stream)[][];
+            paginatedStreams: (Stream | Participant)[][];
             localStreamAudio: MediaStream | null;
             defAudioID: string;
             userDefaultAudioInputDevice: string;
@@ -3316,8 +3350,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             prevDoPaginate: boolean;
             doPaginate: boolean;
             shareEnded: boolean;
-            lStreams: (Participant | Stream)[];
-            chatRefStreams: (Participant | Stream)[];
+            lStreams: (Stream | Participant)[];
+            chatRefStreams: (Stream | Participant)[];
             controlHeight: number;
             isWideScreen: boolean;
             isMediumScreen: boolean;
@@ -3329,11 +3363,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             altGridRows: number;
             altGridCols: number;
             numberPages: number;
-            currentStreams: (Participant | Stream)[];
+            currentStreams: (Stream | Participant)[];
             showMiniView: boolean;
             nStream: MediaStream | null;
             defer_receive: boolean;
-            allAudioStreams: (Participant | Stream)[];
+            allAudioStreams: (Stream | Participant)[];
             screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             remoteScreenStream: Stream[];
             gotAllVids: boolean;
@@ -3785,7 +3819,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateValidated: (value: boolean) => void;
@@ -3941,15 +3975,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         landScaped: boolean;
         lock_screen: boolean;
         screenId: string;
-        allVideoStreams: (Participant | Stream)[];
-        newLimitedStreams: (Participant | Stream)[];
+        allVideoStreams: (Stream | Participant)[];
+        newLimitedStreams: (Stream | Participant)[];
         newLimitedStreamsIDs: string[];
         activeSounds: string[];
         screenShareIDStream: string;
         screenShareNameStream: string;
         adminIDStream: string;
         adminNameStream: string;
-        youYouStream: (Participant | Stream)[];
+        youYouStream: (Stream | Participant)[];
         youYouStreamIDs: string[];
         localStream: MediaStream | null;
         recordStarted: boolean;
@@ -3991,15 +4025,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         screenAlreadyOn: boolean;
         chatAlreadyOn: boolean;
         redirectURL: string;
-        oldAllStreams: (Participant | Stream)[];
+        oldAllStreams: (Stream | Participant)[];
         adminVidID: string;
         streamNames: Stream[];
         non_alVideoStreams: Participant[];
         sortAudioLoudness: boolean;
         audioDecibels: AudioDecibels[];
-        mixed_alVideoStreams: (Participant | Stream)[];
+        mixed_alVideoStreams: (Stream | Participant)[];
         non_alVideoStreams_muted: Participant[];
-        paginatedStreams: (Participant | Stream)[][];
+        paginatedStreams: (Stream | Participant)[][];
         localStreamAudio: MediaStream | null;
         defAudioID: string;
         userDefaultAudioInputDevice: string;
@@ -4027,8 +4061,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         prevDoPaginate: boolean;
         doPaginate: boolean;
         shareEnded: boolean;
-        lStreams: (Participant | Stream)[];
-        chatRefStreams: (Participant | Stream)[];
+        lStreams: (Stream | Participant)[];
+        chatRefStreams: (Stream | Participant)[];
         controlHeight: number;
         isWideScreen: boolean;
         isMediumScreen: boolean;
@@ -4040,11 +4074,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         altGridRows: number;
         altGridCols: number;
         numberPages: number;
-        currentStreams: (Participant | Stream)[];
+        currentStreams: (Stream | Participant)[];
         showMiniView: boolean;
         nStream: MediaStream | null;
         defer_receive: boolean;
-        allAudioStreams: (Participant | Stream)[];
+        allAudioStreams: (Stream | Participant)[];
         screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         remoteScreenStream: Stream[];
         gotAllVids: boolean;
@@ -4496,7 +4530,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateValidated: (value: boolean) => void;
@@ -4649,15 +4683,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             landScaped: boolean;
             lock_screen: boolean;
             screenId: string;
-            allVideoStreams: (Participant | Stream)[];
-            newLimitedStreams: (Participant | Stream)[];
+            allVideoStreams: (Stream | Participant)[];
+            newLimitedStreams: (Stream | Participant)[];
             newLimitedStreamsIDs: string[];
             activeSounds: string[];
             screenShareIDStream: string;
             screenShareNameStream: string;
             adminIDStream: string;
             adminNameStream: string;
-            youYouStream: (Participant | Stream)[];
+            youYouStream: (Stream | Participant)[];
             youYouStreamIDs: string[];
             localStream: MediaStream | null;
             recordStarted: boolean;
@@ -4699,15 +4733,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             screenAlreadyOn: boolean;
             chatAlreadyOn: boolean;
             redirectURL: string;
-            oldAllStreams: (Participant | Stream)[];
+            oldAllStreams: (Stream | Participant)[];
             adminVidID: string;
             streamNames: Stream[];
             non_alVideoStreams: Participant[];
             sortAudioLoudness: boolean;
             audioDecibels: AudioDecibels[];
-            mixed_alVideoStreams: (Participant | Stream)[];
+            mixed_alVideoStreams: (Stream | Participant)[];
             non_alVideoStreams_muted: Participant[];
-            paginatedStreams: (Participant | Stream)[][];
+            paginatedStreams: (Stream | Participant)[][];
             localStreamAudio: MediaStream | null;
             defAudioID: string;
             userDefaultAudioInputDevice: string;
@@ -4735,8 +4769,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             prevDoPaginate: boolean;
             doPaginate: boolean;
             shareEnded: boolean;
-            lStreams: (Participant | Stream)[];
-            chatRefStreams: (Participant | Stream)[];
+            lStreams: (Stream | Participant)[];
+            chatRefStreams: (Stream | Participant)[];
             controlHeight: number;
             isWideScreen: boolean;
             isMediumScreen: boolean;
@@ -4748,11 +4782,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             altGridRows: number;
             altGridCols: number;
             numberPages: number;
-            currentStreams: (Participant | Stream)[];
+            currentStreams: (Stream | Participant)[];
             showMiniView: boolean;
             nStream: MediaStream | null;
             defer_receive: boolean;
-            allAudioStreams: (Participant | Stream)[];
+            allAudioStreams: (Stream | Participant)[];
             screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             remoteScreenStream: Stream[];
             gotAllVids: boolean;
@@ -5204,7 +5238,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateValidated: (value: boolean) => void;
@@ -5450,15 +5484,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 landScaped: boolean;
                 lock_screen: boolean;
                 screenId: string;
-                allVideoStreams: (Participant | Stream)[];
-                newLimitedStreams: (Participant | Stream)[];
+                allVideoStreams: (Stream | Participant)[];
+                newLimitedStreams: (Stream | Participant)[];
                 newLimitedStreamsIDs: string[];
                 activeSounds: string[];
                 screenShareIDStream: string;
                 screenShareNameStream: string;
                 adminIDStream: string;
                 adminNameStream: string;
-                youYouStream: (Participant | Stream)[];
+                youYouStream: (Stream | Participant)[];
                 youYouStreamIDs: string[];
                 localStream: MediaStream | null;
                 recordStarted: boolean;
@@ -5500,15 +5534,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 screenAlreadyOn: boolean;
                 chatAlreadyOn: boolean;
                 redirectURL: string;
-                oldAllStreams: (Participant | Stream)[];
+                oldAllStreams: (Stream | Participant)[];
                 adminVidID: string;
                 streamNames: Stream[];
                 non_alVideoStreams: Participant[];
                 sortAudioLoudness: boolean;
                 audioDecibels: AudioDecibels[];
-                mixed_alVideoStreams: (Participant | Stream)[];
+                mixed_alVideoStreams: (Stream | Participant)[];
                 non_alVideoStreams_muted: Participant[];
-                paginatedStreams: (Participant | Stream)[][];
+                paginatedStreams: (Stream | Participant)[][];
                 localStreamAudio: MediaStream | null;
                 defAudioID: string;
                 userDefaultAudioInputDevice: string;
@@ -5536,8 +5570,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 prevDoPaginate: boolean;
                 doPaginate: boolean;
                 shareEnded: boolean;
-                lStreams: (Participant | Stream)[];
-                chatRefStreams: (Participant | Stream)[];
+                lStreams: (Stream | Participant)[];
+                chatRefStreams: (Stream | Participant)[];
                 controlHeight: number;
                 isWideScreen: boolean;
                 isMediumScreen: boolean;
@@ -5549,11 +5583,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 altGridRows: number;
                 altGridCols: number;
                 numberPages: number;
-                currentStreams: (Participant | Stream)[];
+                currentStreams: (Stream | Participant)[];
                 showMiniView: boolean;
                 nStream: MediaStream | null;
                 defer_receive: boolean;
-                allAudioStreams: (Participant | Stream)[];
+                allAudioStreams: (Stream | Participant)[];
                 screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
                 remoteScreenStream: Stream[];
                 gotAllVids: boolean;
@@ -6005,7 +6039,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 updateAnnotateScreenStream: (value: boolean) => void;
                 updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                 updateIsScreenboardModalVisible: (value: boolean) => void;
-                checkOrientation: () => "landscape" | "portrait";
+                checkOrientation: () => "portrait" | "landscape";
                 updateDevice: (value: Device | null) => void;
                 updateSocket: (value: Socket) => void;
                 updateValidated: (value: boolean) => void;
@@ -6158,15 +6192,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     landScaped: boolean;
                     lock_screen: boolean;
                     screenId: string;
-                    allVideoStreams: (Participant | Stream)[];
-                    newLimitedStreams: (Participant | Stream)[];
+                    allVideoStreams: (Stream | Participant)[];
+                    newLimitedStreams: (Stream | Participant)[];
                     newLimitedStreamsIDs: string[];
                     activeSounds: string[];
                     screenShareIDStream: string;
                     screenShareNameStream: string;
                     adminIDStream: string;
                     adminNameStream: string;
-                    youYouStream: (Participant | Stream)[];
+                    youYouStream: (Stream | Participant)[];
                     youYouStreamIDs: string[];
                     localStream: MediaStream | null;
                     recordStarted: boolean;
@@ -6208,15 +6242,15 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     screenAlreadyOn: boolean;
                     chatAlreadyOn: boolean;
                     redirectURL: string;
-                    oldAllStreams: (Participant | Stream)[];
+                    oldAllStreams: (Stream | Participant)[];
                     adminVidID: string;
                     streamNames: Stream[];
                     non_alVideoStreams: Participant[];
                     sortAudioLoudness: boolean;
                     audioDecibels: AudioDecibels[];
-                    mixed_alVideoStreams: (Participant | Stream)[];
+                    mixed_alVideoStreams: (Stream | Participant)[];
                     non_alVideoStreams_muted: Participant[];
-                    paginatedStreams: (Participant | Stream)[][];
+                    paginatedStreams: (Stream | Participant)[][];
                     localStreamAudio: MediaStream | null;
                     defAudioID: string;
                     userDefaultAudioInputDevice: string;
@@ -6244,8 +6278,8 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     prevDoPaginate: boolean;
                     doPaginate: boolean;
                     shareEnded: boolean;
-                    lStreams: (Participant | Stream)[];
-                    chatRefStreams: (Participant | Stream)[];
+                    lStreams: (Stream | Participant)[];
+                    chatRefStreams: (Stream | Participant)[];
                     controlHeight: number;
                     isWideScreen: boolean;
                     isMediumScreen: boolean;
@@ -6257,11 +6291,11 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     altGridRows: number;
                     altGridCols: number;
                     numberPages: number;
-                    currentStreams: (Participant | Stream)[];
+                    currentStreams: (Stream | Participant)[];
                     showMiniView: boolean;
                     nStream: MediaStream | null;
                     defer_receive: boolean;
-                    allAudioStreams: (Participant | Stream)[];
+                    allAudioStreams: (Stream | Participant)[];
                     screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
                     remoteScreenStream: Stream[];
                     gotAllVids: boolean;
@@ -6713,7 +6747,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     updateAnnotateScreenStream: (value: boolean) => void;
                     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                     updateIsScreenboardModalVisible: (value: boolean) => void;
-                    checkOrientation: () => "landscape" | "portrait";
+                    checkOrientation: () => "portrait" | "landscape";
                     updateDevice: (value: Device | null) => void;
                     updateSocket: (value: Socket) => void;
                     updateValidated: (value: boolean) => void;

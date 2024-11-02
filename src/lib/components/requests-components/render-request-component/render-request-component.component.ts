@@ -24,6 +24,29 @@ export interface RenderRequestComponentOptions {
 
 export type RenderRequestComponentType = (options: RenderRequestComponentOptions) => HTMLElement;
 
+/**
+ * @component RenderRequestComponent
+ * @description Component to render and manage individual requests in a list. Each request can be responded to with specified actions (e.g., approve, deny).
+ *
+ * @selector app-render-request-component
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule]
+ * @templateUrl ./render-request-component.component.html
+ * @styleUrls ./render-request-component.component.css
+ *
+ * @example
+ * ```html
+ * <app-render-request-component
+ *   [request]="request"
+ *   [requestList]="requestList"
+ *   [roomName]="roomName"
+ *   [socket]="socket"
+ *   [onRequestItemPress]="handleRequestPress"
+ *   [updateRequestList]="updateRequestList">
+ * </app-render-request-component>
+ * ```
+ */
+
 @Component({
   selector: 'app-render-request-component',
   standalone: true,

@@ -9,6 +9,32 @@ export interface PersonJoinedOptions {
 // Export the type definition for the function
 export type PersonJoinedType = (options: PersonJoinedOptions) => Promise<void>;
 
+/**
+ * Service to handle actions when a person joins an event.
+ *
+ * @class
+ * @name PersonJoined
+ * @description
+ * Displays a notification when a person joins the event, using the `showAlert` function if provided.
+ *
+ * @method
+ * personJoined
+ *
+ * @param {PersonJoinedOptions} options - Contains information about the person and alert display function:
+ *   - `name` {string}: The name of the person who joined.
+ *   - `showAlert` {Function} (optional): Function to display a notification when the person joins.
+ *
+ * @returns {void} Executes alert display through `showAlert` if defined.
+ *
+ * @example
+ * const options = {
+ *   name: 'Alice',
+ *   showAlert: ({ message, type, duration }) => console.log(message)
+ * };
+ * personJoinedService.personJoined(options);
+ * // Logs: "Alice joined the event."
+ */
+
 @Injectable({
   providedIn: 'root',
 })

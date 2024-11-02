@@ -73,6 +73,30 @@ export type MessagePanelType = (options: MessagePanelOptions) => HTMLElement;
  * @method handleTextInputChange - Handles changes in the text input field.
  * @method openReplyInput - Opens the reply input for a specific sender.
  * @method handleSendButton - Handles the send button click event.
+ *
+ * @example
+ * ```html
+ * <app-message-panel
+ *   [messages]="chatMessages"
+ *   [messagesLength]="chatMessages.length"
+ *   [type]="'group'"
+ *   [username]="'JohnDoe'"
+ *   [onSendMessagePress]="sendMessage"
+ *   [focusedInput]="true"
+ *   [eventType]="'webinar'"
+ *   [member]="'JohnDoe'"
+ *   [islevel]="'2'"
+ *   [startDirectMessage]="false"
+ *   [updateStartDirectMessage]="updateDirectMessageStart"
+ *   [directMessageDetails]="selectedParticipant"
+ *   [updateDirectMessageDetails]="updateParticipantDetails"
+ *   [coHostResponsibility]="coHostRoles"
+ *   [coHost]="'coHost123'"
+ *   [roomName]="'RoomName'"
+ *   [socket]="chatSocket"
+ *   [chatSetting]="'enabled'"
+ * ></app-message-panel>
+ * ```
  */
 export declare class MessagePanel implements OnInit, OnChanges {
     messages: Array<any>;

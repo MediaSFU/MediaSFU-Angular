@@ -109,6 +109,99 @@ export interface DispStreamsOptions {
 // Export the type definition for the function
 export type DispStreamsType = (options: DispStreamsOptions) => Promise<void>;
 
+  /**
+   * Function to display streams based on various parameters and conditions.
+   *
+   * @param {DispStreamsOptions} options - The options object.
+   * @param {Array<(Stream | Participant)>} options.lStreams - List of streams to display.
+   * @param {number} options.ind - Index of the current stream.
+   * @param {boolean} [options.auto=false] - Flag to indicate if the function should run automatically.
+   * @param {boolean} [options.ChatSkip=false] - Flag to indicate if chat should be skipped.
+   * @param {string|null} [options.forChatID=null] - ID for chat reference.
+   * @param {DispStreamsParameters} options.parameters - Parameters object containing various settings and functions.
+   * @param {number} [options.breakRoom=-1] - Break room number.
+   * @param {boolean} [options.inBreakRoom=false] - Flag to indicate if in break room.
+   *
+   * @returns {Promise<void>} A promise that resolves when the function completes.
+   *
+   * @async
+   *
+   * @example
+   * ```typescript
+   * const options = {
+   *   lStreams: [...], // Your streams data here
+   *   ind: 0,
+   *   auto: true,
+   *   ChatSkip: false,
+   *   parameters: {
+   *     consumerTransports: [],
+   *     streamNames: [],
+   *     audStreamNames: [],
+   *     participants: [],
+   *     ref_participants: [],
+   *     recordingDisplayType: 'video',
+   *     recordingVideoOptimized: false,
+   *     meetingDisplayType: 'video',
+   *     meetingVideoOptimized: false,
+   *     currentUserPage: 1,
+   *     hostLabel: 'Host',
+   *     mainHeightWidth: 100,
+   *     prevMainHeightWidth: 100,
+   *     prevDoPaginate: false,
+   *     doPaginate: false,
+   *     firstAll: false,
+   *     shared: false,
+   *     shareScreenStarted: false,
+   *     shareEnded: false,
+   *     oldAllStreams: [],
+   *     updateMainWindow: false,
+   *     remoteProducerId: null,
+   *     activeNames: [],
+   *     dispActiveNames: [],
+   *     p_dispActiveNames: [],
+   *     nForReadjustRecord: 0,
+   *     first_round: false,
+   *     lock_screen: false,
+   *     chatRefStreams: [],
+   *     eventType: 'normal',
+   *     islevel: '1',
+   *     localStreamVideo: null,
+   *     breakOutRoomStarted: false,
+   *     breakOutRoomEnded: false,
+   *     keepBackground: false,
+   *     virtualStream: null,
+   *     updateActiveNames: (names) => {},
+   *     updateDispActiveNames: (names) => {},
+   *     updateLStreams: (streams) => {},
+   *     updateChatRefStreams: (streams) => {},
+   *     updateNForReadjustRecord: (n) => {},
+   *     updateUpdateMainWindow: (value) => {},
+   *     updateShowMiniView: (value) => {},
+   *     prepopulateUserMedia: async () => {},
+   *     rePort: async () => {},
+   *     processConsumerTransports: async () => {},
+   *     resumePauseStreams: async () => {},
+   *     readjust: async () => {},
+   *     addVideosGrid: async () => {},
+   *     getEstimate: async () => {},
+   *     checkGrid: async () => {},
+   *     resumePauseAudioStreams: async () => {},
+   *     getUpdatedAllParams: () => options.parameters,
+   *   },
+   *   breakRoom: -1,
+   *   inBreakRoom: false,
+   * };
+   *
+   * dispStreamsService.dispStreams(options)
+   *   .then(() => {
+   *     console.log('Streams displayed successfully');
+   *   })
+   *   .catch((error) => {
+   *     console.error('Error displaying streams:', error);
+   *   });
+   * ```
+   */
+
 @Injectable({
   providedIn: 'root',
 })

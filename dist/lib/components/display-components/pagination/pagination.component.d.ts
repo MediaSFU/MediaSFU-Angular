@@ -35,18 +35,17 @@ export interface PaginationOptions {
 }
 export type PaginationType = (options: PaginationOptions) => HTMLElement;
 /**
- * Pagination component for displaying and handling pagination controls.
+ * Pagination component for managing and displaying page navigation controls with various layouts and customizations.
  *
- * @component
  * @selector app-pagination
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule]
  *
  * @description
- * This component renders pagination controls with customizable styles and behavior.
- * It supports horizontal and vertical layouts, different positions, and dynamic data.
+ * This component renders pagination controls, allowing users to navigate through pages. The controls support horizontal and vertical layouts, customizable styles, and dynamic page content handling, with special support for breakout room navigation.
  *
  * @example
+ * ```html
  * <app-pagination
  *   [totalPages]="10"
  *   [currentUserPage]="1"
@@ -59,27 +58,34 @@ export type PaginationType = (options: PaginationOptions) => HTMLElement;
  *   [showAspect]="true"
  *   [parameters]="paginationParameters">
  * </app-pagination>
+ * ```
  *
- * @input {number} totalPages - Total number of pages.
- * @input {number} currentUserPage - Current active page.
- * @input {Function} handlePageChange - Function to handle page change.
- * @input {'left' | 'middle' | 'right' | string} position - Position of the pagination controls.
- * @input {'top' | 'middle' | 'bottom' | string} location - Location of the pagination controls.
- * @input {'horizontal' | 'vertical' | string} direction - Direction of the pagination controls.
- * @input {any} buttonsContainerStyle - Custom styles for the buttons container.
- * @input {any} activePageStyle - Custom styles for the active page button.
- * @input {any} inactivePageStyle - Custom styles for the inactive page buttons.
- * @input {string} backgroundColor - Background color of the pagination controls.
- * @input {number} paginationHeight - Height of the pagination controls.
- * @input {boolean} showAspect - Flag to show or hide the pagination controls.
- * @input {PaginationParameters} parameters - Additional parameters for pagination.
+ * @input {number} totalPages - Total number of pages available for navigation.
+ * @input {number} currentUserPage - Current active page number.
+ * @input {Function} handlePageChange - Callback function to handle page changes.
+ * @input {'left' | 'middle' | 'right' | string} position - Horizontal position of the pagination controls (default is 'middle').
+ * @input {'top' | 'middle' | 'bottom' | string} location - Vertical position of the pagination controls (default is 'middle').
+ * @input {'horizontal' | 'vertical' | string} direction - Layout direction of the pagination controls (default is 'horizontal').
+ * @input {any} buttonsContainerStyle - Custom CSS styles for the buttons container.
+ * @input {any} activePageStyle - CSS styles for the active page button.
+ * @input {any} inactivePageStyle - CSS styles for inactive page buttons.
+ * @input {string} backgroundColor - Background color for the pagination controls.
+ * @input {number} paginationHeight - Height of the pagination controls in pixels.
+ * @input {boolean} showAspect - Flag to display or hide the pagination controls.
+ * @input {PaginationParameters} parameters - Additional configuration parameters for managing breakout rooms and related state.
  *
- * @method ngOnInit - Initializes the component and sets up initial data.
- * @method ngOnChanges - Handles changes to input properties and updates data accordingly.
- * @method handleClick - Handles click events on pagination buttons and performs necessary actions.
- * @method getPageStyle - Returns the style for a given page button based on its state.
- * @method isBreakoutRoom - Determines if a given item represents a breakout room.
- * @method getDisplayItem - Returns the display text for a given item.
+ * @property {number[]} data - Array representing pages to be displayed in pagination controls.
+ * @property {ComponentSizes} componentSizes - Stores calculated sizes for pagination controls.
+ *
+ * @method ngOnInit - Lifecycle hook that initializes the component and sets up page data.
+ * @method ngOnChanges - Handles input property changes to update page data when needed.
+ * @method handleClick - Asynchronously handles page button clicks and manages breakout room navigation logic.
+ * @method getPageStyle - Returns specific styles for a page button based on its active or inactive state.
+ * @method isBreakoutRoom - Checks if a page represents a breakout room.
+ * @method getDisplayItem - Returns the display label for a page, accounting for breakout room naming conventions.
+ *
+ * @dependencies
+ * This component requires an external pagination parameters configuration (`PaginationParameters`) and access to the `GeneratePageContent` service for managing dynamic content loading.
  */
 export declare class Pagination implements OnInit, OnChanges {
     private generatePageContentService;

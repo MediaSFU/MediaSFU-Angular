@@ -25,6 +25,21 @@ export interface AdvancedPanelParameters {
     eventType: EventType;
 }
 export type AdvancedPanelType = (options: AdvancedPanelParameters) => HTMLElement;
+/**
+ * Component for configuring advanced recording options in a MediaSFU session.
+ *
+ * @component
+ * @selector app-advanced-panel-component
+ * @standalone true
+ * @templateUrl ./advanced-panel-component.component.html
+ * @styleUrls ['./advanced-panel-component.component.css']
+ * @imports [CommonModule, FormsModule]
+ *
+ * @example
+ * ```html
+ * <app-advanced-panel-component [parameters]="advancedPanelOptions"></app-advanced-panel-component>
+ * ```
+ */
 export declare class AdvancedPanelComponent implements OnInit, OnChanges {
     parameters: AdvancedPanelParameters;
     selectedOrientationVideo: string;

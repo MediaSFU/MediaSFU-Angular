@@ -21,6 +21,43 @@ export interface CardVideoDisplayOptions {
 
 export type CardVideoDisplayType = (options: CardVideoDisplayOptions) => HTMLElement;
 
+/**
+ * CardVideoDisplay component displays a video stream with options for full display, mirroring, and background color customization.
+ *
+ * @selector app-card-video-display
+ * @standalone true
+ * @imports CommonModule
+ *
+ * @inputs
+ * - `remoteProducerId` (string): Identifier for the remote producer.
+ * - `eventType` (EventType): Type of event, such as 'webinar'. Default is 'webinar'.
+ * - `forceFullDisplay` (boolean): Forces full video display if true. Default is false.
+ * - `videoStream` (MediaStream | null): The media stream to display in the video element.
+ * - `backgroundColor` (string): Background color for the video container. Default is 'transparent'.
+ * - `doMirror` (boolean): Mirrors the video if true. Default is false.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes the video stream and sets the container style on component load.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates the video stream or container style when inputs change.
+ * - `updateVideoStream()`: Assigns the video stream to the video element if it differs from the current stream.
+ * - `setVideoContainerStyle()`: Sets the style of the video container based on the provided background color.
+ * - `getBaseVideoContainerStyle()`: Returns base styles for the video container.
+ * - `getVideoStyle()`: Returns styles for the video element, including optional mirroring and sizing.
+ *
+ * @example
+ * ```html
+ * <app-card-video-display
+ *  [remoteProducerId]="producerId"
+ * [eventType]="'conference'"
+ * [forceFullDisplay]="true"
+ * [videoStream]="stream"
+ * [backgroundColor]="'black'"
+ * [doMirror]="true">
+ * </app-card-video-display>
+ * ```
+ **/
+
+
 @Component({
   selector: 'app-card-video-display',
   standalone: true,

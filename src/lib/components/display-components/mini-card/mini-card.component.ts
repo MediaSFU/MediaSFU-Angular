@@ -12,7 +12,7 @@ export interface MiniCardOptions {
 export type MiniCardType = (options: MiniCardOptions) => HTMLElement;
 
 /**
- * MiniCard component displays a card with either an image or initials.
+ * MiniCard component displays a customizable card with an image or initials.
  *
  * @component
  * @selector app-mini-card
@@ -20,6 +20,7 @@ export type MiniCardType = (options: MiniCardOptions) => HTMLElement;
  * @imports CommonModule
  *
  * @template
+ * ```html
  * <div class="mini-card" [ngStyle]="getMergedCardStyles()">
  *   <div *ngIf="imageSource; else noImage" class="image-container">
  *     <img [src]="imageSource" alt="Profile" [ngStyle]="getMergedImageStyles()" />
@@ -28,36 +29,32 @@ export type MiniCardType = (options: MiniCardOptions) => HTMLElement;
  *     <div class="initials" [ngStyle]="getInitialsStyle()">{{ initials }}</div>
  *   </ng-template>
  * </div>
+ * ```
  *
  * @styleUrls ['./mini-card.component.css']
  *
- * @property {string} initials - The initials to display if no image is provided.
- * @property {number} fontSize - The font size for the initials text. Default is 14.
- * @property {Partial<CSSStyleDeclaration>} customStyle - Custom styles for the card.
- * @property {string} imageSource - The source URL for the image.
- * @property {boolean} roundedImage - Whether the image should be rounded. Default is false.
- * @property {Partial<CSSStyleDeclaration>} imageStyle - Custom styles for the image.
+ * @inputs
+ * - `initials` (string): Initials to display if no image is provided.
+ * - `fontSize` (number): Font size for initials text, default is 14.
+ * - `customStyle` (CSSStyleDeclaration): Custom styles for the card.
+ * - `imageSource` (string): Source URL for the image.
+ * - `roundedImage` (boolean): Whether the image should be rounded, default is false.
+ * - `imageStyle` (CSSStyleDeclaration): Custom styles for the image.
  *
  * @constructor
- * @param {string} [injectedInitials] - Injected initials.
- * @param {number} [injectedFontSize] - Injected font size.
- * @param {Partial<CSSStyleDeclaration>} [injectedCustomStyle] - Injected custom styles.
- * @param {string} [injectedImageSource] - Injected image source.
- * @param {boolean} [injectedRoundedImage] - Injected rounded image flag.
- * @param {Partial<CSSStyleDeclaration>} [injectedImageStyle] - Injected image styles.
+ * - Optionally accepts injected values for each input property.
  *
- * @method getMergedCardStyles
- * @description Merges the default card styles with custom styles.
- * @returns {CSSStyleDeclaration} The merged card styles.
+ * @methods
+ * - `getMergedCardStyles()`: Returns merged styles for the card.
+ * - `getMergedImageStyles()`: Returns merged styles for the image.
+ * - `getInitialsStyle()`: Returns styles for the initials text.
  *
- * @method getMergedImageStyles
- * @description Merges the default image styles with custom styles.
- * @returns {CSSStyleDeclaration} The merged image styles.
- *
- * @method getInitialsStyle
- * @description Returns the styles for the initials text.
- * @returns {CSSStyleDeclaration} The initials text styles.
+ * @example
+ * ```html
+ * <app-mini-card initials="AB" fontSize="20" [roundedImage]="true" imageSource="/path/to/image.jpg"></app-mini-card>
+ * ```
  */
+
 @Component({
   selector: 'app-mini-card',
   standalone: true,

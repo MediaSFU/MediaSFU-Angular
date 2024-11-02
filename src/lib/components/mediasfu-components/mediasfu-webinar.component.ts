@@ -270,17 +270,6 @@ import {
 } from 'mediasoup-client/lib/types';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
-/**
- * Options for configuring the MediasfuWebinar component.
- *
- * @typedef {Object} MediasfuWebinarOptions
- * @property {(options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement} [PrejoinPage] - A function that returns an HTMLElement for the pre-join page.
- * @property {{ apiUserName: string; apiKey: string }} [credentials] - Credentials for API access, including username and API key.
- * @property {boolean} [useLocalUIMode] - Flag to determine if the local UI mode should be used.
- * @property {SeedData} [seedData] - Data used for seeding the component.
- * @property {boolean} [useSeed] - Flag to determine if seed data should be used.
- * @property {string} [imgSrc] - Source URL for an image to be used in the component.
- */
 export type MediasfuWebinarOptions = {
   PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
   credentials?: { apiUserName: string; apiKey: string };
@@ -289,6 +278,53 @@ export type MediasfuWebinarOptions = {
   useSeed?: boolean;
   imgSrc?: string;
 };
+
+/**
+ * Component for managing webinars in the MediaSFU environment.
+ *
+ * @selector app-mediasfu-webinar
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * This component's template includes:
+ * - A conditional PrejoinPage displayed before main content for user preparation.
+ * - The main screen layout with flexible configurations for video, control buttons, and layout grids.
+ * - Modals for participant, settings, polling, and media interactions.
+ *
+ * @input {any} PrejoinPage - Prejoin component that defaults to `WelcomePage`.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials.
+ * @input {boolean} useLocalUIMode - Determines whether to enable local UI settings.
+ * @input {SeedData} seedData - Optional seed data for initializing component states.
+ * @input {boolean} useSeed - Whether to utilize the provided seed data.
+ * @input {string} imgSrc - Image source for branding or customization.
+ *
+ * @property {string} title - Title of the component, defaulting to "MediaSFU-Webinar".
+ *
+ * @styles
+ * Component-specific styles with full-screen properties and customizable modal colors.
+ *
+ * @providers [CookieService] - Utilized for session or user state management within the component.
+ *
+ * @class MediasfuWebinar
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes session settings, user interfaces, and modals as necessary.
+ * @method ngOnDestroy - Cleans up event listeners and intervals to prevent memory leaks.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-webinar
+ *   [PrejoinPage]="CustomPrejoinPage"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="initialData"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-webinar>
+ * ```
+ */
+
 
 @Component({
   selector: 'app-mediasfu-webinar',

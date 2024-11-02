@@ -87,6 +87,50 @@ export type UpdateRoomParametersClientOptions = {
     parameters: UpdateRoomParametersClientParameters;
 };
 export type UpdateRoomParametersClientType = (options: UpdateRoomParametersClientOptions) => void;
+/**
+ * Updates room parameters for the client after joining a room and receiving server-provided parameters.
+ *
+ * @param {UpdateRoomParametersClientOptions} options - An object containing:
+ *  - various room settings and parameters,
+ *  - functions to update those parameters.
+ *
+ * - **Screen/Page Settings:** Adjusts screen and item page limits, meeting room parameters, and video constraints based on server data.
+ * - **Recording and Media Settings:** Applies bitrate and frame rate adjustments, based on the target resolution and media options.
+ * - **Role-Specific Settings:** Configures admin, host, and co-host settings for permissions, orientations, and resolutions.
+ * - **Alerting**: Uses `showAlert` to notify the client on issues or permissions restrictions.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   parameters: {
+ *     rtpCapabilities: myRtpCapabilities,
+ *     roomRecvIPs: ['192.168.1.1'],
+ *     meetingRoomParams: myMeetingParams,
+ *     itemPageLimit: 3,
+ *     audioOnlyRoom: false,
+ *     addForBasic: true,
+ *     screenPageLimit: 2,
+ *     shareScreenStarted: false,
+ *     shared: true,
+ *     targetOrientation: 'landscape',
+ *     recordingVideoSupport: true,
+ *     frameRate: 15,
+ *     adminPasscode: 'admin123',
+ *     eventType: 'conference',
+ *     youAreCoHost: false,
+ *     updateRtpCapabilities: (rtp) => console.log('Updating RTP:', rtp),
+ *     updateRoomRecvIPs: (ips) => console.log('Updating IPs:', ips),
+ *     updateMeetingRoomParams: (params) => console.log('Updating room params:', params),
+ *     // Additional parameters...
+ *   },
+ * };
+ *
+ * const updateRoomParametersClient = new UpdateRoomParametersClient(videoCaptureConstraints, hParams, vParams, screenParams, aParams);
+ * updateRoomParametersClient.updateRoomParametersClient(options);
+ * ```
+ *
+ * This example demonstrates setting up room parameters for a conference-type room with recording support and custom update functions.
+ */
 export declare class UpdateRoomParametersClient {
     private videoCaptureConstraints;
     private hParams;

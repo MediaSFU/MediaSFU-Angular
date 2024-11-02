@@ -11,6 +11,31 @@ export interface MenuItemComponentOptions {
 
 export type MenuItemComponentType = (options: MenuItemComponentOptions) => HTMLElement;
 
+/**
+ * Component representing an individual menu item with an icon, name, and an action handler.
+ *
+ * @selector app-menu-item-component
+ * @standalone true
+ * @templateUrl ./menu-item-component.component.html
+ * @styleUrls ./menu-item-component.component.css
+ *
+ * @example
+ * ```html
+ * <app-menu-item-component
+ *   [icon]="faCoffee"
+ *   name="Coffee"
+ *   [onPress]="handleCoffeePress">
+ * </app-menu-item-component>
+ * ```
+ *
+ * ```typescript
+ * handleCoffeePress() {
+ *   console.log('Coffee icon clicked');
+ * }
+ * ```
+ */
+
+
 @Component({
   selector: 'app-menu-item-component',
   standalone: true,

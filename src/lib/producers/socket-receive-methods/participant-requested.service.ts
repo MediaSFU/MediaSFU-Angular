@@ -12,6 +12,39 @@ export interface ParticipantRequestedOptions {
 // Export the type definition for the function
 export type ParticipantRequestedType = (options: ParticipantRequestedOptions) => Promise<void>;
 
+/**
+ * Service to handle participant requests in an event's waiting room.
+ *
+ * @class
+ * @name ParticipantRequested
+ * @description
+ * Manages participant requests by adding new requests to the list and updating the total count of requests and waiting room participants.
+ *
+ * @method
+ * participantRequested
+ *
+ * @param {ParticipantRequestedOptions} options - Contains request information and update functions:
+ *   - `userRequest` {Request}: The new request from a participant.
+ *   - `requestList` {Request[]}: The current list of requests.
+ *   - `waitingRoomList` {WaitingRoomParticipant[]}: The list of participants in the waiting room.
+ *   - `updateTotalReqWait` {Function}: Function to update the total count of requests and waiting room participants.
+ *   - `updateRequestList` {Function}: Function to update the request list.
+ *
+ * @returns {Promise<void>} Updates the request list and total request count.
+ *
+ * @example
+ * const options = {
+ *   userRequest: { id: '123', name: 'John Doe', icon: 'fa-user', username: 'johndoe' },
+ *   requestList: existingRequests,
+ *   waitingRoomList: waitingParticipants,
+ *   updateTotalReqWait: (count) => console.log(`Total requests: ${count}`),
+ *   updateRequestList: (list) => console.log('Updated request list', list)
+ * };
+ * await participantRequestedService.participantRequested(options);
+ * // Adds "John Doe" to request list and updates the total count.
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

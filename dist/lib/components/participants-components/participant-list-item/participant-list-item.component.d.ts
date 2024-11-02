@@ -21,6 +21,25 @@ export interface ParticipantListItemOptions {
     updateParticipants: (participants: Participant[]) => void;
 }
 export type ParticipantListItemType = (options: ParticipantListItemOptions) => HTMLElement;
+/**
+ * Component representing an individual participant item in the participant list.
+ * Provides controls for muting, messaging, and removing a participant.
+ *
+ * @component
+ * @selector app-participant-list-item
+ * @standalone true
+ * @templateUrl ./participant-list-item.component.html
+ * @styleUrls ['./participant-list-item.component.css']
+ * @imports [CommonModule, FontAwesomeModule]
+ *
+ * @example
+ * ```html
+ * <app-participant-list-item [participant]="participant" [isBroadcast]="isBroadcast"
+ *                            [onMuteParticipants]="muteHandler" [onMessageParticipants]="messageHandler"
+ *                            [onRemoveParticipants]="removeHandler" [socket]="socket" [member]="member">
+ * </app-participant-list-item>
+ * ```
+ */
 export declare class ParticipantListItem {
     participant: Participant;
     isBroadcast: boolean;

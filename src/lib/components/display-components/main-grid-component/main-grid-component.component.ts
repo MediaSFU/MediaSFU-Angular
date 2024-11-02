@@ -16,14 +16,14 @@ export interface MainGridComponentOptions {
 export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLElement;
 
 /**
- * MainGridComponent is a standalone Angular component that displays a grid container
- * with optional meeting progress timer and customizable styles.
+ * MainGridComponent displays a customizable grid container with an optional meeting progress timer.
  *
  * @selector app-main-grid-component
  * @standalone true
  * @imports CommonModule, MeetingProgressTimer
  *
  * @template
+ * ```html
  * <div [ngStyle]="maingridContainerStyle">
  *   <app-meeting-progress-timer
  *     *ngIf="showTimer"
@@ -32,20 +32,35 @@ export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLE
  *   ></app-meeting-progress-timer>
  *   <ng-content></ng-content>
  * </div>
+ * ```
  *
- * @Inputs
- * @property {string} backgroundColor - The background color of the grid container.
- * @property {number} mainSize - The main size of the grid container.
- * @property {number} height - The height of the grid container in pixels.
- * @property {number} width - The width of the grid container in pixels.
- * @property {boolean} showAspect - Determines if the grid container should be displayed as flex.
- * @property {string} timeBackgroundColor - The background color of the meeting progress timer.
- * @property {boolean} showTimer - Determines if the meeting progress timer should be displayed.
- * @property {string} meetingProgressTime - The progress time to be displayed in the meeting progress timer.
+ * @inputs
+ * - `backgroundColor` (string): Background color of the grid container. Default is an empty string.
+ * - `mainSize` (number): Main size of the grid container, used for layout adjustments.
+ * - `height` (number): Height of the grid container in pixels.
+ * - `width` (number): Width of the grid container in pixels.
+ * - `showAspect` (boolean): If true, displays the grid container in flex layout. Default is true.
+ * - `timeBackgroundColor` (string): Background color of the meeting progress timer. Default is 'green'.
+ * - `showTimer` (boolean): If true, displays the meeting progress timer. Default is true.
+ * - `meetingProgressTime` (string): Time displayed in the meeting progress timer.
  *
- * @getter maingridContainerStyle - Returns the style object for the grid container.
- * @returns {Object} The style object for the grid container.
- */
+ * @getter
+ * - `maingridContainerStyle`: Returns a style object for the grid container, including display, color, dimensions, and border styling.
+ *
+ * @example
+ * ```html
+ * <app-main-grid-component
+ *   [backgroundColor]="'lightgrey'"
+ *   [height]="500"
+ *   [width]="500"
+ *   [showAspect]="true"
+ *   [timeBackgroundColor]="'blue'"
+ *   [showTimer]="true"
+ *   [meetingProgressTime]="'10:45'"
+ * ></app-main-grid-component>
+ * ```
+ **/
+
 @Component({
   selector: 'app-main-grid-component',
   standalone: true,

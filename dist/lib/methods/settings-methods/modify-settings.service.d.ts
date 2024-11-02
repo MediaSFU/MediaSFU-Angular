@@ -16,6 +16,48 @@ export interface ModifySettingsOptions {
     updateIsSettingsModalVisible: (isVisible: boolean) => void;
 }
 export type ModifySettingsType = (options: ModifySettingsOptions) => Promise<void>;
+/**
+ * Modifies the settings for a given room and updates the state accordingly.
+ *
+ * @param {ModifySettingsOptions} options - The options for modifying settings.
+ * @param {Function} options.showAlert - Function to show alert messages.
+ * @param {string} options.roomName - The name of the room.
+ * @param {string} options.audioSet - The audio setting to be applied.
+ * @param {string} options.videoSet - The video setting to be applied.
+ * @param {string} options.screenshareSet - The screenshare setting to be applied.
+ * @param {string} options.chatSet - The chat setting to be applied.
+ * @param {Socket} options.socket - The socket instance for emitting events.
+ * @param {Function} options.updateAudioSetting - Function to update the audio setting state.
+ * @param {Function} options.updateVideoSetting - Function to update the video setting state.
+ * @param {Function} options.updateScreenshareSetting - Function to update the screenshare setting state.
+ * @param {Function} options.updateChatSetting - Function to update the chat setting state.
+ * @param {Function} options.updateIsSettingsModalVisible - Function to update the visibility of the settings modal.
+ *
+ * @returns {Promise<void>} A promise that resolves when the settings have been modified.
+ *
+ * @throws Will show an alert if any setting is set to "approval" in demo mode (room name starts with "d").
+ *
+ * @example
+ * ```typescript
+ * const options: ModifySettingsOptions = {
+ *   showAlert: (alert) => console.log(alert),
+ *   roomName: 'exampleRoom',
+ *   audioSet: 'enabled',
+ *   videoSet: 'disabled',
+ *   screenshareSet: 'approval',
+ *   chatSet: 'enabled',
+ *   socket: socketInstance,
+ *   updateAudioSetting: (audio) => console.log('Audio setting updated:', audio),
+ *   updateVideoSetting: (video) => console.log('Video setting updated:', video),
+ *   updateScreenshareSetting: (screenshare) => console.log('Screenshare setting updated:', screenshare),
+ *   updateChatSetting: (chat) => console.log('Chat setting updated:', chat),
+ *   updateIsSettingsModalVisible: (visible) => console.log('Settings modal visibility:', visible),
+ * };
+ *
+ * const modifySettingsService = new ModifySettings();
+ * await modifySettingsService.modifySettings(options);
+ * ```
+ */
 export declare class ModifySettings {
     /**
      * Modifies the settings for a given room and updates the state accordingly.

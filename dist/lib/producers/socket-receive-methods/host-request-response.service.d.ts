@@ -21,58 +21,41 @@ export interface HostRequestResponseOptions {
 }
 export type HostRequestResponseType = (options: HostRequestResponseOptions) => Promise<void>;
 /**
- * Service to handle host request responses.
- *
- * @example
- * ```typescript
- * const hostRequestResponseService = new HostRequestResponse();
- * await hostRequestResponseService.hostRequestResponse({
- *   requestResponse: { id: '1', type: 'fa-microphone', name: 'John Doe', username: 'johndoe', action: 'accepted' },
- *   showAlert: (alert) => console.log(alert),
- *   requestList: [],
- *   updateRequestList: (list) => console.log(list),
- *   updateMicAction: (state) => console.log(state),
- *   updateVideoAction: (state) => console.log(state),
- *   updateScreenAction: (state) => console.log(state),
- *   updateChatAction: (state) => console.log(state),
- *   updateAudioRequestState: (state) => console.log(state),
- *   updateVideoRequestState: (state) => console.log(state),
- *   updateScreenRequestState: (state) => console.log(state),
- *   updateChatRequestState: (state) => console.log(state),
- *   updateAudioRequestTime: (time) => console.log(time),
- *   updateVideoRequestTime: (time) => console.log(time),
- *   updateScreenRequestTime: (time) => console.log(time),
- *   updateChatRequestTime: (time) => console.log(time),
- *   updateRequestIntervalSeconds: 30,
- * });
- * ```
- *
- * @typedef {Object} HostRequestResponseOptions
- * @property {Object} requestResponse - The request response object.
- * @property {Function} showAlert - Function to show alert messages.
- * @property {Array} requestList - List of current requests.
- * @property {Function} updateRequestList - Function to update the request list.
- * @property {Function} updateMicAction - Function to update microphone action state.
- * @property {Function} updateVideoAction - Function to update video action state.
- * @property {Function} updateScreenAction - Function to update screen action state.
- * @property {Function} updateChatAction - Function to update chat action state.
- * @property {Function} updateAudioRequestState - Function to update audio request state.
- * @property {Function} updateVideoRequestState - Function to update video request state.
- * @property {Function} updateScreenRequestState - Function to update screen request state.
- * @property {Function} updateChatRequestState - Function to update chat request state.
- * @property {Function} updateAudioRequestTime - Function to update audio request time.
- * @property {Function} updateVideoRequestTime - Function to update video request time.
- * @property {Function} updateScreenRequestTime - Function to update screen request time.
- * @property {Function} updateChatRequestTime - Function to update chat request time.
- * @property {number} updateRequestIntervalSeconds - Interval in seconds to update request time.
+ * Service to handle host responses to participant requests, including updating states and showing relevant alerts.
  *
  * @class
- * @classdesc This service handles the responses to host requests, updating the state and showing alerts based on the response.
+ * @name HostRequestResponse
+ * @description
+ * Manages host responses to requests (e.g., microphone, video, screenshare, chat) by updating the state of actions and triggering alerts based on acceptance or rejection.
  *
- * @method hostRequestResponse
+ * @method
+ * hostRequestResponse
  * @async
- * @param {HostRequestResponseOptions} options - The options for handling the host request response.
- * @returns {Promise<void>} A promise that resolves when the request response has been handled.
+ *
+ * @param {HostRequestResponseOptions} options - Options for handling the host request response:
+ *   - `requestResponse` {RequestResponse}: The request response object.
+ *   - `showAlert` {Function}: Optional alert function for notifications.
+ *   - `requestList` {Request[]}: The current list of requests.
+ *   - `updateRequestList` {Function}: Updates the request list.
+ *   - `updateMicAction`, `updateVideoAction`, `updateScreenAction`, `updateChatAction` {Function}: Update functions for respective actions.
+ *   - `updateAudioRequestState`, `updateVideoRequestState`, `updateScreenRequestState`, `updateChatRequestState` {Function}: Updates request states.
+ *   - `updateAudioRequestTime`, `updateVideoRequestTime`, `updateScreenRequestTime`, `updateChatRequestTime` {Function}: Update functions for request timers.
+ *   - `updateRequestIntervalSeconds` {number}: Interval in seconds to update request time.
+ *
+ * @returns {Promise<void>} Resolves once the request response has been handled.
+ *
+ * @example
+ * const options = {
+ *   requestResponse: { id: '1', type: 'fa-microphone', action: 'accepted' },
+ *   showAlert: alert => console.log(alert.message),
+ *   requestList: [{ id: '1', type: 'fa-microphone' }],
+ *   updateRequestList: list => console.log(list),
+ *   updateMicAction: state => console.log(state),
+ *   updateAudioRequestState: state => console.log(state),
+ *   updateAudioRequestTime: time => console.log(time),
+ *   updateRequestIntervalSeconds: 30,
+ * };
+ * hostRequestResponseService.hostRequestResponse(options);
  */
 export declare class HostRequestResponse {
     hostRequestResponse: ({ requestResponse, showAlert, requestList, updateRequestList, updateMicAction, updateVideoAction, updateScreenAction, updateChatAction, updateAudioRequestState, updateVideoRequestState, updateScreenRequestState, updateChatRequestState, updateAudioRequestTime, updateVideoRequestTime, updateScreenRequestTime, updateChatRequestTime, updateRequestIntervalSeconds, }: HostRequestResponseOptions) => Promise<void>;

@@ -22,6 +22,21 @@ export interface WelcomePageOptions {
     parameters: WelcomePageParameters;
 }
 export type WelcomePageType = (options: WelcomePageOptions) => HTMLElement;
+/**
+ * @component WelcomePage
+ * @description Component for handling room creation and joining on MediaSFU with QR scanning and form submission.
+ *
+ * @selector app-welcome-page
+ * @standalone true
+ * @templateUrl ./welcome-page.component.html
+ * @styleUrls ['./welcome-page.component.css']
+ * @imports [ZXingScannerModule, CommonModule, FontAwesomeModule, ReactiveFormsModule]
+ *
+ * @example
+ * ```html
+ * <app-welcome-page [parameters]="welcomeParameters"></app-welcome-page>
+ * ```
+ */
 export declare class WelcomePage implements OnInit {
     private fb;
     private cookieService;

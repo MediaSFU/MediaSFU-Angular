@@ -6,24 +6,37 @@ export interface FormatNumberOptions {
 // Export the type definition for the function
 export type FormatNumberType = (options: FormatNumberOptions) => Promise<string | undefined>;
 
+/**
+ * The `FormatNumber` service provides functionality to format numeric values
+ * into a more readable string representation, appending appropriate suffixes
+ * like K (thousands), M (millions), and B (billions).
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { FormatNumber } from 'mediasfu-angular';
+ *
+ * constructor(private formatNumber: FormatNumber) {}
+ *
+ * async displayFormattedNumber() {
+ *   const formatted = await this.formatNumber.formatNumber({ number: 1500 });
+ *   console.log(formatted); // Outputs: "1.5K"
+ * }
+ * ```
+ *
+ * @remarks
+ * This service can be useful for displaying large numbers in a more compact form
+ * in user interfaces, especially in dashboards or reports where space is limited.
+ *
+ * @property {FormatNumberOptions} options - Options containing the number to format.
+ *
+ * @returns {FormatNumber} The FormatNumber service for formatting numeric values.
+ */
+
 @Injectable({
   providedIn: 'root',
 })
 export class FormatNumber {
-  /**
-   * Formats a number into a string representation with appropriate suffixes (K, M, B).
-   *
-   * @param number - The number to format.
-   * @returns A promise that resolves to a formatted string or undefined if the input is falsy.
-   *
-   * @example
-   * ```typescript
-   * formatNumber(500); // "500"
-   * formatNumber(1500); // "1.5K"
-   * formatNumber(1500000); // "1.5M"
-   * formatNumber(1500000000); // "1.5B"
-   * ```
-   */
 
   async formatNumber({ number }: FormatNumberOptions): Promise<string | undefined> {
     if (number) {

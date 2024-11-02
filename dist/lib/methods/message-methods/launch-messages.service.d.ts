@@ -4,6 +4,28 @@ export interface LaunchMessagesOptions {
     isMessagesModalVisible: boolean;
 }
 export type LaunchMessagesType = (options: LaunchMessagesOptions) => void;
+/**
+ * Toggles the visibility state of the messages modal.
+ *
+ * This method updates the visibility state of the messages modal by calling the provided
+ * function with the negated current visibility state. If the modal is currently visible,
+ * it will be closed; if it's hidden, it will be opened.
+ *
+ * @param {LaunchMessagesOptions} options - The options for launching the messages modal.
+ * @param {Function} options.updateIsMessagesModalVisible - Function to update the visibility state of the messages modal.
+ * @param {boolean} options.isMessagesModalVisible - Current visibility state of the messages modal.
+ *
+ * @example
+ * ```typescript
+ * const launchMessagesService = new LaunchMessages();
+ * launchMessagesService.launchMessages({
+ *   updateIsMessagesModalVisible: (visible) => {
+ *     console.log('Messages modal is now:', visible ? 'Visible' : 'Hidden');
+ *   },
+ *   isMessagesModalVisible: false, // Initially not visible
+ * });
+ * ```
+ */
 export declare class LaunchMessages {
     /**
      * Toggles the visibility state of the messages modal.

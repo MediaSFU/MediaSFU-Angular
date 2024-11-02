@@ -23,6 +23,65 @@ export interface WaitingRoomModalOptions {
     onWaitingRoomItemPress?: RespondToWaitingType;
 }
 export type WaitingRoomModalType = (options: WaitingRoomModalOptions) => HTMLElement;
+/**
+ * Component representing a modal for managing participants in a waiting room.
+ *
+ * @component
+ * @selector app-waiting-room-modal
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, FormsModule
+ * @templateUrl ./waiting-room-modal.component.html
+ * @styleUrls ['./waiting-room-modal.component.css']
+ *
+ * @property {boolean} isWaitingModalVisible - Visibility state of the modal.
+ * @property {number} waitingRoomCounter - Counter for the number of participants in the waiting room.
+ * @property {WaitingRoomParticipant[]} waitingRoomList - List of participants in the waiting room.
+ * @property {string} roomName - Name of the room.
+ * @property {Socket} socket - Socket instance for communication.
+ * @property {string} position - Position of the modal on the screen.
+ * @property {string} backgroundColor - Background color of the modal.
+ * @property {WaitingRoomModalParameters} parameters - Parameters for the waiting room modal.
+ * @property {function} onWaitingRoomClose - Function to call when the modal is closed.
+ * @property {function} onWaitingRoomFilterChange - Function to call when the filter value changes.
+ * @property {function} updateWaitingList - Function to update the waiting list.
+ * @property {function} onWaitingRoomItemPress - Function to call when an item in the waiting room is pressed.
+ *
+ * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
+ * @property {IconDefinition} faCheck - FontAwesome icon for the check button.
+ * @property {WaitingRoomParticipant[]} waitingRoomList_s - Filtered list of participants in the waiting room.
+ * @property {number} waitingRoomCounter_s - Counter for the filtered list of participants in the waiting room.
+ * @property {boolean} reRender - Flag to trigger re-rendering of the component.
+ *
+ * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
+ * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
+ * @method updateParameters - Updates the parameters for the waiting room modal.
+ * @method handleModalClose - Handles the closing of the modal.
+ * @method handleFilterChange - Handles the change in the filter input.
+ * @method handleItemPress - Handles the pressing of an item in the waiting room.
+ *
+ * @getter modalContainerStyle - Returns the style object for the modal container.
+ * @getter modalContentStyle - Returns the style object for the modal content.
+ * @getter inputStyle - Returns the style object for the input field.
+ *
+ * @example
+ * ```html
+ * <app-waiting-room-modal
+ *  [isWaitingModalVisible]="true"
+ * [waitingRoomCounter]="waitingRoomCounter"
+ * [waitingRoomList]="waitingRoomList"
+ * [roomName]="roomName"
+ * [socket]="socket"
+ * [position]="'topRight'"
+ * [backgroundColor]="'#83c0e9'"
+ * [parameters]="waitingRoomModalParams"
+ * [onWaitingRoomClose]="closeWaitingRoomModal"
+ * [onWaitingRoomFilterChange]="filterWaitingRoom"
+ * [updateWaitingList]="updateWaitingList"
+ * [onWaitingRoomItemPress]="handleWaitingRoomItemPress"
+ * ></app-waiting-room-modal>
+ * ```
+ *
+ */
 export declare class WaitingRoomModal implements OnChanges, OnInit {
     private respondToWaitingService;
     constructor(respondToWaitingService: RespondToWaiting);

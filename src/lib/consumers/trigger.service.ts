@@ -34,6 +34,46 @@ export interface TriggerOptions {
 // Export the type definition for the function
 export type TriggerType = (options: TriggerOptions) => Promise<void>;
 
+/**
+ * Triggers an update to the screen client based on the provided parameters.
+ *
+ * This function handles various conditions to determine the main screen person,
+ * adjusts the screen states, and emits an update to the screen client via socket.
+ *
+ * @param {TriggerOptions} options - The options for triggering the update.
+ * @param {string[]} options.ref_ActiveNames - Reference to the active names.
+ * @param {TriggerParameters} options.parameters - The parameters for the trigger.
+ * @returns {Promise<void>} A promise that resolves when the trigger is complete.
+ *
+ * @throws Will throw an error if the updateScreenClient operation fails.
+ *
+ * @example
+ * ```typescript
+ * await trigger({
+ *   ref_ActiveNames: ["user1", "user2"],
+ *   parameters: {
+ *     socket: socketInstance,
+ *     roomName: "room1",
+ *     screenStates: [{ mainScreenPerson: "user1", mainScreenFilled: true, adminOnMainScreen: false }],
+ *     participants: [{ name: "admin", islevel: "2" }],
+ *     updateDateState: 0,
+ *     lastUpdate: null,
+ *     nForReadjust: 0,
+ *     eventType: "conference",
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     whiteboardStarted: false,
+ *     whiteboardEnded: false,
+ *     updateUpdateDateState: (date) => {},
+ *     updateLastUpdate: (date) => {},
+ *     updateNForReadjust: (n) => {},
+ *     autoAdjust: async ({ n, parameters }) => [n, 0],
+ *   },
+ * });
+ * ```
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

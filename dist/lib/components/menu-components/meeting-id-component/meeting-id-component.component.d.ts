@@ -7,9 +7,14 @@ export type MeetingIdComponentType = (options: MeetingIdComponentOptions) => HTM
  * Component representing a meeting ID.
  *
  * @selector app-meeting-id-component
+ * @standalone true
  * @templateUrl ./meeting-id-component.component.html
  * @styleUrls ./meeting-id-component.component.css
- * @standalone true
+ *
+ * @example
+ * ```html
+ * <app-meeting-id-component [meetingID]="'123-456-789'"></app-meeting-id-component>
+ * ```
  */
 export declare class MeetingIdComponent {
     meetingID: string;

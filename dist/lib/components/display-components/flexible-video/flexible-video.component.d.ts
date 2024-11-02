@@ -15,58 +15,43 @@ export interface FlexibleVideoOptions {
 }
 export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
 /**
- * Component for displaying a flexible video grid.
+ * FlexibleVideo component displays a customizable video grid, supporting dynamic layout and optional screenboard overlay.
  *
- * @component
  * @selector app-flexible-video
  * @standalone true
  * @imports CommonModule
  *
- * @template
- * <div>
- *   <!-- Dynamic styles and layout for video grid -->
- *   <div *ngFor="let rowComponents of grid; let rowIndex = index">
- *     <div *ngFor="let component of rowComponents; let colIndex = index">
- *       <ng-container *ngComponentOutlet="component.component; injector: createInjector(component.inputs)"></ng-container>
- *     </div>
- *   </div>
- *   <div *ngIf="Screenboard && Screenboard.component">
- *     <ng-container *ngComponentOutlet="Screenboard.component; injector: createInjector(Screenboard.inputs)"></ng-container>
- *   </div>
- * </div>
+ * @inputs
+ * - `customWidth` (number): The custom width for each video grid item in pixels. Default is 0.
+ * - `customHeight` (number): The custom height for each video grid item in pixels. Default is 0.
+ * - `rows` (number): Number of rows in the video grid. Default is 0.
+ * - `columns` (number): Number of columns in the video grid. Default is 0.
+ * - `componentsToRender` (CustomMediaComponent[]): Array of components to render in the grid.
+ * - `showAspect` (boolean): Flag to control aspect ratio display. Default is false.
+ * - `backgroundColor` (string): Background color for the video grid. Default is 'transparent'.
+ * - `Screenboard` (CustomMediaComponent): Optional screenboard component to overlay on the grid.
+ * - `annotateScreenStream` (boolean): Flag to annotate the screen stream. Default is false.
+ * - `localStreamScreen` (MediaStream): Local screen stream for video.
  *
- * @class FlexibleVideo
- * @implements OnInit, OnChanges
+ * @methods
+ * - `ngOnInit()`: Initializes and generates the grid on component load if `showAspect` is true.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates grid layout and dimensions if properties change.
+ * - `generateGrid()`: Generates grid structure based on rows, columns, and `componentsToRender`.
+ * - `createInjector(inputs: any)`: Creates and caches an injector for component inputs.
  *
- * @property {number} customWidth - Custom width for the video grid.
- * @property {number} customHeight - Custom height for the video grid.
- * @property {number} rows - Number of rows in the video grid.
- * @property {number} columns - Number of columns in the video grid.
- * @property {Array<{ component: ComponentType<any>, inputs: any }>} componentsToRender - Components to render in the grid.
- * @property {boolean} showAspect - Flag to show or hide the aspect ratio.
- * @property {string} [backgroundColor='transparent'] - Background color for the video grid.
- * @property {{ component: ComponentType<any>, inputs: any }} [Screenboard] - Screenboard component to overlay on the grid.
- * @property {boolean} [annotateScreenStream=false] - Flag to annotate the screen stream.
- * @property {MediaStream} [localStreamScreen] - Local media stream for the screen.
- *
- * @property {number} key - Key for tracking changes.
- * @property {number} cardWidth - Width of each card in the grid.
- * @property {number} cardHeight - Height of each card in the grid.
- * @property {number} cardTop - Top position of each card in the grid.
- * @property {number} cardLeft - Left position of each card in the grid.
- * @property {number} canvasLeft - Left position of the canvas.
- * @property {any[][]} grid - Grid structure for the components.
- *
- * @constructor
- * @param {Injector} injector - Angular injector for dependency injection.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method generateGrid - Generates the grid structure based on rows and columns.
- * @method createInjector - Creates an injector for the given inputs.
- * @param {any} inputs - Inputs for the component.
- * @returns {Injector} - The created injector.
- */
+ * @example
+ * ```html
+ * <app-flexible-video
+ *   [customWidth]="300"
+ *   [customHeight]="200"
+ *   [rows]="2"
+ *   [columns]="3"
+ *   [componentsToRender]="[{ component: VideoComponent, inputs: { stream: videoStream } }]"
+ *   showAspect="true"
+ *   [Screenboard]="{ component: ScreenOverlayComponent, inputs: { overlayData: data } }"
+ * ></app-flexible-video>
+ * ```
+ **/
 export declare class FlexibleVideo implements OnInit, OnChanges {
     private injector;
     customWidth: number;

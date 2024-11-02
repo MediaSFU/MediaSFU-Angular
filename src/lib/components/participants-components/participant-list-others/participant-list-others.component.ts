@@ -11,6 +11,25 @@ export interface ParticipantListOthersOptions {
 
 export type ParticipantListOthersType = (options: ParticipantListOthersOptions) => HTMLElement;
 
+/**
+ * Component for displaying a list of other participants.
+ * It renders individual participant items within the list.
+ *
+ * @component
+ * @selector app-participant-list-others
+ * @standalone true
+ * @templateUrl ./participant-list-others.component.html
+ * @styleUrls ['./participant-list-others.component.css']
+ * @imports [CommonModule, ParticipantListOthersItem]
+ *
+ * @example
+ * ```html
+ * <app-participant-list-others [participants]="participantsList" [coHost]="coHostID" [member]="memberID">
+ * </app-participant-list-others>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-participant-list-others',
   standalone: true,

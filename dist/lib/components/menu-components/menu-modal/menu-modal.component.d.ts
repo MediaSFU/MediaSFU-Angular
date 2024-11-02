@@ -15,40 +15,33 @@ export interface MenuModalOptions {
 }
 export type MenuModalType = (options: MenuModalOptions) => HTMLElement;
 /**
- * @component MenuModal
- *
- * @description
- * The MenuModal component is a standalone Angular component that displays a modal dialog.
- * It includes various customizable properties and imports necessary modules and components.
+ * Component for displaying a customizable menu modal with various options.
  *
  * @selector app-menu-modal
+ * @standalone true
  * @templateUrl ./menu-modal.component.html
  * @styleUrls ./menu-modal.component.css
  *
- * @inputs
- * @input {string} backgroundColor - The background color of the modal content. Default is '#83c0e9'.
- * @input {boolean} isVisible - Determines whether the modal is visible.
- * @input {CustomButton[]} customButtons - An array of custom buttons to be displayed in the modal.
- * @input {boolean} shareButtons - Determines whether share buttons are displayed. Default is true.
- * @input {string} position - The position of the modal on the screen. Default is 'bottomRight'.
- * @input {string} roomName - The name of the room.
- * @input {string} adminPasscode - The admin passcode for the room.
- * @input {string} islevel - The level of the user.
- * @input {() => void} onClose - A function to be called when the modal is closed.
+ * @example
+ * ```html
+ * <app-menu-modal
+ *   [isVisible]="true"
+ *   backgroundColor="#83c0e9"
+ *   roomName="Room 123"
+ *   adminPasscode="AdminPass"
+ *   [customButtons]="customButtons"
+ *   [shareButtons]="true"
+ *   position="bottomRight"
+ *   (onClose)="closeMenu()"
+ * ></app-menu-modal>
+ * ```
  *
- * @methods
- * @method modalContainerStyle - Returns the style object for the modal container.
- * @method modalContentStyle - Returns the style object for the modal content.
- * @method handleClose - Calls the onClose function to handle closing the modal.
- *
- * @dependencies
- * - CommonModule
- * - FontAwesomeModule
- * - FormsModule
- * - CustomButtons
- * - MeetingIdComponent
- * - MeetingPasscodeComponent
- * - ShareButtonsComponent
+ * ```typescript
+ * const customButtons = [
+ *   { action: () => console.log('Clicked'), show: true, text: 'Button' },
+ * ];
+ * closeMenu() { console.log('Menu closed'); }
+ * ```
  */
 export declare class MenuModal {
     backgroundColor: string;

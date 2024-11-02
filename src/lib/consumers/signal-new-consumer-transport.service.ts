@@ -33,11 +33,8 @@ export interface SignalNewConsumerTransportOptions {
 export type SignalNewConsumerTransportType = (
   options: SignalNewConsumerTransportOptions,
 ) => Promise<string[] | void>;
-@Injectable({
-  providedIn: 'root',
-})
-export class SignalNewConsumerTransport {
-  /**
+
+/**
    * Signals the creation of a new consumer transport.
    *
    * @param {Object} options - The options for signaling a new consumer transport.
@@ -74,6 +71,11 @@ export class SignalNewConsumerTransport {
    *     console.error('Error signaling new consumer transport:', error);
    *   });
    */
+@Injectable({
+  providedIn: 'root',
+})
+export class SignalNewConsumerTransport {
+
   signalNewConsumerTransport = async ({
     remoteProducerId,
     islevel,

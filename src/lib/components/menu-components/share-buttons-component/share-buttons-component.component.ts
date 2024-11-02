@@ -24,24 +24,27 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
 
 /**
  * @component ShareButtonsComponent
- * @description This component provides a set of share buttons for different social media platforms and email.
- * It allows users to share a meeting link via various channels.
- *
  * @selector app-share-buttons-component
- * @templateUrl ./share-buttons-component.component.html
- * @styleUrls ./share-buttons-component.component.css
  * @standalone true
- * @imports [CommonModule, FontAwesomeModule]
+ * @description Displays a set of share buttons for sharing a meeting link on social media and email.
  *
- * @input {string} meetingID - The ID of the meeting to be shared.
- * @input {ShareButton[]} shareButtons - An array of custom share buttons.
- * @input {string} eventType - The type of event (e.g., 'chat', 'broadcast', 'webinar').
+ * @example
+ * ```html
+ * <app-share-buttons-component
+ *   [meetingID]="'12345'"
+ *   [eventType]="'broadcast'"
+ *   [shareButtons]="customShareButtons"
+ * ></app-share-buttons-component>
+ * ```
  *
- * @property {ShareButton[]} defaultShareButtons - The default set of share buttons.
- *
- * @getter {string} shareName - Determines the share name based on the event type.
- * @getter {ShareButton[]} filteredShareButtons - Returns the filtered share buttons based on visibility.
+ * ```typescript
+ * const customShareButtons = [
+ *   { icon: faEnvelope, action: () => console.log('Email'), show: true },
+ *   { icon: faFacebook, action: () => console.log('Facebook'), show: true },
+ * ];
+ * ```
  */
+
 @Component({
   selector: 'app-share-buttons-component',
   templateUrl: './share-buttons-component.component.html',

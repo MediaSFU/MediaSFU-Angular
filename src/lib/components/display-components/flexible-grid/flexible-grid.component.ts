@@ -13,31 +13,41 @@ export interface FlexibleGridOptions {
 export type FlexibleGridType = (options: FlexibleGridOptions) => HTMLElement;
 
 /**
- * @component FlexibleGrid
- *
- * A flexible grid component that dynamically renders a grid of components based on the provided inputs.
+ * FlexibleGrid is a dynamic, customizable grid component that renders a specified number of rows and columns,
+ * with each grid item containing a provided component.
  *
  * @selector app-flexible-grid
+ * @standalone true
+ * @imports CommonModule
  *
  * @inputs
- * - `customWidth` (number): The custom width for each grid item in pixels. Default is 0.
- * - `customHeight` (number): The custom height for each grid item in pixels. Default is 0.
- * - `rows` (number): The number of rows in the grid. Default is 0.
- * - `columns` (number): The number of columns in the grid. Default is 0.
- * - `componentsToRender` ({ component: any, inputs?: any }[]): An array of components to render in the grid, each with optional inputs.
- * - `backgroundColor` (string): The background color for each grid item. Default is 'transparent'.
+ * - `customWidth` (number): The width for each grid item in pixels. Default is 0.
+ * - `customHeight` (number): The height for each grid item in pixels. Default is 0.
+ * - `rows` (number): Number of rows in the grid. Default is 0.
+ * - `columns` (number): Number of columns in the grid. Default is 0.
+ * - `componentsToRender` ({ component: any, inputs?: any }[]): Array of components to render in the grid, each with optional inputs.
+ * - `backgroundColor` (string): Background color for each grid item. Default is 'transparent'.
  *
  * @methods
- * - `ngOnInit()`: Lifecycle hook that is called after the component is initialized. It generates the grid.
- * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook that is called when any data-bound property of the component changes. It regenerates the grid if `columns`, `componentsToRender`, or `rows` change.
- * - `generateGrid()`: Generates the grid based on the number of rows and columns, and the components to render.
- * - `getGridItemStyle()`: Returns the style object for each grid item, including custom width, height, background color, margin, padding, and border radius.
- * - `createInjector(inputs: any)`: Creates and caches an injector for the given inputs to be used with `ngComponentOutlet`.
+ * - `ngOnInit()`: Initializes and generates the grid on component load.
+ * - `ngOnChanges(changes: SimpleChanges)`: Regenerates the grid if `columns`, `componentsToRender`, or `rows` change.
+ * - `generateGrid()`: Builds the grid based on the row, column, and component configurations.
+ * - `getGridItemStyle()`: Returns a style object for each grid item, including custom width, height, and background color.
+ * - `createInjector(inputs: any)`: Creates a cached injector for each component to support dynamic component inputs.
  *
- * @dependencies
- * - `CommonModule`: Angular's common module is imported for common directives.
- * - `Injector`: Angular's dependency injection system is used to create injectors for dynamic components.
- */
+ * @example
+ * ```html
+ * <app-flexible-grid
+ *   [customWidth]="100"
+ *   [customHeight]="100"
+ *   [rows]="2"
+ *   [columns]="3"
+ *   [componentsToRender]="[{ component: MyComponent, inputs: { prop: 'value' } }]"
+ *   backgroundColor="lightgrey"
+ * ></app-flexible-grid>
+ * ```
+ **/
+
 @Component({
   selector: 'app-flexible-grid',
   standalone: true,

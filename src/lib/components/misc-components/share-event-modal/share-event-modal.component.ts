@@ -45,6 +45,20 @@ export type ShareEventModalType = (options: ShareEventModalOptions) => void;
  *
  * @getter modalContainerStyle - Returns the style object for the modal container.
  * @getter modalContentStyle - Returns the style object for the modal content.
+ * @example
+ * ```html
+ * <app-share-event-modal
+ *   [backgroundColor]="'rgba(255, 255, 255, 0.25)'"
+ *   [isShareEventModalVisible]="isModalVisible"
+ *   [onShareEventClose]="handleModalClose"
+ *   [roomName]="roomName"
+ *   [adminPasscode]="adminPasscode"
+ *   [islevel]="userLevel"
+ *   [position]="'topRight'"
+ *   [shareButtons]="true"
+ *   [eventType]="eventType"
+ * ></app-share-event-modal>
+ * ```
  */
 @Component({
   selector: 'app-share-event-modal',

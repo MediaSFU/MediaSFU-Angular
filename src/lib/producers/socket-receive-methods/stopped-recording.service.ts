@@ -10,6 +10,33 @@ export interface StoppedRecordingOptions {
 // Export the type definition for the function
 export type StoppedRecordingType = (options: StoppedRecordingOptions) => Promise<void>;
 
+/**
+ * Service to display an alert message when recording has stopped.
+ *
+ * @class
+ * @name StoppedRecording
+ * @description Provides a method to show an alert indicating that the recording has stopped.
+ *
+ * @method
+ * stoppedRecording
+ *
+ * @param {StoppedRecordingOptions} options - Options for displaying the alert:
+ *   - `state` {string}: The state of the recording, typically 'stop'.
+ *   - `reason` {string}: The reason for stopping the recording.
+ *   - `showAlert` {Function}: Optional function to show alert messages.
+ *
+ * @returns {Promise<void>} Resolves when the alert message has been displayed.
+ *
+ * @example
+ * const options = {
+ *   state: 'stop',
+ *   reason: 'User ended recording',
+ *   showAlert: ({ message, duration, type }) => console.log(message)
+ * };
+ * stoppedRecordingService.stoppedRecording(options);
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

@@ -10,27 +10,42 @@ export interface OtherGridComponentOptions {
 }
 export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTMLElement;
 /**
- * Component representing a customizable grid with an optional timer.
+ * OtherGridComponent represents a customizable grid container with optional meeting progress timer.
  *
  * @selector app-other-grid-component
  * @standalone true
  * @imports CommonModule, MeetingProgressTimer
  *
  * @template
- * <div [ngStyle]="{...}">
- *   <app-meeting-progress-timer *ngIf="showTimer" [meetingProgressTime]="meetingProgressTime" [initialBackgroundColor]="timeBackgroundColor" [showTimer]="showTimer"></app-meeting-progress-timer>
- *   <ng-content></ng-content>
- * </div>
+ * - The template consists of:
+ *   - A grid container styled with specified dimensions, background color, and border.
+ *   - An optional `MeetingProgressTimer` component displayed within the grid if `showTimer` is true.
+ *
+ * @styles
+ * - Default border, padding, and display styles for the grid container.
+ *
+ * @inputs
+ * - `backgroundColor` (string): Background color of the grid container. Default is `'transparent'`.
+ * - `width` (number): Width of the grid in pixels. Default is `0`.
+ * - `height` (number): Height of the grid in pixels. Default is `0`.
+ * - `showAspect` (boolean): Controls visibility of the grid container. Default is `true`.
+ * - `timeBackgroundColor` (string): Background color of the timer. Default is `'green'`.
+ * - `showTimer` (boolean): Determines if the timer should be displayed. Default is `false`.
+ * - `meetingProgressTime` (string): Time to display in the timer. Default is `'00:00:00'`.
  *
  * @class OtherGridComponent
- *
- * @property {string} backgroundColor - The background color of the grid. Default is 'transparent'.
- * @property {number} width - The width of the grid in pixels. Default is 0.
- * @property {number} height - The height of the grid in pixels. Default is 0.
- * @property {boolean} showAspect - Flag to show or hide the grid. Default is true.
- * @property {string} timeBackgroundColor - The background color of the timer. Default is 'green'.
- * @property {boolean} showTimer - Flag to show or hide the timer. Default is false.
- * @property {string} meetingProgressTime - The meeting progress time to be displayed in the timer. Default is '00:00:00'.
+ * @example
+ * ```html
+ * <app-other-grid-component
+ *   [backgroundColor]="'lightgray'"
+ *   [width]="300"
+ *   [height]="200"
+ *   [showAspect]="true"
+ *   [timeBackgroundColor]="'blue'"
+ *   [showTimer]="true"
+ *   [meetingProgressTime]="'00:05:32'"
+ * ></app-other-grid-component>
+ * ```
  */
 export declare class OtherGridComponent {
     backgroundColor: string;

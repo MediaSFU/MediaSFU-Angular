@@ -29,6 +29,56 @@ export interface CustomButtonsOptions {
 
 export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
 
+/**
+ * CustomButtons component renders a list of customizable buttons.
+ *
+ * @selector app-custom-buttons
+ * @standalone true
+ * @imports [CommonModule, FormsModule, FontAwesomeModule]
+ *
+ * @input {CustomButton[]} buttons - Array of button configurations.
+ * Each button configuration includes properties such as:
+ * - **action**: Function executed on button click.
+ * - **show**: Boolean or function determining button visibility.
+ * - **backgroundColor**: Background color of the button.
+ * - **disabled**: Boolean to disable button if set to true.
+ * - **icon**: Optional FontAwesome icon displayed on the button.
+ * - **iconStyle**: Style applied to the icon.
+ * - **text**: Text displayed on the button.
+ * - **textStyle**: Style applied to the text.
+ * - **customComponent**: A custom Angular component or HTML element rendered within the button.
+ * - **injector**: Injector used for providing dependencies to the custom component.
+ *
+ * @example
+ * ```html
+ * <app-custom-buttons [buttons]="buttonsArray"></app-custom-buttons>
+ * ```
+ *
+ * @example
+ * ```typescript
+ * const buttonsArray: CustomButton[] = [
+ *   {
+ *     action: () => console.log('Button 1 clicked'),
+ *     show: true,
+ *     backgroundColor: 'blue',
+ *     disabled: false,
+ *     icon: faCoffee,
+ *     iconStyle: { color: 'white' },
+ *     text: 'Button 1',
+ *     textStyle: { color: 'white' },
+ *     customComponent: <CustomComponent />,
+ *     injector: Injector.create({
+ *       providers: [{ provide: 'customProp', useValue: 'customValue' }]
+ *     }),
+ *   },
+ * ];
+ * ```
+ *
+ * @class CustomButtons
+ * @method mergeStyles - Merges default styles with user-provided custom styles.
+ * @method isCustomComponentConfig - Type guard to check if an object is of type CustomComponent.
+ */
+
 @Component({
   selector: 'app-custom-buttons',
   templateUrl: './custom-buttons.component.html',
@@ -37,57 +87,6 @@ export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
   imports: [CommonModule, FormsModule, FontAwesomeModule],
 })
 export class CustomButtons {
-  /**
-   * CustomButtons component renders a list of customizable buttons.
-   *
-   * @component
-   * @param {CustomButtonsOptions} props - The properties for the CustomButtons component.
-   * @param {Array} props.buttons - An array of button configurations.
-   * @param {Object} props.buttons[].action - The function to be called when the button is clicked.
-   * @param {boolean} props.buttons[].show - Determines if the button should be displayed.
-   * @param {string} props.buttons[].backgroundColor - The background color of the button.
-   * @param {boolean} props.buttons[].disabled - Determines if the button should be disabled.
-   * @param {Object} [props.buttons[].icon] - The icon to be displayed on the button.
-   * @param {Object} [props.buttons[].iconStyle] - The style to be applied to the icon.
-   * @param {string} [props.buttons[].text] - The text to be displayed on the button.
-   * @param {Object} [props.buttons[].textStyle] - The style to be applied to the text.
-   * @param {React.ReactNode} [props.buttons[].customComponent] - A custom component to be rendered inside the button.
-   * @param {Injector} [props.buttons[].injector] - The injector to be used for the custom component.
-   * @returns {HTMLElement} The CustomButtons component.
-   * @example
-   * ```html
-   * <app-custom-buttons [buttons]="buttons"></app-custom-buttons>
-   * ```
-   * @example
-   * ```typescript
-   * const buttons = [
-   *  {
-   *   action: () => console.log('Button 1 clicked'),
-   *  show: true,
-   * backgroundColor: 'blue',
-   * disabled: false,
-   * icon: faCoffee,
-   * iconStyle: { color: 'white' },
-   * text: 'Button 1',
-   * textStyle: { color: 'white' },
-   * customComponent: <CustomComponent />,
-   * injector: Injector.create({ providers: [{ provide: 'customProp', useValue: 'customValue' }] }),
-   * },
-   * {
-   *  action: () => console.log('Button 2 clicked'),
-   * show: true,
-   * backgroundColor: 'red',
-   * disabled: false,
-   * icon: faCoffee,
-   * iconStyle: { color: 'white' },
-   * text: 'Button 2',
-   * textStyle: { color: 'white' },
-   * customComponent: <CustomComponent />,
-   * injector: Injector.create({ providers: [{ provide: 'customProp', useValue: 'customValue' }] }),
-   * },
-   * ];
-   * ```
-   */
 
   @Input() buttons!: CustomButton[];
 

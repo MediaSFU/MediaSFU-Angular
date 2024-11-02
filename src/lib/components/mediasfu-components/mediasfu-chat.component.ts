@@ -193,6 +193,57 @@ export type MediasfuChatOptions = {
   imgSrc?: string;
 };
 
+/**
+ * MediasfuChat component provides an interface for chat-based streaming events. It includes a conditional prejoin screen, main content with flexible grids and modals, and supports chat-related settings.
+ *
+ * @component
+ * @selector app-mediasfu-chat
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, AlertComponent, AudioGrid, ControlButtonsComponentTouch, FlexibleGrid, LoadingModal, ConfirmExitModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, MainAspectComponent, MainContainerComponent, MainScreenComponent, OtherGridComponent, MessageWidget]
+ *
+ * @template
+ * The template includes:
+ * - Conditional rendering for the PrejoinPage component.
+ * - A main container with nested components for chat functionalities, including an aspect and screen layout.
+ * - The `app-main-aspect-component` for setting display properties based on event types.
+ * - An `app-other-grid-component` that manages the layout for video and audio content.
+ * - Embedded modals for messages, exit confirmation, and share event actions.
+ *
+ * @input {any} PrejoinPage - Component for the prejoin page (defaults to WelcomePage).
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for MediaSFU.
+ * @input {boolean} useLocalUIMode - Toggles local UI mode.
+ * @input {SeedData} seedData - Optional seed data.
+ * @input {boolean} useSeed - Enables use of seed data.
+ * @input {string} imgSrc - Image source for branding or logos.
+ *
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Chat".
+ *
+ * @styles
+ * Customizable styles for layout and overflow.
+ *
+ * @providers [CookieService] - Service for managing cookies within the component.
+ *
+ * @constructor
+ * @class MediasfuChat
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes configurations and parameters.
+ * @method ngOnDestroy - Handles cleanup and removal of event listeners or intervals.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-chat
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-chat>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-mediasfu-chat',
   standalone: true,

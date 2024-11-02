@@ -21,6 +21,38 @@ export interface CompareActiveNamesOptions {
 // Export the type definition for the function
 export type CompareActiveNamesType = (options: CompareActiveNamesOptions) => Promise<void>;
 
+  /**
+   * Compares the current active names with the previous active names and triggers an action if there are changes.
+   *
+   * @param {CompareActiveNamesOptions} options - The options for comparing active names.
+   * @param {boolean} [options.restart=false] - Whether to restart the comparison.
+   * @param {CompareActiveNamesParameters} options.parameters - The parameters for the comparison.
+   * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+   * @param {string[]} options.parameters.activeNames - The current active names.
+   * @param {string[]} options.parameters.prevActiveNames - The previous active names.
+   * @param {Function} options.parameters.updatePrevActiveNames - Function to update the previous active names.
+   * @param {Function} options.parameters.trigger - Function to trigger an action when names change.
+   *
+   * @returns {Promise<void>} A promise that resolves when the comparison is complete.
+   *
+   * @throws Will log an error message if an error occurs during the comparison.
+   *
+   * @example
+   * const options = {
+   *   restart: false,
+   *   parameters: {
+   *     getUpdatedAllParams: () => { /* Logic to get updated parameters *\/ },
+   *     activeNames: ['Alice', 'Bob'],
+   *     prevActiveNames: ['Alice', 'Charlie'],
+   *     updatePrevActiveNames: (names) => { /* Logic to update previous active names *\/ },
+   *     trigger: async (data) => { /* Logic to handle the trigger *\/ },
+   *   },
+   * };
+   *
+   * await compareActiveNamesService.compareActiveNames(options);
+   * // If 'Bob' is not in the previous active names, it will trigger the action.
+   */
+
 @Injectable({
   providedIn: 'root',
 })

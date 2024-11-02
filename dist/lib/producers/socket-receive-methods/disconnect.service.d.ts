@@ -7,6 +7,32 @@ export interface DisconnectOptions {
     updateValidated?: (isValidated: boolean) => void;
 }
 export type DisconnectType = (options: DisconnectOptions) => Promise<void>;
+/**
+ * Service to handle disconnection logic, providing options to redirect or display an alert message.
+ *
+ * @class
+ * @name Disconnect
+ * @description This service manages user disconnection by either redirecting the user to a specified URL (for web platforms) or showing a custom alert message.
+ *
+ * @method
+ * disconnect
+ * @async
+ * @param {DisconnectOptions} options - The options for handling disconnection.
+ * @param {Function} options.showAlert - Function to display an alert message if a redirect is not needed.
+ * @param {string} options.redirectURL - The URL to redirect to upon disconnection, if applicable.
+ * @param {boolean} options.onWeb - Flag indicating if the application is running on the web.
+ * @param {Function} [options.updateValidated] - Optional function to update validation state, primarily for native applications.
+ * @returns {Promise<void>} A promise that resolves when the disconnection process completes.
+ *
+ * @example
+ * const disconnectOptions = {
+ *   showAlert: (alert) => console.log(alert.message),
+ *   redirectURL: 'https://example.com/home',
+ *   onWeb: true,
+ *   updateValidated: (isValid) => console.log(`Validation updated: ${isValid}`)
+ * };
+ * disconnectService.disconnect(disconnectOptions);
+ */
 export declare class Disconnect {
     /**
      * Handles the disconnection logic by either redirecting to a specified URL or showing an alert.

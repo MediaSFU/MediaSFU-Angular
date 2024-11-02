@@ -49,6 +49,44 @@ export interface ControlMediaHostOptions {
 // Export the type definition for the function
 export type ControlMediaHostType = (options: ControlMediaHostOptions) => Promise<void>;
 
+/**
+ * Service for controlling participant media in a session, with options to manage audio, video, screenshare, and chat functionalities.
+ *
+ * @class
+ * @name ControlMediaHost
+ * @description This service provides the host with control over a participant's media (audio, video, screenshare, chat), with options to enable or disable these functionalities individually or all at once.
+ *
+ * @method
+ * controlMediaHost
+ * @async
+ * @param {ControlMediaHostOptions} options - Options to specify which media type to control and provide necessary parameters.
+ * @param {string} options.type - The media type to control ('audio', 'video', 'screenshare', 'chat', 'all').
+ * @param {ControlMediaHostParameters} options.parameters - Additional parameters, functions, and media streams necessary to perform the media control operations.
+ *
+ * @returns {Promise<void>} - A promise that resolves when the media control operation is complete.
+ *
+ * @example
+ * ```typescript
+ * const controlMediaHostService = new ControlMediaHost();
+ * await controlMediaHostService.controlMediaHost({
+ *   type: 'audio',
+ *   parameters: {
+ *     updateAdminRestrictSetting: (value) => console.log(value),
+ *     localStream: myLocalStream,
+ *     updateLocalStream: (stream) => console.log(stream),
+ *     updateAudioAlreadyOn: (value) => console.log(value),
+ *     onScreenChanges: async () => { },
+ *     disconnectSendTransportAudio: async () => { },
+ *     getUpdatedAllParams: () => ({ }),
+ *   }
+ * });
+ * ```
+ *
+ * @remarks
+ * - This function handles the control of audio, video, screenshare, or chat for a participant based on the specified type.
+ * - For `all` type, it sequentially controls each media type to ensure all are turned off.
+ */
+
 @Injectable({
   providedIn: 'root',
 })

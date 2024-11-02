@@ -114,6 +114,17 @@ export type ScreenboardModalType = (options: ScreenboardModalOptions) => HTMLEle
  * @method handleScreenTransport - Method to handle screen transport logic.
  * @method stopAnnotation - Method to stop the screen annotation.
  * @method stopAllTracks - Method to stop all media tracks.
+ * @returns {HTMLElement} The screenboard modal component.
+ * @example
+ * ```html
+ * <app-screenboard-modal
+ *  [parameters]="screenboardModalParams"
+ * [isVisible]="isModalVisible"
+ * [onClose]="closeModal"
+ * [position]="'topRight'"
+ * [backgroundColor]="'#83c0e9'">
+ * </app-screenboard-modal>
+ * ```
  */
 @Component({
   selector: 'app-screenboard-modal',

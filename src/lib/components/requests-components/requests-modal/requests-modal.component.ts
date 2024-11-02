@@ -74,6 +74,23 @@ export type RequestsModalType = (options: RenderRequestComponentOptions) => HTML
  * @method handleModalClose - Handles the modal close action.
  * @method handleFilterChange - Handles the filter change event.
  * @param {Event} event - The filter change event.
+ * @example
+ * ```html
+ * <app-requests-modal
+ *   [isRequestsModalVisible]="isModalVisible"
+ *   [requestCounter]="requestCounter"
+ *   [requestList]="requests"
+ *   [roomName]="roomName"
+ *   [socket]="socket"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [position]="'topRight'"
+ *   [parameters]="requestParams"
+ *   (onRequestClose)="handleModalClose()"
+ *   (onRequestFilterChange)="handleFilterChange($event)"
+ *   (onRequestItemPress)="handleRequestPress($event)"
+ *   [updateRequestList]="updateRequestList">
+ * </app-requests-modal>
+ * ```
  */
 @Component({
   selector: 'app-requests-modal',

@@ -270,17 +270,6 @@ import {
 } from 'mediasoup-client/lib/types';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
-/**
- * Options for configuring the MediasfuConference component.
- *
- * @typedef {Object} MediasfuConferenceOptions
- * @property {(options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement} [PrejoinPage] - A function that returns an HTMLElement for the pre-join page.
- * @property {{ apiUserName: string; apiKey: string }} [credentials] - Credentials for API access, including username and API key.
- * @property {boolean} [useLocalUIMode] - Flag to determine if the local UI mode should be used.
- * @property {SeedData} [seedData] - Data used for seeding the component.
- * @property {boolean} [useSeed] - Flag to determine if seed data should be used.
- * @property {string} [imgSrc] - Source URL for an image to be used in the component.
- */
 export type MediasfuConferenceOptions = {
   PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
   credentials?: { apiUserName: string; apiKey: string };
@@ -289,6 +278,55 @@ export type MediasfuConferenceOptions = {
   useSeed?: boolean;
   imgSrc?: string;
 };
+
+/**
+ * MediasfuConference component creates an interactive conference interface, supporting breakout rooms, chat, video and audio management, and custom controls.
+ *
+ * @component
+ * @selector app-mediasfu-conference
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * The template includes:
+ * - Conditional rendering for PrejoinPage or WelcomePage component.
+ * - A main content area with modular components for grid layouts, video streaming, and sub-aspect controls.
+ * - Modals for participants, settings, recording, breakout rooms, and more, to enhance interactivity and customization in conference settings.
+ *
+ * @input {any} PrejoinPage - Component for the prejoin page (defaults to WelcomePage).
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for MediaSFU.
+ * @input {boolean} useLocalUIMode - Toggles local UI mode.
+ * @input {SeedData} seedData - Optional seed data for initializing components.
+ * @input {boolean} useSeed - Enables use of seed data.
+ * @input {string} imgSrc - Image source for branding or logos.
+ *
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Conference".
+ *
+ * @styles
+ * Customizable styles for component layout, overflow, and specific modal appearances.
+ *
+ * @providers [CookieService] - Service for managing cookies within the component.
+ *
+ * @constructor
+ * @class MediasfuConference
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes configurations and input parameters.
+ * @method ngOnDestroy - Handles cleanup of event listeners or intervals.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-conference
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-conference>
+ * ```
+ */
+
 
 @Component({
   selector: 'app-mediasfu-conference',

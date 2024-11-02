@@ -17,6 +17,42 @@ export interface ResumeSendTransportAudioOptions {
     parameters: ResumeSendTransportAudioParameters;
 }
 export type ResumeSendTransportAudioType = (options: ResumeSendTransportAudioOptions) => Promise<void>;
+/**
+ * Resumes the send transport for audio and updates the UI and audio producer state accordingly.
+ *
+ * This method is essential for resuming audio streaming after it has been paused.
+ * It updates the application state and UI to reflect the current audio status.
+ *
+ * @param {ResumeSendTransportAudioOptions} options - The options for resuming the send transport.
+ * @param {Object} options.parameters - The parameters required for resuming the send transport.
+ * @param {Producer} options.parameters.audioProducer - The audio producer to be resumed.
+ * @param {string} options.parameters.islevel - The level of the user (e.g., host).
+ * @param {string} options.parameters.hostLabel - The label of the host.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {Function} options.parameters.updateAudioProducer - Function to update the audio producer state.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ *
+ * @returns {Promise<void>} A promise that resolves when the send transport is resumed and the UI is updated.
+ *
+ * @throws {Error} Throws an error if there is an issue during the process of resuming the audio send transport.
+ *
+ * @example
+ * await resumeSendTransportAudio({
+ *   parameters: {
+ *     audioProducer: myAudioProducer,
+ *     islevel: '2',
+ *     hostLabel: 'Host',
+ *     lock_screen: false,
+ *     shared: false,
+ *     updateAudioProducer: (producer) => { /* update producer state *\/ },
+ *     updateUpdateMainWindow: (state) => { /* update main window state *\/ },
+ *     prepopulateUserMedia: myPrepopulateFunction,
+ *   },
+ * });
+ */
 export declare class ResumeSendTransportAudio {
     /**
      * Resumes the send transport for audio and updates the UI and audio producer state accordingly.

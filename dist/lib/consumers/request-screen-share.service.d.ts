@@ -15,6 +15,40 @@ export interface RequestScreenShareOptions {
     parameters: RequestScreenShareParameters;
 }
 export type RequestScreenShareType = (options: RequestScreenShareOptions) => Promise<void>;
+/**
+ * Requests to start screen sharing.
+ *
+ * This method initiates a screen sharing request and handles the response
+ * from the server to determine if screen sharing is allowed. It also configures
+ * the target resolution for the screen share based on the user's input and
+ * parameters.
+ *
+ * @param {RequestScreenShareOptions} options - The options for requesting screen share.
+ * @param {Object} options.parameters - The parameters for the screen share request.
+ * @param {Socket} options.parameters.socket - The socket instance to communicate with the server.
+ * @param {Function} [options.parameters.showAlert] - Optional function to show alerts to the user.
+ * @param {boolean} options.parameters.localUIMode - Indicates if the user is in local UI mode.
+ * @param {string} [options.parameters.targetResolution] - The target resolution for screen sharing.
+ * @param {string} [options.parameters.targetResolutionHost] - The target resolution for the host screen.
+ * @param {Function} options.parameters.startShareScreen - Function to start screen sharing.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen share request is processed.
+ *
+ * @throws {Error} Throws an error if there is an issue during the screen share request process.
+ *
+ * @example
+ * ```typescript
+ * await requestScreenShare({
+ *   parameters: {
+ *     socket: mySocket,
+ *     localUIMode: false,
+ *     targetResolution: 'fhd',
+ *     startShareScreen: myStartShareScreenFunction,
+ *     showAlert: myShowAlertFunction,
+ *   },
+ * });
+ * ```
+ */
 export declare class RequestScreenShare {
     /**
      * Requests to start screen sharing.

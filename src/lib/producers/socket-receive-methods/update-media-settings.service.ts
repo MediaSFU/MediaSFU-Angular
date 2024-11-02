@@ -11,6 +11,38 @@ export interface UpdateMediaSettingsOptions {
 // Export the type definition for the function
 export type UpdateMediaSettingsType = (options: UpdateMediaSettingsOptions) => void;
 
+/**
+ * Service for updating media settings including audio, video, screenshare, and chat.
+ *
+ * @class
+ * @name UpdateMediaSettings
+ * @description Provides a method to update multiple media settings at once using specified update functions.
+ *
+ * @method
+ * updateMediaSettings
+ *
+ * @param {UpdateMediaSettingsOptions} options - Options for updating media settings:
+ *   - `settings` {Settings}: The settings values to apply.
+ *   - `updateAudioSetting` {Function}: Function to update the audio setting.
+ *   - `updateVideoSetting` {Function}: Function to update the video setting.
+ *   - `updateScreenshareSetting` {Function}: Function to update the screenshare setting.
+ *   - `updateChatSetting` {Function}: Function to update the chat setting.
+ *
+ * @returns {void} Updates settings directly through the provided functions.
+ *
+ * @example
+ * const settings = ['mute', 'HD', 'enabled', 'disabled'];
+ * const options = {
+ *   settings,
+ *   updateAudioSetting: (value) => console.log(`Audio setting updated to: ${value}`),
+ *   updateVideoSetting: (value) => console.log(`Video setting updated to: ${value}`),
+ *   updateScreenshareSetting: (value) => console.log(`Screenshare setting updated to: ${value}`),
+ *   updateChatSetting: (value) => console.log(`Chat setting updated to: ${value}`)
+ * };
+ * updateMediaSettingsService.updateMediaSettings(options);
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

@@ -57,6 +57,64 @@ export interface StreamSuccessVideoOptions {
     parameters: StreamSuccessVideoParameters;
 }
 export type StreamSuccessVideoType = (options: StreamSuccessVideoOptions) => Promise<void>;
+/**
+ * Streams a video successfully by managing the local stream, updating parameters, and handling video transport.
+ *
+ * This method initiates the video streaming process by updating the local video stream with the new stream,
+ * creating or connecting to the video transport, and notifying participants of the streaming status.
+ *
+ * @param {StreamSuccessVideoOptions} options - The options for streaming the video.
+ * @param {MediaStream} options.stream - The media stream to be used for the video.
+ * @param {StreamSuccessVideoParameters} options.parameters - The parameters required for streaming.
+ * @param {Socket} options.parameters.socket - The socket instance for real-time communication.
+ * @param {Participant[]} options.parameters.participants - The list of participants in the session.
+ * @param {MediaStream | null} options.parameters.localStream - The local media stream.
+ * @param {boolean} options.parameters.transportCreated - Indicates if the transport has already been created.
+ * @param {boolean} options.parameters.transportCreatedVideo - Indicates if the video transport has been created.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {boolean} options.parameters.videoAction - Indicates if a video action is being performed.
+ * @param {ProducerOptions} options.parameters.videoParams - The parameters for the video producer.
+ * @param {MediaStream | null} options.parameters.localStreamVideo - The local video stream.
+ * @param {string} options.parameters.defVideoID - The default video device ID.
+ * @param {string} options.parameters.userDefaultVideoInputDevice - The user's default video input device.
+ * @param {ProducerOptions} options.parameters.params - Additional parameters for the producer.
+ * @param {ProducerOptions} options.parameters.videoParamse - Additional parameters for the video.
+ * @param {string} options.parameters.islevel - The level of the user (e.g., host, participant).
+ * @param {string} options.parameters.member - The member's name in the session.
+ * @param {boolean} options.parameters.updateMainWindow - Indicates if the main window should be updated.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {Function} options.parameters.showAlert - Function to show alert messages.
+ * @param {Function} options.parameters.updateParticipants - Function to update the participants list.
+ * @param {Function} options.parameters.updateTransportCreatedVideo - Function to update the transport creation state.
+ * @param {Function} options.parameters.updateVideoAlreadyOn - Function to update the video status.
+ * @param {Function} options.parameters.updateVideoAction - Function to update the video action state.
+ * @param {Function} options.parameters.updateLocalStream - Function to update the local stream.
+ * @param {Function} options.parameters.updateLocalStreamVideo - Function to update the local video stream.
+ * @param {Function} options.parameters.updateUserDefaultVideoInputDevice - Function to update the default video input device.
+ * @param {Function} options.parameters.updateCurrentFacingMode - Function to update the current facing mode.
+ * @param {Function} options.parameters.updateDefVideoID - Function to update the default video device ID.
+ * @param {Function} options.parameters.updateAllowed - Function to update the allowed state.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.createSendTransport - Function to create a send transport for video.
+ * @param {Function} options.parameters.connectSendTransportVideo - Function to connect the send transport for video.
+ * @param {Function} options.parameters.resumeSendTransportAudio - Function to resume audio transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video has been successfully streamed.
+ *
+ * @throws {Error} Throws an error if there is an issue with streaming the video.
+ *
+ * @example
+ * await streamSuccessVideo({
+ *   stream: newVideoStream,
+ *   parameters: {
+ *     socket: socketInstance,
+ *     localStream: null,
+ *     // other parameters...
+ *   },
+ * });
+ */
 export declare class StreamSuccessVideo {
     /**
      * Streams a video successfully by managing the local stream, updating parameters, and handling video transport.

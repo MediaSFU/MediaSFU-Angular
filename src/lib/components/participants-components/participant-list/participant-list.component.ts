@@ -31,6 +31,27 @@ export interface ParticipantListOptions {
   updateParticipants: (participants: Participant[]) => void;
 }
 
+/**
+ * @component ParticipantList
+ * @description Displays a list of participants and provides actions like muting, messaging, and removing participants.
+ *
+ * @selector app-participant-list
+ * @standalone true
+ * @templateUrl ./participant-list.component.html
+ * @styleUrls ['./participant-list.component.css']
+ * @imports [CommonModule, ParticipantListItem]
+ *
+ * @example
+ * ```html
+ * <app-participant-list [participants]="participants" [isBroadcast]="isBroadcast"
+ *                       [onMuteParticipants]="muteParticipantsHandler"
+ *                       [onMessageParticipants]="messageParticipantsHandler"
+ *                       [onRemoveParticipants]="removeParticipantsHandler">
+ * </app-participant-list>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-participant-list',
   standalone: true,

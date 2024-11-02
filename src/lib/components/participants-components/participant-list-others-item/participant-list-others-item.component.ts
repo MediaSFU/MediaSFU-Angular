@@ -14,6 +14,25 @@ export type ParticipantListOthersItemType = (
   options: ParticipantListOthersItemOptions,
 ) => HTMLElement;
 
+/**
+ * Component for displaying an individual participant item in the "others" participant list.
+ * Provides a display name with conditional labels for roles such as host, co-host, or self.
+ *
+ * @component
+ * @selector app-participant-list-others-item
+ * @standalone true
+ * @templateUrl ./participant-list-others-item.component.html
+ * @styleUrls ['./participant-list-others-item.component.css']
+ * @imports [CommonModule, FontAwesomeModule]
+ *
+ * @example
+ * ```html
+ * <app-participant-list-others-item [participant]="participant" [member]="currentMember" [coHost]="coHostID">
+ * </app-participant-list-others-item>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-participant-list-others-item',
   standalone: true,

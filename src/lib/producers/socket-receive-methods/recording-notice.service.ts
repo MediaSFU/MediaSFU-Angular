@@ -62,6 +62,46 @@ export interface RecordingNoticeOptions {
 // Export the type definition for the function
 export type RecordingNoticeType = (options: RecordingNoticeOptions) => Promise<void>;
 
+/**
+ * Service for handling recording notices, managing recording states, and updating related parameters.
+ *
+ * @class
+ * @name RecordingNotice
+ * @description Provides methods to handle the recording notice state, manage user recording parameters, and play appropriate sounds for different states.
+ *
+ * @method
+ * RecordingNotice
+ *
+ * @param {RecordingNoticeOptions} options - The options for recording notices:
+ *   - `state` {string}: The current recording state (`pause`, `stop`, etc.).
+ *   - `userRecordingParam` {UserRecordingParams | null}: The user recording parameters (if available).
+ *   - `pauseCount` {number}: The number of pauses in the recording.
+ *   - `timeDone` {number}: The total recording time completed.
+ *   - `parameters` {RecordingNoticeParameters}: Functions and properties to update recording details.
+ *     - `updateRecordElapsedTime` {Function}: Updates elapsed recording time.
+ *     - `updateShowRecordButtons` {Function}: Toggles record button visibility.
+ *     - `updateRecordState` {Function}: Sets the record state (e.g., `red`, `green`, `yellow`).
+ *     - `updatePauseRecordCount` {Function}: Sets the pause record count.
+ *     - `updateRecordStarted`, `updateRecordPaused`, `updateCanLaunchRecord`, etc.: Other update functions to control recording settings and states.
+ *
+ * @returns {Promise<void>} Resolves when the recording state and parameters have been updated.
+ *
+ * @example
+ * const options = {
+ *   state: 'pause',
+ *   userRecordingParam: { mainSpecs: { mediaOptions: 'audio', ... } },
+ *   pauseCount: 3,
+ *   timeDone: 3600,
+ *   parameters: {
+ *     updateRecordStarted: (started) => console.log(`Recording started: ${started}`),
+ *     updateRecordPaused: (paused) => console.log(`Recording paused: ${paused}`),
+ *     // Define other update functions similarly
+ *   }
+ * };
+ * await recordingNoticeService.RecordingNotice(options);
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

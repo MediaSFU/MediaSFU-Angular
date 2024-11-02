@@ -33,27 +33,42 @@ export interface GetDomainsOptions {
 export type GetDomainsType = (options: GetDomainsOptions) => Promise<void>;
 
 /**
- * Service to handle domain-related operations.
+ * Service to handle domain-related operations, such as retrieving and processing domains for connection.
  *
  * @class
  * @name GetDomains
- * @description This service provides a method to retrieve and process domains.
+ * @description This service provides a method to retrieve and process domains by connecting IPs that are not currently present in the room.
  *
  * @method
- * @name getDomains
+ * getDomains
  * @async
- * @param {Object} options - The options for retrieving domains.
+ * @param {GetDomainsOptions} options - The options for retrieving and connecting domains.
  * @param {string[]} options.domains - The list of domains to process.
- * @param {Object} options.alt_domains - An object mapping domains to alternative domains.
+ * @param {AltDomains} options.alt_domains - An object mapping primary domains to alternative domains.
  * @param {string} options.apiUserName - The API username for authentication.
  * @param {string} options.apiKey - The API key for authentication.
  * @param {string} options.apiToken - The API token for authentication.
- * @param {Object} options.parameters - Additional parameters for the operation.
- * @param {string[]} options.parameters.roomRecvIPs - The list of IPs currently in the room.
+ * @param {GetDomainsParameters} options.parameters - Additional parameters for the operation.
+ * @param {string[]} options.parameters.roomRecvIPs - The list of IP addresses already connected in the room.
  * @param {Function} options.parameters.getUpdatedAllParams - A function to get updated parameters.
- * @param {Function} options.parameters.connectIps - A function to connect IPs.
+ * @param {Function} options.parameters.connectIps - A function to connect IPs that are not currently present.
  * @returns {Promise<void>} A promise that resolves when the operation is complete.
- * @throws {Error} Throws an error if the domain retrieval fails.
+ * @throws {Error} Throws an error if the domain retrieval or connection fails.
+ *
+ * @example
+ * const options = {
+ *   domains: ['example.com', 'example.org'],
+ *   alt_domains: { 'example.com': 'alt-example.com' },
+ *   apiUserName: 'user123',
+ *   apiKey: 'key123',
+ *   apiToken: 'token123',
+ *   parameters: {
+ *     roomRecvIPs: ['192.168.1.1'],
+ *     getUpdatedAllParams: () => updatedParameters,
+ *     connectIps: connectIpsFunction,
+ *   }
+ * };
+ * getDomainsService.getDomains(options);
  */
 @Injectable({
   providedIn: 'root',

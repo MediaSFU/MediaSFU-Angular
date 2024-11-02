@@ -26,6 +26,40 @@ export interface MessagesModalOptions {
     chatSetting: string;
 }
 export type MessagesModalType = (options: MessagesModalOptions) => void;
+/**
+ * @component MessagesModal
+ * @description A modal component for managing chat messages in MediaSFU applications, supporting both group and direct messaging, and providing a customizable user interface.
+ *
+ * @selector app-messages-modal
+ * @templateUrl ./messages-modal.component.html
+ * @styleUrls ./messages-modal.component.css
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule, MessagePanel]
+ *
+ * @example
+ * ```html
+ * <app-messages-modal
+ *   [isMessagesModalVisible]="true"
+ *   [onMessagesClose]="closeMessages"
+ *   [messages]="chatMessages"
+ *   [position]="'bottomRight'"
+ *   [backgroundColor]="'#f5f5f5'"
+ *   [eventType]="'webinar'"
+ *   [member]="'JohnDoe'"
+ *   [islevel]="'2'"
+ *   [coHostResponsibility]="coHostRoles"
+ *   [coHost]="'coHost123'"
+ *   [startDirectMessage]="false"
+ *   [directMessageDetails]="selectedParticipant"
+ *   [updateStartDirectMessage]="updateDirectMessageStart"
+ *   [updateDirectMessageDetails]="updateParticipantDetails"
+ *   [showAlert]="displayAlert"
+ *   [roomName]="'RoomName'"
+ *   [socket]="chatSocket"
+ *   [chatSetting]="'enabled'"
+ * ></app-messages-modal>
+ * ```
+ */
 export declare class MessagesModal implements OnInit, OnChanges {
     private SendMessageService;
     constructor(SendMessageService: SendMessage);

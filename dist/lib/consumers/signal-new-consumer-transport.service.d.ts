@@ -19,44 +19,44 @@ export interface SignalNewConsumerTransportOptions {
     parameters: SignalNewConsumerTransportParameters;
 }
 export type SignalNewConsumerTransportType = (options: SignalNewConsumerTransportOptions) => Promise<string[] | void>;
+/**
+   * Signals the creation of a new consumer transport.
+   *
+   * @param {Object} options - The options for signaling a new consumer transport.
+   * @param {string} options.remoteProducerId - The ID of the remote producer.
+   * @param {boolean} options.islevel - Indicates the level of the consumer.
+   * @param {any} options.nsock - The socket instance for communication.
+   * @param {SignalNewConsumerTransportOptions} options.parameters - The parameters for the transport.
+   *
+   * @returns {Promise<string[] | void>} A promise that resolves to an array of consuming transports or void.
+   *
+   * @throws Will throw an error if the signaling process fails.
+   *
+   * @example
+   * const options = {
+   *   remoteProducerId: 'producer-id',
+   *   islevel: true,
+   *   nsock: socketInstance,
+   *   parameters: {
+   *     device: mediaDevice,
+   *     consumingTransports: [],
+   *     lock_screen: false,
+   *     updateConsumingTransports: updateFunction,
+   *     connectRecvTransport: connectFunction,
+   *     reorderStreams: reorderFunction,
+   *     getUpdatedAllParams: getUpdatedParamsFunction,
+   *   },
+   * };
+   *
+   * signalNewConsumerTransport(options)
+   *   .then(consumingTransports => {
+   *     console.log('Consuming Transports:', consumingTransports);
+   *   })
+   *   .catch(error => {
+   *     console.error('Error signaling new consumer transport:', error);
+   *   });
+   */
 export declare class SignalNewConsumerTransport {
-    /**
-     * Signals the creation of a new consumer transport.
-     *
-     * @param {Object} options - The options for signaling a new consumer transport.
-     * @param {string} options.remoteProducerId - The ID of the remote producer.
-     * @param {boolean} options.islevel - Indicates the level of the consumer.
-     * @param {any} options.nsock - The socket instance for communication.
-     * @param {SignalNewConsumerTransportOptions} options.parameters - The parameters for the transport.
-     *
-     * @returns {Promise<string[] | void>} A promise that resolves to an array of consuming transports or void.
-     *
-     * @throws Will throw an error if the signaling process fails.
-     *
-     * @example
-     * const options = {
-     *   remoteProducerId: 'producer-id',
-     *   islevel: true,
-     *   nsock: socketInstance,
-     *   parameters: {
-     *     device: mediaDevice,
-     *     consumingTransports: [],
-     *     lock_screen: false,
-     *     updateConsumingTransports: updateFunction,
-     *     connectRecvTransport: connectFunction,
-     *     reorderStreams: reorderFunction,
-     *     getUpdatedAllParams: getUpdatedParamsFunction,
-     *   },
-     * };
-     *
-     * signalNewConsumerTransport(options)
-     *   .then(consumingTransports => {
-     *     console.log('Consuming Transports:', consumingTransports);
-     *   })
-     *   .catch(error => {
-     *     console.error('Error signaling new consumer transport:', error);
-     *   });
-     */
     signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: SignalNewConsumerTransportOptions) => Promise<string[] | void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<SignalNewConsumerTransport, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<SignalNewConsumerTransport>;

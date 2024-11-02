@@ -13,31 +13,37 @@ export interface AlertComponentOptions {
 export type AlertComponentType = (options: AlertComponentOptions) => HTMLElement;
 
 /**
- * AlertComponent is a standalone Angular component that displays an alert message.
- * It supports different types of alerts such as 'success' and 'danger', and can be configured
- * to automatically hide after a specified duration.
+ * AlertComponent displays an alert message of type 'success' or 'danger' with customizable options.
+ * It can automatically hide after a set duration and includes a manual dismiss option.
  *
  * @selector app-alert-component
  * @standalone true
  * @imports CommonModule
- * @templateUrl ./alert.component.html
- * @styleUrls ./alert.component.css
  *
- * @class AlertComponent
- * @implements OnChanges
+ * @inputs
+ * - `visible` (boolean): Determines if the alert is visible. Default is false.
+ * - `message` (string): The message displayed in the alert.
+ * - `type` ('success' | 'danger'): Type of alert, either 'success' or 'danger'. Default is 'success'.
+ * - `duration` (number): Duration in milliseconds for the alert to remain visible before hiding. Default is 4000 ms.
+ * - `textColor` (string): Optional color for alert text. Default is 'black'.
+ * - `onHide` (function): Optional callback invoked when the alert is hidden.
  *
- * @property {boolean} visible - Determines if the alert is visible.
- * @property {string} message - The message to be displayed in the alert.
- * @property {'success' | 'danger'} type - The type of alert, either 'success' or 'danger'.
- * @property {number} duration - The duration (in milliseconds) for which the alert is visible before hiding.
- * @property {string} textColor - The color of the text in the alert.
- * @property {() => void} onHide - A callback function that is called when the alert is hidden.
+ * @methods
+ * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook invoked on input changes; initiates auto-hide based on duration if `visible` is true.
+ * - `handlePress()`: Manually hides the alert by invoking the `onHide` callback.
  *
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @param {SimpleChanges} changes - An object of changes to the data-bound properties.
- *
- * @method handlePress - Manually hides the alert by calling the onHide callback.
- */
+ * @example
+ * ```html
+ * <app-alert-component
+ *  [visible]="showAlert"
+ * [message]="alertMessage"
+ * [type]="alertType"
+ * [duration]="5000"
+ * [textColor]="alertTextColor"
+ * [onHide]="onAlertHide">
+ * </app-alert-component>
+ * ```
+ **/
 @Component({
   selector: 'app-alert-component',
   standalone: true,
@@ -45,6 +51,8 @@ export type AlertComponentType = (options: AlertComponentOptions) => HTMLElement
   templateUrl: './alert.component.component.html',
   styleUrls: ['./alert.component.component.css'],
 })
+
+
 export class AlertComponent implements OnChanges {
   @Input() visible = false;
   @Input() message = '';

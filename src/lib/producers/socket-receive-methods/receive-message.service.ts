@@ -16,6 +16,46 @@ export interface ReceiveMessageOptions {
 // Export the type definition for the function
 export type ReceiveMessageType = (options: ReceiveMessageOptions) => Promise<void>;
 
+/**
+ * Service for receiving and processing messages, including handling group and direct messages, filtering banned senders, and updating message states.
+ *
+ * @class
+ * @name ReceiveMessage
+ * @description Manages incoming messages, appends them to the existing messages array, filters out banned senders, and updates message badge visibility as needed.
+ *
+ * @method
+ * receiveMessage
+ *
+ * @param {ReceiveMessageOptions} options - Options for handling a received message:
+ *   - `message` {Message}: The new message object to process.
+ *   - `messages` {Message[]}: The current list of messages.
+ *   - `participantsAll` {Participant[]}: All participants in the chat.
+ *   - `member` {string}: The current member's name.
+ *   - `eventType` {EventType}: The type of event (e.g., "broadcast" or "chat").
+ *   - `islevel` {string}: The level of the current user.
+ *   - `coHost` {string}: The name of the co-host.
+ *   - `updateMessages` {Function}: A function to update the messages list.
+ *   - `updateShowMessagesBadge` {Function}: A function to toggle the visibility of the message badge.
+ *
+ * @returns {Promise<void>} Resolves when the message processing and updates are complete.
+ *
+ * @example
+ * const message = { sender: 'Alice', receivers: ['Bob'], message: 'Hello!', timestamp: Date.now(), group: false };
+ * const options = {
+ *   message,
+ *   messages: [],
+ *   participantsAll: [{ name: 'Alice' }, { name: 'Bob' }],
+ *   member: 'Bob',
+ *   eventType: 'chat',
+ *   islevel: '1',
+ *   coHost: 'Charlie',
+ *   updateMessages: (updatedMessages) => console.log('Messages updated:', updatedMessages),
+ *   updateShowMessagesBadge: (show) => console.log('Show badge:', show)
+ * };
+ * receiveMessageService.receiveMessage(options);
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

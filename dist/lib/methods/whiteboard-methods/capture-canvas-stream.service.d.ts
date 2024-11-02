@@ -20,6 +20,35 @@ export interface CaptureCanvasStreamOptions {
     start?: boolean;
 }
 export type CaptureCanvasStreamType = (options: CaptureCanvasStreamOptions) => Promise<void>;
+/**
+ * Manages capturing and streaming from a canvas element.
+ *
+ * @param {CaptureCanvasStreamOptions} options - Options to control canvas streaming.
+ * @param {CaptureCanvasStreamParameters} options.parameters - Object containing media settings and state management functions.
+ * @param {boolean} [options.start=true] - If `true`, initiates canvas capture; if `false`, stops the capture.
+ * @returns {Promise<void>} A promise that resolves once the canvas stream has started or stopped.
+ *
+ * The function first checks the availability of `canvasWhiteboard` to capture the canvas stream. If unavailable, it attempts multiple times until a timeout. If successful:
+ * - It starts the canvas capture, creating or reconnecting the transport for streaming.
+ * - If stopping, it disconnects the transport and halts the stream.
+ *
+ * @example
+ * ```typescript
+ * const captureService = new CaptureCanvasStream();
+ * captureService.captureCanvasStream({
+ *   parameters: {
+ *     canvasWhiteboard: document.getElementById('myCanvas') as HTMLCanvasElement,
+ *     updateCanvasStream: (stream) => console.log('Canvas Stream:', stream),
+ *     screenProducer: null,
+ *     transportCreated: false,
+ *     // other required parameters...
+ *   },
+ *   start: true
+ * });
+ * ```
+ *
+ * This example initiates a capture of `myCanvas`, updating the canvas stream upon successful connection.
+ */
 export declare class CaptureCanvasStream {
     /**
      * Capture the canvas stream.

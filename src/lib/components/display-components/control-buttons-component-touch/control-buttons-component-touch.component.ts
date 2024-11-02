@@ -40,57 +40,42 @@ export type ControlButtonsComponentTouchType = (
 ) => HTMLElement;
 
 /**
- * ControlButtonsComponentTouch is an Angular component that displays a set of control buttons.
- * The buttons can be customized with various styles, icons, and actions.
+ * ControlButtonsComponentTouch provides customizable touch controls with various icons, colors, and alignment options.
  *
- * @component
  * @selector app-control-buttons-component-touch
  * @standalone true
- * @imports [CommonModule, FontAwesomeModule]
+ * @imports CommonModule, FontAwesomeModule
  *
- * @template
- * The template includes a container div that holds the buttons. Each button can display an icon,
- * a custom component, or a name. The styles and visibility of the buttons are controlled by the
- * component's inputs.
+ * @inputs
+ * - `buttons` (ButtonTouch[]): Array of button configurations with properties for icon, color, action, and visibility.
+ * - `position` ('left' | 'right' | 'middle'): Horizontal alignment of the buttons container. Default is 'left'.
+ * - `location` ('top' | 'bottom' | 'center'): Vertical alignment of the buttons container. Default is 'top'.
+ * - `direction` ('horizontal' | 'vertical'): Layout direction of buttons. Default is 'horizontal'.
+ * - `buttonsContainerStyle` (Partial<CSSStyleDeclaration>): Custom styles for the buttons container.
+ * - `showAspect` (boolean): Controls the visibility of the buttons container. Default is false.
  *
- * @styles
- * The host element is styled to be a flex container centered both horizontally and vertically.
- *
- * @class ControlButtonsComponentTouch
- *
- * @property {any[]} buttons - An array of button configurations. Each button can have properties like
- * `show`, `backgroundColor`, `onPress`, `icon`, `alternateIcon`, `active`, `activeColor`, `inActiveColor`,
- * `customComponent`, and `name`.
- *
- * @property {string} position - The horizontal alignment of the buttons container. Can be 'left', 'right', or 'middle'.
- * Default is 'left'.
- *
- * @property {string} location - The vertical alignment of the buttons container. Can be 'top', 'bottom', or 'center'.
- * Default is 'top'.
- *
- * @property {string} direction - The direction of the buttons layout. Can be 'horizontal' or 'vertical'.
- * Default is 'horizontal'.
- *
- * @property {any} buttonsContainerStyle - Additional styles for the buttons container.
- *
- * @property {boolean} showAspect - A flag to control the visibility of the buttons container.
- *
- * @method getAlignmentStyle
- * Returns the alignment styles based on the `position`, `location`, and `direction` inputs.
- *
- * @method mergeStyles
- * Merges multiple style objects into one.
+ * @methods
+ * - `getAlignmentStyle()`: Returns alignment styles based on `position`, `location`, and `direction` inputs.
+ * - `mergeStyles(...styles: any[])`: Merges multiple style objects into one for flexible styling.
+ * - `isCustomComponent(comp)`: Type guard for identifying custom component objects.
+ * - `isFunctionComponent(comp)`: Type guard for identifying function components.
  *
  * @example
+ * ```html
  * <app-control-buttons-component-touch
- *   [buttons]="buttonsArray"
+ *   [buttons]="[
+ *     { name: 'Mute', icon: faMicrophoneSlash, onPress: muteAction, activeColor: 'red' },
+ *     { name: 'Unmute', icon: faMicrophone, onPress: unmuteAction, activeColor: 'green' }
+ *   ]"
  *   position="right"
  *   location="bottom"
  *   direction="vertical"
- *   [buttonsContainerStyle]="customStyles"
- *   [showAspect]="true">
- * </app-control-buttons-component-touch>
- */
+ *   [buttonsContainerStyle]="{ backgroundColor: '#333' }"
+ *   [showAspect]="true"
+ * ></app-control-buttons-component-touch>
+ * ```
+ **/
+
 @Component({
   selector: 'app-control-buttons-component-touch',
   standalone: true,

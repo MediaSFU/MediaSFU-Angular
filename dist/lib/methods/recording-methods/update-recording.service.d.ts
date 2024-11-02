@@ -41,6 +41,54 @@ export interface UpdateRecordingOptions {
     parameters: UpdateRecordingParameters;
 }
 export type UpdateRecordingType = (options: UpdateRecordingOptions) => Promise<void>;
+/**
+ * Updates the recording state based on the provided parameters.
+ *
+ * @param {UpdateRecordingOptions} options - The options for updating the recording state.
+ * @param {Object} options.parameters - The parameters required for updating the recording state.
+ * @param {string} options.parameters.roomName - The name of the room where the recording is taking place.
+ * @param {UserRecordingParams} options.parameters.userRecordingParams - User-specific recording parameters.
+ * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Function} options.parameters.updateIsRecordingModalVisible - Function to update the visibility of the recording modal.
+ * @param {boolean} options.parameters.confirmedToRecord - Indicates if the user has confirmed to start recording.
+ * @param {Function} options.parameters.showAlert - Function to show alerts.
+ * @param {string} options.parameters.recordingMediaOptions - The media options for recording (e.g., "video", "audio").
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already turned on.
+ * @param {boolean} options.parameters.audioAlreadyOn - Indicates if the audio is already turned on.
+ * @param {boolean} options.parameters.recordStarted - Indicates if the recording has started.
+ * @param {boolean} options.parameters.recordPaused - Indicates if the recording is paused.
+ * @param {boolean} options.parameters.recordResumed - Indicates if the recording has resumed.
+ * @param {boolean} options.parameters.recordStopped - Indicates if the recording has stopped.
+ * @param {number} options.parameters.recordChangeSeconds - The interval in seconds for changing the recording state.
+ * @param {number} options.parameters.pauseRecordCount - The count of pauses during the recording.
+ * @param {boolean} options.parameters.startReport - Indicates if the start report is active.
+ * @param {boolean} options.parameters.endReport - Indicates if the end report is active.
+ * @param {boolean} options.parameters.canRecord - Indicates if recording is allowed.
+ * @param {boolean} options.parameters.canPauseResume - Indicates if pausing and resuming the recording is allowed.
+ * @param {Function} options.parameters.updateCanPauseResume - Function to update the pause/resume state.
+ * @param {Function} options.parameters.updatePauseRecordCount - Function to update the pause record count.
+ * @param {Function} options.parameters.updateClearedToRecord - Function to update the cleared-to-record state.
+ * @param {Function} options.parameters.updateRecordPaused - Function to update the record paused state.
+ * @param {Function} options.parameters.updateRecordResumed - Function to update the record resumed state.
+ * @param {Function} options.parameters.updateStartReport - Function to update the start report state.
+ * @param {Function} options.parameters.updateEndReport - Function to update the end report state.
+ * @param {Function} options.parameters.updateCanRecord - Function to update the can record state.
+ * @param {Function} options.parameters.rePort - Function to handle reporting.
+ *
+ * @returns {Promise<void>} A promise that resolves when the recording state has been updated.
+ *
+ * @remarks
+ * This method handles the recording state updates, including starting, pausing, resuming, and stopping the recording.
+ * It also performs necessary checks to ensure that the user can perform the requested actions based on their current state.
+ * Alerts are displayed for any issues encountered during the process.
+ *
+ * @example
+ * ```typescript
+ * const options: UpdateRecordingOptions = { parameters: someParameters };
+ * await updateRecording(options);
+ * console.log('Recording state updated successfully.');
+ * ```
+ */
 export declare class UpdateRecording {
     private CheckPauseStateService;
     private CheckResumeStateService;

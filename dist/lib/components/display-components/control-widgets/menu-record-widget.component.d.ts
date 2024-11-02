@@ -8,6 +8,28 @@ interface RecordButton {
     inActiveColor?: string;
     text?: string;
 }
+/**
+ * MenuRecordWidget is a configurable widget that displays a set of record control buttons, with customizable icon, color, and actions.
+ *
+ * @selector app-menu-record-widget
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, ControlButtonsAltComponent
+ *
+ * @inputs
+ * - `buttons` (RecordButton[]): Array of record button configurations, each with properties for icon, active state, colors, and actions.
+ * - `direction` ('horizontal' | 'vertical'): Layout direction for the buttons. Default is 'horizontal'.
+ *
+ * @example
+ * ```html
+ * <app-menu-record-widget
+ *   [buttons]="[
+ *     { icon: faCircle, text: 'Record', onPress: startRecording, activeColor: 'red' },
+ *     { icon: faStop, text: 'Stop', onPress: stopRecording, inActiveColor: 'gray' }
+ *   ]"
+ *   direction="horizontal"
+ * ></app-menu-record-widget>
+ * ```
+ **/
 export declare class MenuRecordWidget {
     buttons: RecordButton[];
     direction: 'horizontal' | 'vertical';

@@ -19,7 +19,8 @@ export interface ConfirmHereModalOptions {
 export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
 
 /**
- * Component representing a confirmation modal with a countdown timer.
+ * @component ConfirmHereModal
+ * @description Displays a confirmation modal with a countdown timer, allowing users to confirm their presence or be automatically disconnected after the timer expires.
  *
  * @selector app-confirm-here-modal
  * @templateUrl ./confirm-here-modal.component.html
@@ -27,39 +28,22 @@ export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule]
  *
- * @styles
- * - .spinner: Styles for the loading spinner.
- * - @keyframes spin: Keyframes for spinner animation.
- * - .modal-content: Styles for the modal content container.
- * - .loading-text: Styles for the loading text.
- *
- * @class ConfirmHereModal
- * @implements OnInit, OnDestroy
- *
- * @property {boolean} isConfirmHereModalVisible - Determines if the modal is visible.
- * @property {string} position - Position of the modal.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {string} displayColor - Display color of the modal.
- * @property {Function} onConfirmHereClose - Callback function to execute when the modal is closed.
- * @property {number} [countdownDuration=120] - Duration of the countdown in seconds.
- * @property {Socket} socket - Socket instance for communication.
- * @property {string} roomName - Name of the room for socket communication.
- * @property {string} member - Member identifier for socket communication.
- * @property {IconDefinition} faSpinner - FontAwesome spinner icon.
- * @property {number} counter - Countdown counter.
- * @property {any} countdownInterval - Interval ID for the countdown timer.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed.
- * @method startCountdown - Starts the countdown timer.
- * @method clearCountdown - Clears the countdown timer.
- * @method handleConfirmHere - Handles the confirmation action and closes the modal.
- *
- * @getter spinnerContainerStyle - Returns the style object for the spinner container.
- * @getter modalContainerStyle - Returns the style object for the modal container.
- * @getter modalContentStyle - Returns the style object for the modal content.
+ * @example
+ * ```html
+ * <app-confirm-here-modal
+ *   [isConfirmHereModalVisible]="true"
+ *   [position]="'center'"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [displayColor]="'#000000'"
+ *   [onConfirmHereClose]="closeConfirmModal"
+ *   [countdownDuration]="120"
+ *   [socket]="socketInstance"
+ *   [roomName]="'exampleRoom'"
+ *   [member]="'exampleMember'"
+ * ></app-confirm-here-modal>
+ * ```
  */
+
 @Component({
   selector: 'app-confirm-here-modal',
   templateUrl: './confirm-here-modal.component.html',

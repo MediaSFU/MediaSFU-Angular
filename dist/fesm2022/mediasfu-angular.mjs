@@ -400,28 +400,15 @@ const initialValuesState = {
 };
 
 /**
- * Component representing a loading modal.
+ * LoadingModal displays a loading spinner and a customizable "Loading..." text as an overlay.
  *
  * @selector app-loading-modal
  * @standalone true
  * @imports CommonModule
  *
- * @description
- * This component displays a loading modal with a spinner and a loading text.
- * It is designed to be displayed as an overlay with customizable background and text colors.
- *
- * @example
- * <app-loading-modal [isVisible]="true" [backgroundColor]="'rgba(0, 0, 0, 0.5)'" [displayColor]="'white'"></app-loading-modal>
- *
- * @styles
- * - .spinner: Styles for the loading spinner.
- * - @keyframes spin: Keyframes for the spinner animation.
- * - .modal-content: Styles for the modal content container.
- * - .loading-text: Styles for the loading text.
- *
  * @inputs
- * - `isVisible` (boolean): Determines if the modal is visible. Default is `false`.
- * - `backgroundColor` (string): Background color of the modal. Default is `'rgba(0, 0, 0, 0.5)'`.
+ * - `isVisible` (boolean): Controls the visibility of the modal overlay. Default is `false`.
+ * - `backgroundColor` (string): Background color of the modal overlay. Default is `'rgba(0, 0, 0, 0.5)'`.
  * - `displayColor` (string): Color of the loading text. Default is `'white'`.
  *
  * @properties
@@ -429,7 +416,22 @@ const initialValuesState = {
  * - `modalContentStyle` (object): Computed styles for the modal content.
  * - `spinnerContainerStyle` (object): Computed styles for the spinner container.
  * - `loadingTextStyle` (object): Computed styles for the loading text.
- */
+ *
+ * @example
+ * ```html
+ * <app-loading-modal
+ *   [isVisible]="true"
+ *   [backgroundColor]="'rgba(0, 0, 0, 0.5)'"
+ *   [displayColor]="'white'">
+ * </app-loading-modal>
+ * ```
+ *
+ * @styles
+ * - `.spinner`: Styles for the loading spinner.
+ * - `@keyframes spin`: Keyframes for the spinner rotation animation.
+ * - `.modal-content`: Styles for the modal content container.
+ * - `.loading-text`: Styles for the loading text.
+ **/
 class LoadingModal {
     isVisible = false;
     backgroundColor = 'rgba(0, 0, 0, 0.5)';
@@ -496,13 +498,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * MainAspectComponent is a standalone Angular component that adjusts its aspect ratio
- * based on the window size and other input properties. It listens to window resize
- * and orientation change events to dynamically update its styles.
+ * MainAspectComponent dynamically adjusts its aspect ratio based on window size, providing an adaptable container for content.
+ * It listens for window resize and orientation changes to update its layout, making it suitable for responsive applications.
  *
  * @selector app-main-aspect-component
  * @standalone true
- * @imports [CommonModule]
+ * @imports CommonModule
  *
  * @template
  * ```html
@@ -512,29 +513,38 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * ```
  *
  * @styles
- * ```css
- * .aspect-container {
- *   overflow: hidden;
- * }
+ * - `.aspect-container`: Styles for overflow handling.
+ *
+ * @inputs
+ * - `backgroundColor` (string): The background color of the aspect container.
+ * - `showControls` (boolean): Toggles control display, adjusting the container height. Default is true.
+ * - `containerWidthFraction` (number): Fraction of window width for container width. Default is 1.
+ * - `containerHeightFraction` (number): Fraction of window height for container height. Default is 1.
+ * - `defaultFraction` (number): Height adjustment factor when controls are shown. Default is 0.94.
+ * - `updateIsWideScreen` (function): Callback to set wide screen status.
+ * - `updateIsMediumScreen` (function): Callback to set medium screen status.
+ * - `updateIsSmallScreen` (function): Callback to set small screen status.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes component and sets up resize and orientation listeners.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates layout when relevant inputs change.
+ * - `ngOnDestroy()`: Removes event listeners to prevent memory leaks.
+ * - `updateAspectStyles()`: Calculates and applies styles based on current window dimensions and component inputs.
+ *
+ * @example
+ * ```html
+ * <app-main-aspect-component
+ *   [backgroundColor]="'lightblue'"
+ *   [showControls]="true"
+ *   [containerWidthFraction]="0.9"
+ *   [containerHeightFraction]="0.8"
+ *   [defaultFraction]="0.95"
+ *   [updateIsWideScreen]="onWideScreenUpdate"
+ *   [updateIsMediumScreen]="onMediumScreenUpdate"
+ *   [updateIsSmallScreen]="onSmallScreenUpdate"
+ * ></app-main-aspect-component>
  * ```
- *
- * @class MainAspectComponent
- * @implements OnInit, OnDestroy, OnChanges
- *
- * @property {string} backgroundColor - The background color of the aspect container.
- * @property {boolean} showControls - Flag to show or hide controls.
- * @property {number} containerWidthFraction - Fraction of the window width for the container.
- * @property {number} containerHeightFraction - Fraction of the window height for the container.
- * @property {number} defaultFraction - Default fraction to adjust the height when controls are shown.
- * @property {(isWideScreen: boolean) => void} updateIsWideScreen - Callback to update wide screen status.
- * @property {(isMediumScreen: boolean) => void} updateIsMediumScreen - Callback to update medium screen status.
- * @property {(isSmallScreen: boolean) => void} updateIsSmallScreen - Callback to update small screen status.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed.
- * @method private updateAspectStyles - Updates the aspect styles based on the window size and input properties.
- */
+ **/
 class MainAspectComponent {
     backgroundColor = '';
     showControls = true;
@@ -848,6 +858,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * ControlButtonsAltComponent provides configurable button controls with custom icons, colors, and positioning options.
+ *
+ * @selector app-control-buttons-alt-component
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule
+ *
+ * @inputs
+ * - `buttons` (AltButton[]): Array of button configurations with options for icon, color, state, and actions.
+ * - `position` ('left' | 'right' | 'middle'): Horizontal alignment of buttons. Default is 'left'.
+ * - `location` ('top' | 'bottom' | 'center'): Vertical alignment of buttons. Default is 'top'.
+ * - `direction` ('horizontal' | 'vertical'): Layout direction for buttons. Default is 'horizontal'.
+ * - `buttonsContainerStyle` (Partial<CSSStyleDeclaration>): Custom styles for the container of buttons.
+ * - `showAspect` (boolean): Controls the visibility of the button container. Default is false.
+ *
+ * @methods
+ * - `getAlignmentStyle()`: Returns alignment styles based on `position`, `location`, and `direction`.
+ * - `getContainerStyle()`: Combines container styles, alignment styles, and visibility settings.
+ * - `getButtonStyle(button: AltButton)`: Applies style to each button based on its properties.
+ * - `getTextStyle(button: AltButton)`: Sets text styles for button labels.
+ * - `isCustomComponent(comp)`: Type guard to identify custom component objects.
+ * - `isFunctionComponent(comp)`: Type guard to identify function components.
+ *
+ * @example
+ * ```html
+ * <app-control-buttons-alt-component
+ *  [buttons]="[
+ *    { name: 'Pause', icon: faPause, onPress: pauseAction, activeColor: 'blue' },
+ *    { name: 'Play', icon: faPlay, onPress: playAction, color: 'green' }
+ *  ]"
+ * [position]="'middle'"
+ * [location]="'bottom'"
+ * [direction]="'vertical'"
+ * [buttonsContainerStyle]="{ backgroundColor: '#333' }"
+ * [showAspect]="true">
+ * </app-control-buttons-alt-component>
+ * ```
+ **/
 class ControlButtonsAltComponent {
     buttons = [];
     position = 'left';
@@ -943,57 +991,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * ControlButtonsComponentTouch is an Angular component that displays a set of control buttons.
- * The buttons can be customized with various styles, icons, and actions.
+ * ControlButtonsComponentTouch provides customizable touch controls with various icons, colors, and alignment options.
  *
- * @component
  * @selector app-control-buttons-component-touch
  * @standalone true
- * @imports [CommonModule, FontAwesomeModule]
+ * @imports CommonModule, FontAwesomeModule
  *
- * @template
- * The template includes a container div that holds the buttons. Each button can display an icon,
- * a custom component, or a name. The styles and visibility of the buttons are controlled by the
- * component's inputs.
+ * @inputs
+ * - `buttons` (ButtonTouch[]): Array of button configurations with properties for icon, color, action, and visibility.
+ * - `position` ('left' | 'right' | 'middle'): Horizontal alignment of the buttons container. Default is 'left'.
+ * - `location` ('top' | 'bottom' | 'center'): Vertical alignment of the buttons container. Default is 'top'.
+ * - `direction` ('horizontal' | 'vertical'): Layout direction of buttons. Default is 'horizontal'.
+ * - `buttonsContainerStyle` (Partial<CSSStyleDeclaration>): Custom styles for the buttons container.
+ * - `showAspect` (boolean): Controls the visibility of the buttons container. Default is false.
  *
- * @styles
- * The host element is styled to be a flex container centered both horizontally and vertically.
- *
- * @class ControlButtonsComponentTouch
- *
- * @property {any[]} buttons - An array of button configurations. Each button can have properties like
- * `show`, `backgroundColor`, `onPress`, `icon`, `alternateIcon`, `active`, `activeColor`, `inActiveColor`,
- * `customComponent`, and `name`.
- *
- * @property {string} position - The horizontal alignment of the buttons container. Can be 'left', 'right', or 'middle'.
- * Default is 'left'.
- *
- * @property {string} location - The vertical alignment of the buttons container. Can be 'top', 'bottom', or 'center'.
- * Default is 'top'.
- *
- * @property {string} direction - The direction of the buttons layout. Can be 'horizontal' or 'vertical'.
- * Default is 'horizontal'.
- *
- * @property {any} buttonsContainerStyle - Additional styles for the buttons container.
- *
- * @property {boolean} showAspect - A flag to control the visibility of the buttons container.
- *
- * @method getAlignmentStyle
- * Returns the alignment styles based on the `position`, `location`, and `direction` inputs.
- *
- * @method mergeStyles
- * Merges multiple style objects into one.
+ * @methods
+ * - `getAlignmentStyle()`: Returns alignment styles based on `position`, `location`, and `direction` inputs.
+ * - `mergeStyles(...styles: any[])`: Merges multiple style objects into one for flexible styling.
+ * - `isCustomComponent(comp)`: Type guard for identifying custom component objects.
+ * - `isFunctionComponent(comp)`: Type guard for identifying function components.
  *
  * @example
+ * ```html
  * <app-control-buttons-component-touch
- *   [buttons]="buttonsArray"
+ *   [buttons]="[
+ *     { name: 'Mute', icon: faMicrophoneSlash, onPress: muteAction, activeColor: 'red' },
+ *     { name: 'Unmute', icon: faMicrophone, onPress: unmuteAction, activeColor: 'green' }
+ *   ]"
  *   position="right"
  *   location="bottom"
  *   direction="vertical"
- *   [buttonsContainerStyle]="customStyles"
- *   [showAspect]="true">
- * </app-control-buttons-component-touch>
- */
+ *   [buttonsContainerStyle]="{ backgroundColor: '#333' }"
+ *   [showAspect]="true"
+ * ></app-control-buttons-component-touch>
+ * ```
+ **/
 class ControlButtonsComponentTouch {
     buttons = [];
     position = 'left';
@@ -1235,8 +1267,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * Component to display a meeting progress timer.
- *s
+ * MeetingProgressTimer displays a customizable timer badge to track meeting progress time.
+ *
  * @selector app-meeting-progress-timer
  * @standalone true
  * @imports CommonModule
@@ -1251,38 +1283,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * ```
  *
  * @styles
- * ```css
- * .badge-container {
- *   padding: 5px;
- *   position: relative;
- *   z-index: 1000;
- * }
- * .progress-timer {
- *   background-color: green;
- *   padding: 5px;
- *   border-radius: 5px;
- *   color: white;
- * }
- * .progress-timer-text {
- *   color: black;
- * }
+ * - `.badge-container`: General container style with positioning.
+ * - `.progress-timer`: Timer badge with default padding, background, and border-radius.
+ * - `.progress-timer-text`: Text styling within the timer badge.
+ *
+ * @inputs
+ * - `meetingProgressTime` (string): Time to be displayed in the timer.
+ * - `initialBackgroundColor` (string): Background color of the timer badge. Default is 'green'.
+ * - `position` ('topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'): Position of the timer on the screen. Default is 'topLeft'.
+ * - `textStyle` (object): Custom styles for the timer text.
+ * - `showTimer` (boolean): If true, displays the timer. Default is true.
+ *
+ * @property `positions` (object): Preset styles for timer positioning options.
+ *
+ * @methods
+ * - `ngOnChanges(changes: SimpleChanges)`: Handles changes to input properties and updates styles accordingly.
+ *
+ * @example
+ * ```html
+ * <app-meeting-progress-timer
+ *   [meetingProgressTime]="'10:30'"
+ *   [initialBackgroundColor]="'blue'"
+ *   [position]="'bottomRight'"
+ *   [textStyle]="{ color: 'white', fontWeight: 'bold' }"
+ *   [showTimer]="true"
+ * ></app-meeting-progress-timer>
  * ```
- *
- * @class MeetingProgressTimer
- * @implements OnInit, OnChanges
- *
- * @property {string} meetingProgressTime - The time to be displayed in the timer.
- * @property {string} [initialBackgroundColor='green'] - The initial background color of the timer.
- * @property {'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'} [position='topLeft'] - The position of the timer on the screen.
- * @property {{ [key: string]: string | number }} [textStyle={}] - The style to be applied to the timer text.
- * @property {boolean} [showTimer=true] - Flag to show or hide the timer.
- *
- * @property {{ [key: string]: { position: string, top?: string, bottom?: string, left?: string, right?: string } }} positions - The possible positions for the timer.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @param {SimpleChanges} changes - The changed properties.
- */
+ **/
 class MeetingProgressTimer {
     meetingProgressTime;
     initialBackgroundColor = 'green';
@@ -1351,27 +1378,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * Component representing a customizable grid with an optional timer.
+ * OtherGridComponent represents a customizable grid container with optional meeting progress timer.
  *
  * @selector app-other-grid-component
  * @standalone true
  * @imports CommonModule, MeetingProgressTimer
  *
  * @template
- * <div [ngStyle]="{...}">
- *   <app-meeting-progress-timer *ngIf="showTimer" [meetingProgressTime]="meetingProgressTime" [initialBackgroundColor]="timeBackgroundColor" [showTimer]="showTimer"></app-meeting-progress-timer>
- *   <ng-content></ng-content>
- * </div>
+ * - The template consists of:
+ *   - A grid container styled with specified dimensions, background color, and border.
+ *   - An optional `MeetingProgressTimer` component displayed within the grid if `showTimer` is true.
+ *
+ * @styles
+ * - Default border, padding, and display styles for the grid container.
+ *
+ * @inputs
+ * - `backgroundColor` (string): Background color of the grid container. Default is `'transparent'`.
+ * - `width` (number): Width of the grid in pixels. Default is `0`.
+ * - `height` (number): Height of the grid in pixels. Default is `0`.
+ * - `showAspect` (boolean): Controls visibility of the grid container. Default is `true`.
+ * - `timeBackgroundColor` (string): Background color of the timer. Default is `'green'`.
+ * - `showTimer` (boolean): Determines if the timer should be displayed. Default is `false`.
+ * - `meetingProgressTime` (string): Time to display in the timer. Default is `'00:00:00'`.
  *
  * @class OtherGridComponent
- *
- * @property {string} backgroundColor - The background color of the grid. Default is 'transparent'.
- * @property {number} width - The width of the grid in pixels. Default is 0.
- * @property {number} height - The height of the grid in pixels. Default is 0.
- * @property {boolean} showAspect - Flag to show or hide the grid. Default is true.
- * @property {string} timeBackgroundColor - The background color of the timer. Default is 'green'.
- * @property {boolean} showTimer - Flag to show or hide the timer. Default is false.
- * @property {string} meetingProgressTime - The meeting progress time to be displayed in the timer. Default is '00:00:00'.
+ * @example
+ * ```html
+ * <app-other-grid-component
+ *   [backgroundColor]="'lightgray'"
+ *   [width]="300"
+ *   [height]="200"
+ *   [showAspect]="true"
+ *   [timeBackgroundColor]="'blue'"
+ *   [showTimer]="true"
+ *   [meetingProgressTime]="'00:05:32'"
+ * ></app-other-grid-component>
+ * ```
  */
 class OtherGridComponent {
     backgroundColor = 'transparent';
@@ -1457,36 +1499,57 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * MainScreenComponent is responsible for displaying a main screen with dynamic dimensions
- * and layout based on the input properties and screen size.
+ * MainScreenComponent dynamically displays a main screen area with responsive dimensions, adjustable layout, and stacking options based on the screen size and input properties.
  *
  * @selector app-main-screen-component
  * @standalone true
  * @imports CommonModule
  *
- * @property {number} mainSize - The size of the main component as a percentage.
- * @property {boolean} doStack - Determines if the components should be stacked.
- * @property {number} containerWidthFraction - Fraction of the container width.
- * @property {number} containerHeightFraction - Fraction of the container height.
- * @property {number} defaultFraction - Default fraction for height calculation.
- * @property {boolean} showControls - Flag to show or hide controls.
- * @property {(sizes: ComponentSizes) => void} updateComponentSizes - Callback to update component sizes.
+ * @template
+ * ```html
+ * <div [ngStyle]="containerStyle">
+ *   <ng-content></ng-content>
+ * </div>
+ * ```
  *
- * @ContentChildren('child') children - Query list of child elements.
+ * @inputs
+ * - `mainSize` (number): Percentage size of the main component. Default is 40.
+ * - `doStack` (boolean): Determines if components should be stacked. Default is true.
+ * - `containerWidthFraction` (number): Fraction of the container width to use. Default is 1.
+ * - `containerHeightFraction` (number): Fraction of the container height to use. Default is 1.
+ * - `defaultFraction` (number): Default height fraction for the container when controls are shown. Default is 0.94.
+ * - `showControls` (boolean): If true, shows control elements, affecting container height. Default is true.
+ * - `updateComponentSizes` (function): Callback for updating component sizes.
  *
- * @property {number} parentWidth - The width of the parent container.
- * @property {number} parentHeight - The height of the parent container.
- * @property {boolean} isWideScreen - Flag to determine if the screen is wide.
+ * @ContentChildren('child') children - Query list of child elements within the component.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnDestroy - Lifecycle hook that is called when the component is destroyed.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method ngAfterViewInit - Lifecycle hook that is called after the component's view has been fully initialized.
- * @method computeDimensions - Computes the dimensions of the main and other components based on the input properties.
- * @method updateDimensions - Updates the dimensions of the parent container and child components.
- * @method get containerStyle - Returns the style object for the container.
- * @method applyChildStyles - Applies the computed styles to the child components.
- */
+ * @properties
+ * - `containerStyle`: Returns a style object for the container based on dimensions and layout options.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes the component and sets up event listeners for window resize and orientation changes.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates dimensions and layout if any relevant inputs change.
+ * - `ngOnDestroy()`: Removes event listeners to prevent memory leaks.
+ * - `ngAfterViewInit()`: Applies computed styles to child elements after view initialization.
+ * - `computeDimensions()`: Calculates the dimensions for main and secondary components based on current layout settings.
+ * - `updateDimensions()`: Updates component dimensions based on window size and input properties.
+ * - `applyChildStyles()`: Applies computed styles to child components.
+ *
+ * @example
+ * ```html
+ * <app-main-screen-component
+ *   [mainSize]="60"
+ *   [doStack]="false"
+ *   [containerWidthFraction]="0.8"
+ *   [containerHeightFraction]="0.9"
+ *   [defaultFraction]="0.9"
+ *   [showControls]="true"
+ *   [updateComponentSizes]="onUpdateSizes"
+ * >
+ *   <div #child>Child Component</div>
+ * </app-main-screen-component>
+ * ```
+ **/
 class MainScreenComponent {
     renderer;
     mainSize = 40; // percentage
@@ -1633,14 +1696,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * MainGridComponent is a standalone Angular component that displays a grid container
- * with optional meeting progress timer and customizable styles.
+ * MainGridComponent displays a customizable grid container with an optional meeting progress timer.
  *
  * @selector app-main-grid-component
  * @standalone true
  * @imports CommonModule, MeetingProgressTimer
  *
  * @template
+ * ```html
  * <div [ngStyle]="maingridContainerStyle">
  *   <app-meeting-progress-timer
  *     *ngIf="showTimer"
@@ -1649,20 +1712,34 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  *   ></app-meeting-progress-timer>
  *   <ng-content></ng-content>
  * </div>
+ * ```
  *
- * @Inputs
- * @property {string} backgroundColor - The background color of the grid container.
- * @property {number} mainSize - The main size of the grid container.
- * @property {number} height - The height of the grid container in pixels.
- * @property {number} width - The width of the grid container in pixels.
- * @property {boolean} showAspect - Determines if the grid container should be displayed as flex.
- * @property {string} timeBackgroundColor - The background color of the meeting progress timer.
- * @property {boolean} showTimer - Determines if the meeting progress timer should be displayed.
- * @property {string} meetingProgressTime - The progress time to be displayed in the meeting progress timer.
+ * @inputs
+ * - `backgroundColor` (string): Background color of the grid container. Default is an empty string.
+ * - `mainSize` (number): Main size of the grid container, used for layout adjustments.
+ * - `height` (number): Height of the grid container in pixels.
+ * - `width` (number): Width of the grid container in pixels.
+ * - `showAspect` (boolean): If true, displays the grid container in flex layout. Default is true.
+ * - `timeBackgroundColor` (string): Background color of the meeting progress timer. Default is 'green'.
+ * - `showTimer` (boolean): If true, displays the meeting progress timer. Default is true.
+ * - `meetingProgressTime` (string): Time displayed in the meeting progress timer.
  *
- * @getter maingridContainerStyle - Returns the style object for the grid container.
- * @returns {Object} The style object for the grid container.
- */
+ * @getter
+ * - `maingridContainerStyle`: Returns a style object for the grid container, including display, color, dimensions, and border styling.
+ *
+ * @example
+ * ```html
+ * <app-main-grid-component
+ *   [backgroundColor]="'lightgrey'"
+ *   [height]="500"
+ *   [width]="500"
+ *   [showAspect]="true"
+ *   [timeBackgroundColor]="'blue'"
+ *   [showTimer]="true"
+ *   [meetingProgressTime]="'10:45'"
+ * ></app-main-grid-component>
+ * ```
+ **/
 class MainGridComponent {
     backgroundColor = '';
     mainSize = 0;
@@ -1734,38 +1811,32 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * @fileoverview SubAspectComponent is an Angular component that displays a sub-aspect of a media element.
- * It adjusts its size and visibility based on input properties and window events.
+ * SubAspectComponent is an Angular component that displays a sub-aspect of a media element with customizable dimensions and background color.
+ * The component adapts its size and visibility based on the provided properties and listens for window resize and orientation change events.
  *
- * @component
  * @selector app-sub-aspect-component
  * @standalone true
  * @imports CommonModule
  *
- * @template
- * <div *ngIf="showControls" [ngStyle]="{ position: 'absolute', bottom: '0', margin: '0', backgroundColor: backgroundColor, height: aspectStyles.height + 'px', width: aspectStyles.width + 'px' }">
- *   <ng-content></ng-content>
- * </div>
+ * @example
+ * ```html
+ * <app-sub-aspect-component [backgroundColor]="'blue'" [showControls]="true" [containerWidthFraction]="0.8"></app-sub-aspect-component>
+ * ```
  *
- * @styles []
+ * @input {string} backgroundColor - The background color of the component. Default is 'transparent'.
+ * @input {boolean} showControls - Determines if controls are shown within the component. Default is true.
+ * @input {number} containerWidthFraction - Fraction of the window width for the component width. Default is 1.
+ * @input {number} containerHeightFraction - Fraction of the window height for the component height. Default is 1.
+ * @input {number} defaultFractionSub - The default fraction for the sub-aspect height. Default is 0.0.
  *
- * @class SubAspectComponent
- * @implements OnInit, OnDestroy, OnChanges
+ * @property {object} aspectStyles - Contains calculated styles for the component's height and width.
+ * @property {number} aspectStyles.height - Calculated height of the component.
+ * @property {number} aspectStyles.width - Calculated width of the component.
  *
- * @property {string} backgroundColor - The background color of the component. Default is 'transparent'.
- * @property {boolean} showControls - Determines whether the controls are shown. Default is true.
- * @property {number} containerWidthFraction - The fraction of the container's width. Default is 1.
- * @property {number} containerHeightFraction - The fraction of the container's height. Default is 1.
- * @property {number} defaultFractionSub - The default fraction for the sub-aspect. Default is 0.0.
- * @property {object} aspectStyles - The styles for the aspect, including height and width.
- * @property {number} aspectStyles.height - The height of the aspect.
- * @property {number} aspectStyles.width - The width of the aspect.
- * @property {number} subAspectFraction - The fraction of the sub-aspect.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized. Adds event listeners for window resize and orientation change.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes. Updates aspect styles if relevant properties change.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed. Removes event listeners for window resize and orientation change.
- * @method updateAspectStyles - Updates the aspect styles based on the current window size and input properties.
+ * @method ngOnInit - Initializes the component and adds event listeners for responsive adjustments.
+ * @method ngOnChanges - Updates the aspect styles when any of the input properties change.
+ * @method ngOnDestroy - Removes event listeners when the component is destroyed.
+ * @method updateAspectStyles - Calculates and applies updated styles based on the window size and input properties.
  */
 class SubAspectComponent {
     backgroundColor = 'transparent';
@@ -1848,8 +1919,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * MainContainerComponent is a standalone Angular component that dynamically adjusts its styles
- * based on the provided input properties and window size changes.
+ * MainContainerComponent dynamically adjusts its styles based on input properties and window size,
+ * providing a responsive container for content.
  *
  * @selector app-main-container-component
  * @standalone true
@@ -1862,22 +1933,34 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * </div>
  * ```
  *
- * @class MainContainerComponent
- * @implements OnInit, OnDestroy, OnChanges
+ * @inputs
+ * - `backgroundColor` (string): Background color of the container.
+ * - `containerWidthFraction` (number): Fraction of the window width the container should occupy. Default is 1.
+ * - `containerHeightFraction` (number): Fraction of the window height the container should occupy. Default is 1.
+ * - `marginLeft` (number): Left margin of the container in pixels.
+ * - `marginRight` (number): Right margin of the container in pixels.
+ * - `marginTop` (number): Top margin of the container in pixels.
+ * - `marginBottom` (number): Bottom margin of the container in pixels.
+ * - `padding` (number): Padding inside the container in pixels.
  *
- * @property {string} backgroundColor - The background color of the container.
- * @property {number} containerWidthFraction - The fraction of the window width the container should occupy.
- * @property {number} containerHeightFraction - The fraction of the window height the container should occupy.
- * @property {number} marginLeft - The left margin of the container in pixels.
- * @property {number} marginRight - The right margin of the container in pixels.
- * @property {number} marginTop - The top margin of the container in pixels.
- * @property {number} marginBottom - The bottom margin of the container in pixels.
+ * @methods
+ * - `ngOnInit()`: Initializes the component, sets up event listeners for resize and orientation changes, and updates container styles.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates container styles when input properties change.
+ * - `ngOnDestroy()`: Removes event listeners to avoid memory leaks.
+ * - `updateContainerStyles()`: Computes and applies styles to the container based on current window size and input properties.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized. Sets up event listeners for window resize and orientation change.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes. Updates the container styles accordingly.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed. Removes event listeners for window resize and orientation change.
- * @method updateContainerStyles - Updates the container styles based on the current input properties and window size.
- */
+ * @example
+ * ```html
+ * <app-main-container-component
+ *   [backgroundColor]="'lightgrey'"
+ *   [containerWidthFraction]="0.8"
+ *   [containerHeightFraction]="0.9"
+ *   [marginLeft]="10"
+ *   [marginTop]="15"
+ *   [padding]="5"
+ * ></app-main-container-component>
+ * ```
+ **/
 class MainContainerComponent {
     backgroundColor = '';
     containerWidthFraction = 1;
@@ -1963,31 +2046,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * AlertComponent is a standalone Angular component that displays an alert message.
- * It supports different types of alerts such as 'success' and 'danger', and can be configured
- * to automatically hide after a specified duration.
+ * AlertComponent displays an alert message of type 'success' or 'danger' with customizable options.
+ * It can automatically hide after a set duration and includes a manual dismiss option.
  *
  * @selector app-alert-component
  * @standalone true
  * @imports CommonModule
- * @templateUrl ./alert.component.html
- * @styleUrls ./alert.component.css
  *
- * @class AlertComponent
- * @implements OnChanges
+ * @inputs
+ * - `visible` (boolean): Determines if the alert is visible. Default is false.
+ * - `message` (string): The message displayed in the alert.
+ * - `type` ('success' | 'danger'): Type of alert, either 'success' or 'danger'. Default is 'success'.
+ * - `duration` (number): Duration in milliseconds for the alert to remain visible before hiding. Default is 4000 ms.
+ * - `textColor` (string): Optional color for alert text. Default is 'black'.
+ * - `onHide` (function): Optional callback invoked when the alert is hidden.
  *
- * @property {boolean} visible - Determines if the alert is visible.
- * @property {string} message - The message to be displayed in the alert.
- * @property {'success' | 'danger'} type - The type of alert, either 'success' or 'danger'.
- * @property {number} duration - The duration (in milliseconds) for which the alert is visible before hiding.
- * @property {string} textColor - The color of the text in the alert.
- * @property {() => void} onHide - A callback function that is called when the alert is hidden.
+ * @methods
+ * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook invoked on input changes; initiates auto-hide based on duration if `visible` is true.
+ * - `handlePress()`: Manually hides the alert by invoking the `onHide` callback.
  *
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @param {SimpleChanges} changes - An object of changes to the data-bound properties.
- *
- * @method handlePress - Manually hides the alert by calling the onHide callback.
- */
+ * @example
+ * ```html
+ * <app-alert-component
+ *  [visible]="showAlert"
+ * [message]="alertMessage"
+ * [type]="alertType"
+ * [duration]="5000"
+ * [textColor]="alertTextColor"
+ * [onHide]="onAlertHide">
+ * </app-alert-component>
+ * ```
+ **/
 class AlertComponent {
     visible = false;
     message = '';
@@ -2031,58 +2120,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * CustomButtons component renders a list of customizable buttons.
+ *
+ * @selector app-custom-buttons
+ * @standalone true
+ * @imports [CommonModule, FormsModule, FontAwesomeModule]
+ *
+ * @input {CustomButton[]} buttons - Array of button configurations.
+ * Each button configuration includes properties such as:
+ * - **action**: Function executed on button click.
+ * - **show**: Boolean or function determining button visibility.
+ * - **backgroundColor**: Background color of the button.
+ * - **disabled**: Boolean to disable button if set to true.
+ * - **icon**: Optional FontAwesome icon displayed on the button.
+ * - **iconStyle**: Style applied to the icon.
+ * - **text**: Text displayed on the button.
+ * - **textStyle**: Style applied to the text.
+ * - **customComponent**: A custom Angular component or HTML element rendered within the button.
+ * - **injector**: Injector used for providing dependencies to the custom component.
+ *
+ * @example
+ * ```html
+ * <app-custom-buttons [buttons]="buttonsArray"></app-custom-buttons>
+ * ```
+ *
+ * @example
+ * ```typescript
+ * const buttonsArray: CustomButton[] = [
+ *   {
+ *     action: () => console.log('Button 1 clicked'),
+ *     show: true,
+ *     backgroundColor: 'blue',
+ *     disabled: false,
+ *     icon: faCoffee,
+ *     iconStyle: { color: 'white' },
+ *     text: 'Button 1',
+ *     textStyle: { color: 'white' },
+ *     customComponent: <CustomComponent />,
+ *     injector: Injector.create({
+ *       providers: [{ provide: 'customProp', useValue: 'customValue' }]
+ *     }),
+ *   },
+ * ];
+ * ```
+ *
+ * @class CustomButtons
+ * @method mergeStyles - Merges default styles with user-provided custom styles.
+ * @method isCustomComponentConfig - Type guard to check if an object is of type CustomComponent.
+ */
 class CustomButtons {
-    /**
-     * CustomButtons component renders a list of customizable buttons.
-     *
-     * @component
-     * @param {CustomButtonsOptions} props - The properties for the CustomButtons component.
-     * @param {Array} props.buttons - An array of button configurations.
-     * @param {Object} props.buttons[].action - The function to be called when the button is clicked.
-     * @param {boolean} props.buttons[].show - Determines if the button should be displayed.
-     * @param {string} props.buttons[].backgroundColor - The background color of the button.
-     * @param {boolean} props.buttons[].disabled - Determines if the button should be disabled.
-     * @param {Object} [props.buttons[].icon] - The icon to be displayed on the button.
-     * @param {Object} [props.buttons[].iconStyle] - The style to be applied to the icon.
-     * @param {string} [props.buttons[].text] - The text to be displayed on the button.
-     * @param {Object} [props.buttons[].textStyle] - The style to be applied to the text.
-     * @param {React.ReactNode} [props.buttons[].customComponent] - A custom component to be rendered inside the button.
-     * @param {Injector} [props.buttons[].injector] - The injector to be used for the custom component.
-     * @returns {HTMLElement} The CustomButtons component.
-     * @example
-     * ```html
-     * <app-custom-buttons [buttons]="buttons"></app-custom-buttons>
-     * ```
-     * @example
-     * ```typescript
-     * const buttons = [
-     *  {
-     *   action: () => console.log('Button 1 clicked'),
-     *  show: true,
-     * backgroundColor: 'blue',
-     * disabled: false,
-     * icon: faCoffee,
-     * iconStyle: { color: 'white' },
-     * text: 'Button 1',
-     * textStyle: { color: 'white' },
-     * customComponent: <CustomComponent />,
-     * injector: Injector.create({ providers: [{ provide: 'customProp', useValue: 'customValue' }] }),
-     * },
-     * {
-     *  action: () => console.log('Button 2 clicked'),
-     * show: true,
-     * backgroundColor: 'red',
-     * disabled: false,
-     * icon: faCoffee,
-     * iconStyle: { color: 'white' },
-     * text: 'Button 2',
-     * textStyle: { color: 'white' },
-     * customComponent: <CustomComponent />,
-     * injector: Injector.create({ providers: [{ provide: 'customProp', useValue: 'customValue' }] }),
-     * },
-     * ];
-     * ```
-     */
     buttons;
     faSpinner = faSpinner;
     mergeStyles(defaultStyle, customStyle) {
@@ -2112,9 +2199,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * Component representing a meeting ID.
  *
  * @selector app-meeting-id-component
+ * @standalone true
  * @templateUrl ./meeting-id-component.component.html
  * @styleUrls ./meeting-id-component.component.css
- * @standalone true
+ *
+ * @example
+ * ```html
+ * <app-meeting-id-component [meetingID]="'123-456-789'"></app-meeting-id-component>
+ * ```
  */
 class MeetingIdComponent {
     meetingID = '';
@@ -2135,6 +2227,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @standalone true
  * @templateUrl ./meeting-passcode-component.component.html
  * @styleUrls ./meeting-passcode-component.component.css
+ *
+ * @example
+ * ```html
+ * <app-meeting-passcode-component [meetingPasscode]="'ABC123'"></app-meeting-passcode-component>
+ * ```
  */
 class MeetingPasscodeComponent {
     meetingPasscode = '';
@@ -2150,23 +2247,25 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 
 /**
  * @component ShareButtonsComponent
- * @description This component provides a set of share buttons for different social media platforms and email.
- * It allows users to share a meeting link via various channels.
- *
  * @selector app-share-buttons-component
- * @templateUrl ./share-buttons-component.component.html
- * @styleUrls ./share-buttons-component.component.css
  * @standalone true
- * @imports [CommonModule, FontAwesomeModule]
+ * @description Displays a set of share buttons for sharing a meeting link on social media and email.
  *
- * @input {string} meetingID - The ID of the meeting to be shared.
- * @input {ShareButton[]} shareButtons - An array of custom share buttons.
- * @input {string} eventType - The type of event (e.g., 'chat', 'broadcast', 'webinar').
+ * @example
+ * ```html
+ * <app-share-buttons-component
+ *   [meetingID]="'12345'"
+ *   [eventType]="'broadcast'"
+ *   [shareButtons]="customShareButtons"
+ * ></app-share-buttons-component>
+ * ```
  *
- * @property {ShareButton[]} defaultShareButtons - The default set of share buttons.
- *
- * @getter {string} shareName - Determines the share name based on the event type.
- * @getter {ShareButton[]} filteredShareButtons - Returns the filtered share buttons based on visibility.
+ * ```typescript
+ * const customShareButtons = [
+ *   { icon: faEnvelope, action: () => console.log('Email'), show: true },
+ *   { icon: faFacebook, action: () => console.log('Facebook'), show: true },
+ * ];
+ * ```
  */
 class ShareButtonsComponent {
     meetingID;
@@ -2245,40 +2344,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * @component MenuModal
- *
- * @description
- * The MenuModal component is a standalone Angular component that displays a modal dialog.
- * It includes various customizable properties and imports necessary modules and components.
+ * Component for displaying a customizable menu modal with various options.
  *
  * @selector app-menu-modal
+ * @standalone true
  * @templateUrl ./menu-modal.component.html
  * @styleUrls ./menu-modal.component.css
  *
- * @inputs
- * @input {string} backgroundColor - The background color of the modal content. Default is '#83c0e9'.
- * @input {boolean} isVisible - Determines whether the modal is visible.
- * @input {CustomButton[]} customButtons - An array of custom buttons to be displayed in the modal.
- * @input {boolean} shareButtons - Determines whether share buttons are displayed. Default is true.
- * @input {string} position - The position of the modal on the screen. Default is 'bottomRight'.
- * @input {string} roomName - The name of the room.
- * @input {string} adminPasscode - The admin passcode for the room.
- * @input {string} islevel - The level of the user.
- * @input {() => void} onClose - A function to be called when the modal is closed.
+ * @example
+ * ```html
+ * <app-menu-modal
+ *   [isVisible]="true"
+ *   backgroundColor="#83c0e9"
+ *   roomName="Room 123"
+ *   adminPasscode="AdminPass"
+ *   [customButtons]="customButtons"
+ *   [shareButtons]="true"
+ *   position="bottomRight"
+ *   (onClose)="closeMenu()"
+ * ></app-menu-modal>
+ * ```
  *
- * @methods
- * @method modalContainerStyle - Returns the style object for the modal container.
- * @method modalContentStyle - Returns the style object for the modal content.
- * @method handleClose - Calls the onClose function to handle closing the modal.
- *
- * @dependencies
- * - CommonModule
- * - FontAwesomeModule
- * - FormsModule
- * - CustomButtons
- * - MeetingIdComponent
- * - MeetingPasscodeComponent
- * - ShareButtonsComponent
+ * ```typescript
+ * const customButtons = [
+ *   { action: () => console.log('Clicked'), show: true, text: 'Button' },
+ * ];
+ * closeMenu() { console.log('Menu closed'); }
+ * ```
  */
 class MenuModal {
     backgroundColor = '#83c0e9';
@@ -2391,6 +2483,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  *
  * @param {SimpleChanges} changes - The changes to the input properties.
  * @param {any} event - The event object from the change event.
+ *
+ * @example
+ * ```html
+ * <app-standard-panel-component [parameters]="standardPanelParameters"></app-standard-panel-component>
+ * ```
  */
 class StandardPanelComponent {
     parameters = {};
@@ -2443,6 +2540,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Component for configuring advanced recording options in a MediaSFU session.
+ *
+ * @component
+ * @selector app-advanced-panel-component
+ * @standalone true
+ * @templateUrl ./advanced-panel-component.component.html
+ * @styleUrls ['./advanced-panel-component.component.css']
+ * @imports [CommonModule, FormsModule]
+ *
+ * @example
+ * ```html
+ * <app-advanced-panel-component [parameters]="advancedPanelOptions"></app-advanced-panel-component>
+ * ```
+ */
 class AdvancedPanelComponent {
     parameters = {};
     selectedOrientationVideo;
@@ -2543,6 +2655,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
  * @method confirm - Calls the confirmRecording callback with the current parameters.
  * @method start - Calls the startRecording callback with the current parameters.
+ * @example
+ * ```html
+ * <app-recording-modal
+ *   [isRecordingModalVisible]="true"
+ *   [onClose]="closeRecordingModal"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [position]="'bottomRight'"
+ *   [confirmRecording]="confirmRecording"
+ *   [startRecording]="startRecording"
+ *   [parameters]="recordingModalParams"
+ * ></app-recording-modal>
+ * ```
  */
 class RecordingModal {
     isRecordingModalVisible = false;
@@ -2626,6 +2750,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * @component RenderRequestComponent
+ * @description Component to render and manage individual requests in a list. Each request can be responded to with specified actions (e.g., approve, deny).
+ *
+ * @selector app-render-request-component
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule]
+ * @templateUrl ./render-request-component.component.html
+ * @styleUrls ./render-request-component.component.css
+ *
+ * @example
+ * ```html
+ * <app-render-request-component
+ *   [request]="request"
+ *   [requestList]="requestList"
+ *   [roomName]="roomName"
+ *   [socket]="socket"
+ *   [onRequestItemPress]="handleRequestPress"
+ *   [updateRequestList]="updateRequestList">
+ * </app-render-request-component>
+ * ```
+ */
 class RenderRequestComponent {
     request = {};
     requestList = [];
@@ -2678,6 +2824,45 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Responds to incoming requests by updating the request list and emitting a response to the server.
+ *
+ * @param {RespondToRequestsOptions} options - The options for responding to requests.
+ * @param {Socket} options.socket - The socket instance used to emit the response.
+ * @param {Request} options.request - The request object containing details of the request.
+ * @param {Function} options.updateRequestList - The function to update the request list.
+ * @param {Request[]} options.requestList - The current list of requests.
+ * @param {string} options.action - The action to be taken on the request.
+ * @param {string} options.roomName - The name of the room to which the response should be emitted.
+ *
+ * @returns {Promise<void>} A promise that resolves when the response has been emitted.
+ *
+ * @remarks
+ * This method filters out the request that is being responded to from the current request list,
+ * updates the list, and emits the response to the server using the provided socket.
+ * It ensures that the state of the requests is accurately reflected in the application.
+ *
+ * @example
+ * ```typescript
+ * const options: RespondToRequestsOptions = {
+ *   socket: socketInstance,
+ *   request: {
+ *     id: 'request_id',
+ *     name: 'Request Name',
+ *     icon: 'request_icon'
+ *   },
+ *   updateRequestList: (newRequestList) => {
+ *     console.log('Updated request list:', newRequestList);
+ *   },
+ *   requestList: currentRequestList,
+ *   action: 'accept',
+ *   roomName: 'Room 1',
+ * };
+ *
+ * const respondToRequestsService = new RespondToRequests();
+ * await respondToRequestsService.respondToRequests(options);
+ * ```
+ */
 class RespondToRequests {
     /**
      * Responds to incoming requests by updating the request list and emitting a response to the server.
@@ -2760,6 +2945,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @method handleModalClose - Handles the modal close action.
  * @method handleFilterChange - Handles the filter change event.
  * @param {Event} event - The filter change event.
+ * @example
+ * ```html
+ * <app-requests-modal
+ *   [isRequestsModalVisible]="isModalVisible"
+ *   [requestCounter]="requestCounter"
+ *   [requestList]="requests"
+ *   [roomName]="roomName"
+ *   [socket]="socket"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [position]="'topRight'"
+ *   [parameters]="requestParams"
+ *   (onRequestClose)="handleModalClose()"
+ *   (onRequestFilterChange)="handleFilterChange($event)"
+ *   (onRequestItemPress)="handleRequestPress($event)"
+ *   [updateRequestList]="updateRequestList">
+ * </app-requests-modal>
+ * ```
  */
 class RequestsModal {
     respondToRequestsService;
@@ -2842,6 +3044,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Handles the response to a participant in the waiting room, either allowing or denying their entry.
+ *
+ * @param {RespondToWaitingOptions} options - Options for handling the participant's entry request.
+ * @param {string} options.participantId - Unique identifier for the participant.
+ * @param {string} options.participantName - Name of the participant.
+ * @param {Function} options.updateWaitingList - Function to update the waiting list by removing the responded participant.
+ * @param {WaitingRoomParticipant[]} options.waitingList - Current list of participants in the waiting room.
+ * @param {boolean | string} options.type - Indicates whether to allow ("true") or deny ("false") the participant's entry.
+ * @param {string} options.roomName - The name of the room the participant is requesting to join.
+ * @param {Socket} options.socket - The socket instance used to emit the response event.
+ * @returns {Promise<void>} Resolves when the response has been processed.
+ *
+ * @example
+ * ```typescript
+ * const respondService = new RespondToWaiting();
+ * respondService.respondToWaiting({
+ *   participantId: '12345',
+ *   participantName: 'John Doe',
+ *   updateWaitingList: (newList) => console.log('Updated Waiting List:', newList),
+ *   waitingList: currentWaitingList,
+ *   type: 'true',
+ *   roomName: 'Room1',
+ *   socket: io('http://localhost:3000'),
+ * });
+ * ```
+ *
+ * In this example, the participant 'John Doe' is allowed to join 'Room1', and the updated waiting list is logged.
+ */
 class RespondToWaiting {
     /**
      * Responds to a participant waiting to join a room by either allowing or denying their entry.
@@ -2881,6 +3112,65 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /* eslint-disable @typescript-eslint/no-empty-function */
+/**
+ * Component representing a modal for managing participants in a waiting room.
+ *
+ * @component
+ * @selector app-waiting-room-modal
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, FormsModule
+ * @templateUrl ./waiting-room-modal.component.html
+ * @styleUrls ['./waiting-room-modal.component.css']
+ *
+ * @property {boolean} isWaitingModalVisible - Visibility state of the modal.
+ * @property {number} waitingRoomCounter - Counter for the number of participants in the waiting room.
+ * @property {WaitingRoomParticipant[]} waitingRoomList - List of participants in the waiting room.
+ * @property {string} roomName - Name of the room.
+ * @property {Socket} socket - Socket instance for communication.
+ * @property {string} position - Position of the modal on the screen.
+ * @property {string} backgroundColor - Background color of the modal.
+ * @property {WaitingRoomModalParameters} parameters - Parameters for the waiting room modal.
+ * @property {function} onWaitingRoomClose - Function to call when the modal is closed.
+ * @property {function} onWaitingRoomFilterChange - Function to call when the filter value changes.
+ * @property {function} updateWaitingList - Function to update the waiting list.
+ * @property {function} onWaitingRoomItemPress - Function to call when an item in the waiting room is pressed.
+ *
+ * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
+ * @property {IconDefinition} faCheck - FontAwesome icon for the check button.
+ * @property {WaitingRoomParticipant[]} waitingRoomList_s - Filtered list of participants in the waiting room.
+ * @property {number} waitingRoomCounter_s - Counter for the filtered list of participants in the waiting room.
+ * @property {boolean} reRender - Flag to trigger re-rendering of the component.
+ *
+ * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
+ * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
+ * @method updateParameters - Updates the parameters for the waiting room modal.
+ * @method handleModalClose - Handles the closing of the modal.
+ * @method handleFilterChange - Handles the change in the filter input.
+ * @method handleItemPress - Handles the pressing of an item in the waiting room.
+ *
+ * @getter modalContainerStyle - Returns the style object for the modal container.
+ * @getter modalContentStyle - Returns the style object for the modal content.
+ * @getter inputStyle - Returns the style object for the input field.
+ *
+ * @example
+ * ```html
+ * <app-waiting-room-modal
+ *  [isWaitingModalVisible]="true"
+ * [waitingRoomCounter]="waitingRoomCounter"
+ * [waitingRoomList]="waitingRoomList"
+ * [roomName]="roomName"
+ * [socket]="socket"
+ * [position]="'topRight'"
+ * [backgroundColor]="'#83c0e9'"
+ * [parameters]="waitingRoomModalParams"
+ * [onWaitingRoomClose]="closeWaitingRoomModal"
+ * [onWaitingRoomFilterChange]="filterWaitingRoom"
+ * [updateWaitingList]="updateWaitingList"
+ * [onWaitingRoomItemPress]="handleWaitingRoomItemPress"
+ * ></app-waiting-room-modal>
+ * ```
+ *
+ */
 class WaitingRoomModal {
     respondToWaitingService;
     constructor(respondToWaitingService) {
@@ -3013,6 +3303,81 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Modifies the display settings based on the provided parameters.
+ *
+ * This method updates the display settings for the meeting based on the participant's level,
+ * recording status, and other conditions. It validates display types and shows alerts
+ * when necessary. It also handles the display settings for breakout rooms.
+ *
+ * @param {ModifyDisplaySettingsOptions} options - The options containing the parameters to modify the display settings.
+ * @param {Object} options.parameters - The parameters for modifying the display settings.
+ * @param {Function} options.parameters.showAlert - Function to show alert messages.
+ * @param {string} options.parameters.meetingDisplayType - The current meeting display type.
+ * @param {boolean} options.parameters.autoWave - Flag indicating if auto wave is enabled.
+ * @param {boolean} options.parameters.forceFullDisplay - Flag indicating if full display is forced.
+ * @param {boolean} options.parameters.meetingVideoOptimized - Flag indicating if the meeting video is optimized.
+ * @param {string} options.parameters.islevel - The current level of the meeting.
+ * @param {boolean} options.parameters.recordStarted - Flag indicating if recording has started.
+ * @param {boolean} options.parameters.recordResumed - Flag indicating if recording has resumed.
+ * @param {boolean} options.parameters.recordStopped - Flag indicating if recording has stopped.
+ * @param {boolean} options.parameters.recordPaused - Flag indicating if recording is paused.
+ * @param {string} options.parameters.recordingDisplayType - The current recording display type.
+ * @param {boolean} options.parameters.recordingVideoOptimized - Flag indicating if the recording video is optimized.
+ * @param {string} options.parameters.prevForceFullDisplay - The previous force full display value.
+ * @param {string} options.parameters.prevMeetingDisplayType - The previous meeting display type.
+ * @param {Function} options.parameters.updateMeetingDisplayType - Function to update the meeting display type.
+ * @param {Function} options.parameters.updateAutoWave - Function to update the auto wave setting.
+ * @param {Function} options.parameters.updateForceFullDisplay - Function to update the force full display setting.
+ * @param {Function} options.parameters.updateMeetingVideoOptimized - Function to update the meeting video optimization setting.
+ * @param {Function} options.parameters.updatePrevForceFullDisplay - Function to update the previous force full display setting.
+ * @param {Function} options.parameters.updatePrevMeetingDisplayType - Function to update the previous meeting display type.
+ * @param {Function} options.parameters.updateIsDisplaySettingsModalVisible - Function to update the visibility of the display settings modal.
+ * @param {Function} options.parameters.updateFirstAll - Function to update the first all setting.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window.
+ * @param {boolean} options.parameters.breakOutRoomStarted - Flag indicating if a breakout room has started.
+ * @param {boolean} options.parameters.breakOutRoomEnded - Flag indicating if a breakout room has ended.
+ * @param {Function} options.parameters.onScreenChanges - Function to handle screen changes.
+ *
+ * @returns {Promise<void>} A promise that resolves when the display settings have been modified.
+ *
+ * @example
+ * ```typescript
+ * const options: ModifyDisplaySettingsOptions = {
+ *   parameters: {
+ *     showAlert: (alert) => console.log(alert.message),
+ *     meetingDisplayType: 'video',
+ *     autoWave: true,
+ *     forceFullDisplay: false,
+ *     meetingVideoOptimized: true,
+ *     islevel: '1',
+ *     recordStarted: false,
+ *     recordResumed: false,
+ *     recordStopped: false,
+ *     recordPaused: false,
+ *     recordingDisplayType: 'media',
+ *     recordingVideoOptimized: false,
+ *     prevForceFullDisplay: false,
+ *     prevMeetingDisplayType: 'media',
+ *     updateMeetingDisplayType: (type) => console.log('Updated display type:', type),
+ *     updateAutoWave: (wave) => console.log('Updated auto wave:', wave),
+ *     updateForceFullDisplay: (fullDisplay) => console.log('Updated force full display:', fullDisplay),
+ *     updateMeetingVideoOptimized: (optimized) => console.log('Updated video optimization:', optimized),
+ *     updatePrevForceFullDisplay: (fullDisplay) => console.log('Updated previous full display:', fullDisplay),
+ *     updatePrevMeetingDisplayType: (type) => console.log('Updated previous display type:', type),
+ *     updateIsDisplaySettingsModalVisible: (isVisible) => console.log('Display settings modal is now:', isVisible),
+ *     updateFirstAll: (firstAll) => console.log('Updated first all:', firstAll),
+ *     updateUpdateMainWindow: (update) => console.log('Updated main window:', update),
+ *     breakOutRoomStarted: false,
+ *     breakOutRoomEnded: false,
+ *     onScreenChanges: async ({ changed, parameters }) => console.log('Screen changes:', changed),
+ *   },
+ * };
+ *
+ * const modifyDisplaySettingsService = new ModifyDisplaySettings();
+ * await modifyDisplaySettingsService.modifyDisplaySettings(options);
+ * ```
+ */
 class ModifyDisplaySettings {
     /**
      * Modifies the display settings based on the provided parameters.
@@ -3131,33 +3496,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * Component for displaying and modifying display settings in a modal.
+ * DisplaySettingsModal component is a modal dialog for managing display settings in a meeting.
  *
+ * @component
  * @selector app-display-settings-modal
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule, FormsModule]
- * @templateUrl ./display-settings-modal.component.html
- * @styleUrls ['./display-settings-modal.component.css']
  *
- * @property {boolean} isDisplaySettingsModalVisible - Determines if the display settings modal is visible.
- * @property {() => void} onDisplaySettingsClose - Callback function to handle closing the display settings modal.
- * @property {(params: any) => void} onModifyDisplaySettings - Callback function to handle modifying display settings.
- * @property {DisplaySettingsModalParameters} parameters - Parameters for the display settings modal.
- * @property {string} position - Position of the modal on the screen. Default is 'topRight'.
- * @property {string} backgroundColor - Background color of the modal. Default is '#83c0e9'.
+ * @example
+ * ```html
+ * <app-display-settings-modal
+ *   [isDisplaySettingsModalVisible]="true"
+ *   [onDisplaySettingsClose]="closeModal"
+ *   [onModifyDisplaySettings]="saveSettings"
+ *   [parameters]="displaySettingsParams"
+ *   position="topRight"
+ *   backgroundColor="#83c0e9"
+ * ></app-display-settings-modal>
+ * ```
  *
- * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
+ * @input {boolean} isDisplaySettingsModalVisible - Determines if the modal is visible.
+ * @input {() => void} onDisplaySettingsClose - Callback to close the modal.
+ * @input {(params: any) => void} onModifyDisplaySettings - Callback to modify display settings.
+ * @input {DisplaySettingsModalParameters} parameters - Input parameters for modal settings.
+ * @input {string} position - Modal's screen position, default is 'topRight'.
+ * @input {string} backgroundColor - Background color of the modal, default is '#83c0e9'.
  *
- * @property {string} meetingDisplayTypeState - State for the meeting display type.
- * @property {boolean} autoWaveState - State for the auto wave setting. Default is false.
- * @property {boolean} forceFullDisplayState - State for the force full display setting. Default is false.
- * @property {boolean} meetingVideoOptimizedState - State for the meeting video optimized setting. Default is false.
+ * @property {IconDefinition} faTimes - FontAwesome icon for closing the modal.
+ *
+ * @property {string} meetingDisplayTypeState - State variable for meeting display type.
+ * @property {boolean} autoWaveState - State variable for auto wave setting.
+ * @property {boolean} forceFullDisplayState - State variable for force full display setting.
+ * @property {boolean} meetingVideoOptimizedState - State variable for video optimized setting.
  *
  * @constructor
- * @param {ModifyDisplaySettings} modifyDisplaySettingsService - Service to modify display settings.
+ * @param {ModifyDisplaySettings} modifyDisplaySettingsService - Service to handle display settings modifications.
  *
- * @method ngOnInit - Initializes the component and sets the initial state based on the input parameters.
- * @method handleSaveSettings - Handles saving the modified display settings.
+ * @method ngOnInit - Initializes component state based on input parameters.
+ * @method handleSaveSettings - Triggers the modification of display settings using `onModifyDisplaySettings`.
  */
 class DisplaySettingsModal {
     modifyDisplaySettingsService;
@@ -3215,6 +3591,48 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Modifies the settings for a given room and updates the state accordingly.
+ *
+ * @param {ModifySettingsOptions} options - The options for modifying settings.
+ * @param {Function} options.showAlert - Function to show alert messages.
+ * @param {string} options.roomName - The name of the room.
+ * @param {string} options.audioSet - The audio setting to be applied.
+ * @param {string} options.videoSet - The video setting to be applied.
+ * @param {string} options.screenshareSet - The screenshare setting to be applied.
+ * @param {string} options.chatSet - The chat setting to be applied.
+ * @param {Socket} options.socket - The socket instance for emitting events.
+ * @param {Function} options.updateAudioSetting - Function to update the audio setting state.
+ * @param {Function} options.updateVideoSetting - Function to update the video setting state.
+ * @param {Function} options.updateScreenshareSetting - Function to update the screenshare setting state.
+ * @param {Function} options.updateChatSetting - Function to update the chat setting state.
+ * @param {Function} options.updateIsSettingsModalVisible - Function to update the visibility of the settings modal.
+ *
+ * @returns {Promise<void>} A promise that resolves when the settings have been modified.
+ *
+ * @throws Will show an alert if any setting is set to "approval" in demo mode (room name starts with "d").
+ *
+ * @example
+ * ```typescript
+ * const options: ModifySettingsOptions = {
+ *   showAlert: (alert) => console.log(alert),
+ *   roomName: 'exampleRoom',
+ *   audioSet: 'enabled',
+ *   videoSet: 'disabled',
+ *   screenshareSet: 'approval',
+ *   chatSet: 'enabled',
+ *   socket: socketInstance,
+ *   updateAudioSetting: (audio) => console.log('Audio setting updated:', audio),
+ *   updateVideoSetting: (video) => console.log('Video setting updated:', video),
+ *   updateScreenshareSetting: (screenshare) => console.log('Screenshare setting updated:', screenshare),
+ *   updateChatSetting: (chat) => console.log('Chat setting updated:', chat),
+ *   updateIsSettingsModalVisible: (visible) => console.log('Settings modal visibility:', visible),
+ * };
+ *
+ * const modifySettingsService = new ModifySettings();
+ * await modifySettingsService.modifySettings(options);
+ * ```
+ */
 class ModifySettings {
     /**
      * Modifies the settings for a given room and updates the state accordingly.
@@ -3282,56 +3700,65 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 
 // event-settings-modal.component.ts
 /**
- * Component for managing event settings modal.
+ * EventSettingsModal component provides a modal interface to manage and update event settings like audio, video, screenshare, and chat settings.
  *
+ * @component
  * @selector app-event-settings-modal
  * @standalone true
- * @imports CommonModule, FontAwesomeModule, FormsModule
- * @templateUrl ./event-settings-modal.component.html
- * @styleUrls ./event-settings-modal.component.css
+ * @imports [CommonModule, FontAwesomeModule, FormsModule]
  *
- * @class EventSettingsModal
- * @implements OnInit, OnChanges
+ * @example
+ * ```html
+ * <app-event-settings-modal
+ *   [isEventSettingsModalVisible]="true"
+ *   [onEventSettingsClose]="closeModal"
+ *   [onModifyEventSettings]="saveSettings"
+ *   [audioSetting]="audio"
+ *   [videoSetting]="video"
+ *   [screenshareSetting]="screenshare"
+ *   [chatSetting]="chat"
+ *   [position]="'topRight'"
+ *   [backgroundColor]="'#83c0e9'"
+ * ></app-event-settings-modal>
+ * ```
  *
- * @property {boolean} isEventSettingsModalVisible - Indicates if the event settings modal is visible.
- * @property {() => void} onEventSettingsClose - Callback function to close the event settings modal.
- * @property {(options: ModifySettingsOptions) => Promise<void>} onModifyEventSettings - Callback function to modify event settings.
- * @property {string} position - Position of the modal on the screen.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {string} audioSetting - Current audio setting.
- * @property {string} videoSetting - Current video setting.
- * @property {string} screenshareSetting - Current screenshare setting.
- * @property {string} chatSetting - Current chat setting.
- * @property {(setting: string) => void} updateAudioSetting - Callback function to update audio setting.
- * @property {(setting: string) => void} updateVideoSetting - Callback function to update video setting.
- * @property {(setting: string) => void} updateScreenshareSetting - Callback function to update screenshare setting.
- * @property {(setting: string) => void} updateChatSetting - Callback function to update chat setting.
- * @property {(isVisible: boolean) => void} updateIsSettingsModalVisible - Callback function to update modal visibility.
- * @property {string} roomName - Name of the room.
- * @property {Socket} socket - Socket instance for communication.
- * @property {ShowAlert} [showAlert] - Optional alert function.
+ * @input {boolean} isEventSettingsModalVisible - Indicates if the event settings modal is visible.
+ * @input {() => void} onEventSettingsClose - Callback to close the modal.
+ * @input {(options: ModifySettingsOptions) => Promise<void>} onModifyEventSettings - Callback to handle event settings modifications.
+ * @input {string} position - Position of the modal on the screen, default is 'topRight'.
+ * @input {string} backgroundColor - Background color of the modal, default is '#83c0e9'.
+ * @input {string} audioSetting - Current audio setting.
+ * @input {string} videoSetting - Current video setting.
+ * @input {string} screenshareSetting - Current screenshare setting.
+ * @input {string} chatSetting - Current chat setting.
+ * @input {(setting: string) => void} updateAudioSetting - Function to update audio setting.
+ * @input {(setting: string) => void} updateVideoSetting - Function to update video setting.
+ * @input {(setting: string) => void} updateScreenshareSetting - Function to update screenshare setting.
+ * @input {(setting: string) => void} updateChatSetting - Function to update chat setting.
+ * @input {(isVisible: boolean) => void} updateIsSettingsModalVisible - Function to update modal visibility.
+ * @input {string} roomName - Room name associated with the settings.
+ * @input {Socket} socket - Socket for real-time communication.
+ * @input {ShowAlert} [showAlert] - Optional alert function.
  *
- * @property {string} audioState - State of the audio setting.
- * @property {string} videoState - State of the video setting.
- * @property {string} screenshareState - State of the screenshare setting.
- * @property {string} chatState - State of the chat setting.
- *
- * @property {IconDefinition} faTimes - FontAwesome icon for close button.
+ * @property {string} audioState - Internal state for audio setting.
+ * @property {string} videoState - Internal state for video setting.
+ * @property {string} screenshareState - Internal state for screenshare setting.
+ * @property {string} chatState - Internal state for chat setting.
+ * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
  *
  * @constructor
  * @param {ModifySettings} modifySettingsService - Service for modifying settings.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @param {SimpleChanges} changes - Object of current and previous property values.
+ * @method ngOnInit - Initializes the component and binds the settings modification service.
+ * @method ngOnChanges - Updates internal states when `isEventSettingsModalVisible` changes.
+ * @param {SimpleChanges} changes - Object containing previous and current values of bound properties.
  *
- * @method updateStatesFromParameters - Updates the state variables from the input parameters.
+ * @method updateStatesFromParameters - Sets internal state variables based on input parameters.
+ * @method getModalContentStyle - Returns style object for modal content with dynamic positioning and size.
+ * @returns {Object} Style object for modal content.
  *
- * @method getModalContentStyle - Returns the style object for the modal content.
- * @returns {Object} Style object for the modal content.
- *
- * @method handleSaveSettings - Handles the save settings action.
- * @returns {Promise<void>} Promise that resolves when settings are saved.
+ * @method handleSaveSettings - Invokes the settings modification function with updated values.
+ * @returns {Promise<void>} Promise that resolves after saving settings.
  *
  * @method closeModal - Closes the modal.
  */
@@ -3461,6 +3888,50 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 // This method is used to modify the co-host settings in the chat room.
+/**
+ * Modifies the co-host settings for a given room.
+ *
+ * This method allows you to update the co-host for a chat room, set their responsibilities,
+ * and emit the relevant changes to the server. It also handles demo mode restrictions.
+ *
+ * @param {ModifyCoHostSettingsOptions} options - The options for modifying co-host settings.
+ * @param {string} options.roomName - The name of the room.
+ * @param {Function} options.showAlert - Function to show an alert message.
+ * @param {string} options.selectedParticipant - The participant selected to be co-host.
+ * @param {string} options.coHost - The current co-host.
+ * @param {Array<CoHostResponsibility>} options.coHostResponsibility - The responsibilities assigned to the co-host.
+ * @param {Function} options.updateIsCoHostModalVisible - Function to update the visibility of the co-host modal.
+ * @param {Function} options.updateCoHostResponsibility - Function to update the co-host responsibility.
+ * @param {Function} options.updateCoHost - Function to update the co-host.
+ * @param {Socket} options.socket - The socket instance for emitting events.
+ *
+ * @returns {Promise<void>} A promise that resolves when the co-host settings have been modified.
+ *
+ * @remarks
+ * - If the room is in demo mode (room name starts with "d"), co-host cannot be added and an alert is shown.
+ * - If a valid participant is selected, they are set as the new co-host.
+ * - The co-host responsibility is updated.
+ * - A socket event is emitted to update the co-host information.
+ * - The co-host modal is closed after updating the settings.
+ *
+ * @example
+ * ```typescript
+ * const options: ModifyCoHostSettingsOptions = {
+ *   roomName: 'mainRoom',
+ *   showAlert: (alert) => console.log(alert.message),
+ *   selectedParticipant: 'JohnDoe',
+ *   coHost: 'No coHost',
+ *   coHostResponsibility: ['manage participants', 'start/stop recording'],
+ *   updateIsCoHostModalVisible: (isVisible) => console.log('Co-host modal visible:', isVisible),
+ *   updateCoHostResponsibility: (responsibility) => console.log('Updated co-host responsibility:', responsibility),
+ *   updateCoHost: (coHost) => console.log('New co-host:', coHost),
+ *   socket: socketInstance,
+ * };
+ *
+ * const modifyCoHostService = new ModifyCoHostSettings();
+ * await modifyCoHostService.modifyCoHostSettings(options);
+ * ```
+ */
 class ModifyCoHostSettings {
     /**
      * Modifies the co-host settings for a given room.
@@ -3666,7 +4137,6 @@ class CoHostModal {
         }
     }
     handleSave() {
-        console.log('handleSave');
         this.onModifyCoHost({
             roomName: this.roomName,
             showAlert: this.showAlert,
@@ -3754,6 +4224,25 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Component representing an individual participant item in the participant list.
+ * Provides controls for muting, messaging, and removing a participant.
+ *
+ * @component
+ * @selector app-participant-list-item
+ * @standalone true
+ * @templateUrl ./participant-list-item.component.html
+ * @styleUrls ['./participant-list-item.component.css']
+ * @imports [CommonModule, FontAwesomeModule]
+ *
+ * @example
+ * ```html
+ * <app-participant-list-item [participant]="participant" [isBroadcast]="isBroadcast"
+ *                            [onMuteParticipants]="muteHandler" [onMessageParticipants]="messageHandler"
+ *                            [onRemoveParticipants]="removeHandler" [socket]="socket" [member]="member">
+ * </app-participant-list-item>
+ * ```
+ */
 class ParticipantListItem {
     participant;
     isBroadcast;
@@ -3868,6 +4357,25 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /* eslint-disable @typescript-eslint/no-empty-function */
+/**
+ * @component ParticipantList
+ * @description Displays a list of participants and provides actions like muting, messaging, and removing participants.
+ *
+ * @selector app-participant-list
+ * @standalone true
+ * @templateUrl ./participant-list.component.html
+ * @styleUrls ['./participant-list.component.css']
+ * @imports [CommonModule, ParticipantListItem]
+ *
+ * @example
+ * ```html
+ * <app-participant-list [participants]="participants" [isBroadcast]="isBroadcast"
+ *                       [onMuteParticipants]="muteParticipantsHandler"
+ *                       [onMessageParticipants]="messageParticipantsHandler"
+ *                       [onRemoveParticipants]="removeParticipantsHandler">
+ * </app-participant-list>
+ * ```
+ */
 class ParticipantList {
     participants = [];
     isBroadcast = false;
@@ -3925,6 +4433,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Component for displaying an individual participant item in the "others" participant list.
+ * Provides a display name with conditional labels for roles such as host, co-host, or self.
+ *
+ * @component
+ * @selector app-participant-list-others-item
+ * @standalone true
+ * @templateUrl ./participant-list-others-item.component.html
+ * @styleUrls ['./participant-list-others-item.component.css']
+ * @imports [CommonModule, FontAwesomeModule]
+ *
+ * @example
+ * ```html
+ * <app-participant-list-others-item [participant]="participant" [member]="currentMember" [coHost]="coHostID">
+ * </app-participant-list-others-item>
+ * ```
+ */
 class ParticipantListOthersItem {
     participant;
     member;
@@ -3962,6 +4487,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Component for displaying a list of other participants.
+ * It renders individual participant items within the list.
+ *
+ * @component
+ * @selector app-participant-list-others
+ * @standalone true
+ * @templateUrl ./participant-list-others.component.html
+ * @styleUrls ['./participant-list-others.component.css']
+ * @imports [CommonModule, ParticipantListOthersItem]
+ *
+ * @example
+ * ```html
+ * <app-participant-list-others [participants]="participantsList" [coHost]="coHostID" [member]="memberID">
+ * </app-participant-list-others>
+ * ```
+ */
 class ParticipantListOthers {
     participants = [];
     coHost = '';
@@ -3980,6 +4522,45 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Mutes a participant in a media session if certain conditions are met.
+ *
+ * This method checks the current user's level and their co-host responsibilities
+ * to determine if they are allowed to mute a specified participant. If allowed,
+ * the method emits a socket event to mute the participant. If not allowed, an alert
+ * is displayed.
+ *
+ * @param {MuteParticipantsOptions} options - The options for muting participants.
+ * @param {Socket} options.socket - The socket instance for communication.
+ * @param {CoHostResponsibility[]} options.coHostResponsibility - List of co-host responsibilities.
+ * @param {Participant} options.participant - The participant to be muted.
+ * @param {string} options.member - The current member attempting to mute.
+ * @param {string} options.islevel - The level of the current member.
+ * @param {Function} [options.showAlert] - Optional function to show alerts.
+ * @param {string} options.coHost - The co-host information.
+ * @param {string} options.roomName - The name of the room.
+ *
+ * @returns {Promise<void>} A promise that resolves when the participant is muted.
+ *
+ * @throws Will log an error if there is an issue accessing co-host responsibilities.
+ *
+ * @example
+ * ```typescript
+ * const muteService = new MuteParticipants();
+ * muteService.muteParticipants({
+ *   socket: socketInstance,
+ *   coHostResponsibility: [{ name: 'media', value: true }],
+ *   participant: { id: '123', name: 'John', islevel: '1', muted: false },
+ *   member: 'Alice',
+ *   islevel: '1',
+ *   showAlert: ({ message, type }) => {
+ *     console.log(`Alert: ${message} - Type: ${type}`);
+ *   },
+ *   coHost: 'Bob',
+ *   roomName: 'room1',
+ * });
+ * ```
+ */
 class MuteParticipants {
     /**
      * Mutes a participant in a media session if certain conditions are met.
@@ -4035,6 +4616,52 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Sends a direct message to a participant if certain conditions are met.
+ *
+ * This method checks the current user's level and their co-host responsibilities
+ * to determine if they are allowed to send a direct message to a specified participant.
+ * If the user has the appropriate permissions, the method updates the direct message
+ * details and opens the messages modal. If the user is not allowed to send the message,
+ * an alert is displayed.
+ *
+ * @param {MessageParticipantsOptions} options - The options for sending a message to a participant.
+ * @param {CoHostResponsibility[]} options.coHostResponsibility - Array of responsibilities assigned to the co-host.
+ * @param {Participant} options.participant - The participant to whom the message is to be sent.
+ * @param {string} options.member - The current member attempting to send the message.
+ * @param {string} options.islevel - The level of the current member.
+ * @param {Function} [options.showAlert] - Function to show an alert message if the message cannot be sent.
+ * @param {string} options.coHost - The co-host member.
+ * @param {Function} options.updateIsMessagesModalVisible - Function to update the visibility of the messages modal.
+ * @param {Function} options.updateDirectMessageDetails - Function to update the details of the direct message.
+ * @param {Function} options.updateStartDirectMessage - Function to start the direct message.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const messageService = new MessageParticipants();
+ * messageService.messageParticipants({
+ *   coHostResponsibility: [{ name: 'chat', value: true }],
+ *   participant: { name: 'John', islevel: '1' },
+ *   member: 'Alice',
+ *   islevel: '1',
+ *   showAlert: ({ message, type, duration }) => {
+ *     console.log(`Alert: ${message} - Type: ${type} - Duration: ${duration}`);
+ *   },
+ *   coHost: 'Bob',
+ *   updateIsMessagesModalVisible: (isVisible) => {
+ *     console.log(`Messages modal is now ${isVisible ? 'visible' : 'hidden'}`);
+ *   },
+ *   updateDirectMessageDetails: (participant) => {
+ *     console.log(`Direct messaging: ${participant.name}`);
+ *   },
+ *   updateStartDirectMessage: (start) => {
+ *     console.log(`Direct messaging started: ${start}`);
+ *   },
+ * });
+ * ```
+ */
 class MessageParticipants {
     /**
      * Sends a direct message to a participant if certain conditions are met.
@@ -4085,6 +4712,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Removes a participant from the room if the user has the appropriate permissions.
+ *
+ * This method checks the current user's level and their co-host responsibilities
+ * to determine if they are allowed to remove a specified participant. If allowed,
+ * the method emits a socket event to disconnect the participant and updates
+ * the local list of participants. If not allowed, an alert is displayed.
+ *
+ * @param {RemoveParticipantsOptions} options - The options for removing a participant.
+ * @param {CoHostResponsibility[]} options.coHostResponsibility - The responsibilities of the co-host.
+ * @param {Participant} options.participant - The participant to be removed.
+ * @param {string} options.member - The current member attempting to remove the participant.
+ * @param {string} options.islevel - The level of the current member.
+ * @param {Function} [options.showAlert] - Optional function to show alert messages.
+ * @param {string} options.coHost - The co-host information.
+ * @param {Participant[]} options.participants - The list of current participants.
+ * @param {Socket} options.socket - The socket instance for emitting events.
+ * @param {string} options.roomName - The name of the room.
+ * @param {Function} options.updateParticipants - Function to update the participants list.
+ *
+ * @returns {Promise<void>} A promise that resolves when the participant is removed.
+ *
+ * @throws Will log an error if there is an issue accessing co-host responsibilities.
+ *
+ * @example
+ * ```typescript
+ * const removeParticipantsService = new RemoveParticipants();
+ * await removeParticipantsService.removeParticipants({
+ *   coHostResponsibility: [{ name: 'participants', value: true }],
+ *   participant: { id: '123', name: 'John', islevel: '1' },
+ *   member: 'Alice',
+ *   islevel: '1',
+ *   showAlert: ({ message, type }) => {
+ *     console.log(`Alert: ${message} - Type: ${type}`);
+ *   },
+ *   coHost: 'Bob',
+ *   participants: [{ id: '123', name: 'John', islevel: '1' }],
+ *   socket: socketInstance,
+ *   roomName: 'room1',
+ *   updateParticipants: (updatedList) => {
+ *     console.log('Updated participants:', updatedList);
+ *   },
+ * });
+ * ```
+ */
 class RemoveParticipants {
     /**
      * Removes a participant from the room if the user has the appropriate permissions.
@@ -4145,6 +4817,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Component for displaying a modal containing a list of participants with options to mute, message, or remove participants.
+ * Supports both regular participants and a subset of "other" participants.
+ *
+ * @component
+ * @selector app-participants-modal
+ * @standalone true
+ * @templateUrl ./participants-modal.component.html
+ * @styleUrls ['./participants-modal.component.css']
+ * @imports [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers]
+ *
+ * @example
+ * ```html
+ * <app-participants-modal
+ *   [isParticipantsModalVisible]="true"
+ *   [onParticipantsClose]="closeModalFunction"
+ *   [onParticipantsFilterChange]="filterFunction"
+ *   [participantsCounter]="5"
+ *   [parameters]="participantsModalParameters"
+ *   [position]="'topRight'"
+ *   [backgroundColor]="'#83c0e9'"
+ * ></app-participants-modal>
+ * ```
+ */
 class ParticipantsModal {
     muteParticipantsService;
     messageParticipantsService;
@@ -4281,6 +4977,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @method handleTextInputChange - Handles changes in the text input field.
  * @method openReplyInput - Opens the reply input for a specific sender.
  * @method handleSendButton - Handles the send button click event.
+ *
+ * @example
+ * ```html
+ * <app-message-panel
+ *   [messages]="chatMessages"
+ *   [messagesLength]="chatMessages.length"
+ *   [type]="'group'"
+ *   [username]="'JohnDoe'"
+ *   [onSendMessagePress]="sendMessage"
+ *   [focusedInput]="true"
+ *   [eventType]="'webinar'"
+ *   [member]="'JohnDoe'"
+ *   [islevel]="'2'"
+ *   [startDirectMessage]="false"
+ *   [updateStartDirectMessage]="updateDirectMessageStart"
+ *   [directMessageDetails]="selectedParticipant"
+ *   [updateDirectMessageDetails]="updateParticipantDetails"
+ *   [coHostResponsibility]="coHostRoles"
+ *   [coHost]="'coHost123'"
+ *   [roomName]="'RoomName'"
+ *   [socket]="chatSocket"
+ *   [chatSetting]="'enabled'"
+ * ></app-message-panel>
+ * ```
  */
 class MessagePanel {
     messages = [];
@@ -4429,6 +5149,55 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Sends a message to the specified room.
+ *
+ * This method validates the message and its recipients, checks user permissions,
+ * and then emits the message to the server via a socket connection. It also
+ * handles alerting the user for any errors encountered during the process,
+ * such as exceeding message limits or invalid input.
+ *
+ * @param {SendMessageOptions} options - The options for sending the message.
+ * @param {string} options.member - The member sending the message.
+ * @param {string} options.islevel - The level of the member.
+ * @param {Function} options.showAlert - Function to show alert messages.
+ * @param {Array} options.coHostResponsibility - List of co-host responsibilities.
+ * @param {string} options.coHost - The co-host of the room.
+ * @param {string} options.chatSetting - Chat setting for the room.
+ * @param {string} options.message - The message to be sent.
+ * @param {string} options.roomName - The name of the room.
+ * @param {number} options.messagesLength - The current number of messages in the room.
+ * @param {Array} options.receivers - List of receivers for the message.
+ * @param {boolean} options.group - Indicates if the message is for a group.
+ * @param {string} options.sender - The sender of the message.
+ * @param {Object} options.socket - The socket instance for emitting events.
+ *
+ * @returns {Promise<void>} A promise that resolves when the message is sent.
+ *
+ * @throws Will throw an error if the message count limit is exceeded.
+ * @throws Will throw an error if the message, sender, or receivers are not valid.
+ * @throws Will throw an error if the user is not allowed to send a message in the event room.
+ *
+ * @example
+ * ```typescript
+ * const sendMessageService = new SendMessage();
+ * await sendMessageService.sendMessage({
+ *   member: 'JohnDoe',
+ *   islevel: '1',
+ *   showAlert: (alert) => console.log(alert.message),
+ *   coHostResponsibility: [],
+ *   coHost: 'JaneDoe',
+ *   chatSetting: 'allowed',
+ *   message: 'Hello everyone!',
+ *   roomName: 'Room1',
+ *   messagesLength: 50,
+ *   receivers: ['user1', 'user2'],
+ *   group: true,
+ *   sender: 'JohnDoe',
+ *   socket: socketInstance,
+ * });
+ * ```
+ */
 class SendMessage {
     /**
      * Sends a message to the specified room.
@@ -4522,6 +5291,40 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /* eslint-disable @typescript-eslint/no-empty-function */
+/**
+ * @component MessagesModal
+ * @description A modal component for managing chat messages in MediaSFU applications, supporting both group and direct messaging, and providing a customizable user interface.
+ *
+ * @selector app-messages-modal
+ * @templateUrl ./messages-modal.component.html
+ * @styleUrls ./messages-modal.component.css
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule, MessagePanel]
+ *
+ * @example
+ * ```html
+ * <app-messages-modal
+ *   [isMessagesModalVisible]="true"
+ *   [onMessagesClose]="closeMessages"
+ *   [messages]="chatMessages"
+ *   [position]="'bottomRight'"
+ *   [backgroundColor]="'#f5f5f5'"
+ *   [eventType]="'webinar'"
+ *   [member]="'JohnDoe'"
+ *   [islevel]="'2'"
+ *   [coHostResponsibility]="coHostRoles"
+ *   [coHost]="'coHost123'"
+ *   [startDirectMessage]="false"
+ *   [directMessageDetails]="selectedParticipant"
+ *   [updateStartDirectMessage]="updateDirectMessageStart"
+ *   [updateDirectMessageDetails]="updateParticipantDetails"
+ *   [showAlert]="displayAlert"
+ *   [roomName]="'RoomName'"
+ *   [socket]="chatSocket"
+ *   [chatSetting]="'enabled'"
+ * ></app-messages-modal>
+ * ```
+ */
 class MessagesModal {
     SendMessageService;
     constructor(SendMessageService) {
@@ -4755,6 +5558,53 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Switches the audio input device based on user preference.
+ *
+ * @param {SwitchAudioOptions} options - The options for switching the audio input.
+ * @param {string} options.audioPreference - The ID of the preferred audio input device.
+ * @param {SwitchAudioParameters} options.parameters - The parameters required for switching the audio.
+ * @param {string} options.parameters.defAudioID - The default audio input device ID.
+ * @param {string} options.parameters.userDefaultAudioInputDevice - The current default audio input device ID.
+ * @param {string} options.parameters.prevAudioInputDevice - The previously used audio input device ID.
+ * @param {Function} options.parameters.updateUserDefaultAudioInputDevice - Function to update the user's default audio input device.
+ * @param {Function} options.parameters.updatePrevAudioInputDevice - Function to update the previous audio input device.
+ * @param {Function} options.parameters.switchUserAudio - Function to switch the user's audio.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio input has been switched.
+ *
+ * @remarks
+ * This function checks if the user's preferred audio device differs from the current default.
+ * If so, it updates the previous audio device and the current default audio device.
+ * It then calls the function to switch the user's audio.
+ *
+ * @example
+ * ```typescript
+ * const options: SwitchAudioOptions = {
+ *   audioPreference: 'newAudioDeviceID',
+ *   parameters: {
+ *     defAudioID: 'defaultAudioDeviceID',
+ *     userDefaultAudioInputDevice: 'currentAudioDeviceID',
+ *     prevAudioInputDevice: '',
+ *     updateUserDefaultAudioInputDevice: (deviceId) => console.log(`Updated to: ${deviceId}`),
+ *     updatePrevAudioInputDevice: (deviceId) => console.log(`Previous device was: ${deviceId}`),
+ *     switchUserAudio: async ({ audioPreference, parameters }) => {
+ *       console.log(`Switching audio to: ${audioPreference}`);
+ *     },
+ *     getUpdatedAllParams: () => {
+ *       return {
+ *         defAudioID: 'defaultAudioDeviceID',
+ *         userDefaultAudioInputDevice: 'currentAudioDeviceID',
+ *         prevAudioInputDevice: '',
+ *       };
+ *     },
+ *   },
+ * };
+ *
+ * const switchAudioService = new SwitchAudio();
+ * await switchAudioService.switchAudio(options);
+ * ```
+ */
 class SwitchAudio {
     /**
      * Switches the audio input device based on user preference.
@@ -4786,6 +5636,62 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Switches the user's video device based on the provided video preference.
+ *
+ * @param {SwitchVideoOptions} options - The options for switching the video input.
+ * @param {string} options.videoPreference - The preferred video device to switch to.
+ * @param {SwitchVideoParameters} options.parameters - The parameters required for switching the video input.
+ * @param {boolean} options.parameters.recordStarted - Indicates if recording has started.
+ * @param {boolean} options.parameters.recordResumed - Indicates if recording has resumed.
+ * @param {boolean} options.parameters.recordStopped - Indicates if recording has stopped.
+ * @param {boolean} options.parameters.recordPaused - Indicates if recording is paused.
+ * @param {string} options.parameters.recordingMediaOptions - The current media options (e.g., "video").
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is currently on.
+ * @param {string} options.parameters.userDefaultVideoInputDevice - The default video input device for the user.
+ * @param {string} options.parameters.defVideoID - The default video ID for the input device.
+ * @param {boolean} options.parameters.allowed - Indicates if the user is allowed to switch video.
+ * @param {Function} options.parameters.updateDefVideoID - Function to update the default video ID.
+ * @param {Function} options.parameters.updatePrevVideoInputDevice - Function to update the previous video input device.
+ * @param {Function} options.parameters.updateUserDefaultVideoInputDevice - Function to update the user’s default video input device.
+ * @param {Function} options.parameters.updateIsMediaSettingsModalVisible - Function to update the visibility of the media settings modal.
+ * @param {Function} [options.parameters.showAlert] - Optional function to show alert messages.
+ * @param {Function} options.parameters.switchUserVideo - Function to switch the user's video input.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video input has been switched.
+ *
+ * @remarks
+ * This function checks if the user is allowed to switch the video input based on the current state,
+ * and it shows alerts if there are any issues. If the video is already on, it cannot be switched until
+ * it is turned off, and vice versa. The default video input device is updated if necessary.
+ *
+ * @example
+ * ```typescript
+ * const options: SwitchVideoOptions = {
+ *   videoPreference: 'newDeviceId',
+ *   parameters: {
+ *     recordStarted: false,
+ *     recordResumed: false,
+ *     recordStopped: false,
+ *     recordPaused: false,
+ *     recordingMediaOptions: 'video',
+ *     videoAlreadyOn: true,
+ *     userDefaultVideoInputDevice: 'currentDeviceId',
+ *     defVideoID: 'defaultDeviceId',
+ *     allowed: true,
+ *     updateDefVideoID: (deviceId) => console.log(`Default video ID updated to: ${deviceId}`),
+ *     updatePrevVideoInputDevice: (deviceId) => console.log(`Previous video input device updated to: ${deviceId}`),
+ *     updateUserDefaultVideoInputDevice: (deviceId) => console.log(`User default video input device updated to: ${deviceId}`),
+ *     updateIsMediaSettingsModalVisible: (isVisible) => console.log(`Media settings modal is now ${isVisible ? 'visible' : 'hidden'}`),
+ *     switchUserVideo: async ({ videoPreference }) => console.log(`Switched video to: ${videoPreference}`),
+ *     getUpdatedAllParams: () => ({ }),
+ *   },
+ * };
+ *
+ * const switchVideoService = new SwitchVideo();
+ * await switchVideoService.switchVideo(options);
+ * ```
+ */
 class SwitchVideo {
     /**
      * Switches the user's video device based on the provided video preference.
@@ -4860,6 +5766,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Switches the video input based on user preference and current state.
+ *
+ * @param {SwitchVideoAltOptions} options - The options for switching the video input.
+ * @param {SwitchVideoAltParameters} options.parameters - The parameters required for switching the video input.
+ * @param {boolean} options.parameters.recordStarted - Indicates if recording has started.
+ * @param {boolean} options.parameters.recordResumed - Indicates if recording has resumed.
+ * @param {boolean} options.parameters.recordStopped - Indicates if recording has stopped.
+ * @param {boolean} options.parameters.recordPaused - Indicates if recording is paused.
+ * @param {string} options.parameters.recordingMediaOptions - The current media options (e.g., "video").
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is currently on.
+ * @param {string} options.parameters.currentFacingMode - The current facing mode of the camera (e.g., "environment").
+ * @param {boolean} options.parameters.allowed - Indicates if the user is allowed to switch video.
+ * @param {boolean} options.parameters.audioOnlyRoom - Indicates if the current room is audio-only.
+ * @param {Function} options.parameters.updateCurrentFacingMode - Function to update the current facing mode.
+ * @param {Function} options.parameters.updateIsMediaSettingsModalVisible - Function to update the visibility of the media settings modal.
+ * @param {Function} [options.parameters.showAlert] - Optional function to show alert messages.
+ * @param {Function} options.parameters.switchUserVideoAlt - Function to switch the user's video input.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video input has been switched.
+ *
+ * @remarks
+ * This function checks if the user is allowed to switch the video input based on the current state,
+ * and it shows alerts if there are any issues. If the video is already on, it cannot be switched until
+ * it is turned off, and vice versa. The facing mode of the camera is toggled between "user" and "environment".
+ *
+ * @example
+ * ```typescript
+ * const options: SwitchVideoAltOptions = {
+ *   parameters: {
+ *     recordStarted: false,
+ *     recordResumed: false,
+ *     recordStopped: false,
+ *     recordPaused: false,
+ *     recordingMediaOptions: 'video',
+ *     videoAlreadyOn: true,
+ *     currentFacingMode: 'user',
+ *     allowed: true,
+ *     audioOnlyRoom: false,
+ *     updateCurrentFacingMode: (mode) => console.log(`Facing mode updated to: ${mode}`),
+ *     updateIsMediaSettingsModalVisible: (isVisible) => console.log(`Media settings modal is now ${isVisible ? 'visible' : 'hidden'}`),
+ *     switchUserVideoAlt: async ({ videoPreference }) => console.log(`Switched video to: ${videoPreference}`),
+ *     getUpdatedAllParams: () => ({ }),
+ *   },
+ * };
+ *
+ * const switchVideoService = new SwitchVideoAlt();
+ * await switchVideoService.switchVideoAlt(options);
+ * ```
+ */
 class SwitchVideoAlt {
     async switchVideoAlt({ parameters }) {
         let { recordStarted, recordResumed, recordStopped, recordPaused, recordingMediaOptions, videoAlreadyOn, currentFacingMode, allowed, audioOnlyRoom, updateCurrentFacingMode, updateIsMediaSettingsModalVisible, showAlert, 
@@ -4925,25 +5881,36 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * Component for displaying and managing media settings in a modal.
+ * MediaSettingsModal component renders a modal interface for managing media settings.
+ * Users can switch between different audio and video input devices and adjust other settings.
  *
+ * @component
  * @selector app-media-settings-modal
- * @templateUrl ./media-settings-modal.component.html
- * @styleUrls ./media-settings-modal.component.css
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule, FormsModule]
  *
- * @class MediaSettingsModal
- * @implements OnInit, OnChanges
+ * @example
+ * ```html
+ * <app-media-settings-modal
+ *   [isMediaSettingsModalVisible]="true"
+ *   [onMediaSettingsClose]="closeModal"
+ *   [switchCameraOnPress]="handleCameraSwitch"
+ *   [switchVideoOnPress]="handleVideoSwitch"
+ *   [switchAudioOnPress]="handleAudioSwitch"
+ *   [parameters]="mediaSettingsParams"
+ *   position="topRight"
+ *   backgroundColor="#83c0e9">
+ * </app-media-settings-modal>
+ * ```
  *
- * @property {boolean} isMediaSettingsModalVisible - Determines if the media settings modal is visible.
- * @property {() => void} onMediaSettingsClose - Callback function to close the media settings modal.
- * @property {(params: any) => Promise<void>} switchCameraOnPress - Callback function to switch the camera.
- * @property {(params: any) => Promise<void>} switchVideoOnPress - Callback function to switch the video.
- * @property {(params: any) => Promise<void>} switchAudioOnPress - Callback function to switch the audio.
- * @property {MediaSettingsModalParameters} parameters - Parameters for the media settings modal.
- * @property {string} position - Position of the modal on the screen. Default is 'topRight'.
- * @property {string} backgroundColor - Background color of the modal. Default is '#83c0e9'.
+ * @input {boolean} isMediaSettingsModalVisible - Indicates whether the modal is visible.
+ * @input {() => void} onMediaSettingsClose - Function to close the modal.
+ * @input {(params: SwitchVideoAltOptions) => Promise<void>} switchCameraOnPress - Function to handle camera switching.
+ * @input {(params: SwitchVideoOptions) => Promise<void>} switchVideoOnPress - Function to handle video switching.
+ * @input {(params: SwitchAudioOptions) => Promise<void>} switchAudioOnPress - Function to handle audio switching.
+ * @input {MediaSettingsModalParameters} parameters - Parameters for the modal.
+ * @input {string} position - Position of the modal on the screen (default: 'topRight').
+ * @input {string} backgroundColor - Background color of the modal (default: '#83c0e9').
  *
  * @property {IconDefinition} faTimes - FontAwesome icon for closing the modal.
  * @property {IconDefinition} faSyncAlt - FontAwesome icon for sync.
@@ -4961,18 +5928,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @param {SwitchVideo} switchVideoService - Service for switching video.
  * @param {SwitchVideoAlt} switchVideoAltService - Alternative service for switching video.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method setupDefaultServices - Sets up default services for switching camera, video, and audio if not provided.
- * @method updateParameters - Updates the parameters for the modal.
- * @method ensureDefaultSelections - Ensures that default selections for video and audio inputs are set.
- * @method initializeModalSettings - Initializes settings for the modal.
+ * @method ngOnInit - Initializes the component and sets up default selections and services.
+ * @method ngOnChanges - Updates component state based on input changes.
+ * @method setupDefaultServices - Configures default services for switching camera, video, and audio.
+ * @method updateParameters - Updates the modal parameters.
+ * @method ensureDefaultSelections - Ensures default selections for video and audio inputs.
+ * @method initializeModalSettings - Initializes the modal settings.
  * @method modalContentStyle - Returns the style object for the modal content.
- * @method handleSwitchCamera - Handles the action to switch the camera.
- * @method handleVideoSwitch - Handles the action to switch the video input.
- * @method handleAudioSwitch - Handles the action to switch the audio input.
- * @method handleModalClose - Handles the action to close the modal.
- * @method showVirtual - Toggles the visibility of the virtual background modal.
+ * @method handleSwitchCamera - Initiates camera switching.
+ * @method handleVideoSwitch - Initiates video input switching.
+ * @method handleAudioSwitch - Initiates audio input switching.
+ * @method handleModalClose - Closes the modal.
+ * @method showVirtual - Toggles the virtual background modal.
  */
 class MediaSettingsModal {
     switchAudioService;
@@ -5122,6 +6089,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 // confirm-exit.service.ts
+/**
+ * Confirms the exit of a member from a room and optionally bans them.
+ *
+ * This method emits a socket event to disconnect the specified member from the given room.
+ * If the `ban` option is set to true, the member will be banned from rejoining the room.
+ *
+ * @param {ConfirmExitOptions} options - The options for confirming the exit.
+ * @param {Socket} options.socket - The socket instance to emit the event.
+ * @param {string} options.member - The member who is exiting.
+ * @param {string} options.roomName - The name of the room the member is exiting from.
+ * @param {boolean} [options.ban=false] - Whether to ban the member from the room.
+ * @returns {Promise<void>} A promise that resolves when the exit is confirmed.
+ *
+ * @example
+ * ```typescript
+ * const confirmExitService = new ConfirmExit();
+ * await confirmExitService.confirmExit({
+ *   socket: socketInstance,
+ *   member: 'JohnDoe',
+ *   roomName: 'Room1',
+ *   ban: true, // Optional: set to true if you want to ban the member
+ * });
+ * ```
+ */
 class ConfirmExit {
     /**
      * Confirms the exit of a member from a room and optionally bans them.
@@ -5148,37 +6139,50 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * Component for displaying a confirmation modal when exiting.
+ * ConfirmExitModal component renders a modal view for exit confirmation,
+ * allowing users to confirm or cancel an exit event from a session or room.
  *
+ * @component
  * @selector app-confirm-exit-modal
- * @templateUrl ./confirm-exit-modal.component.html
- * @styleUrls ./confirm-exit-modal.component.css
  * @standalone true
  * @imports [CommonModule, FormsModule, FontAwesomeModule]
  *
- * @class ConfirmExitModal
- * @implements OnInit, OnChanges
+ * @example
+ * ```html
+ * <app-confirm-exit-modal
+ *   [isConfirmExitModalVisible]="true"
+ *   [onConfirmExitClose]="closeModal"
+ *   [exitEventOnConfirm]="confirmExit"
+ *   [member]="memberName"
+ *   [ban]="false"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [islevel]="userLevel">
+ * </app-confirm-exit-modal>
+ * ```
  *
- * @property {boolean} isConfirmExitModalVisible - Visibility state of the confirmation modal.
- * @property {() => void} onConfirmExitClose - Callback function to close the modal.
- * @property {string} position - Position of the modal on the screen.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {(options: ConfirmExitOptions) => void} exitEventOnConfirm - Event triggered on confirming exit.
- * @property {string} member - Member information.
- * @property {boolean} ban - Ban status.
- * @property {string} roomName - Name of the room.
- * @property {Socket} socket - Socket instance.
- * @property {string} islevel - Level information.
- * @property {IconDefinition} faTimes - FontAwesome icon for close button.
- * @property {any} modalContentStyle - Style object for modal content.
+ * @input {boolean} isConfirmExitModalVisible - Determines the visibility of the modal.
+ * @input {() => void} onConfirmExitClose - Callback to close the modal.
+ * @input {string} position - Position on the screen (default: 'topRight').
+ * @input {string} backgroundColor - Background color of the modal (default: '#83c0e9').
+ * @input {(options: ConfirmExitOptions) => void} exitEventOnConfirm - Callback function to handle exit confirmation.
+ * @input {string} member - Identifies the member for whom the exit is confirmed.
+ * @input {boolean} ban - Indicates if the exit action includes a ban.
+ * @input {string} roomName - Name of the room involved in the exit action.
+ * @input {Socket} socket - Socket instance for real-time interaction.
+ * @input {string} islevel - User level information.
+ *
+ * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
+ * @property {any} modalContentStyle - Object defining the style for modal content.
  *
  * @constructor
- * @param {ConfirmExit} confirmExitService - Service for handling exit confirmation.
+ * @param {ConfirmExit} confirmExitService - Service to handle the exit confirmation.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @param {SimpleChanges} changes - Object of current and previous property values.
- * @method handleConfirmExit - Handles the exit confirmation event.
+ * @method ngOnInit - Initializes component properties and default styles for the modal content.
+ * @method ngOnChanges - Updates component state upon changes in input properties.
+ * @param {SimpleChanges} changes - Object containing the current and previous property values.
+ *
+ * @method handleConfirmExit - Handles the exit confirmation event, triggering the provided `exitEventOnConfirm` function and then closing the modal.
  */
 class ConfirmExitModal {
     confirmExitService;
@@ -5258,7 +6262,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * Component representing a confirmation modal with a countdown timer.
+ * @component ConfirmHereModal
+ * @description Displays a confirmation modal with a countdown timer, allowing users to confirm their presence or be automatically disconnected after the timer expires.
  *
  * @selector app-confirm-here-modal
  * @templateUrl ./confirm-here-modal.component.html
@@ -5266,38 +6271,20 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule]
  *
- * @styles
- * - .spinner: Styles for the loading spinner.
- * - @keyframes spin: Keyframes for spinner animation.
- * - .modal-content: Styles for the modal content container.
- * - .loading-text: Styles for the loading text.
- *
- * @class ConfirmHereModal
- * @implements OnInit, OnDestroy
- *
- * @property {boolean} isConfirmHereModalVisible - Determines if the modal is visible.
- * @property {string} position - Position of the modal.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {string} displayColor - Display color of the modal.
- * @property {Function} onConfirmHereClose - Callback function to execute when the modal is closed.
- * @property {number} [countdownDuration=120] - Duration of the countdown in seconds.
- * @property {Socket} socket - Socket instance for communication.
- * @property {string} roomName - Name of the room for socket communication.
- * @property {string} member - Member identifier for socket communication.
- * @property {IconDefinition} faSpinner - FontAwesome spinner icon.
- * @property {number} counter - Countdown counter.
- * @property {any} countdownInterval - Interval ID for the countdown timer.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed.
- * @method startCountdown - Starts the countdown timer.
- * @method clearCountdown - Clears the countdown timer.
- * @method handleConfirmHere - Handles the confirmation action and closes the modal.
- *
- * @getter spinnerContainerStyle - Returns the style object for the spinner container.
- * @getter modalContainerStyle - Returns the style object for the modal container.
- * @getter modalContentStyle - Returns the style object for the modal content.
+ * @example
+ * ```html
+ * <app-confirm-here-modal
+ *   [isConfirmHereModalVisible]="true"
+ *   [position]="'center'"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [displayColor]="'#000000'"
+ *   [onConfirmHereClose]="closeConfirmModal"
+ *   [countdownDuration]="120"
+ *   [socket]="socketInstance"
+ *   [roomName]="'exampleRoom'"
+ *   [member]="'exampleMember'"
+ * ></app-confirm-here-modal>
+ * ```
  */
 class ConfirmHereModal {
     isConfirmHereModalVisible = false;
@@ -5422,6 +6409,20 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  *
  * @getter modalContainerStyle - Returns the style object for the modal container.
  * @getter modalContentStyle - Returns the style object for the modal content.
+ * @example
+ * ```html
+ * <app-share-event-modal
+ *   [backgroundColor]="'rgba(255, 255, 255, 0.25)'"
+ *   [isShareEventModalVisible]="isModalVisible"
+ *   [onShareEventClose]="handleModalClose"
+ *   [roomName]="roomName"
+ *   [adminPasscode]="adminPasscode"
+ *   [islevel]="userLevel"
+ *   [position]="'topRight'"
+ *   [shareButtons]="true"
+ *   [eventType]="eventType"
+ * ></app-share-event-modal>
+ * ```
  */
 class ShareEventModal {
     backgroundColor = 'rgba(255, 255, 255, 0.25)';
@@ -5503,6 +6504,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 
 const MAX_ATTEMPTS$1 = 10; // Maximum number of unsuccessful attempts before rate limiting
 const RATE_LIMIT_DURATION$1 = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+/**
+ * @component WelcomePage
+ * @description Component for handling room creation and joining on MediaSFU with QR scanning and form submission.
+ *
+ * @selector app-welcome-page
+ * @standalone true
+ * @templateUrl ./welcome-page.component.html
+ * @styleUrls ['./welcome-page.component.css']
+ * @imports [ZXingScannerModule, CommonModule, FontAwesomeModule, ReactiveFormsModule]
+ *
+ * @example
+ * ```html
+ * <app-welcome-page [parameters]="welcomeParameters"></app-welcome-page>
+ * ```
+ */
 class WelcomePage {
     fb;
     cookieService;
@@ -5773,6 +6789,14 @@ const TIMEOUT_DURATION = 10000; // 5 seconds in milliseconds
  * @param {string} params.apiUserName - API username.
  * @param {string} params.apiKey - API key.
  * @returns {Promise<{ data: CreateJoinRoomResponse | CreateJoinRoomError | null; success: boolean }>} Response from the API.
+ *
+ * @example
+ * ```html
+ * <app-pre-join-page
+ *   [parameters]="preJoinPageParameters"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apiKey' }"
+ * ></app-pre-join-page>
+ * ```
  */
 class PreJoinPage {
     fb;
@@ -6039,6 +7063,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /* eslint-disable @typescript-eslint/no-empty-function */
+/**
+ * Component for displaying a poll modal, allowing users to create, vote, and end polls within a session.
+ *
+ * @component
+ * @selector app-poll-modal
+ * @standalone true
+ * @templateUrl ./poll-modal.component.html
+ * @styleUrls ['./poll-modal.component.css']
+ * @imports [CommonModule, FontAwesomeModule, FormsModule]
+ *
+ * @example
+ * ```html
+ * <app-poll-modal
+ *   [isPollModalVisible]="true"
+ *   [onClose]="closeModalFunction"
+ *   [member]="currentMember"
+ *   [islevel]="'2'"
+ *   [polls]="pollList"
+ *   [poll]="selectedPoll"
+ *   [socket]="socketInstance"
+ *   [roomName]="'exampleRoom'"
+ *   [handleCreatePoll]="createPollFunction"
+ *   [handleEndPoll]="endPollFunction"
+ *   [handleVotePoll]="votePollFunction"
+ * ></app-poll-modal>
+ * ```
+ */
 class PollModal {
     isPollModalVisible = false;
     onClose;
@@ -6204,6 +7255,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/**
+ * BackgroundModal - Component to manage background selection and manipulation in media streams.
+ *
+ * This component allows users to choose, apply, and manipulate virtual backgrounds for media streams, leveraging MediaPipe’s Selfie Segmentation and MediaSoup functionalities.
+ *
+ * @component
+ * @name BackgroundModal
+ * @example
+ * ```typescript
+ * <app-background-modal
+ *   [isVisible]="isModalVisible"
+ *   [parameters]="modalParameters"
+ *   position="topLeft"
+ *   backgroundColor="#f5f5f5"
+ *   (onClose)="handleModalClose()"
+ * ></app-background-modal>
+ * ```
+ *
+ * @param {boolean} isVisible - Visibility state of the modal.
+ * @param {BackgroundModalParameters} parameters - Parameters including settings and methods for media and background management.
+ * @param {string} position - The position of the modal, e.g., 'topLeft'.
+ * @param {string} backgroundColor - Background color of the modal.
+ * @param {Function} onClose - Callback function when the modal is closed.
+ *
+ * @property {faTimes} faTimes - Icon used for closing the modal.
+ * @property {string} customImage - Custom image URL for background.
+ * @property {string} selectedImage - Selected image URL for background.
+ * @property {MediaStream | null} segmentVideo - Media stream for video segmentation.
+ * @property {SelfieSegmentation | null} selfieSegmentation - SelfieSegmentation instance.
+ * @property {boolean} pauseSegmentation - Pause state for segmentation.
+ * @property {MediaStream | null} processedStream - Processed media stream with applied background.
+ * @property {boolean} keepBackground - State to keep or reset background.
+ *
+ * @method
+ * ngOnInit - Initializes the modal component by updating properties based on parameters.
+ */
 class BackgroundModal {
     isVisible = false;
     parameters = {};
@@ -6991,6 +8078,54 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Output
             }] } });
 
+/**
+ * EditRoomModalComponent allows managing participants within a breakout room for an event.
+ *
+ * @selector app-edit-room-modal
+ * @inputs
+ * - `editRoomModalVisible` (boolean): Controls the visibility of the edit room modal. Default is false.
+ * - `currentRoom` (BreakoutParticipant[]): List of participants currently assigned to the room.
+ * - `participantsRef` (Participant[]): Reference list of all participants.
+ * - `currentRoomIndex` (number): Index of the room being edited.
+ * - `position` (string): Position of the modal on the screen. Default is 'center'.
+ * - `backgroundColor` (string): Background color of the modal. Default is '#fff'.
+ *
+ * @outputs
+ * - `setEditRoomModalVisible` (EventEmitter<boolean>): Emits a boolean to toggle the visibility of the modal.
+ * - `addParticipant` (EventEmitter<{ roomIndex: number; participant: Participant | BreakoutParticipant; }>): Emits data for adding a participant to the room.
+ * - `removeParticipant` (EventEmitter<{ roomIndex: number; participant: Participant | BreakoutParticipant; }>): Emits data for removing a participant from the room.
+ *
+ * @methods
+ * - `ngOnInit()`: Lifecycle hook to initialize modal width and attach resize event listener.
+ * - `ngOnDestroy()`: Lifecycle hook to remove the resize event listener.
+ * - `calculateModalWidth()`: Dynamically calculates and sets modal width based on screen width.
+ * - `modalContainerStyle()`: Returns style object for modal container.
+ * - `modalContentStyle()`: Returns style object for modal content.
+ * - `handleAddParticipant(roomIndex: number, participant: BreakoutParticipant)`: Emits event to add participant to specified room.
+ * - `handleRemoveParticipant(roomIndex: number, participant: BreakoutParticipant)`: Emits event to remove participant from specified room.
+ * - `closeModal()`: Closes the modal by emitting a visibility change.
+ * - `unassignedParticipants()`: Filters and returns a list of unassigned participants.
+ *
+ * @dependencies
+ * - `CommonModule`: Provides Angular's common directives.
+ * - `FontAwesomeModule`: Allows usage of Font Awesome icons.
+ *
+ * @example
+ * ```html
+ * <app-edit-room-modal
+ *  [editRoomModalVisible]="editRoomModalVisible"
+ * [currentRoom]="currentRoom"
+ * [participantsRef]="participantsRef"
+ * [currentRoomIndex]="currentRoomIndex"
+ * [position]="position"
+ * [backgroundColor]="backgroundColor"
+ * (setEditRoomModalVisible)="setEditRoomModalVisible($event)"
+ * (addParticipant)="addParticipant($event)"
+ * (removeParticipant)="removeParticipant($event)">
+ * </app-edit-room-modal>
+ * ```
+ *
+ **/
 class EditRoomModalComponent {
     editRoomModalVisible = false;
     currentRoom = [];
@@ -7079,6 +8214,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Output
             }] } });
 
+/**
+ * BreakoutRoomsModal component manages the creation, modification, and assignment of breakout rooms.
+ *
+ * @selector app-breakout-rooms-modal
+ * @inputs
+ * - `isVisible` (boolean): Controls the visibility of the breakout rooms modal. Default is false.
+ * - `parameters` (BreakoutRoomsModalParameters): Parameters for managing breakout room settings and behavior.
+ * - `position` (string): Position of the modal on the screen. Default is 'topRight'.
+ * - `backgroundColor` (string): Background color of the modal. Default is '#83c0e9'.
+ * - `onBreakoutRoomsClose` (function): Callback function triggered when the modal is closed.
+ *
+ * @methods
+ * - `ngOnInit()`: Lifecycle hook to initialize modal width and breakout rooms.
+ * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook called when any data-bound input properties change.
+ * - `calculateModalWidth()`: Dynamically calculates and sets modal width based on screen width.
+ * - `modalContainerStyle()`: Returns style object for modal container.
+ * - `modalContentStyle()`: Returns style object for modal content.
+ * - `initializeBreakoutRooms()`: Initializes the breakout rooms based on the current participants and parameters.
+ * - `handleRandomAssign()`: Randomly assigns participants to breakout rooms.
+ * - `handleManualAssign()`: Initializes manual room assignment by setting empty breakout rooms.
+ * - `handleAddRoom()`: Adds a new breakout room.
+ * - `handleSaveRooms()`: Validates and saves breakout room configurations.
+ * - `validateRooms()`: Validates room configurations and participants' uniqueness and quantity.
+ * - `checkCanStartBreakout()`: Checks conditions to enable the start of breakout rooms.
+ * - `handleStartBreakout()`: Starts the breakout session if conditions are met.
+ * - `handleStopBreakout()`: Stops the breakout session and reverts to the initial meeting display type.
+ * - `handleEditRoom(roomIndex: number)`: Opens the modal to edit the specified breakout room.
+ * - `handleDeleteRoom(roomIndex: number)`: Deletes a breakout room and updates participants' room assignments.
+ * - `handleAddParticipant(event)`: Adds a participant to a specified breakout room.
+ * - `handleRemoveParticipant(event)`: Removes a participant from a specified breakout room.
+ *
+ * @dependencies
+ * - `CommonModule`: Angular's common directives.
+ * - `FormsModule`: Angular's forms module for form handling.
+ * - `FontAwesomeModule`: Font Awesome icons for UI elements.
+ * - `RoomListComponent`: Component for listing rooms.
+ * - `EditRoomModalComponent`: Component for editing room participants.
+ *
+ * @example
+ * ```html
+ * <app-breakout-rooms-modal
+ *  [isVisible]="isBreakoutRoomsModalVisible"
+ * [parameters]="breakoutRoomsParams"
+ * [position]="modalPosition"
+ * [backgroundColor]="modalBgColor"
+ * [onBreakoutRoomsClose]="onCloseBreakoutRooms">
+ * </app-breakout-rooms-modal>
+ * ```
+ *
+ **/
 class BreakoutRoomsModal {
     isVisible = false;
     parameters;
@@ -7384,6 +8569,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['roomsContainer']
             }] } });
 
+/**
+ * @component ConfigureWhiteboardModal
+ * @description A modal component to configure and manage whiteboard settings and participants.
+ *
+ * @selector app-configure-whiteboard-modal
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule]
+ * @templateUrl ./configure-whiteboard-modal.component.html
+ * @styleUrls ./configure-whiteboard-modal.component.css
+ *
+ * @example
+ * ```html
+ * <app-configure-whiteboard-modal
+ *   [isVisible]="isWhiteboardModalVisible"
+ *   [parameters]="whiteboardParameters"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [position]="'topRight'"
+ *   (onConfigureWhiteboardClose)="handleCloseModal()">
+ * </app-configure-whiteboard-modal>
+ * ```
+ */
 class ConfigureWhiteboardModal {
     isVisible = false;
     parameters = {};
@@ -7844,6 +9050,55 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @param {number} y1 - Y coordinate of the polygon start.
  * @param {number} x2 - X coordinate of the polygon end.
  * @param {number} y2 - Y coordinate of the polygon end.
+ *
+ * @example
+ * ```html
+ * <app-whiteboard
+ *  [customWidth]="1280"
+ * [customHeight]="720"
+ * [parameters]="{
+ *  socket: socket,
+ * showAlert: showAlert,
+ * islevel: islevel,
+ * roomName: roomName,
+ * shapes: shapes,
+ * useImageBackground: useImageBackground,
+ * redoStack: redoStack,
+ * undoStack: undoStack,
+ * whiteboardStarted: whiteboardStarted,
+ * whiteboardEnded: whiteboardEnded,
+ * whiteboardUsers: whiteboardUsers,
+ * participants: participants,
+ * participantsAll: participantsAll,
+ * screenId: screenId,
+ * recordStarted: recordStarted,
+ * recordStopped: recordStopped,
+ * recordPaused: recordPaused,
+ * recordResumed: recordResumed,
+ * recordingMediaOptions: recordingMediaOptions,
+ * member: member,
+ * shareScreenStarted: shareScreenStarted,
+ * canvasWhiteboard: canvasWhiteboard,
+ * targetResolution: targetResolution,
+ * targetResolutionHost: targetResolutionHost,
+ * updateShapes: updateShapes,
+ * updateUseImageBackground: updateUseImageBackground,
+ * updateRedoStack: updateRedoStack,
+ * updateUndoStack: updateUndoStack,
+ * updateWhiteboardStarted: updateWhiteboardStarted,
+ * updateWhiteboardEnded: updateWhiteboardEnded,
+ * updateWhiteboardUsers: updateWhiteboardUsers,
+ * updateParticipants: updateParticipants,
+ * updateScreenId: updateScreenId,
+ * updateShareScreenStarted: updateShareScreenStarted,
+ * updateCanvasWhiteboard: updateCanvasWhiteboard,
+ * onScreenChanges: onScreenChanges,
+ * captureCanvasStream: captureCanvasStream,
+ * getUpdatedAllParams: getUpdatedAllParams
+ * }"
+ * [showAspect]="true"
+ * ></app-whiteboard>
+ * ```
  */
 class Whiteboard {
     customWidth;
@@ -9517,6 +10772,16 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @method isPointNearLine - Checks if a point is near a line.
  * @method toggleToolbar - Toggles the visibility of the toolbar.
  * @method toggleAnnotate - Toggles the annotation mode.
+ *
+ * @example
+ * ```html
+ * <app-screenboard
+ *  [customWidth]="customWidth"
+ * [customHeight]="customHeight"
+ * [parameters]="screenboardParameters"
+ * [showAspect]="showAspect"
+ * ></app-screenboard>
+ * ```
  */
 class Screenboard {
     customWidth;
@@ -10068,6 +11333,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @method handleScreenTransport - Method to handle screen transport logic.
  * @method stopAnnotation - Method to stop the screen annotation.
  * @method stopAllTracks - Method to stop all media tracks.
+ * @returns {HTMLElement} The screenboard modal component.
+ * @example
+ * ```html
+ * <app-screenboard-modal
+ *  [parameters]="screenboardModalParams"
+ * [isVisible]="isModalVisible"
+ * [onClose]="closeModal"
+ * [position]="'topRight'"
+ * [backgroundColor]="'#83c0e9'">
+ * </app-screenboard-modal>
+ * ```
  */
 class ScreenboardModal {
     parameters = {};
@@ -10396,6 +11672,53 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['screenCanvas']
             }] } });
 
+/**
+ * Generates the content for a specific page.
+ *
+ * @param {GeneratePageContentOptions} options - The options for generating page content.
+ * @param {number | string} options.page - The page number to generate content for.
+ * @param {GeneratePageContentParameters} options.parameters - The parameters required for generating content.
+ * @param {Array<(Participant | Stream)[]>} options.parameters.paginatedStreams - The streams to be paginated.
+ * @param {number} options.parameters.currentUserPage - The current page of the user.
+ * @param {Function} options.parameters.updateMainWindow - Function to update the main window flag.
+ * @param {Function} options.parameters.updateCurrentUserPage - Function to update the current user page.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window update flag.
+ * @param {Function} options.parameters.dispStreams - Function to display streams for the specified page.
+ * @param {number} [options.breakRoom=-1] - The break room identifier.
+ * @param {boolean} [options.inBreakRoom=false] - Flag indicating if the user is in a break room.
+ *
+ * @returns {Promise<void>} A promise that resolves when the content generation is complete.
+ *
+ * @throws {Error} Throws an error if content generation fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   page: 1,
+ *   parameters: {
+ *     paginatedStreams: [
+ *       // Page 0 streams
+ *       [stream1, stream2],
+ *       // Page 1 streams
+ *       [stream3, stream4],
+ *     ],
+ *     currentUserPage: 0,
+ *     updateMainWindow: false,
+ *     updateCurrentUserPage: (page) => { console.log(`Current page updated to: ${page}`); },
+ *     updateUpdateMainWindow: (flag) => { console.log(`Main window update flag: ${flag}`); },
+ *     dispStreams: async ({ lStreams, ind }) => {
+ *       console.log(`Displaying streams for page ${ind}:`, lStreams);
+ *     },
+ *     getUpdatedAllParams: () => options.parameters,
+ *   },
+ *   breakRoom: -1,
+ *   inBreakRoom: false,
+ * };
+ *
+ * const generatePageContentService = new GeneratePageContent();
+ * await generatePageContentService.generatePageContent(options);
+ * ```
+ */
 class GeneratePageContent {
     /**
      * Generates the content for a specific page.
@@ -10454,18 +11777,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * Pagination component for displaying and handling pagination controls.
+ * Pagination component for managing and displaying page navigation controls with various layouts and customizations.
  *
- * @component
  * @selector app-pagination
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule]
  *
  * @description
- * This component renders pagination controls with customizable styles and behavior.
- * It supports horizontal and vertical layouts, different positions, and dynamic data.
+ * This component renders pagination controls, allowing users to navigate through pages. The controls support horizontal and vertical layouts, customizable styles, and dynamic page content handling, with special support for breakout room navigation.
  *
  * @example
+ * ```html
  * <app-pagination
  *   [totalPages]="10"
  *   [currentUserPage]="1"
@@ -10478,27 +11800,34 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  *   [showAspect]="true"
  *   [parameters]="paginationParameters">
  * </app-pagination>
+ * ```
  *
- * @input {number} totalPages - Total number of pages.
- * @input {number} currentUserPage - Current active page.
- * @input {Function} handlePageChange - Function to handle page change.
- * @input {'left' | 'middle' | 'right' | string} position - Position of the pagination controls.
- * @input {'top' | 'middle' | 'bottom' | string} location - Location of the pagination controls.
- * @input {'horizontal' | 'vertical' | string} direction - Direction of the pagination controls.
- * @input {any} buttonsContainerStyle - Custom styles for the buttons container.
- * @input {any} activePageStyle - Custom styles for the active page button.
- * @input {any} inactivePageStyle - Custom styles for the inactive page buttons.
- * @input {string} backgroundColor - Background color of the pagination controls.
- * @input {number} paginationHeight - Height of the pagination controls.
- * @input {boolean} showAspect - Flag to show or hide the pagination controls.
- * @input {PaginationParameters} parameters - Additional parameters for pagination.
+ * @input {number} totalPages - Total number of pages available for navigation.
+ * @input {number} currentUserPage - Current active page number.
+ * @input {Function} handlePageChange - Callback function to handle page changes.
+ * @input {'left' | 'middle' | 'right' | string} position - Horizontal position of the pagination controls (default is 'middle').
+ * @input {'top' | 'middle' | 'bottom' | string} location - Vertical position of the pagination controls (default is 'middle').
+ * @input {'horizontal' | 'vertical' | string} direction - Layout direction of the pagination controls (default is 'horizontal').
+ * @input {any} buttonsContainerStyle - Custom CSS styles for the buttons container.
+ * @input {any} activePageStyle - CSS styles for the active page button.
+ * @input {any} inactivePageStyle - CSS styles for inactive page buttons.
+ * @input {string} backgroundColor - Background color for the pagination controls.
+ * @input {number} paginationHeight - Height of the pagination controls in pixels.
+ * @input {boolean} showAspect - Flag to display or hide the pagination controls.
+ * @input {PaginationParameters} parameters - Additional configuration parameters for managing breakout rooms and related state.
  *
- * @method ngOnInit - Initializes the component and sets up initial data.
- * @method ngOnChanges - Handles changes to input properties and updates data accordingly.
- * @method handleClick - Handles click events on pagination buttons and performs necessary actions.
- * @method getPageStyle - Returns the style for a given page button based on its state.
- * @method isBreakoutRoom - Determines if a given item represents a breakout room.
- * @method getDisplayItem - Returns the display text for a given item.
+ * @property {number[]} data - Array representing pages to be displayed in pagination controls.
+ * @property {ComponentSizes} componentSizes - Stores calculated sizes for pagination controls.
+ *
+ * @method ngOnInit - Lifecycle hook that initializes the component and sets up page data.
+ * @method ngOnChanges - Handles input property changes to update page data when needed.
+ * @method handleClick - Asynchronously handles page button clicks and manages breakout room navigation logic.
+ * @method getPageStyle - Returns specific styles for a page button based on its active or inactive state.
+ * @method isBreakoutRoom - Checks if a page represents a breakout room.
+ * @method getDisplayItem - Returns the display label for a page, accounting for breakout room naming conventions.
+ *
+ * @dependencies
+ * This component requires an external pagination parameters configuration (`PaginationParameters`) and access to the `GeneratePageContent` service for managing dynamic content loading.
  */
 class Pagination {
     generatePageContentService;
@@ -10774,31 +12103,40 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * @component FlexibleGrid
- *
- * A flexible grid component that dynamically renders a grid of components based on the provided inputs.
+ * FlexibleGrid is a dynamic, customizable grid component that renders a specified number of rows and columns,
+ * with each grid item containing a provided component.
  *
  * @selector app-flexible-grid
+ * @standalone true
+ * @imports CommonModule
  *
  * @inputs
- * - `customWidth` (number): The custom width for each grid item in pixels. Default is 0.
- * - `customHeight` (number): The custom height for each grid item in pixels. Default is 0.
- * - `rows` (number): The number of rows in the grid. Default is 0.
- * - `columns` (number): The number of columns in the grid. Default is 0.
- * - `componentsToRender` ({ component: any, inputs?: any }[]): An array of components to render in the grid, each with optional inputs.
- * - `backgroundColor` (string): The background color for each grid item. Default is 'transparent'.
+ * - `customWidth` (number): The width for each grid item in pixels. Default is 0.
+ * - `customHeight` (number): The height for each grid item in pixels. Default is 0.
+ * - `rows` (number): Number of rows in the grid. Default is 0.
+ * - `columns` (number): Number of columns in the grid. Default is 0.
+ * - `componentsToRender` ({ component: any, inputs?: any }[]): Array of components to render in the grid, each with optional inputs.
+ * - `backgroundColor` (string): Background color for each grid item. Default is 'transparent'.
  *
  * @methods
- * - `ngOnInit()`: Lifecycle hook that is called after the component is initialized. It generates the grid.
- * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook that is called when any data-bound property of the component changes. It regenerates the grid if `columns`, `componentsToRender`, or `rows` change.
- * - `generateGrid()`: Generates the grid based on the number of rows and columns, and the components to render.
- * - `getGridItemStyle()`: Returns the style object for each grid item, including custom width, height, background color, margin, padding, and border radius.
- * - `createInjector(inputs: any)`: Creates and caches an injector for the given inputs to be used with `ngComponentOutlet`.
+ * - `ngOnInit()`: Initializes and generates the grid on component load.
+ * - `ngOnChanges(changes: SimpleChanges)`: Regenerates the grid if `columns`, `componentsToRender`, or `rows` change.
+ * - `generateGrid()`: Builds the grid based on the row, column, and component configurations.
+ * - `getGridItemStyle()`: Returns a style object for each grid item, including custom width, height, and background color.
+ * - `createInjector(inputs: any)`: Creates a cached injector for each component to support dynamic component inputs.
  *
- * @dependencies
- * - `CommonModule`: Angular's common module is imported for common directives.
- * - `Injector`: Angular's dependency injection system is used to create injectors for dynamic components.
- */
+ * @example
+ * ```html
+ * <app-flexible-grid
+ *   [customWidth]="100"
+ *   [customHeight]="100"
+ *   [rows]="2"
+ *   [columns]="3"
+ *   [componentsToRender]="[{ component: MyComponent, inputs: { prop: 'value' } }]"
+ *   backgroundColor="lightgrey"
+ * ></app-flexible-grid>
+ * ```
+ **/
 class FlexibleGrid {
     injector;
     customWidth = 0;
@@ -10912,58 +12250,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
             }] } });
 
 /**
- * Component for displaying a flexible video grid.
+ * FlexibleVideo component displays a customizable video grid, supporting dynamic layout and optional screenboard overlay.
  *
- * @component
  * @selector app-flexible-video
  * @standalone true
  * @imports CommonModule
  *
- * @template
- * <div>
- *   <!-- Dynamic styles and layout for video grid -->
- *   <div *ngFor="let rowComponents of grid; let rowIndex = index">
- *     <div *ngFor="let component of rowComponents; let colIndex = index">
- *       <ng-container *ngComponentOutlet="component.component; injector: createInjector(component.inputs)"></ng-container>
- *     </div>
- *   </div>
- *   <div *ngIf="Screenboard && Screenboard.component">
- *     <ng-container *ngComponentOutlet="Screenboard.component; injector: createInjector(Screenboard.inputs)"></ng-container>
- *   </div>
- * </div>
+ * @inputs
+ * - `customWidth` (number): The custom width for each video grid item in pixels. Default is 0.
+ * - `customHeight` (number): The custom height for each video grid item in pixels. Default is 0.
+ * - `rows` (number): Number of rows in the video grid. Default is 0.
+ * - `columns` (number): Number of columns in the video grid. Default is 0.
+ * - `componentsToRender` (CustomMediaComponent[]): Array of components to render in the grid.
+ * - `showAspect` (boolean): Flag to control aspect ratio display. Default is false.
+ * - `backgroundColor` (string): Background color for the video grid. Default is 'transparent'.
+ * - `Screenboard` (CustomMediaComponent): Optional screenboard component to overlay on the grid.
+ * - `annotateScreenStream` (boolean): Flag to annotate the screen stream. Default is false.
+ * - `localStreamScreen` (MediaStream): Local screen stream for video.
  *
- * @class FlexibleVideo
- * @implements OnInit, OnChanges
+ * @methods
+ * - `ngOnInit()`: Initializes and generates the grid on component load if `showAspect` is true.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates grid layout and dimensions if properties change.
+ * - `generateGrid()`: Generates grid structure based on rows, columns, and `componentsToRender`.
+ * - `createInjector(inputs: any)`: Creates and caches an injector for component inputs.
  *
- * @property {number} customWidth - Custom width for the video grid.
- * @property {number} customHeight - Custom height for the video grid.
- * @property {number} rows - Number of rows in the video grid.
- * @property {number} columns - Number of columns in the video grid.
- * @property {Array<{ component: ComponentType<any>, inputs: any }>} componentsToRender - Components to render in the grid.
- * @property {boolean} showAspect - Flag to show or hide the aspect ratio.
- * @property {string} [backgroundColor='transparent'] - Background color for the video grid.
- * @property {{ component: ComponentType<any>, inputs: any }} [Screenboard] - Screenboard component to overlay on the grid.
- * @property {boolean} [annotateScreenStream=false] - Flag to annotate the screen stream.
- * @property {MediaStream} [localStreamScreen] - Local media stream for the screen.
- *
- * @property {number} key - Key for tracking changes.
- * @property {number} cardWidth - Width of each card in the grid.
- * @property {number} cardHeight - Height of each card in the grid.
- * @property {number} cardTop - Top position of each card in the grid.
- * @property {number} cardLeft - Left position of each card in the grid.
- * @property {number} canvasLeft - Left position of the canvas.
- * @property {any[][]} grid - Grid structure for the components.
- *
- * @constructor
- * @param {Injector} injector - Angular injector for dependency injection.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method generateGrid - Generates the grid structure based on rows and columns.
- * @method createInjector - Creates an injector for the given inputs.
- * @param {any} inputs - Inputs for the component.
- * @returns {Injector} - The created injector.
- */
+ * @example
+ * ```html
+ * <app-flexible-video
+ *   [customWidth]="300"
+ *   [customHeight]="200"
+ *   [rows]="2"
+ *   [columns]="3"
+ *   [componentsToRender]="[{ component: VideoComponent, inputs: { stream: videoStream } }]"
+ *   showAspect="true"
+ *   [Screenboard]="{ component: ScreenOverlayComponent, inputs: { overlayData: data } }"
+ * ></app-flexible-video>
+ * ```
+ **/
 class FlexibleVideo {
     injector;
     customWidth = 0;
@@ -11172,6 +12495,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * AudioGrid component renders a dynamic grid of components with individually provided inputs.
+ *
+ * @selector app-audio-grid
+ * @standalone true
+ * @imports CommonModule
+ *
+ * @inputs
+ * - `componentsToRender` ({ component: any; inputs?: any }[]): Array of components with optional inputs to render in the grid.
+ *
+ * @methods
+ * - `ngOnChanges(changes: SimpleChanges)`: Clears the injector cache on changes to `componentsToRender`.
+ * - `createInjector(inputs: any)`: Creates and caches an injector with specific inputs for each component.
+ * - `clearInjectorCache()`: Clears the cache to avoid memory leaks and ensure updated injectors.
+ *
+ * @example
+ * ```html
+ * <app-audio-grid [componentsToRender]="[{ component: AudioCard, inputs: { name: 'Participant 1' } }]"></app-audio-grid>
+ * ```
+ **/
 class AudioGrid {
     injector;
     componentsToRender = [];
@@ -11228,6 +12571,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Toggles the visibility of the menu modal.
+ *
+ * This method updates the visibility state of the menu modal by calling the provided
+ * function with the negated current visibility state. If the modal is currently visible,
+ * it will be hidden, and vice versa.
+ *
+ * @param {LaunchMenuModalOptions} options - The options for launching the menu modal.
+ * @param {Function} options.updateIsMenuModalVisible - Function to update the visibility state of the menu modal.
+ * @param {boolean} options.isMenuModalVisible - Current visibility state of the menu modal.
+ *
+ * @example
+ * ```typescript
+ * const launchMenuModalService = new LaunchMenuModal();
+ * launchMenuModalService.launchMenuModal({
+ *   updateIsMenuModalVisible: (isVisible) => {
+ *     console.log('Menu modal is now:', isVisible ? 'Visible' : 'Hidden');
+ *   },
+ *   isMenuModalVisible: false, // Initially not visible
+ * });
+ * ```
+ */
 class LaunchMenuModal {
     /**
      * Toggles the visibility of the menu modal.
@@ -11248,6 +12613,49 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Launches the recording process based on various conditions and updates the UI accordingly.
+ *
+ * @param {LaunchRecordingOptions} options - The options for launching the recording.
+ * @param {Function} options.updateIsRecordingModalVisible - Function to update the visibility of the recording modal.
+ * @param {boolean} options.isRecordingModalVisible - Indicates if the recording modal is currently visible.
+ * @param {Function} [options.showAlert] - Optional function to show an alert message.
+ * @param {boolean} options.stopLaunchRecord - Indicates if the recording launch should be stopped.
+ * @param {boolean} options.canLaunchRecord - Indicates if the recording can be launched.
+ * @param {boolean} options.recordingAudioSupport - Indicates if audio recording is supported.
+ * @param {boolean} options.recordingVideoSupport - Indicates if video recording is supported.
+ * @param {Function} options.updateCanRecord - Function to update the recording capability.
+ * @param {Function} options.updateClearedToRecord - Function to update the cleared-to-record status.
+ * @param {boolean} options.recordStarted - Indicates if the recording has started.
+ * @param {boolean} options.recordPaused - Indicates if the recording is paused.
+ * @param {boolean} options.localUIMode - Indicates if the local UI mode is active.
+ *
+ * @returns {void}
+ *
+ * @throws Will show an alert if:
+ * - The recording has already ended or the user is not allowed to record.
+ * - The recording initiation is not allowed due to insufficient permissions.
+ * - The recording is currently running and cannot be reconfigured unless paused.
+ *
+ * @example
+ * ```typescript
+ * const options: LaunchRecordingOptions = {
+ *   updateIsRecordingModalVisible: (visible) => { /* update visibility logic *\/ },
+ *   isRecordingModalVisible: false,
+ *   showAlert: (alert) => { /* show alert logic *\/ },
+ *   stopLaunchRecord: false,
+ *   canLaunchRecord: true,
+ *   recordingAudioSupport: true,
+ *   recordingVideoSupport: true,
+ *   updateCanRecord: (canRecord) => { /* update record capability *\/ },
+ *   updateClearedToRecord: (cleared) => { /* update cleared status *\/ },
+ *   recordStarted: false,
+ *   recordPaused: false,
+ *   localUIMode: false,
+ * };
+ * launchRecording(options);
+ * ```
+ */
 class LaunchRecording {
     /**
      * Launches the recording process based on various conditions and updates the UI accordingly.
@@ -11328,6 +12736,38 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Updates the recording timer and progress time.
+ * @function
+ * @param {RecordUpdateTimerOptions} options - The options object containing necessary variables and functions.
+ */
+/**
+ * Updates the recording timer by calculating the elapsed time since the recording started
+ * and formatting it in HH:MM:SS format.
+ *
+ * @param {Object} options - The options object.
+ * @param {number} options.recordElapsedTime - The elapsed recording time in seconds.
+ * @param {number} options.recordStartTime - The timestamp when the recording started.
+ * @param {Function} options.updateRecordElapsedTime - Callback to update the elapsed recording time.
+ * @param {Function} options.updateRecordingProgressTime - Callback to update the formatted recording time.
+ * @returns {void}
+ *
+ * @remarks
+ * This function calculates the elapsed time since the recording started and formats it into
+ * a string in HH:MM:SS format. It updates both the elapsed time in seconds and the formatted
+ * time via the provided callback functions.
+ *
+ * @example
+ * ```typescript
+ * const options: RecordUpdateTimerOptions = {
+ *   recordElapsedTime: 0,
+ *   recordStartTime: Date.now(),
+ *   updateRecordElapsedTime: (elapsedTime) => { console.log(`Elapsed Time: ${elapsedTime} seconds`); },
+ *   updateRecordingProgressTime: (formattedTime) => { console.log(`Formatted Time: ${formattedTime}`); },
+ * };
+ * recordUpdateTimer(options);
+ * ```
+ */
 class RecordUpdateTimer {
     /**
      * Updates the recording timer and progress time.
@@ -11374,6 +12814,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Starts the recording timer and manages its state.
+ *
+ * @param {RecordStartTimerOptions} options - The options for starting the recording timer.
+ * @param {Object} options.parameters - The parameters for the recording timer.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {number} options.parameters.recordStartTime - The start time of the recording.
+ * @param {NodeJS.Timeout | null} options.parameters.recordTimerInterval - The interval ID for the recording timer.
+ * @param {boolean} options.parameters.isTimerRunning - Flag indicating if the timer is currently running.
+ * @param {boolean} options.parameters.canPauseResume - Flag indicating if pause/resume actions are enabled.
+ * @param {number} options.parameters.recordChangeSeconds - The time after which pause/resume actions are enabled.
+ * @param {Function} options.parameters.updateRecordStartTime - Function to update the recording start time.
+ * @param {Function} options.parameters.updateRecordTimerInterval - Function to update the recording timer interval.
+ * @param {Function} options.parameters.updateIsTimerRunning - Function to update the timer running state.
+ * @param {Function} options.parameters.updateCanPauseResume - Function to update the pause/resume state.
+ *
+ * @returns {Promise<void>} A promise that resolves when the timer is started.
+ *
+ * @remarks
+ * This function initializes the recording start time and sets up an interval to update the timer every second.
+ * It also manages the state of the timer, including enabling and disabling pause/resume actions.
+ * The timer is stopped if the recording is paused, stopped, or if the room name is invalid.
+ *
+ * @example
+ * ```typescript
+ * const options: RecordStartTimerOptions = {
+ *   parameters: {
+ *     recordStartTime: Date.now(),
+ *     recordTimerInterval: null,
+ *     isTimerRunning: false,
+ *     canPauseResume: false,
+ *     recordChangeSeconds: 15,
+ *     recordPaused: false,
+ *     recordStopped: false,
+ *     roomName: 'room1',
+ *     updateRecordStartTime: (time) => {  },
+ *     updateRecordTimerInterval: (interval) => {  },
+ *     updateIsTimerRunning: (isRunning) => { },
+ *     updateCanPauseResume: (canPause) => {},
+ *     getUpdatedAllParams: () => { },
+ *   },
+ * };
+ * await recordStartTimer(options);
+ * ```
+ */
 class RecordStartTimer {
     RecordUpdateTimerService;
     constructor(RecordUpdateTimerService) {
@@ -11460,6 +12945,50 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: RecordUpdateTimer }] });
 
+/**
+ * Resumes the recording timer if it is not already running and can be paused/resumed.
+ *
+ * @param {RecordResumeTimerOptions} options - The options for resuming the recording timer.
+ * @param {Object} options.parameters - The parameters for the recording timer.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {boolean} options.parameters.isTimerRunning - Indicates if the timer is currently running.
+ * @param {boolean} options.parameters.canPauseResume - Indicates if the timer can be paused/resumed.
+ * @param {number} options.parameters.recordElapsedTime - The elapsed recording time in seconds.
+ * @param {number} options.parameters.recordStartTime - The start time of the recording.
+ * @param {NodeJS.Timeout | null} options.parameters.recordTimerInterval - The interval ID for the recording timer.
+ * @param {Function} options.parameters.showAlert - Function to show an alert message.
+ * @param {Function} options.parameters.updateRecordStartTime - Function to update the recording start time.
+ * @param {Function} options.parameters.updateRecordTimerInterval - Function to update the recording timer interval.
+ * @param {Function} options.parameters.updateIsTimerRunning - Function to update the timer running status.
+ * @param {Function} options.parameters.updateCanPauseResume - Function to update the pause/resume status.
+ *
+ * @returns {Promise<boolean>} - Returns a promise that resolves to true if the timer was successfully resumed, otherwise false.
+ *
+ * @throws Will show an alert if the timer cannot be resumed due to conditions not being met.
+ *
+ * @example
+ * ```typescript
+ * const options: RecordResumeTimerOptions = {
+ *   parameters: {
+ *     isTimerRunning: false,
+ *     canPauseResume: true,
+ *     recordElapsedTime: 10,
+ *     recordStartTime: Date.now(),
+ *     recordTimerInterval: null,
+ *     showAlert: (alert) => { },
+ *     updateRecordStartTime: (time) => { },
+ *     updateRecordTimerInterval: (interval) => { },
+ *     updateIsTimerRunning: (isRunning) => { },
+ *     updateCanPauseResume: (canPause) => {  },
+ *     getUpdatedAllParams: () => ({  }),
+ *   },
+ * };
+ * const canResume = await recordResumeTimer(options);
+ * if (canResume) {
+ *   // proceed with the resumed recording
+ * }
+ * ```
+ */
 class RecordResumeTimer {
     RecordUpdateTimerService;
     constructor(RecordUpdateTimerService) {
@@ -11543,6 +13072,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: RecordUpdateTimer }] });
 
+/**
+ * Starts the recording process based on the provided parameters.
+ *
+ * @param {StartRecordingOptions} options - The options for starting the recording.
+ * @param {object} options.parameters - The parameters required for starting the recording.
+ * @param {string} options.parameters.roomName - The name of the room where recording is to be started.
+ * @param {object} options.parameters.userRecordingParams - User-specific recording parameters.
+ * @param {object} options.parameters.socket - The socket instance for communication.
+ * @param {function} options.parameters.updateIsRecordingModalVisible - Function to update the visibility of the recording modal.
+ * @param {boolean} options.parameters.confirmedToRecord - Flag indicating if the user has confirmed to record.
+ * @param {function} options.parameters.showAlert - Function to show alerts.
+ * @param {string} options.parameters.recordingMediaOptions - The media options for recording (e.g., "video", "audio").
+ * @param {boolean} options.parameters.videoAlreadyOn - Flag indicating if the video is already on.
+ * @param {boolean} options.parameters.audioAlreadyOn - Flag indicating if the audio is already on.
+ * @param {boolean} options.parameters.recordStarted - Flag indicating if the recording has started.
+ * @param {boolean} options.parameters.recordPaused - Flag indicating if the recording is paused.
+ * @param {boolean} options.parameters.recordResumed - Flag indicating if the recording is resumed.
+ * @param {boolean} options.parameters.recordStopped - Flag indicating if the recording is stopped.
+ * @param {boolean} options.parameters.startReport - Flag indicating if the start report is active.
+ * @param {boolean} options.parameters.endReport - Flag indicating if the end report is active.
+ * @param {boolean} options.parameters.canRecord - Flag indicating if recording is allowed.
+ * @param {function} options.parameters.updateClearedToRecord - Function to update the cleared to record status.
+ * @param {function} options.parameters.updateRecordStarted - Function to update the record started status.
+ * @param {function} options.parameters.updateRecordPaused - Function to update the record paused status.
+ * @param {function} options.parameters.updateRecordResumed - Function to update the record resumed status.
+ * @param {function} options.parameters.updateStartReport - Function to update the start report status.
+ * @param {function} options.parameters.updateEndReport - Function to update the end report status.
+ * @param {function} options.parameters.updateCanRecord - Function to update the can record status.
+ * @param {boolean} options.parameters.whiteboardStarted - Flag indicating if the whiteboard has started.
+ * @param {boolean} options.parameters.whiteboardEnded - Flag indicating if the whiteboard has ended.
+ * @param {function} options.parameters.rePort - Function to report the recording status.
+ * @param {function} options.parameters.captureCanvasStream - Function to capture the canvas stream.
+ *
+ * @returns {Promise<boolean | undefined>} - A promise that resolves to a boolean indicating if the recording attempt was successful, or undefined if not applicable.
+ *
+ * @remarks
+ * This method checks various conditions, such as whether the user has confirmed recording and whether audio or video is already on,
+ * before starting the recording. It updates the recording state, manages socket communication, and handles whiteboard functionality if applicable.
+ *
+ * @example
+ * ```typescript
+ * const options: StartRecordingOptions = { parameters: someParameters };
+ * const result = await startRecording(options);
+ * if (result) {
+ *   console.log('Recording started successfully.');
+ * } else {
+ *   console.log('Failed to start recording.');
+ * }
+ * ```
+ */
 class StartRecording {
     RecordStartTimerService;
     RecordResumeTimerService;
@@ -11686,6 +13265,69 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: RecordStartTimer }, { type: RecordResumeTimer }] });
 
+/**
+ * Confirms the recording settings based on the provided parameters and updates the recording state.
+ *
+ * @param {ConfirmRecordingOptions} options - The options for confirming the recording.
+ * @param {ConfirmRecordingParameters} options.parameters - The parameters for the recording, including:
+ *   - {ShowAlert} [options.parameters.showAlert] - Optional function to show alert messages.
+ *   - {string} options.parameters.recordingMediaOptions - Type of media being recorded ("video" or "audio").
+ *   - {string} options.parameters.recordingAudioOptions - Audio recording options.
+ *   - {string} options.parameters.recordingVideoOptions - Video recording options.
+ *   - {string} options.parameters.recordingVideoType - Type of video recording.
+ *   - {'video' | 'media' | 'all'} options.parameters.recordingDisplayType - The display type for the recording.
+ *   - {boolean} options.parameters.recordingNameTags - Flag for including name tags in the recording.
+ *   - {string} options.parameters.recordingBackgroundColor - Background color for the recording.
+ *   - {string} options.parameters.recordingNameTagsColor - Color for the name tags.
+ *   - {string} options.parameters.recordingOrientationVideo - Orientation for video recording.
+ *   - {boolean} options.parameters.recordingAddHLS - Flag for adding HLS support.
+ *   - {boolean} options.parameters.recordingAddText - Flag for adding custom text.
+ *   - {string} options.parameters.recordingCustomText - Custom text for the recording.
+ *   - {string} options.parameters.recordingCustomTextPosition - Position of the custom text.
+ *   - {string} options.parameters.recordingCustomTextColor - Color of the custom text.
+ *   - {string} options.parameters.meetingDisplayType - Current display type of the meeting.
+ *   - {boolean} options.parameters.recordingVideoParticipantsFullRoomSupport - Support for video participants in full room.
+ *   - {boolean} options.parameters.recordingAllParticipantsSupport - Support for recording all participants.
+ *   - {boolean} options.parameters.recordingVideoParticipantsSupport - Support for video participants.
+ *   - {boolean} options.parameters.recordingSupportForOtherOrientation - Support for other orientations.
+ *   - {string} options.parameters.recordingPreferredOrientation - Preferred orientation for recording.
+ *   - {boolean} options.parameters.recordingMultiFormatsSupport - Support for multiple formats.
+ *   - {boolean} options.parameters.recordingVideoOptimized - Flag for video optimization.
+ *   - {boolean} options.parameters.recordingAllParticipantsFullRoomSupport - Support for recording all participants in full room.
+ *   - {boolean} options.parameters.meetingVideoOptimized - Flag for meeting video optimization.
+ *   - {EventType} options.parameters.eventType - Type of the event.
+ *   - {boolean} options.parameters.breakOutRoomStarted - Indicates if a breakout room has started.
+ *   - {boolean} options.parameters.breakOutRoomEnded - Indicates if a breakout room has ended.
+ *   - {Function} options.parameters.updateRecordingDisplayType - Function to update the recording display type.
+ *   - {Function} options.parameters.updateRecordingVideoOptimized - Function to update video optimization status.
+ *   - {Function} options.parameters.updateUserRecordingParams - Function to update user recording parameters.
+ *   - {Function} options.parameters.updateConfirmedToRecord - Function to confirm the recording.
+ *
+ * @returns {Promise<void>} A promise that resolves when the recording settings have been confirmed.
+ *
+ * @remarks
+ * This function performs several checks to ensure that the recording settings are valid based on the provided parameters.
+ * If any of the checks fail, an alert is shown and the function returns early without updating the recording state.
+ *
+ * The function checks for the following conditions:
+ * - Whether recording videos of all participants is allowed.
+ * - Whether recording all participants is allowed.
+ * - Whether recording other video participants is allowed.
+ * - Whether recording all orientations is allowed.
+ * - Whether recording the preferred orientation is allowed.
+ * - Whether recording all formats is allowed.
+ * - Whether the recording display type is valid based on the meeting display type.
+ * - Whether recording all participants with media is allowed.
+ *
+ * If all checks pass, the function constructs the `mainSpecs`, `dispSpecs`, and `textSpecs` objects based on the state variables,
+ * updates the user recording parameters, and confirms the recording.
+ *
+ * @example
+ * ```typescript
+ * const options: ConfirmRecordingOptions = { parameters: someParameters };
+ * await confirmRecording(options);
+ * ```
+ */
 class ConfirmRecording {
     /**
      * Confirms the recording settings based on the provided parameters and updates the recording state.
@@ -11899,6 +13541,24 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to toggle the visibility of a waiting modal.
+ *
+ * @param {LaunchWaitingOptions} options - The options to control the waiting modal visibility.
+ * @param {Function} options.updateIsWaitingModalVisible - Function to update the visibility of the waiting modal.
+ * @param {boolean} options.isWaitingModalVisible - Current visibility state of the waiting modal.
+ *
+ * @example
+ * ```typescript
+ * const launchWaitingService = new LaunchWaiting();
+ * launchWaitingService.launchWaiting({
+ *   updateIsWaitingModalVisible: (isVisible) => console.log(`Modal is now ${isVisible ? 'visible' : 'hidden'}`),
+ *   isWaitingModalVisible: false,
+ * });
+ * ```
+ *
+ * This example toggles the modal's visibility state, making it visible if it was hidden and vice versa.
+ */
 class LaunchWaiting {
     /**
      * Toggles the visibility of the waiting modal.
@@ -11920,6 +13580,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Toggles the visibility of the co-host modal.
+ *
+ * This method is used to show or hide the co-host modal based on the current visibility state.
+ *
+ * @param {LaunchCoHostOptions} options - The options object containing necessary variables and functions.
+ * @param {Function} options.updateIsCoHostModalVisible - Function to update the visibility state of the co-host modal.
+ * @param {boolean} options.isCoHostModalVisible - Current visibility state of the co-host modal.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const options: LaunchCoHostOptions = {
+ *   updateIsCoHostModalVisible: (isVisible) => {
+ *     console.log('Co-Host Modal is now:', isVisible ? 'Visible' : 'Hidden');
+ *   },
+ *   isCoHostModalVisible: false,
+ * };
+ *
+ * const launchCoHostService = new launchCoHost();
+ * launchCoHostService.launchCoHost(options);
+ * ```
+ */
 class launchCoHost {
     /**
      * Toggles the visibility of the co-host modal.
@@ -11940,6 +13624,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Launches the media settings modal and updates the available audio and video input devices.
+ *
+ * This method checks the current visibility of the media settings modal and, if it is not visible,
+ * retrieves the list of available audio and video input devices. It then updates the state with
+ * these devices and opens the modal. If the modal is already visible, it closes the modal.
+ *
+ * @param {LaunchMediaSettingsOptions} options - The options for launching media settings.
+ * @param {Function} options.updateIsMediaSettingsModalVisible - Function to update the visibility state of the media settings modal.
+ * @param {boolean} options.isMediaSettingsModalVisible - Current visibility state of the media settings modal.
+ * @param {MediaDeviceInfo[]} options.audioInputs - Array to store available audio input devices.
+ * @param {MediaDeviceInfo[]} options.videoInputs - Array to store available video input devices.
+ * @param {Function} options.updateAudioInputs - Function to update the available audio input devices.
+ * @param {Function} options.updateVideoInputs - Function to update the available video input devices.
+ * @returns {Promise<void>} A promise that resolves when the media settings have been updated.
+ *
+ * @example
+ * ```typescript
+ * const launchMediaSettingsService = new LaunchMediaSettings();
+ * launchMediaSettingsService.launchMediaSettings({
+ *   updateIsMediaSettingsModalVisible: (isVisible) => {
+ *     console.log('Media settings modal is now:', isVisible ? 'Visible' : 'Hidden');
+ *   },
+ *   isMediaSettingsModalVisible: false, // Initially not visible
+ *   audioInputs: [],
+ *   videoInputs: [],
+ *   updateAudioInputs: (inputs) => {
+ *     console.log('Available audio inputs:', inputs);
+ *   },
+ *   updateVideoInputs: (inputs) => {
+ *     console.log('Available video inputs:', inputs);
+ *   },
+ * });
+ * ```
+ */
 class LaunchMediaSettings {
     /**
      * Launches the media settings modal and updates the available audio and video input devices.
@@ -11989,6 +13708,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // display-settings.service.ts
+/**
+ * Toggles the visibility of the display settings modal.
+ *
+ * This method allows you to show or hide the display settings modal by updating its visibility state.
+ *
+ * @param {LaunchDisplaySettingsOptions} options - The options for launching the display settings.
+ * @param {Function} options.updateIsDisplaySettingsModalVisible - Function to update the visibility state of the display settings modal.
+ * @param {boolean} options.isDisplaySettingsModalVisible - Current visibility state of the display settings modal.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const options: LaunchDisplaySettingsOptions = {
+ *   updateIsDisplaySettingsModalVisible: (isVisible) => console.log('Display settings modal is now:', isVisible),
+ *   isDisplaySettingsModalVisible: false,
+ * };
+ *
+ * const launchDisplaySettingsService = new LaunchDisplaySettings();
+ * launchDisplaySettingsService.launchDisplaySettings(options);
+ * ```
+ */
 class LaunchDisplaySettings {
     /**
      * Toggles the visibility of the display settings modal.
@@ -12011,6 +13752,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // settings.service.ts
+/**
+ * Toggles the visibility state of the settings modal.
+ *
+ * @param {LaunchSettingsOptions} options - The options for launching settings.
+ * @param {Function} options.updateIsSettingsModalVisible - Function to update the visibility state of the settings modal.
+ * @param {boolean} options.isSettingsModalVisible - Current visibility state of the settings modal.
+ * @returns {void}
+ *
+ * @remarks
+ * This method toggles the current visibility state of the settings modal.
+ * If the modal is currently visible, it will be hidden, and vice versa.
+ *
+ * @example
+ * ```typescript
+ * const options: LaunchSettingsOptions = {
+ *   updateIsSettingsModalVisible: (isVisible) => {
+ *     console.log('Settings modal visibility:', isVisible);
+ *   },
+ *   isSettingsModalVisible: false,
+ * };
+ *
+ * const launchSettingsService = new LaunchSettings();
+ * launchSettingsService.launchSettings(options);
+ * ```
+ */
 class LaunchSettings {
     /**
      * Toggles the visibility state of the settings modal.
@@ -12035,6 +13801,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // requests.service.ts
+/**
+ * Toggles the visibility state of the requests modal.
+ *
+ * @param {LaunchRequestsOptions} options - The options for launching requests.
+ * @param {Function} options.updateIsRequestsModalVisible - Function to update the visibility state of the requests modal.
+ * @param {boolean} options.isRequestsModalVisible - Current visibility state of the requests modal.
+ * @returns {void}
+ *
+ * @remarks
+ * This method is used to open or close the requests modal by toggling its visibility state.
+ * It takes the current visibility state as input and updates it accordingly.
+ *
+ * @example
+ * ```typescript
+ * const options: LaunchRequestsOptions = {
+ *   updateIsRequestsModalVisible: (isVisible) => {
+ *     console.log('Requests modal visibility:', isVisible);
+ *   },
+ *   isRequestsModalVisible: false,
+ * };
+ *
+ * const launchRequestsService = new LaunchRequests();
+ * launchRequestsService.launchRequests(options);
+ * ```
+ */
 class LaunchRequests {
     /**
      * Toggles the visibility state of the requests modal.
@@ -12058,6 +13849,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Toggles the visibility of the participants modal.
+ *
+ * This method checks the current visibility state of the participants modal
+ * and updates it accordingly. If the modal is currently visible, it will be hidden.
+ * If it is hidden, it will be displayed.
+ *
+ * @param {LaunchParticipantsOptions} options - The options for toggling the participants modal.
+ * @param {Function} options.updateIsParticipantsModalVisible - Function to update the visibility state of the participants modal.
+ * @param {boolean} options.isParticipantsModalVisible - Current visibility state of the participants modal.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const launchParticipantsService = new LaunchParticipants();
+ * launchParticipantsService.launchParticipants({
+ *   updateIsParticipantsModalVisible: (isVisible) => {
+ *     console.log(`Participants modal is now ${isVisible ? 'visible' : 'hidden'}`);
+ *   },
+ *   isParticipantsModalVisible: false,
+ * });
+ * ```
+ */
 class LaunchParticipants {
     /**
      * Toggles the visibility of the participants modal.
@@ -12079,6 +13894,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Toggles the visibility state of the messages modal.
+ *
+ * This method updates the visibility state of the messages modal by calling the provided
+ * function with the negated current visibility state. If the modal is currently visible,
+ * it will be closed; if it's hidden, it will be opened.
+ *
+ * @param {LaunchMessagesOptions} options - The options for launching the messages modal.
+ * @param {Function} options.updateIsMessagesModalVisible - Function to update the visibility state of the messages modal.
+ * @param {boolean} options.isMessagesModalVisible - Current visibility state of the messages modal.
+ *
+ * @example
+ * ```typescript
+ * const launchMessagesService = new LaunchMessages();
+ * launchMessagesService.launchMessages({
+ *   updateIsMessagesModalVisible: (visible) => {
+ *     console.log('Messages modal is now:', visible ? 'Visible' : 'Hidden');
+ *   },
+ *   isMessagesModalVisible: false, // Initially not visible
+ * });
+ * ```
+ */
 class LaunchMessages {
     /**
      * Toggles the visibility state of the messages modal.
@@ -12100,6 +13937,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Toggles the visibility of the confirmation exit modal.
+ *
+ * This method updates the state of the confirmation exit modal by inverting its current visibility status.
+ *
+ * @param {LaunchConfirmExitOptions} options - The options for toggling the confirmation exit modal visibility.
+ * @param {Function} options.updateIsConfirmExitModalVisible - Function to update the visibility state of the confirmation exit modal.
+ * @param {boolean} options.isConfirmExitModalVisible - Current visibility state of the confirmation exit modal.
+ *
+ * @example
+ * ```typescript
+ * const launchConfirmExitService = new LaunchConfirmExit();
+ * launchConfirmExitService.launchConfirmExit({
+ *   updateIsConfirmExitModalVisible: (isVisible) => {
+ *     console.log('Confirm exit modal is now:', isVisible ? 'Visible' : 'Hidden');
+ *   },
+ *   isConfirmExitModalVisible: false, // Initially not visible
+ * });
+ * ```
+ */
 class LaunchConfirmExit {
     /**
      * Toggles the visibility of the confirmation exit modal.
@@ -12120,6 +13977,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Toggles the visibility of the poll modal.
+ *
+ * @param {LaunchPollOptions} options - The options object containing necessary variables and functions.
+ * @param {Function} options.updateIsPollModalVisible - Function to update the visibility state of the poll modal.
+ * @param {boolean} options.isPollModalVisible - Current visibility state of the poll modal.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const launchPollService = new LaunchPoll();
+ * launchPollService.launchPoll({
+ *   updateIsPollModalVisible: (isVisible) => {
+ *     console.log('Poll modal visibility:', isVisible);
+ *   },
+ *   isPollModalVisible: false,
+ * });
+ * ```
+ */
 class LaunchPoll {
     /**
      * Toggles the visibility of the poll modal.
@@ -12141,6 +14018,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Toggles the visibility of the background modal.
+ *
+ * This method updates the visibility state of the background modal by calling
+ * the provided update function with the negation of the current visibility state.
+ *
+ * @param {LaunchBackgroundOptions} options - The options object containing necessary variables and functions.
+ * @param {Function} options.updateIsBackgroundModalVisible - Function to update the visibility state of the background modal.
+ * @param {boolean} options.isBackgroundModalVisible - Current visibility state of the background modal.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   updateIsBackgroundModalVisible: (isVisible) => {
+ *     console.log(`Background modal is now ${isVisible ? 'visible' : 'hidden'}.`);
+ *   },
+ *   isBackgroundModalVisible: false,
+ * };
+ *
+ * const launchBackgroundService = new LaunchBackground();
+ * launchBackgroundService.launchBackground(options);
+ * ```
+ */
 class LaunchBackground {
     /**
      * Toggles the visibility of the background modal.
@@ -12162,6 +14064,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Launches the breakout rooms by toggling the visibility of the breakout rooms modal.
+ *
+ * This method is used to show or hide the breakout rooms modal based on the current visibility state.
+ *
+ * @param {LaunchBreakoutRoomsOptions} options - The options object containing necessary variables and functions.
+ * @param {Function} options.updateIsBreakoutRoomsModalVisible - Function to update the visibility state of the breakout rooms modal.
+ * @param {boolean} options.isBreakoutRoomsModalVisible - Current visibility state of the breakout rooms modal.
+ *
+ * @returns {void}
+ *
+ * @example
+ * ```typescript
+ * const options: LaunchBreakoutRoomsOptions = {
+ *   updateIsBreakoutRoomsModalVisible: (isVisible) => {
+ *     console.log('Breakout Rooms Modal is now:', isVisible ? 'Visible' : 'Hidden');
+ *   },
+ *   isBreakoutRoomsModalVisible: false,
+ * };
+ *
+ * const launchBreakoutRoomsService = new LaunchBreakoutRooms();
+ * launchBreakoutRoomsService.launchBreakoutRooms(options);
+ * ```
+ */
 class LaunchBreakoutRooms {
     /**
      * Launches the breakout rooms by toggling the visibility of the breakout rooms modal.
@@ -12183,6 +14109,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // whiteboard.service.ts
+/**
+ * Toggles the visibility of the configure whiteboard modal.
+ *
+ * @param {LaunchConfigureWhiteboardOptions} options - Options to control whiteboard configuration modal.
+ * @param {Function} options.updateIsConfigureWhiteboardModalVisible - Function to update the modal's visibility state.
+ * @param {boolean} options.isConfigureWhiteboardModalVisible - Current visibility state of the configure whiteboard modal.
+ *
+ * This function uses the current visibility state to toggle the whiteboard configuration modal on or off.
+ *
+ * @example
+ * ```typescript
+ * const launchService = new LaunchConfigureWhiteboard();
+ * launchService.launchConfigureWhiteboard({
+ *   updateIsConfigureWhiteboardModalVisible: (visible) => console.log('Modal Visible:', visible),
+ *   isConfigureWhiteboardModalVisible: false
+ * });
+ * ```
+ *
+ * In this example, the modal visibility state is toggled, and the updated visibility state is logged.
+ */
 class LaunchConfigureWhiteboard {
     /**
      * Toggles the visibility of the configure whiteboard modal.
@@ -12204,6 +14150,46 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Manages connections to a media socket, allowing users to connect or disconnect based on API credentials.
+ *
+ * @class
+ * @name SocketManager
+ * @description Provides methods to connect and disconnect from a media socket using a provided API key or token.
+ *
+ * @method
+ * validateApiKeyToken - Validates the API key or token for correct format.
+ * connectSocket - Establishes a connection to the media socket using either the API key or token.
+ * disconnectSocket - Disconnects an active socket connection.
+ *
+ * @example
+ * ```typescript
+ * const socketManager = new SocketManager();
+ *
+ * // Example of connecting to the socket
+ * const socketConnection = await socketManager.connectSocket({
+ *   apiUserName: 'user123',
+ *   apiKey: 'validApiKeyOf64Characters',
+ *   link: 'https://socketserver.example.com'
+ * });
+ *
+ * // Example of disconnecting the socket
+ * const isDisconnected = await socketManager.disconnectSocket({
+ *   socket: socketConnection
+ * });
+ * ```
+ *
+ * @typedef {Object} ConnectSocketOptions
+ * @property {string} apiUserName - Username for the API.
+ * @property {string} [apiKey] - The API key for authentication.
+ * @property {string} [apiToken] - The API token for authentication.
+ * @property {string} link - The socket server link.
+ *
+ * @typedef {Object} DisconnectSocketOptions
+ * @property {Socket} socket - The socket instance to disconnect.
+ *
+ * @returns {Promise<Socket | boolean>} The active socket instance on connection, or a boolean indicating disconnection success.
+ */
 class SocketManager {
     socket;
     async validateApiKeyToken(value) {
@@ -12273,6 +14259,22 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to validate if a given string contains only alphanumeric characters.
+ *
+ * @class ValidateAlphanumeric
+ *
+ * @example
+ * ```typescript
+ * const validator = new ValidateAlphanumeric();
+ * validator.validateAlphanumeric({ str: 'abc123' }).then(isValid => console.log(isValid)); // true
+ * validator.validateAlphanumeric({ str: 'abc 123!' }).then(isValid => console.log(isValid)); // false
+ * ```
+ *
+ * @param {ValidateAlphanumericOptions} options - Contains the string to validate.
+ * @param {string} options.str - The input string that needs to be validated.
+ * @returns {Promise<boolean>} - A promise resolving to `true` if the input string is alphanumeric, otherwise `false`.
+ */
 class ValidateAlphanumeric {
     /**
      * Validates if the given string contains only alphanumeric characters.
@@ -12304,6 +14306,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Joins a user to a room using socket communication with validation checks.
+ *
+ * @param {JoinRoomOptions} options - Contains:
+ *   - `socket`: Socket instance for communication.
+ *   - `roomName`: Name of the room to join.
+ *   - `islevel`: User's level indicator.
+ *   - `member`: User identifier.
+ *   - `sec`: Security token.
+ *   - `apiUserName`: API username for authentication.
+ *
+ * - **Validation**:
+ *   - Ensures `roomName`, `apiUserName`, and `member` are alphanumeric.
+ *   - Verifies that `roomName` starts with 's' or 'p' and meets length requirements.
+ *   - Validates `sec`, `islevel`, and `apiUserName` against specified length and format conditions.
+ *
+ * - **Response Handling**:
+ *   - Resolves with the server's response upon a successful join.
+ *   - Rejects with a descriptive error if the user is banned, suspended, or if the host has not yet joined the room.
+ *
+ * @returns {Promise<object>} Resolves with data from the 'joinRoom' event or rejects with validation errors.
+ * @throws {Error} Throws errors encountered during validation or join process.
+ *
+ * @example
+ * ```typescript
+ * const joinOptions = {
+ *   socket: mySocket,
+ *   roomName: 'sMyRoom',
+ *   islevel: '1',
+ *   member: 'participant123',
+ *   sec: '64-character-secure-key...',
+ *   apiUserName: 'apiUser123',
+ * };
+ * joinRoom(joinOptions)
+ *   .then(response => console.log('Room joined:', response))
+ *   .catch(error => console.error('Join failed:', error));
+ * ```
+ */
 class JoinRoom {
     validateAlphanumeric;
     constructor(validateAlphanumeric) {
@@ -12415,6 +14455,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: ValidateAlphanumeric }] });
 
+/**
+ * Joins a conference room with the provided options and performs validation checks.
+ *
+ * @param {JoinConRoomOptions} options - Contains:
+ *   - socket: Socket instance for communication.
+ *   - roomName: Name of the room to join.
+ *   - islevel: User level within the room.
+ *   - member: Member identifier.
+ *   - sec: Security token.
+ *   - apiUserName: API username for authentication.
+ *
+ * - **Validation**:
+ *   - Checks that `roomName`, `apiUserName`, and `member` are alphanumeric.
+ *   - Ensures `roomName` starts with 's' or 'p' and meets length requirements.
+ *   - Verifies `sec`, `islevel`, and `apiUserName` comply with length and format expectations.
+ *
+ * - **Response Handling**:
+ *   - Resolves to the server's response data upon a successful join.
+ *   - Rejects with specific reasons if the user is banned, suspended, or if the room host is not present.
+ *
+ * @returns {Promise<JoinConRoomResponse>} Resolves with the join response data, or rejects with error details.
+ * @throws {Error} Throws validation errors or issues encountered while joining the room.
+ *
+ * @example
+ * ```typescript
+ * const joinOptions = {
+ *   socket: mySocket,
+ *   roomName: 'sMyRoom',
+ *   islevel: '1',
+ *   member: 'participant123',
+ *   sec: '64-character-long-secret-key-here...',
+ *   apiUserName: 'apiUser123',
+ * };
+ * joinConRoom(joinOptions)
+ *   .then(response => console.log('Joined room:', response))
+ *   .catch(error => console.error('Failed to join room:', error));
+ * ```
+ */
 class JoinConRoom {
     validateAlphanumeric;
     constructor(validateAlphanumeric) {
@@ -12526,6 +14604,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: ValidateAlphanumeric }] });
 
+/**
+ * Facilitates joining a room by emitting the `joinRoom` event to the server through a socket connection.
+ *
+ * @param {JoinRoomClientOptions} options - Configuration options for joining the room.
+ * @param {Socket} options.socket - The socket instance for server communication.
+ * @param {string} options.roomName - The name of the room to join.
+ * @param {string} options.islevel - Level identifier for the user in the room.
+ * @param {string} options.member - Member identifier for the joining user.
+ * @param {string} options.sec - Security token or identifier for access.
+ * @param {string} options.apiUserName - API username for server authentication.
+ * @param {boolean} [options.consume=false] - If `true`, joins via `joinConRoom`; otherwise, joins via `joinRoom`.
+ * @returns {Promise<any>} - A promise resolving with the server response data.
+ * @throws {Error} - Throws an error if the room joining attempt fails.
+ *
+ * @example
+ * ```typescript
+ * const joinRoomClient = new JoinRoomClient(joinRoomService, joinConRoomService);
+ * const response = await joinRoomClient.joinRoomClient({
+ *   socket: mySocket,
+ *   roomName: 'myRoom',
+ *   islevel: '1',
+ *   member: 'user123',
+ *   sec: 'secureToken',
+ *   apiUserName: 'apiUser',
+ *   consume: true,
+ * });
+ * console.log('Joined room with response:', response);
+ * ```
+ *
+ * This example demonstrates using `joinRoomClient` to join a room, either as a consumer or a producer, based on the `consume` flag.
+ */
 class JoinRoomClient {
     JoinRoomService;
     JoinConRoomService;
@@ -12587,6 +14696,52 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: JoinRoom }, { type: JoinConRoom }] });
 
+/**
+ * The `VideoCaptureConstraints` service provides various video capture constraints
+ * including resolution and frame rate settings for different display sizes (landscape, portrait, and neutral).
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { VideoCaptureConstraints } from './path/to/video-capture-constraints.service';
+ *
+ * constructor(private videoConstraints: VideoCaptureConstraints) {
+ *   console.log(this.videoConstraints.hdCons); // Access HD constraints
+ * }
+ * ```
+ *
+ * @remarks
+ * This service contains predefined constraints that can be used for video capture
+ * settings based on the desired quality and aspect ratio. These constraints can
+ * be applied when requesting media streams from the user's camera.
+ *
+ * @property {Object} QnHDCons - Video capture constraints for QnHD resolution (320x180).
+ * @property {Object} sdCons - Video capture constraints for SD resolution (640x360).
+ * @property {Object} hdCons - Video capture constraints for HD resolution (1280x720).
+ * @property {Object} fhdCons - Video capture constraints for FHD resolution (1920x1080).
+ * @property {Object} qhdCons - Video capture constraints for QHD resolution (2560x1440).
+ *
+ * @property {Object} QnHDConsPort - Video capture constraints for QnHD resolution in portrait mode.
+ * @property {Object} sdConsPort - Video capture constraints for SD resolution in portrait mode.
+ * @property {Object} hdConsPort - Video capture constraints for HD resolution in portrait mode.
+ * @property {Object} fhdConsPort - Video capture constraints for FHD resolution in portrait mode.
+ * @property {Object} qhdConsPort - Video capture constraints for QHD resolution in portrait mode.
+ *
+ * @property {Object} QnHDConsNeu - Video capture constraints for QnHD resolution in neutral mode.
+ * @property {Object} sdConsNeu - Video capture constraints for SD resolution in neutral mode.
+ * @property {Object} hdConsNeu - Video capture constraints for HD resolution in neutral mode.
+ * @property {Object} fhdConsNeu - Video capture constraints for FHD resolution in neutral mode.
+ * @property {Object} qhdConsNeu - Video capture constraints for QnHD resolution in neutral mode.
+ *
+ * @property {number} QnHDFrameRate - Frame rate for QnHD video capture (5 FPS).
+ * @property {number} sdFrameRate - Frame rate for SD video capture (10 FPS).
+ * @property {number} hdFrameRate - Frame rate for HD video capture (15 FPS).
+ * @property {number} fhdFrameRate - Frame rate for FHD video capture (20 FPS).
+ * @property {number} qhdFrameRate - Frame rate for QHD video capture (30 FPS).
+ * @property {number} screenFrameRate - Frame rate for screen capture (30 FPS).
+ *
+ * @returns {VideoCaptureConstraints} The video capture constraints for use in media requests.
+ */
 class VideoCaptureConstraints {
     // Landscape display sizes
     QnHDCons = { width: { ideal: 320 }, height: { ideal: 180 } };
@@ -12623,6 +14778,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * The `HParams` service provides encoding parameters for video production in a media session using the Mediasoup library.
+ * It includes a default configuration for RTP encoding parameters designed for handling high-quality video streams.
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { HParams } from './path/to/h-params.service';
+ *
+ * constructor(private hParamsService: HParams) {
+ *   console.log(this.hParamsService.hParams);
+ * }
+ * ```
+ *
+ * @typedef HParamsType
+ * @property {RtpEncodingParameters[]} encodings - Array of RTP encoding parameters for video.
+ * @property {ProducerCodecOptions} [codecOptions] - Optional codec options for the video producer.
+ *
+ * @example
+ * const hParams: HParamsType = {
+ *   encodings: [
+ *     {
+ *       rid: 'r8',
+ *       maxBitrate: 240000, // Max bitrate for this encoding (in bps)
+ *       scalabilityMode: 'L1T3', // Scalable video coding mode
+ *       scaleResolutionDownBy: 4.0, // Scale down the resolution by a factor of 4
+ *     },
+ *     {
+ *       rid: 'r9',
+ *       maxBitrate: 480000,
+ *       scalabilityMode: 'L1T3',
+ *       scaleResolutionDownBy: 2.0, // Scale down the resolution by a factor of 2
+ *     },
+ *     {
+ *       rid: 'r10',
+ *       maxBitrate: 960000,
+ *       scalabilityMode: 'L1T3',
+ *     },
+ *   ],
+ *   codecOptions: {
+ *     videoGoogleStartBitrate: 320, // Initial bitrate for the Google codec
+ *   },
+ * };
+ *
+ * @remarks
+ * The default `hParams` includes three encoding configurations with different resolutions and bitrates.
+ * The configurations are optimized for scalable video encoding, allowing for adaptive bitrate streaming based on network conditions.
+ *
+ * @returns {HParamsType} The video parameters for use in video producer configuration.
+ */
 class HParams {
     hParams = {
         encodings: [
@@ -12658,6 +14863,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * The `VParams` service provides encoding parameters for video in a media session using the Mediasoup library.
+ * It includes a default configuration for RTP encoding parameters optimized for video streaming.
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { VParams } from './path/to/v-params.service';
+ *
+ * constructor(private vParamsService: VParams) {
+ *   console.log(this.vParamsService.vParams);
+ * }
+ * ```
+ *
+ * @typedef VParamsType
+ * @property {RtpEncodingParameters[]} encodings - Array of RTP encoding parameters for video.
+ * @property {ProducerCodecOptions} [codecOptions] - Optional codec options for the video producer.
+ *
+ * @example
+ * const vParams: VParamsType = {
+ *   encodings: [
+ *     {
+ *       rid: 'r3',
+ *       maxBitrate: 200000, // Max bitrate for this encoding (in bps)
+ *       scalabilityMode: 'L1T3', // Scalability mode for encoding
+ *       scaleResolutionDownBy: 4.0, // Scale down resolution by this factor
+ *     },
+ *     {
+ *       rid: 'r4',
+ *       maxBitrate: 400000,
+ *       scalabilityMode: 'L1T3',
+ *       scaleResolutionDownBy: 2.0,
+ *     },
+ *     {
+ *       rid: 'r5',
+ *       maxBitrate: 800000,
+ *       scalabilityMode: 'L1T3',
+ *     },
+ *   ],
+ *   codecOptions: {
+ *     videoGoogleStartBitrate: 320, // Initial bitrate for the Google codec
+ *   },
+ * };
+ *
+ * @remarks
+ * The default `vParams` includes multiple encoding configurations with different maximum bitrates,
+ * allowing for adaptive streaming based on network conditions and participant capabilities.
+ *
+ * @returns {VParamsType} The video parameters for use in video producer configuration.
+ */
 class VParams {
     vParams = {
         encodings: [
@@ -12693,6 +14948,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * The `ScreenParams` service provides encoding parameters specifically for screen sharing in a media session using the Mediasoup library.
+ * It includes a default configuration for RTP encoding parameters optimized for high-quality screen sharing.
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { ScreenParams } from './path/to/screen-params.service';
+ *
+ * constructor(private screenParamsService: ScreenParams) {
+ *   console.log(this.screenParamsService.screenParams);
+ * }
+ * ```
+ *
+ * @typedef ScreenParamsType
+ * @property {RtpEncodingParameters[]} encodings - Array of RTP encoding parameters for screen sharing.
+ * @property {ProducerCodecOptions} [codecOptions] - Optional codec options for the screen sharing producer.
+ *
+ * @example
+ * const screenParams: ScreenParamsType = {
+ *   encodings: [
+ *     {
+ *       rid: 'r7',
+ *       maxBitrate: 3000000, // Max bitrate for this encoding (in bps)
+ *     },
+ *   ],
+ *   codecOptions: {
+ *     videoGoogleStartBitrate: 1000, // Initial bitrate for the Google codec
+ *   },
+ * };
+ *
+ * @remarks
+ * The default `screenParams` includes one encoding configuration with a high maximum bitrate suitable for sharing detailed screen content.
+ * The parameters are optimized to ensure a smooth experience during screen sharing sessions.
+ *
+ * @returns {ScreenParamsType} The screen sharing parameters for use in screen sharing producer configuration.
+ */
 class ScreenParams {
     screenParams = {
         encodings: [
@@ -12715,6 +15007,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * The `AParams` service provides the encoding parameters for audio production in a media session using the Mediasoup library.
+ * It includes a default configuration for RTP encoding parameters, which can be used when creating audio producers.
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { AParams } from './path/to/a-params.service';
+ *
+ * constructor(private aParamsService: AParams) {
+ *   console.log(this.aParamsService.aParams);
+ * }
+ * ```
+ *
+ * @typedef AParamsType
+ * @property {RtpEncodingParameters[]} encodings - Array of RTP encoding parameters for audio.
+ * @property {ProducerCodecOptions} [codecOptions] - Optional codec options for the audio producer.
+ *
+ * @example
+ * const aParams: AParamsType = {
+ *   encodings: [
+ *     {
+ *       rid: 'r0',
+ *       maxBitrate: 64000, // Max bitrate for the audio stream (in bps)
+ *     },
+ *   ],
+ *   codecOptions: {
+ *     // Additional codec options can be defined here
+ *   },
+ * };
+ *
+ * @remarks
+ * The default `aParams` contains a single encoding with a `rid` of "r0" and a maximum bitrate of 64 kbps.
+ * This configuration can be adjusted based on application requirements.
+ *
+ * @returns {AParamsType} The audio parameters for use in audio producer configuration.
+ */
 class AParams {
     aParams = {
         encodings: [
@@ -12736,6 +15065,50 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // room.service.ts
+/**
+ * Updates room parameters for the client after joining a room and receiving server-provided parameters.
+ *
+ * @param {UpdateRoomParametersClientOptions} options - An object containing:
+ *  - various room settings and parameters,
+ *  - functions to update those parameters.
+ *
+ * - **Screen/Page Settings:** Adjusts screen and item page limits, meeting room parameters, and video constraints based on server data.
+ * - **Recording and Media Settings:** Applies bitrate and frame rate adjustments, based on the target resolution and media options.
+ * - **Role-Specific Settings:** Configures admin, host, and co-host settings for permissions, orientations, and resolutions.
+ * - **Alerting**: Uses `showAlert` to notify the client on issues or permissions restrictions.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   parameters: {
+ *     rtpCapabilities: myRtpCapabilities,
+ *     roomRecvIPs: ['192.168.1.1'],
+ *     meetingRoomParams: myMeetingParams,
+ *     itemPageLimit: 3,
+ *     audioOnlyRoom: false,
+ *     addForBasic: true,
+ *     screenPageLimit: 2,
+ *     shareScreenStarted: false,
+ *     shared: true,
+ *     targetOrientation: 'landscape',
+ *     recordingVideoSupport: true,
+ *     frameRate: 15,
+ *     adminPasscode: 'admin123',
+ *     eventType: 'conference',
+ *     youAreCoHost: false,
+ *     updateRtpCapabilities: (rtp) => console.log('Updating RTP:', rtp),
+ *     updateRoomRecvIPs: (ips) => console.log('Updating IPs:', ips),
+ *     updateMeetingRoomParams: (params) => console.log('Updating room params:', params),
+ *     // Additional parameters...
+ *   },
+ * };
+ *
+ * const updateRoomParametersClient = new UpdateRoomParametersClient(videoCaptureConstraints, hParams, vParams, screenParams, aParams);
+ * updateRoomParametersClient.updateRoomParametersClient(options);
+ * ```
+ *
+ * This example demonstrates setting up room parameters for a conference-type room with recording support and custom update functions.
+ */
 class UpdateRoomParametersClient {
     videoCaptureConstraints;
     hParams;
@@ -12959,6 +15332,29 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: VideoCaptureConstraints }, { type: HParams }, { type: VParams }, { type: ScreenParams }, { type: AParams }] });
 
+/**
+ * Creates a mediasoup client device using the provided RTP capabilities.
+ *
+ * @param {CreateDeviceClientOptions} options - Options containing the required RTP capabilities.
+ * @param {RtpCapabilities | null} options.rtpCapabilities - The RTP capabilities necessary for initializing the device.
+ * @returns {Promise<Device | null>} - A promise resolving to the created `Device` instance or `null` if creation fails.
+ * @throws {Error} - Throws an error if RTP capabilities or the mediasoup client library are not provided, or if the device is unsupported by the browser.
+ *
+ * This function initializes a mediasoup client `Device` using the specified RTP capabilities, enabling communication capabilities according to provided media configurations. It filters out unsupported video orientation extensions and loads router capabilities, ensuring compatibility with client configurations.
+ *
+ * @example
+ * ```typescript
+ * const client = new CreateDeviceClient();
+ * const device = await client.createDeviceClient({ rtpCapabilities });
+ * if (device) {
+ *   console.log('Device created successfully:', device);
+ * } else {
+ *   console.log('Failed to create device.');
+ * }
+ * ```
+ *
+ * In this example, the function creates a device based on RTP capabilities, handling errors and unsupported devices gracefully.
+ */
 class CreateDeviceClient {
     /**
      * Creates a mediasoup client device with the provided RTP capabilities.
@@ -13008,6 +15404,94 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // click-video.service.ts
+/**
+ * Handles the click event to toggle the participant's video on/off and manages video permission requests.
+ *
+ * @param {ClickVideoOptions} options - The options for handling the video click event.
+ * @param {ClickVideoParameters} options.parameters - The parameters required for the video action.
+ * @param {boolean} options.parameters.checkMediaPermission - Indicates if media permission needs to be checked.
+ * @param {boolean} options.parameters.hasCameraPermission - Indicates if camera permission has been granted.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is currently active.
+ * @param {boolean} options.parameters.audioOnlyRoom - Indicates if the current room is audio-only.
+ * @param {boolean} options.parameters.recordStarted - Indicates if recording has started.
+ * @param {boolean} options.parameters.recordResumed - Indicates if recording has resumed.
+ * @param {boolean} options.parameters.recordPaused - Indicates if recording is paused.
+ * @param {boolean} options.parameters.recordStopped - Indicates if recording is stopped.
+ * @param {string} options.parameters.recordingMediaOptions - The media options for recording (e.g., "video", "audio").
+ * @param {string} options.parameters.islevel - The participant's level.
+ * @param {boolean} options.parameters.youAreCoHost - Indicates if the user is a co-host.
+ * @param {boolean} options.parameters.adminRestrictSetting - Indicates if there are admin restrictions on video.
+ * @param {string | null} options.parameters.videoRequestState - State of the video request.
+ * @param {number} options.parameters.videoRequestTime - Timestamp of the video request.
+ * @param {string} options.parameters.member - The participant's name.
+ * @param {Socket} options.parameters.socket - The socket connection used for communication.
+ * @param {string} options.parameters.roomName - The name of the room where the video is being toggled.
+ * @param {string} options.parameters.userDefaultVideoInputDevice - The default video input device.
+ * @param {string} options.parameters.currentFacingMode - The current facing mode of the camera.
+ * @param {VidCons} options.parameters.vidCons - Video constraints for the stream.
+ * @param {number} options.parameters.frameRate - Desired frame rate for the video.
+ * @param {boolean} options.parameters.videoAction - Indicates if a video action is currently taking place.
+ * @param {MediaStream | null} options.parameters.localStream - The local media stream.
+ * @param {string} options.parameters.audioSetting - The current audio setting.
+ * @param {string} options.parameters.videoSetting - The current video setting.
+ * @param {string} options.parameters.screenshareSetting - The current screenshare setting.
+ * @param {string} options.parameters.chatSetting - The current chat setting.
+ * @param {number} options.parameters.updateRequestIntervalSeconds - Interval time for updating request state.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video action has been handled.
+ *
+ * @remarks
+ * This function checks the current status of the video and handles the logic for starting or stopping the video stream.
+ * It validates permissions and room settings before allowing the video to be activated or deactivated.
+ *
+ * @example
+ * ```typescript
+ * const options: ClickVideoOptions = {
+ *   parameters: {
+ *     checkMediaPermission: true,
+ *     hasCameraPermission: false,
+ *     videoAlreadyOn: false,
+ *     audioOnlyRoom: false,
+ *     recordStarted: false,
+ *     recordResumed: false,
+ *     recordPaused: false,
+ *     recordStopped: false,
+ *     recordingMediaOptions: 'video',
+ *     islevel: '1',
+ *     youAreCoHost: false,
+ *     adminRestrictSetting: false,
+ *     videoRequestState: null,
+ *     videoRequestTime: 0,
+ *     member: 'John Doe',
+ *     socket: socketInstance,
+ *     roomName: 'myRoom',
+ *     userDefaultVideoInputDevice: '',
+ *     currentFacingMode: 'user',
+ *     vidCons: { width: 1280, height: 720 },
+ *     frameRate: 30,
+ *     videoAction: false,
+ *     localStream: null,
+ *     audioSetting: 'on',
+ *     videoSetting: 'on',
+ *     screenshareSetting: 'off',
+ *     chatSetting: 'allow',
+ *     updateRequestIntervalSeconds: 30,
+ *     showAlert: (alert) => console.log(alert.message),
+ *     updateVideoAlreadyOn: (status) => console.log(`Video already on: ${status}`),
+ *     updateVideoRequestState: (state) => console.log(`Video request state: ${state}`),
+ *     updateLocalStream: (stream) => console.log('Local stream updated'),
+ *     streamSuccessVideo: streamSuccessFunction,
+ *     disconnectSendTransportVideo: disconnectFunction,
+ *     requestPermissionCamera: requestPermissionFunction,
+ *     checkPermission: checkPermissionFunction,
+ *     getUpdatedAllParams: () => parameters,
+ *   },
+ * };
+ *
+ * const clickVideoService = new ClickVideo();
+ * await clickVideoService.clickVideo(options);
+ * ```
+ */
 class ClickVideo {
     /**
      * Handles the click event to toggle the participant's video on/off and manages video permission requests.
@@ -13188,6 +15672,103 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the click event for toggling audio in a media session.
+ *
+ * @param {ClickAudioOptions} options - The parameters required for handling the audio click event.
+ * @param {Object} options.parameters - The parameters for toggling audio.
+ * @param {boolean} options.parameters.checkMediaPermission - Flag indicating whether to check media permission.
+ * @param {boolean} options.parameters.hasAudioPermission - Flag indicating if the user has audio permission.
+ * @param {boolean} options.parameters.audioPaused - Flag indicating if audio is paused.
+ * @param {boolean} options.parameters.audioAlreadyOn - Flag indicating if audio is already turned on.
+ * @param {boolean} options.parameters.audioOnlyRoom - Flag indicating if the room is audio-only.
+ * @param {boolean} options.parameters.recordStarted - Flag indicating if recording has started.
+ * @param {boolean} options.parameters.recordResumed - Flag indicating if recording has resumed.
+ * @param {boolean} options.parameters.recordPaused - Flag indicating if recording is paused.
+ * @param {boolean} options.parameters.recordStopped - Flag indicating if recording is stopped.
+ * @param {string} options.parameters.recordingMediaOptions - Media options for recording (e.g., "video", "audio").
+ * @param {string} options.parameters.islevel - User's level in the application.
+ * @param {boolean} options.parameters.youAreCoHost - Flag indicating if the user is a co-host.
+ * @param {boolean} options.parameters.adminRestrictSetting - Flag indicating if admin restrictions are set.
+ * @param {string | null} options.parameters.audioRequestState - Current state of the audio request.
+ * @param {number} options.parameters.audioRequestTime - Timestamp of the audio request.
+ * @param {string} options.parameters.member - Current member's name.
+ * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {string} options.parameters.roomName - The name of the room.
+ * @param {string} options.parameters.userDefaultAudioInputDevice - The default audio input device for the user.
+ * @param {boolean} options.parameters.micAction - Flag indicating if the microphone action is in progress.
+ * @param {MediaStream | null} options.parameters.localStream - The user's local media stream.
+ * @param {string} options.parameters.audioSetting - Current audio setting.
+ * @param {string} options.parameters.videoSetting - Current video setting.
+ * @param {string} options.parameters.screenshareSetting - Current screenshare setting.
+ * @param {string} options.parameters.chatSetting - Current chat setting.
+ * @param {number} options.parameters.updateRequestIntervalSeconds - Interval for updating request states.
+ * @param {Participant[]} options.parameters.participants - List of participants in the room.
+ * @param {boolean} options.parameters.transportCreated - Flag indicating if the transport has been created.
+ * @param {boolean} options.parameters.transportCreatedAudio - Flag indicating if audio transport has been created.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio click event has been handled.
+ *
+ * @remarks
+ * This function performs the following actions:
+ * - If the event is audio-only, it shows an alert and exits.
+ * - If the audio is already on, it handles the logic for turning it off, including checking recording states and permissions.
+ * - If the audio is off, it checks for admin restrictions, user permissions, and handles the logic for turning the audio on.
+ * - It updates various states and emits socket events as necessary.
+ *
+ * @example
+ * ```typescript
+ * const options: ClickAudioOptions = {
+ *   parameters: {
+ *     checkMediaPermission: true,
+ *     hasAudioPermission: false,
+ *     audioPaused: false,
+ *     audioAlreadyOn: false,
+ *     audioOnlyRoom: false,
+ *     recordStarted: false,
+ *     recordResumed: false,
+ *     recordPaused: false,
+ *     recordStopped: false,
+ *     recordingMediaOptions: 'audio',
+ *     islevel: '1',
+ *     youAreCoHost: false,
+ *     adminRestrictSetting: false,
+ *     audioRequestState: null,
+ *     audioRequestTime: 0,
+ *     member: 'John Doe',
+ *     socket: socketInstance,
+ *     roomName: 'exampleRoom',
+ *     userDefaultAudioInputDevice: 'default',
+ *     micAction: false,
+ *     localStream: null,
+ *     audioSetting: 'enabled',
+ *     videoSetting: 'disabled',
+ *     screenshareSetting: 'disabled',
+ *     chatSetting: 'enabled',
+ *     updateRequestIntervalSeconds: 30,
+ *     participants: [],
+ *     transportCreated: false,
+ *     transportCreatedAudio: false,
+ *     updateAudioAlreadyOn: (status) => console.log(status),
+ *     updateAudioRequestState: (state) => console.log(state),
+ *     updateAudioPaused: (status) => console.log(status),
+ *     updateLocalStream: (stream) => console.log(stream),
+ *     updateParticipants: (participants) => console.log(participants),
+ *     updateTransportCreated: (status) => console.log(status),
+ *     updateTransportCreatedAudio: (status) => console.log(status),
+ *     updateMicAction: (action) => console.log(action),
+ *     checkPermission: async () => 'granted',
+ *     streamSuccessAudio: async () => console.log('Audio streaming success'),
+ *     disconnectSendTransportAudio: async () => console.log('Audio transport disconnected'),
+ *     requestPermissionAudio: async () => 'granted',
+ *     resumeSendTransportAudio: async () => console.log('Audio transport resumed'),
+ *   },
+ * };
+ *
+ * const clickAudioService = new ClickAudio();
+ * await clickAudioService.clickAudio(options);
+ * ```
+ */
 class ClickAudio {
     /**
      * Handles the click event for toggling audio in a media session.
@@ -13365,6 +15946,74 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // screen-share.service.ts
+/**
+ * Handles the action for the screen button, including starting and stopping screen sharing.
+ *
+ * @param {ClickScreenShareOptions} options - Options for handling the screen button action.
+ * @param {Object} options.parameters - The parameters required for the screen share action.
+ * @param {Function} options.parameters.showAlert - Function to show alert messages.
+ * @param {string} options.parameters.roomName - The name of the room where the screen share is taking place.
+ * @param {string} options.parameters.member - The member initiating the screen share.
+ * @param {Socket} options.parameters.socket - The socket connection used for communication.
+ * @param {string} options.parameters.islevel - The participant's level.
+ * @param {boolean} options.parameters.youAreCoHost - Indicates if the user is a co-host.
+ * @param {boolean} options.parameters.adminRestrictSetting - Indicates if there are restrictions set by the admin.
+ * @param {string} options.parameters.audioSetting - Current audio setting.
+ * @param {string} options.parameters.videoSetting - Current video setting.
+ * @param {string} options.parameters.screenshareSetting - Current screen share setting.
+ * @param {string} options.parameters.chatSetting - Current chat setting.
+ * @param {boolean} options.parameters.screenAction - Indicates if a screen action is currently taking place.
+ * @param {boolean} options.parameters.screenAlreadyOn - Indicates if screen sharing is currently active.
+ * @param {string | null} options.parameters.screenRequestState - State of the screen share request.
+ * @param {number} options.parameters.screenRequestTime - Timestamp of when the screen share request was made.
+ * @param {boolean} options.parameters.audioOnlyRoom - Indicates if the room is audio-only.
+ * @param {number} options.parameters.updateRequestIntervalSeconds - Interval time for updating request state.
+ * @param {Function} options.parameters.updateScreenRequestState - Function to update the screen request state.
+ * @param {Function} options.parameters.updateScreenAlreadyOn - Function to update the screen sharing status.
+ * @param {Function} options.parameters.checkPermission - Function to check permissions for screen sharing.
+ * @param {Function} options.parameters.checkScreenShare - Function to check and initiate screen sharing.
+ * @param {Function} options.parameters.stopShareScreen - Function to stop screen sharing.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen share action has been handled.
+ *
+ * @remarks
+ * This function checks the current status of screen sharing and handles the logic for starting or stopping screen sharing.
+ * It validates permissions and room settings before allowing screen sharing to be activated or deactivated.
+ *
+ * @example
+ * ```typescript
+ * const options: ClickScreenShareOptions = {
+ *   parameters: {
+ *     showAlert: (alert) => console.log(alert.message),
+ *     roomName: 'myRoom',
+ *     member: 'John Doe',
+ *     socket: socketInstance,
+ *     islevel: '1',
+ *     youAreCoHost: false,
+ *     adminRestrictSetting: false,
+ *     audioSetting: 'on',
+ *     videoSetting: 'on',
+ *     screenshareSetting: 'off',
+ *     chatSetting: 'allow',
+ *     screenAction: false,
+ *     screenAlreadyOn: false,
+ *     screenRequestState: null,
+ *     screenRequestTime: 0,
+ *     audioOnlyRoom: false,
+ *     updateRequestIntervalSeconds: 30,
+ *     updateScreenRequestState: (state) => console.log(`Screen request state: ${state}`),
+ *     updateScreenAlreadyOn: (status) => console.log(`Screen already on: ${status}`),
+ *     checkPermission: checkPermissionFunction,
+ *     checkScreenShare: checkScreenShareFunction,
+ *     stopShareScreen: stopShareScreenFunction,
+ *     getUpdatedAllParams: () => parameters,
+ *   },
+ * };
+ *
+ * const clickScreenShareService = new ClickScreenShare();
+ * await clickScreenShareService.clickScreenShare(options);
+ * ```
+ */
 class ClickScreenShare {
     /**
      * Handles the action for the screen button, including starting and stopping screen sharing.
@@ -13472,6 +16121,64 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Streams a video successfully by managing the local stream, updating parameters, and handling video transport.
+ *
+ * This method initiates the video streaming process by updating the local video stream with the new stream,
+ * creating or connecting to the video transport, and notifying participants of the streaming status.
+ *
+ * @param {StreamSuccessVideoOptions} options - The options for streaming the video.
+ * @param {MediaStream} options.stream - The media stream to be used for the video.
+ * @param {StreamSuccessVideoParameters} options.parameters - The parameters required for streaming.
+ * @param {Socket} options.parameters.socket - The socket instance for real-time communication.
+ * @param {Participant[]} options.parameters.participants - The list of participants in the session.
+ * @param {MediaStream | null} options.parameters.localStream - The local media stream.
+ * @param {boolean} options.parameters.transportCreated - Indicates if the transport has already been created.
+ * @param {boolean} options.parameters.transportCreatedVideo - Indicates if the video transport has been created.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {boolean} options.parameters.videoAction - Indicates if a video action is being performed.
+ * @param {ProducerOptions} options.parameters.videoParams - The parameters for the video producer.
+ * @param {MediaStream | null} options.parameters.localStreamVideo - The local video stream.
+ * @param {string} options.parameters.defVideoID - The default video device ID.
+ * @param {string} options.parameters.userDefaultVideoInputDevice - The user's default video input device.
+ * @param {ProducerOptions} options.parameters.params - Additional parameters for the producer.
+ * @param {ProducerOptions} options.parameters.videoParamse - Additional parameters for the video.
+ * @param {string} options.parameters.islevel - The level of the user (e.g., host, participant).
+ * @param {string} options.parameters.member - The member's name in the session.
+ * @param {boolean} options.parameters.updateMainWindow - Indicates if the main window should be updated.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {Function} options.parameters.showAlert - Function to show alert messages.
+ * @param {Function} options.parameters.updateParticipants - Function to update the participants list.
+ * @param {Function} options.parameters.updateTransportCreatedVideo - Function to update the transport creation state.
+ * @param {Function} options.parameters.updateVideoAlreadyOn - Function to update the video status.
+ * @param {Function} options.parameters.updateVideoAction - Function to update the video action state.
+ * @param {Function} options.parameters.updateLocalStream - Function to update the local stream.
+ * @param {Function} options.parameters.updateLocalStreamVideo - Function to update the local video stream.
+ * @param {Function} options.parameters.updateUserDefaultVideoInputDevice - Function to update the default video input device.
+ * @param {Function} options.parameters.updateCurrentFacingMode - Function to update the current facing mode.
+ * @param {Function} options.parameters.updateDefVideoID - Function to update the default video device ID.
+ * @param {Function} options.parameters.updateAllowed - Function to update the allowed state.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.createSendTransport - Function to create a send transport for video.
+ * @param {Function} options.parameters.connectSendTransportVideo - Function to connect the send transport for video.
+ * @param {Function} options.parameters.resumeSendTransportAudio - Function to resume audio transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video has been successfully streamed.
+ *
+ * @throws {Error} Throws an error if there is an issue with streaming the video.
+ *
+ * @example
+ * await streamSuccessVideo({
+ *   stream: newVideoStream,
+ *   parameters: {
+ *     socket: socketInstance,
+ *     localStream: null,
+ *     // other parameters...
+ *   },
+ * });
+ */
 class StreamSuccessVideo {
     /**
      * Streams a video successfully by managing the local stream, updating parameters, and handling video transport.
@@ -13672,6 +16379,67 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the successful streaming of audio by setting up the necessary transports and updating the relevant states.
+ *
+ * This method updates the local media stream with the new audio track, manages the transport connection,
+ * and updates the participants' states to reflect changes in audio settings.
+ *
+ * @param {StreamSuccessAudioOptions} options - The options for streaming success audio.
+ * @param {MediaStream} options.stream - The media stream containing the audio track.
+ * @param {StreamSuccessAudioParameters} options.parameters - The parameters required for setting up the audio stream.
+ * @param {Socket} options.parameters.socket - The socket connection for real-time communication.
+ * @param {Participant[]} options.parameters.participants - The list of participants in the session.
+ * @param {MediaStream | null} options.parameters.localStream - The local media stream that includes video and audio tracks.
+ * @param {boolean} options.parameters.transportCreated - Indicates if the audio transport has been created.
+ * @param {boolean} options.parameters.transportCreatedAudio - Indicates if the audio transport has been created.
+ * @param {boolean} options.parameters.audioAlreadyOn - Indicates if the audio is already active.
+ * @param {boolean} options.parameters.micAction - Indicates the microphone action state.
+ * @param {ProducerOptions} options.parameters.audioParams - The current audio parameters for the producer.
+ * @param {MediaStream | null} options.parameters.localStreamAudio - The local audio stream.
+ * @param {string} options.parameters.defAudioID - The default audio device ID for the stream.
+ * @param {string} options.parameters.userDefaultAudioInputDevice - The user default audio input device.
+ * @param {ProducerOptions} options.parameters.params - Additional parameters for the producer.
+ * @param {ProducerOptions} [options.parameters.audioParamse] - Additional audio parameters.
+ * @param {ProducerOptions} options.parameters.aParams - Producer parameters for the audio.
+ * @param {string} options.parameters.hostLabel - The label of the host for this session.
+ * @param {string} options.parameters.islevel - The participant's level (e.g., admin, regular user).
+ * @param {string} options.parameters.member - The member name for identification.
+ * @param {boolean} options.parameters.updateMainWindow - Indicates if the main window needs to be updated.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked for participants.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is currently shared.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video stream is currently active.
+ * @param {ShowAlert} [options.parameters.showAlert] - Optional function to show alert messages.
+ * @param {Function} options.parameters.updateParticipants - Function to update the list of participants.
+ * @param {Function} options.parameters.updateTransportCreated - Function to update the audio transport created status.
+ * @param {Function} options.parameters.updateTransportCreatedAudio - Function to update the audio transport created status.
+ * @param {Function} options.parameters.updateAudioAlreadyOn - Function to update the audio active status.
+ * @param {Function} options.parameters.updateMicAction - Function to update the microphone action state.
+ * @param {Function} options.parameters.updateAudioParams - Function to update the audio parameters.
+ * @param {Function} options.parameters.updateLocalStream - Function to update the local stream.
+ * @param {Function} options.parameters.updateLocalStreamAudio - Function to update the local audio stream.
+ * @param {Function} options.parameters.updateDefAudioID - Function to update the default audio device ID.
+ * @param {Function} options.parameters.updateUserDefaultAudioInputDevice - Function to update the default audio input device.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window status.
+ * @param {Function} options.parameters.createSendTransport - Function to create a send transport for audio.
+ * @param {Function} options.parameters.connectSendTransportAudio - Function to connect the send transport for audio.
+ * @param {Function} options.parameters.resumeSendTransportAudio - Function to resume the send transport for audio.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media based on current settings.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio streaming setup is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the audio stream setup.
+ *
+ * @example
+ * await streamSuccessAudio({
+ *   stream: newAudioStream,
+ *   parameters: {
+ *     socket: socketInstance,
+ *     participants: participantList,
+ *     // other parameters...
+ *   },
+ * });
+ */
 class StreamSuccessAudio {
     /**
      * Handles the successful streaming of audio by setting up the necessary transports and updating the relevant states.
@@ -13819,6 +16587,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the successful initiation of screen sharing.
+ *
+ * This method sets up the necessary transport connections for screen sharing,
+ * updates relevant application states, and notifies participants of the screen
+ * sharing status.
+ *
+ * @param {StreamSuccessScreenOptions} options - The options for the screen sharing success handler.
+ * @param {MediaStream} options.stream - The media stream to be shared.
+ * @param {StreamSuccessScreenParameters} options.parameters - The parameters required for screen sharing.
+ * @param {Socket} options.parameters.socket - The socket instance for real-time communication.
+ * @param {boolean} options.parameters.transportCreated - Flag indicating if the transport is already created.
+ * @param {MediaStream | null} options.parameters.localStreamScreen - The local screen media stream.
+ * @param {boolean} options.parameters.screenAlreadyOn - Flag indicating if the screen is already being shared.
+ * @param {boolean} options.parameters.screenAction - Flag indicating if the screen share action is requested.
+ * @param {boolean} options.parameters.transportCreatedScreen - Flag indicating if the screen transport is created.
+ * @param {string} options.parameters.hostLabel - The label of the host for this session.
+ * @param {string} options.parameters.eventType - The type of event (e.g., conference).
+ * @param {ShowAlert} [options.parameters.showAlert] - Optional function to show alert messages.
+ * @param {boolean} options.parameters.annotateScreenStream - Flag indicating if screen annotation is enabled.
+ * @param {Function} options.parameters.updateTransportCreatedScreen - Function to update the screen transport creation state.
+ * @param {Function} options.parameters.updateScreenAlreadyOn - Function to update the screen sharing state.
+ * @param {Function} options.parameters.updateScreenAction - Function to update the screen action state.
+ * @param {Function} options.parameters.updateTransportCreated - Function to update the transport creation state.
+ * @param {Function} options.parameters.updateLocalStreamScreen - Function to update the local screen stream.
+ * @param {Function} options.parameters.updateShared - Function to update the shared state.
+ * @param {Function} options.parameters.updateIsScreenboardModalVisible - Function to update the screenboard modal visibility.
+ * @param {Function} options.parameters.sleep - Function to pause execution for a specified time.
+ * @param {Function} options.parameters.createSendTransport - Function to create a send transport for screen sharing.
+ * @param {Function} options.parameters.connectSendTransportScreen - Function to connect the send transport for screen sharing.
+ * @param {Function} options.parameters.disconnectSendTransportScreen - Function to disconnect the send transport for screen sharing.
+ * @param {Function} options.parameters.stopShareScreen - Function to stop the screen sharing process.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder streams based on current state.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media based on current settings.
+ * @param {Function} options.parameters.rePort - Function to reinitialize ports if needed.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen sharing setup is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the screen sharing setup.
+ *
+ * @example
+ * await streamSuccessScreen({
+ *   stream: newScreenStream,
+ *   parameters: {
+ *     socket: socketInstance,
+ *     localStreamScreen: null,
+ *     // other parameters...
+ *   },
+ * });
+ */
 class StreamSuccessScreen {
     /**
      * Handles the successful initiation of screen sharing.
@@ -13960,6 +16778,59 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the switching of the audio stream upon successful stream connection.
+ *
+ * This method updates the audio producer, manages the transport connections,
+ * and ensures that the UI reflects the current audio state after switching devices.
+ *
+ * @param {StreamSuccessAudioSwitchOptions} options - The options for the stream success audio switch.
+ * @param {MediaStream} options.stream - The new media stream with the switched audio device.
+ * @param {Object} options.parameters - The parameters required for the audio switch.
+ * @param {Producer | null} options.parameters.audioProducer - The current audio producer.
+ * @param {Socket} options.parameters.socket - The socket connection.
+ * @param {string} options.parameters.roomName - The name of the room for the connection.
+ * @param {MediaStream | null} options.parameters.localStream - The local media stream.
+ * @param {MediaStream | null} options.parameters.localStreamAudio - The local audio stream.
+ * @param {ProducerOptions} options.parameters.audioParams - The audio parameters for the producer.
+ * @param {boolean} options.parameters.audioPaused - Indicates if the audio is currently paused.
+ * @param {boolean} options.parameters.audioAlreadyOn - Indicates if the audio was already active.
+ * @param {boolean} options.parameters.transportCreated - Indicates if the transport has been created.
+ * @param {ProducerCodecOptions} [options.parameters.audioParamse] - Additional audio parameters.
+ * @param {string} options.parameters.defAudioID - The default audio device ID.
+ * @param {string} options.parameters.userDefaultAudioInputDevice - The user default audio input device.
+ * @param {string} options.parameters.hostLabel - The label of the host for the session.
+ * @param {boolean} options.parameters.updateMainWindow - Indicates if the main window needs to be updated.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video stream is active.
+ * @param {string} options.parameters.islevel - The level of the user in the session.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {Function} options.parameters.updateAudioProducer - Function to update the audio producer state.
+ * @param {Function} options.parameters.updateLocalStream - Function to update the local stream.
+ * @param {Function} options.parameters.updateAudioParams - Function to update the audio parameters.
+ * @param {Function} options.parameters.updateDefAudioID - Function to update the default audio device ID.
+ * @param {Function} options.parameters.updateUserDefaultAudioInputDevice - Function to update the user default audio input device.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.sleep - Function to pause execution for a specified time.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ * @param {Function} options.parameters.createSendTransport - Function to create a send transport for audio.
+ * @param {Function} options.parameters.connectSendTransportAudio - Function to connect the send transport for audio.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio switch is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the audio stream switch process.
+ *
+ * @example
+ * await streamSuccessAudioSwitch({
+ *   stream: newStream,
+ *   parameters: {
+ *     audioProducer: currentAudioProducer,
+ *     socket: socketInstance,
+ *     roomName: 'exampleRoom',
+ *     // other parameters...
+ *   },
+ * });
+ */
 class StreamSuccessAudioSwitch {
     /**
      * Handles the switching of the audio stream upon successful stream connection.
@@ -14090,6 +16961,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Checks the permission based on the provided settings.
+ *
+ * @param {CheckPermissionOptions} options - The options for checking permissions.
+ * @param {string} options.permissionType - The type of permission to check. Can be "audioSetting", "videoSetting", "screenshareSetting", or "chatSetting".
+ * @param {string} options.audioSetting - The setting for audio permission. Can be "allow", "approval", or other.
+ * @param {string} options.videoSetting - The setting for video permission. Can be "allow", "approval", or other.
+ * @param {string} options.screenshareSetting - The setting for screenshare permission. Can be "allow", "approval", or other.
+ * @param {string} options.chatSetting - The setting for chat permission. Can be "allow", "approval", or other.
+ * @returns {Promise<number>} - Returns 0 if the setting is "allow", 1 if the setting is "approval", and 2 for other settings or invalid permission types.
+ * @throws Will throw an error if an unexpected error occurs during the permission check.
+ *
+ * @example
+ * const options = {
+ *   permissionType: 'videoSetting',
+ *   audioSetting: 'allow',
+ *   videoSetting: 'approval',
+ *   screenshareSetting: 'deny',
+ *   chatSetting: 'allow',
+ * };
+ *
+ * const result = await checkPermissionService.checkPermission(options);
+ * console.log(result);
+ * // Output: 1 (since videoSetting is 'approval')
+ */
 class CheckPermission {
     /**
      * Checks the permission based on the provided settings.
@@ -14168,6 +17064,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * @service ProducerClosed
+ * @description Service to manage the closing of a producer, including resizing video elements and updating consumer transports.
+ *
+ * @method producerClosed
+ * Closes a specific producer by its ID, adjusts any associated video elements, and updates the list of consumer transports.
+ *
+ * @param {ProducerClosedOptions} options - Options for closing the specified producer.
+ * @param {string} options.remoteProducerId - Unique ID for the producer to close.
+ * @param {ProducerClosedParameters} options.parameters - Parameters to configure the producer closure and related updates.
+ *
+ * @returns {Promise<void>} A promise that resolves when the producer has been closed and relevant updates have been made.
+ *
+ * @example
+ * ```typescript
+ * await producerClosedService.producerClosed({
+ *   remoteProducerId: 'producer123',
+ *   parameters: {
+ *     consumerTransports: currentTransports,
+ *     screenId: 'screen123',
+ *     updateConsumerTransports: updateTransportList,
+ *     closeAndResize: closeAndResizeFunction,
+ *     getUpdatedAllParams: getUpdatedParamsFunction,
+ *   }
+ * });
+ * ```
+ */
 class ProducerClosed {
     /**
      * Handles the closing of a producer and resizes video elements.
@@ -14217,44 +17140,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+   * Signals the creation of a new consumer transport.
+   *
+   * @param {Object} options - The options for signaling a new consumer transport.
+   * @param {string} options.remoteProducerId - The ID of the remote producer.
+   * @param {boolean} options.islevel - Indicates the level of the consumer.
+   * @param {any} options.nsock - The socket instance for communication.
+   * @param {SignalNewConsumerTransportOptions} options.parameters - The parameters for the transport.
+   *
+   * @returns {Promise<string[] | void>} A promise that resolves to an array of consuming transports or void.
+   *
+   * @throws Will throw an error if the signaling process fails.
+   *
+   * @example
+   * const options = {
+   *   remoteProducerId: 'producer-id',
+   *   islevel: true,
+   *   nsock: socketInstance,
+   *   parameters: {
+   *     device: mediaDevice,
+   *     consumingTransports: [],
+   *     lock_screen: false,
+   *     updateConsumingTransports: updateFunction,
+   *     connectRecvTransport: connectFunction,
+   *     reorderStreams: reorderFunction,
+   *     getUpdatedAllParams: getUpdatedParamsFunction,
+   *   },
+   * };
+   *
+   * signalNewConsumerTransport(options)
+   *   .then(consumingTransports => {
+   *     console.log('Consuming Transports:', consumingTransports);
+   *   })
+   *   .catch(error => {
+   *     console.error('Error signaling new consumer transport:', error);
+   *   });
+   */
 class SignalNewConsumerTransport {
-    /**
-     * Signals the creation of a new consumer transport.
-     *
-     * @param {Object} options - The options for signaling a new consumer transport.
-     * @param {string} options.remoteProducerId - The ID of the remote producer.
-     * @param {boolean} options.islevel - Indicates the level of the consumer.
-     * @param {any} options.nsock - The socket instance for communication.
-     * @param {SignalNewConsumerTransportOptions} options.parameters - The parameters for the transport.
-     *
-     * @returns {Promise<string[] | void>} A promise that resolves to an array of consuming transports or void.
-     *
-     * @throws Will throw an error if the signaling process fails.
-     *
-     * @example
-     * const options = {
-     *   remoteProducerId: 'producer-id',
-     *   islevel: true,
-     *   nsock: socketInstance,
-     *   parameters: {
-     *     device: mediaDevice,
-     *     consumingTransports: [],
-     *     lock_screen: false,
-     *     updateConsumingTransports: updateFunction,
-     *     connectRecvTransport: connectFunction,
-     *     reorderStreams: reorderFunction,
-     *     getUpdatedAllParams: getUpdatedParamsFunction,
-     *   },
-     * };
-     *
-     * signalNewConsumerTransport(options)
-     *   .then(consumingTransports => {
-     *     console.log('Consuming Transports:', consumingTransports);
-     *   })
-     *   .catch(error => {
-     *     console.error('Error signaling new consumer transport:', error);
-     *   });
-     */
     signalNewConsumerTransport = async ({ remoteProducerId, islevel, nsock, parameters, }) => {
         try {
             let { device, consumingTransports, lock_screen, updateConsumingTransports, connectRecvTransport, reorderStreams, } = parameters;
@@ -14351,6 +17274,45 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * @service NewPipeProducer
+ * @description Service to manage new pipe producer events, update state, and handle screen orientation for optimal experience.
+ *
+ * @method newPipeProducer
+ * Handles the setup of a new pipe producer and manages user notifications or orientation changes as needed.
+ *
+ * @param {NewPipeProducerOptions} options - Options for setting up a new pipe producer.
+ * @param {string} options.producerId - Unique ID for the new producer.
+ * @param {string} options.islevel - Level designation for the producer.
+ * @param {Socket} options.nsock - The socket used for communication.
+ * @param {NewPipeProducerParameters} options.parameters - Parameters to configure the new pipe producer.
+ *
+ * @returns {Promise<void>} A promise that completes when the new pipe producer is set up.
+ *
+ * @example
+ * ```typescript
+ * await newPipeProducerService.newPipeProducer({
+ *   producerId: 'producer123',
+ *   islevel: '2',
+ *   nsock: mySocket,
+ *   parameters: {
+ *     first_round: true,
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     landScaped: false,
+ *     showAlert: alertFunction,
+ *     isWideScreen: true,
+ *     updateFirst_round: updateFirstRoundFunction,
+ *     updateLandScaped: updateLandScapedFunction,
+ *     device: myDevice,
+ *     consumingTransports: [],
+ *     connectRecvTransport: connectRecvTransportFunction,
+ *     reorderStreams: reorderStreamsFunction,
+ *     getUpdatedAllParams: getUpdatedParamsFunction,
+ *   }
+ * });
+ * ```
+ */
 class NewPipeProducer {
     signalNewConsumerTransportService;
     constructor(signalNewConsumerTransportService) {
@@ -14409,6 +17371,60 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: SignalNewConsumerTransport }] });
 
+/**
+ * Updates the mini cards grid based on the specified rows and columns.
+ *
+ * This method calculates the dimensions for the mini cards based on the provided
+ * rows and columns, as well as the container sizes. It also considers pagination
+ * settings and updates the grid sizes accordingly. The method can update either
+ * the default grid or an alternative grid based on the `defal` parameter.
+ *
+ * @param {UpdateMiniCardsGridOptions} options - The options for updating the mini cards grid.
+ * @param {number} options.rows - The number of rows in the grid.
+ * @param {number} options.cols - The number of columns in the grid.
+ * @param {boolean} [options.defal=true] - Flag indicating whether to update the default grid or an alternative grid.
+ * @param {number} [options.actualRows=2] - The actual number of rows in the grid.
+ * @param {UpdateMiniCardsGridParameters} options.parameters - Additional parameters needed for the function.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {Function} options.parameters.updateGridRows - Function to update the grid rows.
+ * @param {Function} options.parameters.updateGridCols - Function to update the grid columns.
+ * @param {Function} options.parameters.updateAltGridRows - Function to update the alternative grid rows.
+ * @param {Function} options.parameters.updateAltGridCols - Function to update the alternative grid columns.
+ * @param {Function} options.parameters.updateGridSizes - Function to update the grid sizes.
+ * @param {GridSizes} options.parameters.gridSizes - Object containing grid width and height.
+ * @param {string} options.parameters.paginationDirection - The direction of pagination ('horizontal' or 'vertical').
+ * @param {number} options.parameters.paginationHeightWidth - The height or width of pagination.
+ * @param {boolean} options.parameters.doPaginate - Flag indicating whether pagination is enabled.
+ * @param {ComponentSizes} options.parameters.componentSizes - Object containing container width and height.
+ * @param {EventType} options.parameters.eventType - The type of event ('chat', etc.).
+ *
+ * @returns {Promise<void>} - A Promise that resolves after updating the mini cards grid.
+ *
+ * @example
+ * ```typescript
+ * const gridOptions = {
+ *   rows: 3,
+ *   cols: 4,
+ *   parameters: {
+ *     getUpdatedAllParams: () => updatedParams,
+ *     updateGridRows: (rows) => console.log(`Grid Rows Updated: ${rows}`),
+ *     updateGridCols: (cols) => console.log(`Grid Cols Updated: ${cols}`),
+ *     updateAltGridRows: (rows) => console.log(`Alt Grid Rows Updated: ${rows}`),
+ *     updateAltGridCols: (cols) => console.log(`Alt Grid Cols Updated: ${cols}`),
+ *     updateGridSizes: (sizes) => console.log(`Grid Sizes Updated: ${JSON.stringify(sizes)}`),
+ *     gridSizes: { gridWidth: 100, gridHeight: 100 },
+ *     paginationDirection: 'horizontal',
+ *     paginationHeightWidth: 50,
+ *     doPaginate: true,
+ *     componentSizes: { otherWidth: 800, otherHeight: 600 },
+ *     eventType: 'chat',
+ *   },
+ * };
+ *
+ * const miniCardGridService = new UpdateMiniCardsGrid();
+ * miniCardGridService.updateMiniCardsGrid(gridOptions);
+ * ```
+ */
 class UpdateMiniCardsGrid {
     /**
      * Updates the mini cards grid based on the specified rows and columns.
@@ -14488,6 +17504,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Mixes video and audio streams and participants based on specified parameters.
+ *
+ * @param {MixStreamsOptions} options - The options for mixing streams.
+ * @param {Array<Stream | Participant>} options.alVideoStreams - The list of audio and video streams to mix.
+ * @param {Array<Participant>} options.non_alVideoStreams - The list of non-audio and video streams to mix.
+ * @param {Array<Stream | Participant>} options.ref_participants - The list of reference participants to mix.
+ * @returns {Promise<Array<Stream | Participant>>} A promise that resolves with the mixed streams.
+ *
+ * @throws Will throw an error if there is an issue mixing the streams.
+ *
+ * @example
+ * ```typescript
+ * const mixedStreams = await mixStreams({
+ *   alVideoStreams: [stream1, stream2],
+ *   non_alVideoStreams: [participant1, participant2],
+ *   ref_participants: [participant1, participant2],
+ * });
+ *
+ * console.log('Mixed streams:', mixedStreams);
+ * ```
+ */
 class MixStreams {
     /**
      * Mixes video and audio streams and participants based on specified parameters.
@@ -14559,6 +17597,98 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Function to display streams based on various parameters and conditions.
+ *
+ * @param {DispStreamsOptions} options - The options object.
+ * @param {Array<(Stream | Participant)>} options.lStreams - List of streams to display.
+ * @param {number} options.ind - Index of the current stream.
+ * @param {boolean} [options.auto=false] - Flag to indicate if the function should run automatically.
+ * @param {boolean} [options.ChatSkip=false] - Flag to indicate if chat should be skipped.
+ * @param {string|null} [options.forChatID=null] - ID for chat reference.
+ * @param {DispStreamsParameters} options.parameters - Parameters object containing various settings and functions.
+ * @param {number} [options.breakRoom=-1] - Break room number.
+ * @param {boolean} [options.inBreakRoom=false] - Flag to indicate if in break room.
+ *
+ * @returns {Promise<void>} A promise that resolves when the function completes.
+ *
+ * @async
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   lStreams: [...], // Your streams data here
+ *   ind: 0,
+ *   auto: true,
+ *   ChatSkip: false,
+ *   parameters: {
+ *     consumerTransports: [],
+ *     streamNames: [],
+ *     audStreamNames: [],
+ *     participants: [],
+ *     ref_participants: [],
+ *     recordingDisplayType: 'video',
+ *     recordingVideoOptimized: false,
+ *     meetingDisplayType: 'video',
+ *     meetingVideoOptimized: false,
+ *     currentUserPage: 1,
+ *     hostLabel: 'Host',
+ *     mainHeightWidth: 100,
+ *     prevMainHeightWidth: 100,
+ *     prevDoPaginate: false,
+ *     doPaginate: false,
+ *     firstAll: false,
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     shareEnded: false,
+ *     oldAllStreams: [],
+ *     updateMainWindow: false,
+ *     remoteProducerId: null,
+ *     activeNames: [],
+ *     dispActiveNames: [],
+ *     p_dispActiveNames: [],
+ *     nForReadjustRecord: 0,
+ *     first_round: false,
+ *     lock_screen: false,
+ *     chatRefStreams: [],
+ *     eventType: 'normal',
+ *     islevel: '1',
+ *     localStreamVideo: null,
+ *     breakOutRoomStarted: false,
+ *     breakOutRoomEnded: false,
+ *     keepBackground: false,
+ *     virtualStream: null,
+ *     updateActiveNames: (names) => {},
+ *     updateDispActiveNames: (names) => {},
+ *     updateLStreams: (streams) => {},
+ *     updateChatRefStreams: (streams) => {},
+ *     updateNForReadjustRecord: (n) => {},
+ *     updateUpdateMainWindow: (value) => {},
+ *     updateShowMiniView: (value) => {},
+ *     prepopulateUserMedia: async () => {},
+ *     rePort: async () => {},
+ *     processConsumerTransports: async () => {},
+ *     resumePauseStreams: async () => {},
+ *     readjust: async () => {},
+ *     addVideosGrid: async () => {},
+ *     getEstimate: async () => {},
+ *     checkGrid: async () => {},
+ *     resumePauseAudioStreams: async () => {},
+ *     getUpdatedAllParams: () => options.parameters,
+ *   },
+ *   breakRoom: -1,
+ *   inBreakRoom: false,
+ * };
+ *
+ * dispStreamsService.dispStreams(options)
+ *   .then(() => {
+ *     console.log('Streams displayed successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error displaying streams:', error);
+ *   });
+ * ```
+ */
 class DispStreams {
     /**
      * Function to display streams based on various parameters and conditions.
@@ -14978,6 +18108,61 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Stops the screen sharing process and updates the relevant parameters and states.
+ *
+ * This method updates the internal state to reflect that screen sharing has ended,
+ * cleans up local media tracks, and reorders the streams in the application.
+ *
+ * @param {StopShareScreenOptions} options - The options for stopping the screen share.
+ * @param {Object} options.parameters - The parameters required for stopping the screen share.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is currently shared.
+ * @param {boolean} options.parameters.shareScreenStarted - Indicates if the screen sharing has started.
+ * @param {boolean} options.parameters.shareEnded - Indicates if the screen sharing has ended.
+ * @param {boolean} options.parameters.updateMainWindow - Indicates if the main window needs to be updated.
+ * @param {boolean} options.parameters.defer_receive - Indicates if receiving is deferred.
+ * @param {string} options.parameters.hostLabel - The label of the host.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {boolean} options.parameters.forceFullDisplay - Indicates if full display is forced.
+ * @param {boolean} options.parameters.firstAll - Indicates if it is the first all.
+ * @param {boolean} options.parameters.first_round - Indicates if it is the first round.
+ * @param {MediaStream} options.parameters.localStreamScreen - The local screen stream.
+ * @param {string} options.parameters.eventType - The type of event (e.g., "conference").
+ * @param {boolean} options.parameters.prevForceFullDisplay - Indicates if full display was previously forced.
+ * @param {boolean} options.parameters.annotateScreenStream - Indicates if the screen stream is annotated.
+ * @param {Function} options.parameters.updateShared - Function to update the shared state.
+ * @param {Function} options.parameters.updateShareScreenStarted - Function to update the share screen started state.
+ * @param {Function} options.parameters.updateShareEnded - Function to update the share ended state.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.updateDefer_receive - Function to update the defer receive state.
+ * @param {Function} options.parameters.updateLock_screen - Function to update the lock screen state.
+ * @param {Function} options.parameters.updateForceFullDisplay - Function to update the force full display state.
+ * @param {Function} options.parameters.updateFirstAll - Function to update the first all state.
+ * @param {Function} options.parameters.updateFirst_round - Function to update the first round state.
+ * @param {Function} options.parameters.updateLocalStreamScreen - Function to update the local screen stream.
+ * @param {Function} options.parameters.updateMainHeightWidth - Function to update the main height and width.
+ * @param {Function} options.parameters.updateAnnotateScreenStream - Function to update the annotate screen stream state.
+ * @param {Function} options.parameters.updateIsScreenboardModalVisible - Function to update the screenboard modal visibility.
+ * @param {Function} options.parameters.disconnectSendTransportScreen - Function to disconnect the send transport screen.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder streams.
+ * @param {Function} options.parameters.getVideos - Function to get videos.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen sharing process is stopped.
+ *
+ * @throws {Error} Throws an error if there is an issue during the screen share stopping process.
+ *
+ * @example
+ * await stopShareScreen({
+ *   parameters: {
+ *     socket: mySocket,
+ *     shared: true,
+ *     shareScreenStarted: true,
+ *     // other parameters...
+ *   },
+ * });
+ */
 class StopShareScreen {
     /**
      * Stops the screen sharing process and updates the relevant parameters and states.
@@ -15096,6 +18281,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Checks the current screen sharing status and either stops or requests screen sharing based on the provided parameters.
+ *
+ * @param {CheckScreenShareOptions} options - The options for checking screen share.
+ * @param {Object} options.parameters - The parameters for screen sharing.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is currently being shared.
+ * @param {Function} [options.parameters.showAlert] - Function to show alerts.
+ * @param {boolean} options.parameters.whiteboardStarted - Indicates if the whiteboard session has started.
+ * @param {boolean} options.parameters.whiteboardEnded - Indicates if the whiteboard session has ended.
+ * @param {boolean} options.parameters.breakOutRoomStarted - Indicates if the breakout room session has started.
+ * @param {boolean} options.parameters.breakOutRoomEnded - Indicates if the breakout room session has ended.
+ * @param {Function} options.parameters.stopShareScreen - Function to stop screen sharing.
+ * @param {Function} options.parameters.requestScreenShare - Function to request screen sharing.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen sharing status has been checked and the appropriate action has been taken.
+ *
+ * @throws Will log an error message if an error occurs during the process.
+ *
+ * @example
+ * const options = {
+ *   parameters: {
+ *     shared: false,
+ *     whiteboardStarted: false,
+ *     whiteboardEnded: false,
+ *     breakOutRoomStarted: false,
+ *     breakOutRoomEnded: false,
+ *     stopShareScreen: async () => { /* Logic to stop screen sharing *\/ },
+ *     requestScreenShare: async () => { /* Logic to request screen sharing *\/ },
+ *     showAlert: (alert) => { console.log(alert.message); },
+ *   },
+ * };
+ *
+ * await checkScreenShareService.checkScreenShare(options);
+ * // Output: Logic to request screen sharing will be executed.
+ */
 class CheckScreenShare {
     /**
      * Checks the current screen sharing status and either stops or requests screen sharing based on the provided parameters.
@@ -15165,6 +18385,46 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * StartShareScreen - Service to initiate screen sharing with configurable options for different environments.
+ *
+ * This service initiates the screen sharing process, handling both successful and failed attempts
+ * and updating the shared state accordingly.
+ *
+ * @class
+ * @name StartShareScreen
+ * @example
+ * ```typescript
+ * const startShareScreenService = new StartShareScreen();
+ * await startShareScreenService.startShareScreen({
+ *   parameters: {
+ *     shared: false,
+ *     showAlert: (alert) => console.log(alert.message),
+ *     updateShared: (shared) => console.log('Shared state:', shared),
+ *     onWeb: true,
+ *     targetWidth: 1920,
+ *     targetHeight: 1080,
+ *     streamSuccessScreen: async ({ stream }) => {
+ *       // Handle the successful stream here
+ *       console.log('Stream started:', stream);
+ *     },
+ *   },
+ * });
+ * ```
+ *
+ * @param {StartShareScreenOptions} options - The options for starting screen sharing.
+ * @param {Object} options.parameters - The parameters controlling screen sharing behavior.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is currently shared.
+ * @param {Function} options.parameters.showAlert - Function to display alerts.
+ * @param {Function} options.parameters.updateShared - Function to update the shared state.
+ * @param {boolean} options.parameters.onWeb - Indicates if the app is running in a web environment.
+ * @param {number} [options.parameters.targetWidth=1280] - Optional width setting for shared screen resolution.
+ * @param {number} [options.parameters.targetHeight=720] - Optional height setting for shared screen resolution.
+ * @param {Function} options.parameters.streamSuccessScreen - Function to handle successful screen sharing.
+ *
+ * @method startShareScreen - Initiates the screen sharing process based on the provided parameters.
+ * @returns {Promise<void>} Resolves when the screen sharing process is complete or fails.
+ */
 class StartShareScreen {
     /**
      * Starts the screen sharing process.
@@ -15243,6 +18503,40 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Requests to start screen sharing.
+ *
+ * This method initiates a screen sharing request and handles the response
+ * from the server to determine if screen sharing is allowed. It also configures
+ * the target resolution for the screen share based on the user's input and
+ * parameters.
+ *
+ * @param {RequestScreenShareOptions} options - The options for requesting screen share.
+ * @param {Object} options.parameters - The parameters for the screen share request.
+ * @param {Socket} options.parameters.socket - The socket instance to communicate with the server.
+ * @param {Function} [options.parameters.showAlert] - Optional function to show alerts to the user.
+ * @param {boolean} options.parameters.localUIMode - Indicates if the user is in local UI mode.
+ * @param {string} [options.parameters.targetResolution] - The target resolution for screen sharing.
+ * @param {string} [options.parameters.targetResolutionHost] - The target resolution for the host screen.
+ * @param {Function} options.parameters.startShareScreen - Function to start screen sharing.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen share request is processed.
+ *
+ * @throws {Error} Throws an error if there is an issue during the screen share request process.
+ *
+ * @example
+ * ```typescript
+ * await requestScreenShare({
+ *   parameters: {
+ *     socket: mySocket,
+ *     localUIMode: false,
+ *     targetResolution: 'fhd',
+ *     startShareScreen: myStartShareScreenFunction,
+ *     showAlert: myShowAlertFunction,
+ *   },
+ * });
+ * ```
+ */
 class RequestScreenShare {
     /**
      * Requests to start screen sharing.
@@ -15309,6 +18603,64 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/**
+ * Reorders the video streams based on the provided options and updates the UI accordingly.
+ *
+ * This method handles the logic for reordering streams in a video conferencing application,
+ * managing the addition and arrangement of streams based on various conditions such as
+ * participant roles, screen sharing status, and current streams.
+ *
+ * @param {ReorderStreamsOptions} options - The options for reordering streams.
+ * @param {boolean} [options.add=false] - Whether to add new streams or not.
+ * @param {boolean} [options.screenChanged=false] - Whether the screen has changed or not.
+ * @param {ReorderStreamsParameters} options.parameters - The parameters required for reordering streams.
+ * @param {Array<Stream | Participant>} options.parameters.allVideoStreams - Array of all video streams.
+ * @param {Array<Participant>} options.parameters.participants - Array of participants.
+ * @param {Array<Stream | Participant>} options.parameters.oldAllStreams - Array of old streams.
+ * @param {string} [options.parameters.screenId] - ID of the screen.
+ * @param {string} [options.parameters.adminVidID] - ID of the admin video.
+ * @param {Array<Stream | Participant>} options.parameters.newLimitedStreams - Array of new limited streams.
+ * @param {Array<string>} options.parameters.newLimitedStreamsIDs - Array of new limited stream IDs.
+ * @param {Array<string>} options.parameters.activeSounds - Array of active sounds.
+ * @param {string} [options.parameters.screenShareIDStream] - ID of the screen share stream.
+ * @param {string} [options.parameters.screenShareNameStream] - Name of the screen share stream.
+ * @param {string} [options.parameters.adminIDStream] - ID of the admin stream.
+ * @param {string} [options.parameters.adminNameStream] - Name of the admin stream.
+ * @param {Function} options.parameters.updateNewLimitedStreams - Function to update new limited streams.
+ * @param {Function} options.parameters.updateNewLimitedStreamsIDs - Function to update new limited stream IDs.
+ * @param {Function} options.parameters.updateActiveSounds - Function to update active sounds.
+ * @param {Function} options.parameters.updateScreenShareIDStream - Function to update screen share ID stream.
+ * @param {Function} options.parameters.updateScreenShareNameStream - Function to update screen share name stream.
+ * @param {Function} options.parameters.updateAdminIDStream - Function to update admin ID stream.
+ * @param {Function} options.parameters.updateAdminNameStream - Function to update admin name stream.
+ * @param {Function} options.parameters.updateYouYouStream - Function to update YouYou stream.
+ * @param {Function} options.parameters.changeVids - Function to reflect changes on the UI.
+ *
+ * @returns {Promise<void>} A promise that resolves when the reordering is complete.
+ *
+ * @throws Will throw an error if there is an issue during the reordering process.
+ *
+ * @example
+ * ```typescript
+ * await reorderStreams({
+ *   add: true,
+ *   screenChanged: false,
+ *   parameters: {
+ *     allVideoStreams: [...],
+ *     participants: [...],
+ *     oldAllStreams: [...],
+ *     newLimitedStreams: [],
+ *     newLimitedStreamsIDs: [],
+ *     activeSounds: [],
+ *     updateNewLimitedStreams: (streams) => { console.log(updated) },
+ *     updateNewLimitedStreamsIDs: (ids) => { console.log(updated) },
+ *     updateActiveSounds: (sounds) => { console.log(updated) },
+ *     changeVids: async (options) => { },
+ *     // ...other parameters
+ *   },
+ * });
+ * ```
+ */
 class ReorderStreams {
     /**
      * Reorders the video streams based on the provided options and updates the UI accordingly.
@@ -15488,7 +18840,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * MiniCard component displays a card with either an image or initials.
+ * MiniCard component displays a customizable card with an image or initials.
  *
  * @component
  * @selector app-mini-card
@@ -15496,6 +18848,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * @imports CommonModule
  *
  * @template
+ * ```html
  * <div class="mini-card" [ngStyle]="getMergedCardStyles()">
  *   <div *ngIf="imageSource; else noImage" class="image-container">
  *     <img [src]="imageSource" alt="Profile" [ngStyle]="getMergedImageStyles()" />
@@ -15504,35 +18857,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  *     <div class="initials" [ngStyle]="getInitialsStyle()">{{ initials }}</div>
  *   </ng-template>
  * </div>
+ * ```
  *
  * @styleUrls ['./mini-card.component.css']
  *
- * @property {string} initials - The initials to display if no image is provided.
- * @property {number} fontSize - The font size for the initials text. Default is 14.
- * @property {Partial<CSSStyleDeclaration>} customStyle - Custom styles for the card.
- * @property {string} imageSource - The source URL for the image.
- * @property {boolean} roundedImage - Whether the image should be rounded. Default is false.
- * @property {Partial<CSSStyleDeclaration>} imageStyle - Custom styles for the image.
+ * @inputs
+ * - `initials` (string): Initials to display if no image is provided.
+ * - `fontSize` (number): Font size for initials text, default is 14.
+ * - `customStyle` (CSSStyleDeclaration): Custom styles for the card.
+ * - `imageSource` (string): Source URL for the image.
+ * - `roundedImage` (boolean): Whether the image should be rounded, default is false.
+ * - `imageStyle` (CSSStyleDeclaration): Custom styles for the image.
  *
  * @constructor
- * @param {string} [injectedInitials] - Injected initials.
- * @param {number} [injectedFontSize] - Injected font size.
- * @param {Partial<CSSStyleDeclaration>} [injectedCustomStyle] - Injected custom styles.
- * @param {string} [injectedImageSource] - Injected image source.
- * @param {boolean} [injectedRoundedImage] - Injected rounded image flag.
- * @param {Partial<CSSStyleDeclaration>} [injectedImageStyle] - Injected image styles.
+ * - Optionally accepts injected values for each input property.
  *
- * @method getMergedCardStyles
- * @description Merges the default card styles with custom styles.
- * @returns {CSSStyleDeclaration} The merged card styles.
+ * @methods
+ * - `getMergedCardStyles()`: Returns merged styles for the card.
+ * - `getMergedImageStyles()`: Returns merged styles for the image.
+ * - `getInitialsStyle()`: Returns styles for the initials text.
  *
- * @method getMergedImageStyles
- * @description Merges the default image styles with custom styles.
- * @returns {CSSStyleDeclaration} The merged image styles.
- *
- * @method getInitialsStyle
- * @description Returns the styles for the initials text.
- * @returns {CSSStyleDeclaration} The initials text styles.
+ * @example
+ * ```html
+ * <app-mini-card initials="AB" fontSize="20" [roundedImage]="true" imageSource="/path/to/image.jpg"></app-mini-card>
+ * ```
  */
 class MiniCard {
     initials;
@@ -15648,6 +18996,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * CardVideoDisplay component displays a video stream with options for full display, mirroring, and background color customization.
+ *
+ * @selector app-card-video-display
+ * @standalone true
+ * @imports CommonModule
+ *
+ * @inputs
+ * - `remoteProducerId` (string): Identifier for the remote producer.
+ * - `eventType` (EventType): Type of event, such as 'webinar'. Default is 'webinar'.
+ * - `forceFullDisplay` (boolean): Forces full video display if true. Default is false.
+ * - `videoStream` (MediaStream | null): The media stream to display in the video element.
+ * - `backgroundColor` (string): Background color for the video container. Default is 'transparent'.
+ * - `doMirror` (boolean): Mirrors the video if true. Default is false.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes the video stream and sets the container style on component load.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates the video stream or container style when inputs change.
+ * - `updateVideoStream()`: Assigns the video stream to the video element if it differs from the current stream.
+ * - `setVideoContainerStyle()`: Sets the style of the video container based on the provided background color.
+ * - `getBaseVideoContainerStyle()`: Returns base styles for the video container.
+ * - `getVideoStyle()`: Returns styles for the video element, including optional mirroring and sizing.
+ *
+ * @example
+ * ```html
+ * <app-card-video-display
+ *  [remoteProducerId]="producerId"
+ * [eventType]="'conference'"
+ * [forceFullDisplay]="true"
+ * [videoStream]="stream"
+ * [backgroundColor]="'black'"
+ * [doMirror]="true">
+ * </app-card-video-display>
+ * ```
+ **/
 class CardVideoDisplay {
     remoteProducerId = '';
     eventType = 'webinar';
@@ -15740,9 +19123,19 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 
 /**
  * Gets the style for positioning an overlay based on the specified position.
- * @function
- * @param {string} position - The desired position for the overlay ('topLeft', 'topRight', 'bottomLeft', 'bottomRight').
- * @returns {OverlayPositionStyle} - The style object for positioning the overlay.
+ *
+ * @param {GetOverlayPositionOptions} options - Contains the desired position for the overlay.
+ * @param {string} options.position - The position for the overlay ('topLeft', 'topRight', 'bottomLeft', 'bottomRight').
+ * @returns {OverlayPositionStyle} - Style object defining the overlay position.
+ *
+ * @example
+ * ```typescript
+ * const topLeftPosition = getOverlayPosition({ position: 'topLeft' });
+ * // Output: { top: 0, left: 0 }
+ *
+ * const bottomRightPosition = getOverlayPosition({ position: 'bottomRight' });
+ * // Output: { bottom: 0, right: 0 }
+ * ```
  */
 function getOverlayPosition({ position }) {
     switch (position) {
@@ -15759,6 +19152,51 @@ function getOverlayPosition({ position }) {
     }
 }
 
+/**
+ * Controls the media of a participant in a media session if certain conditions are met.
+ *
+ * @param {ControlMediaOptions} options - The options for controlling media.
+ * @param {string} options.participantId - The ID of the participant to control.
+ * @param {string} options.participantName - The name of the participant to control.
+ * @param {'audio' | 'video' | 'screenshare' | 'all'} options.type - The type of media to control.
+ * @param {Socket} options.socket - The socket instance for communication.
+ * @param {CoHostResponsibility[]} options.coHostResponsibility - List of co-host responsibilities.
+ * @param {Participant[]} options.participants - List of participants in the session.
+ * @param {string} options.member - The current member attempting to control media.
+ * @param {string} options.islevel - The level of the current member.
+ * @param {Function} [options.showAlert] - Optional function to show alerts.
+ * @param {string} options.coHost - The co-host information.
+ * @param {string} options.roomName - The name of the room.
+ *
+ * @returns {Promise<void>} A promise that resolves when the media control operation is complete.
+ *
+ * @throws Will log an error message if the operation fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   participantId: '12345',
+ *   participantName: 'John Doe',
+ *   type: 'audio',
+ *   socket: socketInstance,
+ *   coHostResponsibility: [{ name: 'media', value: true }],
+ *   participants: participantList,
+ *   member: 'currentMember',
+ *   islevel: '2',
+ *   showAlert: showAlertFunction,
+ *   coHost: 'coHostName',
+ *   roomName: 'Room A',
+ * };
+ *
+ * controlMediaService.controlMedia(options)
+ *   .then(() => {
+ *     console.log('Media control action completed');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error controlling media:', error);
+ *   });
+ * ```
+ */
 class ControlMedia {
     /**
      * Controls the media of a participant in a media session if certain conditions are met.
@@ -15825,6 +19263,68 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * VideoCard component represents a customizable video display card with participant controls for toggling audio and video.
+ * It also animates an audio waveform if sound is detected in the participant's audio stream.
+ *
+ * @selector app-video-card
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule, CardVideoDisplay]
+ *
+ * @example
+ * ```html
+ * <app-video-card
+ *   [name]="participant.name"
+ *   [videoStream]="videoStream"
+ *   [audioDecibels]="audioDecibels"
+ *   [participant]="participant"
+ *   [parameters]="videoCardParameters"
+ * ></app-video-card>
+ * ```
+ *
+ * @input {Partial<CSSStyleDeclaration>} customStyle - Styles for the card container.
+ * @input {string} name - Name of the participant displayed on the card.
+ * @input {string} barColor - Color of the waveform bars. Default is 'red'.
+ * @input {string} textColor - Color of the name text. Default is 'white'.
+ * @input {string} imageSource - Source URL of the participant's image.
+ * @input {boolean} roundedImage - Whether the image should have rounded corners.
+ * @input {Partial<CSSStyleDeclaration>} imageStyle - Additional styles for the image.
+ * @input {string} remoteProducerId - ID of the remote media producer.
+ * @input {EventType} eventType - Type of event (used for internal logic).
+ * @input {boolean} forceFullDisplay - Forces full display if true.
+ * @input {MediaStream | null} videoStream - Stream of the video to be displayed.
+ * @input {boolean} showControls - Determines if the controls are displayed. Default is true.
+ * @input {boolean} showInfo - Determines if info (e.g., participant name) is shown. Default is true.
+ * @input {HTMLElement | CustomComponent} videoInfoComponent - Custom component for video info display.
+ * @input {HTMLElement | CustomComponent} videoControlsComponent - Custom component for video controls.
+ * @input {'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'} controlsPosition - Position of controls overlay.
+ * @input {'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'} infoPosition - Position of info overlay.
+ * @input {Participant} participant - Participant data object.
+ * @input {string} backgroundColor - Background color of the video card.
+ * @input {AudioDecibels[]} audioDecibels - Audio decibel data for animating waveform.
+ * @input {boolean} doMirror - If true, mirrors the video display.
+ * @input {VideoCardParameters} parameters - Additional parameters including socket and alert configuration.
+ *
+ * @property {number[]} waveformAnimations - Array representing animation states for waveform bars.
+ * @property {boolean} showWaveform - Flag to toggle waveform animation. Default is true.
+ * @property {any} interval - Interval reference for audio decibel checks.
+ * @property {IconDefinition} faMicrophone - FontAwesome icon for microphone.
+ * @property {IconDefinition} faMicrophoneSlash - FontAwesome icon for muted microphone.
+ * @property {IconDefinition} faVideo - FontAwesome icon for video.
+ * @property {IconDefinition} faVideoSlash - FontAwesome icon for video off.
+ *
+ * @method ngOnInit - Lifecycle hook to initialize audio decibel interval check.
+ * @method ngOnDestroy - Lifecycle hook to clear intervals.
+ * @method animateWaveform - Starts audio waveform animation.
+ * @method resetWaveform - Resets waveform animations.
+ * @method getAnimationDuration - Returns animation duration for given bar index.
+ * @method toggleAudio - Toggles participant's audio status.
+ * @method toggleVideo - Toggles participant's video status.
+ * @method renderControls - Renders the control buttons (audio and video) based on participant status.
+ * @method getOverlayPosition - Returns overlay position styles based on the input position string.
+ * @method isCustomComponent - Checks if a component is a custom component.
+ * @method isFunctionComponent - Checks if a component is a function component.
+ */
 class VideoCard {
     controlMediaService;
     customStyle = {};
@@ -16145,6 +19645,65 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * AudioCard component renders an audio card for participants with customizable options and media controls.
+ * It shows audio waveform animations, video/audio toggle buttons, and additional info based on injected or passed properties.
+ *
+ * @selector app-audio-card
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, MiniCard
+ *
+ * @inputs
+ * - `controlUserMedia` (function): Optional function to control media actions for a participant.
+ * - `customStyle` (Partial<CSSStyleDeclaration>): Custom CSS styles for the audio card.
+ * - `name` (string): Name of the participant.
+ * - `barColor` (string): Color for the audio bar. Default is 'red'.
+ * - `textColor` (string): Text color. Default is 'white'.
+ * - `imageSource` (string): Image source URL for participant.
+ * - `roundedImage` (boolean): Toggle for rounded image style.
+ * - `imageStyle` (Partial<CSSStyleDeclaration>): Custom styles for the image.
+ * - `showControls` (boolean): Toggle for displaying media controls. Default is true.
+ * - `showInfo` (boolean): Toggle for displaying info section. Default is true.
+ * - `videoInfoComponent` (HTMLElement | CustomComponent): Custom component for participant info.
+ * - `videoControlsComponent` (HTMLElement | CustomComponent): Custom component for video controls.
+ * - `controlsPosition` (ControlsPosition): Position for controls on the card. Default is 'topLeft'.
+ * - `infoPosition` (InfoPosition): Position for the info section. Default is 'topRight'.
+ * - `participant` (Participant | null): Participant object reference.
+ * - `backgroundColor` (string): Background color for the card.
+ * - `audioDecibels` (AudioDecibels): Optional audio decibel levels for the participant.
+ * - `parameters` (AudioCardParameters): Required object with configuration parameters.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes the component, sets default media control behavior, and activates audio waveform animations.
+ * - `ngOnDestroy()`: Clears the animation interval.
+ * - `animateBar(index: number)`: Animates the audio bar at a specified index.
+ * - `animateWaveform()`: Triggers animations across the waveform bars.
+ * - `resetWaveform()`: Resets waveform animations to default.
+ * - `getAnimationDuration(index: number)`: Retrieves the animation duration for a bar by index.
+ * - `toggleAudio()`: Toggles audio for the participant if media control function is defined.
+ * - `toggleVideo()`: Toggles video for the participant if media control function is defined.
+ * - `renderControls()`: Returns `showControls` to render or hide media controls.
+ * - `combineStyles(baseStyle: any, additionalStyles: any)`: Combines base and additional styles for inline styling.
+ * - `getOverlayPosition(position: string)`: Retrieves calculated overlay position for elements.
+ * - `isCustomComponent(comp: HTMLElement | CustomComponent)`: Type guard for identifying custom components.
+ * - `isFunctionComponent(comp: HTMLElement | CustomComponent)`: Type guard for identifying function components.
+ *
+ * @example
+ * ```html
+ * <app-audio-card
+ *  [controlUserMedia]="controlMediaFunction"
+ * [name]="participantName"
+ * [barColor]="'blue'"
+ * [textColor]="'black'"
+ * [imageSource]="participantImageURL"
+ * [roundedImage]="true"
+ * [showControls]="true"
+ * [participant]="participant"
+ * [parameters]="audioCardParameters">
+ * </app-audio-card>
+ * ```
+ *
+ **/
 class AudioCard {
     ngZone;
     controlMediaService;
@@ -16432,6 +19991,105 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Prepopulates the user media based on the provided options.
+ *
+ * This method prepares the UI components for the user's media based on the event type and participant information.
+ * It manages the display of video and audio cards, mini cards, and handles screen sharing scenarios.
+ *
+ * @param {PrepopulateUserMediaOptions} options - The options for prepopulating user media.
+ * @param {string} options.name - The name of the user.
+ * @param {PrepopulateUserMediaParameters} options.parameters - The parameters for prepopulating user media.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {Array<Participant>} options.parameters.participants - List of participants.
+ * @param {Array<Stream>} options.parameters.allVideoStreams - List of all video streams.
+ * @param {string} options.parameters.islevel - The level of the user.
+ * @param {string} options.parameters.member - The member name.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {boolean} options.parameters.shareScreenStarted - Indicates if screen sharing has started.
+ * @param {string} options.parameters.eventType - The type of event (e.g., "broadcast", "chat", "conference").
+ * @param {string} options.parameters.screenId - The ID of the screen.
+ * @param {boolean} options.parameters.forceFullDisplay - Indicates if full display is forced.
+ * @param {Function} options.parameters.updateMainWindow - Function to update the main window.
+ * @param {boolean} options.parameters.mainScreenFilled - Indicates if the main screen is filled.
+ * @param {boolean} options.parameters.adminOnMainScreen - Indicates if admin is on the main screen.
+ * @param {string} options.parameters.mainScreenPerson - The person on the main screen.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {boolean} options.parameters.audioAlreadyOn - Indicates if the audio is already on.
+ * @param {Array<Stream>} options.parameters.oldAllStreams - List of old all streams.
+ * @param {Function} options.parameters.checkOrientation - Function to check orientation.
+ * @param {boolean} options.parameters.screenForceFullDisplay - Indicates if screen force full display is enabled.
+ * @param {Stream} options.parameters.localStreamScreen - The local screen stream.
+ * @param {Array<Stream>} options.parameters.remoteScreenStream - List of remote screen streams.
+ * @param {Stream} options.parameters.localStreamVideo - The local video stream.
+ * @param {number} options.parameters.mainHeightWidth - The main height and width.
+ * @param {boolean} options.parameters.isWideScreen - Indicates if the screen is wide.
+ * @param {boolean} options.parameters.localUIMode - Indicates if local UI mode is enabled.
+ * @param {boolean} options.parameters.whiteboardStarted - Indicates if whiteboard has started.
+ * @param {boolean} options.parameters.whiteboardEnded - Indicates if whiteboard has ended.
+ * @param {Stream} options.parameters.virtualStream - The virtual stream.
+ * @param {boolean} options.parameters.keepBackground - Indicates if background should be kept.
+ * @param {Stream} options.parameters.annotateScreenStream - The annotate screen stream.
+ * @param {Function} options.parameters.updateMainScreenPerson - Function to update the main screen person.
+ * @param {Function} options.parameters.updateMainScreenFilled - Function to update if the main screen is filled.
+ * @param {Function} options.parameters.updateAdminOnMainScreen - Function to update if admin is on the main screen.
+ * @param {Function} options.parameters.updateMainHeightWidth - Function to update the main height and width.
+ * @param {Function} options.parameters.updateScreenForceFullDisplay - Function to update screen force full display.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window update status.
+ * @param {Function} options.parameters.updateMainGridStream - Function to update the main grid stream.
+ *
+ * @returns {Promise<{ component: any; inputs: any }[] | void>} A promise that resolves with the components and inputs or void.
+ *
+ * @throws {Error} Throws an error if there is an issue preparing and populating the main screen.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   name: 'John Doe',
+ *   parameters: {
+ *     getUpdatedAllParams: () => { },
+ *     participants: [],
+ *     allVideoStreams: [],
+ *     islevel: '1',
+ *     member: 'John',
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     eventType: 'conference',
+ *     screenId: 'screen123',
+ *     forceFullDisplay: false,
+ *     updateMainWindow: false,
+ *     mainScreenFilled: false,
+ *     adminOnMainScreen: false,
+ *     mainScreenPerson: '',
+ *     videoAlreadyOn: false,
+ *     audioAlreadyOn: false,
+ *     oldAllStreams: [],
+ *     checkOrientation: () => 'landscape',
+ *     screenForceFullDisplay: false,
+ *     localStreamScreen: null,
+ *     remoteScreenStream: [],
+ *     localStreamVideo: null,
+ *     mainHeightWidth: 100,
+ *     isWideScreen: true,
+ *     localUIMode: false,
+ *     whiteboardStarted: false,
+ *     whiteboardEnded: false,
+ *     virtualStream: null,
+ *     keepBackground: false,
+ *     annotateScreenStream: false,
+ *     updateMainScreenPerson: (person) => { console.log(updated) },
+ *     updateMainScreenFilled: (filled) => { console.log(updated) },
+ *     updateAdminOnMainScreen: (admin) => { console.log(updated) },
+ *     updateMainHeightWidth: (heightWidth) => { console.log(updated) },
+ *     updateScreenForceFullDisplay: (force) => { console.log(updated) },
+ *     updateUpdateMainWindow: (update) => { console.log(updated) },
+ *     updateMainGridStream: (components) => { console.log(updated) },
+ *   },
+ * };
+ *
+ * await prepopulateUserMedia(options);
+ * ```
+ */
 class PrepopulateUserMedia {
     /**
      * Prepopulates the user media based on the provided options.
@@ -16869,6 +20527,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Asynchronously processes and updates video streams by filtering out the admin's video stream.
+ *
+ * @param {GetVideosOptions} options - The options for getting videos.
+ * @param {Participant[]} options.participants - The list of participants.
+ * @param {Stream[]} options.allVideoStreams - The list of all video streams.
+ * @param {(Stream | Participant)[]} options.oldAllStreams - The list of old video streams.
+ * @param {string} [options.adminVidID] - The ID of the admin's video stream.
+ * @param {Function} options.updateAllVideoStreams - Function to update the state variable for all video streams.
+ * @param {Function} options.updateOldAllStreams - Function to update the state variable for old video streams.
+ * @returns {Promise<void>} A promise that resolves when the video streams have been processed and updated.
+ *
+ * @throws {Error} If an error occurs during the process of updating video streams.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   participants: participantList,
+ *   allVideoStreams: currentVideoStreams,
+ *   oldAllStreams: previousVideoStreams,
+ *   updateAllVideoStreams: (streams) => {
+ *     console.log('Updated all video streams:', streams);
+ *   },
+ *   updateOldAllStreams: (streams) => {
+ *     console.log('Updated old video streams:', streams);
+ *   },
+ * };
+ *
+ * const getVideosService = new GetVideos();
+ * await getVideosService.getVideos(options);
+ * console.log('Video streams processed successfully.');
+ * ```
+ */
 class GetVideos {
     /**
      * Asynchronously processes and updates video streams by filtering out the admin's video stream.
@@ -16925,6 +20616,54 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * RePort function that handles the reporting logic based on the provided parameters.
+ *
+ * This method checks the current state of the recording process and updates the screen states
+ * accordingly. It also compares active names and screen states based on the provided parameters.
+ *
+ * @param {RePortOptions} options - The options for the rePort function.
+ * @param {boolean} [options.restart=false] - Flag indicating whether to restart the process.
+ * @param {RePortParameters} options.parameters - The parameters object containing various states and functions.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {string} options.parameters.islevel - The current level of the process.
+ * @param {string} options.parameters.mainScreenPerson - The person on the main screen.
+ * @param {boolean} options.parameters.adminOnMainScreen - Flag indicating if admin is on the main screen.
+ * @param {boolean} options.parameters.mainScreenFilled - Flag indicating if the main screen is filled.
+ * @param {boolean} options.parameters.recordStarted - Flag indicating if recording has started.
+ * @param {boolean} options.parameters.recordStopped - Flag indicating if recording has stopped.
+ * @param {boolean} options.parameters.recordPaused - Flag indicating if recording is paused.
+ * @param {boolean} options.parameters.recordResumed - Flag indicating if recording has resumed.
+ * @param {Array<ScreenState>} options.parameters.screenStates - Array of current screen states.
+ * @param {Function} options.parameters.updateScreenStates - Function to update the current screen states.
+ * @param {Function} options.parameters.updatePrevScreenStates - Function to update the previous screen states.
+ * @param {Function} options.parameters.compareActiveNames - Function to compare active names.
+ * @param {Function} options.parameters.compareScreenStates - Function to compare screen states.
+ *
+ * @returns {Promise<void>} A promise that resolves when the reporting process is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the reporting process.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   restart: false,
+ *   parameters: {
+ *     islevel: '1',
+ *     mainScreenPerson: 'John Doe',
+ *     adminOnMainScreen: false,
+ *     mainScreenFilled: true,
+ *     recordStarted: true,
+ *     screenStates: [],
+ *     updateScreenStates: (states) => { console.log(updated) },
+ *     compareActiveNames: async (opts) => {  },
+ *     compareScreenStates: async (opts) => {  },
+ *   },
+ * };
+ *
+ * await rePort(options);
+ * ```
+ */
 class RePort {
     /**
      * RePort function that handles the reporting logic based on the provided parameters.
@@ -16989,6 +20728,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Triggers an update to the screen client based on the provided parameters.
+ *
+ * This function handles various conditions to determine the main screen person,
+ * adjusts the screen states, and emits an update to the screen client via socket.
+ *
+ * @param {TriggerOptions} options - The options for triggering the update.
+ * @param {string[]} options.ref_ActiveNames - Reference to the active names.
+ * @param {TriggerParameters} options.parameters - The parameters for the trigger.
+ * @returns {Promise<void>} A promise that resolves when the trigger is complete.
+ *
+ * @throws Will throw an error if the updateScreenClient operation fails.
+ *
+ * @example
+ * ```typescript
+ * await trigger({
+ *   ref_ActiveNames: ["user1", "user2"],
+ *   parameters: {
+ *     socket: socketInstance,
+ *     roomName: "room1",
+ *     screenStates: [{ mainScreenPerson: "user1", mainScreenFilled: true, adminOnMainScreen: false }],
+ *     participants: [{ name: "admin", islevel: "2" }],
+ *     updateDateState: 0,
+ *     lastUpdate: null,
+ *     nForReadjust: 0,
+ *     eventType: "conference",
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     whiteboardStarted: false,
+ *     whiteboardEnded: false,
+ *     updateUpdateDateState: (date) => {},
+ *     updateLastUpdate: (date) => {},
+ *     updateNForReadjust: (n) => {},
+ *     autoAdjust: async ({ n, parameters }) => [n, 0],
+ *   },
+ * });
+ * ```
+ */
 class Trigger {
     /**
      * Triggers an update to the screen client based on the provided parameters.
@@ -17160,76 +20937,69 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * MiniAudio component is a standalone Angular component that displays a mini audio player with waveform animations.
- * It supports various customizations including visibility, styles, text, and image properties.
- * The component can be dragged around the screen.
+ * MiniAudio component is a draggable, customizable mini audio player with optional waveform animations.
  *
  * @selector app-mini-audio
  * @standalone true
  * @imports CommonModule
  *
  * @template
- * The template includes a modal container with a card that displays an optional background image, name text, and waveform animations.
+ * ```html
+ * <div *ngIf="visible" class="modal-container" [ngStyle]="{ transform: 'translate(' + position.x + 'px, ' + position.y + 'px)' }" (mousedown)="handleMouseDown($event)">
+ *   <div class="card" [ngStyle]="customStyle">
+ *     <ng-container *ngIf="imageSource">
+ *       <img [src]="imageSource" [ngStyle]="getImageStyle()" alt="Background" class="background-image" />
+ *     </ng-container>
+ *     <div class="name-text" [ngStyle]="combineStyles({ color: textColor }, nameTextStyling)">
+ *       {{ name }}
+ *     </div>
+ *     <div [ngStyle]="getOverlayPosition(overlayPosition)" class="overlay-web">
+ *       <div class="waveform-web">
+ *         <div *ngFor="let animation of waveformAnimations; let i = index"
+ *              [ngStyle]="{ height: animation == 0 ? '1px' : '30px', width: '10px', backgroundColor: barColor }"
+ *              class="bar">
+ *         </div>
+ *       </div>
+ *     </div>
+ *   </div>
+ * </div>
+ * ```
  *
  * @styles
- * The styles define the appearance of the modal container, card, background image, name text, overlay, waveform, and bars.
+ * - `.modal-container`: Positioning and drag area.
+ * - `.card`: The main container styling.
+ * - `.background-image`: Styling for an optional background image.
+ * - `.name-text`: Styling for name text with customizable color.
+ * - `.overlay-web` and `.waveform-web`: Contains and styles the waveform animation bars.
  *
- * @class MiniAudio
- * @implements OnInit, OnDestroy
+ * @inputs
+ * - `visible` (boolean): Show/hide the component.
+ * - `customStyle` (object): Custom styles for the component.
+ * - `name` (string): Text to display as the name.
+ * - `showWaveform` (boolean): Show/hide waveform animations.
+ * - `overlayPosition` (string): Position of the overlay.
+ * - `barColor` (string): Color of waveform bars.
+ * - `textColor` (string): Color of name text.
+ * - `nameTextStyling` (object): Additional styles for the name text.
+ * - `imageSource` (string): URL of the background image.
+ * - `roundedImage` (boolean): If true, applies rounded corners to the image.
+ * - `imageStyle` (object): Custom styles for the image.
  *
- * @property {boolean} visible - Determines if the component is visible.
- * @property {any} customStyle - Custom styles for the component.
- * @property {string} name - The name text displayed in the component.
- * @property {boolean} showWaveform - Flag to show or hide the waveform animations.
- * @property {string} overlayPosition - Position of the overlay.
- * @property {string} barColor - Color of the waveform bars.
- * @property {string} textColor - Color of the name text.
- * @property {any} nameTextStyling - Additional styles for the name text.
- * @property {string} imageSource - Source URL for the background image.
- * @property {boolean} roundedImage - Flag to apply rounded corners to the background image.
- * @property {any} imageStyle - Custom styles for the background image.
+ * @property `waveformAnimations` (array): Tracks animation states for each waveform bar.
+ * @property `position` (object): Tracks x and y positioning for dragging.
  *
- * @constructor
- * The constructor allows optional dependency injection for all input properties.
+ * @methods
+ * - `ngOnInit()`: Starts waveform animations if `showWaveform` is true.
+ * - `ngOnDestroy()`: Clears waveform animation intervals.
+ * - `animateWaveform()`: Sets intervals for each bar's animation.
+ * - `handleMouseDown(event: MouseEvent)`: Starts dragging on mousedown.
+ * - `handleMouseMove(event: MouseEvent)`: Updates position during drag.
+ * - `handleMouseUp()`: Ends dragging on mouseup.
  *
- * @method ngOnInit
- * Initializes the component and starts waveform animations if enabled.
- *
- * @method ngOnDestroy
- * Cleans up intervals to prevent memory leaks.
- *
- * @method animateWaveform
- * Starts the waveform animations by setting intervals for each bar.
- *
- * @method animateBar
- * Animates a single bar in the waveform.
- *
- * @method resetWaveform
- * Resets the waveform animations to their initial state.
- *
- * @method clearIntervals
- * Clears all animation intervals.
- *
- * @method getAnimationDuration
- * Returns the animation duration for a given bar index.
- *
- * @method getImageStyle
- * Returns the combined styles for the background image, including optional rounded corners.
- *
- * @method combineStyles
- * Combines base styles with additional styles.
- *
- * @method handleMouseDown
- * Handles the mousedown event to start dragging the component.
- *
- * @method handleMouseMove
- * Handles the mousemove event to update the component's position while dragging.
- *
- * @method handleMouseUp
- * Handles the mouseup event to stop dragging the component.
- *
- * @method getOverlayPosition
- * Returns the position styles for the overlay.
+ * @example
+ * ```html
+ * <app-mini-audio [visible]="true" [name]="'Audio Player'" [barColor]="'blue'" [imageSource]="'/path/to/image.png'"></app-mini-audio>
+ * ```
  */
 class MiniAudio {
     visible = true;
@@ -17480,6 +21250,61 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['document:mouseup']
             }] } });
 
+/**
+ * The `MiniAudioPlayer` component manages audio playback for participants in a meeting, including volume control, audio visualization, and connection to the main application state.
+ * It uses audio analysis to display waveforms for active speakers and supports breakout room conditions, participant-specific audio decibel updates, and other media state dependencies.
+ *
+ * @component
+ * @example
+ * ```html
+ * <app-mini-audio-player
+ *    [stream]="audioStream"
+ *    [remoteProducerId]="producerId"
+ *    [parameters]="audioPlayerParameters">
+ * </app-mini-audio-player>
+ * ```
+ *
+ * @param {MediaStream} [stream] - The audio stream from the participant.
+ * @param {string} [remoteProducerId] - Unique ID for the remote producer of the audio stream.
+ * @param {MiniAudioPlayerParameters} [parameters] - Configuration object with various parameters and utility functions for audio management.
+ * @param {Component} [MiniAudioComponent] - Optional audio visualization component injected into the `MiniAudioPlayer`.
+ * @param {Record<string, any>} [miniAudioProps] - Additional properties for configuring the audio visualization component.
+ *
+ * @returns {HTMLElement} The created audio player element.
+ *
+ * @remarks
+ * The `MiniAudioPlayer` leverages the `AudioContext` API to process audio data, analyze frequency, and manage audio levels.
+ * It supports a dynamic breakout room feature that restricts audio visibility to limited participants, updates decibel levels for individual participants, and adjusts the waveforms based on audio activity.
+ *
+ * Key functionalities include:
+ * - Automatically toggling wave visualization for active speakers.
+ * - Handling audio settings for different room states (e.g., shared screens, breakout rooms).
+ * - Injecting configuration and parameter dependencies dynamically through `Injector`.
+ *
+ * @dependencies
+ * - `AudioContext`: Web API for processing and analyzing audio data.
+ * - `setInterval` for periodic volume level checks (auto-clears on component destruction).
+ * - `ReUpdateInterType` and `UpdateParticipantAudioDecibelsType` for dynamic participant audio decibel management.
+ *
+ * @example
+ * ```typescript
+ * const audioPlayerParameters: MiniAudioPlayerParameters = {
+ *   breakOutRoomStarted: true,
+ *   breakOutRoomEnded: false,
+ *   limitedBreakRoom: participantList,
+ *   reUpdateInter: reUpdateInterFunc,
+ *   updateParticipantAudioDecibels: updateAudioDecibelsFunc,
+ *   getUpdatedAllParams: () => getParams(),
+ * };
+ *
+ * // Initialize component with required inputs
+ * <app-mini-audio-player
+ *   [stream]="audioStream"
+ *   [remoteProducerId]="participantId"
+ *   [parameters]="audioPlayerParameters"
+ * ></app-mini-audio-player>
+ * ```
+ */
 class MiniAudioPlayer {
     injector;
     stream = null;
@@ -17736,6 +21561,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['audioElement', { static: true }]
             }] } });
 
+/**
+ * Resumes a consumer, making it ready for use.
+ *
+ * @param {ConsumerResumeOptions} options - The options for resuming the consumer.
+ * @param {MediaStreamTrack} options.track - The media stream track associated with the resumed consumer.
+ * @param {string} options.kind - The type of media ('audio' or 'video') being resumed.
+ * @param {string} options.remoteProducerId - The ID of the remote producer associated with the resumed consumer.
+ * @param {ResumeParams} options.params - Additional parameters related to the resumed consumer.
+ * @param {ConsumerResumeParameters} options.parameters - The parameters object containing various utility functions and state.
+ * @param {Socket} options.nsock - The socket associated with the consumer.
+ * @throws Will throw an error if an issue occurs during the consumer resumption.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   track: mediaStreamTrack, // MediaStreamTrack to be resumed
+ *   remoteProducerId: 'producer-id', // Remote producer ID
+ *   params: {
+ *     id: 'consumer-id',
+ *     producerId: 'producer-id',
+ *     kind: 'audio',
+ *     rtpParameters: {},
+ *   },
+ *   parameters: consumerResumeParameters, // Parameters for the consumer
+ *   nsock: socket, // Socket for communication
+ * };
+ *
+ * consumerResume(options)
+ *   .then(() => {
+ *     console.log('Consumer resumed successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error resuming consumer:', error);
+ *   });
+ * ```
+ */
 class ConsumerResume {
     /**
      * Resumes a consumer, making it ready for use.
@@ -18064,6 +21925,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Connects the send transport for audio by producing audio data and updating the audio producer and producer transport objects.
+ *
+ * @param {ConnectSendTransportAudioOptions} options - The parameters for connecting the send transport.
+ * @param {ProducerOptions} options.audioParams - The options for the audio producer.
+ * @param {ConnectSendTransportAudioParameters} options.parameters - The parameters containing the audio producer, producer transport, and update functions.
+ * @param {Producer} options.parameters.audioProducer - The current audio producer.
+ * @param {Transport} options.parameters.producerTransport - The transport used to produce audio data.
+ * @param {Function} options.parameters.updateAudioProducer - Function to update the audio producer.
+ * @param {Function} options.parameters.updateProducerTransport - Function to update the producer transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio transport is successfully connected.
+ *
+ * @throws Will throw an error if the connection fails.
+ *
+ * @example
+ * ```typescript
+ * const audioParams: ProducerOptions = {
+ *   codec: 'opus',
+ *   // other options
+ * };
+ *
+ * const parameters = {
+ *   audioProducer: null,
+ *   producerTransport: transport,
+ *   updateAudioProducer: (producer) => { console.log(updated) },
+  *   updateProducerTransport: (transport) => { console.log(updated) },
+  * };
+  *
+  * connectSendTransportAudio({ audioParams, parameters })
+  *   .then(() => {
+  *     console.log('Audio transport connected successfully');
+  *   })
+  *   .catch((error) => {
+  *     console.error('Error connecting audio transport:', error);
+  *   });
+  * ```
+  */
 class ConnectSendTransportAudio {
     /**
      * Connects the send transport for audio by producing audio data and updating the audio producer and producer transport objects.
@@ -18108,6 +22007,50 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Connects the send transport for video by producing video data and updates the relevant states.
+ *
+ * @param {ConnectSendTransportVideoOptions} options - The options for connecting the send transport for video.
+ * @param {ProducerOptions} options.videoParams - The parameters for producing video data.
+ * @param {ConnectSendTransportVideoParameters} options.parameters - The parameters for updating the state.
+ * @param {Producer} options.parameters.videoProducer - The video producer instance.
+ * @param {Transport} options.parameters.producerTransport - The transport instance used for producing video.
+ * @param {string} options.parameters.islevel - The connection level.
+ * @param {boolean} options.parameters.updateMainWindow - The state of the main window update.
+ * @param {Function} options.parameters.updateVideoProducer - Function to update the video producer.
+ * @param {Function} options.parameters.updateProducerTransport - Function to update the producer transport.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ *
+ * @returns {Promise<void>} A promise that resolves when the send transport for video is connected.
+ *
+ * @throws Will throw an error if the connection fails.
+ *
+ * @example
+ * ```typescript
+ * const videoParams = {
+ *   codec: 'vp8',
+ *   // Other producer options...
+ * };
+ *
+ * const parameters = {
+ *   videoProducer: null,
+ *   producerTransport: transport, // Assume 'transport' is initialized and ready
+ *   islevel: '1',
+ *   updateMainWindow: false,
+ *   updateVideoProducer: (producer) => { console.log(updated) },
+ *   updateProducerTransport: (transport) => { console.log(updated) },
+ *   updateUpdateMainWindow: (state) => { console.log(updated) },
+ * };
+ *
+ * connectSendTransportVideo({ videoParams, parameters })
+ *   .then(() => {
+ *     console.log('Video transport connected successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error connecting video transport:', error);
+ *   });
+ * ```
+ */
 class ConnectSendTransportVideo {
     /**
      * Connects the send transport for video by producing video data and updates the relevant states.
@@ -18161,6 +22104,46 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Connects and sets up the screen sharing transport for sending video streams.
+ *
+ * @param {ConnectSendTransportScreenOptions} options - The options for connecting the screen transport.
+ * @param {MediaStream} options.stream - The media stream containing the screen video track.
+ * @param {ConnectSendTransportScreenParameters} options.parameters - The parameters required for setting up the transport.
+ * @param {Producer} options.parameters.screenProducer - The screen producer object.
+ * @param {Device} options.parameters.device - The device object containing RTP capabilities.
+ * @param {ProducerOptions} options.parameters.screenParams - The parameters for producing the screen share.
+ * @param {Transport} options.parameters.producerTransport - The transport object used for producing the screen share.
+ * @param {Function} options.parameters.updateScreenProducer - Function to update the screen producer object.
+ * @param {Function} options.parameters.updateProducerTransport - Function to update the producer transport object.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to fetch updated device information.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen transport is successfully connected and set up.
+ *
+ * @throws Will throw an error if the connection or setup process fails.
+ *
+ * @example
+ * ```typescript
+ * const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+ * const parameters = {
+ *   screenProducer: null,
+ *   device: device, // Assume 'device' is initialized and ready
+ *   screenParams: { codec: 'vp9' },
+ *   producerTransport: transport, // Assume 'transport' is initialized
+ *   updateScreenProducer: (producer) => { console.log(updated) },
+ *   updateProducerTransport: (transport) => { console.log(updated) },
+ *   getUpdatedAllParams: () => {  },
+ * };
+ *
+ * connectSendTransportScreen({ stream, parameters })
+ *   .then(() => {
+ *     console.log('Screen transport connected successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error connecting screen transport:', error);
+ *   });
+ * ```
+ */
 class ConnectSendTransportScreen {
     /**
      * Connects and sets up the screen sharing transport for sending video streams.
@@ -18221,6 +22204,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Processes consumer transports by pausing and resuming them based on certain conditions.
+ *
+ * This method checks the state of each consumer transport and determines whether to pause or resume
+ * based on the validity of the producer ID in relation to the provided streams.
+ * It utilizes a sleep function to introduce a delay before pausing the transports.
+ *
+ * @param {ProcessConsumerTransportsOptions} options - The options for processing consumer transports.
+ * @param {Array<Transport>} options.consumerTransports - The list of consumer transports to process.
+ * @param {Array<Stream | Participant>} options.lStreams_ - The list of local streams.
+ * @param {ProcessConsumerTransportsParameters} options.parameters - The parameters for processing, including:
+ *   - {Array<Stream>} options.parameters.remoteScreenStream - The list of remote screen streams.
+ *   - {Array<Stream | Participant>} options.parameters.oldAllStreams - The list of old streams.
+ *   - {Array<Stream | Participant>} options.parameters.newLimitedStreams - The list of new limited streams.
+ *   - {Function} options.parameters.sleep - A function to pause execution for a specified duration.
+ *   - {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ *
+ * @returns {Promise<void>} A promise that resolves when the processing is complete.
+ *
+ * @throws {Error} Will throw an error if there is an issue processing consumer transports.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   consumerTransports: [],
+ *   lStreams_: [],
+ *   parameters: {
+ *     remoteScreenStream: [],
+ *     oldAllStreams: [],
+ *     newLimitedStreams: [],
+ *     sleep: async ({ ms }) => new Promise(resolve => setTimeout(resolve, ms)),
+ *   },
+ * };
+ *
+ * await processConsumerTransports(options);
+ * ```
+ */
 class ProcessConsumerTransports {
     /**
      * Processes consumer transports by pausing and resuming them based on certain conditions.
@@ -18310,6 +22330,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Resumes or pauses streams based on the provided parameters.
+ *
+ * This method processes the current participant states and the active display names to determine
+ * which audio and video streams should be resumed or paused. It communicates with the server
+ * to resume streams as necessary.
+ *
+ * @param {ResumePauseStreamsOptions} options - The options for resuming or pausing streams.
+ * @param {Object} options.parameters - The parameters for the function.
+ * @param {Array<Participant>} options.parameters.participants - The list of participants in the session.
+ * @param {Array<string>} options.parameters.dispActiveNames - The list of active display names.
+ * @param {Array<Transport>} options.parameters.consumerTransports - The list of consumer transports.
+ * @param {string} [options.parameters.screenId] - The screen producer ID if applicable.
+ * @param {string} options.parameters.islevel - The level of the user (e.g., participant or host).
+ *
+ * @returns {Promise<void>} A promise that resolves when the streams have been resumed or paused.
+ *
+ * @throws Will throw an error if there is an issue during the process of resuming or pausing streams.
+ *
+ * @example
+ * ```typescript
+ * await resumePauseStreams({
+ *   parameters: {
+ *     participants: [...], // Array of participants
+ *     dispActiveNames: ['Alice', 'Bob'], // Active display names
+ *     consumerTransports: [...], // Array of consumer transports
+ *     screenId: 'screen123', // Screen producer ID
+ *     islevel: '1', // User level
+ *     getUpdatedAllParams: myGetUpdatedFunction, // Function to get updated params
+ *   },
+ * });
+ * ```
+ */
 class ResumePauseStreams {
     /**
      * Resumes or pauses streams based on the provided parameters.
@@ -18378,6 +22431,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Adjusts the layout parameters based on the provided options.
+ *
+ * This method calculates the layout dimensions and updates the main window size based on the current event type,
+ * the number of participants, and whether screen sharing is active. It also manages the state transitions
+ * to ensure that the UI reflects the correct configuration based on user interactions.
+ *
+ * @param {ReadjustOptions} options - The options for readjusting the layout.
+ * @param {number} options.n - The number of participants or elements.
+ * @param {number} options.state - The current state of the layout.
+ * @param {Object} options.parameters - The parameters for the layout adjustment.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {string} options.parameters.eventType - The type of event (e.g., "broadcast", "chat", "conference").
+ * @param {boolean} options.parameters.shareScreenStarted - Indicates if screen sharing has started.
+ * @param {boolean} options.parameters.shared - Indicates if content is being shared.
+ * @param {number} options.parameters.mainHeightWidth - The main height and width value.
+ * @param {number} options.parameters.prevMainHeightWidth - The previous main height and width value.
+ * @param {string} options.parameters.hostLabel - The label for the host.
+ * @param {boolean} options.parameters.first_round - Indicates if it is the first round.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {Function} options.parameters.updateMainHeightWidth - Function to update the main height and width.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ *
+ * @returns {Promise<void>} A promise that resolves when the layout adjustment is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue updating the grid sizes.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   n: 5,
+ *   state: 0,
+ *   parameters: {
+ *     getUpdatedAllParams: () => updatedParams,
+ *     eventType: 'conference',
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     mainHeightWidth: 100,
+ *     prevMainHeightWidth: 100,
+ *     hostLabel: 'Host Name',
+ *     first_round: false,
+ *     lock_screen: false,
+ *     updateMainHeightWidth: (value) => { console.log(updated) },
+ *     prepopulateUserMedia: async ({ name, parameters }) => {  },
+ *   },
+ * };
+ *
+ * await readjust(options);
+ * ```
+ */
 class Readjust {
     /**
      * Adjusts the layout parameters based on the provided options.
@@ -18499,25 +22602,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Checks the grid configuration and calculates various parameters based on the number of rows, columns, and active elements.
+ *
+ * @param {CheckGridOptions} options - The options for checking the grid.
+ * @param {number} options.rows - The number of rows in the grid.
+ * @param {number} options.cols - The number of columns in the grid.
+ * @param {number} options.actives - The number of active elements in the grid.
+ * @returns {Promise<[boolean, number, number, number, number, number, number] | void>} A promise that resolves to a tuple containing:
+ * - `removeAltGrid` (boolean): Indicates whether to remove the alternate grid.
+ * - `numtoadd` (number): The number of elements to add.
+ * - `numRows` (number): The number of rows.
+ * - `numCols` (number): The number of columns.
+ * - `remainingVideos` (number): The number of remaining videos.
+ * - `actualRows` (number): The actual number of rows.
+ * - `lastrowcols` (number): The number of columns in the last row.
+ *
+ * If an error occurs, it logs the error to the console.
+ *
+ *   *
+ * @example
+ * ```typescript
+ * const options = {
+ *   rows: 3,
+ *   cols: 4,
+ *   actives: 10,
+ * };
+ *
+ * const result = await checkGridService.checkGrid(options);
+ * console.log(result);
+ * // Output could be: [false, 2, 3, 4, 2, 3, 2]
+ * ```
+ */
 class CheckGrid {
-    /**
-     * Checks the grid configuration and calculates various parameters based on the number of rows, columns, and active elements.
-     *
-     * @param {CheckGridOptions} options - The options for checking the grid.
-     * @param {number} options.rows - The number of rows in the grid.
-     * @param {number} options.cols - The number of columns in the grid.
-     * @param {number} options.actives - The number of active elements in the grid.
-     * @returns {Promise<[boolean, number, number, number, number, number, number] | void>} A promise that resolves to a tuple containing:
-     * - `removeAltGrid` (boolean): Indicates whether to remove the alternate grid.
-     * - `numtoadd` (number): The number of elements to add.
-     * - `numRows` (number): The number of rows.
-     * - `numCols` (number): The number of columns.
-     * - `remainingVideos` (number): The number of remaining videos.
-     * - `actualRows` (number): The actual number of rows.
-     * - `lastrowcols` (number): The number of columns in the last row.
-     *
-     * If an error occurs, it logs the error to the console.
-     */
     async checkGrid({ rows, cols, actives, }) {
         try {
             let numRows = 0;
@@ -18577,6 +22694,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // estimate.service.ts
+/**
+ * Estimates the number of rows and columns for a given set of parameters.
+ *
+ * @param {GetEstimateOptions} options - The options for the estimation.
+ * @param {number} options.n - The number of items to estimate for.
+ * @param {GetEstimateParameters} options.parameters - The parameters for the estimation.
+ * @param {number} options.parameters.fixedPageLimit - The fixed page limit.
+ * @param {number} options.parameters.screenPageLimit - The screen page limit.
+ * @param {boolean} options.parameters.shareScreenStarted - Indicates if screen sharing has started.
+ * @param {boolean} [options.parameters.shared=false] - Indicates if sharing is active.
+ * @param {EventType} options.parameters.eventType - The type of event (e.g., "chat", "conference").
+ * @param {boolean} options.parameters.removeAltGrid - Indicates if the alternate grid should be removed.
+ * @param {boolean} options.parameters.isWideScreen - Indicates if the screen is wide.
+ * @param {boolean} options.parameters.isMediumScreen - Indicates if the screen is medium-sized.
+ * @param {Function} options.parameters.updateRemoveAltGrid - Function to update the removeAltGrid parameter.
+ * @param {CalculateRowsAndColumnsType} options.parameters.calculateRowsAndColumns - Function to calculate rows and columns.
+ *
+ * @returns {[number, number, number]} An array containing:
+ * - Estimated number of items,
+ * - Estimated number of rows,
+ * - Estimated number of columns.
+ *
+ * @throws Will log an error message if an error occurs during estimation.
+ *
+ * @example
+ * ```typescript
+ * const estimateOptions = {
+ *   n: 20,
+ *   parameters: {
+ *     fixedPageLimit: 10,
+ *     screenPageLimit: 15,
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     eventType: 'conference',
+ *     removeAltGrid: false,
+ *     isWideScreen: true,
+ *     isMediumScreen: false,
+ *     updateRemoveAltGrid: (value) => console.log(`Remove Alt Grid: ${value}`),
+ *     calculateRowsAndColumns: ({ n }) => {
+ *       const sqrt = Math.sqrt(n);
+ *       return [Math.ceil(sqrt), Math.floor(sqrt)];
+ *     },
+ *   },
+ * };
+ *
+ * const estimateService = new GetEstimate();
+ * const [estimatedItems, estimatedRows, estimatedCols] = estimateService.getEstimate(estimateOptions);
+ * console.log(`Estimated Items: ${estimatedItems}, Rows: ${estimatedRows}, Columns: ${estimatedCols}`);
+ * ```
+ */
 class GetEstimate {
     /**
      * Estimates the number of rows and columns for a given set of parameters.
@@ -18644,6 +22811,24 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * @service CalculateRowsAndColumns
+ * @description Service to calculate the optimal number of rows and columns needed to display a given number of items in a grid. Useful for dynamically determining grid layout in responsive designs.
+ *
+ * @method calculateRowsAndColumns
+ * Calculates the optimal number of rows and columns to display a specified number of items in a compact grid format.
+ *
+ * @param {CalculateRowsAndColumnsOptions} options - Configuration options for row and column calculation.
+ * @param {number} options.n - The number of items to display in the grid.
+ *
+ * @returns {[number, number]} A tuple where the first value is the number of rows and the second is the number of columns.
+ *
+ * @example
+ * ```typescript
+ * const [rows, cols] = calculateRowsAndColumnsService.calculateRowsAndColumns({ n: 10 });
+ * console.log(rows, cols); // Outputs optimized rows and columns for displaying 10 items
+ * ```
+ */
 class CalculateRowsAndColumns {
     /**
      * Calculates the number of rows and columns needed to display a given number of items in a grid.
@@ -18684,6 +22869,55 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * @service AddVideosGrid
+ * @description Service to manage and update video and audio components on a grid in the user interface. This service helps organize and configure participants and streams into different grid layouts.
+ *
+ * @method addVideosGrid
+ * Adds video and audio cards to the main and alternate grids based on the parameters and configuration options provided.
+ *
+ * @param {AddVideosGridOptions} options - Configuration options for setting up the grid.
+ * @param {(Stream | Participant)[]} options.mainGridStreams - Streams or participants to display on the main grid.
+ * @param {(Stream | Participant)[]} options.altGridStreams - Streams or participants to display on the alternate grid.
+ * @param {number} options.numtoadd - The number of items to add to the grid.
+ * @param {number} options.numRows - The number of rows for the main grid.
+ * @param {number} options.numCols - The number of columns for the main grid.
+ * @param {number} options.actualRows - The actual rows currently displayed.
+ * @param {number} options.lastrowcols - The number of columns in the last row of the grid.
+ * @param {boolean} options.removeAltGrid - Whether to remove the alternate grid layout.
+ * @param {AddVideosGridParameters} options.parameters - Additional parameters for updating the grid, controlling appearance, and handling events.
+ *
+ * @returns {Promise<void>} A promise that resolves once the grid layout is updated.
+ *
+ * @example
+ * ```typescript
+ * await addVideosGridService.addVideosGrid({
+ *   mainGridStreams: [...],
+ *   altGridStreams: [...],
+ *   numtoadd: 4,
+ *   numRows: 2,
+ *   numCols: 2,
+ *   actualRows: 2,
+ *   lastrowcols: 2,
+ *   removeAltGrid: false,
+ *   parameters: {
+ *     eventType: 'webinar',
+ *     updateAddAltGrid: (value) => {},
+ *     ref_participants: participantsList,
+ *     islevel: '1',
+ *     videoAlreadyOn: true,
+ *     localStreamVideo: localStream,
+ *     keepBackground: true,
+ *     virtualStream: virtualStream,
+ *     forceFullDisplay: false,
+ *     otherGridStreams: otherStreamsArray,
+ *     updateOtherGridStreams: (newStreams) => {},
+ *     updateMiniCardsGrid: (params) => {},
+ *     getUpdatedAllParams: () => ({ /* updated parameters * / }),
+ *   },
+ * });
+ * ```
+ */
 class AddVideosGrid {
     addVideosGrid = async ({ mainGridStreams, altGridStreams, numtoadd, numRows, numCols, actualRows, lastrowcols, removeAltGrid, parameters, }) => {
         let { getUpdatedAllParams } = parameters;
@@ -18975,6 +23209,46 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles changes in screen events such as broadcast, chat, and conference.
+ *
+ * @param {OnScreenChangesOptions} options - The options for handling screen changes.
+ * @param {boolean} [options.changed=false] - Indicates if the screen has changed.
+ * @param {OnScreenChangesParameters} options.parameters - The parameters for handling screen changes.
+ * @param {string} options.parameters.eventType - The type of event (e.g., "broadcast", "chat", "conference").
+ * @param {boolean} options.parameters.shareScreenStarted - Indicates if screen sharing has started.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {boolean} options.parameters.addForBasic - Flag to add basic controls.
+ * @param {Function} options.parameters.updateMainHeightWidth - Function to update the main height and width.
+ * @param {Function} options.parameters.updateAddForBasic - Function to update the addForBasic flag.
+ * @param {number} options.parameters.itemPageLimit - The limit for item pages.
+ * @param {Function} options.parameters.updateItemPageLimit - Function to update the item page limit.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder streams.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen changes have been handled.
+ *
+ * @throws {Error} Throws an error if there is an issue handling screen changes.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   changed: true,
+ *   parameters: {
+ *     eventType: 'broadcast',
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     addForBasic: false,
+ *     updateMainHeightWidth: (value) => { console.log(updated) },
+ *     updateAddForBasic: (value) => { console.log(updated) },
+ *     itemPageLimit: 1,
+ *     updateItemPageLimit: (value) => { console.log(updated) },
+ *     reorderStreams: async (params) => { },
+ *   },
+ * };
+ *
+ * await onScreenChanges(options);
+ * ```
+ */
 class OnScreenChanges {
     /**
      * Handles changes in screen events such as broadcast, chat, and conference.
@@ -19039,81 +23313,152 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 /**
  * Pauses the execution for a specified number of milliseconds.
  *
- * @param {SleepOptions} options - An object containing the sleep duration.
- * @param {number} options.ms - The number of milliseconds to sleep.
- * @returns {Promise<void>} A promise that resolves after the specified duration.
+ * @param {SleepOptions} options - Contains the duration to pause.
+ * @param {number} options.ms - Number of milliseconds to delay.
+ * @returns {Promise<void>} Resolves after the specified duration.
+ *
+ * @example
+ * ```typescript
+ * await sleep({ ms: 2000 });
+ * // Pauses execution for 2 seconds
+ * ```
  */
 function sleep({ ms }) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * Asynchronously changes the video streams based on the provided options.
+ *
+ * @param {Object} options - The options for changing video streams.
+ * @param {boolean} [options.screenChanged=false] - Indicates if the screen has changed.
+ * @param {ChangeVidsOptions} options.parameters - The parameters for changing video streams.
+ * @returns {Promise<void>} A promise that resolves when the video streams have been changed.
+ *
+ * @typedef {Object} ChangeVidsOptions
+ * @property {Function} getUpdatedAllParams - Function to get updated parameters.
+ * @property {Array} allVideoStreams - Array of all video streams.
+ * @property {Array} p_activeNames - Array of active participant names.
+ * @property {Array} activeNames - Array of active names.
+ * @property {Array} dispActiveNames - Array of displayed active names.
+ * @property {boolean} shareScreenStarted - Indicates if screen sharing has started.
+ * @property {boolean} shared - Indicates if the screen is shared.
+ * @property {Array} newLimitedStreams - Array of new limited streams.
+ * @property {Array} non_alVideoStreams - Array of non-al video streams.
+ * @property {Array} ref_participants - Array of reference participants.
+ * @property {Array} participants - Array of participants.
+ * @property {string} eventType - Type of the event.
+ * @property {string} islevel - Level of the participant.
+ * @property {string} member - Name of the member.
+ * @property {boolean} sortAudioLoudness - Indicates if audio loudness should be sorted.
+ * @property {Array} audioDecibels - Array of audio decibels.
+ * @property {Array} mixed_alVideoStreams - Array of mixed al video streams.
+ * @property {Array} non_alVideoStreams_muted - Array of muted non-al video streams.
+ * @property {string} remoteProducerId - ID of the remote producer.
+ * @property {Object} localStreamVideo - Local stream video object.
+ * @property {Array} oldAllStreams - Array of old all streams.
+ * @property {number} screenPageLimit - Limit of streams per screen page.
+ * @property {string} meetingDisplayType - Type of meeting display.
+ * @property {boolean} meetingVideoOptimized - Indicates if meeting video is optimized.
+ * @property {boolean} recordingVideoOptimized - Indicates if recording video is optimized.
+ * @property {string} recordingDisplayType - Type of recording display.
+ * @property {Array} paginatedStreams - Array of paginated streams.
+ * @property {number} itemPageLimit - Limit of items per page.
+ * @property {boolean} doPaginate - Indicates if pagination should be done.
+ * @property {boolean} prevDoPaginate - Indicates if pagination was previously done.
+ * @property {number} currentUserPage - Current user page number.
+ * @property {Array} breakoutRooms - Array of breakout rooms.
+ * @property {number} hostNewRoom - Index of the new room for the host.
+ * @property {boolean} breakOutRoomStarted - Indicates if breakout room has started.
+ * @property {boolean} breakOutRoomEnded - Indicates if breakout room has ended.
+ * @property {Object} virtualStream - Virtual stream object.
+ * @property {number} mainRoomsLength - Length of main rooms.
+ * @property {string} memberRoom - Room of the member.
+ * @property {Function} updateP_activeNames - Function to update active participant names.
+ * @property {Function} updateActiveNames - Function to update active names.
+ * @property {Function} updateDispActiveNames - Function to update displayed active names.
+ * @property {Function} updateNewLimitedStreams - Function to update new limited streams.
+ * @property {Function} updateNon_alVideoStreams - Function to update non-al video streams.
+ * @property {Function} updateRef_participants - Function to update reference participants.
+ * @property {Function} updateSortAudioLoudness - Function to update audio loudness sorting.
+ * @property {Function} updateMixed_alVideoStreams - Function to update mixed al video streams.
+ * @property {Function} updateNon_alVideoStreams_muted - Function to update muted non-al video streams.
+ * @property {Function} updatePaginatedStreams - Function to update paginated streams.
+ * @property {Function} updateDoPaginate - Function to update pagination status.
+ * @property {Function} updatePrevDoPaginate - Function to update previous pagination status.
+ * @property {Function} updateCurrentUserPage - Function to update current user page.
+ * @property {Function} updateNumberPages - Function to update number of pages.
+ * @property {Function} updateMainRoomsLength - Function to update main rooms length.
+ * @property {Function} updateMemberRoom - Function to update member room.
+ * @property {Function} mixStreams - Function to mix streams.
+ * @property {Function} dispStreams - Function to display streams.
+ *
+ *
+ * @example
+ * ```typescript
+ * await changeVidsService.changeVids({
+ *   screenChanged: true,
+ *   parameters: {
+ *     allVideoStreams: [], // Your array of video streams
+ *     p_activeNames: [], // Active participant names
+ *     activeNames: [], // Names of active streams
+ *     dispActiveNames: [], // Names of displayed active streams
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     newLimitedStreams: [], // New limited streams
+ *     non_alVideoStreams: [], // Non-audio video streams
+ *     ref_participants: [], // Reference participants
+ *     participants: [], // All participants
+ *     eventType: 'conference', // Type of event
+ *     islevel: '1', // Level of the participant
+ *     member: 'John Doe', // Member's name
+ *     sortAudioLoudness: true,
+ *     audioDecibels: [], // Audio decibel levels
+ *     mixed_alVideoStreams: [], // Mixed audio/video streams
+ *     non_alVideoStreams_muted: [], // Muted non-audio video streams
+ *     remoteProducerId: 'abc123',
+ *     localStreamVideo: null, // Local video stream
+ *     oldAllStreams: [], // Previous streams
+ *     screenPageLimit: 4, // Limit of streams per screen
+ *     meetingDisplayType: 'grid', // Type of display
+ *     meetingVideoOptimized: true, // Video optimization status
+ *     recordingVideoOptimized: false, // Recording optimization status
+ *     recordingDisplayType: 'video', // Recording display type
+ *     paginatedStreams: [], // Paginated streams
+ *     itemPageLimit: 2, // Items per page limit
+ *     doPaginate: true, // Pagination flag
+ *     prevDoPaginate: false, // Previous pagination state
+ *     currentUserPage: 1, // Current page number
+ *     breakoutRooms: [], // Breakout room information
+ *     hostNewRoom: 0, // Host room number
+ *     breakOutRoomStarted: false, // Breakout room status
+ *     breakOutRoomEnded: false, // Breakout room end status
+ *     virtualStream: null, // Virtual stream
+ *     mainRoomsLength: 3, // Number of main rooms
+ *     memberRoom: 1, // Member's room number
+ *     updateP_activeNames: (names) => {}, // Update function for active names
+ *     updateActiveNames: (names) => {}, // Update function for all names
+ *     updateDispActiveNames: (names) => {}, // Update function for displayed names
+ *     updateNewLimitedStreams: (streams) => {}, // Update function for limited streams
+ *     updateNon_alVideoStreams: (participants) => {}, // Update function for non-audio streams
+ *     updateRef_participants: (participants) => {}, // Update function for reference participants
+ *     updateSortAudioLoudness: (sort) => {}, // Update function for sorting audio
+ *     updateMixed_alVideoStreams: (streams) => {}, // Update function for mixed streams
+ *     updateNon_alVideoStreams_muted: (participants) => {}, // Update function for muted streams
+ *     updatePaginatedStreams: (streams) => {}, // Update function for paginated streams
+ *     updateDoPaginate: (paginate) => {}, // Update function for pagination
+ *     updatePrevDoPaginate: (paginate) => {}, // Update function for previous pagination
+ *     updateCurrentUserPage: (page) => {}, // Update function for current page
+ *     updateNumberPages: (pages) => {}, // Update function for number of pages
+ *     updateMainRoomsLength: (length) => {}, // Update function for main room length
+ *     updateMemberRoom: (room) => {}, // Update function for member's room
+ *     mixStreams: async ({ streams, displayType }) => {}, // Function to mix streams
+ *     dispStreams: async ({ streams, displayType }) => {}, // Function to display streams
+ *   },
+ * });
+ * ```
+ */
 class ChangeVids {
-    /**
-     * Asynchronously changes the video streams based on the provided options.
-     *
-     * @param {Object} options - The options for changing video streams.
-     * @param {boolean} [options.screenChanged=false] - Indicates if the screen has changed.
-     * @param {ChangeVidsOptions} options.parameters - The parameters for changing video streams.
-     * @returns {Promise<void>} A promise that resolves when the video streams have been changed.
-     *
-     * @typedef {Object} ChangeVidsOptions
-     * @property {Function} getUpdatedAllParams - Function to get updated parameters.
-     * @property {Array} allVideoStreams - Array of all video streams.
-     * @property {Array} p_activeNames - Array of active participant names.
-     * @property {Array} activeNames - Array of active names.
-     * @property {Array} dispActiveNames - Array of displayed active names.
-     * @property {boolean} shareScreenStarted - Indicates if screen sharing has started.
-     * @property {boolean} shared - Indicates if the screen is shared.
-     * @property {Array} newLimitedStreams - Array of new limited streams.
-     * @property {Array} non_alVideoStreams - Array of non-al video streams.
-     * @property {Array} ref_participants - Array of reference participants.
-     * @property {Array} participants - Array of participants.
-     * @property {string} eventType - Type of the event.
-     * @property {string} islevel - Level of the participant.
-     * @property {string} member - Name of the member.
-     * @property {boolean} sortAudioLoudness - Indicates if audio loudness should be sorted.
-     * @property {Array} audioDecibels - Array of audio decibels.
-     * @property {Array} mixed_alVideoStreams - Array of mixed al video streams.
-     * @property {Array} non_alVideoStreams_muted - Array of muted non-al video streams.
-     * @property {string} remoteProducerId - ID of the remote producer.
-     * @property {Object} localStreamVideo - Local stream video object.
-     * @property {Array} oldAllStreams - Array of old all streams.
-     * @property {number} screenPageLimit - Limit of streams per screen page.
-     * @property {string} meetingDisplayType - Type of meeting display.
-     * @property {boolean} meetingVideoOptimized - Indicates if meeting video is optimized.
-     * @property {boolean} recordingVideoOptimized - Indicates if recording video is optimized.
-     * @property {string} recordingDisplayType - Type of recording display.
-     * @property {Array} paginatedStreams - Array of paginated streams.
-     * @property {number} itemPageLimit - Limit of items per page.
-     * @property {boolean} doPaginate - Indicates if pagination should be done.
-     * @property {boolean} prevDoPaginate - Indicates if pagination was previously done.
-     * @property {number} currentUserPage - Current user page number.
-     * @property {Array} breakoutRooms - Array of breakout rooms.
-     * @property {number} hostNewRoom - Index of the new room for the host.
-     * @property {boolean} breakOutRoomStarted - Indicates if breakout room has started.
-     * @property {boolean} breakOutRoomEnded - Indicates if breakout room has ended.
-     * @property {Object} virtualStream - Virtual stream object.
-     * @property {number} mainRoomsLength - Length of main rooms.
-     * @property {string} memberRoom - Room of the member.
-     * @property {Function} updateP_activeNames - Function to update active participant names.
-     * @property {Function} updateActiveNames - Function to update active names.
-     * @property {Function} updateDispActiveNames - Function to update displayed active names.
-     * @property {Function} updateNewLimitedStreams - Function to update new limited streams.
-     * @property {Function} updateNon_alVideoStreams - Function to update non-al video streams.
-     * @property {Function} updateRef_participants - Function to update reference participants.
-     * @property {Function} updateSortAudioLoudness - Function to update audio loudness sorting.
-     * @property {Function} updateMixed_alVideoStreams - Function to update mixed al video streams.
-     * @property {Function} updateNon_alVideoStreams_muted - Function to update muted non-al video streams.
-     * @property {Function} updatePaginatedStreams - Function to update paginated streams.
-     * @property {Function} updateDoPaginate - Function to update pagination status.
-     * @property {Function} updatePrevDoPaginate - Function to update previous pagination status.
-     * @property {Function} updateCurrentUserPage - Function to update current user page.
-     * @property {Function} updateNumberPages - Function to update number of pages.
-     * @property {Function} updateMainRoomsLength - Function to update main rooms length.
-     * @property {Function} updateMemberRoom - Function to update member room.
-     * @property {Function} mixStreams - Function to mix streams.
-     * @property {Function} dispStreams - Function to display streams.
-     */
     changeVids = async ({ screenChanged = false, parameters }) => {
         let { getUpdatedAllParams } = parameters;
         parameters = getUpdatedAllParams();
@@ -19531,6 +23876,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Compares the current active names with the previous active names and triggers an action if there are changes.
+ *
+ * @param {CompareActiveNamesOptions} options - The options for comparing active names.
+ * @param {boolean} [options.restart=false] - Whether to restart the comparison.
+ * @param {CompareActiveNamesParameters} options.parameters - The parameters for the comparison.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {string[]} options.parameters.activeNames - The current active names.
+ * @param {string[]} options.parameters.prevActiveNames - The previous active names.
+ * @param {Function} options.parameters.updatePrevActiveNames - Function to update the previous active names.
+ * @param {Function} options.parameters.trigger - Function to trigger an action when names change.
+ *
+ * @returns {Promise<void>} A promise that resolves when the comparison is complete.
+ *
+ * @throws Will log an error message if an error occurs during the comparison.
+ *
+ * @example
+ * const options = {
+ *   restart: false,
+ *   parameters: {
+ *     getUpdatedAllParams: () => { /* Logic to get updated parameters *\/ },
+ *     activeNames: ['Alice', 'Bob'],
+ *     prevActiveNames: ['Alice', 'Charlie'],
+ *     updatePrevActiveNames: (names) => { /* Logic to update previous active names *\/ },
+ *     trigger: async (data) => { /* Logic to handle the trigger *\/ },
+ *   },
+ * };
+ *
+ * await compareActiveNamesService.compareActiveNames(options);
+ * // If 'Bob' is not in the previous active names, it will trigger the action.
+ */
 class CompareActiveNames {
     /**
      * Compares the current active names with the previous active names and triggers an action if there are changes.
@@ -19604,6 +23980,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+   * Compares the current screen states with the previous screen states and triggers actions based on changes.
+   *
+   * @param {CompareScreenStatesOptions} options - The options for comparing screen states.
+   * @param {boolean} [options.restart=false] - Whether to restart the comparison process.
+   * @param {CompareScreenStatesParameters} options.parameters - The parameters for the comparison.
+   * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+   * @param {string} options.parameters.recordingDisplayType - The type of display being recorded.
+   * @param {boolean} options.parameters.recordingVideoOptimized - Whether the recording is optimized for video.
+   * @param {ScreenState[]} options.parameters.screenStates - The current screen states.
+   * @param {ScreenState[]} options.parameters.prevScreenStates - The previous screen states.
+   * @param {string[]} options.parameters.activeNames - The active names in the current context.
+   * @param {Function} options.parameters.trigger - Function to trigger actions based on changes.
+   *
+   * @returns {Promise<void>} A promise that resolves when the comparison and any triggered actions are complete.
+   *
+   * @throws Will log an error message if an error occurs during the comparison process.
+   *
+   * @example
+   * const options = {
+   *   restart: false,
+   *   parameters: {
+   *     getUpdatedAllParams: () => { /* Logic to get updated parameters *\/ },
+   *     recordingDisplayType: 'video',
+   *     recordingVideoOptimized: true,
+   *     screenStates: [{ state: 'active' }, { state: 'inactive' }],
+   *     prevScreenStates: [{ state: 'inactive' }, { state: 'active' }],
+   *     activeNames: ['Alice', 'Bob'],
+   *     trigger: async (data) => { /* Logic to handle the trigger *\/ },
+   *   },
+   * };
+   *
+   * await compareScreenStatesService.compareScreenStates(options);
+   * // If any screen state has changed, the trigger function will be called accordingly.
+   */
 class CompareScreenStates {
     /**
      * Compares the current screen states with the previous screen states and triggers actions based on changes.
@@ -19665,6 +24076,52 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Creates a WebRTC send transport and sets up event handlers for the transport.
+ *
+ * @param {CreateSendTransportOptions} options - The options for creating the send transport.
+ * @param {'audio' | 'video' | 'screen' | 'all'} options.option - The type of transport to create.
+ * @param {CreateSendTransportParameters} options.parameters - The parameters required for creating the transport.
+ * @param {string} options.parameters.islevel - Indicates the level of the transport.
+ * @param {string} options.parameters.member - The member name associated with the transport.
+ * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Device | null} options.parameters.device - The WebRTC device instance.
+ * @param {boolean} options.parameters.transportCreated - Flag indicating if the transport is created.
+ * @param {Transport | null} options.parameters.producerTransport - The producer transport instance.
+ * @param {Function} options.parameters.updateProducerTransport - Function to update the producer transport.
+ * @param {Function} options.parameters.updateTransportCreated - Function to update the transport creation state.
+ * @param {Function} options.parameters.connectSendTransport - Function to connect the send transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the send transport is created and configured.
+ *
+ * @throws Will throw an error if there is an issue creating the send transport.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   option: 'audio',
+ *   parameters: {
+ *     islevel: '2',
+ *     member: 'currentMember',
+ *     socket: socketInstance,
+ *     device: deviceInstance,
+ *     transportCreated: false,
+ *     producerTransport: null,
+ *     updateProducerTransport: (transport) => { console.log(updated) },
+ *     updateTransportCreated: (state) => { console.log(updated) },
+ *     connectSendTransport: connectSendTransportFunction,
+ *   },
+ * };
+ *
+ * createSendTransportService.createSendTransport(options)
+ *   .then(() => {
+ *     console.log('Send transport created successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error creating send transport:', error);
+ *   });
+ * ```
+ */
 class CreateSendTransport {
     /**
      * Creates a WebRTC send transport and sets up event handlers for the transport.
@@ -19789,6 +24246,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Resumes the send transport for audio and updates the UI and audio producer state accordingly.
+ *
+ * This method is essential for resuming audio streaming after it has been paused.
+ * It updates the application state and UI to reflect the current audio status.
+ *
+ * @param {ResumeSendTransportAudioOptions} options - The options for resuming the send transport.
+ * @param {Object} options.parameters - The parameters required for resuming the send transport.
+ * @param {Producer} options.parameters.audioProducer - The audio producer to be resumed.
+ * @param {string} options.parameters.islevel - The level of the user (e.g., host).
+ * @param {string} options.parameters.hostLabel - The label of the host.
+ * @param {boolean} options.parameters.lock_screen - Indicates if the screen is locked.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {Function} options.parameters.updateAudioProducer - Function to update the audio producer state.
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ *
+ * @returns {Promise<void>} A promise that resolves when the send transport is resumed and the UI is updated.
+ *
+ * @throws {Error} Throws an error if there is an issue during the process of resuming the audio send transport.
+ *
+ * @example
+ * await resumeSendTransportAudio({
+ *   parameters: {
+ *     audioProducer: myAudioProducer,
+ *     islevel: '2',
+ *     hostLabel: 'Host',
+ *     lock_screen: false,
+ *     shared: false,
+ *     updateAudioProducer: (producer) => { /* update producer state *\/ },
+ *     updateUpdateMainWindow: (state) => { /* update main window state *\/ },
+ *     prepopulateUserMedia: myPrepopulateFunction,
+ *   },
+ * });
+ */
 class ResumeSendTransportAudio {
     /**
      * Resumes the send transport for audio and updates the UI and audio producer state accordingly.
@@ -19842,6 +24335,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Receives all piped transports by emitting an event to the server and processing the response.
+ *
+ * This method communicates with the server to request piped transports for a specific room and member.
+ * It checks if any producers exist and, if so, iterates through different levels to retrieve piped producers.
+ *
+ * @param {ReceiveAllPipedTransportsOptions} options - The options for receiving all piped transports.
+ * @param {Socket} options.nsock - The socket instance used for communication.
+ * @param {ReceiveAllPipedTransportsParameters} options.parameters - The parameters for the operation.
+ * @param {string} options.parameters.roomName - The name of the room.
+ * @param {string} options.parameters.member - The member identifier.
+ * @param {GetPipedProducersAltType} options.parameters.getPipedProducersAlt - The function to get piped producers for a given level.
+ *
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ *
+ * @throws Will log an error message if the operation fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   nsock: socketInstance,
+ *   parameters: {
+ *     roomName: 'Room1',
+ *     member: 'Member1',
+ *     getPipedProducersAlt: getPipedProducersAltFunction,
+ *   },
+ * };
+ *
+ * await receiveAllPipedTransports(options);
+ * ```
+ */
 class ReceiveAllPipedTransports {
     /**
      * Receives all piped transports by emitting an event to the server and processing the response.
@@ -19896,6 +24420,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Disconnects the send transport for video, closes the video producer, and updates the state.
+ *
+ * @param {DisconnectSendTransportVideoOptions} options - The options required for disconnecting the send transport.
+ * @param {Object} options.parameters - The parameters for the disconnection.
+ * @param {Producer} options.parameters.videoProducer - The video producer to be closed.
+ * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {string} options.parameters.islevel - The participant's level.
+ * @param {string} options.parameters.roomName - The name of the room.
+ * @param {boolean} options.parameters.lock_screen - Flag indicating if the screen is locked.
+ * @param {boolean} options.parameters.updateMainWindow - Flag to update the main window.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+ * @param {Function} options.parameters.updateVideoProducer - Function to update the video producer state.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder streams.
+ *
+ * @returns {Promise<void>} A promise that resolves when the disconnection process is complete.
+ *
+ * @throws {Error} Throws an error if the disconnection process fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   parameters: {
+ *     videoProducer,
+ *     socket,
+ *     islevel: '1',
+ *     roomName: 'Room 101',
+ *     lock_screen: false,
+ *     updateMainWindow: false,
+ *     updateUpdateMainWindow: (state) => { console.log(updated) },
+ *     updateVideoProducer: (producer) => { console.log(updated) },
+ *     reorderStreams: (params) => { },
+ *     getUpdatedAllParams: () => ({}),
+ *   },
+ * };
+ *
+ * disconnectSendTransportVideoService.disconnectSendTransportVideo(options)
+ *   .then(() => {
+ *     console.log('Video transport disconnected successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error disconnecting video transport:', error);
+ *   });
+ * ```
+ */
 class DisconnectSendTransportVideo {
     /**
      * Disconnects the send transport for video, closes the video producer, and updates the state.
@@ -19950,6 +24519,56 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Disconnects the send transport for audio by pausing the audio producer and updating the UI accordingly.
+ *
+ * @param {DisconnectSendTransportAudioOptions} options - The options required to disconnect the send transport for audio.
+ * @param {Object} options.parameters - The parameters required for the disconnection.
+ * @param {Producer | null} options.parameters.audioProducer - The audio producer to be paused.
+ * @param {Socket} options.parameters.socket - The socket connection to notify the server.
+ * @param {boolean} options.parameters.videoAlreadyOn - Flag indicating if the video is already on.
+ * @param {string} options.parameters.islevel - The level of the user.
+ * @param {boolean} options.parameters.lock_screen - Flag indicating if the screen is locked.
+ * @param {boolean} options.parameters.shared - Flag indicating if the screen is shared.
+ * @param {Function} options.parameters.updateMainWindow - Function to update the main window state.
+ * @param {string} options.parameters.hostLabel - The label of the host.
+ * @param {string} options.parameters.roomName - The name of the room.
+ * @param {Function} options.parameters.updateAudioProducer - Function to update the audio producer state.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window update state.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ *
+ * @returns {Promise<void>} A promise that resolves when the send transport for audio is disconnected.
+ *
+ * @throws Will throw an error if the operation fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   parameters: {
+ *     audioProducer,
+ *     socket,
+ *     videoAlreadyOn: false,
+ *     islevel: '1',
+ *     lock_screen: false,
+ *     shared: false,
+ *     updateMainWindow: false,
+ *     hostLabel: 'Host',
+ *     roomName: 'Room 101',
+ *     updateAudioProducer: (producer) => { console.log(updated) },
+ *     updateUpdateMainWindow: (state) => { console.log(updated) },
+ *     prepopulateUserMedia: async ({ name, parameters }) => { },
+ *   },
+ * };
+ *
+ * disconnectSendTransportAudioService.disconnectSendTransportAudio(options)
+ *   .then(() => {
+ *     console.log('Audio transport disconnected successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error disconnecting audio transport:', error);
+ *   });
+ * ```
+ */
 class DisconnectSendTransportAudio {
     /**
      * Disconnects the send transport for audio by pausing the audio producer and updating the UI accordingly.
@@ -20006,6 +24625,45 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Disconnects the send transport for screen sharing.
+ *
+ * This function closes the screen producer, updates the state, and notifies the server
+ * about the closure and pausing of screen sharing.
+ *
+ * @param {DisconnectSendTransportScreenOptions} options - The options for disconnecting the send transport.
+ * @param {Object} options.parameters - The parameters required for disconnection.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {Producer | null} options.parameters.screenProducer - The screen producer to be closed.
+ * @param {Socket} options.parameters.socket - The socket connection to notify the server.
+ * @param {string} options.parameters.roomName - The name of the room.
+ * @param {Function} options.parameters.updateScreenProducer - Function to update the screen producer state.
+ *
+ * @returns {Promise<void>} A promise that resolves when the disconnection process is complete.
+ *
+ * @throws {Error} If an error occurs during the disconnection process.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   parameters: {
+ *     screenProducer,
+ *     socket,
+ *     roomName: 'Room 101',
+ *     updateScreenProducer: (producer) => { console.log(updated) },
+ *     getUpdatedAllParams: () => ({}),
+ *   },
+ * };
+ *
+ * disconnectSendTransportScreenService.disconnectSendTransportScreen(options)
+ *   .then(() => {
+ *     console.log('Screen transport disconnected successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error disconnecting screen transport:', error);
+ *   });
+ * ```
+ */
 class DisconnectSendTransportScreen {
     /**
      * Disconnects the send transport for screen sharing.
@@ -20049,6 +24707,60 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Connects the send transport based on the specified option.
+ *
+ * @param {ConnectSendTransportOptions} options - The options for connecting the send transport.
+ * @param {string} options.option - The type of transport to connect ("audio", "video", "screen", or "all").
+ * @param {ConnectSendTransportParameters} options.parameters - The parameters required for connecting the transport.
+ * @param {ProducerOptions} options.parameters.audioParams - The audio parameters.
+ * @param {ProducerOptions} options.parameters.videoParams - The video parameters.
+ * @param {MediaStream} options.parameters.localStreamScreen - The local screen stream.
+ * @param {MediaStream} options.parameters.canvasStream - The canvas stream.
+ * @param {boolean} options.parameters.whiteboardStarted - Indicates if the whiteboard has started.
+ * @param {boolean} options.parameters.whiteboardEnded - Indicates if the whiteboard has ended.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {string} options.parameters.islevel - The level of the screen sharing.
+ * @param {Function} options.parameters.connectSendTransportAudio - Function to connect the audio send transport.
+ * @param {Function} options.parameters.connectSendTransportVideo - Function to connect the video send transport.
+ * @param {Function} options.parameters.connectSendTransportScreen - Function to connect the screen send transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the transport is connected.
+ *
+ * @throws Will throw an error if the connection fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   option: 'audio', // Can be 'audio', 'video', 'screen', or 'all'
+ *   parameters: {
+ *     audioParams: { codec: 'opus' },
+ *     videoParams: { codec: 'vp8' },
+ *     localStreamScreen: null, // Set to your local screen stream
+ *     canvasStream: null, // Set to your canvas stream if using
+ *     whiteboardStarted: false,
+ *     whiteboardEnded: true,
+ *     shared: false,
+ *     islevel: '1',
+ *     connectSendTransportAudio: connectSendTransportAudioFunction,
+ *     connectSendTransportVideo: connectSendTransportVideoFunction,
+ *     connectSendTransportScreen: connectSendTransportScreenFunction,
+ *     updateVideoProducer: () => {},
+ *     updateProducerTransport: () => {},
+ *     updateScreenProducer: () => {},
+ *     updateMainWindow: false,
+ *   },
+ * };
+ *
+ * connectSendTransport(options)
+ *   .then(() => {
+ *     console.log('Transport connected successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error connecting transport:', error);
+ *   });
+ * ```
+ */
 class ConnectSendTransport {
     /**
      * Connects the send transport based on the specified option.
@@ -20134,6 +24846,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // piped-producers.service.ts
+/**
+ * Retrieves piped producers and signals new consumer transport for each retrieved producer.
+ *
+ * @param {GetPipedProducersAltOptions} options - The options for retrieving piped producers.
+ * @param {Socket} options.nsock - The WebSocket instance used for communication.
+ * @param {string} options.islevel - A flag indicating the level of the request.
+ * @param {GetPipedProducersAltParameters} options.parameters - Additional parameters for the request.
+ * @param {string} options.parameters.member - The member identifier.
+ * @param {SignalNewConsumerTransportType} options.parameters.signalNewConsumerTransport - A function to signal new consumer transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ *
+ * @throws {Error} If an error occurs during the process of retrieving producers.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   nsock: socketInstance,
+ *   islevel: '2',
+ *   parameters: {
+ *     member: 'user123',
+ *     signalNewConsumerTransport: async ({ nsock, remoteProducerId, islevel, parameters }) => {
+ *       // Implementation to signal new consumer transport
+ *       console.log(`Signaling new consumer transport for producer: ${remoteProducerId}`);
+ *     },
+ *   },
+ * };
+ *
+ * const getPipedProducersService = new GetPipedProducersAlt();
+ * await getPipedProducersService.getPipedProducersAlt(options);
+ * console.log('Piped producers retrieved successfully.');
+ * ```
+ */
 class GetPipedProducersAlt {
     /**
      * Retrieves piped producers and signals new consumer transport for each retrieved producer.
@@ -20180,6 +24925,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Connects the receiving transport to consume media from a remote producer.
+ *
+ * @param {ConnectRecvTransportOptions} options - The options for connecting the receiving transport.
+ * @param {Transport} options.consumerTransport - The transport used for consuming media.
+ * @param {string} options.remoteProducerId - The ID of the remote producer.
+ * @param {string} options.serverConsumerTransportId - The ID of the server consumer transport.
+ * @param {Socket} options.nsock - The socket used for communication.
+ * @param {ConnectRecvTransportParameters} options.parameters - The parameters for the connection.
+ *
+ * @returns {Promise<void>} A promise that resolves when the connection is established.
+ *
+ * @throws Will throw an error if the connection or consumption fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   consumerTransport,
+ *   remoteProducerId: 'producer-id',
+ *   serverConsumerTransportId: 'transport-id',
+ *   nsock: socket,
+ *   parameters: connectRecvTransportOptions,
+ * };
+ *
+ * connectRecvTransport(options)
+ *   .then(() => {
+ *     console.log('Transport connected and consuming media');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error connecting transport:', error);
+ *   });
+ * ```
+ */
 class ConnectRecvTransport {
     /**
      * Connects the receiving transport to consume media from a remote producer.
@@ -20291,6 +25069,88 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Updates the interaction state based on the provided options and parameters.
+ *
+ * This method handles the updating of participant interactions based on the event type, screen sharing status,
+ * and various other parameters. It manages the addition and removal of streams in the context of screen sharing
+ * and video/audio management.
+ *
+ * @param {ReUpdateInterOptions} options - The options for updating the interaction.
+ * @param {string} options.name - The name of the participant.
+ * @param {boolean} [options.add=false] - Whether to add the participant to the interaction.
+ * @param {boolean} [options.force=false] - Whether to force the update.
+ * @param {number} [options.average=127] - The average value used for determining reorder intervals.
+ * @param {ReUpdateInterParameters} options.parameters - The parameters for updating the interaction.
+ * @param {number} options.parameters.screenPageLimit - The screen page limit.
+ * @param {number} options.parameters.itemPageLimit - The item page limit.
+ * @param {number} options.parameters.reorderInterval - The reorder interval.
+ * @param {number} options.parameters.fastReorderInterval - The fast reorder interval.
+ * @param {string} options.parameters.eventType - The type of event (e.g., "broadcast", "chat", "conference").
+ * @param {Array<Participant>} options.parameters.participants - The list of participants.
+ * @param {Array<Stream | Participant>} options.parameters.allVideoStreams - The list of all video streams.
+ * @param {boolean} options.parameters.shared - Indicates if the screen is shared.
+ * @param {boolean} options.parameters.shareScreenStarted - Indicates if screen sharing has started.
+ * @param {string} options.parameters.adminNameStream - The admin name stream.
+ * @param {string} options.parameters.screenShareNameStream - The screen share name stream.
+ * @param {boolean} options.parameters.updateMainWindow - Whether to update the main window.
+ * @param {boolean} options.parameters.sortAudioLoudness - Whether to sort audio by loudness.
+ * @param {number} options.parameters.lastReorderTime - The last reorder time.
+ * @param {Array<Stream | Participant>} options.parameters.newLimitedStreams - The list of new limited streams.
+ * @param {Array<string>} options.parameters.newLimitedStreamsIDs - The list of new limited stream IDs.
+ * @param {Array<string>} options.parameters.oldSoundIds - The list of old sound IDs.
+ * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window.
+ * @param {Function} options.parameters.updateSortAudioLoudness - Function to update the audio loudness sorting.
+ * @param {Function} options.parameters.updateLastReorderTime - Function to update the last reorder time.
+ * @param {Function} options.parameters.updateNewLimitedStreams - Function to update the new limited streams.
+ * @param {Function} options.parameters.updateNewLimitedStreamsIDs - Function to update the new limited stream IDs.
+ * @param {Function} options.parameters.updateOldSoundIds - Function to update the old sound IDs.
+ * @param {Function} options.parameters.onScreenChanges - Function to handle screen changes.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder streams.
+ * @param {Function} options.parameters.changeVids - Function to change videos.
+ *
+ * @returns {Promise<void>} A promise that resolves when the interaction update is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the interaction update.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   name: 'John Doe',
+ *   add: true,
+ *   parameters: {
+ *     screenPageLimit: 5,
+ *     itemPageLimit: 10,
+ *     reorderInterval: 1000,
+ *     fastReorderInterval: 500,
+ *     eventType: 'conference',
+ *     participants: [...],
+ *     allVideoStreams: [...],
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     adminNameStream: 'Admin',
+ *     screenShareNameStream: 'ScreenShare',
+ *     updateMainWindow: true,
+ *     sortAudioLoudness: false,
+ *     lastReorderTime: Date.now(),
+ *     newLimitedStreams: [],
+ *     newLimitedStreamsIDs: [],
+ *     oldSoundIds: [],
+ *     updateUpdateMainWindow: (value) => { console.log(updated) },
+ *     updateSortAudioLoudness: (value) => { console.log(updated) },
+ *     updateLastReorderTime: (value) => { console.log(updated) },
+ *     updateNewLimitedStreams: (streams) => { console.log(updated) },
+ *     updateNewLimitedStreamsIDs: (ids) => { console.log(updated) },
+ *     updateOldSoundIds: (ids) => { console.log(updated) },
+ *     onScreenChanges: async (opts) => {  },
+ *     reorderStreams: async (opts) => {  },
+ *     changeVids: async (opts) => {  },
+ *   },
+ * };
+ *
+ * await reUpdateInter(options);
+ * ```
+ */
 class ReUpdateInter {
     /**
      * Updates the interaction state based on the provided options and parameters.
@@ -20446,6 +25306,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Updates or adds a participant's audio decibel data in the array.
+ *
+ * This method checks if a participant's name exists in the audio decibels array.
+ * If it does, it updates the participant's `averageLoudness`; otherwise, it adds a new entry.
+ * After modification, it calls `updateAudioDecibels` to apply the changes to the array.
+ *
+ * @param {UpdateParticipantAudioDecibelsOptions} options - The options for updating participant audio decibels.
+ * @param {string} options.name - The name of the participant.
+ * @param {number} options.averageLoudness - The current average loudness of the participant.
+ * @param {AudioDecibels[]} options.audioDecibels - The array of current audio decibel entries.
+ * @param {Function} options.updateAudioDecibels - The function to update the audio decibels array.
+ *
+ * @returns {void} - This function does not return a value.
+ *
+ * @example
+ * ```typescript
+ * const audioDecibels = [
+ *   { name: 'Alice', averageLoudness: -10 },
+ *   { name: 'Bob', averageLoudness: -12 },
+ * ];
+ *
+ * const updateAudioDecibels = (newDecibels) => {
+ *   console.log('Updated audio decibels:', newDecibels);
+ * };
+ *
+ * const updateService = new UpdateParticipantAudioDecibels();
+ *
+ * // Update existing participant
+ * updateService.updateParticipantAudioDecibels({
+ *   name: 'Alice',
+ *   averageLoudness: -8,
+ *   audioDecibels,
+ *   updateAudioDecibels,
+ * });
+ *
+ * // Add a new participant
+ * updateService.updateParticipantAudioDecibels({
+ *   name: 'Charlie',
+ *   averageLoudness: -15,
+ *   audioDecibels,
+ *   updateAudioDecibels,
+ * });
+ * ```
+ */
 class UpdateParticipantAudioDecibels {
     /**
      * Updates the audio decibels for a participant.
@@ -20483,6 +25388,108 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Closes and resizes the video and audio elements based on the provided options.
+ *
+ * @param {CloseAndResizeOptions} options - The options for closing and resizing.
+ * @param {string} options.producerId - The ID of the producer.
+ * @param {string} options.kind - The kind of media (audio, video, screenshare, or screen).
+ * @param {object} options.parameters - The parameters for the operation.
+ * @param {function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ * @param {Array} options.parameters.allAudioStreams - Array of all audio streams.
+ * @param {Array} options.parameters.allVideoStreams - Array of all video streams.
+ * @param {Array} options.parameters.activeNames - Array of active participant names.
+ * @param {Array} options.parameters.participants - Array of participants.
+ * @param {Array} options.parameters.streamNames - Array of stream names.
+ * @param {string} options.parameters.recordingDisplayType - Type of recording display.
+ * @param {boolean} options.parameters.recordingVideoOptimized - Whether recording is video optimized.
+ * @param {string} options.parameters.adminIDStream - ID of the admin stream.
+ * @param {Array} options.parameters.newLimitedStreams - Array of new limited streams.
+ * @param {Array} options.parameters.newLimitedStreamsIDs - Array of new limited stream IDs.
+ * @param {Array} options.parameters.oldAllStreams - Array of old all streams.
+ * @param {boolean} options.parameters.shareScreenStarted - Whether screen sharing has started.
+ * @param {boolean} options.parameters.shared - Whether sharing is active.
+ * @param {string} options.parameters.meetingDisplayType - Type of meeting display.
+ * @param {boolean} options.parameters.defer_receive - Whether to defer receiving.
+ * @param {boolean} options.parameters.lock_screen - Whether the screen is locked.
+ * @param {boolean} options.parameters.firstAll - Whether it is the first all.
+ * @param {boolean} options.parameters.first_round - Whether it is the first round.
+ * @param {boolean} options.parameters.gotAllVids - Whether all videos are received.
+ * @param {string} options.parameters.eventType - Type of event.
+ * @param {string} options.parameters.hostLabel - Label of the host.
+ * @param {boolean} options.parameters.shareEnded - Whether sharing has ended.
+ * @param {boolean} options.parameters.updateMainWindow - Whether to update the main window.
+ * @param {function} options.parameters.updateActiveNames - Function to update active names.
+ * @param {function} options.parameters.updateAllAudioStreams - Function to update all audio streams.
+ * @param {function} options.parameters.updateAllVideoStreams - Function to update all video streams.
+ * @param {function} options.parameters.updateShareScreenStarted - Function to update share screen started status.
+ * @param {function} options.parameters.updateUpdateMainWindow - Function to update main window status.
+ * @param {function} options.parameters.updateNewLimitedStreams - Function to update new limited streams.
+ * @param {function} options.parameters.updateOldAllStreams - Function to update old all streams.
+ * @param {function} options.parameters.updateDefer_receive - Function to update defer receive status.
+ * @param {function} options.parameters.updateMainHeightWidth - Function to update main height and width.
+ * @param {function} options.parameters.updateShareEnded - Function to update share ended status.
+ * @param {function} options.parameters.updateLock_screen - Function to update lock screen status.
+ * @param {function} options.parameters.updateFirstAll - Function to update first all status.
+ * @param {function} options.parameters.updateFirst_round - Function to update first round status.
+ * @param {function} options.parameters.reorderStreams - Function to reorder streams.
+ * @param {function} options.parameters.prepopulateUserMedia - Function to prepopulate user media.
+ * @param {function} options.parameters.getVideos - Function to get videos.
+ * @param {function} options.parameters.rePort - Function to report.
+ *
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ *
+ * @example
+ * const options = {
+ *   producerId: '12345',
+ *   kind: 'video',
+ *   parameters: {
+ *     getUpdatedAllParams: () => { /* Logic to get updated parameters *\/ },
+ *     allAudioStreams: [],
+ *     allVideoStreams: [],
+ *     activeNames: ['Participant1', 'Participant2'],
+ *     participants: [],
+ *     streamNames: [],
+ *     recordingDisplayType: 'video',
+ *     recordingVideoOptimized: true,
+ *     adminIDStream: 'admin123',
+ *     newLimitedStreams: [],
+ *     newLimitedStreamsIDs: [],
+ *     oldAllStreams: [],
+ *     shareScreenStarted: false,
+ *     shared: false,
+ *     meetingDisplayType: 'media',
+ *     defer_receive: false,
+ *     lock_screen: false,
+ *     firstAll: false,
+ *     first_round: false,
+ *     gotAllVids: false,
+ *     eventType: 'conference',
+ *     hostLabel: 'Host',
+ *     shareEnded: false,
+ *     updateMainWindow: false,
+ *     updateActiveNames: (names) => { /* Logic to update active names *\/ },
+ *     updateAllAudioStreams: (streams) => { /* Logic to update audio streams *\/ },
+ *     updateShareScreenStarted: (status) => { /* Logic to update share screen status *\/ },
+ *     updateUpdateMainWindow: (status) => { /* Logic to update main window status *\/ },
+ *     updateNewLimitedStreams: (streams) => { /* Logic to update new limited streams *\/ },
+ *     updateOldAllStreams: (streams) => { /* Logic to update old streams *\/ },
+ *     updateDefer_receive: (status) => { /* Logic to update defer receive status *\/ },
+ *     updateMainHeightWidth: (size) => { /* Logic to update main height and width *\/ },
+ *     updateShareEnded: (status) => { /* Logic to update share ended status *\/ },
+ *     updateLock_screen: (status) => { /* Logic to update lock screen status *\/ },
+ *     updateFirstAll: (status) => { /* Logic to update first all status *\/ },
+ *     updateFirst_round: (status) => { /* Logic to update first round status *\/ },
+ *     reorderStreams: async () => { /* Logic to reorder streams *\/ },
+ *     prepopulateUserMedia: async () => { /* Logic to prepopulate user media *\/ },
+ *     getVideos: async () => { /* Logic to get videos *\/ },
+ *     rePort: async () => { /* Logic to report *\/ },
+ *   },
+ * };
+ *
+ * await closeAndResizeService.closeAndResize(options);
+ * // The operation will adjust the video and audio elements as per the given parameters.
+ */
 class CloseAndResize {
     /**
      * Closes and resizes the video and audio elements based on the provided options.
@@ -20710,6 +25717,32 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * @service AutoAdjust
+ * @description Service to auto-adjust layout values based on the event type, number of participants, and sharing conditions. Useful for dynamically adjusting UI elements in different event settings.
+ *
+ * @method autoAdjust
+ * Dynamically calculates and adjusts layout values (e.g., grid columns) based on conditions such as event type, participant count, and sharing status.
+ *
+ * @param {AutoAdjustOptions} options - Configuration options for the auto-adjustment.
+ * @param {number} options.n - Number of participants in the event.
+ * @param {EventType} options.eventType - Type of event (e.g., 'broadcast', 'chat', 'conference').
+ * @param {boolean} options.shareScreenStarted - Indicates whether screen sharing is active.
+ * @param {boolean} options.shared - Indicates if another resource is currently shared.
+ *
+ * @returns {Promise<number[]>} A promise resolving to an array of two adjusted layout values.
+ *
+ * @example
+ * ```typescript
+ * const [primaryLayout, secondaryLayout] = await autoAdjustService.autoAdjust({
+ *   n: 5,
+ *   eventType: 'conference',
+ *   shareScreenStarted: false,
+ *   shared: false,
+ * });
+ * console.log(primaryLayout, secondaryLayout); // Adjusted layout values based on inputs
+ * ```
+ */
 class AutoAdjust {
     /**
      * Adjusts values based on the provided options.
@@ -20791,6 +25824,38 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Switches the user's video stream based on the provided video preference and other parameters.
+ *
+ * This method manages the process of switching the user's video input device,
+ * checking permissions, and updating the relevant application state.
+ * If the specified device is not accessible, it attempts to find an alternative.
+ *
+ * @param {SwitchUserVideoAltOptions} options - The options for switching the user's video.
+ * @param {string} options.videoPreference - The preferred video input device ID.
+ * @param {boolean} options.checkoff - A flag indicating whether to turn off the video before switching.
+ * @param {SwitchUserVideoAltParameters} options.parameters - The parameters required for switching the video.
+ * @param {Function} options.parameters.showAlert - Function to show alert messages to the user.
+ * @param {boolean} options.parameters.hasCameraPermission - Flag indicating if the user has granted camera permission.
+ * @param {Function} options.parameters.updateVideoSwitching - Function to update the video switching state.
+ * @param {Function} options.parameters.requestPermissionCamera - Function to request camera permission from the user.
+ * @param {Function} options.parameters.checkMediaPermission - Function to check if media permissions are granted.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video switching is complete.
+ *
+ * @throws Will throw an error if the audio input device cannot be accessed or if there is an unexpected error.
+ *
+ * @example
+ * await switchUserVideoAlt({
+ *   videoPreference: 'user',
+ *   checkoff: false,
+ *   parameters: {
+ *     hasCameraPermission: true,
+ *     updateVideoSwitching: (state) => { /* update state *\/ },
+ *     // other parameters...
+ *   },
+ * });
+ */
 class SwitchUserVideoAlt {
     ClickVideoService;
     constructor(ClickVideoService) {
@@ -21016,6 +26081,53 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: ClickVideo }] });
 
+/**
+ * Switches the user's video input device based on the provided options.
+ *
+ * This method checks permissions, enumerates available devices, and updates the
+ * video stream based on user preferences. It also manages UI updates and alerts.
+ *
+ * @param {SwitchUserVideoOptions} options - The options for switching the user's video.
+ * @param {string} options.videoPreference - The preferred video input device ID.
+ * @param {boolean} options.checkoff - Flag indicating whether to turn off the video.
+ * @param {SwitchUserVideoParameters} options.parameters - Additional parameters required for switching the video.
+ * @param {boolean} options.parameters.audioOnlyRoom - Indicates if the room is audio-only.
+ * @param {number} options.parameters.frameRate - The desired frame rate for the video.
+ * @param {Object} options.parameters.vidCons - Video constraints such as width and height.
+ * @param {string} options.parameters.prevVideoInputDevice - The previous video input device ID.
+ * @param {Function} options.parameters.showAlert - Function to show alerts to the user.
+ * @param {boolean} options.parameters.hasCameraPermission - Indicates if the user has camera permission.
+ * @param {Function} options.parameters.updateVideoSwitching - Function to update video switching state.
+ * @param {Function} options.parameters.updateUserDefaultVideoInputDevice - Function to update the default video input device.
+ * @param {Function} options.parameters.requestPermissionCamera - Function to request camera permission.
+ * @param {Function} options.parameters.streamSuccessVideo - Function to handle successful video stream.
+ * @param {Function} options.parameters.sleep - Function to pause execution for a specified duration.
+ * @param {Function} options.parameters.checkMediaPermission - Function to check media permissions.
+ *
+ * @returns {Promise<void>} A promise that resolves when the video input device has been successfully switched.
+ *
+ * @throws {Error} Throws an error if switching the video input device fails.
+ *
+ * @example
+ * await switchUserVideo({
+ *   videoPreference: 'user',
+ *   checkoff: false,
+ *   parameters: {
+ *     audioOnlyRoom: false,
+ *     frameRate: 30,
+ *     vidCons: { width: 1280, height: 720 },
+ *     prevVideoInputDevice: 'device-id',
+ *     showAlert: myShowAlertFunction,
+ *     hasCameraPermission: true,
+ *     updateVideoSwitching: myUpdateFunction,
+ *     updateUserDefaultVideoInputDevice: myUpdateFunction,
+ *     requestPermissionCamera: myRequestPermissionFunction,
+ *     streamSuccessVideo: myStreamSuccessFunction,
+ *     sleep: mySleepFunction,
+ *     checkMediaPermission: true,
+ *   },
+ * });
+ */
 class SwitchUserVideo {
     ClickVideoService;
     constructor(ClickVideoService) {
@@ -21138,6 +26250,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: ClickVideo }] });
 
+/**
+ * Switches the user's audio input device based on the provided audio preference.
+ *
+ * This method checks for audio permissions, attempts to access the specified audio input device,
+ * and updates the application's state accordingly. If the audio input device cannot be accessed,
+ * it will revert to the previous audio input device.
+ *
+ * @param {SwitchUserAudioOptions} options - The options for switching the user's audio input device.
+ * @param {string} options.audioPreference - The preferred audio input device ID.
+ * @param {SwitchUserAudioParameters} options.parameters - Additional parameters required for switching the audio input device.
+ * @param {string} options.parameters.prevAudioInputDevice - The previous audio input device ID.
+ * @param {Function} options.parameters.showAlert - Function to show alert messages.
+ * @param {boolean} options.parameters.hasAudioPermission - Flag indicating if the user has granted audio permission.
+ * @param {Function} options.parameters.updateUserDefaultAudioInputDevice - Function to update the user's default audio input device.
+ * @param {Function} options.parameters.streamSuccessAudioSwitch - Function to handle successful audio stream switch.
+ * @param {Function} options.parameters.requestPermissionAudio - Function to request audio permission from the user.
+ * @param {Function} options.parameters.checkMediaPermission - Function to check if media permission is granted.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio input device has been successfully switched.
+ *
+ * @throws Will throw an error if the audio input device cannot be accessed or if there is an unexpected error.
+ *
+ * @example
+ * await switchUserAudio({
+ *   audioPreference: 'new-audio-device-id',
+ *   parameters: {
+ *     prevAudioInputDevice: 'previous-device-id',
+ *     hasAudioPermission: true,
+ *     updateUserDefaultAudioInputDevice: updateDeviceFunction,
+ *     // other parameters...
+ *   },
+ * });
+ */
 class SwitchUserAudio {
     /**
      * Switches the user's audio input device based on the provided audio preference.
@@ -21223,6 +26368,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Asynchronously retrieves and updates messages for a specified room from the server.
+ *
+ * This method communicates with the server to request messages for a specific room and updates the messages array accordingly.
+ *
+ * @param {ReceiveRoomMessagesOptions} options - The function parameters.
+ * @param {Socket} options.socket - The socket instance used for communication.
+ * @param {string} options.roomName - The name of the room to retrieve messages for.
+ * @param {function} options.updateMessages - Function to update the messages array with the retrieved messages.
+ *
+ * @returns {Promise<void>} A promise that resolves when the messages have been successfully retrieved and updated.
+ *
+ * @throws Will log an error message if an error occurs during the process of retrieving messages.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   socket: socketInstance,
+ *   roomName: 'Room1',
+ *   updateMessages: (messages) => {
+ *     // Logic to update messages
+ *   },
+ * };
+ *
+ * await receiveRoomMessages(options);
+ * ```
+ */
 class ReceiveRoomMessages {
     /**
      * Asynchronously retrieves and updates messages for a specified room from the server.
@@ -21263,21 +26435,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * The `FormatNumber` service provides functionality to format numeric values
+ * into a more readable string representation, appending appropriate suffixes
+ * like K (thousands), M (millions), and B (billions).
+ *
+ * @service
+ * @example
+ * ```typescript
+ * import { FormatNumber } from 'mediasfu-angular';
+ *
+ * constructor(private formatNumber: FormatNumber) {}
+ *
+ * async displayFormattedNumber() {
+ *   const formatted = await this.formatNumber.formatNumber({ number: 1500 });
+ *   console.log(formatted); // Outputs: "1.5K"
+ * }
+ * ```
+ *
+ * @remarks
+ * This service can be useful for displaying large numbers in a more compact form
+ * in user interfaces, especially in dashboards or reports where space is limited.
+ *
+ * @property {FormatNumberOptions} options - Options containing the number to format.
+ *
+ * @returns {FormatNumber} The FormatNumber service for formatting numeric values.
+ */
 class FormatNumber {
-    /**
-     * Formats a number into a string representation with appropriate suffixes (K, M, B).
-     *
-     * @param number - The number to format.
-     * @returns A promise that resolves to a formatted string or undefined if the input is falsy.
-     *
-     * @example
-     * ```typescript
-     * formatNumber(500); // "500"
-     * formatNumber(1500); // "1.5K"
-     * formatNumber(1500000); // "1.5M"
-     * formatNumber(1500000000); // "1.5B"
-     * ```
-     */
     async formatNumber({ number }) {
         if (number) {
             if (number < 1e3) {
@@ -21306,6 +26490,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * @service JoinConsumeRoom
+ * @description Service to join a media consumption room, setup device, and manage piped transports.
+ *
+ * @method joinConsumeRoom
+ * Joins a consumption room by sending a request to the server and performing necessary device and transport setup.
+ *
+ * @param {JoinConsumeRoomOptions} options - Options for joining the consumption room.
+ * @param {Socket} options.remote_sock - The remote socket used for joining the room.
+ * @param {string} options.apiToken - API token for authentication.
+ * @param {string} options.apiUserName - API username for authentication.
+ * @param {JoinConsumeRoomParameters} options.parameters - Parameters required for the function.
+ *
+ * @returns {Promise<JoinConsumeRoomResponse>} A promise that resolves with the result of the join request.
+ *
+ * @example
+ * ```typescript
+ * const joinConsumeRoomResponse = await joinConsumeRoomService.joinConsumeRoom({
+ *   remote_sock: mySocket,
+ *   apiToken: 'apiToken123',
+ *   apiUserName: 'myUser',
+ *   parameters: {
+ *     roomName: 'room1',
+ *     islevel: '2',
+ *     member: 'JohnDoe',
+ *     device: null,
+ *     updateDevice: updateDeviceFunction,
+ *     receiveAllPipedTransports: receiveAllPipedTransportsFunction,
+ *     createDeviceClient: createDeviceClientFunction,
+ *   }
+ * });
+ * ```
+ */
 class JoinConsumeRoom {
     JoinConRoomService;
     constructor(JoinConRoomService) {
@@ -21366,6 +26583,48 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: JoinConRoom }] });
 
+/**
+ * Connects to remote IPs and manages socket connections.
+ *
+ * This method establishes connections to remote IPs for media streaming, handles new pipe producer events,
+ * and manages producer closure events. It updates the necessary state in the application to reflect
+ * the current connections and stream configurations.
+ *
+ * @param {ConnectIpsOptions} options - The options for connecting IPs.
+ * @param {Record<string, any>[]} options.consume_sockets - The array of current socket connections.
+ * @param {string[]} options.remIP - The list of remote IPs to connect to.
+ * @param {string} options.apiUserName - The API username for authentication.
+ * @param {string} [options.apiKey] - The API key for authentication.
+ * @param {string} [options.apiToken] - The API token for authentication.
+ * @param {Function} [options.newProducerMethod] - The method to handle new pipe producer events (default: newPipeProducer).
+ * @param {Function} [options.closedProducerMethod] - The method to handle producer closed events (default: producerClosed).
+ * @param {Function} [options.joinConsumeRoomMethod] - The method to handle joining a consuming room (default: joinConsumeRoom).
+ * @param {ConnectIpsParameters} options.parameters - Additional parameters for the operation.
+ * @param {string[]} options.parameters.roomRecvIPs - The list of IPs that have been received in the room.
+ * @param {Function} options.parameters.updateRoomRecvIPs - Function to update the room received IPs.
+ * @param {Function} options.parameters.updateConsume_sockets - Function to update the consume sockets.
+ *
+ * @returns {Promise<[Record<string, any>[], string[]]>} A promise that resolves to an array containing the updated consume sockets and room received IPs.
+ *
+ * @throws Will throw an error if required parameters are missing or if there is an issue connecting to a remote IP.
+ *
+ * @example
+ * ```typescript
+ * const result = await connectIps({
+ *   consume_sockets: currentSockets,
+ *   remIP: ['192.168.1.1', '192.168.1.2'],
+ *   apiUserName: 'username',
+ *   apiKey: 'your-api-key',
+ *   apiToken: 'your-api-token',
+ *   parameters: {
+ *     roomRecvIPs: [],
+ *     updateRoomRecvIPs: (ips) => { },
+ *     updateConsume_sockets: (sockets) => { },
+ *     // ...other parameters
+ *   },
+ * });
+ * ```
+ */
 class ConnectIps {
     socketManagerService;
     newPipeProducerService;
@@ -21472,6 +26731,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: SocketManager }, { type: NewPipeProducer }, { type: ProducerClosed }, { type: JoinConsumeRoom }] });
 
+/**
+ * Updates the poll state based on the provided data.
+ *
+ * @param {PollUpdatedOptions} options - The options for updating the poll.
+ * @param {PollUpdatedData} options.data - The data containing poll information.
+ * @param {Poll[]} options.polls - The current list of polls.
+ * @param {Poll} options.poll - The current poll.
+ * @param {string} options.member - The member identifier.
+ * @param {string} options.islevel - The level of the member.
+ * @param {Function} [options.showAlert] - Function to show alerts.
+ * @param {Function} options.updatePolls - Function to update the list of polls.
+ * @param {Function} options.updatePoll - Function to update the current poll.
+ * @param {Function} options.updateIsPollModalVisible - Function to update the visibility of the poll modal.
+ * @returns {Promise<void>} A promise that resolves when the poll update is complete.
+ *
+ * @example
+ * ```typescript
+ * const pollUpdatedService = new PollUpdated();
+ * pollUpdatedService.pollUpdated({
+ *   data: { polls: [], poll: { id: '123', question: 'Sample Poll?', status: 'started' } },
+ *   polls: [],
+ *   poll: { id: '123', question: 'Sample Poll?', status: 'started' },
+ *   member: 'user1',
+ *   islevel: '1',
+ *   showAlert: (alert) => console.log(alert.message),
+ *   updatePolls: (polls) => console.log('Updated polls:', polls),
+ *   updatePoll: (poll) => console.log('Updated poll:', poll),
+ *   updateIsPollModalVisible: (visible) => console.log('Poll modal visibility:', visible),
+ * });
+ * ```
+ */
 class PollUpdated {
     /**
      * Updates the poll state based on the provided data.
@@ -21534,6 +26824,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the creation of a poll.
+ *
+ * This method sends a request to create a poll in the specified room via a socket event.
+ * It also handles the response from the server to notify the user whether the poll was
+ * created successfully or if there was an error.
+ *
+ * @param {HandleCreatePollOptions} options - The options for creating the poll.
+ * @param {Poll} options.poll - The poll object containing the poll details.
+ * @param {Socket} options.socket - The socket instance for emitting events.
+ * @param {string} options.roomName - The name of the room where the poll will be created.
+ * @param {Function} [options.showAlert] - Optional function to show alert messages.
+ * @param {Function} options.updateIsPollModalVisible - Function to update the visibility of the poll modal.
+ *
+ * @returns {Promise<void>} A promise that resolves when the poll is created successfully.
+ *
+ * @throws Will handle any errors during the poll creation process silently.
+ *
+ * @example
+ * ```typescript
+ * const handleCreatePollService = new HandleCreatePoll();
+ * const pollData = {
+ *   question: 'What is your favorite color?',
+ *   options: ['Red', 'Blue', 'Green'],
+ * };
+ * await handleCreatePollService.handleCreatePoll({
+ *   poll: pollData,
+ *   socket: socketInstance,
+ *   roomName: 'room1',
+ *   showAlert: ({ message, type }) => {
+ *     console.log(`Alert: ${message} - Type: ${type}`);
+ *   },
+ *   updateIsPollModalVisible: (isVisible) => {
+ *     console.log('Poll modal visibility:', isVisible);
+ *   },
+ * });
+ * ```
+ */
 class HandleCreatePoll {
     /**
      * Handles the creation of a poll.
@@ -21569,6 +26897,40 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the voting process for a poll.
+ *
+ * @param {HandleVotePollOptions} options - The options for handling the vote.
+ * @param {string} options.pollId - The ID of the poll.
+ * @param {number} options.optionIndex - The index of the selected option.
+ * @param {Socket} options.socket - The socket instance for communication.
+ * @param {Function} [options.showAlert] - Optional function to show alerts.
+ * @param {string} options.member - The member who is voting.
+ * @param {string} options.roomName - The name of the room where the poll is conducted.
+ * @param {Function} options.updateIsPollModalVisible - Function to update the visibility of the poll modal.
+ *
+ * @returns {Promise<void>} A promise that resolves when the vote is handled.
+ *
+ * @throws Will log an error message if there is an issue submitting the vote.
+ *
+ * @example
+ * ```typescript
+ * const handleVotePollService = new HandleVotePoll();
+ * await handleVotePollService.handleVotePoll({
+ *   pollId: '12345',
+ *   optionIndex: 1,
+ *   socket: socketInstance,
+ *   member: 'user1',
+ *   roomName: 'room1',
+ *   showAlert: ({ message, type }) => {
+ *     console.log(`Alert: ${message} - Type: ${type}`);
+ *   },
+ *   updateIsPollModalVisible: (isVisible) => {
+ *     console.log('Poll modal visibility:', isVisible);
+ *   },
+ * });
+ * ```
+ */
 class HandleVotePoll {
     /**
      * Handles the voting process for a poll.
@@ -21616,6 +26978,38 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Handles the end of a poll by emitting an "endPoll" event through the provided socket.
+ * Displays an alert based on the success or failure of the operation.
+ *
+ * @param {HandleEndPollOptions} options - The options for ending the poll.
+ * @param {string} options.pollId - The ID of the poll to end.
+ * @param {Socket} options.socket - The socket instance to emit the event.
+ * @param {Function} [options.showAlert] - Optional function to display alerts.
+ * @param {string} options.roomName - The name of the room where the poll is being conducted.
+ * @param {Function} options.updateIsPollModalVisible - Function to update the visibility of the poll modal.
+ *
+ * @returns {Promise<void>} A promise that resolves when the poll end operation is complete.
+ *
+ * @throws Will log an error if the operation fails to emit the end poll event.
+ *
+ * @example
+ * ```typescript
+ * const handleEndPollService = new HandleEndPoll();
+ * const pollId = '12345';
+ * await handleEndPollService.handleEndPoll({
+ *   pollId: pollId,
+ *   socket: socketInstance,
+ *   roomName: 'room1',
+ *   showAlert: ({ message, type }) => {
+ *     console.log(`Alert: ${message} - Type: ${type}`);
+ *   },
+ *   updateIsPollModalVisible: (isVisible) => {
+ *     console.log('Poll modal visibility:', isVisible);
+ *   },
+ * });
+ * ```
+ */
 class HandleEndPoll {
     /**
      * Handles the end of a poll by emitting an "endPoll" event through the provided socket.
@@ -21654,6 +27048,77 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Updates the state of breakout rooms based on the provided data and parameters.
+ *
+ * This method handles changes in breakout rooms, updates the relevant state variables,
+ * and triggers necessary UI updates based on the current status of the breakout rooms.
+ *
+ * @param {BreakoutRoomUpdatedOptions} options - The options object containing the data and parameters.
+ * @param {BreakoutRoomUpdatedData} options.data - The data object containing information about the breakout rooms.
+ * @param {BreakoutRoomUpdatedParameters} options.parameters - The parameters object containing various state update functions and other parameters.
+ * @param {boolean} options.parameters.breakOutRoomStarted - Indicates if the breakout room has started.
+ * @param {boolean} options.parameters.breakOutRoomEnded - Indicates if the breakout room has ended.
+ * @param {Array<BreakoutParticipant[]>} options.parameters.breakoutRooms - The list of current breakout rooms.
+ * @param {number} options.parameters.hostNewRoom - The ID of the new room for the host.
+ * @param {string} options.parameters.islevel - The level of the breakout room (e.g., '2' for host).
+ * @param {Array<Participant>} options.parameters.participantsAll - The list of all participants.
+ * @param {Array<Participant>} options.parameters.participants - The list of participants who are not banned.
+ * @param {string} options.parameters.meetingDisplayType - The current display type of the meeting.
+ * @param {string} options.parameters.prevMeetingDisplayType - The previous display type of the meeting.
+ * @param {Function} options.parameters.updateBreakoutRooms - Function to update the breakout rooms.
+ * @param {Function} options.parameters.updateBreakOutRoomStarted - Function to update the breakout room started state.
+ * @param {Function} options.parameters.updateBreakOutRoomEnded - Function to update the breakout room ended state.
+ * @param {Function} options.parameters.updateHostNewRoom - Function to update the host's new room.
+ * @param {Function} options.parameters.updateMeetingDisplayType - Function to update the meeting display type.
+ * @param {Function} options.parameters.updateParticipantsAll - Function to update the list of all participants.
+ * @param {Function} options.parameters.updateParticipants - Function to update the list of participants who are not banned.
+ * @param {Function} options.parameters.onScreenChanges - Function to handle screen changes.
+ * @param {Function} options.parameters.rePort - Function to handle reporting.
+ *
+ * @returns {Promise<void>} A promise that resolves when the breakout room state has been updated.
+ *
+ * @throws Will throw an error if the update process fails.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   data: {
+ *     forHost: true,
+ *     newRoom: 3,
+ *     status: 'started',
+ *     members: [
+ *       { name: 'user1', isBanned: false, audioID: 'audio1', videoID: 'video1' },
+ *       { name: 'user2', isBanned: true, audioID: 'audio2', videoID: 'video2' },
+ *     ],
+ *     breakoutRooms: [[{ name: 'user1' }, { name: 'user2' }]],
+ *   },
+ *   parameters: {
+ *     socket: socketInstance,
+ *     roomName: 'mainRoom',
+ *     screenStates: [{ mainScreenPerson: 'user1', mainScreenFilled: true, adminOnMainScreen: false }],
+ *     participants: [{ name: 'admin', islevel: '2' }],
+ *     breakOutRoomStarted: false,
+ *     breakOutRoomEnded: false,
+ *     hostNewRoom: 0,
+ *     islevel: '2',
+ *     participantsAll: [],
+ *     updateBreakoutRooms: (rooms) => {},
+ *     updateBreakOutRoomStarted: (started) => {},
+ *     updateBreakOutRoomEnded: (ended) => {},
+ *     updateHostNewRoom: (room) => {},
+ *     updateMeetingDisplayType: (type) => {},
+ *     updateParticipantsAll: (participants) => {},
+ *     updateParticipants: (participants) => {},
+ *     onScreenChanges: async () => {},
+ *     rePort: async () => {},
+ *   },
+ * };
+ *
+ * const breakoutRoomService = new BreakoutRoomUpdated();
+ * await breakoutRoomService.breakoutRoomUpdated(options);
+ * ```
+ */
 class BreakoutRoomUpdated {
     /**
      * Updates the state of breakout rooms based on the provided data and parameters.
@@ -21765,6 +27230,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 // start-meeting-progress-timer.service.ts
+/**
+ * Starts a timer to track the progress of a meeting.
+ *
+ * @param {StartMeetingProgressTimerOptions} options - The options for starting the meeting progress timer.
+ * @param {number} options.startTime - The custom start time for the meeting progress timer in seconds since epoch.
+ * @param {StartMeetingProgressTimerParameters} options.parameters - The parameters required for updating the meeting progress.
+ * @param {Function} options.parameters.updateMeetingProgressTime - Function to update the formatted meeting progress time.
+ * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ *
+ * @returns {void}
+ *
+ * @remarks
+ * This function calculates the elapsed time since the meeting started and updates the meeting progress every second.
+ * The timer will stop if the validated flag is set to false or if the room name is not valid.
+ *
+ * The time is formatted in HH:MM:SS format, and the update function is called with the formatted time.
+ *
+ * @example
+ * ```typescript
+ * const options: StartMeetingProgressTimerOptions = {
+ *   startTime: Math.floor(Date.now() / 1000), // Current time in seconds
+ *   parameters: {
+ *     updateMeetingProgressTime: (formattedTime) => console.log(`Meeting Progress: ${formattedTime}`),
+ *     validated: true,
+ *     roomName: 'Room123',
+ *     getUpdatedAllParams: () => ({
+ *       validated: true,
+ *       roomName: 'Room123',
+ *       updateMeetingProgressTime: options.parameters.updateMeetingProgressTime,
+ *     }),
+ *   },
+ * };
+ *
+ * const timerService = new StartMeetingProgressTimer();
+ * timerService.startMeetingProgressTimer(options);
+ * ```
+ */
 class StartMeetingProgressTimer {
     timeProgress;
     /**
@@ -21821,6 +27323,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Checks if the recording can be paused based on the current pause count and the allowed pause limits.
+ *
+ * @param {CheckPauseStateOptions} options - The options for checking the pause state.
+ * @param {string} options.recordingMediaOptions - The type of media being recorded ("video" or "audio").
+ * @param {number} options.recordingVideoPausesLimit - The maximum number of pauses allowed for video recordings.
+ * @param {number} options.recordingAudioPausesLimit - The maximum number of pauses allowed for audio recordings.
+ * @param {number} options.pauseRecordCount - The current count of pauses that have been made.
+ * @param {Function} [options.showAlert] - A function to show an alert message if the pause limit is reached.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the recording can be paused, otherwise `false`.
+ *
+ * @example
+ * ```typescript
+ * const checkPauseStateService = new CheckPauseState();
+ * const canPause = await checkPauseStateService.checkPauseState({
+ *   recordingMediaOptions: 'video',
+ *   recordingVideoPausesLimit: 3,
+ *   recordingAudioPausesLimit: 5,
+ *   pauseRecordCount: 2,
+ *   showAlert: (alert) => console.log(alert.message),
+ * });
+ * console.log('Can pause recording:', canPause);
+ * ```
+ */
 class CheckPauseState {
     /**
      * Checks if the recording can be paused based on the current pause count and the allowed pause limits.
@@ -21864,6 +27390,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Checks if the recording can be resumed based on the media type and pause limits.
+ *
+ * @param {CheckResumeStateOptions} options - The options for checking resume state.
+ * @param {string} options.recordingMediaOptions - The type of media being recorded ("video" or "audio").
+ * @param {number} options.recordingVideoPausesLimit - The maximum number of pauses allowed for video recording.
+ * @param {number} options.recordingAudioPausesLimit - The maximum number of pauses allowed for audio recording.
+ * @param {number} options.pauseRecordCount - The current number of pauses that have occurred.
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the recording can be resumed.
+ *
+ * @example
+ * ```typescript
+ * const checkResumeStateService = new CheckResumeState();
+ * const canResume = await checkResumeStateService.checkResumeState({
+ *   recordingMediaOptions: 'audio',
+ *   recordingVideoPausesLimit: 3,
+ *   recordingAudioPausesLimit: 5,
+ *   pauseRecordCount: 2,
+ * });
+ * console.log('Can resume recording:', canResume);
+ * ```
+ */
 class CheckResumeState {
     /**
      * Checks if the recording can be resumed based on the media type and pause limits.
@@ -21896,6 +27444,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Controls the pause and resume functionality of a recording timer.
+ *
+ * @param {RecordPauseTimerOptions} options - The options for controlling the timer.
+ * @param {boolean} [options.stop=false] - Indicates whether to stop the timer.
+ * @param {boolean} options.isTimerRunning - Indicates if the timer is currently running.
+ * @param {boolean} options.canPauseResume - Indicates if the timer can be paused or resumed.
+ * @param {Function} [options.showAlert] - Optional function to show an alert message.
+ * @returns {boolean} - Returns true if the timer can be paused or resumed, otherwise false.
+ *
+ * @throws Will show an alert message if:
+ * - The timer cannot be stopped, paused, or resumed due to not meeting the required time condition.
+ *
+ * @example
+ * ```typescript
+ * const options: RecordPauseTimerOptions = {
+ *   stop: false,
+ *   isTimerRunning: true,
+ *   canPauseResume: true,
+ *   showAlert: (alert) => {  },
+ * };
+ * const canPause = recordPauseTimer(options);
+ * if (canPause) {
+ *   // proceed with pausing or resuming the recording
+ * }
+ * ```
+ */
 class RecordPauseTimer {
     /**
      * Controls the pause and resume functionality of a recording timer.
@@ -21934,6 +27509,54 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Updates the recording state based on the provided parameters.
+ *
+ * @param {UpdateRecordingOptions} options - The options for updating the recording state.
+ * @param {Object} options.parameters - The parameters required for updating the recording state.
+ * @param {string} options.parameters.roomName - The name of the room where the recording is taking place.
+ * @param {UserRecordingParams} options.parameters.userRecordingParams - User-specific recording parameters.
+ * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Function} options.parameters.updateIsRecordingModalVisible - Function to update the visibility of the recording modal.
+ * @param {boolean} options.parameters.confirmedToRecord - Indicates if the user has confirmed to start recording.
+ * @param {Function} options.parameters.showAlert - Function to show alerts.
+ * @param {string} options.parameters.recordingMediaOptions - The media options for recording (e.g., "video", "audio").
+ * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already turned on.
+ * @param {boolean} options.parameters.audioAlreadyOn - Indicates if the audio is already turned on.
+ * @param {boolean} options.parameters.recordStarted - Indicates if the recording has started.
+ * @param {boolean} options.parameters.recordPaused - Indicates if the recording is paused.
+ * @param {boolean} options.parameters.recordResumed - Indicates if the recording has resumed.
+ * @param {boolean} options.parameters.recordStopped - Indicates if the recording has stopped.
+ * @param {number} options.parameters.recordChangeSeconds - The interval in seconds for changing the recording state.
+ * @param {number} options.parameters.pauseRecordCount - The count of pauses during the recording.
+ * @param {boolean} options.parameters.startReport - Indicates if the start report is active.
+ * @param {boolean} options.parameters.endReport - Indicates if the end report is active.
+ * @param {boolean} options.parameters.canRecord - Indicates if recording is allowed.
+ * @param {boolean} options.parameters.canPauseResume - Indicates if pausing and resuming the recording is allowed.
+ * @param {Function} options.parameters.updateCanPauseResume - Function to update the pause/resume state.
+ * @param {Function} options.parameters.updatePauseRecordCount - Function to update the pause record count.
+ * @param {Function} options.parameters.updateClearedToRecord - Function to update the cleared-to-record state.
+ * @param {Function} options.parameters.updateRecordPaused - Function to update the record paused state.
+ * @param {Function} options.parameters.updateRecordResumed - Function to update the record resumed state.
+ * @param {Function} options.parameters.updateStartReport - Function to update the start report state.
+ * @param {Function} options.parameters.updateEndReport - Function to update the end report state.
+ * @param {Function} options.parameters.updateCanRecord - Function to update the can record state.
+ * @param {Function} options.parameters.rePort - Function to handle reporting.
+ *
+ * @returns {Promise<void>} A promise that resolves when the recording state has been updated.
+ *
+ * @remarks
+ * This method handles the recording state updates, including starting, pausing, resuming, and stopping the recording.
+ * It also performs necessary checks to ensure that the user can perform the requested actions based on their current state.
+ * Alerts are displayed for any issues encountered during the process.
+ *
+ * @example
+ * ```typescript
+ * const options: UpdateRecordingOptions = { parameters: someParameters };
+ * await updateRecording(options);
+ * console.log('Recording state updated successfully.');
+ * ```
+ */
 class UpdateRecording {
     CheckPauseStateService;
     CheckResumeStateService;
@@ -22152,6 +27775,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: CheckPauseState }, { type: CheckResumeState }, { type: RecordPauseTimer }, { type: RecordResumeTimer }] });
 
+/**
+ * Stops the recording process based on the provided parameters.
+ *
+ * @param {StopRecordingOptions} options - The options for stopping the recording.
+ * @param {Object} options.parameters - The parameters required for stopping the recording.
+ * @param {string} options.parameters.roomName - The name of the room where the recording is being stopped.
+ * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Function} options.parameters.showAlert - Function to show alerts.
+ * @param {boolean} options.parameters.startReport - Flag indicating if the start report is active.
+ * @param {boolean} options.parameters.endReport - Flag indicating if the end report is active.
+ * @param {boolean} options.parameters.recordStarted - Flag indicating if the recording has started.
+ * @param {boolean} options.parameters.recordPaused - Flag indicating if the recording is paused.
+ * @param {boolean} options.parameters.recordStopped - Flag indicating if the recording is stopped.
+ * @param {Function} options.parameters.updateRecordPaused - Function to update the record paused status.
+ * @param {Function} options.parameters.updateRecordStopped - Function to update the record stopped status.
+ * @param {Function} options.parameters.updateStartReport - Function to update the start report status.
+ * @param {Function} options.parameters.updateEndReport - Function to update the end report status.
+ * @param {Function} options.parameters.updateShowRecordButtons - Function to update the visibility of recording buttons.
+ * @param {boolean} options.parameters.whiteboardStarted - Flag indicating if the whiteboard has started.
+ * @param {boolean} options.parameters.whiteboardEnded - Flag indicating if the whiteboard has ended.
+ * @param {string} options.parameters.recordingMediaOptions - The media options for recording (e.g., "video", "audio").
+ * @param {Function} options.parameters.captureCanvasStream - Function to capture the canvas stream.
+ *
+ * @returns {Promise<void>} - A promise that resolves when the recording is stopped.
+ *
+ * @remarks
+ * This method checks if the recording has started and is not already stopped.
+ * It pauses the timer and emits a stop recording event via socket communication.
+ * If successful, it updates the recording state and alerts the user.
+ * Additionally, if the whiteboard feature is active, it captures the canvas stream.
+ *
+ * @example
+ * ```typescript
+ * const options: StopRecordingOptions = { parameters: someParameters };
+ * await stopRecording(options);
+ * console.log('Recording stopped successfully.');
+ * ```
+ */
 class StopRecording {
     RecordPauseTimerService;
     constructor(RecordPauseTimerService) {
@@ -22224,56 +27885,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }], ctorParameters: () => [{ type: RecordPauseTimer }] });
 
 /**
- * @fileoverview Service to handle user waiting functionality.
- *
- * @description
- * This service provides methods to handle the logic when a user joins the waiting room.
- * It displays an alert/notification and updates the total number of requests waiting.
- */
-/**
- * Options for the userWaiting method.
- *
- * @interface UserWaitingOptions
- * @property {string} name - The name of the user joining the waiting room.
- * @property {(options: { message: string; type: string; duration: number }) => void} [showAlert] - Optional function to display an alert/notification.
- * @property {number} totalReqWait - The current total number of requests waiting.
- * @property {(total: number) => void} updateTotalReqWait - Function to update the total number of requests waiting.
- */
-/**
- * Service to handle user waiting functionality.
+ * Service for handling user waiting room actions, including notifications and updating request counts.
  *
  * @class
  * @name UserWaiting
- * @description
- * This service provides methods to handle the logic when a user joins the waiting room.
- * It displays an alert/notification and updates the total number of requests waiting.
- *
- * @example
- * const userWaitingService = new UserWaiting();
- * userWaitingService.userWaiting({
- *   name: 'John Doe',
- *   showAlert: (options) => console.log(options.message),
- *   totalReqWait: 5,
- *   updateTotalReqWait: (total) => console.log(`Total requests: ${total}`),
- * });
- */
-/**
- * Handles the logic when a user joins the waiting room.
+ * @description Manages the logic when a user joins the waiting room by displaying alerts and incrementing the total request count.
  *
  * @method
- * @name userWaiting
- * @memberof UserWaiting
+ * userWaiting
  * @async
  *
- * @param {UserWaitingOptions} options - The options for the user waiting method.
- * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ * @param {UserWaitingOptions} options - The options for handling user waiting actions:
+ *   - `name` {string}: Name of the user joining the waiting room.
+ *   - `showAlert` {ShowAlert}: Optional function for showing an alert with a customizable message, type, and duration.
+ *   - `totalReqWait` {number}: Current count of waiting requests.
+ *   - `updateTotalReqWait` {Function}: Updates the total waiting request count.
+ *
+ * @returns {Promise<void>} Resolves after alert is shown and request count is updated.
  *
  * @example
  * const options = {
- *   name: 'John Doe',
- *   showAlert: (options) => console.log(options.message),
- *   totalReqWait: 5,
- *   updateTotalReqWait: (total) => console.log(`Total requests: ${total}`),
+ *   name: 'Alice',
+ *   showAlert: ({ message, type, duration }) => console.log(message),
+ *   totalReqWait: 3,
+ *   updateTotalReqWait: (newTotal) => console.log(`Updated count: ${newTotal}`)
  * };
  * await userWaitingService.userWaiting(options);
  */
@@ -22299,6 +27934,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle actions when a person joins an event.
+ *
+ * @class
+ * @name PersonJoined
+ * @description
+ * Displays a notification when a person joins the event, using the `showAlert` function if provided.
+ *
+ * @method
+ * personJoined
+ *
+ * @param {PersonJoinedOptions} options - Contains information about the person and alert display function:
+ *   - `name` {string}: The name of the person who joined.
+ *   - `showAlert` {Function} (optional): Function to display a notification when the person joins.
+ *
+ * @returns {void} Executes alert display through `showAlert` if defined.
+ *
+ * @example
+ * const options = {
+ *   name: 'Alice',
+ *   showAlert: ({ message, type, duration }) => console.log(message)
+ * };
+ * personJoinedService.personJoined(options);
+ * // Logs: "Alice joined the event."
+ */
 class PersonJoined {
     /**
      * Handles the event when a person joins.
@@ -22326,6 +27986,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle updating the list and count of waiting room participants.
+ *
+ * @class
+ * @name AllWaitingRoomMembers
+ * @description This service updates the waiting room participants list and the total count of participants waiting to join.
+ *
+ * @method
+ * @async
+ * @name allWaitingRoomMembers
+ * @param {AllWaitingRoomMembersOptions} options - The options for updating the waiting room data.
+ * @param {WaitingRoomParticipant[]} options.waitingParticipants - An array of participants currently in the waiting room.
+ * @param {Function} options.updateWaitingRoomList - Function to update the waiting room participants list.
+ * @param {Function} options.updateTotalReqWait - Function to update the total count of waiting room participants.
+ *
+ * @returns {Promise<void>} A promise that resolves when the updates to the waiting room data are complete.
+ *
+ * @example
+ * ```typescript
+ * const allWaitingRoomMembersService = new AllWaitingRoomMembers();
+ * await allWaitingRoomMembersService.allWaitingRoomMembers({
+ *   waitingParticipants: [{ name: 'John Doe', isApproved: false }],
+ *   updateWaitingRoomList: (participants) => console.log(participants),
+ *   updateTotalReqWait: (total) => console.log(`Total requests: ${total}`)
+ * });
+ * ```
+ */
 class AllWaitingRoomMembers {
     /**
      * Updates the waiting room participants list and the total count of waiting room participants.
@@ -22354,6 +28041,68 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to update recording parameters for a room.
+ *
+ * @class
+ * @name RoomRecordParams
+ * @description Updates multiple recording parameters at once, using provided functions for each specific setting.
+ *
+ * @method
+ * roomRecordParams
+ *
+ * @param {RoomRecordParamsOptions} options - The options for updating recording parameters:
+ *   - `recordParams` {RecordParams}: The new recording parameters to apply.
+ *   - `parameters` {RoomRecordParamsParameters}: The update functions for each recording parameter.
+ *     - `updateRecordingAudioPausesLimit` {Function}: Updates the audio pauses limit.
+ *     - `updateRecordingAudioPausesCount` {Function}: Updates the audio pauses count.
+ *     - `updateRecordingAudioSupport` {Function}: Updates the audio support status.
+ *     - `updateRecordingAudioPeopleLimit` {Function}: Updates the audio people limit.
+ *     - `updateRecordingAudioParticipantsTimeLimit` {Function}: Updates the audio participants time limit.
+ *     - `updateRecordingVideoPausesCount` {Function}: Updates the video pauses count.
+ *     - `updateRecordingVideoPausesLimit` {Function}: Updates the video pauses limit.
+ *     - `updateRecordingVideoSupport` {Function}: Updates the video support status.
+ *     - `updateRecordingVideoPeopleLimit` {Function}: Updates the video people limit.
+ *     - `updateRecordingVideoParticipantsTimeLimit` {Function}: Updates the video participants time limit.
+ *     - `updateRecordingAllParticipantsSupport` {Function}: Updates support for all participants.
+ *     - `updateRecordingVideoParticipantsSupport` {Function}: Updates video participants support.
+ *     - `updateRecordingAllParticipantsFullRoomSupport` {Function}: Updates full room support for all participants.
+ *     - `updateRecordingVideoParticipantsFullRoomSupport` {Function}: Updates full room support for video participants.
+ *     - `updateRecordingPreferredOrientation` {Function}: Updates the preferred recording orientation.
+ *     - `updateRecordingSupportForOtherOrientation` {Function}: Updates support for other orientations.
+ *     - `updateRecordingMultiFormatsSupport` {Function}: Updates support for multiple formats.
+ *
+ * @returns {Promise<void>} A promise that resolves after all parameters are updated.
+ *
+ * @example
+ * const recordParams = {
+ *   recordingAudioPausesLimit: 5,
+ *   recordingAudioPausesCount: 2,
+ *   recordingAudioSupport: true,
+ *   recordingAudioPeopleLimit: 10,
+ *   recordingAudioParticipantsTimeLimit: 60,
+ *   recordingVideoPausesCount: 1,
+ *   recordingVideoPausesLimit: 3,
+ *   recordingVideoSupport: true,
+ *   recordingVideoPeopleLimit: 8,
+ *   recordingVideoParticipantsTimeLimit: 90,
+ *   recordingAllParticipantsSupport: true,
+ *   recordingVideoParticipantsSupport: true,
+ *   recordingAllParticipantsFullRoomSupport: false,
+ *   recordingVideoParticipantsFullRoomSupport: true,
+ *   recordingPreferredOrientation: 'landscape',
+ *   recordingSupportForOtherOrientation: false,
+ *   recordingMultiFormatsSupport: true,
+ * };
+ *
+ * const parameters = {
+ *   updateRecordingAudioPausesLimit: (value) => console.log(`Audio pauses limit: ${value}`),
+ *   updateRecordingAudioPausesCount: (value) => console.log(`Audio pauses count: ${value}`),
+ *   // Define other update functions similarly
+ * };
+ *
+ * roomRecordParamsService.roomRecordParams({ recordParams, parameters });
+ */
 class RoomRecordParams {
     /**
      * Updates various recording parameters based on the provided `recordParams`.
@@ -22411,6 +28160,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle banning a participant from the session.
+ *
+ * @class
+ * @name BanParticipant
+ * @description This service provides a method to remove a participant from active lists and update the session's participant array, followed by reordering the streams.
+ *
+ * @method
+ * banParticipant
+ * @async
+ * @param {BanParticipantOptions} options - The options for banning a participant.
+ * @param {string} options.name - The name of the participant to be banned.
+ * @param {BanParticipantParameters} options.parameters - Parameters required for the banning operation.
+ * @param {string[]} options.parameters.activeNames - Array of active participant names.
+ * @param {string[]} options.parameters.dispActiveNames - Array of display participant names.
+ * @param {Participant[]} options.parameters.participants - Array of current session participants.
+ * @param {Function} options.parameters.updateParticipants - Function to update the participants array.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder the streams after removing the participant.
+ *
+ * @returns {Promise<void>} A promise that resolves when the participant has been banned and streams reordered.
+ *
+ * @example
+ * ```typescript
+ * const banParticipantService = new BanParticipant();
+ * await banParticipantService.banParticipant({
+ *   name: 'John Doe',
+ *   parameters: {
+ *     activeNames: ['John Doe', 'Jane Smith'],
+ *     dispActiveNames: ['John Doe', 'Jane Smith'],
+ *     participants: [{ name: 'John Doe', isBanned: false }, { name: 'Jane Smith', isBanned: false }],
+ *     updateParticipants: (updated) => console.log(updated),
+ *     reorderStreams: async () => { }
+ *   }
+ * });
+ * ```
+ */
 class BanParticipant {
     /**
      * Bans a participant from the session by removing them from the active and display names arrays,
@@ -22449,6 +28234,46 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service for updating co-host information, responsibilities, and the user's co-host status.
+ *
+ * @class
+ * @name UpdatedCoHost
+ * @description Manages co-host updates for different event types, assigning responsibilities and notifying the user if their co-host status changes.
+ *
+ * @method
+ * updatedCoHost
+ * @async
+ *
+ * @param {UpdatedCoHostOptions} options - The options for co-host updates:
+ *   - `coHost` {string}: The name of the co-host.
+ *   - `coHostResponsibility` {CoHostResponsibility[]}: List of responsibilities assigned to the co-host.
+ *   - `showAlert` {ShowAlert}: Optional function to display an alert message.
+ *   - `eventType` {EventType}: Type of the event, determining if co-host can be updated.
+ *   - `islevel` {string}: Current level of the event.
+ *   - `member` {string}: The current user's identifier.
+ *   - `youAreCoHost` {boolean}: Current user's co-host status.
+ *   - `updateCoHost` {Function}: Function to set the new co-host.
+ *   - `updateCoHostResponsibility` {Function}: Function to assign responsibilities to the co-host.
+ *   - `updateYouAreCoHost` {Function}: Function to update the user's co-host status.
+ *
+ * @returns {Promise<void>} Resolves after co-host information is updated.
+ *
+ * @example
+ * const options = {
+ *   coHost: 'Alice',
+ *   coHostResponsibility: ['moderate', 'manageParticipants'],
+ *   showAlert: ({ message, type, duration }) => console.log(message),
+ *   eventType: 'conference',
+ *   islevel: '1',
+ *   member: 'Alice',
+ *   youAreCoHost: false,
+ *   updateCoHost: (newCoHost) => console.log(`Updated co-host: ${newCoHost}`),
+ *   updateCoHostResponsibility: (responsibilities) => console.log(responsibilities),
+ *   updateYouAreCoHost: (status) => console.log(`You are co-host: ${status}`)
+ * };
+ * await updatedCoHostService.updatedCoHost(options);
+ */
 class UpdatedCoHost {
     /**
      * Updates the co-host information, responsibility, and user's co-host status based on the provided options.
@@ -22503,6 +28328,37 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle participant requests in an event's waiting room.
+ *
+ * @class
+ * @name ParticipantRequested
+ * @description
+ * Manages participant requests by adding new requests to the list and updating the total count of requests and waiting room participants.
+ *
+ * @method
+ * participantRequested
+ *
+ * @param {ParticipantRequestedOptions} options - Contains request information and update functions:
+ *   - `userRequest` {Request}: The new request from a participant.
+ *   - `requestList` {Request[]}: The current list of requests.
+ *   - `waitingRoomList` {WaitingRoomParticipant[]}: The list of participants in the waiting room.
+ *   - `updateTotalReqWait` {Function}: Function to update the total count of requests and waiting room participants.
+ *   - `updateRequestList` {Function}: Function to update the request list.
+ *
+ * @returns {Promise<void>} Updates the request list and total request count.
+ *
+ * @example
+ * const options = {
+ *   userRequest: { id: '123', name: 'John Doe', icon: 'fa-user', username: 'johndoe' },
+ *   requestList: existingRequests,
+ *   waitingRoomList: waitingParticipants,
+ *   updateTotalReqWait: (count) => console.log(`Total requests: ${count}`),
+ *   updateRequestList: (list) => console.log('Updated request list', list)
+ * };
+ * await participantRequestedService.participantRequested(options);
+ * // Adds "John Doe" to request list and updates the total count.
+ */
 class ParticipantRequested {
     /**
      * Handles a participant's request by adding it to the request list and updating the total count of requests and waiting room participants.
@@ -22533,6 +28389,47 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to manage screen producer ID and screen sharing status for participants.
+ *
+ * @class
+ * @name ScreenProducerId
+ * @description This service processes and updates the screen producer ID, manages screen sharing states, and defers screen updates as needed based on participant data.
+ *
+ * @method
+ * screenProducerId
+ *
+ * @param {ScreenProducerIdOptions} options - Options for handling screen producer ID:
+ *   - `producerId` {string}: The ID of the screen producer.
+ *   - `screenId` {string}: The current screen ID.
+ *   - `membersReceived` {boolean}: Indicates if members data has been received.
+ *   - `shareScreenStarted` {boolean}: Indicates if screen sharing has started.
+ *   - `deferScreenReceived` {boolean}: Indicates if screen sharing should be deferred.
+ *   - `participants` {Participant[]}: The list of current participants.
+ *   - `updateScreenId` {Function}: Function to update the screen ID.
+ *   - `updateShareScreenStarted` {Function}: Function to update the screen sharing status.
+ *   - `updateDeferScreenReceived` {Function}: Function to update the deferred screen status.
+ *
+ * @returns {void} Updates states directly through provided functions.
+ *
+ * @example
+ * const options = {
+ *   producerId: 'abc123',
+ *   screenId: 'screen45',
+ *   membersReceived: true,
+ *   shareScreenStarted: false,
+ *   deferScreenReceived: false,
+ *   participants: [
+ *     { id: 'p1', ScreenID: 'screen45', ScreenOn: true },
+ *     // Additional participants
+ *   ],
+ *   updateScreenId: (id) => console.log(`Screen ID updated to: ${id}`),
+ *   updateShareScreenStarted: (started) => console.log(`Screen sharing started: ${started}`),
+ *   updateDeferScreenReceived: (received) => console.log(`Screen sharing deferred: ${received}`)
+ * };
+ *
+ * screenProducerIdService.screenProducerId(options);
+ */
 class ScreenProducerId {
     /**
      * Handles the screen producer id.
@@ -22576,6 +28473,36 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service for updating media settings including audio, video, screenshare, and chat.
+ *
+ * @class
+ * @name UpdateMediaSettings
+ * @description Provides a method to update multiple media settings at once using specified update functions.
+ *
+ * @method
+ * updateMediaSettings
+ *
+ * @param {UpdateMediaSettingsOptions} options - Options for updating media settings:
+ *   - `settings` {Settings}: The settings values to apply.
+ *   - `updateAudioSetting` {Function}: Function to update the audio setting.
+ *   - `updateVideoSetting` {Function}: Function to update the video setting.
+ *   - `updateScreenshareSetting` {Function}: Function to update the screenshare setting.
+ *   - `updateChatSetting` {Function}: Function to update the chat setting.
+ *
+ * @returns {void} Updates settings directly through the provided functions.
+ *
+ * @example
+ * const settings = ['mute', 'HD', 'enabled', 'disabled'];
+ * const options = {
+ *   settings,
+ *   updateAudioSetting: (value) => console.log(`Audio setting updated to: ${value}`),
+ *   updateVideoSetting: (value) => console.log(`Video setting updated to: ${value}`),
+ *   updateScreenshareSetting: (value) => console.log(`Screenshare setting updated to: ${value}`),
+ *   updateChatSetting: (value) => console.log(`Chat setting updated to: ${value}`)
+ * };
+ * updateMediaSettingsService.updateMediaSettings(options);
+ */
 class UpdateMediaSettings {
     /**
      * Updates the media settings by invoking the provided update functions for each setting.
@@ -22610,6 +28537,68 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle the paused state of media for a producer.
+ *
+ * @class
+ * @name ProducerMediaPaused
+ * @description
+ * Handles the actions required when media is paused for a specified producer, including UI updates, participant state handling, and managing meeting display optimizations.
+ *
+ * @method
+ * producerMediaPaused
+ *
+ * @param {ProducerMediaPausedOptions} options - Options to specify the producer and event details:
+ *   - `producerId` {string}: The ID of the paused producer.
+ *   - `kind` {string}: The type of media paused (e.g., "audio", "video").
+ *   - `name` {string}: Name of the producer whose media is paused.
+ *   - `parameters` {ProducerMediaPausedParameters}: Configuration and state parameters for the meeting.
+ *      - `activeSounds` {string[]}: Active audio streams currently displayed.
+ *      - `meetingDisplayType` {string}: Current meeting layout type (e.g., "media", "video").
+ *      - `meetingVideoOptimized` {boolean}: Indicates if video is optimized.
+ *      - `participants` {Participant[]}: List of all meeting participants.
+ *      - `oldSoundIds` {string[]}: List of previously active audio stream IDs.
+ *      - `shared` {boolean}: Indicates if the screen is currently shared.
+ *      - `shareScreenStarted` {boolean}: Indicates if screen sharing has started.
+ *      - `updateMainWindow` {boolean}: Specifies if the main display window should update.
+ *      - `hostLabel` {string}: The label representing the host participant.
+ *      - `islevel` {string}: The access level of the participant.
+ *      - `updateActiveSounds` {Function}: Updates the list of active audio streams.
+ *      - `updateUpdateMainWindow` {Function}: Updates the status of the main display window.
+ *      - `reorderStreams` {Function}: Reorders media streams for optimized display.
+ *      - `prepopulateUserMedia` {Function}: Preloads user media based on display needs.
+ *      - `reUpdateInter` {Function}: Refreshes participant interactions on the UI.
+ *
+ * @returns {Promise<void>} Resolves when media pause handling is complete.
+ *
+ * @example
+ * const options = {
+ *   producerId: '12345',
+ *   kind: 'audio',
+ *   name: 'Participant A',
+ *   parameters: {
+ *     activeSounds: ['Participant B'],
+ *     meetingDisplayType: 'video',
+ *     meetingVideoOptimized: false,
+ *     participants: [...],
+ *     oldSoundIds: ['Participant A'],
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     updateMainWindow: true,
+ *     hostLabel: 'Host',
+ *     islevel: '1',
+ *     updateActiveSounds: (sounds) => { ... },
+ *     updateUpdateMainWindow: (status) => { ... },
+ *     reorderStreams: ({ add, screenChanged, parameters }) => { ... },
+ *     prepopulateUserMedia: ({ name, parameters }) => { ... },
+ *     reUpdateInter: ({ name, add, force, parameters }) => { ... }
+ *   }
+ * };
+ *
+ * producerMediaPausedService.producerMediaPaused(options)
+ *   .then(() => console.log('Media pause handled'))
+ *   .catch(error => console.error('Error:', error));
+ */
 class ProducerMediaPaused {
     /**
      * Handles the event when media is paused for a producer.
@@ -22698,6 +28687,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle resuming media for a specific participant in a meeting.
+ *
+ * @class
+ * @name ProducerMediaResumed
+ * @description Resumes media (audio only) for a participant and updates the meeting display based on the meeting layout and participant status.
+ *
+ * @method
+ * producerMediaResumed
+ *
+ * @param {ProducerMediaResumedOptions} options - Options to control media resumption:
+ *   - `name` {string}: Name of the participant whose media is to be resumed.
+ *   - `parameters` {ProducerMediaResumedParameters}: Meeting and participant-specific configurations.
+ *      - `meetingDisplayType` {string}: Type of meeting display (e.g., "media").
+ *      - `participants` {Participant[]}: List of participants in the meeting.
+ *      - `shared` {boolean}: Indicates if the screen is currently shared.
+ *      - `shareScreenStarted` {boolean}: Indicates if screen sharing has started.
+ *      - `mainScreenFilled` {boolean}: Indicates if the main screen is filled.
+ *      - `hostLabel` {string}: Label or name of the host.
+ *      - `updateUpdateMainWindow` {Function}: Function to update the main window display.
+ *      - `reorderStreams` {Function}: Function to manage stream ordering when display changes.
+ *      - `prepopulateUserMedia` {Function}: Function to preload user media for the main screen.
+ *
+ * @returns {Promise<void>} Resolves when media for the specified participant has resumed.
+ *
+ * @example
+ * const options = {
+ *   name: 'Participant A',
+ *   parameters: {
+ *     meetingDisplayType: 'media',
+ *     participants: [...],
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     mainScreenFilled: false,
+ *     hostLabel: 'Host',
+ *     updateUpdateMainWindow: (updateMainWindow) => { ... },
+ *     reorderStreams: ({ add, screenChanged, parameters }) => { ... },
+ *     prepopulateUserMedia: ({ name, parameters }) => { ... }
+ *   }
+ * };
+ *
+ * producerMediaResumedService.producerMediaResumed(options)
+ *   .then(() => console.log('Media resumed'))
+ *   .catch(error => console.error('Error:', error));
+ */
 class ProducerMediaResumed {
     /**
      * Resumes media for a specific participant in a meeting.
@@ -22750,6 +28784,67 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle closing a media producer and associated UI and state updates.
+ *
+ * @class
+ * @name ProducerMediaClosed
+ * @description
+ * Manages the closure of a media producer by identifying associated consumer transports, closing necessary resources,
+ * and updating the user interface to reflect the change. For screen sharing, it resets the shared state and adjusts the main view.
+ *
+ * @method
+ * producerMediaClosed
+ *
+ * @param {ProducerMediaClosedOptions} options - Contains details on the producer and parameters for state updates:
+ *   - `producerId` {string}: ID of the producer to close.
+ *   - `kind` {string}: The type of media to close (e.g., "screenshare" or "audio").
+ *   - `parameters` {ProducerMediaClosedParameters}: Settings and update functions to manage the closure process.
+ *      - `consumerTransports` {Transport[]}: List of active transports for consumers.
+ *      - `updateConsumerTransports` {Function}: Updates the list of active consumer transports.
+ *      - `hostLabel` {string}: Label of the host to revert to if screen sharing ends.
+ *      - `shared` {boolean}: Indicates whether a screen is currently shared.
+ *      - `updateShared` {Function}: Updates the shared screen state.
+ *      - `updateShareScreenStarted` {Function}: Marks the start or end of screen sharing.
+ *      - `updateScreenId` {Function}: Clears the screen ID when screen sharing ends.
+ *      - `updateShareEnded` {Function}: Marks the end of screen sharing.
+ *      - `closeAndResize` {Function}: Adjusts the screen display upon closing the media.
+ *      - `prepopulateUserMedia` {Function}: Loads default media after screen sharing ends.
+ *      - `reorderStreams` {Function}: Reorders streams to optimize layout when media is closed.
+ *
+ * @returns {Promise<void>} Resolves when all updates are complete and the producer closure is handled.
+ *
+ * @example
+ * const options = {
+ *   producerId: '12345',
+ *   kind: 'screenshare',
+ *   parameters: {
+ *     consumerTransports: [...],
+ *     updateConsumerTransports: (transports) => { ... },
+ *     hostLabel: 'Host',
+ *     shared: true,
+ *     updateShared: (shared) => { ... },
+ *     updateShareScreenStarted: (started) => { ... },
+ *     updateScreenId: (id) => { ... },
+ *     updateShareEnded: (ended) => { ... },
+ *     closeAndResize: ({ producerId, kind, parameters }) => { ... },
+ *     prepopulateUserMedia: ({ name, parameters }) => { ... },
+ *     reorderStreams: ({ add, screenChanged, parameters }) => { ... },
+ *   }
+ * };
+ *
+ * producerMediaClosedService.producerMediaClosed(options)
+ *   .then(() => console.log('Producer closed successfully'))
+ *   .catch(error => console.error('Error:', error));
+ *
+ * @remarks
+ * This service performs the following steps:
+ * 1. Retrieves updated parameters.
+ * 2. Finds and closes the transport associated with the producer.
+ * 3. Updates the list of consumer transports.
+ * 4. Adjusts the display layout with `closeAndResize`.
+ * 5. If the producer is a screen share, resets shared state and reloads default media.
+ */
 class ProducerMediaClosed {
     /**
      * Handles the closure of a media producer.
@@ -22816,6 +28911,43 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service for controlling participant media in a session, with options to manage audio, video, screenshare, and chat functionalities.
+ *
+ * @class
+ * @name ControlMediaHost
+ * @description This service provides the host with control over a participant's media (audio, video, screenshare, chat), with options to enable or disable these functionalities individually or all at once.
+ *
+ * @method
+ * controlMediaHost
+ * @async
+ * @param {ControlMediaHostOptions} options - Options to specify which media type to control and provide necessary parameters.
+ * @param {string} options.type - The media type to control ('audio', 'video', 'screenshare', 'chat', 'all').
+ * @param {ControlMediaHostParameters} options.parameters - Additional parameters, functions, and media streams necessary to perform the media control operations.
+ *
+ * @returns {Promise<void>} - A promise that resolves when the media control operation is complete.
+ *
+ * @example
+ * ```typescript
+ * const controlMediaHostService = new ControlMediaHost();
+ * await controlMediaHostService.controlMediaHost({
+ *   type: 'audio',
+ *   parameters: {
+ *     updateAdminRestrictSetting: (value) => console.log(value),
+ *     localStream: myLocalStream,
+ *     updateLocalStream: (stream) => console.log(stream),
+ *     updateAudioAlreadyOn: (value) => console.log(value),
+ *     onScreenChanges: async () => { },
+ *     disconnectSendTransportAudio: async () => { },
+ *     getUpdatedAllParams: () => ({ }),
+ *   }
+ * });
+ * ```
+ *
+ * @remarks
+ * - This function handles the control of audio, video, screenshare, or chat for a participant based on the specified type.
+ * - For `all` type, it sequentially controls each media type to ensure all are turned off.
+ */
 class ControlMediaHost {
     /**
      * Controls the media (audio, video, screenshare, chat) of a participant as a host.
@@ -22960,6 +29092,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle the end of a meeting, including showing an alert and redirecting the user.
+ *
+ * @class
+ * @name MeetingEnded
+ * @description
+ * This service provides a method to display a notification when a meeting ends and redirects the user to a specified URL or handles other post-meeting actions.
+ *
+ * @method
+ * meetingEnded
+ *
+ * @param {MeetingEndedOptions} options - Options for handling the meeting end:
+ *   - `showAlert` {Function}: Optional function to display an alert message.
+ *   - `redirectURL` {string}: URL to redirect to after the meeting ends.
+ *   - `onWeb` {boolean}: Specifies if the application is running on the web.
+ *   - `eventType` {string}: Specifies the type of event ending the meeting.
+ *
+ * @returns {Promise<void>} Completes meeting end handling by displaying an alert and performing a redirect.
+ *
+ * @example
+ * const options = {
+ *   showAlert: (options) => console.log(options.message),
+ *   redirectURL: 'https://example.com/home',
+ *   onWeb: true,
+ *   eventType: 'webinar',
+ * };
+ * meetingEndedService.meetingEnded(options);
+ * // Displays alert and redirects to specified URL
+ */
 class MeetingEnded {
     /**
      * Handles the end of a meeting by showing an alert and redirecting the user.
@@ -23002,6 +29163,30 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle self-disconnection and banning of a user from a room.
+ *
+ * @class
+ * @name DisconnectUserSelf
+ * @description This service manages the disconnection of a user from a specified room and initiates a ban on the user.
+ *
+ * @method
+ * disconnectUserSelf
+ * @async
+ * @param {DisconnectUserSelfOptions} options - The options required to disconnect the user.
+ * @param {string} options.member - The identifier of the member to be disconnected.
+ * @param {string} options.roomName - The name of the room from which the user will be disconnected.
+ * @param {Socket} options.socket - The socket instance used to emit the disconnection and ban request.
+ * @returns {Promise<void>} A promise that resolves when the disconnection request is sent to the server.
+ *
+ * @example
+ * const disconnectUserSelfOptions = {
+ *   member: 'user123',
+ *   roomName: 'room456',
+ *   socket: mySocketInstance
+ * };
+ * await disconnectUserSelfService.disconnectUserSelf(disconnectUserSelfOptions);
+ */
 class DisconnectUserSelf {
     /**
      * Disconnects the user from the specified room and bans them.
@@ -23026,6 +29211,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service for receiving and processing messages, including handling group and direct messages, filtering banned senders, and updating message states.
+ *
+ * @class
+ * @name ReceiveMessage
+ * @description Manages incoming messages, appends them to the existing messages array, filters out banned senders, and updates message badge visibility as needed.
+ *
+ * @method
+ * receiveMessage
+ *
+ * @param {ReceiveMessageOptions} options - Options for handling a received message:
+ *   - `message` {Message}: The new message object to process.
+ *   - `messages` {Message[]}: The current list of messages.
+ *   - `participantsAll` {Participant[]}: All participants in the chat.
+ *   - `member` {string}: The current member's name.
+ *   - `eventType` {EventType}: The type of event (e.g., "broadcast" or "chat").
+ *   - `islevel` {string}: The level of the current user.
+ *   - `coHost` {string}: The name of the co-host.
+ *   - `updateMessages` {Function}: A function to update the messages list.
+ *   - `updateShowMessagesBadge` {Function}: A function to toggle the visibility of the message badge.
+ *
+ * @returns {Promise<void>} Resolves when the message processing and updates are complete.
+ *
+ * @example
+ * const message = { sender: 'Alice', receivers: ['Bob'], message: 'Hello!', timestamp: Date.now(), group: false };
+ * const options = {
+ *   message,
+ *   messages: [],
+ *   participantsAll: [{ name: 'Alice' }, { name: 'Bob' }],
+ *   member: 'Bob',
+ *   eventType: 'chat',
+ *   islevel: '1',
+ *   coHost: 'Charlie',
+ *   updateMessages: (updatedMessages) => console.log('Messages updated:', updatedMessages),
+ *   updateShowMessagesBadge: (show) => console.log('Show badge:', show)
+ * };
+ * receiveMessageService.receiveMessage(options);
+ */
 class ReceiveMessage {
     /**
      * Receives and processes a message, updating the messages array and handling
@@ -23120,6 +29343,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle the remaining time for a meeting and display an alert if necessary.
+ *
+ * @class
+ * @name MeetingTimeRemaining
+ * @description
+ * Manages the display of a time remaining alert for meetings, except when the event type is 'chat'.
+ *
+ * @method
+ * meetingTimeRemaining
+ *
+ * @param {MeetingTimeRemainingOptions} options - Options for managing meeting time:
+ *   - `timeRemaining` {number}: The remaining time in milliseconds.
+ *   - `showAlert` {Function}: Optional function to display an alert message.
+ *   - `eventType` {EventType}: The type of the event (e.g., "meeting", "broadcast", "chat").
+ *
+ * @returns {Promise<void>} Displays an alert with the remaining time for the meeting.
+ *
+ * @example
+ * const options = {
+ *   timeRemaining: 180000, // 3 minutes in milliseconds
+ *   showAlert: (options) => console.log(options.message),
+ *   eventType: 'meeting'
+ * };
+ * await meetingTimeRemainingService.meetingTimeRemaining(options);
+ * // Output: Displays "The event will end in 3:00 minutes."
+ */
 class MeetingTimeRemaining {
     /**
      * Handles the remaining time for a meeting and shows an alert if the event type is not 'chat'.
@@ -23154,6 +29404,29 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle the "still there?" check in a meeting by showing a confirmation modal.
+ *
+ * @class
+ * @name MeetingStillThere
+ * @description
+ * This service provides a method to display a "still there?" confirmation modal to check if participants are still active in the meeting.
+ *
+ * @method
+ * meetingStillThere
+ *
+ * @param {MeetingStillThereOptions} options - Options for managing the modal visibility:
+ *   - `updateIsConfirmHereModalVisible` {Function}: Function to set the visibility of the "still there?" confirmation modal.
+ *
+ * @returns {Promise<void>} Updates modal visibility when checking if the user is still present.
+ *
+ * @example
+ * const options = {
+ *   updateIsConfirmHereModalVisible: (isVisible) => console.log(`Modal visibility: ${isVisible}`),
+ * };
+ * meetingStillThereService.meetingStillThere(options);
+ * // Output: Sets and logs modal visibility to true
+ */
 class MeetingStillThere {
     /**
      * Handles the "still there?" meeting check by updating the visibility of the confirmation modal.
@@ -23176,6 +29449,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to initiate recording for a specified room.
+ *
+ * @class
+ * @name StartRecords
+ * @description Sends a request to the server to begin recording a room, using socket communication.
+ *
+ * @method
+ * startRecords
+ *
+ * @param {StartRecordsOptions} options - Options required to start the recording:
+ *   - `roomName` {string}: The name of the room to record.
+ *   - `member` {string}: The identifier of the member initiating the recording.
+ *   - `socket` {Socket}: The socket instance for server communication.
+ *
+ * @returns {Promise<void>} Resolves when the server confirms the recording start request.
+ *
+ * @example
+ * const options = {
+ *   roomName: 'Room101',
+ *   member: 'user123',
+ *   socket: io('http://localhost:3000')
+ * };
+ * startRecordsService.startRecords(options);
+ */
 class StartRecords {
     /**
      * Starts recording the room.
@@ -23209,6 +29507,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to re-initiate recording in a specific room, considering administrative restrictions.
+ *
+ * @class
+ * @name ReInitiateRecording
+ * @description Attempts to re-initiate recording if administrative restrictions permit.
+ *
+ * @method
+ * reInitiateRecording
+ *
+ * @param {ReInitiateRecordingOptions} options - Configuration options for re-initiating recording:
+ *   - `roomName` {string}: The name of the room to start recording in.
+ *   - `member` {string}: The name of the member initiating the recording.
+ *   - `socket` {Socket}: The socket instance for server communication.
+ *   - `adminRestrictSetting` {boolean}: Flag indicating if the admin restrict setting is active, preventing re-initiation.
+ *
+ * @returns {Promise<void>} Resolves if recording is successfully re-initiated; otherwise, it throws an error if re-initiation fails.
+ *
+ * @example
+ * const options = {
+ *   roomName: 'Room101',
+ *   member: 'Alice',
+ *   socket: mySocketInstance,
+ *   adminRestrictSetting: false
+ * };
+ * reInitiateRecordingService.reInitiateRecording(options)
+ *   .then(() => console.log('Recording re-initiated'))
+ *   .catch(error => console.error(error.message));
+ */
 class ReInitiateRecording {
     /**
      * Re-initiates recording based on specific conditions.
@@ -23246,27 +29573,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * Service to handle domain-related operations.
+ * Service to handle domain-related operations, such as retrieving and processing domains for connection.
  *
  * @class
  * @name GetDomains
- * @description This service provides a method to retrieve and process domains.
+ * @description This service provides a method to retrieve and process domains by connecting IPs that are not currently present in the room.
  *
  * @method
- * @name getDomains
+ * getDomains
  * @async
- * @param {Object} options - The options for retrieving domains.
+ * @param {GetDomainsOptions} options - The options for retrieving and connecting domains.
  * @param {string[]} options.domains - The list of domains to process.
- * @param {Object} options.alt_domains - An object mapping domains to alternative domains.
+ * @param {AltDomains} options.alt_domains - An object mapping primary domains to alternative domains.
  * @param {string} options.apiUserName - The API username for authentication.
  * @param {string} options.apiKey - The API key for authentication.
  * @param {string} options.apiToken - The API token for authentication.
- * @param {Object} options.parameters - Additional parameters for the operation.
- * @param {string[]} options.parameters.roomRecvIPs - The list of IPs currently in the room.
+ * @param {GetDomainsParameters} options.parameters - Additional parameters for the operation.
+ * @param {string[]} options.parameters.roomRecvIPs - The list of IP addresses already connected in the room.
  * @param {Function} options.parameters.getUpdatedAllParams - A function to get updated parameters.
- * @param {Function} options.parameters.connectIps - A function to connect IPs.
+ * @param {Function} options.parameters.connectIps - A function to connect IPs that are not currently present.
  * @returns {Promise<void>} A promise that resolves when the operation is complete.
- * @throws {Error} Throws an error if the domain retrieval fails.
+ * @throws {Error} Throws an error if the domain retrieval or connection fails.
+ *
+ * @example
+ * const options = {
+ *   domains: ['example.com', 'example.org'],
+ *   alt_domains: { 'example.com': 'alt-example.com' },
+ *   apiUserName: 'user123',
+ *   apiKey: 'key123',
+ *   apiToken: 'token123',
+ *   parameters: {
+ *     roomRecvIPs: ['192.168.1.1'],
+ *     getUpdatedAllParams: () => updatedParameters,
+ *     connectIps: connectIpsFunction,
+ *   }
+ * };
+ * getDomainsService.getDomains(options);
  */
 class GetDomains {
     getDomains = async ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }) => {
@@ -23306,6 +29648,48 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to update consuming domains based on specified options and parameters.
+ *
+ * @class
+ * @name UpdateConsumingDomains
+ * @description Provides a method to update consuming domains and optionally connect IPs based on the domains provided.
+ *
+ * @method
+ * updateConsumingDomains
+ *
+ * @param {UpdateConsumingDomainsOptions} options - Options for updating consuming domains:
+ *   - `domains` {Array<string>}: The list of domains to be updated.
+ *   - `alt_domains` {AltDomains}: Alternative domains for fallback scenarios.
+ *   - `apiUserName` {string}: API username for authentication.
+ *   - `apiKey` {string}: API key for access.
+ *   - `apiToken` {string}: API token for additional security.
+ *   - `parameters` {UpdateConsumingDomainsParameters}: The parameters needed for updating, including:
+ *     - `participants` {Array<Participant>}: List of participants.
+ *     - `consume_sockets` {Array<ConsumeSocket>}: Sockets to use for consuming domains.
+ *     - `getDomains` {Function}: Function to retrieve current domain configurations.
+ *     - `connectIps` {Function}: Function to initiate IP connections.
+ *     - `getUpdatedAllParams` {Function}: Refreshes and returns the latest parameters.
+ *
+ * @returns {Promise<void>} Resolves when the consuming domains have been successfully updated.
+ *
+ * @example
+ * const options = {
+ *   domains: ['example.com', 'sample.org'],
+ *   alt_domains: { primary: 'primary.com', backup: 'backup.com' },
+ *   apiUserName: 'user123',
+ *   apiKey: 'apikey123',
+ *   apiToken: 'token123',
+ *   parameters: {
+ *     participants: [{ id: '1', name: 'John Doe' }],
+ *     consume_sockets: [socket1, socket2],
+ *     getDomains: (opts) => fetchDomains(opts),
+ *     connectIps: (opts) => connectToIPs(opts),
+ *     getUpdatedAllParams: () => refreshParams(),
+ *   },
+ * };
+ * await updateConsumingDomainsService.updateConsumingDomains(options);
+ */
 class UpdateConsumingDomains {
     /**
      * Updates the consuming domains based on the provided options.
@@ -23368,6 +29752,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
+ * SoundPlayer service for playing a sound from a provided URL.
+ *
+ * @class SoundPlayer
+ * @implements {OnInit}
+ *
+ * @example
+ * ```typescript
+ * const soundUrl = 'https://example.com/sound.mp3';
+ * const soundPlayer = new SoundPlayer();
+ * soundPlayer.playSound({ soundUrl });
+ * ```
+ *
+ * ### Details
+ * - **soundUrl**: URL to the sound file that will be played.
+ * - **playSound**: Initiates the audio playback.
+ * - **ngOnInit**: Automatically triggers sound playback if `soundUrl` is set.
+ *
+ * @param {SoundPlayerOptions} options - Contains the URL of the sound to play.
+ * @returns {void} - No return; sound is played asynchronously.
+ */
+/**
  * Plays a sound from a given URL.
  * @class
  * @implements {OnInit}
@@ -23407,6 +29812,44 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * Service for handling recording notices, managing recording states, and updating related parameters.
+ *
+ * @class
+ * @name RecordingNotice
+ * @description Provides methods to handle the recording notice state, manage user recording parameters, and play appropriate sounds for different states.
+ *
+ * @method
+ * RecordingNotice
+ *
+ * @param {RecordingNoticeOptions} options - The options for recording notices:
+ *   - `state` {string}: The current recording state (`pause`, `stop`, etc.).
+ *   - `userRecordingParam` {UserRecordingParams | null}: The user recording parameters (if available).
+ *   - `pauseCount` {number}: The number of pauses in the recording.
+ *   - `timeDone` {number}: The total recording time completed.
+ *   - `parameters` {RecordingNoticeParameters}: Functions and properties to update recording details.
+ *     - `updateRecordElapsedTime` {Function}: Updates elapsed recording time.
+ *     - `updateShowRecordButtons` {Function}: Toggles record button visibility.
+ *     - `updateRecordState` {Function}: Sets the record state (e.g., `red`, `green`, `yellow`).
+ *     - `updatePauseRecordCount` {Function}: Sets the pause record count.
+ *     - `updateRecordStarted`, `updateRecordPaused`, `updateCanLaunchRecord`, etc.: Other update functions to control recording settings and states.
+ *
+ * @returns {Promise<void>} Resolves when the recording state and parameters have been updated.
+ *
+ * @example
+ * const options = {
+ *   state: 'pause',
+ *   userRecordingParam: { mainSpecs: { mediaOptions: 'audio', ... } },
+ *   pauseCount: 3,
+ *   timeDone: 3600,
+ *   parameters: {
+ *     updateRecordStarted: (started) => console.log(`Recording started: ${started}`),
+ *     updateRecordPaused: (paused) => console.log(`Recording paused: ${paused}`),
+ *     // Define other update functions similarly
+ *   }
+ * };
+ * await recordingNoticeService.RecordingNotice(options);
+ */
 class RecordingNotice {
     SoundPlayerService;
     constructor(SoundPlayerService) {
@@ -23599,6 +30042,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }], ctorParameters: () => [{ type: SoundPlayer }] });
 
+/**
+ * Service to display an alert indicating the remaining recording time.
+ *
+ * @class
+ * @name TimeLeftRecording
+ * @description Provides a method to show an alert when the recording is close to its end.
+ *
+ * @method
+ * timeLeftRecording
+ *
+ * @param {TimeLeftRecordingOptions} options - Options for the remaining time alert:
+ *   - `timeLeft` {number}: The time left in seconds before the recording stops.
+ *   - `showAlert` {Function}: Optional function to display the alert message.
+ *
+ * @example
+ * const options = {
+ *   timeLeft: 30,
+ *   showAlert: ({ message, duration, type }) => console.log(message)
+ * };
+ * timeLeftRecordingService.timeLeftRecording(options);
+ */
 class TimeLeftRecording {
     /**
      * Displays an alert message indicating the remaining time left for recording.
@@ -23633,6 +30097,31 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to display an alert message when recording has stopped.
+ *
+ * @class
+ * @name StoppedRecording
+ * @description Provides a method to show an alert indicating that the recording has stopped.
+ *
+ * @method
+ * stoppedRecording
+ *
+ * @param {StoppedRecordingOptions} options - Options for displaying the alert:
+ *   - `state` {string}: The state of the recording, typically 'stop'.
+ *   - `reason` {string}: The reason for stopping the recording.
+ *   - `showAlert` {Function}: Optional function to show alert messages.
+ *
+ * @returns {Promise<void>} Resolves when the alert message has been displayed.
+ *
+ * @example
+ * const options = {
+ *   state: 'stop',
+ *   reason: 'User ended recording',
+ *   showAlert: ({ message, duration, type }) => console.log(message)
+ * };
+ * stoppedRecordingService.stoppedRecording(options);
+ */
 class StoppedRecording {
     /**
      * Displays an alert message when the recording has stopped.
@@ -23669,58 +30158,41 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * Service to handle host request responses.
- *
- * @example
- * ```typescript
- * const hostRequestResponseService = new HostRequestResponse();
- * await hostRequestResponseService.hostRequestResponse({
- *   requestResponse: { id: '1', type: 'fa-microphone', name: 'John Doe', username: 'johndoe', action: 'accepted' },
- *   showAlert: (alert) => console.log(alert),
- *   requestList: [],
- *   updateRequestList: (list) => console.log(list),
- *   updateMicAction: (state) => console.log(state),
- *   updateVideoAction: (state) => console.log(state),
- *   updateScreenAction: (state) => console.log(state),
- *   updateChatAction: (state) => console.log(state),
- *   updateAudioRequestState: (state) => console.log(state),
- *   updateVideoRequestState: (state) => console.log(state),
- *   updateScreenRequestState: (state) => console.log(state),
- *   updateChatRequestState: (state) => console.log(state),
- *   updateAudioRequestTime: (time) => console.log(time),
- *   updateVideoRequestTime: (time) => console.log(time),
- *   updateScreenRequestTime: (time) => console.log(time),
- *   updateChatRequestTime: (time) => console.log(time),
- *   updateRequestIntervalSeconds: 30,
- * });
- * ```
- *
- * @typedef {Object} HostRequestResponseOptions
- * @property {Object} requestResponse - The request response object.
- * @property {Function} showAlert - Function to show alert messages.
- * @property {Array} requestList - List of current requests.
- * @property {Function} updateRequestList - Function to update the request list.
- * @property {Function} updateMicAction - Function to update microphone action state.
- * @property {Function} updateVideoAction - Function to update video action state.
- * @property {Function} updateScreenAction - Function to update screen action state.
- * @property {Function} updateChatAction - Function to update chat action state.
- * @property {Function} updateAudioRequestState - Function to update audio request state.
- * @property {Function} updateVideoRequestState - Function to update video request state.
- * @property {Function} updateScreenRequestState - Function to update screen request state.
- * @property {Function} updateChatRequestState - Function to update chat request state.
- * @property {Function} updateAudioRequestTime - Function to update audio request time.
- * @property {Function} updateVideoRequestTime - Function to update video request time.
- * @property {Function} updateScreenRequestTime - Function to update screen request time.
- * @property {Function} updateChatRequestTime - Function to update chat request time.
- * @property {number} updateRequestIntervalSeconds - Interval in seconds to update request time.
+ * Service to handle host responses to participant requests, including updating states and showing relevant alerts.
  *
  * @class
- * @classdesc This service handles the responses to host requests, updating the state and showing alerts based on the response.
+ * @name HostRequestResponse
+ * @description
+ * Manages host responses to requests (e.g., microphone, video, screenshare, chat) by updating the state of actions and triggering alerts based on acceptance or rejection.
  *
- * @method hostRequestResponse
+ * @method
+ * hostRequestResponse
  * @async
- * @param {HostRequestResponseOptions} options - The options for handling the host request response.
- * @returns {Promise<void>} A promise that resolves when the request response has been handled.
+ *
+ * @param {HostRequestResponseOptions} options - Options for handling the host request response:
+ *   - `requestResponse` {RequestResponse}: The request response object.
+ *   - `showAlert` {Function}: Optional alert function for notifications.
+ *   - `requestList` {Request[]}: The current list of requests.
+ *   - `updateRequestList` {Function}: Updates the request list.
+ *   - `updateMicAction`, `updateVideoAction`, `updateScreenAction`, `updateChatAction` {Function}: Update functions for respective actions.
+ *   - `updateAudioRequestState`, `updateVideoRequestState`, `updateScreenRequestState`, `updateChatRequestState` {Function}: Updates request states.
+ *   - `updateAudioRequestTime`, `updateVideoRequestTime`, `updateScreenRequestTime`, `updateChatRequestTime` {Function}: Update functions for request timers.
+ *   - `updateRequestIntervalSeconds` {number}: Interval in seconds to update request time.
+ *
+ * @returns {Promise<void>} Resolves once the request response has been handled.
+ *
+ * @example
+ * const options = {
+ *   requestResponse: { id: '1', type: 'fa-microphone', action: 'accepted' },
+ *   showAlert: alert => console.log(alert.message),
+ *   requestList: [{ id: '1', type: 'fa-microphone' }],
+ *   updateRequestList: list => console.log(list),
+ *   updateMicAction: state => console.log(state),
+ *   updateAudioRequestState: state => console.log(state),
+ *   updateAudioRequestTime: time => console.log(time),
+ *   updateRequestIntervalSeconds: 30,
+ * };
+ * hostRequestResponseService.hostRequestResponse(options);
  */
 class HostRequestResponse {
     hostRequestResponse = async ({ requestResponse, showAlert, requestList, updateRequestList, updateMicAction, updateVideoAction, updateScreenAction, updateChatAction, updateAudioRequestState, updateVideoRequestState, updateScreenRequestState, updateChatRequestState, updateAudioRequestTime, updateVideoRequestTime, updateScreenRequestTime, updateChatRequestTime, updateRequestIntervalSeconds, }) => {
@@ -23833,6 +30305,77 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Manages participant-related operations, including updates for participant lists, requests, co-host settings,
+ * and other session details. This method filters out banned and suspended participants, reorders streams,
+ * connects IPs, and updates the UI.
+ *
+ * @async
+ * @param {AllMembersOptions} options - Parameters for managing all members.
+ * @param {Participant[]} options.members - The array of participant objects.
+ * @param {Request[]} options.requestss - The list of requests from participants.
+ * @param {string} options.coHoste - The current co-host name.
+ * @param {CoHostResponsibility[]} options.coHostRes - The responsibilities assigned to the co-host.
+ * @param {AllMembersParameters} options.parameters - Additional parameters for member management and UI updates.
+ * @param {ConsumeSocket[]} options.consume_sockets - Array of sockets for participant communication.
+ * @param {string} options.apiUserName - API username for authentication.
+ * @param {string} options.apiKey - API key for authentication.
+ * @param {string} options.apiToken - API token for authentication.
+ *
+ * @returns {Promise<void>} A promise that resolves when all members have been processed and updates are complete.
+ *
+ * @example
+ * ```typescript
+ * const allMembersService = new AllMembers();
+ * await allMembersService.allMembers({
+ *   members: [{ name: 'John', isBanned: false, isSuspended: false, audioID: '123', videoID: '456' }],
+ *   requestss: [{ id: '1', name: 'Jane', type: 'fa-microphone' }],
+ *   coHoste: 'Jane',
+ *   coHostRes: ['manage-chat'],
+ *   parameters: {
+ *     participantsAll: [],
+ *     participants: [],
+ *     dispActiveNames: ['John'],
+ *     requestList: [],
+ *     coHost: '',
+ *     coHostResponsibility: [],
+ *     lock_screen: false,
+ *     firstAll: false,
+ *     membersReceived: false,
+ *     roomRecvIPs: [],
+ *     deferScreenReceived: false,
+ *     screenId: null,
+ *     shareScreenStarted: false,
+ *     meetingDisplayType: 'grid',
+ *     hostFirstSwitch: false,
+ *     waitingRoomList: [],
+ *     islevel: '1',
+ *     updateParticipantsAll: (participantsAll) => console.log(participantsAll),
+ *     updateParticipants: (participants) => console.log(participants),
+ *     updateRequestList: (requestList) => console.log(requestList),
+ *     updateCoHost: (coHost) => console.log(coHost),
+ *     updateCoHostResponsibility: (coHostRes) => console.log(coHostRes),
+ *     updateFirstAll: (firstAll) => console.log(firstAll),
+ *     updateMembersReceived: (membersReceived) => console.log(membersReceived),
+ *     updateDeferScreenReceived: (deferScreenReceived) => console.log(deferScreenReceived),
+ *     updateShareScreenStarted: (shareScreenStarted) => console.log(shareScreenStarted),
+ *     updateHostFirstSwitch: (hostFirstSwitch) => console.log(hostFirstSwitch),
+ *     updateConsume_sockets: (sockets) => console.log(sockets),
+ *     updateRoomRecvIPs: (ips) => console.log(ips),
+ *     updateIsLoadingModalVisible: (visible) => console.log(visible),
+ *     updateTotalReqWait: (total) => console.log(total),
+ *     onScreenChanges: (params) => console.log('onScreenChanges called with', params),
+ *     connectIps: async (params) => [['socket1'], ['ip1']],
+ *     sleep: async ({ ms }) => new Promise((resolve) => setTimeout(resolve, ms)),
+ *     reorderStreams: async (params) => console.log('reorderStreams called with', params),
+ *   },
+ *   consume_sockets: [{ socketId: 'abc123' }],
+ *   apiUserName: 'testUser',
+ *   apiKey: 'apiKeyExample',
+ *   apiToken: 'apiTokenExample',
+ * });
+ * ```
+ */
 class AllMembers {
     /**
      * allMembers - A method for handling various tasks related to participant management and UI updates.
@@ -23978,6 +30521,79 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Manages participant settings and UI updates, including connecting IPs, reordering streams,
+ * updating settings, and handling participant display based on various session parameters.
+ *
+ * @async
+ * @param {AllMembersRestOptions} options - Parameters for managing members.
+ * @param {Participant[]} options.members - The array of participant objects.
+ * @param {Settings} options.settings - The session settings for audio, video, screenshare, and chat.
+ * @param {string} [options.coHoste] - The current co-host name.
+ * @param {CoHostResponsibility[]} [options.coHostRes] - The responsibilities assigned to the co-host.
+ * @param {AllMembersRestParameters} options.parameters - Additional parameters for managing members and UI updates.
+ * @param {ConsumeSocket[]} options.consume_sockets - Array of sockets for participant communication.
+ * @param {string} options.apiUserName - API username for authentication.
+ * @param {string} options.apiKey - API key for authentication.
+ * @param {string} options.apiToken - API token for authentication.
+ *
+ * @returns {Promise<void>} A promise that resolves when updates and changes for members are completed.
+ *
+ * @example
+ * ```typescript
+ * const allMembersRestService = new AllMembersRest();
+ * await allMembersRestService.allMembersRest({
+ *   members: [{ name: 'John', isBanned: false, isSuspended: false, audioID: '123', videoID: '456' }],
+ *   settings: ['enabled', 'HD', 'allowed', 'public'],
+ *   coHoste: 'Jane',
+ *   coHostRes: ['manage-chat'],
+ *   parameters: {
+ *     participantsAll: [],
+ *     participants: [],
+ *     dispActiveNames: ['John'],
+ *     requestList: [],
+ *     coHost: '',
+ *     coHostResponsibility: [],
+ *     lock_screen: false,
+ *     firstAll: false,
+ *     membersReceived: false,
+ *     roomRecvIPs: [],
+ *     deferScreenReceived: false,
+ *     screenId: null,
+ *     shareScreenStarted: false,
+ *     meetingDisplayType: 'grid',
+ *     audioSetting: '',
+ *     videoSetting: '',
+ *     screenshareSetting: '',
+ *     chatSetting: '',
+ *     updateParticipantsAll: (participantsAll) => console.log(participantsAll),
+ *     updateParticipants: (participants) => console.log(participants),
+ *     updateRequestList: (requestList) => console.log(requestList),
+ *     updateCoHost: (coHost) => console.log(coHost),
+ *     updateCoHostResponsibility: (coHostRes) => console.log(coHostRes),
+ *     updateFirstAll: (firstAll) => console.log(firstAll),
+ *     updateMembersReceived: (membersReceived) => console.log(membersReceived),
+ *     updateDeferScreenReceived: (deferScreenReceived) => console.log(deferScreenReceived),
+ *     updateShareScreenStarted: (shareScreenStarted) => console.log(shareScreenStarted),
+ *     updateAudioSetting: (audioSetting) => console.log(audioSetting),
+ *     updateVideoSetting: (videoSetting) => console.log(videoSetting),
+ *     updateScreenshareSetting: (screenshareSetting) => console.log(screenshareSetting),
+ *     updateChatSetting: (chatSetting) => console.log(chatSetting),
+ *     updateConsume_sockets: (sockets) => console.log(sockets),
+ *     updateRoomRecvIPs: (ips) => console.log(ips),
+ *     updateIsLoadingModalVisible: (visible) => console.log(visible),
+ *     onScreenChanges: (params) => console.log('onScreenChanges called with', params),
+ *     connectIps: async (params) => [['socket1'], ['ip1']],
+ *     sleep: async ({ ms }) => new Promise((resolve) => setTimeout(resolve, ms)),
+ *     reorderStreams: async (params) => console.log('reorderStreams called with', params),
+ *   },
+ *   consume_sockets: [{ socketId: 'abc123' }],
+ *   apiUserName: 'testUser',
+ *   apiKey: 'apiKeyExample',
+ *   apiToken: 'apiTokenExample',
+ * });
+ * ```
+ */
 class AllMembersRest {
     /**
      * Handles various tasks related to participant management and UI updates.
@@ -24131,6 +30747,32 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Service to handle disconnection logic, providing options to redirect or display an alert message.
+ *
+ * @class
+ * @name Disconnect
+ * @description This service manages user disconnection by either redirecting the user to a specified URL (for web platforms) or showing a custom alert message.
+ *
+ * @method
+ * disconnect
+ * @async
+ * @param {DisconnectOptions} options - The options for handling disconnection.
+ * @param {Function} options.showAlert - Function to display an alert message if a redirect is not needed.
+ * @param {string} options.redirectURL - The URL to redirect to upon disconnection, if applicable.
+ * @param {boolean} options.onWeb - Flag indicating if the application is running on the web.
+ * @param {Function} [options.updateValidated] - Optional function to update validation state, primarily for native applications.
+ * @returns {Promise<void>} A promise that resolves when the disconnection process completes.
+ *
+ * @example
+ * const disconnectOptions = {
+ *   showAlert: (alert) => console.log(alert.message),
+ *   redirectURL: 'https://example.com/home',
+ *   onWeb: true,
+ *   updateValidated: (isValid) => console.log(`Validation updated: ${isValid}`)
+ * };
+ * disconnectService.disconnect(disconnectOptions);
+ */
 class Disconnect {
     /**
      * Handles the disconnection logic by either redirecting to a specified URL or showing an alert.
@@ -24169,6 +30811,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // canvas.service.ts
+/**
+ * Manages capturing and streaming from a canvas element.
+ *
+ * @param {CaptureCanvasStreamOptions} options - Options to control canvas streaming.
+ * @param {CaptureCanvasStreamParameters} options.parameters - Object containing media settings and state management functions.
+ * @param {boolean} [options.start=true] - If `true`, initiates canvas capture; if `false`, stops the capture.
+ * @returns {Promise<void>} A promise that resolves once the canvas stream has started or stopped.
+ *
+ * The function first checks the availability of `canvasWhiteboard` to capture the canvas stream. If unavailable, it attempts multiple times until a timeout. If successful:
+ * - It starts the canvas capture, creating or reconnecting the transport for streaming.
+ * - If stopping, it disconnects the transport and halts the stream.
+ *
+ * @example
+ * ```typescript
+ * const captureService = new CaptureCanvasStream();
+ * captureService.captureCanvasStream({
+ *   parameters: {
+ *     canvasWhiteboard: document.getElementById('myCanvas') as HTMLCanvasElement,
+ *     updateCanvasStream: (stream) => console.log('Canvas Stream:', stream),
+ *     screenProducer: null,
+ *     transportCreated: false,
+ *     // other required parameters...
+ *   },
+ *   start: true
+ * });
+ * ```
+ *
+ * This example initiates a capture of `myCanvas`, updating the canvas stream upon successful connection.
+ */
 class CaptureCanvasStream {
     /**
      * Capture the canvas stream.
@@ -24234,6 +30905,57 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Resumes or pauses audio streams based on the provided options.
+ *
+ * This method checks the current state of participants in breakout rooms and
+ * updates the audio streams accordingly. It can add or remove audio streams
+ * based on the participant's current status (in a breakout room or not)
+ * and the event type (e.g., conference, webinar).
+ *
+ * @param {ResumePauseAudioStreamsOptions} options - The options for resuming or pausing audio streams.
+ * @param {number} [options.breakRoom=-1] - The ID of the break room. Defaults to -1 if not specified.
+ * @param {boolean} [options.inBreakRoom=false] - Indicates if the participant is in a break room. Defaults to false.
+ * @param {ResumePauseAudioStreamsParameters} options.parameters - The parameters required for processing audio streams.
+ * @param {Array<BreakoutParticipant[]>} options.parameters.breakoutRooms - Array of breakout rooms.
+ * @param {Array<Participant>} options.parameters.ref_participants - Array of reference participants.
+ * @param {Array<Stream | Participant>} options.parameters.allAudioStreams - Array of all audio streams.
+ * @param {Array<Participant>} options.parameters.participants - Array of participants.
+ * @param {string} options.parameters.islevel - The level of the participant.
+ * @param {EventType} options.parameters.eventType - The type of event (e.g., conference, webinar).
+ * @param {Array<Transport>} options.parameters.consumerTransports - Array of consumer transports.
+ * @param {Array<BreakoutParticipant>} options.parameters.limitedBreakRoom - Array of participants in the limited break room.
+ * @param {number} options.parameters.hostNewRoom - The ID of the host's new room.
+ * @param {string} options.parameters.member - The name of the member.
+ * @param {Function} options.parameters.updateLimitedBreakRoom - Function to update the limited break room.
+ * @param {Function} options.parameters.processConsumerTransportsAudio - Function to process audio transports.
+ *
+ * @returns {Promise<void>} A promise that resolves when the audio streams have been processed.
+ *
+ * @throws Will log an error message if there is an issue processing the audio streams.
+ *
+ * @example
+ * ```typescript
+ * await resumePauseAudioStreams({
+ *   breakRoom: 1,
+ *   inBreakRoom: true,
+ *   parameters: {
+ *     breakoutRooms: [],
+ *     ref_participants: [],
+ *     allAudioStreams: [],
+ *     participants: [],
+ *     islevel: '1',
+ *     eventType: 'conference',
+ *     consumerTransports: [],
+ *     limitedBreakRoom: [],
+ *     hostNewRoom: 2,
+ *     member: 'JohnDoe',
+ *     updateLimitedBreakRoom: myUpdateFunction,
+ *     processConsumerTransportsAudio: myProcessFunction,
+ *   },
+ * });
+ * ```
+ */
 class ResumePauseAudioStreams {
     /**
      * Resumes or pauses audio streams based on the provided options.
@@ -24331,6 +31053,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * Processes consumer transports for audio streams by pausing and resuming them based on their current state and the provided streams.
+ *
+ * This method checks the state of each audio consumer transport and either pauses or resumes it depending on the presence of its producer ID in the provided list of streams.
+ * It uses a sleep function to introduce a delay between the pause and resume operations to ensure smooth transitions.
+ *
+ * @param {ProcessConsumerTransportsAudioOptions} options - The options for processing consumer transports.
+ * @param {Array<Transport>} options.consumerTransports - The list of consumer transports to process.
+ * @param {Array<(Stream | Participant)>} options.lStreams - The list of local streams to check against.
+ * @param {ProcessConsumerTransportsAudioParameters} options.parameters - Additional parameters for processing.
+ * @param {Function} options.parameters.sleep - A function to pause execution for a specified duration.
+ *
+ * @returns {Promise<void>} A promise that resolves when the processing is complete.
+ *
+ * @throws {Error} Will throw an error if there is an issue processing the consumer transports.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   consumerTransports: [,
+ *   lStreams: [],
+ *   parameters: {
+ *     sleep: async ({ ms }) => new Promise(resolve => setTimeout(resolve, ms)),
+ *   },
+ * };
+ *
+ * await processConsumerTransportsAudio(options);
+ * ```
+ */
 class ProcessConsumerTransportsAudio {
     /**
      * Processes consumer transports for audio streams by pausing and resuming them based on their current state and the provided streams.
@@ -24401,6 +31152,29 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * MenuWidget displays an icon with an optional badge counter, used for notifications or alerts.
+ *
+ * @selector app-menu-widget
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule
+ *
+ * @inputs
+ * - `icon` (IconDefinition): FontAwesome icon to display.
+ * - `iconColor` (string): Color of the icon. Default is 'black'.
+ * - `badgeValue` (number): The numeric value displayed within the badge.
+ * - `showBadge` (boolean): Controls the visibility of the badge. Default is false.
+ *
+ * @example
+ * ```html
+ * <app-menu-widget
+ *   [icon]="faBell"
+ *   iconColor="blue"
+ *   [badgeValue]="5"
+ *   [showBadge]="true"
+ * ></app-menu-widget>
+ * ```
+ **/
 class MenuWidget {
     icon;
     iconColor = 'black';
@@ -24509,6 +31283,29 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * MessageWidget displays an icon with an optional badge counter, useful for unread message notifications.
+ *
+ * @selector app-message-widget
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule
+ *
+ * @inputs
+ * - `icon` (IconDefinition): FontAwesome icon to represent the message feature.
+ * - `iconColor` (string): Color of the icon. Default is 'black'.
+ * - `badgeValue` (number): Numeric value displayed in the badge, e.g., unread message count.
+ * - `showBadge` (boolean): Controls the visibility of the badge. Default is false.
+ *
+ * @example
+ * ```html
+ * <app-message-widget
+ *   [icon]="faEnvelope"
+ *   iconColor="blue"
+ *   [badgeValue]="3"
+ *   [showBadge]="true"
+ * ></app-message-widget>
+ * ```
+ **/
 class MessageWidget {
     icon;
     iconColor = 'black';
@@ -24617,6 +31414,28 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * MenuRecordWidget is a configurable widget that displays a set of record control buttons, with customizable icon, color, and actions.
+ *
+ * @selector app-menu-record-widget
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, ControlButtonsAltComponent
+ *
+ * @inputs
+ * - `buttons` (RecordButton[]): Array of record button configurations, each with properties for icon, active state, colors, and actions.
+ * - `direction` ('horizontal' | 'vertical'): Layout direction for the buttons. Default is 'horizontal'.
+ *
+ * @example
+ * ```html
+ * <app-menu-record-widget
+ *   [buttons]="[
+ *     { icon: faCircle, text: 'Record', onPress: startRecording, activeColor: 'red' },
+ *     { icon: faStop, text: 'Stop', onPress: stopRecording, inActiveColor: 'gray' }
+ *   ]"
+ *   direction="horizontal"
+ * ></app-menu-record-widget>
+ * ```
+ **/
 class MenuRecordWidget {
     buttons = [];
     direction = 'horizontal';
@@ -24655,6 +31474,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                     args: ['direction']
                 }] }] });
 
+/**
+ * RecordTimerWidget displays the current recording progress time.
+ *
+ * @selector app-record-timer-widget
+ * @standalone true
+ * @imports CommonModule
+ *
+ * @inputs
+ * - `recordingProgressTime` (string): The time to display as recording progress.
+ *
+ * @example
+ * ```html
+ * <app-record-timer-widget [recordingProgressTime]="'00:05:23'"></app-record-timer-widget>
+ * ```
+ **/
 class RecordTimerWidget {
     recordingProgressTime = '';
     constructor(recordingProgressTime) {
@@ -24688,6 +31522,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                     args: ['recordingProgressTime']
                 }] }] });
 
+/**
+ * MenuParticipantsWidget displays an icon and a counter for participants in a compact, customizable widget.
+ *
+ * @selector app-menu-participants-widget
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule
+ *
+ * @inputs
+ * - `icon` (IconDefinition): The FontAwesome icon to display.
+ * - `iconColor` (string): The color of the icon. Default is 'black'.
+ * - `participantsCounter` (number): The number of participants displayed next to the icon.
+ *
+ * @example
+ * ```html
+ * <app-menu-participants-widget
+ *   [icon]="faUsers"
+ *   iconColor="blue"
+ *   [participantsCounter]="10"
+ * ></app-menu-participants-widget>
+ * ```
+ **/
 class MenuParticipantsWidget {
     icon;
     iconColor = 'black';
@@ -24743,6 +31598,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * ScreenShareWidget - Component representing a screen share button with an optional disabled state.
+ *
+ * This component displays a screen share icon (desktop icon) and an overlay ban icon if disabled.
+ * The disabled state can be controlled either by an injected dependency or an @Input property.
+ *
+ * @component
+ * @name ScreenShareWidget
+ * @example
+ * ```html
+ * <app-screen-share-button [disabled]="isDisabled"></app-screen-share-button>
+ * ```
+ *
+ * @param {boolean} disabled - Optional input to toggle the disabled state of the button.
+ *
+ * @property {boolean} computedDisabled - Internal state to determine if the button is disabled, controlled by either injected value or @Input property.
+ * @property {faDesktop} faDesktop - FontAwesome desktop icon for screen sharing.
+ * @property {faBan} faBan - FontAwesome ban icon indicating a disabled state.
+ *
+ * @example
+ * <app-screen-share-button [disabled]="true"></app-screen-share-button>
+ *
+ * @constructor
+ * @param {boolean} [injectedDisabled] - Optional injected disabled value.
+ *
+ * @method ngOnChanges - Updates the computedDisabled property based on changes to the @Input disabled.
+ */
 class ScreenShareWidget {
     injectedDisabled;
     disabled = false; // Input to toggle disabled state
@@ -24810,6 +31692,53 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 type: Input
             }] } });
 
+/**
+ * MediasfuGeneric component provides a customizable interface with a full suite of modal windows and flexible layout options for interactive media applications.
+ *
+ * @component
+ * @selector app-mediasfu-generic
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponentTouch, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * The template structure:
+ * - Conditional rendering of a PrejoinPage or WelcomePage for introductory or pre-session screens.
+ * - Main content area with nested components for grid layouts, flexible video, and audio grids.
+ * - Modals for user interactions, including participant management, event settings, breakout rooms, whiteboarding, and media settings.
+ *
+ * @input {any} PrejoinPage - Component for the prejoin page, defaults to `WelcomePage`.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for secure access.
+ * @input {boolean} useLocalUIMode - Flag to toggle local UI settings.
+ * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
+ * @input {boolean} useSeed - Enable/disable use of seed data.
+ * @input {string} imgSrc - URL for branding images or logos.
+ *
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Generic".
+ *
+ * @styles
+ * Component-specific styles, including full-screen settings and customizable colors for backgrounds.
+ *
+ * @providers [CookieService] - Provides cookies service for session handling.
+ *
+ * @constructor
+ * @class MediasfuGeneric
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes the component and its configurations.
+ * @method ngOnDestroy - Performs cleanup, removing event listeners and intervals as needed.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-generic
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-generic>
+ * ```
+ */
 class MediasfuGeneric {
     cdr;
     injector;
@@ -29974,6 +36903,55 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['window:orientationchange']
             }] } });
 
+/**
+ * MediasfuBroadcast component provides a streaming broadcast interface with various UI components and settings.
+ * It handles conditional rendering of a prejoin page or main broadcast content, along with integrated modals and controls.
+ *
+ * @component
+ * @selector app-mediasfu-broadcast
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, AlertComponent, AudioGrid, ControlButtonsComponentTouch, FlexibleVideo, LoadingModal, ConfirmExitModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, RecordingModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget]
+ *
+ * @template
+ * The component's template contains:
+ * - Conditional rendering of the PrejoinPage component if the user is not validated.
+ * - The main broadcast content, including video, controls, and optional modals.
+ * - The `app-main-container-component` manages the main display.
+ * - Controls for video and audio grid display and interactive modals (Participants, Messages, Recording, etc.)
+ *
+ * @input {any} PrejoinPage - Component to display as the prejoin page.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for MediaSFU.
+ * @input {boolean} useLocalUIMode - Flag to toggle local UI mode.
+ * @input {SeedData} seedData - Optional seed data.
+ * @input {boolean} useSeed - Flag to use seed data.
+ * @input {string} imgSrc - Source for the logo image.
+ *
+ * @property {string} title - The title of the broadcast.
+ *
+ * @providers [CookieService] - Service for managing cookies within the component.
+ *
+ * @styles
+ * Custom styles specific to MediaSFU layout and interactions.
+ *
+ * @constructor
+ * @class MediasfuBroadcast
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes the component, sets up necessary configurations, and event listeners.
+ * @method ngOnDestroy - Cleanup on component destruction, including removal of event listeners and active intervals.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-broadcast
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'user', apiKey: 'key' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-broadcast>
+ * ```
+ */
 class MediasfuBroadcast {
     cdr;
     injector;
@@ -34038,6 +41016,51 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['window:orientationchange']
             }] } });
 
+/**
+ * Component for managing webinars in the MediaSFU environment.
+ *
+ * @selector app-mediasfu-webinar
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * This component's template includes:
+ * - A conditional PrejoinPage displayed before main content for user preparation.
+ * - The main screen layout with flexible configurations for video, control buttons, and layout grids.
+ * - Modals for participant, settings, polling, and media interactions.
+ *
+ * @input {any} PrejoinPage - Prejoin component that defaults to `WelcomePage`.
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials.
+ * @input {boolean} useLocalUIMode - Determines whether to enable local UI settings.
+ * @input {SeedData} seedData - Optional seed data for initializing component states.
+ * @input {boolean} useSeed - Whether to utilize the provided seed data.
+ * @input {string} imgSrc - Image source for branding or customization.
+ *
+ * @property {string} title - Title of the component, defaulting to "MediaSFU-Webinar".
+ *
+ * @styles
+ * Component-specific styles with full-screen properties and customizable modal colors.
+ *
+ * @providers [CookieService] - Utilized for session or user state management within the component.
+ *
+ * @class MediasfuWebinar
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes session settings, user interfaces, and modals as necessary.
+ * @method ngOnDestroy - Cleans up event listeners and intervals to prevent memory leaks.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-webinar
+ *   [PrejoinPage]="CustomPrejoinPage"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="initialData"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-webinar>
+ * ```
+ */
 class MediasfuWebinar {
     cdr;
     injector;
@@ -38894,6 +45917,53 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['window:orientationchange']
             }] } });
 
+/**
+ * MediasfuConference component creates an interactive conference interface, supporting breakout rooms, chat, video and audio management, and custom controls.
+ *
+ * @component
+ * @selector app-mediasfu-conference
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
+ *
+ * @template
+ * The template includes:
+ * - Conditional rendering for PrejoinPage or WelcomePage component.
+ * - A main content area with modular components for grid layouts, video streaming, and sub-aspect controls.
+ * - Modals for participants, settings, recording, breakout rooms, and more, to enhance interactivity and customization in conference settings.
+ *
+ * @input {any} PrejoinPage - Component for the prejoin page (defaults to WelcomePage).
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for MediaSFU.
+ * @input {boolean} useLocalUIMode - Toggles local UI mode.
+ * @input {SeedData} seedData - Optional seed data for initializing components.
+ * @input {boolean} useSeed - Enables use of seed data.
+ * @input {string} imgSrc - Image source for branding or logos.
+ *
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Conference".
+ *
+ * @styles
+ * Customizable styles for component layout, overflow, and specific modal appearances.
+ *
+ * @providers [CookieService] - Service for managing cookies within the component.
+ *
+ * @constructor
+ * @class MediasfuConference
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes configurations and input parameters.
+ * @method ngOnDestroy - Handles cleanup of event listeners or intervals.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-conference
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-conference>
+ * ```
+ */
 class MediasfuConference {
     cdr;
     injector;
@@ -43751,6 +50821,55 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['window:orientationchange']
             }] } });
 
+/**
+ * MediasfuChat component provides an interface for chat-based streaming events. It includes a conditional prejoin screen, main content with flexible grids and modals, and supports chat-related settings.
+ *
+ * @component
+ * @selector app-mediasfu-chat
+ * @standalone true
+ * @imports [RouterOutlet, CommonModule, AlertComponent, AudioGrid, ControlButtonsComponentTouch, FlexibleGrid, LoadingModal, ConfirmExitModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, MainAspectComponent, MainContainerComponent, MainScreenComponent, OtherGridComponent, MessageWidget]
+ *
+ * @template
+ * The template includes:
+ * - Conditional rendering for the PrejoinPage component.
+ * - A main container with nested components for chat functionalities, including an aspect and screen layout.
+ * - The `app-main-aspect-component` for setting display properties based on event types.
+ * - An `app-other-grid-component` that manages the layout for video and audio content.
+ * - Embedded modals for messages, exit confirmation, and share event actions.
+ *
+ * @input {any} PrejoinPage - Component for the prejoin page (defaults to WelcomePage).
+ * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for MediaSFU.
+ * @input {boolean} useLocalUIMode - Toggles local UI mode.
+ * @input {SeedData} seedData - Optional seed data.
+ * @input {boolean} useSeed - Enables use of seed data.
+ * @input {string} imgSrc - Image source for branding or logos.
+ *
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Chat".
+ *
+ * @styles
+ * Customizable styles for layout and overflow.
+ *
+ * @providers [CookieService] - Service for managing cookies within the component.
+ *
+ * @constructor
+ * @class MediasfuChat
+ * @implements OnInit, OnDestroy
+ *
+ * @method ngOnInit - Initializes configurations and parameters.
+ * @method ngOnDestroy - Handles cleanup and removal of event listeners or intervals.
+ *
+ * @example
+ * ```html
+ * <app-mediasfu-chat
+ *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
+ *   [useLocalUIMode]="true"
+ *   [seedData]="seedDataObject"
+ *   [useSeed]="true"
+ *   imgSrc="https://example.com/logo.png">
+ * </app-mediasfu-chat>
+ * ```
+ */
 class MediasfuChat {
     cdr;
     injector;
@@ -47350,6 +54469,33 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['window:orientationchange']
             }] } });
 
+/**
+ * GenerateRandomParticipants - Service to generate a list of random participants.
+ *
+ * This service creates a list of participants based on a set of specified options, with customization for chat broadcasts
+ * and designation of specific roles like member, co-host, and host.
+ *
+ * @class
+ * @name GenerateRandomParticipants
+ * @example
+ * ```typescript
+ * const generateRandomParticipantsService = new GenerateRandomParticipants();
+ * const participants = generateRandomParticipantsService.generateRandomParticipants({
+ *   member: 'Alice',
+ *   coHost: 'Bob',
+ *   host: 'Charlie',
+ *   forChatBroadcast: true
+ * });
+ * console.log(participants);
+ * ```
+ *
+ * @param {Object} options - Options for generating participants.
+ * @param {string} options.member - Primary member to include in the participants list.
+ * @param {string} [options.coHost] - Optional co-host in the participants list.
+ * @param {string} options.host - Host to include in the participants list.
+ * @param {boolean} [options.forChatBroadcast=false] - Indicates if participants are for a chat broadcast.
+ * @returns {Participant[]} Array of generated participants with randomized levels, muted states, and identifiers.
+ */
 class GenerateRandomParticipants {
     /**
      * Generates a list of random participants with specified options.
@@ -47447,6 +54593,39 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+ * GenerateRandomMessages - Service to generate random chat messages from participants.
+ *
+ * This service generates random direct and group messages based on participants and a given host setup,
+ * with options to tailor messages for chat broadcast.
+ *
+ * @class
+ * @name GenerateRandomMessages
+ * @example
+ * ```typescript
+ * const generateRandomMessagesService = new GenerateRandomMessages();
+ * const messages = generateRandomMessagesService.generateRandomMessages({
+ *   participants: [
+ *     { name: 'Alice' },
+ *     { name: 'Bob' },
+ *     { name: 'Charlie' }
+ *   ],
+ *   member: 'Alice',
+ *   coHost: 'Bob',
+ *   host: 'Charlie',
+ *   forChatBroadcast: true
+ * });
+ * console.log(messages);
+ * ```
+ *
+ * @param {Object} options - Options for generating random messages.
+ * @param {Participant[]} options.participants - List of participants for message generation.
+ * @param {string} options.member - The primary member in the chat.
+ * @param {string} [options.coHost] - Optional co-host participant.
+ * @param {string} options.host - The chat host.
+ * @param {boolean} [options.forChatBroadcast=false] - Flag to indicate if messages are for chat broadcast.
+ * @returns {Message[]} Array of randomly generated messages with direct and group messaging.
+ */
 class GenerateRandomMessages {
     /**
      * Generates random messages for a given set of participants.
@@ -47532,6 +54711,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+  * Generates a random list of requests for participants, ensuring unique icons per participant
+  * and excluding the host and co-host from the request list.
+  *
+  * @param {GenerateRandomRequestListOptions} options - Configuration options for generating requests.
+  * @param {Participant[]} options.participants - Array of participant objects.
+  * @param {string} options.hostName - Name of the host to be excluded.
+  * @param {string} [options.coHostName] - Optional name of the co-host to be excluded.
+  * @param {number} options.numberOfRequests - Number of requests to generate per participant.
+  * @returns {Request[]} Array of requests, each uniquely associated with a participant.
+  *
+  * @example
+  * ```typescript
+  * const requestService = new GenerateRandomRequestList();
+  * const participants = [
+  *   { id: '1', name: 'Alice' },
+  *   { id: '2', name: 'Bob' },
+  *   { id: '3', name: 'Charlie' }
+  * ];
+  * const options = {
+  *   participants,
+  *   hostName: 'Alice',
+  *   coHostName: 'Bob',
+  *   numberOfRequests: 2
+  * };
+  *
+  * const requests = requestService.generateRandomRequestList(options);
+  *
+  * console.log(requests);
+  * // Output:
+  * // [
+  * //   { id: '3', name: 'charlie', icon: 'fa-microphone', username: 'charlie' },
+  * //   { id: '3', name: 'charlie', icon: 'fa-desktop', username: 'charlie' }
+  * // ]
+  * ```
+  */
 class GenerateRandomRequestList {
     /**
      * Generates a list of random requests for participants, excluding the host and co-host.
@@ -47584,6 +54799,27 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+  * Generates a random list of participants for a waiting room.
+  *
+  * @returns {WaitingRoomParticipant[]} An array of `WaitingRoomParticipant` objects, each with a unique ID and random name.
+  *
+  * @example
+  * ```typescript
+  * const generateListService = new GenerateRandomWaitingRoomList();
+  * const waitingRoomList = generateListService.generateRandomWaitingRoomList();
+  *
+  * console.log(waitingRoomList);
+  * // Output:
+  * // [
+  * //   { name: 'Dimen', id: '0' },
+  * //   { name: 'Nore', id: '1' },
+  * //   { name: 'Ker', id: '2' },
+  * //   { name: 'Lor', id: '3' },
+  * //   { name: 'Mik', id: '4' }
+  * // ]
+  * ```
+  */
 class GenerateRandomWaitingRoomList {
     /**
      * Generates a random list of participants for a waiting room.
@@ -47620,6 +54856,32 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 }]
         }] });
 
+/**
+   * Generates an array of random poll objects with varying types and options.
+   *
+   * Each poll includes a question, a type (e.g., "trueFalse", "yesNo", or "custom"), and multiple choice options.
+   * Poll types determine the options generated:
+   * - `"trueFalse"` polls have "True" and "False" options.
+   * - `"yesNo"` polls have "Yes" and "No" options.
+   * - `"custom"` polls generate 2–6 custom options labeled as "Option 1", "Option 2", etc.
+   *
+   * @param {GenerateRandomPollsOptions} options - An object containing the number of polls to generate.
+   * @param {number} options.numberOfPolls - The number of random polls to generate.
+   * @returns {Poll[]} An array of generated polls with unique IDs and randomly selected types and options.
+   *
+   * @example
+   * const pollService = new GenerateRandomPolls();
+   * const options = { numberOfPolls: 3 };
+   * const randomPolls = pollService.generateRandomPolls(options);
+   *
+   * console.log(randomPolls);
+   * // Output:
+   * // [
+   * //   { id: '1', question: 'Random Question 1', type: 'yesNo', options: ['Yes', 'No'], votes: [0, 0], status: 'inactive', voters: {} },
+   * //   { id: '2', question: 'Random Question 2', type: 'trueFalse', options: ['True', 'False'], votes: [0, 0], status: 'inactive', voters: {} },
+   * //   { id: '3', question: 'Random Question 3', type: 'custom', options: ['Option 1', 'Option 2', 'Option 3'], votes: [0, 0, 0], status: 'inactive', voters: {} }
+   * // ]
+   */
 class GenerateRandomPolls {
     /**
      * Generates an array of random poll objects.
@@ -47671,61 +54933,61 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
         }] });
 
 /**
- * MiniCardAudio component displays an audio card with optional waveform animation.
+ * MiniCardAudio component displays an audio card with optional waveform animation and overlay.
  *
- * @component
  * @selector app-mini-card-audio
  * @standalone true
  * @imports CommonModule
  *
  * @template
- * The template includes:
- * - A card container with customizable styles.
- * - An optional background image.
- * - An overlay with the name and waveform animation.
+ * - Displays:
+ *   - A customizable card with optional image and name.
+ *   - Overlay with waveform animation and text.
  *
  * @styles
- * The styles include:
- * - Card dimensions and background color.
- * - Overlay positioning and grid layout.
- * - Name column styling.
- * - Waveform bar styling.
- * - Background image positioning and optional rounded corners.
+ * - Customizable card, overlay, and waveform styles.
  *
  * @inputs
- * @param {any} customStyle - Custom styles for the card.
- * @param {string} name - The name to display on the card.
- * @param {boolean} showWaveform - Flag to show or hide the waveform animation.
- * @param {string} overlayPosition - Position of the overlay on the card.
- * @param {string} barColor - Color of the waveform bars.
- * @param {string} textColor - Color of the name text.
- * @param {string} imageSource - Source URL for the background image.
- * @param {boolean} roundedImage - Flag to apply rounded corners to the background image.
- * @param {any} imageStyle - Custom styles for the background image.
+ * - `customStyle` (Partial<CSSStyleDeclaration>): Custom CSS styles for the card.
+ * - `name` (string): Name displayed on the card.
+ * - `showWaveform` (boolean): Controls visibility of waveform animation.
+ * - `overlayPosition` (string): Position for the overlay on the card.
+ * - `barColor` (string): Color of waveform bars.
+ * - `textColor` (string): Color of the name text.
+ * - `imageSource` (string): URL for the background image.
+ * - `roundedImage` (boolean): Rounds image corners if true.
+ * - `imageStyle` (Partial<CSSStyleDeclaration>): Custom styles for the background image.
  *
- * @class
+ * @class MiniCardAudio
  * @implements OnInit, OnDestroy
  *
  * @constructor
- * @param {Partial<CSSStyleDeclaration>} injectedCustomStyle - Injected custom styles for the card.
- * @param {string} injectedName - Injected name to display on the card.
- * @param {boolean} injectedShowWaveform - Injected flag to show or hide the waveform animation.
- * @param {string} injectedOverlayPosition - Injected position of the overlay on the card.
- * @param {string} injectedBarColor - Injected color of the waveform bars.
- * @param {string} injectedTextColor - Injected color of the name text.
- * @param {string} injectedImageSource - Injected source URL for the background image.
- * @param {boolean} injectedRoundedImage - Injected flag to apply rounded corners to the background image.
- * @param {Partial<CSSStyleDeclaration>} injectedImageStyle - Injected custom styles for the background image.
+ * - Optional injected values for all input properties.
  *
  * @methods
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed.
- * @method animateWaveform - Starts the waveform animation.
- * @method resetWaveform - Resets the waveform animation.
- * @method clearIntervals - Clears all animation intervals.
- * @method getAnimationDuration - Returns the animation duration for a given index.
- * @method getImageStyle - Returns the styles for the background image.
- * @method getOverlayPosition - Returns the styles for the overlay position.
+ * - `ngOnInit`: Initializes the component, starts waveform animation if `showWaveform` is true.
+ * - `ngOnDestroy`: Cleans up intervals.
+ * - `animateWaveform`: Starts animation of the waveform bars.
+ * - `resetWaveform`: Resets waveform to initial state.
+ * - `clearIntervals`: Clears all active intervals.
+ * - `getAnimationDuration`: Returns duration for animation at a given index.
+ * - `getImageStyle`: Combines custom image styles with rounded corners if enabled.
+ * - `getOverlayPosition`: Uses utility to determine the overlay's position.
+ *
+ * @example
+ * ```html
+ * <app-mini-card-audio
+ *   [customStyle]="{ backgroundColor: 'blue' }"
+ *   name="Audio Name"
+ *   [showWaveform]="true"
+ *   overlayPosition="bottomRight"
+ *   barColor="red"
+ *   textColor="white"
+ *   imageSource="/path/to/image.jpg"
+ *   [roundedImage]="true"
+ *   [imageStyle]="{ border: '2px solid black' }"
+ * ></app-mini-card-audio>
+ * ```
  */
 class MiniCardAudio {
     customStyle;

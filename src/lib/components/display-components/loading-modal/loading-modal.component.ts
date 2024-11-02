@@ -9,28 +9,15 @@ export interface LoadingModalOptions {
 export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
 
 /**
- * Component representing a loading modal.
+ * LoadingModal displays a loading spinner and a customizable "Loading..." text as an overlay.
  *
  * @selector app-loading-modal
  * @standalone true
  * @imports CommonModule
  *
- * @description
- * This component displays a loading modal with a spinner and a loading text.
- * It is designed to be displayed as an overlay with customizable background and text colors.
- *
- * @example
- * <app-loading-modal [isVisible]="true" [backgroundColor]="'rgba(0, 0, 0, 0.5)'" [displayColor]="'white'"></app-loading-modal>
- *
- * @styles
- * - .spinner: Styles for the loading spinner.
- * - @keyframes spin: Keyframes for the spinner animation.
- * - .modal-content: Styles for the modal content container.
- * - .loading-text: Styles for the loading text.
- *
  * @inputs
- * - `isVisible` (boolean): Determines if the modal is visible. Default is `false`.
- * - `backgroundColor` (string): Background color of the modal. Default is `'rgba(0, 0, 0, 0.5)'`.
+ * - `isVisible` (boolean): Controls the visibility of the modal overlay. Default is `false`.
+ * - `backgroundColor` (string): Background color of the modal overlay. Default is `'rgba(0, 0, 0, 0.5)'`.
  * - `displayColor` (string): Color of the loading text. Default is `'white'`.
  *
  * @properties
@@ -38,7 +25,23 @@ export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
  * - `modalContentStyle` (object): Computed styles for the modal content.
  * - `spinnerContainerStyle` (object): Computed styles for the spinner container.
  * - `loadingTextStyle` (object): Computed styles for the loading text.
- */
+ *
+ * @example
+ * ```html
+ * <app-loading-modal
+ *   [isVisible]="true"
+ *   [backgroundColor]="'rgba(0, 0, 0, 0.5)'"
+ *   [displayColor]="'white'">
+ * </app-loading-modal>
+ * ```
+ *
+ * @styles
+ * - `.spinner`: Styles for the loading spinner.
+ * - `@keyframes spin`: Keyframes for the spinner rotation animation.
+ * - `.modal-content`: Styles for the modal content container.
+ * - `.loading-text`: Styles for the loading text.
+ **/
+
 @Component({
   selector: 'app-loading-modal',
   standalone: true,

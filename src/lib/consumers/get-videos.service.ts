@@ -12,6 +12,41 @@ export interface GetVideosOptions {
 // Export the type definition for the function
 export type GetVideosType = (options: GetVideosOptions) => Promise<void>;
 
+/**
+ * Asynchronously processes and updates video streams by filtering out the admin's video stream.
+ *
+ * @param {GetVideosOptions} options - The options for getting videos.
+ * @param {Participant[]} options.participants - The list of participants.
+ * @param {Stream[]} options.allVideoStreams - The list of all video streams.
+ * @param {(Stream | Participant)[]} options.oldAllStreams - The list of old video streams.
+ * @param {string} [options.adminVidID] - The ID of the admin's video stream.
+ * @param {Function} options.updateAllVideoStreams - Function to update the state variable for all video streams.
+ * @param {Function} options.updateOldAllStreams - Function to update the state variable for old video streams.
+ * @returns {Promise<void>} A promise that resolves when the video streams have been processed and updated.
+ *
+ * @throws {Error} If an error occurs during the process of updating video streams.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   participants: participantList,
+ *   allVideoStreams: currentVideoStreams,
+ *   oldAllStreams: previousVideoStreams,
+ *   updateAllVideoStreams: (streams) => {
+ *     console.log('Updated all video streams:', streams);
+ *   },
+ *   updateOldAllStreams: (streams) => {
+ *     console.log('Updated old video streams:', streams);
+ *   },
+ * };
+ *
+ * const getVideosService = new GetVideos();
+ * await getVideosService.getVideos(options);
+ * console.log('Video streams processed successfully.');
+ * ```
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

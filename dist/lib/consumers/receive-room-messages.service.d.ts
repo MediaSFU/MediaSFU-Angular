@@ -7,6 +7,33 @@ export interface ReceiveRoomMessagesOptions {
     updateMessages: (messages: Message[]) => void;
 }
 export type ReceiveRoomMessagesType = (options: ReceiveRoomMessagesOptions) => Promise<void>;
+/**
+ * Asynchronously retrieves and updates messages for a specified room from the server.
+ *
+ * This method communicates with the server to request messages for a specific room and updates the messages array accordingly.
+ *
+ * @param {ReceiveRoomMessagesOptions} options - The function parameters.
+ * @param {Socket} options.socket - The socket instance used for communication.
+ * @param {string} options.roomName - The name of the room to retrieve messages for.
+ * @param {function} options.updateMessages - Function to update the messages array with the retrieved messages.
+ *
+ * @returns {Promise<void>} A promise that resolves when the messages have been successfully retrieved and updated.
+ *
+ * @throws Will log an error message if an error occurs during the process of retrieving messages.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   socket: socketInstance,
+ *   roomName: 'Room1',
+ *   updateMessages: (messages) => {
+ *     // Logic to update messages
+ *   },
+ * };
+ *
+ * await receiveRoomMessages(options);
+ * ```
+ */
 export declare class ReceiveRoomMessages {
     /**
      * Asynchronously retrieves and updates messages for a specified room from the server.

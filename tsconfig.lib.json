@@ -1,14 +1,14 @@
 /* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
     "types": ["node"],
-    "typeRoots": ["../../node_modules/@types", "src/@types"]
+    "typeRoots": ["node_modules/@types", "src/@types"]
   },
   "exclude": [
     "**/*.spec.ts"

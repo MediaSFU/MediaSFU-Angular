@@ -19,6 +19,51 @@ export interface ProducerMediaResumedOptions {
     parameters: ProducerMediaResumedParameters;
 }
 export type ProducerMediaResumedType = (options: ProducerMediaResumedOptions) => Promise<void>;
+/**
+ * Service to handle resuming media for a specific participant in a meeting.
+ *
+ * @class
+ * @name ProducerMediaResumed
+ * @description Resumes media (audio only) for a participant and updates the meeting display based on the meeting layout and participant status.
+ *
+ * @method
+ * producerMediaResumed
+ *
+ * @param {ProducerMediaResumedOptions} options - Options to control media resumption:
+ *   - `name` {string}: Name of the participant whose media is to be resumed.
+ *   - `parameters` {ProducerMediaResumedParameters}: Meeting and participant-specific configurations.
+ *      - `meetingDisplayType` {string}: Type of meeting display (e.g., "media").
+ *      - `participants` {Participant[]}: List of participants in the meeting.
+ *      - `shared` {boolean}: Indicates if the screen is currently shared.
+ *      - `shareScreenStarted` {boolean}: Indicates if screen sharing has started.
+ *      - `mainScreenFilled` {boolean}: Indicates if the main screen is filled.
+ *      - `hostLabel` {string}: Label or name of the host.
+ *      - `updateUpdateMainWindow` {Function}: Function to update the main window display.
+ *      - `reorderStreams` {Function}: Function to manage stream ordering when display changes.
+ *      - `prepopulateUserMedia` {Function}: Function to preload user media for the main screen.
+ *
+ * @returns {Promise<void>} Resolves when media for the specified participant has resumed.
+ *
+ * @example
+ * const options = {
+ *   name: 'Participant A',
+ *   parameters: {
+ *     meetingDisplayType: 'media',
+ *     participants: [...],
+ *     shared: false,
+ *     shareScreenStarted: false,
+ *     mainScreenFilled: false,
+ *     hostLabel: 'Host',
+ *     updateUpdateMainWindow: (updateMainWindow) => { ... },
+ *     reorderStreams: ({ add, screenChanged, parameters }) => { ... },
+ *     prepopulateUserMedia: ({ name, parameters }) => { ... }
+ *   }
+ * };
+ *
+ * producerMediaResumedService.producerMediaResumed(options)
+ *   .then(() => console.log('Media resumed'))
+ *   .catch(error => console.error('Error:', error));
+ */
 export declare class ProducerMediaResumed {
     /**
      * Resumes media for a specific participant in a meeting.

@@ -157,6 +157,16 @@ export type ScreenboardType = (options: ScreenboardOptions) => void;
  * @method isPointNearLine - Checks if a point is near a line.
  * @method toggleToolbar - Toggles the visibility of the toolbar.
  * @method toggleAnnotate - Toggles the annotation mode.
+ *
+ * @example
+ * ```html
+ * <app-screenboard
+ *  [customWidth]="customWidth"
+ * [customHeight]="customHeight"
+ * [parameters]="screenboardParameters"
+ * [showAspect]="showAspect"
+ * ></app-screenboard>
+ * ```
  */
 @Component({
   selector: 'app-screenboard',

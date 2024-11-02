@@ -10,6 +10,11 @@ export type MeetingPasscodeComponentType = (options: MeetingPasscodeComponentOpt
  * @standalone true
  * @templateUrl ./meeting-passcode-component.component.html
  * @styleUrls ./meeting-passcode-component.component.css
+ *
+ * @example
+ * ```html
+ * <app-meeting-passcode-component [meetingPasscode]="'ABC123'"></app-meeting-passcode-component>
+ * ```
  */
 export declare class MeetingPasscodeComponent {
     meetingPasscode: string;

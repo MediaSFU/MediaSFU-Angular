@@ -201,6 +201,55 @@
  * @param {number} y1 - Y coordinate of the polygon start.
  * @param {number} x2 - X coordinate of the polygon end.
  * @param {number} y2 - Y coordinate of the polygon end.
+ *
+ * @example
+ * ```html
+ * <app-whiteboard
+ *  [customWidth]="1280"
+ * [customHeight]="720"
+ * [parameters]="{
+ *  socket: socket,
+ * showAlert: showAlert,
+ * islevel: islevel,
+ * roomName: roomName,
+ * shapes: shapes,
+ * useImageBackground: useImageBackground,
+ * redoStack: redoStack,
+ * undoStack: undoStack,
+ * whiteboardStarted: whiteboardStarted,
+ * whiteboardEnded: whiteboardEnded,
+ * whiteboardUsers: whiteboardUsers,
+ * participants: participants,
+ * participantsAll: participantsAll,
+ * screenId: screenId,
+ * recordStarted: recordStarted,
+ * recordStopped: recordStopped,
+ * recordPaused: recordPaused,
+ * recordResumed: recordResumed,
+ * recordingMediaOptions: recordingMediaOptions,
+ * member: member,
+ * shareScreenStarted: shareScreenStarted,
+ * canvasWhiteboard: canvasWhiteboard,
+ * targetResolution: targetResolution,
+ * targetResolutionHost: targetResolutionHost,
+ * updateShapes: updateShapes,
+ * updateUseImageBackground: updateUseImageBackground,
+ * updateRedoStack: updateRedoStack,
+ * updateUndoStack: updateUndoStack,
+ * updateWhiteboardStarted: updateWhiteboardStarted,
+ * updateWhiteboardEnded: updateWhiteboardEnded,
+ * updateWhiteboardUsers: updateWhiteboardUsers,
+ * updateParticipants: updateParticipants,
+ * updateScreenId: updateScreenId,
+ * updateShareScreenStarted: updateShareScreenStarted,
+ * updateCanvasWhiteboard: updateCanvasWhiteboard,
+ * onScreenChanges: onScreenChanges,
+ * captureCanvasStream: captureCanvasStream,
+ * getUpdatedAllParams: getUpdatedAllParams
+ * }"
+ * [showAspect]="true"
+ * ></app-whiteboard>
+ * ```
  */
 import {
   Component,

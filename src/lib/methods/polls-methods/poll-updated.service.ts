@@ -15,6 +15,39 @@ export interface PollUpdatedOptions {
 // Export the type definition for the function
 export type PollUpdatedType = (options: PollUpdatedOptions) => Promise<void>;
 
+/**
+ * Updates the poll state based on the provided data.
+ *
+ * @param {PollUpdatedOptions} options - The options for updating the poll.
+ * @param {PollUpdatedData} options.data - The data containing poll information.
+ * @param {Poll[]} options.polls - The current list of polls.
+ * @param {Poll} options.poll - The current poll.
+ * @param {string} options.member - The member identifier.
+ * @param {string} options.islevel - The level of the member.
+ * @param {Function} [options.showAlert] - Function to show alerts.
+ * @param {Function} options.updatePolls - Function to update the list of polls.
+ * @param {Function} options.updatePoll - Function to update the current poll.
+ * @param {Function} options.updateIsPollModalVisible - Function to update the visibility of the poll modal.
+ * @returns {Promise<void>} A promise that resolves when the poll update is complete.
+ *
+ * @example
+ * ```typescript
+ * const pollUpdatedService = new PollUpdated();
+ * pollUpdatedService.pollUpdated({
+ *   data: { polls: [], poll: { id: '123', question: 'Sample Poll?', status: 'started' } },
+ *   polls: [],
+ *   poll: { id: '123', question: 'Sample Poll?', status: 'started' },
+ *   member: 'user1',
+ *   islevel: '1',
+ *   showAlert: (alert) => console.log(alert.message),
+ *   updatePolls: (polls) => console.log('Updated polls:', polls),
+ *   updatePoll: (poll) => console.log('Updated poll:', poll),
+ *   updateIsPollModalVisible: (visible) => console.log('Poll modal visibility:', visible),
+ * });
+ * ```
+ */
+
+
 @Injectable({
   providedIn: 'root',
 })

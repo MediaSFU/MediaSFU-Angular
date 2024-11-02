@@ -32,14 +32,6 @@ export interface CoHostModalOptions {
 
 export type CoHostModalType = (options: CoHostModalOptions) => HTMLElement;
 
-@Component({
-  selector: 'app-co-host-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './co-host-modal.component.html',
-  styleUrls: ['./co-host-modal.component.css'],
-})
-
 /**
  * CoHostModal component allows managing co-host settings for an event.
  *
@@ -102,6 +94,16 @@ export type CoHostModalType = (options: CoHostModalOptions) => HTMLElement;
  * ```
  *
  **/
+
+@Component({
+  selector: 'app-co-host-modal',
+  standalone: true,
+  imports: [CommonModule, FontAwesomeModule, FormsModule],
+  templateUrl: './co-host-modal.component.html',
+  styleUrls: ['./co-host-modal.component.css'],
+})
+
+
 export class CoHostModal implements OnChanges, OnInit {
   @Input() isCoHostModalVisible = false;
   @Input() currentCohost = 'No coHost';
@@ -217,7 +219,6 @@ export class CoHostModal implements OnChanges, OnInit {
   }
 
   handleSave() {
-    console.log('handleSave');
 
     this.onModifyCoHost({
       roomName: this.roomName,

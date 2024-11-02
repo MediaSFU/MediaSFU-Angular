@@ -12,36 +12,57 @@ export interface MainScreenComponentOptions {
 }
 export type MainScreenComponentType = (options: MainScreenComponentOptions) => HTMLElement;
 /**
- * MainScreenComponent is responsible for displaying a main screen with dynamic dimensions
- * and layout based on the input properties and screen size.
+ * MainScreenComponent dynamically displays a main screen area with responsive dimensions, adjustable layout, and stacking options based on the screen size and input properties.
  *
  * @selector app-main-screen-component
  * @standalone true
  * @imports CommonModule
  *
- * @property {number} mainSize - The size of the main component as a percentage.
- * @property {boolean} doStack - Determines if the components should be stacked.
- * @property {number} containerWidthFraction - Fraction of the container width.
- * @property {number} containerHeightFraction - Fraction of the container height.
- * @property {number} defaultFraction - Default fraction for height calculation.
- * @property {boolean} showControls - Flag to show or hide controls.
- * @property {(sizes: ComponentSizes) => void} updateComponentSizes - Callback to update component sizes.
+ * @template
+ * ```html
+ * <div [ngStyle]="containerStyle">
+ *   <ng-content></ng-content>
+ * </div>
+ * ```
  *
- * @ContentChildren('child') children - Query list of child elements.
+ * @inputs
+ * - `mainSize` (number): Percentage size of the main component. Default is 40.
+ * - `doStack` (boolean): Determines if components should be stacked. Default is true.
+ * - `containerWidthFraction` (number): Fraction of the container width to use. Default is 1.
+ * - `containerHeightFraction` (number): Fraction of the container height to use. Default is 1.
+ * - `defaultFraction` (number): Default height fraction for the container when controls are shown. Default is 0.94.
+ * - `showControls` (boolean): If true, shows control elements, affecting container height. Default is true.
+ * - `updateComponentSizes` (function): Callback for updating component sizes.
  *
- * @property {number} parentWidth - The width of the parent container.
- * @property {number} parentHeight - The height of the parent container.
- * @property {boolean} isWideScreen - Flag to determine if the screen is wide.
+ * @ContentChildren('child') children - Query list of child elements within the component.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnDestroy - Lifecycle hook that is called when the component is destroyed.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method ngAfterViewInit - Lifecycle hook that is called after the component's view has been fully initialized.
- * @method computeDimensions - Computes the dimensions of the main and other components based on the input properties.
- * @method updateDimensions - Updates the dimensions of the parent container and child components.
- * @method get containerStyle - Returns the style object for the container.
- * @method applyChildStyles - Applies the computed styles to the child components.
- */
+ * @properties
+ * - `containerStyle`: Returns a style object for the container based on dimensions and layout options.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes the component and sets up event listeners for window resize and orientation changes.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates dimensions and layout if any relevant inputs change.
+ * - `ngOnDestroy()`: Removes event listeners to prevent memory leaks.
+ * - `ngAfterViewInit()`: Applies computed styles to child elements after view initialization.
+ * - `computeDimensions()`: Calculates the dimensions for main and secondary components based on current layout settings.
+ * - `updateDimensions()`: Updates component dimensions based on window size and input properties.
+ * - `applyChildStyles()`: Applies computed styles to child components.
+ *
+ * @example
+ * ```html
+ * <app-main-screen-component
+ *   [mainSize]="60"
+ *   [doStack]="false"
+ *   [containerWidthFraction]="0.8"
+ *   [containerHeightFraction]="0.9"
+ *   [defaultFraction]="0.9"
+ *   [showControls]="true"
+ *   [updateComponentSizes]="onUpdateSizes"
+ * >
+ *   <div #child>Child Component</div>
+ * </app-main-screen-component>
+ * ```
+ **/
 export declare class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     private renderer;
     mainSize: number;

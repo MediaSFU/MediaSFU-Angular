@@ -41,6 +41,46 @@ export type ControlButtonsAltComponentType = (
   options: ControlButtonsAltComponentOptions,
 ) => HTMLElement;
 
+/**
+ * ControlButtonsAltComponent provides configurable button controls with custom icons, colors, and positioning options.
+ *
+ * @selector app-control-buttons-alt-component
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule
+ *
+ * @inputs
+ * - `buttons` (AltButton[]): Array of button configurations with options for icon, color, state, and actions.
+ * - `position` ('left' | 'right' | 'middle'): Horizontal alignment of buttons. Default is 'left'.
+ * - `location` ('top' | 'bottom' | 'center'): Vertical alignment of buttons. Default is 'top'.
+ * - `direction` ('horizontal' | 'vertical'): Layout direction for buttons. Default is 'horizontal'.
+ * - `buttonsContainerStyle` (Partial<CSSStyleDeclaration>): Custom styles for the container of buttons.
+ * - `showAspect` (boolean): Controls the visibility of the button container. Default is false.
+ *
+ * @methods
+ * - `getAlignmentStyle()`: Returns alignment styles based on `position`, `location`, and `direction`.
+ * - `getContainerStyle()`: Combines container styles, alignment styles, and visibility settings.
+ * - `getButtonStyle(button: AltButton)`: Applies style to each button based on its properties.
+ * - `getTextStyle(button: AltButton)`: Sets text styles for button labels.
+ * - `isCustomComponent(comp)`: Type guard to identify custom component objects.
+ * - `isFunctionComponent(comp)`: Type guard to identify function components.
+ *
+ * @example
+ * ```html
+ * <app-control-buttons-alt-component
+ *  [buttons]="[
+ *    { name: 'Pause', icon: faPause, onPress: pauseAction, activeColor: 'blue' },
+ *    { name: 'Play', icon: faPlay, onPress: playAction, color: 'green' }
+ *  ]"
+ * [position]="'middle'"
+ * [location]="'bottom'"
+ * [direction]="'vertical'"
+ * [buttonsContainerStyle]="{ backgroundColor: '#333' }"
+ * [showAspect]="true">
+ * </app-control-buttons-alt-component>
+ * ```
+ **/
+
+
 @Component({
   selector: 'app-control-buttons-alt-component',
   standalone: true,

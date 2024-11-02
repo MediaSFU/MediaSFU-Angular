@@ -127,6 +127,14 @@ const TIMEOUT_DURATION = 10000; // 5 seconds in milliseconds
  * @param {string} params.apiUserName - API username.
  * @param {string} params.apiKey - API key.
  * @returns {Promise<{ data: CreateJoinRoomResponse | CreateJoinRoomError | null; success: boolean }>} Response from the API.
+ *
+ * @example
+ * ```html
+ * <app-pre-join-page
+ *   [parameters]="preJoinPageParameters"
+ *   [credentials]="{ apiUserName: 'username', apiKey: 'apiKey' }"
+ * ></app-pre-join-page>
+ * ```
  */
 @Component({
   selector: 'app-pre-join-page',

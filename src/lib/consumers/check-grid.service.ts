@@ -10,10 +10,6 @@ export type CheckGridType = (
   options: CheckGridOptions,
 ) => Promise<[boolean, number, number, number, number, number, number] | void>;
 
-@Injectable({
-  providedIn: 'root',
-})
-export class CheckGrid {
   /**
    * Checks the grid configuration and calculates various parameters based on the number of rows, columns, and active elements.
    *
@@ -31,7 +27,27 @@ export class CheckGrid {
    * - `lastrowcols` (number): The number of columns in the last row.
    *
    * If an error occurs, it logs the error to the console.
+   *
+   *   *
+   * @example
+   * ```typescript
+   * const options = {
+   *   rows: 3,
+   *   cols: 4,
+   *   actives: 10,
+   * };
+   *
+   * const result = await checkGridService.checkGrid(options);
+   * console.log(result);
+   * // Output could be: [false, 2, 3, 4, 2, 3, 2]
+   * ```
    */
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CheckGrid {
+
   async checkGrid({
     rows,
     cols,

@@ -26,6 +26,53 @@ export type DisconnectSendTransportVideoType = (
   options: DisconnectSendTransportVideoOptions,
 ) => Promise<void>;
 
+  /**
+   * Disconnects the send transport for video, closes the video producer, and updates the state.
+   *
+   * @param {DisconnectSendTransportVideoOptions} options - The options required for disconnecting the send transport.
+   * @param {Object} options.parameters - The parameters for the disconnection.
+   * @param {Producer} options.parameters.videoProducer - The video producer to be closed.
+   * @param {Socket} options.parameters.socket - The socket instance for communication.
+   * @param {string} options.parameters.islevel - The participant's level.
+   * @param {string} options.parameters.roomName - The name of the room.
+   * @param {boolean} options.parameters.lock_screen - Flag indicating if the screen is locked.
+   * @param {boolean} options.parameters.updateMainWindow - Flag to update the main window.
+   * @param {Function} options.parameters.updateUpdateMainWindow - Function to update the main window state.
+   * @param {Function} options.parameters.updateVideoProducer - Function to update the video producer state.
+   * @param {Function} options.parameters.reorderStreams - Function to reorder streams.
+   *
+   * @returns {Promise<void>} A promise that resolves when the disconnection process is complete.
+   *
+   * @throws {Error} Throws an error if the disconnection process fails.
+   *
+   * @example
+   * ```typescript
+   * const options = {
+   *   parameters: {
+   *     videoProducer,
+   *     socket,
+   *     islevel: '1',
+   *     roomName: 'Room 101',
+   *     lock_screen: false,
+   *     updateMainWindow: false,
+   *     updateUpdateMainWindow: (state) => { console.log(updated) },
+   *     updateVideoProducer: (producer) => { console.log(updated) },
+   *     reorderStreams: (params) => { },
+   *     getUpdatedAllParams: () => ({}),
+   *   },
+   * };
+   *
+   * disconnectSendTransportVideoService.disconnectSendTransportVideo(options)
+   *   .then(() => {
+   *     console.log('Video transport disconnected successfully');
+   *   })
+   *   .catch((error) => {
+   *     console.error('Error disconnecting video transport:', error);
+   *   });
+   * ```
+   */
+
+
 @Injectable({
   providedIn: 'root',
 })

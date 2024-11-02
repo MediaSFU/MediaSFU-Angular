@@ -11,62 +11,34 @@ export interface UserWaitingOptions {
 export type UserWaitingType = (options: UserWaitingOptions) => Promise<void>;
 
 /**
- * @fileoverview Service to handle user waiting functionality.
- *
- * @description
- * This service provides methods to handle the logic when a user joins the waiting room.
- * It displays an alert/notification and updates the total number of requests waiting.
- */
-
-/**
- * Options for the userWaiting method.
- *
- * @interface UserWaitingOptions
- * @property {string} name - The name of the user joining the waiting room.
- * @property {(options: { message: string; type: string; duration: number }) => void} [showAlert] - Optional function to display an alert/notification.
- * @property {number} totalReqWait - The current total number of requests waiting.
- * @property {(total: number) => void} updateTotalReqWait - Function to update the total number of requests waiting.
- */
-
-/**
- * Service to handle user waiting functionality.
+ * Service for handling user waiting room actions, including notifications and updating request counts.
  *
  * @class
  * @name UserWaiting
- * @description
- * This service provides methods to handle the logic when a user joins the waiting room.
- * It displays an alert/notification and updates the total number of requests waiting.
- *
- * @example
- * const userWaitingService = new UserWaiting();
- * userWaitingService.userWaiting({
- *   name: 'John Doe',
- *   showAlert: (options) => console.log(options.message),
- *   totalReqWait: 5,
- *   updateTotalReqWait: (total) => console.log(`Total requests: ${total}`),
- * });
- */
-
-/**
- * Handles the logic when a user joins the waiting room.
+ * @description Manages the logic when a user joins the waiting room by displaying alerts and incrementing the total request count.
  *
  * @method
- * @name userWaiting
- * @memberof UserWaiting
+ * userWaiting
  * @async
  *
- * @param {UserWaitingOptions} options - The options for the user waiting method.
- * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ * @param {UserWaitingOptions} options - The options for handling user waiting actions:
+ *   - `name` {string}: Name of the user joining the waiting room.
+ *   - `showAlert` {ShowAlert}: Optional function for showing an alert with a customizable message, type, and duration.
+ *   - `totalReqWait` {number}: Current count of waiting requests.
+ *   - `updateTotalReqWait` {Function}: Updates the total waiting request count.
+ *
+ * @returns {Promise<void>} Resolves after alert is shown and request count is updated.
  *
  * @example
  * const options = {
- *   name: 'John Doe',
- *   showAlert: (options) => console.log(options.message),
- *   totalReqWait: 5,
- *   updateTotalReqWait: (total) => console.log(`Total requests: ${total}`),
+ *   name: 'Alice',
+ *   showAlert: ({ message, type, duration }) => console.log(message),
+ *   totalReqWait: 3,
+ *   updateTotalReqWait: (newTotal) => console.log(`Updated count: ${newTotal}`)
  * };
  * await userWaitingService.userWaiting(options);
  */
+
 @Injectable({
   providedIn: 'root',
 })

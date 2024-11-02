@@ -15,13 +15,12 @@ export interface MainAspectComponentOptions {
 export type MainAspectComponentType = (options: MainAspectComponentOptions) => HTMLElement;
 
 /**
- * MainAspectComponent is a standalone Angular component that adjusts its aspect ratio
- * based on the window size and other input properties. It listens to window resize
- * and orientation change events to dynamically update its styles.
+ * MainAspectComponent dynamically adjusts its aspect ratio based on window size, providing an adaptable container for content.
+ * It listens for window resize and orientation changes to update its layout, making it suitable for responsive applications.
  *
  * @selector app-main-aspect-component
  * @standalone true
- * @imports [CommonModule]
+ * @imports CommonModule
  *
  * @template
  * ```html
@@ -31,29 +30,39 @@ export type MainAspectComponentType = (options: MainAspectComponentOptions) => H
  * ```
  *
  * @styles
- * ```css
- * .aspect-container {
- *   overflow: hidden;
- * }
+ * - `.aspect-container`: Styles for overflow handling.
+ *
+ * @inputs
+ * - `backgroundColor` (string): The background color of the aspect container.
+ * - `showControls` (boolean): Toggles control display, adjusting the container height. Default is true.
+ * - `containerWidthFraction` (number): Fraction of window width for container width. Default is 1.
+ * - `containerHeightFraction` (number): Fraction of window height for container height. Default is 1.
+ * - `defaultFraction` (number): Height adjustment factor when controls are shown. Default is 0.94.
+ * - `updateIsWideScreen` (function): Callback to set wide screen status.
+ * - `updateIsMediumScreen` (function): Callback to set medium screen status.
+ * - `updateIsSmallScreen` (function): Callback to set small screen status.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes component and sets up resize and orientation listeners.
+ * - `ngOnChanges(changes: SimpleChanges)`: Updates layout when relevant inputs change.
+ * - `ngOnDestroy()`: Removes event listeners to prevent memory leaks.
+ * - `updateAspectStyles()`: Calculates and applies styles based on current window dimensions and component inputs.
+ *
+ * @example
+ * ```html
+ * <app-main-aspect-component
+ *   [backgroundColor]="'lightblue'"
+ *   [showControls]="true"
+ *   [containerWidthFraction]="0.9"
+ *   [containerHeightFraction]="0.8"
+ *   [defaultFraction]="0.95"
+ *   [updateIsWideScreen]="onWideScreenUpdate"
+ *   [updateIsMediumScreen]="onMediumScreenUpdate"
+ *   [updateIsSmallScreen]="onSmallScreenUpdate"
+ * ></app-main-aspect-component>
  * ```
- *
- * @class MainAspectComponent
- * @implements OnInit, OnDestroy, OnChanges
- *
- * @property {string} backgroundColor - The background color of the aspect container.
- * @property {boolean} showControls - Flag to show or hide controls.
- * @property {number} containerWidthFraction - Fraction of the window width for the container.
- * @property {number} containerHeightFraction - Fraction of the window height for the container.
- * @property {number} defaultFraction - Default fraction to adjust the height when controls are shown.
- * @property {(isWideScreen: boolean) => void} updateIsWideScreen - Callback to update wide screen status.
- * @property {(isMediumScreen: boolean) => void} updateIsMediumScreen - Callback to update medium screen status.
- * @property {(isSmallScreen: boolean) => void} updateIsSmallScreen - Callback to update small screen status.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed.
- * @method private updateAspectStyles - Updates the aspect styles based on the window size and input properties.
- */
+ **/
+
 @Component({
   selector: 'app-main-aspect-component',
   standalone: true,

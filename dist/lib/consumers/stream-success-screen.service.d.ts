@@ -36,6 +36,56 @@ export interface StreamSuccessScreenOptions {
     parameters: StreamSuccessScreenParameters;
 }
 export type StreamSuccessScreenType = (options: StreamSuccessScreenOptions) => Promise<void>;
+/**
+ * Handles the successful initiation of screen sharing.
+ *
+ * This method sets up the necessary transport connections for screen sharing,
+ * updates relevant application states, and notifies participants of the screen
+ * sharing status.
+ *
+ * @param {StreamSuccessScreenOptions} options - The options for the screen sharing success handler.
+ * @param {MediaStream} options.stream - The media stream to be shared.
+ * @param {StreamSuccessScreenParameters} options.parameters - The parameters required for screen sharing.
+ * @param {Socket} options.parameters.socket - The socket instance for real-time communication.
+ * @param {boolean} options.parameters.transportCreated - Flag indicating if the transport is already created.
+ * @param {MediaStream | null} options.parameters.localStreamScreen - The local screen media stream.
+ * @param {boolean} options.parameters.screenAlreadyOn - Flag indicating if the screen is already being shared.
+ * @param {boolean} options.parameters.screenAction - Flag indicating if the screen share action is requested.
+ * @param {boolean} options.parameters.transportCreatedScreen - Flag indicating if the screen transport is created.
+ * @param {string} options.parameters.hostLabel - The label of the host for this session.
+ * @param {string} options.parameters.eventType - The type of event (e.g., conference).
+ * @param {ShowAlert} [options.parameters.showAlert] - Optional function to show alert messages.
+ * @param {boolean} options.parameters.annotateScreenStream - Flag indicating if screen annotation is enabled.
+ * @param {Function} options.parameters.updateTransportCreatedScreen - Function to update the screen transport creation state.
+ * @param {Function} options.parameters.updateScreenAlreadyOn - Function to update the screen sharing state.
+ * @param {Function} options.parameters.updateScreenAction - Function to update the screen action state.
+ * @param {Function} options.parameters.updateTransportCreated - Function to update the transport creation state.
+ * @param {Function} options.parameters.updateLocalStreamScreen - Function to update the local screen stream.
+ * @param {Function} options.parameters.updateShared - Function to update the shared state.
+ * @param {Function} options.parameters.updateIsScreenboardModalVisible - Function to update the screenboard modal visibility.
+ * @param {Function} options.parameters.sleep - Function to pause execution for a specified time.
+ * @param {Function} options.parameters.createSendTransport - Function to create a send transport for screen sharing.
+ * @param {Function} options.parameters.connectSendTransportScreen - Function to connect the send transport for screen sharing.
+ * @param {Function} options.parameters.disconnectSendTransportScreen - Function to disconnect the send transport for screen sharing.
+ * @param {Function} options.parameters.stopShareScreen - Function to stop the screen sharing process.
+ * @param {Function} options.parameters.reorderStreams - Function to reorder streams based on current state.
+ * @param {Function} options.parameters.prepopulateUserMedia - Function to prepopulate user media based on current settings.
+ * @param {Function} options.parameters.rePort - Function to reinitialize ports if needed.
+ *
+ * @returns {Promise<void>} A promise that resolves when the screen sharing setup is complete.
+ *
+ * @throws {Error} Throws an error if there is an issue during the screen sharing setup.
+ *
+ * @example
+ * await streamSuccessScreen({
+ *   stream: newScreenStream,
+ *   parameters: {
+ *     socket: socketInstance,
+ *     localStreamScreen: null,
+ *     // other parameters...
+ *   },
+ * });
+ */
 export declare class StreamSuccessScreen {
     /**
      * Handles the successful initiation of screen sharing.

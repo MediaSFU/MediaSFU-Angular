@@ -11,8 +11,8 @@ export interface MeetingProgressTimerOptions {
 }
 export type MeetingProgressTimerType = (options: MeetingProgressTimerOptions) => HTMLElement;
 /**
- * Component to display a meeting progress timer.
- *s
+ * MeetingProgressTimer displays a customizable timer badge to track meeting progress time.
+ *
  * @selector app-meeting-progress-timer
  * @standalone true
  * @imports CommonModule
@@ -27,38 +27,33 @@ export type MeetingProgressTimerType = (options: MeetingProgressTimerOptions) =>
  * ```
  *
  * @styles
- * ```css
- * .badge-container {
- *   padding: 5px;
- *   position: relative;
- *   z-index: 1000;
- * }
- * .progress-timer {
- *   background-color: green;
- *   padding: 5px;
- *   border-radius: 5px;
- *   color: white;
- * }
- * .progress-timer-text {
- *   color: black;
- * }
+ * - `.badge-container`: General container style with positioning.
+ * - `.progress-timer`: Timer badge with default padding, background, and border-radius.
+ * - `.progress-timer-text`: Text styling within the timer badge.
+ *
+ * @inputs
+ * - `meetingProgressTime` (string): Time to be displayed in the timer.
+ * - `initialBackgroundColor` (string): Background color of the timer badge. Default is 'green'.
+ * - `position` ('topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'): Position of the timer on the screen. Default is 'topLeft'.
+ * - `textStyle` (object): Custom styles for the timer text.
+ * - `showTimer` (boolean): If true, displays the timer. Default is true.
+ *
+ * @property `positions` (object): Preset styles for timer positioning options.
+ *
+ * @methods
+ * - `ngOnChanges(changes: SimpleChanges)`: Handles changes to input properties and updates styles accordingly.
+ *
+ * @example
+ * ```html
+ * <app-meeting-progress-timer
+ *   [meetingProgressTime]="'10:30'"
+ *   [initialBackgroundColor]="'blue'"
+ *   [position]="'bottomRight'"
+ *   [textStyle]="{ color: 'white', fontWeight: 'bold' }"
+ *   [showTimer]="true"
+ * ></app-meeting-progress-timer>
  * ```
- *
- * @class MeetingProgressTimer
- * @implements OnInit, OnChanges
- *
- * @property {string} meetingProgressTime - The time to be displayed in the timer.
- * @property {string} [initialBackgroundColor='green'] - The initial background color of the timer.
- * @property {'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'} [position='topLeft'] - The position of the timer on the screen.
- * @property {{ [key: string]: string | number }} [textStyle={}] - The style to be applied to the timer text.
- * @property {boolean} [showTimer=true] - Flag to show or hide the timer.
- *
- * @property {{ [key: string]: { position: string, top?: string, bottom?: string, left?: string, right?: string } }} positions - The possible positions for the timer.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @param {SimpleChanges} changes - The changed properties.
- */
+ **/
 export declare class MeetingProgressTimer implements OnChanges {
     meetingProgressTime: string;
     initialBackgroundColor: string;

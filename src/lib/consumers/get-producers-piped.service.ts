@@ -20,6 +20,41 @@ export interface GetProducersPipedOptions {
 
 // Export the type definition for the function
 export type GetProducersPipedType = (options: GetProducersPipedOptions) => Promise<void>;
+
+/**
+ * Retrieves piped producers and signals new consumer transport for each retrieved producer.
+ *
+ * @param {GetProducersPipedOptions} options - The options for getting piped producers.
+ * @param {Socket} options.nsock - The WebSocket instance used for communication.
+ * @param {string} options.islevel - A flag indicating the level of the operation.
+ * @param {GetProducersPipedParameters} options.parameters - Additional parameters for the operation.
+ * @param {string} options.parameters.member - The member identifier.
+ * @param {SignalNewConsumerTransportType} options.parameters.signalNewConsumerTransport - The function to signal new consumer transport.
+ *
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ *
+ * @throws {Error} If an error occurs during the process of retrieving producers.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   nsock: socketInstance,
+ *   islevel: '2',
+ *   parameters: {
+ *     member: 'user123',
+ *     signalNewConsumerTransport: async ({ remoteProducerId, islevel, nsock, parameters }) => {
+ *       // Implementation to signal new consumer transport
+ *       console.log(`Signaling new consumer transport for producer: ${remoteProducerId}`);
+ *     },
+ *   },
+ * };
+ *
+ * const getProducersPipedService = new GetProducersPiped();
+ * await getProducersPipedService.getProducersPiped(options);
+ * console.log('Piped producers retrieved successfully.');
+ * ```
+ */
+
 @Injectable({
   providedIn: 'root',
 })

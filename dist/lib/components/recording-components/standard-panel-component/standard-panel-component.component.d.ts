@@ -40,6 +40,11 @@ export type StandardPanelType = (options: StandardPanelParameters) => HTMLElemen
  *
  * @param {SimpleChanges} changes - The changes to the input properties.
  * @param {any} event - The event object from the change event.
+ *
+ * @example
+ * ```html
+ * <app-standard-panel-component [parameters]="standardPanelParameters"></app-standard-panel-component>
+ * ```
  */
 export declare class StandardPanelComponent implements OnInit, OnChanges {
     parameters: StandardPanelParameters;

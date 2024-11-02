@@ -51,6 +51,77 @@ export interface AllMembersOptions {
     apiToken: string;
 }
 export type AllMembersType = (options: AllMembersOptions) => Promise<void>;
+/**
+ * Manages participant-related operations, including updates for participant lists, requests, co-host settings,
+ * and other session details. This method filters out banned and suspended participants, reorders streams,
+ * connects IPs, and updates the UI.
+ *
+ * @async
+ * @param {AllMembersOptions} options - Parameters for managing all members.
+ * @param {Participant[]} options.members - The array of participant objects.
+ * @param {Request[]} options.requestss - The list of requests from participants.
+ * @param {string} options.coHoste - The current co-host name.
+ * @param {CoHostResponsibility[]} options.coHostRes - The responsibilities assigned to the co-host.
+ * @param {AllMembersParameters} options.parameters - Additional parameters for member management and UI updates.
+ * @param {ConsumeSocket[]} options.consume_sockets - Array of sockets for participant communication.
+ * @param {string} options.apiUserName - API username for authentication.
+ * @param {string} options.apiKey - API key for authentication.
+ * @param {string} options.apiToken - API token for authentication.
+ *
+ * @returns {Promise<void>} A promise that resolves when all members have been processed and updates are complete.
+ *
+ * @example
+ * ```typescript
+ * const allMembersService = new AllMembers();
+ * await allMembersService.allMembers({
+ *   members: [{ name: 'John', isBanned: false, isSuspended: false, audioID: '123', videoID: '456' }],
+ *   requestss: [{ id: '1', name: 'Jane', type: 'fa-microphone' }],
+ *   coHoste: 'Jane',
+ *   coHostRes: ['manage-chat'],
+ *   parameters: {
+ *     participantsAll: [],
+ *     participants: [],
+ *     dispActiveNames: ['John'],
+ *     requestList: [],
+ *     coHost: '',
+ *     coHostResponsibility: [],
+ *     lock_screen: false,
+ *     firstAll: false,
+ *     membersReceived: false,
+ *     roomRecvIPs: [],
+ *     deferScreenReceived: false,
+ *     screenId: null,
+ *     shareScreenStarted: false,
+ *     meetingDisplayType: 'grid',
+ *     hostFirstSwitch: false,
+ *     waitingRoomList: [],
+ *     islevel: '1',
+ *     updateParticipantsAll: (participantsAll) => console.log(participantsAll),
+ *     updateParticipants: (participants) => console.log(participants),
+ *     updateRequestList: (requestList) => console.log(requestList),
+ *     updateCoHost: (coHost) => console.log(coHost),
+ *     updateCoHostResponsibility: (coHostRes) => console.log(coHostRes),
+ *     updateFirstAll: (firstAll) => console.log(firstAll),
+ *     updateMembersReceived: (membersReceived) => console.log(membersReceived),
+ *     updateDeferScreenReceived: (deferScreenReceived) => console.log(deferScreenReceived),
+ *     updateShareScreenStarted: (shareScreenStarted) => console.log(shareScreenStarted),
+ *     updateHostFirstSwitch: (hostFirstSwitch) => console.log(hostFirstSwitch),
+ *     updateConsume_sockets: (sockets) => console.log(sockets),
+ *     updateRoomRecvIPs: (ips) => console.log(ips),
+ *     updateIsLoadingModalVisible: (visible) => console.log(visible),
+ *     updateTotalReqWait: (total) => console.log(total),
+ *     onScreenChanges: (params) => console.log('onScreenChanges called with', params),
+ *     connectIps: async (params) => [['socket1'], ['ip1']],
+ *     sleep: async ({ ms }) => new Promise((resolve) => setTimeout(resolve, ms)),
+ *     reorderStreams: async (params) => console.log('reorderStreams called with', params),
+ *   },
+ *   consume_sockets: [{ socketId: 'abc123' }],
+ *   apiUserName: 'testUser',
+ *   apiKey: 'apiKeyExample',
+ *   apiToken: 'apiTokenExample',
+ * });
+ * ```
+ */
 export declare class AllMembers {
     /**
      * allMembers - A method for handling various tasks related to participant management and UI updates.

@@ -19,77 +19,71 @@ export interface MiniAudioOptions {
 export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
 
 /**
- * MiniAudio component is a standalone Angular component that displays a mini audio player with waveform animations.
- * It supports various customizations including visibility, styles, text, and image properties.
- * The component can be dragged around the screen.
+ * MiniAudio component is a draggable, customizable mini audio player with optional waveform animations.
  *
  * @selector app-mini-audio
  * @standalone true
  * @imports CommonModule
  *
  * @template
- * The template includes a modal container with a card that displays an optional background image, name text, and waveform animations.
+ * ```html
+ * <div *ngIf="visible" class="modal-container" [ngStyle]="{ transform: 'translate(' + position.x + 'px, ' + position.y + 'px)' }" (mousedown)="handleMouseDown($event)">
+ *   <div class="card" [ngStyle]="customStyle">
+ *     <ng-container *ngIf="imageSource">
+ *       <img [src]="imageSource" [ngStyle]="getImageStyle()" alt="Background" class="background-image" />
+ *     </ng-container>
+ *     <div class="name-text" [ngStyle]="combineStyles({ color: textColor }, nameTextStyling)">
+ *       {{ name }}
+ *     </div>
+ *     <div [ngStyle]="getOverlayPosition(overlayPosition)" class="overlay-web">
+ *       <div class="waveform-web">
+ *         <div *ngFor="let animation of waveformAnimations; let i = index"
+ *              [ngStyle]="{ height: animation == 0 ? '1px' : '30px', width: '10px', backgroundColor: barColor }"
+ *              class="bar">
+ *         </div>
+ *       </div>
+ *     </div>
+ *   </div>
+ * </div>
+ * ```
  *
  * @styles
- * The styles define the appearance of the modal container, card, background image, name text, overlay, waveform, and bars.
+ * - `.modal-container`: Positioning and drag area.
+ * - `.card`: The main container styling.
+ * - `.background-image`: Styling for an optional background image.
+ * - `.name-text`: Styling for name text with customizable color.
+ * - `.overlay-web` and `.waveform-web`: Contains and styles the waveform animation bars.
  *
- * @class MiniAudio
- * @implements OnInit, OnDestroy
+ * @inputs
+ * - `visible` (boolean): Show/hide the component.
+ * - `customStyle` (object): Custom styles for the component.
+ * - `name` (string): Text to display as the name.
+ * - `showWaveform` (boolean): Show/hide waveform animations.
+ * - `overlayPosition` (string): Position of the overlay.
+ * - `barColor` (string): Color of waveform bars.
+ * - `textColor` (string): Color of name text.
+ * - `nameTextStyling` (object): Additional styles for the name text.
+ * - `imageSource` (string): URL of the background image.
+ * - `roundedImage` (boolean): If true, applies rounded corners to the image.
+ * - `imageStyle` (object): Custom styles for the image.
  *
- * @property {boolean} visible - Determines if the component is visible.
- * @property {any} customStyle - Custom styles for the component.
- * @property {string} name - The name text displayed in the component.
- * @property {boolean} showWaveform - Flag to show or hide the waveform animations.
- * @property {string} overlayPosition - Position of the overlay.
- * @property {string} barColor - Color of the waveform bars.
- * @property {string} textColor - Color of the name text.
- * @property {any} nameTextStyling - Additional styles for the name text.
- * @property {string} imageSource - Source URL for the background image.
- * @property {boolean} roundedImage - Flag to apply rounded corners to the background image.
- * @property {any} imageStyle - Custom styles for the background image.
+ * @property `waveformAnimations` (array): Tracks animation states for each waveform bar.
+ * @property `position` (object): Tracks x and y positioning for dragging.
  *
- * @constructor
- * The constructor allows optional dependency injection for all input properties.
+ * @methods
+ * - `ngOnInit()`: Starts waveform animations if `showWaveform` is true.
+ * - `ngOnDestroy()`: Clears waveform animation intervals.
+ * - `animateWaveform()`: Sets intervals for each bar's animation.
+ * - `handleMouseDown(event: MouseEvent)`: Starts dragging on mousedown.
+ * - `handleMouseMove(event: MouseEvent)`: Updates position during drag.
+ * - `handleMouseUp()`: Ends dragging on mouseup.
  *
- * @method ngOnInit
- * Initializes the component and starts waveform animations if enabled.
- *
- * @method ngOnDestroy
- * Cleans up intervals to prevent memory leaks.
- *
- * @method animateWaveform
- * Starts the waveform animations by setting intervals for each bar.
- *
- * @method animateBar
- * Animates a single bar in the waveform.
- *
- * @method resetWaveform
- * Resets the waveform animations to their initial state.
- *
- * @method clearIntervals
- * Clears all animation intervals.
- *
- * @method getAnimationDuration
- * Returns the animation duration for a given bar index.
- *
- * @method getImageStyle
- * Returns the combined styles for the background image, including optional rounded corners.
- *
- * @method combineStyles
- * Combines base styles with additional styles.
- *
- * @method handleMouseDown
- * Handles the mousedown event to start dragging the component.
- *
- * @method handleMouseMove
- * Handles the mousemove event to update the component's position while dragging.
- *
- * @method handleMouseUp
- * Handles the mouseup event to stop dragging the component.
- *
- * @method getOverlayPosition
- * Returns the position styles for the overlay.
+ * @example
+ * ```html
+ * <app-mini-audio [visible]="true" [name]="'Audio Player'" [barColor]="'blue'" [imageSource]="'/path/to/image.png'"></app-mini-audio>
+ * ```
  */
+
 @Component({
   selector: 'app-mini-audio',
   standalone: true,

@@ -12,6 +12,34 @@ export type GenerateRandomParticipantsType = (
   options: GenerateRandomParticipantsOptions,
 ) => Participant[];
 
+/**
+ * GenerateRandomParticipants - Service to generate a list of random participants.
+ *
+ * This service creates a list of participants based on a set of specified options, with customization for chat broadcasts
+ * and designation of specific roles like member, co-host, and host.
+ *
+ * @class
+ * @name GenerateRandomParticipants
+ * @example
+ * ```typescript
+ * const generateRandomParticipantsService = new GenerateRandomParticipants();
+ * const participants = generateRandomParticipantsService.generateRandomParticipants({
+ *   member: 'Alice',
+ *   coHost: 'Bob',
+ *   host: 'Charlie',
+ *   forChatBroadcast: true
+ * });
+ * console.log(participants);
+ * ```
+ *
+ * @param {Object} options - Options for generating participants.
+ * @param {string} options.member - Primary member to include in the participants list.
+ * @param {string} [options.coHost] - Optional co-host in the participants list.
+ * @param {string} options.host - Host to include in the participants list.
+ * @param {boolean} [options.forChatBroadcast=false] - Indicates if participants are for a chat broadcast.
+ * @returns {Participant[]} Array of generated participants with randomized levels, muted states, and identifiers.
+ */
+
 @Injectable({
   providedIn: 'root',
 })

@@ -13,61 +13,61 @@ export interface MiniCardAudioOptions {
 }
 export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
 /**
- * MiniCardAudio component displays an audio card with optional waveform animation.
+ * MiniCardAudio component displays an audio card with optional waveform animation and overlay.
  *
- * @component
  * @selector app-mini-card-audio
  * @standalone true
  * @imports CommonModule
  *
  * @template
- * The template includes:
- * - A card container with customizable styles.
- * - An optional background image.
- * - An overlay with the name and waveform animation.
+ * - Displays:
+ *   - A customizable card with optional image and name.
+ *   - Overlay with waveform animation and text.
  *
  * @styles
- * The styles include:
- * - Card dimensions and background color.
- * - Overlay positioning and grid layout.
- * - Name column styling.
- * - Waveform bar styling.
- * - Background image positioning and optional rounded corners.
+ * - Customizable card, overlay, and waveform styles.
  *
  * @inputs
- * @param {any} customStyle - Custom styles for the card.
- * @param {string} name - The name to display on the card.
- * @param {boolean} showWaveform - Flag to show or hide the waveform animation.
- * @param {string} overlayPosition - Position of the overlay on the card.
- * @param {string} barColor - Color of the waveform bars.
- * @param {string} textColor - Color of the name text.
- * @param {string} imageSource - Source URL for the background image.
- * @param {boolean} roundedImage - Flag to apply rounded corners to the background image.
- * @param {any} imageStyle - Custom styles for the background image.
+ * - `customStyle` (Partial<CSSStyleDeclaration>): Custom CSS styles for the card.
+ * - `name` (string): Name displayed on the card.
+ * - `showWaveform` (boolean): Controls visibility of waveform animation.
+ * - `overlayPosition` (string): Position for the overlay on the card.
+ * - `barColor` (string): Color of waveform bars.
+ * - `textColor` (string): Color of the name text.
+ * - `imageSource` (string): URL for the background image.
+ * - `roundedImage` (boolean): Rounds image corners if true.
+ * - `imageStyle` (Partial<CSSStyleDeclaration>): Custom styles for the background image.
  *
- * @class
+ * @class MiniCardAudio
  * @implements OnInit, OnDestroy
  *
  * @constructor
- * @param {Partial<CSSStyleDeclaration>} injectedCustomStyle - Injected custom styles for the card.
- * @param {string} injectedName - Injected name to display on the card.
- * @param {boolean} injectedShowWaveform - Injected flag to show or hide the waveform animation.
- * @param {string} injectedOverlayPosition - Injected position of the overlay on the card.
- * @param {string} injectedBarColor - Injected color of the waveform bars.
- * @param {string} injectedTextColor - Injected color of the name text.
- * @param {string} injectedImageSource - Injected source URL for the background image.
- * @param {boolean} injectedRoundedImage - Injected flag to apply rounded corners to the background image.
- * @param {Partial<CSSStyleDeclaration>} injectedImageStyle - Injected custom styles for the background image.
+ * - Optional injected values for all input properties.
  *
  * @methods
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnDestroy - Lifecycle hook that is called just before the component is destroyed.
- * @method animateWaveform - Starts the waveform animation.
- * @method resetWaveform - Resets the waveform animation.
- * @method clearIntervals - Clears all animation intervals.
- * @method getAnimationDuration - Returns the animation duration for a given index.
- * @method getImageStyle - Returns the styles for the background image.
- * @method getOverlayPosition - Returns the styles for the overlay position.
+ * - `ngOnInit`: Initializes the component, starts waveform animation if `showWaveform` is true.
+ * - `ngOnDestroy`: Cleans up intervals.
+ * - `animateWaveform`: Starts animation of the waveform bars.
+ * - `resetWaveform`: Resets waveform to initial state.
+ * - `clearIntervals`: Clears all active intervals.
+ * - `getAnimationDuration`: Returns duration for animation at a given index.
+ * - `getImageStyle`: Combines custom image styles with rounded corners if enabled.
+ * - `getOverlayPosition`: Uses utility to determine the overlay's position.
+ *
+ * @example
+ * ```html
+ * <app-mini-card-audio
+ *   [customStyle]="{ backgroundColor: 'blue' }"
+ *   name="Audio Name"
+ *   [showWaveform]="true"
+ *   overlayPosition="bottomRight"
+ *   barColor="red"
+ *   textColor="white"
+ *   imageSource="/path/to/image.jpg"
+ *   [roundedImage]="true"
+ *   [imageStyle]="{ border: '2px solid black' }"
+ * ></app-mini-card-audio>
+ * ```
  */
 export declare class MiniCardAudio implements OnInit, OnDestroy {
     customStyle: any;

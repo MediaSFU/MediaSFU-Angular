@@ -40,6 +40,63 @@ export interface MiniAudioPlayerOptions {
 
 export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLElement;
 
+/**
+ * The `MiniAudioPlayer` component manages audio playback for participants in a meeting, including volume control, audio visualization, and connection to the main application state.
+ * It uses audio analysis to display waveforms for active speakers and supports breakout room conditions, participant-specific audio decibel updates, and other media state dependencies.
+ *
+ * @component
+ * @example
+ * ```html
+ * <app-mini-audio-player
+ *    [stream]="audioStream"
+ *    [remoteProducerId]="producerId"
+ *    [parameters]="audioPlayerParameters">
+ * </app-mini-audio-player>
+ * ```
+ *
+ * @param {MediaStream} [stream] - The audio stream from the participant.
+ * @param {string} [remoteProducerId] - Unique ID for the remote producer of the audio stream.
+ * @param {MiniAudioPlayerParameters} [parameters] - Configuration object with various parameters and utility functions for audio management.
+ * @param {Component} [MiniAudioComponent] - Optional audio visualization component injected into the `MiniAudioPlayer`.
+ * @param {Record<string, any>} [miniAudioProps] - Additional properties for configuring the audio visualization component.
+ *
+ * @returns {HTMLElement} The created audio player element.
+ *
+ * @remarks
+ * The `MiniAudioPlayer` leverages the `AudioContext` API to process audio data, analyze frequency, and manage audio levels.
+ * It supports a dynamic breakout room feature that restricts audio visibility to limited participants, updates decibel levels for individual participants, and adjusts the waveforms based on audio activity.
+ *
+ * Key functionalities include:
+ * - Automatically toggling wave visualization for active speakers.
+ * - Handling audio settings for different room states (e.g., shared screens, breakout rooms).
+ * - Injecting configuration and parameter dependencies dynamically through `Injector`.
+ *
+ * @dependencies
+ * - `AudioContext`: Web API for processing and analyzing audio data.
+ * - `setInterval` for periodic volume level checks (auto-clears on component destruction).
+ * - `ReUpdateInterType` and `UpdateParticipantAudioDecibelsType` for dynamic participant audio decibel management.
+ *
+ * @example
+ * ```typescript
+ * const audioPlayerParameters: MiniAudioPlayerParameters = {
+ *   breakOutRoomStarted: true,
+ *   breakOutRoomEnded: false,
+ *   limitedBreakRoom: participantList,
+ *   reUpdateInter: reUpdateInterFunc,
+ *   updateParticipantAudioDecibels: updateAudioDecibelsFunc,
+ *   getUpdatedAllParams: () => getParams(),
+ * };
+ *
+ * // Initialize component with required inputs
+ * <app-mini-audio-player
+ *   [stream]="audioStream"
+ *   [remoteProducerId]="participantId"
+ *   [parameters]="audioPlayerParameters"
+ * ></app-mini-audio-player>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-mini-audio-player',
   standalone: true,

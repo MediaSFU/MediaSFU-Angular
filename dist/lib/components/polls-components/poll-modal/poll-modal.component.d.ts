@@ -20,6 +20,33 @@ export interface PollModalOptions {
     handleVotePoll: HandleVotePollType;
 }
 export type PollModalType = (options: PollModalOptions) => HTMLElement;
+/**
+ * Component for displaying a poll modal, allowing users to create, vote, and end polls within a session.
+ *
+ * @component
+ * @selector app-poll-modal
+ * @standalone true
+ * @templateUrl ./poll-modal.component.html
+ * @styleUrls ['./poll-modal.component.css']
+ * @imports [CommonModule, FontAwesomeModule, FormsModule]
+ *
+ * @example
+ * ```html
+ * <app-poll-modal
+ *   [isPollModalVisible]="true"
+ *   [onClose]="closeModalFunction"
+ *   [member]="currentMember"
+ *   [islevel]="'2'"
+ *   [polls]="pollList"
+ *   [poll]="selectedPoll"
+ *   [socket]="socketInstance"
+ *   [roomName]="'exampleRoom'"
+ *   [handleCreatePoll]="createPollFunction"
+ *   [handleEndPoll]="endPollFunction"
+ *   [handleVotePoll]="votePollFunction"
+ * ></app-poll-modal>
+ * ```
+ */
 export declare class PollModal implements OnInit, OnChanges {
     isPollModalVisible: boolean;
     onClose: () => void;

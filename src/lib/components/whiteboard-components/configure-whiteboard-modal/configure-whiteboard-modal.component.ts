@@ -72,6 +72,29 @@ export type ConfigureWhiteboardModalType = (
   options: ConfigureWhiteboardModalOptions,
 ) => HTMLElement;
 
+/**
+ * @component ConfigureWhiteboardModal
+ * @description A modal component to configure and manage whiteboard settings and participants.
+ *
+ * @selector app-configure-whiteboard-modal
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule]
+ * @templateUrl ./configure-whiteboard-modal.component.html
+ * @styleUrls ./configure-whiteboard-modal.component.css
+ *
+ * @example
+ * ```html
+ * <app-configure-whiteboard-modal
+ *   [isVisible]="isWhiteboardModalVisible"
+ *   [parameters]="whiteboardParameters"
+ *   [backgroundColor]="'#83c0e9'"
+ *   [position]="'topRight'"
+ *   (onConfigureWhiteboardClose)="handleCloseModal()">
+ * </app-configure-whiteboard-modal>
+ * ```
+ */
+
+
 @Component({
   selector: 'app-configure-whiteboard-modal',
   standalone: true,

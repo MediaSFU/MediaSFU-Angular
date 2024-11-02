@@ -24,56 +24,65 @@ export interface EventSettingsModalOptions {
 }
 export type EventSettingsModalType = (options: EventSettingsModalOptions) => HTMLElement;
 /**
- * Component for managing event settings modal.
+ * EventSettingsModal component provides a modal interface to manage and update event settings like audio, video, screenshare, and chat settings.
  *
+ * @component
  * @selector app-event-settings-modal
  * @standalone true
- * @imports CommonModule, FontAwesomeModule, FormsModule
- * @templateUrl ./event-settings-modal.component.html
- * @styleUrls ./event-settings-modal.component.css
+ * @imports [CommonModule, FontAwesomeModule, FormsModule]
  *
- * @class EventSettingsModal
- * @implements OnInit, OnChanges
+ * @example
+ * ```html
+ * <app-event-settings-modal
+ *   [isEventSettingsModalVisible]="true"
+ *   [onEventSettingsClose]="closeModal"
+ *   [onModifyEventSettings]="saveSettings"
+ *   [audioSetting]="audio"
+ *   [videoSetting]="video"
+ *   [screenshareSetting]="screenshare"
+ *   [chatSetting]="chat"
+ *   [position]="'topRight'"
+ *   [backgroundColor]="'#83c0e9'"
+ * ></app-event-settings-modal>
+ * ```
  *
- * @property {boolean} isEventSettingsModalVisible - Indicates if the event settings modal is visible.
- * @property {() => void} onEventSettingsClose - Callback function to close the event settings modal.
- * @property {(options: ModifySettingsOptions) => Promise<void>} onModifyEventSettings - Callback function to modify event settings.
- * @property {string} position - Position of the modal on the screen.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {string} audioSetting - Current audio setting.
- * @property {string} videoSetting - Current video setting.
- * @property {string} screenshareSetting - Current screenshare setting.
- * @property {string} chatSetting - Current chat setting.
- * @property {(setting: string) => void} updateAudioSetting - Callback function to update audio setting.
- * @property {(setting: string) => void} updateVideoSetting - Callback function to update video setting.
- * @property {(setting: string) => void} updateScreenshareSetting - Callback function to update screenshare setting.
- * @property {(setting: string) => void} updateChatSetting - Callback function to update chat setting.
- * @property {(isVisible: boolean) => void} updateIsSettingsModalVisible - Callback function to update modal visibility.
- * @property {string} roomName - Name of the room.
- * @property {Socket} socket - Socket instance for communication.
- * @property {ShowAlert} [showAlert] - Optional alert function.
+ * @input {boolean} isEventSettingsModalVisible - Indicates if the event settings modal is visible.
+ * @input {() => void} onEventSettingsClose - Callback to close the modal.
+ * @input {(options: ModifySettingsOptions) => Promise<void>} onModifyEventSettings - Callback to handle event settings modifications.
+ * @input {string} position - Position of the modal on the screen, default is 'topRight'.
+ * @input {string} backgroundColor - Background color of the modal, default is '#83c0e9'.
+ * @input {string} audioSetting - Current audio setting.
+ * @input {string} videoSetting - Current video setting.
+ * @input {string} screenshareSetting - Current screenshare setting.
+ * @input {string} chatSetting - Current chat setting.
+ * @input {(setting: string) => void} updateAudioSetting - Function to update audio setting.
+ * @input {(setting: string) => void} updateVideoSetting - Function to update video setting.
+ * @input {(setting: string) => void} updateScreenshareSetting - Function to update screenshare setting.
+ * @input {(setting: string) => void} updateChatSetting - Function to update chat setting.
+ * @input {(isVisible: boolean) => void} updateIsSettingsModalVisible - Function to update modal visibility.
+ * @input {string} roomName - Room name associated with the settings.
+ * @input {Socket} socket - Socket for real-time communication.
+ * @input {ShowAlert} [showAlert] - Optional alert function.
  *
- * @property {string} audioState - State of the audio setting.
- * @property {string} videoState - State of the video setting.
- * @property {string} screenshareState - State of the screenshare setting.
- * @property {string} chatState - State of the chat setting.
- *
- * @property {IconDefinition} faTimes - FontAwesome icon for close button.
+ * @property {string} audioState - Internal state for audio setting.
+ * @property {string} videoState - Internal state for video setting.
+ * @property {string} screenshareState - Internal state for screenshare setting.
+ * @property {string} chatState - Internal state for chat setting.
+ * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
  *
  * @constructor
  * @param {ModifySettings} modifySettingsService - Service for modifying settings.
  *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property changes.
- * @param {SimpleChanges} changes - Object of current and previous property values.
+ * @method ngOnInit - Initializes the component and binds the settings modification service.
+ * @method ngOnChanges - Updates internal states when `isEventSettingsModalVisible` changes.
+ * @param {SimpleChanges} changes - Object containing previous and current values of bound properties.
  *
- * @method updateStatesFromParameters - Updates the state variables from the input parameters.
+ * @method updateStatesFromParameters - Sets internal state variables based on input parameters.
+ * @method getModalContentStyle - Returns style object for modal content with dynamic positioning and size.
+ * @returns {Object} Style object for modal content.
  *
- * @method getModalContentStyle - Returns the style object for the modal content.
- * @returns {Object} Style object for the modal content.
- *
- * @method handleSaveSettings - Handles the save settings action.
- * @returns {Promise<void>} Promise that resolves when settings are saved.
+ * @method handleSaveSettings - Invokes the settings modification function with updated values.
+ * @returns {Promise<void>} Promise that resolves after saving settings.
  *
  * @method closeModal - Closes the modal.
  */

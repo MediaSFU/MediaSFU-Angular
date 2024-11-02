@@ -63,6 +63,42 @@ export interface BackgroundModalOptions {
     onClose: () => void;
 }
 export type BackgroundModalType = (options: BackgroundModalOptions) => HTMLElement;
+/**
+ * BackgroundModal - Component to manage background selection and manipulation in media streams.
+ *
+ * This component allows users to choose, apply, and manipulate virtual backgrounds for media streams, leveraging MediaPipe’s Selfie Segmentation and MediaSoup functionalities.
+ *
+ * @component
+ * @name BackgroundModal
+ * @example
+ * ```typescript
+ * <app-background-modal
+ *   [isVisible]="isModalVisible"
+ *   [parameters]="modalParameters"
+ *   position="topLeft"
+ *   backgroundColor="#f5f5f5"
+ *   (onClose)="handleModalClose()"
+ * ></app-background-modal>
+ * ```
+ *
+ * @param {boolean} isVisible - Visibility state of the modal.
+ * @param {BackgroundModalParameters} parameters - Parameters including settings and methods for media and background management.
+ * @param {string} position - The position of the modal, e.g., 'topLeft'.
+ * @param {string} backgroundColor - Background color of the modal.
+ * @param {Function} onClose - Callback function when the modal is closed.
+ *
+ * @property {faTimes} faTimes - Icon used for closing the modal.
+ * @property {string} customImage - Custom image URL for background.
+ * @property {string} selectedImage - Selected image URL for background.
+ * @property {MediaStream | null} segmentVideo - Media stream for video segmentation.
+ * @property {SelfieSegmentation | null} selfieSegmentation - SelfieSegmentation instance.
+ * @property {boolean} pauseSegmentation - Pause state for segmentation.
+ * @property {MediaStream | null} processedStream - Processed media stream with applied background.
+ * @property {boolean} keepBackground - State to keep or reset background.
+ *
+ * @method
+ * ngOnInit - Initializes the modal component by updating properties based on parameters.
+ */
 export declare class BackgroundModal implements OnChanges, OnInit {
     isVisible: boolean;
     parameters: BackgroundModalParameters;

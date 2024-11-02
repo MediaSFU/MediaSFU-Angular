@@ -65,6 +65,42 @@ export interface ConsumerResumeOptions {
     nsock: Socket;
 }
 export type ConsumerResumeType = (options: ConsumerResumeOptions) => Promise<void>;
+/**
+ * Resumes a consumer, making it ready for use.
+ *
+ * @param {ConsumerResumeOptions} options - The options for resuming the consumer.
+ * @param {MediaStreamTrack} options.track - The media stream track associated with the resumed consumer.
+ * @param {string} options.kind - The type of media ('audio' or 'video') being resumed.
+ * @param {string} options.remoteProducerId - The ID of the remote producer associated with the resumed consumer.
+ * @param {ResumeParams} options.params - Additional parameters related to the resumed consumer.
+ * @param {ConsumerResumeParameters} options.parameters - The parameters object containing various utility functions and state.
+ * @param {Socket} options.nsock - The socket associated with the consumer.
+ * @throws Will throw an error if an issue occurs during the consumer resumption.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   track: mediaStreamTrack, // MediaStreamTrack to be resumed
+ *   remoteProducerId: 'producer-id', // Remote producer ID
+ *   params: {
+ *     id: 'consumer-id',
+ *     producerId: 'producer-id',
+ *     kind: 'audio',
+ *     rtpParameters: {},
+ *   },
+ *   parameters: consumerResumeParameters, // Parameters for the consumer
+ *   nsock: socket, // Socket for communication
+ * };
+ *
+ * consumerResume(options)
+ *   .then(() => {
+ *     console.log('Consumer resumed successfully');
+ *   })
+ *   .catch((error) => {
+ *     console.error('Error resuming consumer:', error);
+ *   });
+ * ```
+ */
 export declare class ConsumerResume {
     /**
      * Resumes a consumer, making it ready for use.

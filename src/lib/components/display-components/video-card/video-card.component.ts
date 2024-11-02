@@ -63,6 +63,70 @@ export interface VideoCardOptions {
 
 export type VideoCardType = (options: VideoCardOptions) => HTMLElement;
 
+/**
+ * VideoCard component represents a customizable video display card with participant controls for toggling audio and video.
+ * It also animates an audio waveform if sound is detected in the participant's audio stream.
+ *
+ * @selector app-video-card
+ * @standalone true
+ * @imports [CommonModule, FontAwesomeModule, CardVideoDisplay]
+ *
+ * @example
+ * ```html
+ * <app-video-card
+ *   [name]="participant.name"
+ *   [videoStream]="videoStream"
+ *   [audioDecibels]="audioDecibels"
+ *   [participant]="participant"
+ *   [parameters]="videoCardParameters"
+ * ></app-video-card>
+ * ```
+ *
+ * @input {Partial<CSSStyleDeclaration>} customStyle - Styles for the card container.
+ * @input {string} name - Name of the participant displayed on the card.
+ * @input {string} barColor - Color of the waveform bars. Default is 'red'.
+ * @input {string} textColor - Color of the name text. Default is 'white'.
+ * @input {string} imageSource - Source URL of the participant's image.
+ * @input {boolean} roundedImage - Whether the image should have rounded corners.
+ * @input {Partial<CSSStyleDeclaration>} imageStyle - Additional styles for the image.
+ * @input {string} remoteProducerId - ID of the remote media producer.
+ * @input {EventType} eventType - Type of event (used for internal logic).
+ * @input {boolean} forceFullDisplay - Forces full display if true.
+ * @input {MediaStream | null} videoStream - Stream of the video to be displayed.
+ * @input {boolean} showControls - Determines if the controls are displayed. Default is true.
+ * @input {boolean} showInfo - Determines if info (e.g., participant name) is shown. Default is true.
+ * @input {HTMLElement | CustomComponent} videoInfoComponent - Custom component for video info display.
+ * @input {HTMLElement | CustomComponent} videoControlsComponent - Custom component for video controls.
+ * @input {'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'} controlsPosition - Position of controls overlay.
+ * @input {'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'} infoPosition - Position of info overlay.
+ * @input {Participant} participant - Participant data object.
+ * @input {string} backgroundColor - Background color of the video card.
+ * @input {AudioDecibels[]} audioDecibels - Audio decibel data for animating waveform.
+ * @input {boolean} doMirror - If true, mirrors the video display.
+ * @input {VideoCardParameters} parameters - Additional parameters including socket and alert configuration.
+ *
+ * @property {number[]} waveformAnimations - Array representing animation states for waveform bars.
+ * @property {boolean} showWaveform - Flag to toggle waveform animation. Default is true.
+ * @property {any} interval - Interval reference for audio decibel checks.
+ * @property {IconDefinition} faMicrophone - FontAwesome icon for microphone.
+ * @property {IconDefinition} faMicrophoneSlash - FontAwesome icon for muted microphone.
+ * @property {IconDefinition} faVideo - FontAwesome icon for video.
+ * @property {IconDefinition} faVideoSlash - FontAwesome icon for video off.
+ *
+ * @method ngOnInit - Lifecycle hook to initialize audio decibel interval check.
+ * @method ngOnDestroy - Lifecycle hook to clear intervals.
+ * @method animateWaveform - Starts audio waveform animation.
+ * @method resetWaveform - Resets waveform animations.
+ * @method getAnimationDuration - Returns animation duration for given bar index.
+ * @method toggleAudio - Toggles participant's audio status.
+ * @method toggleVideo - Toggles participant's video status.
+ * @method renderControls - Renders the control buttons (audio and video) based on participant status.
+ * @method getOverlayPosition - Returns overlay position styles based on the input position string.
+ * @method isCustomComponent - Checks if a component is a custom component.
+ * @method isFunctionComponent - Checks if a component is a function component.
+ */
+
+
 @Component({
   selector: 'app-video-card',
   standalone: true,

@@ -4,6 +4,28 @@ import { WaitingRoomParticipant } from '../../@types/types';
 // Export the type definition for the function
 export type GenerateRandomWaitingRoomListType = () => WaitingRoomParticipant[];
 
+ /**
+   * Generates a random list of participants for a waiting room.
+   *
+   * @returns {WaitingRoomParticipant[]} An array of `WaitingRoomParticipant` objects, each with a unique ID and random name.
+   *
+   * @example
+   * ```typescript
+   * const generateListService = new GenerateRandomWaitingRoomList();
+   * const waitingRoomList = generateListService.generateRandomWaitingRoomList();
+   *
+   * console.log(waitingRoomList);
+   * // Output:
+   * // [
+   * //   { name: 'Dimen', id: '0' },
+   * //   { name: 'Nore', id: '1' },
+   * //   { name: 'Ker', id: '2' },
+   * //   { name: 'Lor', id: '3' },
+   * //   { name: 'Mik', id: '4' }
+   * // ]
+   * ```
+   */
+
 @Injectable({
   providedIn: 'root',
 })

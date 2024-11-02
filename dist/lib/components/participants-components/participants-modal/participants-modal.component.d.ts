@@ -40,6 +40,30 @@ export interface ParticipantsModalOptions {
     position?: string;
 }
 export type ParticipantsModalType = (options: ParticipantsModalOptions) => HTMLElement;
+/**
+ * Component for displaying a modal containing a list of participants with options to mute, message, or remove participants.
+ * Supports both regular participants and a subset of "other" participants.
+ *
+ * @component
+ * @selector app-participants-modal
+ * @standalone true
+ * @templateUrl ./participants-modal.component.html
+ * @styleUrls ['./participants-modal.component.css']
+ * @imports [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers]
+ *
+ * @example
+ * ```html
+ * <app-participants-modal
+ *   [isParticipantsModalVisible]="true"
+ *   [onParticipantsClose]="closeModalFunction"
+ *   [onParticipantsFilterChange]="filterFunction"
+ *   [participantsCounter]="5"
+ *   [parameters]="participantsModalParameters"
+ *   [position]="'topRight'"
+ *   [backgroundColor]="'#83c0e9'"
+ * ></app-participants-modal>
+ * ```
+ */
 export declare class ParticipantsModal implements OnInit, OnChanges {
     private muteParticipantsService;
     private messageParticipantsService;

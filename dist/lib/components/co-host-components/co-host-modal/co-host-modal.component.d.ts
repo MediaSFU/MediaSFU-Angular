@@ -20,6 +20,68 @@ export interface CoHostModalOptions {
     onModifyEventSettings?: (settings: ModifyCoHostSettingsOptions) => void;
 }
 export type CoHostModalType = (options: CoHostModalOptions) => HTMLElement;
+/**
+ * CoHostModal component allows managing co-host settings for an event.
+ *
+ * @selector app-co-host-modal
+ * @inputs
+ * - `isCoHostModalVisible` (boolean): A boolean value that determines whether the modal is visible. Default is false.
+ * - `currentCohost` (string): The current co-host for the event. Default is 'No coHost'.
+ * - `participants` (Participant[]): An array of participants in the event.
+ * - `coHostResponsibility` (CoHostResponsibility[]): An array of co-host responsibilities.
+ * - `position` (string): The position of the modal. Default is 'topRight'.
+ * - `backgroundColor` (string): The background color of the modal. Default is '#83c0e9'.
+ * - `roomName` (string): The name of the room.
+ * - `showAlert` (ShowAlert): A function to show alerts.
+ *
+ * @outputs
+ * - `updateCoHostResponsibility` (coHostResponsibility: CoHostResponsibility[]): A function to update co-host responsibilities.
+ * - `updateCoHost` (coHost: string): A function to update the co-host.
+ * - `updateIsCoHostModalVisible` (isCoHostModalVisible: boolean): A function to update the visibility of the modal.
+ * - `socket` (Socket): The socket object.
+ *
+ * @methods
+ * - `ngOnInit()`: Lifecycle hook that is called after the component is initialized. It sets the default value for `onModifyCoHost` if not provided.
+ * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook that is called when any data-bound property of the component changes. It initializes the responsibilities and calculates the modal width.
+ * - `initializeResponsibilities()`: Initializes the responsibilities.
+ * - `get filteredParticipants()`: Returns the filtered participants.
+ * - `handleToggleSwitch(key: string)`: Handles the toggle switch for the given key.
+ * - `handleSave()`: Handles the save action.
+ * - `handleClose()`: Handles the close action.
+ * - `calculateModalWidth()`: Calculates the modal width.
+ * - `modalContainerStyle()`: Returns the modal container style.
+ * - `modalContentStyle()`: Returns the modal content style.
+ *
+ * @dependencies
+ * - `CommonModule`: Angular's common module is imported for common directives.
+ * - `FontAwesomeModule`: Angular's font awesome module is imported for icons.
+ * - `FormsModule`: Angular's forms module is imported for form-related directives.
+ * - `ModifyCoHostSettings`: The ModifyCoHostSettings service is used to modify co-host settings.
+ *
+ * @styles
+ * - `.container`: The container style.
+ *
+ * @example
+ * ```html
+ * <app-co-host-modal
+ *  [isCoHostModalVisible]="isCoHostModalVisible"
+ * [currentCohost]="currentCohost"
+ * [participants]="participants"
+ * [coHostResponsibility]="coHostResponsibility"
+ * [position]="position"
+ * [backgroundColor]="backgroundColor"
+ * [roomName]="roomName"
+ * [showAlert]="showAlert"
+ * [updateCoHostResponsibility]="updateCoHostResponsibility"
+ * [updateCoHost]="updateCoHost"
+ * [updateIsCoHostModalVisible]="updateIsCoHostModalVisible"
+ * [socket]="socket"
+ * [onCoHostClose]="onCoHostClose"
+ * [onModifyCoHost]="onModifyCoHost">
+ * </app-co-host-modal>
+ * ```
+ *
+ **/
 export declare class CoHostModal implements OnChanges, OnInit {
     private modifyCoHostSettingsService;
     isCoHostModalVisible: boolean;

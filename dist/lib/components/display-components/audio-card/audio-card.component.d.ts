@@ -37,6 +37,65 @@ export interface AudioCardOptions {
     parameters: AudioCardParameters;
 }
 export type AudioCardType = (options: AudioCardOptions) => HTMLElement;
+/**
+ * AudioCard component renders an audio card for participants with customizable options and media controls.
+ * It shows audio waveform animations, video/audio toggle buttons, and additional info based on injected or passed properties.
+ *
+ * @selector app-audio-card
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, MiniCard
+ *
+ * @inputs
+ * - `controlUserMedia` (function): Optional function to control media actions for a participant.
+ * - `customStyle` (Partial<CSSStyleDeclaration>): Custom CSS styles for the audio card.
+ * - `name` (string): Name of the participant.
+ * - `barColor` (string): Color for the audio bar. Default is 'red'.
+ * - `textColor` (string): Text color. Default is 'white'.
+ * - `imageSource` (string): Image source URL for participant.
+ * - `roundedImage` (boolean): Toggle for rounded image style.
+ * - `imageStyle` (Partial<CSSStyleDeclaration>): Custom styles for the image.
+ * - `showControls` (boolean): Toggle for displaying media controls. Default is true.
+ * - `showInfo` (boolean): Toggle for displaying info section. Default is true.
+ * - `videoInfoComponent` (HTMLElement | CustomComponent): Custom component for participant info.
+ * - `videoControlsComponent` (HTMLElement | CustomComponent): Custom component for video controls.
+ * - `controlsPosition` (ControlsPosition): Position for controls on the card. Default is 'topLeft'.
+ * - `infoPosition` (InfoPosition): Position for the info section. Default is 'topRight'.
+ * - `participant` (Participant | null): Participant object reference.
+ * - `backgroundColor` (string): Background color for the card.
+ * - `audioDecibels` (AudioDecibels): Optional audio decibel levels for the participant.
+ * - `parameters` (AudioCardParameters): Required object with configuration parameters.
+ *
+ * @methods
+ * - `ngOnInit()`: Initializes the component, sets default media control behavior, and activates audio waveform animations.
+ * - `ngOnDestroy()`: Clears the animation interval.
+ * - `animateBar(index: number)`: Animates the audio bar at a specified index.
+ * - `animateWaveform()`: Triggers animations across the waveform bars.
+ * - `resetWaveform()`: Resets waveform animations to default.
+ * - `getAnimationDuration(index: number)`: Retrieves the animation duration for a bar by index.
+ * - `toggleAudio()`: Toggles audio for the participant if media control function is defined.
+ * - `toggleVideo()`: Toggles video for the participant if media control function is defined.
+ * - `renderControls()`: Returns `showControls` to render or hide media controls.
+ * - `combineStyles(baseStyle: any, additionalStyles: any)`: Combines base and additional styles for inline styling.
+ * - `getOverlayPosition(position: string)`: Retrieves calculated overlay position for elements.
+ * - `isCustomComponent(comp: HTMLElement | CustomComponent)`: Type guard for identifying custom components.
+ * - `isFunctionComponent(comp: HTMLElement | CustomComponent)`: Type guard for identifying function components.
+ *
+ * @example
+ * ```html
+ * <app-audio-card
+ *  [controlUserMedia]="controlMediaFunction"
+ * [name]="participantName"
+ * [barColor]="'blue'"
+ * [textColor]="'black'"
+ * [imageSource]="participantImageURL"
+ * [roundedImage]="true"
+ * [showControls]="true"
+ * [participant]="participant"
+ * [parameters]="audioCardParameters">
+ * </app-audio-card>
+ * ```
+ *
+ **/
 export declare class AudioCard implements OnInit, OnDestroy {
     private ngZone;
     private controlMediaService;

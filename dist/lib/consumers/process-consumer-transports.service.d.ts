@@ -14,6 +14,43 @@ export interface ProcessConsumerTransportsOptions {
     parameters: ProcessConsumerTransportsParameters;
 }
 export type ProcessConsumerTransportsType = (options: ProcessConsumerTransportsOptions) => Promise<void>;
+/**
+ * Processes consumer transports by pausing and resuming them based on certain conditions.
+ *
+ * This method checks the state of each consumer transport and determines whether to pause or resume
+ * based on the validity of the producer ID in relation to the provided streams.
+ * It utilizes a sleep function to introduce a delay before pausing the transports.
+ *
+ * @param {ProcessConsumerTransportsOptions} options - The options for processing consumer transports.
+ * @param {Array<Transport>} options.consumerTransports - The list of consumer transports to process.
+ * @param {Array<Stream | Participant>} options.lStreams_ - The list of local streams.
+ * @param {ProcessConsumerTransportsParameters} options.parameters - The parameters for processing, including:
+ *   - {Array<Stream>} options.parameters.remoteScreenStream - The list of remote screen streams.
+ *   - {Array<Stream | Participant>} options.parameters.oldAllStreams - The list of old streams.
+ *   - {Array<Stream | Participant>} options.parameters.newLimitedStreams - The list of new limited streams.
+ *   - {Function} options.parameters.sleep - A function to pause execution for a specified duration.
+ *   - {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
+ *
+ * @returns {Promise<void>} A promise that resolves when the processing is complete.
+ *
+ * @throws {Error} Will throw an error if there is an issue processing consumer transports.
+ *
+ * @example
+ * ```typescript
+ * const options = {
+ *   consumerTransports: [],
+ *   lStreams_: [],
+ *   parameters: {
+ *     remoteScreenStream: [],
+ *     oldAllStreams: [],
+ *     newLimitedStreams: [],
+ *     sleep: async ({ ms }) => new Promise(resolve => setTimeout(resolve, ms)),
+ *   },
+ * };
+ *
+ * await processConsumerTransports(options);
+ * ```
+ */
 export declare class ProcessConsumerTransports {
     /**
      * Processes consumer transports by pausing and resuming them based on certain conditions.

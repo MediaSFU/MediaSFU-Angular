@@ -12,6 +12,42 @@ export interface GenerateRandomMessagesOptions {
 // Export the type definition for the function
 export type GenerateRandomMessagesType = (options: GenerateRandomMessagesOptions) => Message[];
 
+/**
+ * GenerateRandomMessages - Service to generate random chat messages from participants.
+ *
+ * This service generates random direct and group messages based on participants and a given host setup,
+ * with options to tailor messages for chat broadcast.
+ *
+ * @class
+ * @name GenerateRandomMessages
+ * @example
+ * ```typescript
+ * const generateRandomMessagesService = new GenerateRandomMessages();
+ * const messages = generateRandomMessagesService.generateRandomMessages({
+ *   participants: [
+ *     { name: 'Alice' },
+ *     { name: 'Bob' },
+ *     { name: 'Charlie' }
+ *   ],
+ *   member: 'Alice',
+ *   coHost: 'Bob',
+ *   host: 'Charlie',
+ *   forChatBroadcast: true
+ * });
+ * console.log(messages);
+ * ```
+ *
+ * @param {Object} options - Options for generating random messages.
+ * @param {Participant[]} options.participants - List of participants for message generation.
+ * @param {string} options.member - The primary member in the chat.
+ * @param {string} [options.coHost] - Optional co-host participant.
+ * @param {string} options.host - The chat host.
+ * @param {boolean} [options.forChatBroadcast=false] - Flag to indicate if messages are for chat broadcast.
+ * @returns {Message[]} Array of randomly generated messages with direct and group messaging.
+ */
+
+
+
 @Injectable({
   providedIn: 'root',
 })
