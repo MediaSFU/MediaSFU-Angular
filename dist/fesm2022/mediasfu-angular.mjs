@@ -7287,7 +7287,7 @@ class PreJoinPage {
                 });
                 if (response && response.success && response.data && 'roomName' in response.data) {
                     createData.eventID = response.data.roomName;
-                    createData.secureCode = response.data.secret;
+                    createData.secureCode = response.data.secureCode;
                     createData.mediasfuURL = response.data.publicURL;
                     await this.createLocalRoom({ createData: createData, link: response.data.link });
                 }

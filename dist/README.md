@@ -23,6 +23,12 @@
 
 MediaSFU offers a cutting-edge streaming experience that empowers users to customize their recordings and engage their audience with high-quality streams. Whether you're a content creator, educator, or business professional, MediaSFU provides the tools you need to elevate your streaming game.
 
+<div style="text-align: center;">
+
+<img src="https://mediasfu.com/images/header_1.jpg" alt="Preview Page" title="Preview Page" style="max-height: 600px;">
+
+</div>
+
 ---
 
 # MediaSFU Angular Module Documentation
@@ -640,7 +646,7 @@ export class PreJoinPage implements OnInit {
 
         if (response && response.success && response.data && 'roomName' in response.data) {
           createData.eventID = response.data.roomName;
-          createData.secureCode = response.data.secret;
+          createData.secureCode = response.data.secureCode;
           createData.mediasfuURL = response.data.publicURL;
           await this.createLocalRoom({ createData: createData, link: response.data.link });
         } else {

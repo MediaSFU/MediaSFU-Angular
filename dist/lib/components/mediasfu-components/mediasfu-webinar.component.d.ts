@@ -859,7 +859,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"all" | "media" | "video">;
+    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -1085,7 +1085,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "landscape" | "portrait";
+    checkOrientation: () => "portrait" | "landscape";
     showAlert: ({ message, type, duration, }: {
         message: string;
         type: "success" | "danger";
@@ -1328,7 +1328,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "all" | "media" | "video";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -1727,7 +1727,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
@@ -2047,7 +2047,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "all" | "media" | "video";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2446,7 +2446,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
@@ -2769,7 +2769,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "all" | "media" | "video";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -3168,7 +3168,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
@@ -3488,7 +3488,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "all" | "media" | "video";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -3887,7 +3887,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
@@ -4210,7 +4210,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "all" | "media" | "video";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -4609,7 +4609,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
@@ -4929,7 +4929,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "all" | "media" | "video";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -5328,7 +5328,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
@@ -5742,7 +5742,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 recordingVideoOptions: string;
                 recordingVideoType: string;
                 recordingVideoOptimized: boolean;
-                recordingDisplayType: "all" | "media" | "video";
+                recordingDisplayType: "video" | "media" | "all";
                 recordingAddHLS: boolean;
                 recordingAddText: boolean;
                 recordingCustomText: string;
@@ -6141,7 +6141,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                 updateAnnotateScreenStream: (value: boolean) => void;
                 updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                 updateIsScreenboardModalVisible: (value: boolean) => void;
-                checkOrientation: () => "landscape" | "portrait";
+                checkOrientation: () => "portrait" | "landscape";
                 updateDevice: (value: Device | null) => void;
                 updateSocket: (value: Socket) => void;
                 updateLocalSocket: (value: Socket | null) => void;
@@ -6461,7 +6461,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     recordingVideoOptions: string;
                     recordingVideoType: string;
                     recordingVideoOptimized: boolean;
-                    recordingDisplayType: "all" | "media" | "video";
+                    recordingDisplayType: "video" | "media" | "all";
                     recordingAddHLS: boolean;
                     recordingAddText: boolean;
                     recordingCustomText: string;
@@ -6860,7 +6860,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
                     updateAnnotateScreenStream: (value: boolean) => void;
                     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                     updateIsScreenboardModalVisible: (value: boolean) => void;
-                    checkOrientation: () => "landscape" | "portrait";
+                    checkOrientation: () => "portrait" | "landscape";
                     updateDevice: (value: Device | null) => void;
                     updateSocket: (value: Socket) => void;
                     updateLocalSocket: (value: Socket | null) => void;
