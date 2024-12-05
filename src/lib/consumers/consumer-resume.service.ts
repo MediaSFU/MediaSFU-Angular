@@ -449,7 +449,7 @@ export class ConsumerResume {
           // Find the ID of the participant with isAdmin = true and islevel == '2'
           if (!shareScreenStarted) {
             let admin = participants.filter(
-              (participant) => participant.isAdmin == true && participant.islevel == '2',
+              (participant) => (participant.isAdmin == true || participant.isHost == true) && participant.islevel == '2',
             );
             // Remove video stream with producerId == admin.id
             // Get the videoID of the admin

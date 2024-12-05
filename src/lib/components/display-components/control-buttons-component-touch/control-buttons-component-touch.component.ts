@@ -77,10 +77,9 @@ export type ControlButtonsComponentTouchType = (
  **/
 
 @Component({
-  selector: 'app-control-buttons-component-touch',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  template: `
+    selector: 'app-control-buttons-component-touch',
+    imports: [CommonModule, FontAwesomeModule],
+    template: `
     <div
       [ngStyle]="
         mergeStyles(getAlignmentStyle(), buttonsContainerStyle, {
@@ -172,15 +171,15 @@ export type ControlButtonsComponentTouchType = (
       </button>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: flex;
         justify-content: center;
         align-items: center;
       }
     `,
-  ],
+    ]
 })
 export class ControlButtonsComponentTouch {
   @Input() buttons: ButtonTouch[] = [];

@@ -47,11 +47,10 @@ export type AdvancedPanelType = (options: AdvancedPanelParameters) => HTMLElemen
 
 
 @Component({
-  selector: 'app-advanced-panel-component',
-  standalone: true,
-  templateUrl: './advanced-panel-component.component.html',
-  styleUrls: ['./advanced-panel-component.component.css'],
-  imports: [CommonModule, FormsModule],
+    selector: 'app-advanced-panel-component',
+    templateUrl: './advanced-panel-component.component.html',
+    styleUrls: ['./advanced-panel-component.component.css'],
+    imports: [CommonModule, FormsModule]
 })
 export class AdvancedPanelComponent implements OnInit, OnChanges {
   @Input() parameters: AdvancedPanelParameters = {} as AdvancedPanelParameters;

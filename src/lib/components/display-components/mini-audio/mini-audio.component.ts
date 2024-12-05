@@ -85,10 +85,9 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
  */
 
 @Component({
-  selector: 'app-mini-audio',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-mini-audio',
+    imports: [CommonModule],
+    template: `
     <div
       *ngIf="visible"
       class="modal-container"
@@ -123,8 +122,8 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .modal-container {
         position: absolute;
         top: 0;
@@ -200,7 +199,7 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
         margin-right: 0.5px;
       }
     `,
-  ],
+    ]
 })
 export class MiniAudio implements OnInit, OnDestroy {
   @Input() visible = true;

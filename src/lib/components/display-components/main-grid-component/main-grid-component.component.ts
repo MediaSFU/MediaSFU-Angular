@@ -62,10 +62,9 @@ export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLE
  **/
 
 @Component({
-  selector: 'app-main-grid-component',
-  standalone: true,
-  imports: [CommonModule, MeetingProgressTimer],
-  template: `
+    selector: 'app-main-grid-component',
+    imports: [CommonModule, MeetingProgressTimer],
+    template: `
     <div [ngStyle]="maingridContainerStyle">
       <app-meeting-progress-timer
         *ngIf="showTimer"
@@ -74,7 +73,7 @@ export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLE
       ></app-meeting-progress-timer>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MainGridComponent {
   @Input() backgroundColor = '';

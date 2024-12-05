@@ -116,11 +116,10 @@ export type MediaSettingsModalType = (options: MediaSettingsModalOptions) => HTM
  */
 
 @Component({
-  selector: 'app-media-settings-modal',
-  templateUrl: './media-settings-modal.component.html',
-  styleUrls: ['./media-settings-modal.component.css'],
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
+    selector: 'app-media-settings-modal',
+    templateUrl: './media-settings-modal.component.html',
+    styleUrls: ['./media-settings-modal.component.css'],
+    imports: [CommonModule, FontAwesomeModule, FormsModule]
 })
 export class MediaSettingsModal implements OnInit, OnChanges {
   @Input() isMediaSettingsModalVisible = false;

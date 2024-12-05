@@ -7,6 +7,7 @@ export interface StartRecordingParameters extends CaptureCanvasStreamParameters,
     roomName: string;
     userRecordingParams: UserRecordingParams;
     socket: Socket;
+    localSocket?: Socket;
     updateIsRecordingModalVisible: (visible: boolean) => void;
     confirmedToRecord: boolean;
     showAlert?: ShowAlert;
@@ -46,6 +47,7 @@ export type StartRecordingType = (options: StartRecordingOptions) => Promise<boo
  * @param {string} options.parameters.roomName - The name of the room where recording is to be started.
  * @param {object} options.parameters.userRecordingParams - User-specific recording parameters.
  * @param {object} options.parameters.socket - The socket instance for communication.
+ * @param {object} options.parameters.localSocket - The local socket instance for communication.
  * @param {function} options.parameters.updateIsRecordingModalVisible - Function to update the visibility of the recording modal.
  * @param {boolean} options.parameters.confirmedToRecord - Flag indicating if the user has confirmed to record.
  * @param {function} options.parameters.showAlert - Function to show alerts.
@@ -100,6 +102,7 @@ export declare class StartRecording {
      * @param {string} options.parameters.roomName - The name of the room where recording is to be started.
      * @param {object} options.parameters.userRecordingParams - User-specific recording parameters.
      * @param {object} options.parameters.socket - The socket instance for communication.
+     * @param {object} options.parameters.localSocket - The local socket instance for communication.
      * @param {function} options.parameters.updateIsRecordingModalVisible - Function to update the visibility of the recording modal.
      * @param {boolean} options.parameters.confirmedToRecord - Flag indicating if the user has confirmed to record.
      * @param {function} options.parameters.showAlert - Function to show alerts.

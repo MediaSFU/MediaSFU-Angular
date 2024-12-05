@@ -54,11 +54,10 @@ import { BreakoutParticipant, Participant } from '../../../@types/types';
  **/
 
 @Component({
-  selector: 'app-edit-room-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './edit-room-modal.component.html',
-  styleUrls: ['./edit-room-modal.component.css'],
+    selector: 'app-edit-room-modal',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './edit-room-modal.component.html',
+    styleUrls: ['./edit-room-modal.component.css']
 })
 
 export class EditRoomModalComponent implements OnInit {

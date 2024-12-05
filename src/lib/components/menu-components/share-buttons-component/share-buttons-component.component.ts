@@ -18,6 +18,7 @@ export interface ShareButtonsComponentOptions {
   meetingID: string;
   shareButtons?: ShareButton[];
   eventType: EventType;
+  localLink?: string;
 }
 
 export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) => HTMLElement;
@@ -25,7 +26,6 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
 /**
  * @component ShareButtonsComponent
  * @selector app-share-buttons-component
- * @standalone true
  * @description Displays a set of share buttons for sharing a meeting link on social media and email.
  *
  * @example
@@ -34,6 +34,7 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
  *   [meetingID]="'12345'"
  *   [eventType]="'broadcast'"
  *   [shareButtons]="customShareButtons"
+ *   [localLink]="'https://www.google.com'"
  * ></app-share-buttons-component>
  * ```
  *
@@ -49,22 +50,20 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
   selector: 'app-share-buttons-component',
   templateUrl: './share-buttons-component.component.html',
   styleUrls: ['./share-buttons-component.component.css'],
-  standalone: true,
   imports: [CommonModule, FontAwesomeModule],
 })
 export class ShareButtonsComponent {
   @Input() meetingID!: string;
   @Input() shareButtons: ShareButton[] = [];
   @Input() eventType!: EventType;
+  @Input() localLink?: string;
 
   defaultShareButtons: ShareButton[] = [
     {
       icon: faCopy,
       action: async () => {
         try {
-          await navigator.clipboard.writeText(
-            `https://${this.shareName}.mediasfu.com/${this.shareName}/${this.meetingID}`,
-          );
+          await navigator.clipboard.writeText(this.getShareUrl());
         } catch (error) {
           console.error('Failed to copy to clipboard:', error);
         }
@@ -74,7 +73,7 @@ export class ShareButtonsComponent {
     {
       icon: faEnvelope,
       action: () => {
-        const emailUrl = `mailto:?subject=Join my meeting&body=Here's the link to the meeting: https://${this.shareName}.mediasfu.com/${this.shareName}/${this.meetingID}`;
+        const emailUrl = `mailto:?subject=Join my meeting&body=Here's the link to the meeting: ${this.getShareUrl()}`;
         window.open(emailUrl, '_blank');
       },
       show: true,
@@ -83,7 +82,7 @@ export class ShareButtonsComponent {
       icon: faFacebook,
       action: () => {
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-          `https://${this.shareName}.mediasfu.com/${this.shareName}/${this.meetingID}`,
+          this.getShareUrl()
         )}`;
         window.open(facebookUrl, '_blank');
       },
@@ -93,7 +92,7 @@ export class ShareButtonsComponent {
       icon: faWhatsapp,
       action: () => {
         const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-          `https://${this.shareName}.mediasfu.com/${this.shareName}/${this.meetingID}`,
+          this.getShareUrl()
         )}`;
         window.open(whatsappUrl, '_blank');
       },
@@ -103,7 +102,7 @@ export class ShareButtonsComponent {
       icon: faTelegram,
       action: () => {
         const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
-          `https://${this.shareName}.mediasfu.com/${this.shareName}/${this.meetingID}`,
+          this.getShareUrl()
         )}`;
         window.open(telegramUrl, '_blank');
       },
@@ -117,6 +116,13 @@ export class ShareButtonsComponent {
       : this.eventType === 'broadcast'
       ? 'broadcast'
       : 'meeting';
+  }
+
+  getShareUrl(): string {
+    if (this.localLink && !this.localLink.includes('mediasfu.com')) {
+      return `${this.localLink}/meeting/${this.meetingID}`;
+    }
+    return `https://${this.shareName}.mediasfu.com/${this.shareName}/${this.meetingID}`;
   }
 
   get filteredShareButtons() {

@@ -51,11 +51,10 @@ export type StandardPanelType = (options: StandardPanelParameters) => HTMLElemen
  * ```
  */
 @Component({
-  selector: 'app-standard-panel-component',
-  standalone: true,
-  templateUrl: './standard-panel-component.component.html',
-  styleUrls: ['./standard-panel-component.component.css'],
-  imports: [CommonModule, FormsModule],
+    selector: 'app-standard-panel-component',
+    templateUrl: './standard-panel-component.component.html',
+    styleUrls: ['./standard-panel-component.component.css'],
+    imports: [CommonModule, FormsModule]
 })
 export class StandardPanelComponent implements OnInit, OnChanges {
   @Input() parameters: StandardPanelParameters = {} as StandardPanelParameters;

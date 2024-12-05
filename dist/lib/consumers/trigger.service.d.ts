@@ -3,6 +3,7 @@ import { Participant, AutoAdjustType, ScreenState, EventType } from '../@types/t
 import * as i0 from "@angular/core";
 export interface TriggerParameters {
     socket: Socket;
+    localSocket?: Socket;
     roomName: string;
     screenStates: ScreenState[];
     participants: Participant[];
@@ -45,6 +46,7 @@ export type TriggerType = (options: TriggerOptions) => Promise<void>;
  *   ref_ActiveNames: ["user1", "user2"],
  *   parameters: {
  *     socket: socketInstance,
+ *     localSocket: socketInstance,
  *     roomName: "room1",
  *     screenStates: [{ mainScreenPerson: "user1", mainScreenFilled: true, adminOnMainScreen: false }],
  *     participants: [{ name: "admin", islevel: "2" }],
@@ -85,6 +87,7 @@ export declare class Trigger {
      *   ref_ActiveNames: ["user1", "user2"],
      *   parameters: {
      *     socket: socketInstance,
+     *     localSocket: socketInstance,
      *     roomName: "room1",
      *     screenStates: [{ mainScreenPerson: "user1", mainScreenFilled: true, adminOnMainScreen: false }],
      *     participants: [{ name: "admin", islevel: "2" }],

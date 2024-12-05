@@ -100,10 +100,9 @@ export type PaginationType = (options: PaginationOptions) => HTMLElement;
  */
 
 @Component({
-  selector: 'app-pagination',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  template: `
+    selector: 'app-pagination',
+    imports: [CommonModule, FontAwesomeModule],
+    template: `
     <div
       [ngStyle]="{
         'background-color': backgroundColor,
@@ -164,13 +163,13 @@ export type PaginationType = (options: PaginationOptions) => HTMLElement;
       </ng-container>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .pageButton.active {
         background-color: #2c678f;
       }
     `,
-  ],
+    ]
 })
 export class Pagination implements OnInit, OnChanges {
   @Input() totalPages = 0;

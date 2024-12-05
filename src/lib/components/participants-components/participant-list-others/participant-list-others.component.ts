@@ -31,11 +31,10 @@ export type ParticipantListOthersType = (options: ParticipantListOthersOptions) 
 
 
 @Component({
-  selector: 'app-participant-list-others',
-  standalone: true,
-  imports: [CommonModule, ParticipantListOthersItem],
-  templateUrl: './participant-list-others.component.html',
-  styleUrls: ['./participant-list-others.component.css'],
+    selector: 'app-participant-list-others',
+    imports: [CommonModule, ParticipantListOthersItem],
+    templateUrl: './participant-list-others.component.html',
+    styleUrls: ['./participant-list-others.component.css']
 })
 export class ParticipantListOthers {
   @Input() participants: Participant[] = [];

@@ -19,6 +19,7 @@ export interface ClickAudioParameters extends DisconnectSendTransportAudioParame
     audioRequestTime: number;
     member: string;
     socket: Socket;
+    localSocket?: Socket;
     roomName: string;
     userDefaultAudioInputDevice: string;
     micAction: boolean;
@@ -74,6 +75,7 @@ export type ClickAudioType = (options: ClickAudioOptions) => Promise<void>;
  * @param {number} options.parameters.audioRequestTime - Timestamp of the audio request.
  * @param {string} options.parameters.member - Current member's name.
  * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Socket} options.parameters.localSocket - The local socket instance for communication.
  * @param {string} options.parameters.roomName - The name of the room.
  * @param {string} options.parameters.userDefaultAudioInputDevice - The default audio input device for the user.
  * @param {boolean} options.parameters.micAction - Flag indicating if the microphone action is in progress.
@@ -117,6 +119,7 @@ export type ClickAudioType = (options: ClickAudioOptions) => Promise<void>;
  *     audioRequestTime: 0,
  *     member: 'John Doe',
  *     socket: socketInstance,
+ *     localSocket: socketInstance,
  *     roomName: 'exampleRoom',
  *     userDefaultAudioInputDevice: 'default',
  *     micAction: false,

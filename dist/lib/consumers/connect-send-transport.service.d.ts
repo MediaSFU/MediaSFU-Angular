@@ -17,6 +17,7 @@ export interface ConnectSendTransportParameters extends ConnectSendTransportAudi
 }
 export interface ConnectSendTransportOptions {
     option: 'audio' | 'video' | 'screen' | 'all';
+    targetOption?: 'local' | 'remote' | 'all';
     parameters: ConnectSendTransportParameters;
 }
 export type ConnectSendTransportType = (options: ConnectSendTransportOptions) => Promise<void>;
@@ -25,6 +26,7 @@ export type ConnectSendTransportType = (options: ConnectSendTransportOptions) =>
  *
  * @param {ConnectSendTransportOptions} options - The options for connecting the send transport.
  * @param {string} options.option - The type of transport to connect ("audio", "video", "screen", or "all").
+ * @param {string} options.targetOption - The target of the transport to connect ("local", "remote", or "all").
  * @param {ConnectSendTransportParameters} options.parameters - The parameters required for connecting the transport.
  * @param {ProducerOptions} options.parameters.audioParams - The audio parameters.
  * @param {ProducerOptions} options.parameters.videoParams - The video parameters.
@@ -46,6 +48,7 @@ export type ConnectSendTransportType = (options: ConnectSendTransportOptions) =>
  * ```typescript
  * const options = {
  *   option: 'audio', // Can be 'audio', 'video', 'screen', or 'all'
+ *   targetOption: 'local', // Can be 'local', 'remote', or 'all'
  *   parameters: {
  *     audioParams: { codec: 'opus' },
  *     videoParams: { codec: 'vp8' },
@@ -80,6 +83,7 @@ export declare class ConnectSendTransport {
      *
      * @param {ConnectSendTransportOptions} options - The options for connecting the send transport.
      * @param {string} options.option - The type of transport to connect ("audio", "video", "screen", or both).
+     * @param {string} options.targetOption - The target of the transport to connect ("local", "remote", or "all").
      * @param {Object} options.parameters - The parameters required for connecting the transport.
      * @param {Object} options.parameters.audioParams - The audio parameters.
      * @param {Object} options.parameters.videoParams - The video parameters.
@@ -97,7 +101,7 @@ export declare class ConnectSendTransport {
      *
      * @throws Will throw an error if the connection fails.
      */
-    connectSendTransport({ option, parameters }: ConnectSendTransportOptions): Promise<void>;
+    connectSendTransport({ option, targetOption, parameters }: ConnectSendTransportOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectSendTransport, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectSendTransport>;
 }

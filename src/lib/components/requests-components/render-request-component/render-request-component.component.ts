@@ -48,11 +48,10 @@ export type RenderRequestComponentType = (options: RenderRequestComponentOptions
  */
 
 @Component({
-  selector: 'app-render-request-component',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './render-request-component.component.html',
-  styleUrls: ['./render-request-component.component.css'],
+    selector: 'app-render-request-component',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './render-request-component.component.html',
+    styleUrls: ['./render-request-component.component.css']
 })
 export class RenderRequestComponent {
   @Input() request: Request = {} as Request;

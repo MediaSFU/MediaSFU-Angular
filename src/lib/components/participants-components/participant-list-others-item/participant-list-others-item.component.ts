@@ -34,11 +34,10 @@ export type ParticipantListOthersItemType = (
 
 
 @Component({
-  selector: 'app-participant-list-others-item',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './participant-list-others-item.component.html',
-  styleUrls: ['./participant-list-others-item.component.css'],
+    selector: 'app-participant-list-others-item',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './participant-list-others-item.component.html',
+    styleUrls: ['./participant-list-others-item.component.css']
 })
 export class ParticipantListOthersItem {
   @Input() participant!: Participant;

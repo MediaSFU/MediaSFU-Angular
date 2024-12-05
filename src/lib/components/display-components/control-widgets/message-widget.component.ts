@@ -29,9 +29,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
  **/
 
 @Component({
-  selector: 'app-message-widget',
-  standalone: true,
-  template: `
+    selector: 'app-message-widget',
+    template: `
     <div style="position: relative; display: inline-block;">
       <fa-icon [icon]="icon" size="lg" [ngStyle]="{ color: iconColor }"></fa-icon>
       <div
@@ -64,7 +63,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       </div>
     </div>
   `,
-  imports: [CommonModule, FontAwesomeModule],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class MessageWidget {
   @Input() icon!: IconDefinition;

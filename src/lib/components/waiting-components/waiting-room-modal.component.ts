@@ -99,11 +99,10 @@ export type WaitingRoomModalType = (options: WaitingRoomModalOptions) => HTMLEle
  *
  */
 @Component({
-  selector: 'app-waiting-room-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './waiting-room-modal.component.html',
-  styleUrls: ['./waiting-room-modal.component.css'],
+    selector: 'app-waiting-room-modal',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './waiting-room-modal.component.html',
+    styleUrls: ['./waiting-room-modal.component.css']
 })
 export class WaitingRoomModal implements OnChanges, OnInit {
   constructor(private respondToWaitingService: RespondToWaiting) {}

@@ -128,11 +128,10 @@ export type VideoCardType = (options: VideoCardOptions) => HTMLElement;
 
 
 @Component({
-  selector: 'app-video-card',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, CardVideoDisplay],
-  templateUrl: './video-card.component.html',
-  styleUrls: ['./video-card.component.css'],
+    selector: 'app-video-card',
+    imports: [CommonModule, FontAwesomeModule, CardVideoDisplay],
+    templateUrl: './video-card.component.html',
+    styleUrls: ['./video-card.component.css']
 })
 export class VideoCard implements OnInit, OnDestroy {
   @Input() customStyle: Partial<CSSStyleDeclaration> = {};

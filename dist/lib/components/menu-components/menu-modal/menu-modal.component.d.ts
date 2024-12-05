@@ -11,6 +11,7 @@ export interface MenuModalOptions {
     adminPasscode: string;
     islevel: string;
     eventType: EventType;
+    localLink?: string;
     onClose: () => void;
 }
 export type MenuModalType = (options: MenuModalOptions) => HTMLElement;
@@ -32,6 +33,9 @@ export type MenuModalType = (options: MenuModalOptions) => HTMLElement;
  *   [customButtons]="customButtons"
  *   [shareButtons]="true"
  *   position="bottomRight"
+ *   islevel="2"
+ *   eventType="meeting"
+ *   localLink="https://www.google.com"
  *   (onClose)="closeMenu()"
  * ></app-menu-modal>
  * ```
@@ -53,6 +57,7 @@ export declare class MenuModal {
     adminPasscode: string;
     islevel: string;
     eventType: EventType;
+    localLink: string;
     onClose: () => void;
     faBars: import("@fortawesome/fontawesome-common-types").IconDefinition;
     faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
@@ -80,5 +85,5 @@ export declare class MenuModal {
     };
     handleClose(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MenuModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MenuModal, "app-menu-modal", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "isVisible": { "alias": "isVisible"; "required": false; }; "customButtons": { "alias": "customButtons"; "required": false; }; "shareButtons": { "alias": "shareButtons"; "required": false; }; "position": { "alias": "position"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "adminPasscode": { "alias": "adminPasscode"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "eventType": { "alias": "eventType"; "required": false; }; "onClose": { "alias": "onClose"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MenuModal, "app-menu-modal", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "isVisible": { "alias": "isVisible"; "required": false; }; "customButtons": { "alias": "customButtons"; "required": false; }; "shareButtons": { "alias": "shareButtons"; "required": false; }; "position": { "alias": "position"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "adminPasscode": { "alias": "adminPasscode"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "eventType": { "alias": "eventType"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "onClose": { "alias": "onClose"; "required": false; }; }, {}, never, never, true, never>;
 }

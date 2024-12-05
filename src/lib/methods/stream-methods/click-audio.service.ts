@@ -35,6 +35,7 @@ export interface ClickAudioParameters
   audioRequestTime: number;
   member: string;
   socket: Socket;
+  localSocket?: Socket;
   roomName: string;
   userDefaultAudioInputDevice: string;
   micAction: boolean;
@@ -98,6 +99,7 @@ export type ClickAudioType = (options: ClickAudioOptions) => Promise<void>;
  * @param {number} options.parameters.audioRequestTime - Timestamp of the audio request.
  * @param {string} options.parameters.member - Current member's name.
  * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Socket} options.parameters.localSocket - The local socket instance for communication.
  * @param {string} options.parameters.roomName - The name of the room.
  * @param {string} options.parameters.userDefaultAudioInputDevice - The default audio input device for the user.
  * @param {boolean} options.parameters.micAction - Flag indicating if the microphone action is in progress.
@@ -141,6 +143,7 @@ export type ClickAudioType = (options: ClickAudioOptions) => Promise<void>;
  *     audioRequestTime: 0,
  *     member: 'John Doe',
  *     socket: socketInstance,
+ *     localSocket: socketInstance,
  *     roomName: 'exampleRoom',
  *     userDefaultAudioInputDevice: 'default',
  *     micAction: false,
@@ -212,6 +215,7 @@ export class ClickAudio {
       audioRequestTime,
       member,
       socket,
+      localSocket,
       roomName,
       userDefaultAudioInputDevice,
       micAction,
@@ -352,6 +356,15 @@ export class ClickAudio {
             updateAudioAlreadyOn(true);
             await resumeSendTransportAudio({ parameters });
             socket.emit('resumeProducerAudio', { mediaTag: 'audio', roomName });
+
+            try {
+              if (localSocket && localSocket.id){
+                  localSocket.emit("resumeProducerAudio", { mediaTag: "audio", roomName });
+              }
+            } catch (error) {
+              console.log("Error in resumeProducerAudio", error);
+
+            }
 
             updateLocalStream(localStream);
             updateAudioAlreadyOn(audioAlreadyOn);

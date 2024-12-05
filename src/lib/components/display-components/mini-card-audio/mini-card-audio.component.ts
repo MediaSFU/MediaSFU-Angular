@@ -75,10 +75,9 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
  */
 
 @Component({
-  selector: 'app-mini-card-audio',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-mini-card-audio',
+    imports: [CommonModule],
+    template: `
     <div class="card" [ngStyle]="customStyle">
       <img *ngIf="imageSource" [src]="imageSource" [ngStyle]="getImageStyle()" alt="Background" />
       <div [ngStyle]="getOverlayPosition(overlayPosition)" [class.overlay-web]="true">
@@ -98,8 +97,8 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .card {
         width: 100%;
         height: 100%;
@@ -157,7 +156,7 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
         border-radius: 20%;
       }
     `,
-  ],
+    ]
 })
 export class MiniCardAudio implements OnInit, OnDestroy {
   @Input() customStyle: any;

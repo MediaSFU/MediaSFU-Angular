@@ -69,11 +69,10 @@ export type DisplaySettingsModalType = (options: DisplaySettingsModalOptions) =>
  */
 
 @Component({
-  selector: 'app-display-settings-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './display-settings-modal.component.html',
-  styleUrls: ['./display-settings-modal.component.css'],
+    selector: 'app-display-settings-modal',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './display-settings-modal.component.html',
+    styleUrls: ['./display-settings-modal.component.css']
 })
 export class DisplaySettingsModal {
   @Input() isDisplaySettingsModalVisible = false;

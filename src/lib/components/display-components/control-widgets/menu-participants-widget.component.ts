@@ -26,9 +26,8 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
  **/
 
 @Component({
-  selector: 'app-menu-participants-widget',
-  standalone: true,
-  template: `
+    selector: 'app-menu-participants-widget',
+    template: `
     <div
       style="background-color: transparent; border-width: 0; padding: 0; margin: 5px; display: flex; flex-direction: row; align-items: center; justify-content: center;"
     >
@@ -38,7 +37,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
       </span>
     </div>
   `,
-  imports: [CommonModule, FontAwesomeModule],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class MenuParticipantsWidget {
   @Input() icon!: IconDefinition;

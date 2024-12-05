@@ -48,10 +48,9 @@ export interface ControlButtonsComponentOptions {
 export type ControlButtonsComponentType = (options: ControlButtonsComponentOptions) => HTMLElement;
 
 @Component({
-  selector: 'app-control-buttons-component',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  template: `
+    selector: 'app-control-buttons-component',
+    imports: [CommonModule, FontAwesomeModule],
+    template: `
     <div class="container" [ngStyle]="mergeStyles(getAlignmentStyle(), buttonsContainerStyle)">
       <button
         *ngFor="let button of buttons; let i = index"
@@ -136,7 +135,7 @@ export type ControlButtonsComponentType = (options: ControlButtonsComponentOptio
       </button>
     </div>
   `,
-  styleUrls: ['./control-buttons-component.component.css'],
+    styleUrls: ['./control-buttons-component.component.css']
 })
 export class ControlButtonsComponent {
   @Input() buttons: Button[] = [];

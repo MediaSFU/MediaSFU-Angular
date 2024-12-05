@@ -37,11 +37,10 @@ export type MenuItemComponentType = (options: MenuItemComponentOptions) => HTMLE
 
 
 @Component({
-  selector: 'app-menu-item-component',
-  standalone: true,
-  templateUrl: './menu-item-component.component.html',
-  styleUrls: ['./menu-item-component.component.css'],
-  imports: [CommonModule, FontAwesomeModule],
+    selector: 'app-menu-item-component',
+    templateUrl: './menu-item-component.component.html',
+    styleUrls: ['./menu-item-component.component.css'],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class MenuItemComponent {
   @Input() icon!: IconDefinition;

@@ -11,6 +11,7 @@ export interface ConfirmHereModalOptions {
   displayColor: string;
   onConfirmHereClose: () => void;
   socket: Socket;
+  localSocket?: Socket;
   roomName: string;
   member: string;
   countdownDuration?: number;
@@ -25,7 +26,6 @@ export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
  * @selector app-confirm-here-modal
  * @templateUrl ./confirm-here-modal.component.html
  * @styleUrls ./confirm-here-modal.component.css
- * @standalone true
  * @imports [CommonModule, FontAwesomeModule]
  *
  * @example
@@ -38,6 +38,7 @@ export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
  *   [onConfirmHereClose]="closeConfirmModal"
  *   [countdownDuration]="120"
  *   [socket]="socketInstance"
+ *   [localSocket]="localSocketInstance"
  *   [roomName]="'exampleRoom'"
  *   [member]="'exampleMember'"
  * ></app-confirm-here-modal>
@@ -48,7 +49,6 @@ export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
   selector: 'app-confirm-here-modal',
   templateUrl: './confirm-here-modal.component.html',
   styleUrls: ['./confirm-here-modal.component.css'],
-  standalone: true,
   imports: [CommonModule, FontAwesomeModule],
   styles: [
     `
@@ -87,6 +87,7 @@ export class ConfirmHereModal implements OnInit, OnDestroy {
   @Input() onConfirmHereClose!: () => void;
   @Input() countdownDuration?: number = 120;
   @Input() socket!: Socket;
+  @Input() localSocket?: Socket; // Added localSocket input
   @Input() roomName!: string;
   @Input() member!: string;
 
@@ -124,6 +125,20 @@ export class ConfirmHereModal implements OnInit, OnDestroy {
           roomName: this.roomName,
           ban: false,
         });
+
+        // Emit to localSocket if available
+        if (this.localSocket && this.localSocket.id) {
+          try {
+            this.localSocket.emit('disconnectUser', {
+              member: this.member,
+              roomName: this.roomName,
+              ban: false,
+            });
+          } catch (error) {
+            console.error('Error emitting disconnect to localSocket:', error);
+          }
+        }
+
         this.onConfirmHereClose();
       }
     }, 1000);

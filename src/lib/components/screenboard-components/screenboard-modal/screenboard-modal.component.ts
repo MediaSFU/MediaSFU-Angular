@@ -127,11 +127,10 @@ export type ScreenboardModalType = (options: ScreenboardModalOptions) => HTMLEle
  * ```
  */
 @Component({
-  selector: 'app-screenboard-modal',
-  standalone: true,
-  templateUrl: './screenboard-modal.component.html',
-  styleUrls: ['./screenboard-modal.component.css'],
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+    selector: 'app-screenboard-modal',
+    templateUrl: './screenboard-modal.component.html',
+    styleUrls: ['./screenboard-modal.component.css'],
+    imports: [CommonModule, FormsModule, FontAwesomeModule]
 })
 export class ScreenboardModal implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() parameters: ScreenboardModalParameters = {} as ScreenboardModalParameters;

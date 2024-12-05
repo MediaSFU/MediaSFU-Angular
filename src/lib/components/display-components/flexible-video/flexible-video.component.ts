@@ -57,10 +57,9 @@ export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
 
 
 @Component({
-  selector: 'app-flexible-video',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-flexible-video',
+    imports: [CommonModule],
+    template: `
     <div
       style="padding: 0; flex: 1; margin: 0; position: relative; display: {{
         showAspect ? 'flex' : 'none'
@@ -108,7 +107,7 @@ export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
         ></ng-container>
       </div>
     </div>
-  `,
+  `
 })
 export class FlexibleVideo implements OnInit, OnChanges {
   @Input() customWidth = 0;

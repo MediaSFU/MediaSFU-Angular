@@ -28,9 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
  **/
 
 @Component({
-  selector: 'app-menu-widget',
-  standalone: true,
-  template: `
+    selector: 'app-menu-widget',
+    template: `
     <div style="position: relative; display: inline-block;">
       <fa-icon [icon]="icon" size="lg" [ngStyle]="{ color: iconColor }"></fa-icon>
       <div
@@ -63,7 +62,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       </div>
     </div>
   `,
-  imports: [CommonModule, FontAwesomeModule],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class MenuWidget {
   @Input() icon!: IconDefinition;

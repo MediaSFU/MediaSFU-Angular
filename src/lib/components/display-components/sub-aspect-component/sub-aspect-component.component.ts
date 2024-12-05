@@ -41,10 +41,9 @@ export type SubAspectComponentType = (options: SubAspectComponentOptions) => HTM
  */
 
 @Component({
-  selector: 'app-sub-aspect-component',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-sub-aspect-component',
+    imports: [CommonModule],
+    template: `
     <div
       *ngIf="showControls"
       [ngStyle]="{
@@ -59,7 +58,7 @@ export type SubAspectComponentType = (options: SubAspectComponentOptions) => HTM
       <ng-content></ng-content>
     </div>
   `,
-  styles: [],
+    styles: []
 })
 export class SubAspectComponent implements OnInit, OnDestroy, OnChanges {
   @Input() backgroundColor = 'transparent';

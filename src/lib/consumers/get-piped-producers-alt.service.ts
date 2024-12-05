@@ -16,6 +16,7 @@ export interface GetPipedProducersAltParameters extends SignalNewConsumerTranspo
 }
 
 export interface GetPipedProducersAltOptions {
+  community?: boolean;
   nsock: Socket;
   islevel: string;
   parameters: GetPipedProducersAltParameters;
@@ -28,6 +29,7 @@ export type GetPipedProducersAltType = (options: GetPipedProducersAltOptions) =>
  * Retrieves piped producers and signals new consumer transport for each retrieved producer.
  *
  * @param {GetPipedProducersAltOptions} options - The options for retrieving piped producers.
+ * @param {boolean} options.community - Whether the room is a community edition room.
  * @param {Socket} options.nsock - The WebSocket instance used for communication.
  * @param {string} options.islevel - A flag indicating the level of the request.
  * @param {GetPipedProducersAltParameters} options.parameters - Additional parameters for the request.
@@ -41,6 +43,7 @@ export type GetPipedProducersAltType = (options: GetPipedProducersAltOptions) =>
  * @example
  * ```typescript
  * const options = {
+ *   community: true,
  *   nsock: socketInstance,
  *   islevel: '2',
  *   parameters: {
@@ -67,6 +70,7 @@ export class GetPipedProducersAlt {
    * Retrieves piped producers and signals new consumer transport for each retrieved producer.
    *
    * @param {Object} options - The options for retrieving piped producers.
+   * @param {boolean} options.community - Whether the room is a community edition room.
    * @param {WebSocket} options.nsock - The WebSocket instance used for communication.
    * @param {boolean} options.islevel - A flag indicating the level of the request.
    * @param {Object} options.parameters - Additional parameters for the request.
@@ -78,6 +82,7 @@ export class GetPipedProducersAlt {
    * @throws {Error} If an error occurs during the process of retrieving producers.
    */
   async getPipedProducersAlt({
+    community = false,
     nsock,
     islevel,
     parameters,
@@ -86,8 +91,10 @@ export class GetPipedProducersAlt {
       // Destructure parameters
       const { member, signalNewConsumerTransport } = parameters;
 
+      const emitName = community ? "getProducersAlt" : "getProducersPipedAlt";
+
       // Emit request to get piped producers using WebSocket
-      nsock.emit('getProducersPipedAlt', { islevel, member }, async (producerIds: string[]) => {
+      nsock.emit(emitName, { islevel, member }, async (producerIds: string[]) => {
         // Check if producers are retrieved
         if (producerIds.length > 0) {
           // Signal new consumer transport for each retrieved producer

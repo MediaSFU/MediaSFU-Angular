@@ -96,11 +96,10 @@ export type CoHostModalType = (options: CoHostModalOptions) => HTMLElement;
  **/
 
 @Component({
-  selector: 'app-co-host-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './co-host-modal.component.html',
-  styleUrls: ['./co-host-modal.component.css'],
+    selector: 'app-co-host-modal',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './co-host-modal.component.html',
+    styleUrls: ['./co-host-modal.component.css']
 })
 
 

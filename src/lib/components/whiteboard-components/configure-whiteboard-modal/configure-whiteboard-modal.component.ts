@@ -96,11 +96,10 @@ export type ConfigureWhiteboardModalType = (
 
 
 @Component({
-  selector: 'app-configure-whiteboard-modal',
-  standalone: true,
-  templateUrl: './configure-whiteboard-modal.component.html',
-  styleUrls: ['./configure-whiteboard-modal.component.css'],
-  imports: [CommonModule, FontAwesomeModule],
+    selector: 'app-configure-whiteboard-modal',
+    templateUrl: './configure-whiteboard-modal.component.html',
+    styleUrls: ['./configure-whiteboard-modal.component.css'],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class ConfigureWhiteboardModal implements OnInit, OnChanges {
   @Input() isVisible = false;

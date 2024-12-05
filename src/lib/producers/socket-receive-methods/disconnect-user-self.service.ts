@@ -5,6 +5,7 @@ export interface DisconnectUserSelfOptions {
   member: string;
   roomName: string;
   socket: Socket;
+  localSocket?: Socket;
 }
 
 // Export the type definition for the function
@@ -24,6 +25,7 @@ export type DisconnectUserSelfType = (options: DisconnectUserSelfOptions) => Pro
  * @param {string} options.member - The identifier of the member to be disconnected.
  * @param {string} options.roomName - The name of the room from which the user will be disconnected.
  * @param {Socket} options.socket - The socket instance used to emit the disconnection and ban request.
+ * @param {Socket} [options.localSocket] - The local socket instance used to emit the disconnection request.
  * @returns {Promise<void>} A promise that resolves when the disconnection request is sent to the server.
  *
  * @example
@@ -31,6 +33,7 @@ export type DisconnectUserSelfType = (options: DisconnectUserSelfOptions) => Pro
  *   member: 'user123',
  *   roomName: 'room456',
  *   socket: mySocketInstance
+ *   localSocket: myLocalSocketInstance
  * };
  * await disconnectUserSelfService.disconnectUserSelf(disconnectUserSelfOptions);
  */
@@ -45,14 +48,29 @@ export class DisconnectUserSelf {
    * @param {Object} options.member - The member object representing the user to disconnect.
    * @param {string} options.roomName - The name of the room from which the user will be disconnected.
    * @param {Socket} options.socket - The socket instance used to emit the disconnection request.
+   * @param {Socket} [options.localSocket] - The local socket instance used to emit the disconnection request.
    * @returns {Promise<void>} A promise that resolves when the disconnection request has been emitted.
    */
   disconnectUserSelf = async ({
     member,
     roomName,
     socket,
+    localSocket,
   }: DisconnectUserSelfOptions): Promise<void> => {
     // Update that the user needs to be disconnected; this is initiated by the host when banning a user
     socket.emit('disconnectUser', { member, roomName, ban: true });
+
+    try {
+      if (localSocket && localSocket.id) {
+        // Emit the disconnection request to the local socket, indicating that the user is being banned
+        localSocket.emit("disconnectUser", {
+          member: member,
+          roomName: roomName,
+          ban: true,
+        });
+      }
+    } catch  {
+      // Do nothing
+    }
   };
 }

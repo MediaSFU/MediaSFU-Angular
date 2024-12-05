@@ -31,6 +31,7 @@ export interface ConnectSendTransportParameters
 
 export interface ConnectSendTransportOptions {
   option: 'audio' | 'video' | 'screen' | 'all';
+  targetOption?: 'local' | 'remote' | 'all';
   parameters: ConnectSendTransportParameters;
 }
 
@@ -42,6 +43,7 @@ export type ConnectSendTransportType = (options: ConnectSendTransportOptions) =>
    *
    * @param {ConnectSendTransportOptions} options - The options for connecting the send transport.
    * @param {string} options.option - The type of transport to connect ("audio", "video", "screen", or "all").
+   * @param {string} options.targetOption - The target of the transport to connect ("local", "remote", or "all").
    * @param {ConnectSendTransportParameters} options.parameters - The parameters required for connecting the transport.
    * @param {ProducerOptions} options.parameters.audioParams - The audio parameters.
    * @param {ProducerOptions} options.parameters.videoParams - The video parameters.
@@ -63,6 +65,7 @@ export type ConnectSendTransportType = (options: ConnectSendTransportOptions) =>
    * ```typescript
    * const options = {
    *   option: 'audio', // Can be 'audio', 'video', 'screen', or 'all'
+   *   targetOption: 'local', // Can be 'local', 'remote', or 'all'
    *   parameters: {
    *     audioParams: { codec: 'opus' },
    *     videoParams: { codec: 'vp8' },
@@ -102,6 +105,7 @@ export class ConnectSendTransport {
    *
    * @param {ConnectSendTransportOptions} options - The options for connecting the send transport.
    * @param {string} options.option - The type of transport to connect ("audio", "video", "screen", or both).
+   * @param {string} options.targetOption - The target of the transport to connect ("local", "remote", or "all").
    * @param {Object} options.parameters - The parameters required for connecting the transport.
    * @param {Object} options.parameters.audioParams - The audio parameters.
    * @param {Object} options.parameters.videoParams - The video parameters.
@@ -120,7 +124,7 @@ export class ConnectSendTransport {
    * @throws Will throw an error if the connection fails.
    */
 
-  async connectSendTransport({ option, parameters }: ConnectSendTransportOptions): Promise<void> {
+  async connectSendTransport({ option, targetOption = "all", parameters }: ConnectSendTransportOptions): Promise<void> {
     try {
       const {
         audioParams,
@@ -139,23 +143,27 @@ export class ConnectSendTransport {
       // Connect send transport based on the specified option
       if (option === 'audio') {
         await connectSendTransportAudio({
+          targetOption,
           audioParams,
           parameters,
         });
       } else if (option === 'video') {
         await connectSendTransportVideo({
+          targetOption,
           videoParams,
           parameters,
         });
       } else if (option === 'screen') {
         if (whiteboardStarted && !whiteboardEnded && canvasStream && islevel === '2' && !shared) {
           await connectSendTransportScreen({
+            targetOption,
             stream: canvasStream,
             parameters,
           });
         } else {
           if (localStreamScreen) {
             await connectSendTransportScreen({
+              targetOption,
               stream: localStreamScreen,
               parameters,
             });
@@ -166,10 +174,12 @@ export class ConnectSendTransport {
       } else {
         // Connect both audio and video send transports
         await connectSendTransportAudio({
+          targetOption,
           audioParams,
           parameters,
         });
         await connectSendTransportVideo({
+          targetOption,
           videoParams,
           parameters,
         });

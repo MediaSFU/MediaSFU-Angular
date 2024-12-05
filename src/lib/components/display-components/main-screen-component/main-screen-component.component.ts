@@ -79,14 +79,13 @@ export type MainScreenComponentType = (options: MainScreenComponentOptions) => H
  **/
 
 @Component({
-  selector: 'app-main-screen-component',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-main-screen-component',
+    imports: [CommonModule],
+    template: `
     <div [ngStyle]="containerStyle">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() mainSize = 40; // percentage

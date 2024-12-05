@@ -78,11 +78,10 @@ export type MessagesModalType = (options: MessagesModalOptions) => void;
  */
 
 @Component({
-  selector: 'app-messages-modal',
-  templateUrl: './messages-modal.component.html',
-  styleUrls: ['./messages-modal.component.css'],
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, MessagePanel],
+    selector: 'app-messages-modal',
+    templateUrl: './messages-modal.component.html',
+    styleUrls: ['./messages-modal.component.css'],
+    imports: [CommonModule, FontAwesomeModule, MessagePanel]
 })
 export class MessagesModal implements OnInit, OnChanges {
   constructor(private SendMessageService: SendMessage) {}

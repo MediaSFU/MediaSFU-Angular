@@ -121,11 +121,10 @@ export type AudioCardType = (options: AudioCardOptions) => HTMLElement;
  *
  **/
 @Component({
-  selector: 'app-audio-card',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, MiniCard],
-  templateUrl: './audio-card.component.html',
-  styleUrls: ['./audio-card.component.css'],
+    selector: 'app-audio-card',
+    imports: [CommonModule, FontAwesomeModule, MiniCard],
+    templateUrl: './audio-card.component.html',
+    styleUrls: ['./audio-card.component.css']
 })
 
 export class AudioCard implements OnInit, OnDestroy {

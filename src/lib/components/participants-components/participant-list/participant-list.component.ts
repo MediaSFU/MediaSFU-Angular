@@ -53,11 +53,10 @@ export interface ParticipantListOptions {
 
 
 @Component({
-  selector: 'app-participant-list',
-  standalone: true,
-  imports: [CommonModule, ParticipantListItem],
-  templateUrl: './participant-list.component.html',
-  styleUrls: ['./participant-list.component.css'],
+    selector: 'app-participant-list',
+    imports: [CommonModule, ParticipantListItem],
+    templateUrl: './participant-list.component.html',
+    styleUrls: ['./participant-list.component.css']
 })
 export class ParticipantList {
   @Input() participants: Participant[] = [];

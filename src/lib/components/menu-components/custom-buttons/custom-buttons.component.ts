@@ -80,11 +80,10 @@ export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
  */
 
 @Component({
-  selector: 'app-custom-buttons',
-  templateUrl: './custom-buttons.component.html',
-  styleUrls: ['./custom-buttons.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+    selector: 'app-custom-buttons',
+    templateUrl: './custom-buttons.component.html',
+    styleUrls: ['./custom-buttons.component.css'],
+    imports: [CommonModule, FormsModule, FontAwesomeModule]
 })
 export class CustomButtons {
 

@@ -52,12 +52,11 @@ export type WelcomePageType = (options: WelcomePageOptions) => HTMLElement;
 
 
 @Component({
-  selector: 'app-welcome-page',
-  templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css'],
-  standalone: true,
-  imports: [ZXingScannerModule, CommonModule, FontAwesomeModule, ReactiveFormsModule],
-  providers: [CookieService],
+    selector: 'app-welcome-page',
+    templateUrl: './welcome-page.component.html',
+    styleUrls: ['./welcome-page.component.css'],
+    imports: [ZXingScannerModule, CommonModule, FontAwesomeModule, ReactiveFormsModule],
+    providers: [CookieService]
 })
 export class WelcomePage implements OnInit {
   welcomeForm: FormGroup;

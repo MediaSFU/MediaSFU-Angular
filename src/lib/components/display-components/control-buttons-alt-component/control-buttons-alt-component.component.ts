@@ -82,11 +82,10 @@ export type ControlButtonsAltComponentType = (
 
 
 @Component({
-  selector: 'app-control-buttons-alt-component',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './control-buttons-alt-component.component.html',
-  styleUrls: ['./control-buttons-alt-component.component.css'],
+    selector: 'app-control-buttons-alt-component',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './control-buttons-alt-component.component.html',
+    styleUrls: ['./control-buttons-alt-component.component.css']
 })
 export class ControlButtonsAltComponent {
   @Input() buttons: AltButton[] = [];

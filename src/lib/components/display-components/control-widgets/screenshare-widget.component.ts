@@ -33,10 +33,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @Component({
-  selector: 'app-screen-share-button',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  template: `
+    selector: 'app-screen-share-button',
+    imports: [CommonModule, FontAwesomeModule],
+    template: `
     <div style="position: relative; display: inline-block;">
       <!-- Desktop icon, change color based on disabled state -->
       <fa-icon [icon]="faDesktop" size="lg" [style.color]="computedDisabled ? 'black' : 'green'">
@@ -51,7 +50,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       >
       </fa-icon>
     </div>
-  `,
+  `
 })
 export class ScreenShareWidget {
   @Input() disabled = false; // Input to toggle disabled state

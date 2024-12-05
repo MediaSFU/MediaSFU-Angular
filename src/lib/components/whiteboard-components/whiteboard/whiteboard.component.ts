@@ -376,12 +376,11 @@ export interface WhiteboardOptions {
 export type WhiteboardType = (options: WhiteboardOptions) => void;
 
 @Component({
-  selector: 'app-whiteboard',
-  standalone: true,
-  templateUrl: './whiteboard.component.html',
-  styleUrls: ['./whiteboard.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+    selector: 'app-whiteboard',
+    templateUrl: './whiteboard.component.html',
+    styleUrls: ['./whiteboard.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [CommonModule, FormsModule, FontAwesomeModule]
 })
 export class Whiteboard implements OnInit, OnDestroy, OnChanges {
   @Input() customWidth!: number;
@@ -494,7 +493,7 @@ export class Whiteboard implements OnInit, OnDestroy, OnChanges {
     if (changes['parameters'] && changes['parameters'].currentValue) {
       this.parameters = changes['parameters'].currentValue;
 
-      if (this.parameters.socket) {
+      if (this.parameters.socket instanceof Socket) {
         this.parameters.socket.on('whiteboardUpdated', async (data: any) => {
           this.WhiteboardUpdated(data);
         });

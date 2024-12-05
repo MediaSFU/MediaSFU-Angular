@@ -52,6 +52,7 @@ export interface InitialValuesStateType {
   validated: boolean;
   localUIMode: boolean;
   socket: Socket;
+  localSocket?: Socket;
   roomData: ResponseJoinRoom | null;
   device: Device | null;
   apiKey: string;
@@ -228,6 +229,7 @@ export interface InitialValuesStateType {
   allAudioStreams: (Participant | Stream)[];
   remoteScreenStream: Stream[];
   screenProducer: Producer | null;
+  localScreenProducer: Producer | null;
   gotAllVids: boolean;
   paginationHeightWidth: number;
   paginationDirection: string;
@@ -314,15 +316,19 @@ export interface InitialValuesStateType {
   hasCameraPermission: boolean;
   hasAudioPermission: boolean;
   transportCreated: boolean;
+  localTransportCreated: boolean;
   transportCreatedVideo: boolean;
   transportCreatedAudio: boolean;
   transportCreatedScreen: boolean;
   producerTransport: Transport | null;
+  localProducerTransport: Transport | null;
   videoProducer: Producer | null;
+  localVideoProducer: Producer | null;
   params: ProducerOptions;
   videoParams: ProducerOptions;
   audioParams: ProducerOptions;
   audioProducer: Producer | null;
+  localAudioProducer: Producer | null;
   consumerTransports: TransportType[];
   consumingTransports: string[];
 
@@ -420,6 +426,7 @@ export const initialValuesState: InitialValuesStateType = {
   validated: false,
   localUIMode: false,
   socket: {} as Socket,
+  localSocket: undefined,
   roomData: null,
   device: null,
   apiKey: '',
@@ -622,6 +629,7 @@ export const initialValuesState: InitialValuesStateType = {
   allAudioStreams: [],
   remoteScreenStream: [],
   screenProducer: null,
+  localScreenProducer: null,
   gotAllVids: false,
   paginationHeightWidth: 40,
   paginationDirection: 'horizontal',
@@ -708,15 +716,19 @@ export const initialValuesState: InitialValuesStateType = {
   hasCameraPermission: false,
   hasAudioPermission: false,
   transportCreated: false,
+  localTransportCreated: false,
   transportCreatedVideo: false,
   transportCreatedAudio: false,
   transportCreatedScreen: false,
   producerTransport: null,
+  localProducerTransport: null,
   videoProducer: null,
+  localVideoProducer: null,
   params: {} as ProducerOptions,
   videoParams: {} as ProducerOptions,
   audioParams: {} as ProducerOptions,
   audioProducer: null,
+  localAudioProducer: null,
   consumerTransports: [],
   consumingTransports: [],
 

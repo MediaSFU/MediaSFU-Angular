@@ -49,10 +49,9 @@ export type FlexibleGridType = (options: FlexibleGridOptions) => HTMLElement;
  **/
 
 @Component({
-  selector: 'app-flexible-grid',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-flexible-grid',
+    imports: [CommonModule],
+    template: `
     <div style="padding: 0;">
       <div
         *ngFor="let rowComponents of grid; let rowIndex = index"
@@ -68,7 +67,7 @@ export type FlexibleGridType = (options: FlexibleGridOptions) => HTMLElement;
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class FlexibleGrid implements OnInit, OnChanges {
   @Input() customWidth = 0;

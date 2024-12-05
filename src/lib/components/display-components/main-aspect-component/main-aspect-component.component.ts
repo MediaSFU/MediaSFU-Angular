@@ -64,10 +64,9 @@ export type MainAspectComponentType = (options: MainAspectComponentOptions) => H
  **/
 
 @Component({
-  selector: 'app-main-aspect-component',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-main-aspect-component',
+    imports: [CommonModule],
+    template: `
     <div
       [ngStyle]="aspectStyles"
       [style.backgroundColor]="backgroundColor"
@@ -76,13 +75,13 @@ export type MainAspectComponentType = (options: MainAspectComponentOptions) => H
       <ng-content></ng-content>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .aspect-container {
         overflow: hidden;
       }
     `,
-  ],
+    ]
 })
 export class MainAspectComponent implements OnInit, OnDestroy, OnChanges {
   @Input() backgroundColor = '';

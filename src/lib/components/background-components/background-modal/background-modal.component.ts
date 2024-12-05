@@ -137,11 +137,10 @@ export type BackgroundModalType = (options: BackgroundModalOptions) => HTMLEleme
 
 
 @Component({
-  selector: 'app-background-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './background-modal.component.html',
-  styleUrls: ['./background-modal.component.css'],
+    selector: 'app-background-modal',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './background-modal.component.html',
+    styleUrls: ['./background-modal.component.css']
 })
 export class BackgroundModal implements OnChanges, OnInit {
   @Input() isVisible = false;
@@ -740,7 +739,21 @@ export class BackgroundModal implements OnChanges, OnInit {
             refVideo.play();
           }
         } catch (error) {
+          // remove the frameRate constraint and try again
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: { ...this.vidCons },
+              audio: false,
+            });
+            this.segmentVideo = stream;
+            this.updateSegmentVideo(this.segmentVideo);
+            refVideo.srcObject = this.segmentVideo;
+            if (refVideo.paused) {
+              refVideo.play();
+            }
+          } catch (error) {
           console.log('Error getting user media:', error);
+          }
         }
 
         refVideo.width = this.segmentVideo!.getVideoTracks()[0].getSettings().width!;

@@ -93,11 +93,10 @@ export type RequestsModalType = (options: RenderRequestComponentOptions) => HTML
  * ```
  */
 @Component({
-  selector: 'app-requests-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, RenderRequestComponent],
-  templateUrl: './requests-modal.component.html',
-  styleUrls: ['./requests-modal.component.css'],
+    selector: 'app-requests-modal',
+    imports: [CommonModule, FontAwesomeModule, RenderRequestComponent],
+    templateUrl: './requests-modal.component.html',
+    styleUrls: ['./requests-modal.component.css']
 })
 export class RequestsModal implements OnInit, OnChanges {
   @Input() isRequestsModalVisible = false;

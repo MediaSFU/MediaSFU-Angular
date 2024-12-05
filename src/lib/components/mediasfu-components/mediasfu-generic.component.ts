@@ -7,7 +7,6 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Subscription, combineLatest } from 'rxjs';
@@ -93,6 +92,7 @@ import { ScreenShareWidget } from '../display-components/control-widgets/screens
 import {
   ButtonTouch,
   ResponseJoinRoom,
+  ResponseJoinLocalRoom,
   CoHostResponsibility,
   EventType,
   Participant,
@@ -134,6 +134,7 @@ import {
   PollUpdatedData,
   PreJoinPageOptions,
 } from '../../@types/types';
+import { createResponseJoinRoom } from '../../methods/utils/create-response-join-room.util';
 
 //import methods for control (samples)
 // Import methods for control (samples)
@@ -158,6 +159,7 @@ import { LaunchConfigureWhiteboard } from '../../methods/whiteboard-methods/laun
 // mediasfu functions -- examples
 import { SocketManager } from '../../sockets/socket-manager.service';
 import { JoinRoomClient } from '../../producer-client/producer-client-emits/join-room-client.service';
+import { JoinLocalRoom } from '../../producers/producer-emits/join-local-room.service';
 import { UpdateRoomParametersClient } from '../../producer-client/producer-client-emits/update-room-parameters-client.service';
 import { CreateDeviceClient } from '../../producer-client/producer-client-emits/create-device-client.service';
 
@@ -220,6 +222,7 @@ import { SwitchUserAudio } from '../../consumers/switch-user-audio.service';
 import { ReceiveRoomMessages } from '../../consumers/receive-room-messages.service';
 import { FormatNumber } from '../../methods/utils/format-number.service';
 import { ConnectIps } from '../../consumers/connect-ips.service';
+import { ConnectLocalIps } from '../../consumers/connect-local-ips.service';
 
 import { PollUpdated } from '../../methods/polls-methods/poll-updated.service';
 import { HandleCreatePoll } from '../../methods/polls-methods/handle-create-poll.service';
@@ -277,6 +280,8 @@ import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 export type MediasfuGenericOptions = {
   PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
+  localLink?: string;
+  connectMediaSFU?: boolean;
   credentials?: { apiUserName: string; apiKey: string };
   useLocalUIMode?: boolean;
   seedData?: SeedData;
@@ -299,6 +304,9 @@ export type MediasfuGenericOptions = {
  * - Modals for user interactions, including participant management, event settings, breakout rooms, whiteboarding, and media settings.
  *
  * @input {any} PrejoinPage - Component for the prejoin page, defaults to `WelcomePage`.
+ * @input {MediasfuGenericOptions} options - Configuration options for the component.
+ * @input {boolean} connectMediaSFU - Flag to enable/disable connection to the MediaSFU server.
+ * @input {string} localLink - Local link for the Community Edition server.
  * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for secure access.
  * @input {boolean} useLocalUIMode - Flag to toggle local UI settings.
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
@@ -323,6 +331,8 @@ export type MediasfuGenericOptions = {
  * ```html
  * <app-mediasfu-generic
  *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [localLink]="'https://localhost:3000'"
+ *   [connectMediaSFU]="true"
  *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
@@ -335,16 +345,13 @@ export type MediasfuGenericOptions = {
 
 @Component({
   selector: 'app-mediasfu-generic',
-  standalone: true,
   imports: [
-    RouterOutlet,
     CommonModule,
     BreakoutRoomsModal,
     BackgroundModal,
     CoHostModal,
     AlertComponent,
     AudioGrid,
-    ControlButtonsAltComponent,
     ControlButtonsComponentTouch,
     ControlButtonsComponent,
     FlexibleGrid,
@@ -360,7 +367,6 @@ export type MediasfuGenericOptions = {
     MessagesModal,
     ConfirmHereModal,
     ShareEventModal,
-    WelcomePage,
     ParticipantsModal,
     PollModal,
     RecordingModal,
@@ -370,17 +376,10 @@ export type MediasfuGenericOptions = {
     MainGridComponent,
     MainScreenComponent,
     OtherGridComponent,
-    Screenboard,
     ScreenboardModal,
     Whiteboard,
     ConfigureWhiteboardModal,
     WaitingRoomModal,
-    MenuWidget,
-    MessageWidget,
-    MenuRecordWidget,
-    RecordTimerWidget,
-    MenuParticipantsWidget,
-    ScreenShareWidget,
   ],
   template: `
     <div
@@ -579,6 +578,7 @@ export type MediasfuGenericOptions = {
         [roomName]="roomName.value"
         [adminPasscode]="adminPasscode.value"
         [islevel]="islevel.value"
+        [localLink]="localLink"
       ></app-menu-modal>
 
       <app-event-settings-modal
@@ -745,6 +745,7 @@ export type MediasfuGenericOptions = {
         [islevel]="islevel.value"
         [adminPasscode]="adminPasscode.value"
         [eventType]="eventType.value"
+        [localLink]="localLink"
       ></app-share-event-modal>
 
       <app-poll-modal
@@ -814,11 +815,13 @@ export type MediasfuGenericOptions = {
       }
     `,
   ],
-  providers: [CookieService],
+  providers: [CookieService]
 })
 export class MediasfuGeneric implements OnInit, OnDestroy {
   @Input()
   PrejoinPage: any = WelcomePage;
+  @Input() localLink = '';
+  @Input() connectMediaSFU = true;
   @Input() credentials: { apiUserName: string; apiKey: string } = { apiUserName: '', apiKey: '' };
   @Input() useLocalUIMode = false;
   @Input() seedData?: SeedData;
@@ -885,6 +888,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     public getDomains: GetDomains,
     public formatNumber: FormatNumber,
     public connectIps: ConnectIps,
+    public connectLocalIps: ConnectLocalIps,
     public createDeviceClient: CreateDeviceClient,
     public handleCreatePoll: HandleCreatePoll,
     public handleEndPoll: HandleEndPoll,
@@ -943,6 +947,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     public breakoutRoomUpdated: BreakoutRoomUpdated,
     public socketManager: SocketManager,
     public joinRoomClient: JoinRoomClient,
+    public joinLocalRoom: JoinLocalRoom,
     public updateRoomParametersClient: UpdateRoomParametersClient,
     public clickVideo: ClickVideo,
     public clickAudio: ClickAudio,
@@ -955,7 +960,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     public checkPermission: CheckPermission,
     public updateConsumingDomains: UpdateConsumingDomains,
     public receiveRoomMessages: ReceiveRoomMessages,
-  ) {}
+  ) { }
 
   createInjector(inputs: any) {
     const inj = Injector.create({
@@ -1209,6 +1214,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         (() => {
           console.log('none');
         }),
+      connectLocalIps:
+        this.connectLocalIps?.connectLocalIps ||
+        (() => {
+          console.log('none');
+        }),
       createDeviceClient:
         this.createDeviceClient?.createDeviceClient ||
         (() => {
@@ -1305,12 +1315,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   validated = new BehaviorSubject<boolean>(false);
   localUIMode = new BehaviorSubject<boolean>(false);
   socket = new BehaviorSubject<Socket>({} as Socket);
+  localSocket? = new BehaviorSubject<Socket | undefined>(undefined);
   roomData = new BehaviorSubject<ResponseJoinRoom | null>(null);
   device = new BehaviorSubject<Device | null>(null);
-  apiKey = new BehaviorSubject<string>(
-    '021193742c935c4434d25d7592362575fcb6d6590b6c38334a2f3e06c83af758',
-  );
-  apiUserName = new BehaviorSubject<string>('abcdefgh');
+  apiKey = new BehaviorSubject<string>('');
+  apiUserName = new BehaviorSubject<string>('');
   apiToken = new BehaviorSubject<string>('');
   link = new BehaviorSubject<string>('');
 
@@ -1538,6 +1547,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   allAudioStreams = new BehaviorSubject<(Participant | Stream)[]>([]);
   remoteScreenStream = new BehaviorSubject<Stream[]>([]);
   screenProducer = new BehaviorSubject<Producer | null>(null);
+  localScreenProducer = new BehaviorSubject<Producer | null>(null);
   gotAllVids = new BehaviorSubject<boolean>(false);
   paginationHeightWidth = new BehaviorSubject<number>(40);
   paginationDirection = new BehaviorSubject<'horizontal' | 'vertical'>('horizontal');
@@ -1563,6 +1573,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateSocket = (value: Socket) => {
     this.socket.next(value);
+  };
+
+  updateLocalSocket = (value: Socket | null) => {
+    this.localSocket!.next(value!);
   };
 
   updateDevice = (value: Device | null) => {
@@ -1594,6 +1608,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateMember = (value: string) => {
+    if (value.length > 0 && value.includes("_")) {
+      this.updateIslevel(value.split("_")[1]);
+      value = value.split("_")[0];
+    }
     this.member.next(value);
   };
 
@@ -2310,6 +2328,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.screenProducer.next(value);
   };
 
+  updateLocalScreenProducer = (value: Producer | null) => {
+    this.localScreenProducer.next(value);
+  };
+
   updateGotAllVids = (value: boolean) => {
     this.gotAllVids.next(value);
   };
@@ -2473,15 +2495,19 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   // Transports
   transportCreated = new BehaviorSubject<boolean>(false);
+  localTransportCreated = new BehaviorSubject<boolean>(false);
   transportCreatedVideo = new BehaviorSubject<boolean>(false);
   transportCreatedAudio = new BehaviorSubject<boolean>(false);
   transportCreatedScreen = new BehaviorSubject<boolean>(false);
   producerTransport = new BehaviorSubject<Transport | null>(null);
+  localProducerTransport = new BehaviorSubject<Transport | null>(null);
   videoProducer = new BehaviorSubject<Producer | null>(null);
+  localVideoProducer = new BehaviorSubject<Producer | null>(null);
   params = new BehaviorSubject<ProducerOptions>({} as ProducerOptions);
   videoParams = new BehaviorSubject<ProducerOptions>({} as ProducerOptions);
   audioParams = new BehaviorSubject<ProducerOptions>({} as ProducerOptions);
   audioProducer = new BehaviorSubject<Producer | null>(null);
+  localAudioProducer = new BehaviorSubject<Producer | null>(null);
   consumerTransports = new BehaviorSubject<TransportType[]>([]);
   consumingTransports = new BehaviorSubject<string[]>([]);
 
@@ -2924,6 +2950,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.transportCreated.next(value);
   };
 
+  updateLocalTransportCreated = (value: boolean) => {
+    this.localTransportCreated.next(value);
+  };
+
   updateTransportCreatedVideo = (value: boolean) => {
     this.transportCreatedVideo.next(value);
   };
@@ -2940,9 +2970,17 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.producerTransport.next(value);
   };
 
+  updateLocalProducerTransport = (value: Transport | null) => {
+    this.localProducerTransport.next(value);
+  };
+
   updateVideoProducer = (value: Producer | null) => {
     this.videoProducer.next(value);
   };
+
+  updateLocalVideoProducer = (value: Producer | null) => {
+    this.localVideoProducer.next(value);
+  }
 
   updateParams = (value: ProducerOptions) => {
     this.params.next(value);
@@ -2958,6 +2996,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateAudioProducer = (value: Producer | null) => {
     this.audioProducer.next(value);
+  };
+
+  updateLocalAudioProducer = (value: Producer | null) => {
+    this.localAudioProducer.next(value);
   };
 
   updateConsumerTransports = (value: TransportType[]) => {
@@ -3471,15 +3513,19 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
       // Transports
       transportCreated: this.transportCreated.value,
+      localTransportCreated: this.localTransportCreated.value,
       transportCreatedVideo: this.transportCreatedVideo.value,
       transportCreatedAudio: this.transportCreatedAudio.value,
       transportCreatedScreen: this.transportCreatedScreen.value,
       producerTransport: this.producerTransport.value,
+      localProducerTransport: this.localProducerTransport.value,
       videoProducer: this.videoProducer.value,
+      localVideoProducer: this.localVideoProducer.value,
       params: this.params.value,
       videoParams: this.videoParams.value,
       audioParams: this.audioParams.value,
       audioProducer: this.audioProducer.value,
+      localAudioProducer: this.localAudioProducer.value,
       consumerTransports: this.consumerTransports.value,
       consumingTransports: this.consumingTransports.value,
 
@@ -3542,6 +3588,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       validated: this.validated.value,
       device: this.device.value,
       socket: this.socket.value,
+      localSocket: this.localSocket!.value,
       checkMediaPermission: false,
       onWeb: true,
 
@@ -3830,15 +3877,19 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
       // Transports
       updateTransportCreated: this.updateTransportCreated.bind(this),
+      updateLocalTransportCreated: this.updateLocalTransportCreated.bind(this),
       updateTransportCreatedVideo: this.updateTransportCreatedVideo.bind(this),
       updateTransportCreatedAudio: this.updateTransportCreatedAudio.bind(this),
       updateTransportCreatedScreen: this.updateTransportCreatedScreen.bind(this),
       updateProducerTransport: this.updateProducerTransport.bind(this),
+      updateLocalProducerTransport: this.updateLocalProducerTransport.bind(this),
       updateVideoProducer: this.updateVideoProducer.bind(this),
+      updateLocalVideoProducer: this.updateLocalVideoProducer.bind(this),
       updateParams: this.updateParams.bind(this),
       updateVideoParams: this.updateVideoParams.bind(this),
       updateAudioParams: this.updateAudioParams.bind(this),
       updateAudioProducer: this.updateAudioProducer.bind(this),
+      updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
       updateConsumerTransports: this.updateConsumerTransports.bind(this),
       updateConsumingTransports: this.updateConsumingTransports.bind(this),
 
@@ -3904,6 +3955,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
       updateDevice: this.updateDevice.bind(this),
       updateSocket: this.updateSocket.bind(this),
+      updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
 
       showAlert: this.showAlert.bind(this),
@@ -4002,7 +4054,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
             }),
           updateIsLoadingModalVisible: this.updateIsLoadingModalVisible,
           connectSocket: this.socketManager.connectSocket,
+          connectLocalSocket: this.socketManager.connectLocalSocket,
           updateSocket: this.updateSocket,
+          updateLocalSocket: this.updateLocalSocket,
           updateValidated: this.updateValidated,
           updateApiUserName: this.updateApiUserName,
           updateApiToken: this.updateApiToken,
@@ -4011,6 +4065,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           updateMember: this.updateMember,
         },
         credentials: this.credentials,
+        localLink: this.localLink,
+        connectMediaSFU: this.connectMediaSFU,
       }),
     };
 
@@ -4193,7 +4249,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       ...this.getAllParams(),
       ...this.mediaSFUFunctions(),
     };
-    const socket_ = await this.connect_Socket(this.apiUserName.value, '', this.apiToken.value);
+    const socket_ = await this.connect_Socket(this.apiUserName.value, this.apiToken.value);
     if (socket_) {
       this.updateSocket(socket_);
     }
@@ -4210,8 +4266,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
       try {
         if (!this.localUIMode.value) {
-          await this.connectAndAddSocketMethods();
           this.updateIsLoadingModalVisible(true);
+          await this.connectAndAddSocketMethods();
         } else {
           this.updateIsLoadingModalVisible(false);
         }
@@ -4383,17 +4439,17 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     if (doStack) {
       return isWideScreen
         ? {
-            mainHeight: Math.floor(parentHeight),
-            otherHeight: Math.floor(parentHeight),
-            mainWidth: Math.floor((mainSize / 100) * parentWidth),
-            otherWidth: Math.floor(((100 - mainSize) / 100) * parentWidth),
-          }
+          mainHeight: Math.floor(parentHeight),
+          otherHeight: Math.floor(parentHeight),
+          mainWidth: Math.floor((mainSize / 100) * parentWidth),
+          otherWidth: Math.floor(((100 - mainSize) / 100) * parentWidth),
+        }
         : {
-            mainHeight: Math.floor((mainSize / 100) * parentHeight),
-            otherHeight: Math.floor(((100 - mainSize) / 100) * parentHeight),
-            mainWidth: Math.floor(parentWidth),
-            otherWidth: Math.floor(parentWidth),
-          };
+          mainHeight: Math.floor((mainSize / 100) * parentHeight),
+          otherHeight: Math.floor(((100 - mainSize) / 100) * parentHeight),
+          mainWidth: Math.floor(parentWidth),
+          otherWidth: Math.floor(parentWidth),
+        };
     } else {
       return {
         mainHeight: Math.floor(parentHeight),
@@ -4449,6 +4505,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     member,
     sec,
     apiUserName,
+    isLocal = false,
   }: {
     socket: Socket;
     roomName: string;
@@ -4456,20 +4513,76 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     member: string;
     sec: string;
     apiUserName: string;
+    isLocal?: boolean;
   }): Promise<void> {
-    const data: ResponseJoinRoom | null = await this.joinRoom({
-      socket: socket,
-      roomName: roomName,
-      islevel: islevel,
-      member: member,
-      sec: sec,
-      apiUserName: apiUserName,
-    });
+    let data: ResponseJoinRoom | null;
 
-    if (data && data.success) {
-      this.roomData.next(data);
+    if (!isLocal) {
+      data = await this.joinRoom({
+        socket,
+        roomName,
+        islevel,
+        member,
+        sec,
+        apiUserName,
+      });
+    } else {
+      const localData: ResponseJoinLocalRoom = await this.joinLocalRoom.joinLocalRoom({
+        socket,
+        roomName,
+        islevel,
+        member,
+        sec,
+        apiUserName,
+        parameters: {
+          showAlert:
+            this.showAlert ||
+            (() => {
+              console.log('showAlert not defined');
+            }),
+          updateIsLoadingModalVisible: this.updateIsLoadingModalVisible,
+          connectSocket: this.socketManager.connectSocket,
+          connectLocalSocket: this.socketManager.connectLocalSocket,
+          updateSocket: this.updateSocket,
+          updateLocalSocket: this.updateLocalSocket,
+          updateValidated: this.updateValidated,
+          updateApiUserName: this.updateApiUserName,
+          updateApiToken: this.updateApiToken,
+          updateLink: this.updateLink,
+          updateRoomName: this.updateRoomName,
+          updateMember: this.updateMember,
+        },
+        checkConnect:
+          this.localLink.length > 0 &&
+          this.connectMediaSFU === true &&
+          !this.link.value.includes('mediasfu.com'),
+      });
 
+      data = await createResponseJoinRoom({ localRoom: localData });
+    }
+
+    const updateAndComplete = async (data: ResponseJoinRoom) => {
+      // Update room parameters
       try {
+        // Check if roomRecvIPs is not empty
+        if (!data.roomRecvIPs || data.roomRecvIPs.length === 0) {
+          data.roomRecvIPs = ['none'];
+
+          if (
+            this.link.value !== "" &&
+            this.link.value.includes("mediasfu.com") &&
+            !isLocal
+          ) {
+            // Community Edition Only
+            await this.receiveAllPipedTransports.receiveAllPipedTransports({
+              community: true,
+              nsock: this.getUpdatedAllParams().socket,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          }
+        }
+
+
         this.updateRoomParametersClient.updateRoomParametersClient({
           parameters: {
             ...this.getAllParams(),
@@ -4481,36 +4594,81 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         if (data.isHost) {
           this.updateIslevel('2');
         } else {
-          this.updateIslevel('1');
+          // Issue with isHost for local room
+          if (islevel !== '2') {
+            this.updateIslevel('1');
+          }
         }
 
-        if (data.secureCode) {
+        if (data.secureCode && data.secureCode !== '') {
           this.updateAdminPasscode(data.secureCode);
         }
 
         if (data.rtpCapabilities) {
-          const device_ = await this.createDeviceClient.createDeviceClient({
-            rtpCapabilities: data.rtpCapabilities,
-          });
+          try {
+            const device_ = await this.createDeviceClient.createDeviceClient({
+              rtpCapabilities: data.rtpCapabilities,
+            });
 
-          if (device_) {
-            this.device.next(device_);
+            if (device_) {
+              this.device.next(device_);
+            }
+          } catch (error) {
+            console.error('Error creating device:', error);
           }
         }
-      } catch {
-        /* handle error */
+      } catch (error) {
+        console.error('Error in updateAndComplete:', error);
       }
+    };
+
+    if (data && data.success) {
+      if (this.link.value !== '' && this.link.value.includes('mediasfu.com') && isLocal) {
+        this.roomData.next(data);
+        return;
+      } else if (this.link.value !== '' && this.link.value.includes('mediasfu.com') && !isLocal) {
+        // Update roomData
+        if (this.roomData.value) {
+          // Updating only the recording and meeting room parameters
+          this.roomData.value.recordingParams = data.recordingParams;
+          this.roomData.value.meetingRoomParams = data.meetingRoomParams;
+          this.roomData.next(this.roomData.value);
+        } else {
+          this.roomData.next(data);
+        }
+      } else {
+        // Update roomData
+        this.roomData.next(data);
+        if (!this.link.value.includes('mediasfu.com')) {
+          this.roomData.value!.meetingRoomParams = data.meetingRoomParams;
+        }
+      }
+
+      await updateAndComplete(data);
     } else {
-      this.updateValidated(false);
+      if (this.link.value !== '' && this.link.value.includes('mediasfu.com') && !isLocal) {
+        // Join local room only
+        if (this.roomData.value) {
+          await updateAndComplete(this.roomData.value);
+        }
+        return;
+      }
+
+      // Might be a wrong room name or room is full or other error; check reason in data object if available
       try {
         if (this.showAlert && data?.reason) {
-          this.showAlert({ message: data?.reason, type: 'danger', duration: 3000 });
+          this.showAlert({
+            message: data.reason,
+            type: 'danger',
+            duration: 3000,
+          });
         }
-      } catch {
+      } catch (error) {
         /* handle error */
       }
     }
   }
+
 
   onParticipantsFilterChange = (value: string): void => {
     if (value && value.length > 0) {
@@ -4929,7 +5087,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           this.coHost.value &&
           this.coHost.value === this.member.value &&
           this.coHostResponsibility?.value?.find((item) => item.name === 'waiting')?.value ===
-            true) ||
+          true) ||
         false,
     },
     {
@@ -5342,99 +5500,385 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   async connect_Socket(
     apiUserName: string,
-    apiKey: string,
-    apiToken: string,
+    token: string,
+    skipSockets: boolean = false
   ): Promise<Socket | null> {
+
+    const socketDefault = this.socket.value;
+    const socketAlt =
+      this.connectMediaSFU && this.localSocket!.value && this.localSocket!.value.id
+        ? this.localSocket!.value
+        : socketDefault;
+
     if (this.socket.value && this.socket.value.id) {
-      this.socket.value.on('disconnect', async () => {
-        await this.disconnect.disconnect({
-          showAlert: this.showAlert.bind(this),
-          redirectURL: this.redirectURL.value,
-          onWeb: true,
-          updateValidated: this.updateValidated.bind(this),
+      if (!skipSockets) {
+        // Event listeners on socketDefault
+        socketDefault.on('disconnect', async () => {
+          await this.disconnect.disconnect({
+            showAlert: this.showAlert.bind(this),
+            redirectURL: this.redirectURL.value,
+            onWeb: true,
+            updateValidated: this.updateValidated.bind(this),
+          });
+          if (this.videoAlreadyOn.value) {
+            await this.clickVideo.clickVideo({
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          }
+          if (this.audioAlreadyOn.value) {
+            await this.clickAudio.clickAudio({
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          }
+          await this.closeAndReset();
         });
-        if (this.videoAlreadyOn.value) {
-          await this.clickVideo.clickVideo({
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-          });
-        }
-        if (this.audioAlreadyOn.value) {
-          await this.clickAudio.clickAudio({
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-          });
-        }
 
-        await this.closeAndReset();
-      });
-
-      this.socket.value.on('allMembers', async (membersData: AllMembersData) => {
-        if (membersData) {
-          await this.allMembers.allMembers({
-            apiUserName: apiUserName,
-            apiKey: '', //not recommended - use apiToken instead. Use for testing/development only
-            apiToken: apiToken,
-            members: membersData.members,
-            requestss: membersData.requests ? membersData.requests : this.requestList.value,
-            coHoste: membersData.coHost ? membersData.coHost : this.coHost.value,
-            coHostRes: membersData.coHostResponsibilities
-              ? membersData.coHostResponsibilities
-              : this.coHostResponsibility.value,
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-            consume_sockets: this.consume_sockets.value,
-          });
-        }
-      });
-
-      this.socket.value.on('allMembersRest', async (membersData: AllMembersRestData) => {
-        if (membersData) {
-          await this.allMembersRest.allMembersRest({
-            apiUserName: apiUserName,
-            apiKey: '', // not recommended - use apiToken instead. Use for testing/development only
-            members: membersData.members,
-            apiToken: apiToken,
-            settings: membersData.settings,
-            coHoste: membersData.coHost ? membersData.coHost : this.coHost.value,
-            coHostRes: membersData.coHostResponsibilities
-              ? membersData.coHostResponsibilities
-              : this.coHostResponsibility.value,
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-            consume_sockets: this.consume_sockets.value,
-          });
-        }
-      });
-
-      this.socket.value.on('userWaiting', async ({ name }: { name: string }) => {
-        await this.userWaiting.userWaiting({
-          name,
-          showAlert: this.showAlert.bind(this),
-          totalReqWait: this.totalReqWait.value,
-          updateTotalReqWait: this.updateTotalReqWait.bind(this),
+        socketDefault.on('allMembers', async (membersData: AllMembersData) => {
+          if (membersData) {
+            await this.allMembers.allMembers({
+              apiUserName: apiUserName,
+              apiKey: '', //not recommended - use apiToken instead. Use for testing/development only
+              apiToken: token,
+              members: membersData.members,
+              requestss: membersData.requests ? membersData.requests : this.requestList.value,
+              coHoste: membersData.coHost ? membersData.coHost : this.coHost.value,
+              coHostRes: membersData.coHostResponsibilities
+                ? membersData.coHostResponsibilities
+                : this.coHostResponsibility.value,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+              consume_sockets: this.consume_sockets.value,
+            });
+          }
         });
-      });
 
-      this.socket.value.on('personJoined', async ({ name }: { name: string }) => {
-        this.personJoined.personJoined({
-          name,
-          showAlert: this.showAlert.bind(this),
+        socketDefault.on('allMembersRest', async (membersData: AllMembersRestData) => {
+          if (membersData) {
+            await this.allMembersRest.allMembersRest({
+              apiUserName: apiUserName,
+              apiKey: '', // not recommended - use apiToken instead. Use for testing/development only
+              members: membersData.members,
+              apiToken: token,
+              settings: membersData.settings,
+              coHoste: membersData.coHost ? membersData.coHost : this.coHost.value,
+              coHostRes: membersData.coHostResponsibilities
+                ? membersData.coHostResponsibilities
+                : this.coHostResponsibility.value,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+              consume_sockets: this.consume_sockets.value,
+            });
+          }
         });
-      });
 
-      this.socket.value.on(
-        'allWaitingRoomMembers',
-        async (waiting_data: AllWaitingRoomMembersData) => {
-          await this.allWaitingRoomMembers.allWaitingRoomMembers({
-            waitingParticipants: waiting_data.waitingParticipants
-              ? waiting_data.waitingParticipants
-              : waiting_data.waitingParticipantss
-              ? waiting_data.waitingParticipantss
-              : this.waitingRoomList.value,
+        socketDefault.on('userWaiting', async ({ name }: { name: string }) => {
+          await this.userWaiting.userWaiting({
+            name,
+            showAlert: this.showAlert.bind(this),
+            totalReqWait: this.totalReqWait.value,
             updateTotalReqWait: this.updateTotalReqWait.bind(this),
-            updateWaitingRoomList: this.updateWaitingRoomList.bind(this),
           });
-        },
-      );
+        });
 
-      this.socket.value.on(
+        socketDefault.on('personJoined', async ({ name }: { name: string }) => {
+          this.personJoined.personJoined({
+            name,
+            showAlert: this.showAlert.bind(this),
+          });
+        });
+
+        socketDefault.on(
+          'allWaitingRoomMembers',
+          async (waiting_data: AllWaitingRoomMembersData) => {
+            await this.allWaitingRoomMembers.allWaitingRoomMembers({
+              waitingParticipants: waiting_data.waitingParticipants
+                ? waiting_data.waitingParticipants
+                : waiting_data.waitingParticipantss
+                  ? waiting_data.waitingParticipantss
+                  : this.waitingRoomList.value,
+              updateTotalReqWait: this.updateTotalReqWait.bind(this),
+              updateWaitingRoomList: this.updateWaitingRoomList.bind(this),
+            });
+          },
+        );
+
+        socketDefault.on('ban', async ({ name }: { name: string }) => {
+          await this.banParticipant.banParticipant({
+            name,
+            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+          });
+        });
+
+        socketDefault.on('updatedCoHost', async (cohost_data: UpdatedCoHostData) => {
+          await this.updatedCoHost.updatedCoHost({
+            coHost: cohost_data.coHost ? cohost_data.coHost : this.coHost.value,
+            coHostResponsibility: cohost_data.coHostResponsibilities
+              ? cohost_data.coHostResponsibilities
+              : this.coHostResponsibility.value,
+            youAreCoHost: this.youAreCoHost.value,
+            updateCoHost: this.updateCoHost.bind(this),
+            updateCoHostResponsibility: this.updateCoHostResponsibility.bind(this),
+            updateYouAreCoHost: this.updateYouAreCoHost.bind(this),
+            showAlert: this.showAlert.bind(this),
+            eventType: this.eventType.value,
+            islevel: this.islevel.value,
+            member: this.member.value,
+          });
+        });
+
+        socketDefault.on(
+          'participantRequested',
+          async ({ userRequest }: { userRequest: Request }) => {
+            await this.participantRequested.participantRequested({
+              userRequest,
+              requestList: this.requestList.value,
+              waitingRoomList: this.waitingRoomList.value,
+              updateTotalReqWait: this.updateTotalReqWait.bind(this),
+              updateRequestList: this.updateRequestList.bind(this),
+            });
+          },
+        );
+
+        socketDefault.on('screenProducerId', async ({ producerId }: { producerId: string }) => {
+          this.screenProducerId.screenProducerId({
+            producerId,
+            screenId: this.screenId.value,
+            membersReceived: this.membersReceived.value,
+            shareScreenStarted: this.shareScreenStarted.value,
+            deferScreenReceived: this.deferScreenReceived.value,
+            participants: this.participants.value,
+            updateScreenId: this.updateScreenId.bind(this),
+            updateShareScreenStarted: this.updateShareScreenStarted.bind(this),
+            updateDeferScreenReceived: this.updateDeferScreenReceived.bind(this),
+          });
+        });
+
+        socketDefault.on('updateMediaSettings', async ({ settings }: { settings: Settings }) => {
+          this.updateMediaSettings.updateMediaSettings({
+            settings,
+            updateAudioSetting: this.updateAudioSetting.bind(this),
+            updateVideoSetting: this.updateVideoSetting.bind(this),
+            updateScreenshareSetting: this.updateScreenshareSetting.bind(this),
+            updateChatSetting: this.updateChatSetting.bind(this),
+          });
+        });
+
+        socketDefault.on(
+          'producer-media-paused',
+          async ({
+            producerId,
+            kind,
+            name,
+          }: {
+            producerId: string;
+            kind: 'video' | 'audio' | 'screenshare' | 'screen';
+            name: string;
+          }) => {
+            await this.producerMediaPaused.producerMediaPaused({
+              producerId,
+              kind,
+              name,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          },
+        );
+
+        socketDefault.on(
+          'producer-media-resumed',
+          async ({ kind, name }: { kind: 'audio'; name: string }) => {
+            await this.producerMediaResumed.producerMediaResumed({
+              kind,
+              name,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          },
+        );
+
+        socketDefault.on(
+          'producer-media-closed',
+          async ({
+            producerId,
+            kind,
+          }: {
+            producerId: string;
+            kind: 'video' | 'audio' | 'screenshare' | 'screen';
+          }) => {
+            if (producerId && kind) {
+              await this.producerMediaClosed.producerMediaClosed({
+                producerId,
+                kind,
+                parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+              });
+            }
+          },
+        );
+
+        socketDefault.on(
+          'controlMediaHost',
+          async ({ type }: { type: 'video' | 'audio' | 'screenshare' | 'chat' | 'all' }) => {
+            await this.controlMediaHost.controlMediaHost({
+              type,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          },
+        );
+
+        socketDefault.on('meetingEnded', async () => {
+          await this.meetingEnded.meetingEnded({
+            showAlert: this.showAlert.bind(this),
+            redirectURL: this.redirectURL.value,
+            onWeb: true,
+            eventType: this.eventType.value,
+            updateValidated: this.updateValidated.bind(this),
+          });
+
+          if (this.videoAlreadyOn.value) {
+            await this.clickVideo.clickVideo({
+              parameters: {
+                ...this.getAllParams(),
+                ...this.mediaSFUFunctions(),
+              },
+            });
+          }
+          if (this.audioAlreadyOn.value) {
+            await this.clickAudio.clickAudio({
+              parameters: {
+                ...this.getAllParams(),
+                ...this.mediaSFUFunctions(),
+              },
+            });
+          }
+
+          await this.closeAndReset();
+        });
+
+        socketDefault.on('disconnectUserSelf', async () => {
+          await this.disconnectUserSelf.disconnectUserSelf({
+            socket: socketDefault,
+            member: this.member.value,
+            roomName: this.roomName.value,
+          });
+        });
+
+        socketDefault.on('receiveMessage', async ({ message }: { message: Message }) => {
+          await this.receiveMessage.receiveMessage({
+            message,
+            messages: this.messages.value,
+            participantsAll: this.participantsAll.value,
+            member: this.member.value,
+            eventType: this.eventType.value,
+            islevel: this.islevel.value,
+            coHost: this.coHost.value,
+            updateMessages: this.updateMessages.bind(this),
+            updateShowMessagesBadge: this.updateShowMessagesBadge.bind(this),
+          });
+        });
+
+        socketDefault.on(
+          'meetingTimeRemaining',
+          async ({ timeRemaining }: { timeRemaining: number }) => {
+            await this.meetingTimeRemaining.meetingTimeRemaining({
+              timeRemaining,
+              showAlert: this.showAlert.bind(this),
+              eventType: this.eventType.value,
+            });
+          },
+        );
+
+        socketDefault.on('meetingStillThere', async () => {
+          this.meetingStillThere.meetingStillThere({
+            updateIsConfirmHereModalVisible: this.updateIsConfirmHereModalVisible.bind(this),
+          });
+        });
+
+        socketDefault.on(
+          'updateConsumingDomains',
+          async ({ domains, alt_domains }: UpdateConsumingDomainsData) => {
+            await this.updateConsumingDomains.updateConsumingDomains({
+              domains,
+              alt_domains,
+              apiUserName,
+              apiKey: '', // not recommended - use apiToken instead. Use for testing/development only
+              apiToken: token,
+              parameters: {
+                ...this.getAllParams(),
+                ...this.mediaSFUFunctions(),
+              },
+            });
+          },
+        );
+
+        socketDefault.on(
+          'hostRequestResponse',
+          ({ requestResponse }: HostRequestResponseData) => {
+            this.hostRequestResponse.hostRequestResponse({
+              requestResponse,
+              showAlert: this.showAlert.bind(this),
+              requestList: this.requestList.value,
+              updateRequestList: this.updateRequestList.bind(this),
+              updateMicAction: this.updateMicAction.bind(this),
+              updateVideoAction: this.updateVideoAction.bind(this),
+              updateScreenAction: this.updateScreenAction.bind(this),
+              updateChatAction: this.updateChatAction.bind(this),
+              updateAudioRequestState: this.updateAudioRequestState.bind(this),
+              updateVideoRequestState: this.updateVideoRequestState.bind(this),
+              updateScreenRequestState: this.updateScreenRequestState.bind(this),
+              updateChatRequestState: this.updateChatRequestState.bind(this),
+              updateAudioRequestTime: this.updateAudioRequestTime.bind(this),
+              updateVideoRequestTime: this.updateVideoRequestTime.bind(this),
+              updateScreenRequestTime: this.updateScreenRequestTime.bind(this),
+              updateChatRequestTime: this.updateChatRequestTime.bind(this),
+              updateRequestIntervalSeconds: this.updateRequestIntervalSeconds.value,
+            });
+          },
+        );
+
+        socketDefault.on('pollUpdated', async (data: PollUpdatedData) => {
+          try {
+            await this.pollUpdated.pollUpdated({
+              data,
+              polls: this.polls.value,
+              poll: this.poll.value ? this.poll.value : ({} as Poll),
+              member: this.member.value,
+              islevel: this.islevel.value,
+              showAlert: this.showAlert.bind(this),
+              updatePolls: this.updatePolls.bind(this),
+              updatePoll: this.updatePoll.bind(this),
+              updateIsPollModalVisible: this.updateIsPollModalVisible.bind(this),
+            });
+          } catch {
+            /* handle error */
+          }
+        });
+
+        socketDefault.on('breakoutRoomUpdated', async (data: BreakoutRoomUpdatedData) => {
+          try {
+            await this.breakoutRoomUpdated.breakoutRoomUpdated({
+              data,
+              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+            });
+          } catch {
+            /* handle error */
+          }
+        });
+
+      }
+
+      if (skipSockets) {
+        // Remove specific event listeners from socketDefault and socketAlt
+        const events = [
+          'roomRecordParams',
+          'startRecords',
+          'reInitiateRecording',
+          'RecordingNotice',
+          'timeLeftRecording',
+          'stoppedRecording',
+        ];
+        events.forEach((event) => {
+          socketDefault.off(event);
+          socketAlt.off(event);
+        });
+      }
+
+      socketAlt.on(
         'roomRecordParams',
         async ({ recordParams }: { recordParams: RecordParams }) => {
           this.roomRecordParams.roomRecordParams({
@@ -5444,230 +5888,24 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         },
       );
 
-      this.socket.value.on('ban', async ({ name }: { name: string }) => {
-        await this.banParticipant.banParticipant({
-          name,
-          parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-        });
-      });
-
-      this.socket.value.on('updatedCoHost', async (cohost_data: UpdatedCoHostData) => {
-        await this.updatedCoHost.updatedCoHost({
-          coHost: cohost_data.coHost ? cohost_data.coHost : this.coHost.value,
-          coHostResponsibility: cohost_data.coHostResponsibilities
-            ? cohost_data.coHostResponsibilities
-            : this.coHostResponsibility.value,
-          youAreCoHost: this.youAreCoHost.value,
-          updateCoHost: this.updateCoHost.bind(this),
-          updateCoHostResponsibility: this.updateCoHostResponsibility.bind(this),
-          updateYouAreCoHost: this.updateYouAreCoHost.bind(this),
-          showAlert: this.showAlert.bind(this),
-          eventType: this.eventType.value,
-          islevel: this.islevel.value,
-          member: this.member.value,
-        });
-      });
-
-      this.socket.value.on(
-        'participantRequested',
-        async ({ userRequest }: { userRequest: Request }) => {
-          await this.participantRequested.participantRequested({
-            userRequest,
-            requestList: this.requestList.value,
-            waitingRoomList: this.waitingRoomList.value,
-            updateTotalReqWait: this.updateTotalReqWait.bind(this),
-            updateRequestList: this.updateRequestList.bind(this),
-          });
-        },
-      );
-
-      this.socket.value.on('screenProducerId', async ({ producerId }: { producerId: string }) => {
-        this.screenProducerId.screenProducerId({
-          producerId,
-          screenId: this.screenId.value,
-          membersReceived: this.membersReceived.value,
-          shareScreenStarted: this.shareScreenStarted.value,
-          deferScreenReceived: this.deferScreenReceived.value,
-          participants: this.participants.value,
-          updateScreenId: this.updateScreenId.bind(this),
-          updateShareScreenStarted: this.updateShareScreenStarted.bind(this),
-          updateDeferScreenReceived: this.updateDeferScreenReceived.bind(this),
-        });
-      });
-      //settings, updateAudioSetting, updateVideoSetting, updateScreenshareSetting, updateChatSetting
-      this.socket.value.on('updateMediaSettings', async ({ settings }: { settings: Settings }) => {
-        this.updateMediaSettings.updateMediaSettings({
-          settings,
-          updateAudioSetting: this.updateAudioSetting.bind(this),
-          updateVideoSetting: this.updateVideoSetting.bind(this),
-          updateScreenshareSetting: this.updateScreenshareSetting.bind(this),
-          updateChatSetting: this.updateChatSetting.bind(this),
-        });
-      });
-
-      this.socket.value.on(
-        'producer-media-paused',
-        async ({
-          producerId,
-          kind,
-          name,
-        }: {
-          producerId: string;
-          kind: 'video' | 'audio' | 'screenshare' | 'screen';
-          name: string;
-        }) => {
-          await this.producerMediaPaused.producerMediaPaused({
-            producerId,
-            kind,
-            name,
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-          });
-        },
-      );
-
-      this.socket.value.on(
-        'producer-media-resumed',
-        async ({ kind, name }: { kind: 'audio'; name: string }) => {
-          await this.producerMediaResumed.producerMediaResumed({
-            kind,
-            name,
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-          });
-        },
-      );
-
-      this.socket.value.on(
-        'producer-media-closed',
-        async ({
-          producerId,
-          kind,
-        }: {
-          producerId: string;
-          kind: 'video' | 'audio' | 'screenshare' | 'screen';
-        }) => {
-          if (producerId && kind) {
-            await this.producerMediaClosed.producerMediaClosed({
-              producerId,
-              kind,
-              parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-            });
-          }
-        },
-      );
-
-      this.socket.value.on(
-        'controlMediaHost',
-        async ({ type }: { type: 'video' | 'audio' | 'screenshare' | 'chat' | 'all' }) => {
-          await this.controlMediaHost.controlMediaHost({
-            type,
-            parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-          });
-        },
-      );
-
-      this.socket.value.on('meetingEnded', async () => {
-        await this.meetingEnded.meetingEnded({
-          showAlert: this.showAlert.bind(this),
-          redirectURL: this.redirectURL.value,
-          onWeb: true,
-          eventType: this.eventType.value,
-          updateValidated: this.updateValidated.bind(this),
-        });
-
-        if (this.videoAlreadyOn.value) {
-          await this.clickVideo.clickVideo({
-            parameters: {
-              ...this.getAllParams(),
-              ...this.mediaSFUFunctions(),
-            },
-          });
-        }
-        if (this.audioAlreadyOn.value) {
-          await this.clickAudio.clickAudio({
-            parameters: {
-              ...this.getAllParams(),
-              ...this.mediaSFUFunctions(),
-            },
-          });
-        }
-
-        await this.closeAndReset();
-      });
-
-      this.socket.value.on('disconnectUserSelf', async () => {
-        await this.disconnectUserSelf.disconnectUserSelf({
-          socket: this.socket.value,
-          member: this.member.value,
-          roomName: this.roomName.value,
-        });
-      });
-
-      this.socket.value.on('receiveMessage', async ({ message }: { message: Message }) => {
-        await this.receiveMessage.receiveMessage({
-          message,
-          messages: this.messages.value,
-          participantsAll: this.participantsAll.value,
-          member: this.member.value,
-          eventType: this.eventType.value,
-          islevel: this.islevel.value,
-          coHost: this.coHost.value,
-          updateMessages: this.updateMessages.bind(this),
-          updateShowMessagesBadge: this.updateShowMessagesBadge.bind(this),
-        });
-      });
-
-      this.socket.value.on(
-        'meetingTimeRemaining',
-        async ({ timeRemaining }: { timeRemaining: number }) => {
-          await this.meetingTimeRemaining.meetingTimeRemaining({
-            timeRemaining,
-            showAlert: this.showAlert.bind(this),
-            eventType: this.eventType.value,
-          });
-        },
-      );
-
-      this.socket.value.on('meetingStillThere', async () => {
-        this.meetingStillThere.meetingStillThere({
-          updateIsConfirmHereModalVisible: this.updateIsConfirmHereModalVisible.bind(this),
-        });
-      });
-
-      this.socket.value.on('startRecords', async () => {
+      socketAlt.on('startRecords', async () => {
         await this.startRecords.startRecords({
           roomName: this.roomName.value,
           member: this.member.value,
-          socket: this.socket.value,
+          socket: socketAlt,
         });
       });
 
-      this.socket.value.on('reInitiateRecording', async () => {
+      socketAlt.on('reInitiateRecording', async () => {
         await this.reInitiateRecording.reInitiateRecording({
           roomName: this.roomName.value,
           member: this.member.value,
-          socket: this.socket.value,
+          socket: socketAlt,
           adminRestrictSetting: this.adminRestrictSetting.value,
         });
       });
 
-      this.socket.value.on(
-        'updateConsumingDomains',
-        async ({ domains, alt_domains }: UpdateConsumingDomainsData) => {
-          await this.updateConsumingDomains.updateConsumingDomains({
-            domains,
-            alt_domains,
-            apiUserName,
-            apiKey,
-            apiToken,
-            parameters: {
-              ...this.getAllParams(),
-              ...this.mediaSFUFunctions(),
-            },
-          });
-        },
-      );
-
-      this.socket.value.on(
+      socketAlt.on(
         'RecordingNotice',
         async ({ state, userRecordingParam, pauseCount, timeDone }: RecordingNoticeData) => {
           await this.recordingNotice.RecordingNotice({
@@ -5680,14 +5918,14 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         },
       );
 
-      this.socket.value.on('timeLeftRecording', async ({ timeLeft }: { timeLeft: number }) => {
+      socketAlt.on('timeLeftRecording', async ({ timeLeft }: { timeLeft: number }) => {
         this.timeLeftRecording.timeLeftRecording({
           timeLeft,
           showAlert: this.showAlert.bind(this),
         });
       });
 
-      this.socket.value.on(
+      socketAlt.on(
         'stoppedRecording',
         async ({ state, reason }: { state: string; reason: string }) => {
           await this.stoppedRecording.stoppedRecording({
@@ -5697,78 +5935,60 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           });
         },
       );
-      this.socket.value.on(
-        'hostRequestResponse',
-        ({ requestResponse }: HostRequestResponseData) => {
-          this.hostRequestResponse.hostRequestResponse({
-            requestResponse,
-            showAlert: this.showAlert.bind(this),
-            requestList: this.requestList.value,
-            updateRequestList: this.updateRequestList.bind(this),
-            updateMicAction: this.updateMicAction.bind(this),
-            updateVideoAction: this.updateVideoAction.bind(this),
-            updateScreenAction: this.updateScreenAction.bind(this),
-            updateChatAction: this.updateChatAction.bind(this),
-            updateAudioRequestState: this.updateAudioRequestState.bind(this),
-            updateVideoRequestState: this.updateVideoRequestState.bind(this),
-            updateScreenRequestState: this.updateScreenRequestState.bind(this),
-            updateChatRequestState: this.updateChatRequestState.bind(this),
-            updateAudioRequestTime: this.updateAudioRequestTime.bind(this),
-            updateVideoRequestTime: this.updateVideoRequestTime.bind(this),
-            updateScreenRequestTime: this.updateScreenRequestTime.bind(this),
-            updateChatRequestTime: this.updateChatRequestTime.bind(this),
-            updateRequestIntervalSeconds: this.updateRequestIntervalSeconds.value,
-          });
-        },
-      );
-      this.socket.value.on('pollUpdated', async (data: PollUpdatedData) => {
-        try {
-          await this.pollUpdated.pollUpdated({
-            data,
-            polls: this.polls.value,
-            poll: this.poll.value ? this.poll.value : ({} as Poll),
-            member: this.member.value,
-            islevel: this.islevel.value,
-            showAlert: this.showAlert.bind(this),
-            updatePolls: this.updatePolls.bind(this),
-            updatePoll: this.updatePoll.bind(this),
-            updateIsPollModalVisible: this.updateIsPollModalVisible.bind(this),
-          });
-        } catch {
-          /* handle error */
-        }
-      });
 
-      this.socket.value.on('breakoutRoomUpdated', async (data: BreakoutRoomUpdatedData) => {
-        try {
-          await this.breakoutRoomUpdated.breakoutRoomUpdated({
-            data,
+      if (this.localLink !== "" && socketDefault && !skipSockets) {
+        await this.join_Room({
+          socket: socketDefault,
+          roomName: this.roomName.value,
+          islevel: this.islevel.value,
+          member: this.member.value,
+          sec: token,
+          apiUserName: apiUserName,
+          isLocal: true,
+        });
+      }
+
+      // Check if localSocket has changed
+      const localChanged =
+        this.localSocket!.value && this.localSocket!.value.id && this.localSocket!.value.id !== socketAlt.id;
+
+
+      if (!skipSockets && localChanged) {
+        // Re-call connect_Socket with skipSockets = true
+        await this.connect_Socket(apiUserName, token, true);
+        await sleep({ ms: 1000 })
+        this.updateIsLoadingModalVisible(false);
+        return socketDefault;
+      } else {
+        if (this.link.value !== '' && this.link.value.includes('mediasfu.com')) {
+          // Token might be different for local room
+          const token = this.apiToken.value;
+          await this.join_Room({
+            socket:
+              this.connectMediaSFU && socketAlt && socketAlt.id ? socketAlt : socketDefault,
+            roomName: this.roomName.value,
+            islevel: this.islevel.value,
+            member: this.member.value,
+            sec: token,
+            apiUserName: apiUserName,
+          });
+        }
+
+        await this.receiveRoomMessages.receiveRoomMessages({
+          socket: socketDefault,
+          roomName: this.roomName.value,
+          updateMessages: this.updateMessages.bind(this),
+        });
+
+        if (!skipSockets) {
+          await this.prepopulateUserMedia.prepopulateUserMedia({
+            name: this.hostLabel.value,
             parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
           });
-        } catch {
-          /* handle error */
         }
-      });
 
-      await this.join_Room({
-        socket: this.socket.value,
-        roomName: this.roomName.value,
-        islevel: this.islevel.value,
-        member: this.member.value,
-        sec: this.apiToken.value,
-        apiUserName: this.apiUserName.value,
-      });
-      await this.receiveRoomMessages.receiveRoomMessages({
-        socket: this.socket.value,
-        roomName: this.roomName.value,
-        updateMessages: this.updateMessages.bind(this),
-      });
-      this.prepopulateUserMedia.prepopulateUserMedia({
-        name: this.hostLabel.value,
-        parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
-      });
-
-      return this.socket.value;
+        return socketDefault;
+      }
     } else {
       return null;
     }

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { RecordPauseTimer } from './record-pause-timer.service';
 import { ShowAlert } from '../../@types/types';
+import { Socket } from 'socket.io-client';
 
 export interface StopRecordingParameters {
   roomName: string;
-  socket: any;
+  socket: Socket;
+  localSocket?: Socket;
   showAlert?: ShowAlert;
   startReport: boolean;
   endReport: boolean;
@@ -40,6 +42,7 @@ export type StopRecordingType = (options: StopRecordingOptions) => Promise<void>
  * @param {Object} options.parameters - The parameters required for stopping the recording.
  * @param {string} options.parameters.roomName - The name of the room where the recording is being stopped.
  * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Socket} [options.parameters.localSocket] - The local socket instance for communication.
  * @param {Function} options.parameters.showAlert - Function to show alerts.
  * @param {boolean} options.parameters.startReport - Flag indicating if the start report is active.
  * @param {boolean} options.parameters.endReport - Flag indicating if the end report is active.
@@ -83,6 +86,7 @@ export class StopRecording {
     let {
       roomName,
       socket,
+      localSocket,
       showAlert,
       startReport,
       endReport,
@@ -106,7 +110,7 @@ export class StopRecording {
     let recAttempt;
 
     if (recordStarted && !recordStopped) {
-      let stop = await this.RecordPauseTimerService.recordPauseTimer({
+      let stop = this.RecordPauseTimerService.recordPauseTimer({
         stop: true,
         isTimerRunning: parameters['isTimerRunning'],
         canPauseResume: parameters['canPauseResume'],
@@ -116,8 +120,10 @@ export class StopRecording {
       if (stop) {
         let action = 'stopRecord';
 
+        let socketRef = localSocket && localSocket.connected ? localSocket : socket;
+
         await new Promise<void>((resolve) => {
-          socket.emit(
+          socketRef.emit(
             action,
             { roomName },
             ({

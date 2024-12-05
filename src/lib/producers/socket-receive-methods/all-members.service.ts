@@ -9,15 +9,19 @@ import {
   OnScreenChangesParameters,
   OnScreenChangesType,
   ConnectIpsType,
+  ConnectLocalIpsType,
+  ConnectLocalIpsParameters,
   ConsumeSocket,
   CoHostResponsibility,
   WaitingRoomParticipant,
 } from '../../@types/types';
+import { Socket } from 'socket.io-client';
 
 export interface AllMembersParameters
   extends ReorderStreamsParameters,
     ConnectIpsParameters,
-    OnScreenChangesParameters {
+    OnScreenChangesParameters,
+    ConnectLocalIpsParameters {
   participantsAll: Participant[];
   participants: Participant[];
   dispActiveNames: string[];
@@ -35,6 +39,7 @@ export interface AllMembersParameters
   hostFirstSwitch: boolean;
   waitingRoomList: WaitingRoomParticipant[];
   islevel: string;
+  socket: Socket;
 
   updateParticipantsAll: (participantsAll: Participant[]) => void;
   updateParticipants: (participants: Participant[]) => void;
@@ -54,6 +59,7 @@ export interface AllMembersParameters
   // mediasfu functions
   onScreenChanges: OnScreenChangesType;
   connectIps: ConnectIpsType;
+  connectLocalIps?: ConnectLocalIpsType;
   sleep: SleepType;
   reorderStreams: ReorderStreamsType;
 
@@ -121,6 +127,7 @@ export type AllMembersType = (options: AllMembersOptions) => Promise<void>;
  *     hostFirstSwitch: false,
  *     waitingRoomList: [],
  *     islevel: '1',
+ *     socket: socket,
  *     updateParticipantsAll: (participantsAll) => console.log(participantsAll),
  *     updateParticipants: (participants) => console.log(participants),
  *     updateRequestList: (requestList) => console.log(requestList),
@@ -137,6 +144,7 @@ export type AllMembersType = (options: AllMembersOptions) => Promise<void>;
  *     updateTotalReqWait: (total) => console.log(total),
  *     onScreenChanges: (params) => console.log('onScreenChanges called with', params),
  *     connectIps: async (params) => [['socket1'], ['ip1']],
+ *     connectLocalIps: async (params) => [['socket1'], ['ip1']],
  *     sleep: async ({ ms }) => new Promise((resolve) => setTimeout(resolve, ms)),
  *     reorderStreams: async (params) => console.log('reorderStreams called with', params),
  *   },
@@ -197,6 +205,7 @@ export class AllMembers {
       hostFirstSwitch,
       waitingRoomList,
       islevel,
+      socket,
       updateParticipantsAll,
       updateParticipants,
       updateRequestList,
@@ -214,6 +223,7 @@ export class AllMembers {
 
       onScreenChanges,
       connectIps,
+      connectLocalIps,
       reorderStreams,
       sleep,
     } = parameters;
@@ -243,8 +253,14 @@ export class AllMembers {
       }
     }
 
+    // check to expect no roomRecvIPs for local instance
+    let onLocal = false;
+    if (roomRecvIPs.length === 1 && roomRecvIPs[0] === "none") {
+      onLocal = true;
+    }
+
     // Operations to update the UI; make sure we are connected to the server before updating the UI
-    if (!membersReceived) {
+    if (!membersReceived && !onLocal) {
       if (roomRecvIPs.length < 1) {
         // Keep checking every 0.01s
         let checkIPs = setInterval(async () => {
@@ -316,6 +332,14 @@ export class AllMembers {
           updateShareScreenStarted(shareScreenStarted);
         }
       }
+    }
+
+    if (onLocal && !membersReceived) {
+      if (connectLocalIps) {
+        await connectLocalIps({ socket: socket, parameters });
+      }
+      await sleep({ ms: 100 });
+      updateIsLoadingModalVisible(false);
     }
 
     // Return requests for only ids that are in the participants array and update the count badge

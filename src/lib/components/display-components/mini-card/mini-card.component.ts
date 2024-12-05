@@ -56,10 +56,9 @@ export type MiniCardType = (options: MiniCardOptions) => HTMLElement;
  */
 
 @Component({
-  selector: 'app-mini-card',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-mini-card',
+    imports: [CommonModule],
+    template: `
     <div class="mini-card" [ngStyle]="getMergedCardStyles()">
       <div *ngIf="imageSource; else noImage" class="image-container">
         <img [src]="imageSource" alt="Profile" [ngStyle]="getMergedImageStyles()" />
@@ -69,7 +68,7 @@ export type MiniCardType = (options: MiniCardOptions) => HTMLElement;
       </ng-template>
     </div>
   `,
-  styleUrls: ['./mini-card.component.css'],
+    styleUrls: ['./mini-card.component.css']
 })
 export class MiniCard {
   @Input() initials!: string;

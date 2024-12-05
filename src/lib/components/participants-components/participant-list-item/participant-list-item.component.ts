@@ -62,11 +62,10 @@ export type ParticipantListItemType = (options: ParticipantListItemOptions) => H
  */
 
 @Component({
-  selector: 'app-participant-list-item',
-  standalone: true,
-  templateUrl: './participant-list-item.component.html',
-  styleUrls: ['./participant-list-item.component.css'],
-  imports: [CommonModule, FontAwesomeModule],
+    selector: 'app-participant-list-item',
+    templateUrl: './participant-list-item.component.html',
+    styleUrls: ['./participant-list-item.component.css'],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class ParticipantListItem {
   @Input() participant!: Participant;

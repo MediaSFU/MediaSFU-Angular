@@ -99,11 +99,10 @@ export type EventSettingsModalType = (options: EventSettingsModalOptions) => HTM
  */
 
 @Component({
-  selector: 'app-event-settings-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './event-settings-modal.component.html',
-  styleUrls: ['./event-settings-modal.component.css'],
+    selector: 'app-event-settings-modal',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './event-settings-modal.component.html',
+    styleUrls: ['./event-settings-modal.component.css']
 })
 export class EventSettingsModal implements OnInit, OnChanges {
   @Input() isEventSettingsModalVisible = false;

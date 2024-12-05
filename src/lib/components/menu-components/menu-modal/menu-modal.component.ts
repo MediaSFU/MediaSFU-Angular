@@ -20,6 +20,7 @@ export interface MenuModalOptions {
   adminPasscode: string;
   islevel: string;
   eventType: EventType;
+  localLink?: string;
 
   onClose: () => void;
 }
@@ -44,6 +45,9 @@ export type MenuModalType = (options: MenuModalOptions) => HTMLElement;
  *   [customButtons]="customButtons"
  *   [shareButtons]="true"
  *   position="bottomRight"
+ *   islevel="2"
+ *   eventType="meeting"
+ *   localLink="https://www.google.com"
  *   (onClose)="closeMenu()"
  * ></app-menu-modal>
  * ```
@@ -58,19 +62,18 @@ export type MenuModalType = (options: MenuModalOptions) => HTMLElement;
 
 
 @Component({
-  selector: 'app-menu-modal',
-  templateUrl: './menu-modal.component.html',
-  styleUrls: ['./menu-modal.component.css'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    FormsModule,
-    CustomButtons,
-    MeetingIdComponent,
-    MeetingPasscodeComponent,
-    ShareButtonsComponent,
-  ],
+    selector: 'app-menu-modal',
+    templateUrl: './menu-modal.component.html',
+    styleUrls: ['./menu-modal.component.css'],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        FormsModule,
+        CustomButtons,
+        MeetingIdComponent,
+        MeetingPasscodeComponent,
+        ShareButtonsComponent,
+    ]
 })
 export class MenuModal {
   @Input() backgroundColor = '#83c0e9';
@@ -82,6 +85,7 @@ export class MenuModal {
   @Input() adminPasscode!: string;
   @Input() islevel!: string;
   @Input() eventType!: EventType;
+  @Input() localLink!: string;
   // Define inputs for functions
   @Input() onClose!: () => void;
 

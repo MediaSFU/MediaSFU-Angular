@@ -38,16 +38,15 @@ interface RecordButton {
 
 
 @Component({
-  selector: 'app-menu-record-widget',
-  standalone: true,
-  template: `
+    selector: 'app-menu-record-widget',
+    template: `
     <app-control-buttons-alt-component
       [buttons]="buttons"
       [direction]="direction"
       [showAspect]="true"
     ></app-control-buttons-alt-component>
   `,
-  imports: [CommonModule, FontAwesomeModule, ControlButtonsAltComponent],
+    imports: [CommonModule, FontAwesomeModule, ControlButtonsAltComponent]
 })
 export class MenuRecordWidget {
   buttons: RecordButton[] = [];

@@ -43,10 +43,9 @@ export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
  **/
 
 @Component({
-  selector: 'app-loading-modal',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-loading-modal',
+    imports: [CommonModule],
+    template: `
     <div *ngIf="isVisible" [ngStyle]="modalContainerStyle">
       <div [ngStyle]="modalContentStyle" class="modal-content">
         <div class="spinner" [ngStyle]="spinnerContainerStyle"></div>
@@ -54,8 +53,8 @@ export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .spinner {
         border: 12px solid #f3f3f3; /* Light grey */
         border-top: 12px solid black; /* Black */
@@ -81,7 +80,7 @@ export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
         margin-top: 10px;
       }
     `,
-  ],
+    ]
 })
 export class LoadingModal {
   @Input() isVisible = false;

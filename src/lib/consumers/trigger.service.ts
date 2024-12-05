@@ -4,6 +4,7 @@ import { Participant, AutoAdjustType, ScreenState, EventType } from '../@types/t
 
 export interface TriggerParameters {
   socket: Socket;
+  localSocket?: Socket;
   roomName: string;
   screenStates: ScreenState[];
   participants: Participant[];
@@ -53,6 +54,7 @@ export type TriggerType = (options: TriggerOptions) => Promise<void>;
  *   ref_ActiveNames: ["user1", "user2"],
  *   parameters: {
  *     socket: socketInstance,
+ *     localSocket: socketInstance,
  *     roomName: "room1",
  *     screenStates: [{ mainScreenPerson: "user1", mainScreenFilled: true, adminOnMainScreen: false }],
  *     participants: [{ name: "admin", islevel: "2" }],
@@ -98,6 +100,7 @@ export class Trigger {
    *   ref_ActiveNames: ["user1", "user2"],
    *   parameters: {
    *     socket: socketInstance,
+   *     localSocket: socketInstance,
    *     roomName: "room1",
    *     screenStates: [{ mainScreenPerson: "user1", mainScreenFilled: true, adminOnMainScreen: false }],
    *     participants: [{ name: "admin", islevel: "2" }],
@@ -123,6 +126,7 @@ export class Trigger {
     try {
       let {
         socket,
+        localSocket,
         roomName,
         screenStates,
         participants,
@@ -141,6 +145,11 @@ export class Trigger {
 
         autoAdjust,
       } = parameters;
+
+      let socketRef = socket;
+      if (localSocket && localSocket.id) {
+        socketRef = localSocket;
+      }
 
       let personOnMainScreen = screenStates[0].mainScreenPerson;
 
@@ -202,7 +211,7 @@ export class Trigger {
         if (lastUpdate == null || updateDateState != timestamp) {
           let now = new Date();
 
-          socket.emit(
+          socketRef.emit(
             'updateScreenClient',
             {
               roomName,
@@ -247,7 +256,7 @@ export class Trigger {
         if (lastUpdate == null || updateDateState != timestamp) {
           let now = new Date();
 
-          socket.emit(
+          socketRef.emit(
             'updateScreenClient',
             {
               roomName,

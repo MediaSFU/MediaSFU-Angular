@@ -72,11 +72,10 @@ export type ConfirmExitModalType = (options: ConfirmExitModalOptions) => HTMLEle
  */
 
 @Component({
-  selector: 'app-confirm-exit-modal',
-  templateUrl: './confirm-exit-modal.component.html',
-  styleUrls: ['./confirm-exit-modal.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+    selector: 'app-confirm-exit-modal',
+    templateUrl: './confirm-exit-modal.component.html',
+    styleUrls: ['./confirm-exit-modal.component.css'],
+    imports: [CommonModule, FormsModule, FontAwesomeModule]
 })
 export class ConfirmExitModal implements OnInit, OnChanges {
   @Input() isConfirmExitModalVisible = false;

@@ -14,7 +14,7 @@ import { Socket } from 'socket.io-client';
 
 export interface ClickVideoParameters
   extends DisconnectSendTransportVideoParameters,
-    StreamSuccessVideoParameters {
+  StreamSuccessVideoParameters {
   checkMediaPermission: boolean;
   hasCameraPermission: boolean;
   videoAlreadyOn: boolean;
@@ -369,13 +369,24 @@ export class ClickVideo {
               .then(async (stream: MediaStream) => {
                 await streamSuccessVideo({ stream, parameters });
               })
-              .catch(() => {
-                showAlert?.({
-                  message:
-                    'Allow access to your camera or check if your camera is not being used by another application.',
-                  type: 'danger',
-                  duration: 3000,
-                });
+              .catch(async () => {
+                //remove frameRate from constraints
+                altMediaConstraints = {
+                  video: { ...vidCons },
+                  audio: false,
+                };
+                await navigator.mediaDevices
+                  .getUserMedia(altMediaConstraints)
+                  .then(async (stream) => {
+                    await streamSuccessVideo({ stream, parameters });
+                  }).catch(() => {
+                    showAlert?.({
+                      message:
+                        'Allow access to your camera or check if your camera is not being used by another application.',
+                      type: 'danger',
+                      duration: 3000,
+                    });
+                  });
               });
           });
       }

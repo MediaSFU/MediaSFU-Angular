@@ -1,6 +1,7 @@
-import { Participant, CoHostResponsibility, OnScreenChangesType, OnScreenChangesParameters, Request, ConnectIpsParameters, ReorderStreamsParameters, ConnectIpsType, SleepType, ReorderStreamsType, Settings, ConsumeSocket } from '../../@types/types';
+import { Participant, CoHostResponsibility, OnScreenChangesType, OnScreenChangesParameters, Request, ConnectIpsParameters, ReorderStreamsParameters, ConnectIpsType, ConnectLocalIpsType, ConnectLocalIpsParameters, SleepType, ReorderStreamsType, Settings, ConsumeSocket } from '../../@types/types';
+import { Socket } from 'socket.io-client';
 import * as i0 from "@angular/core";
-export interface AllMembersRestParameters extends OnScreenChangesParameters, ConnectIpsParameters, ReorderStreamsParameters {
+export interface AllMembersRestParameters extends OnScreenChangesParameters, ConnectIpsParameters, OnScreenChangesParameters, ConnectLocalIpsParameters, ReorderStreamsParameters {
     participantsAll: Participant[];
     participants: Participant[];
     dispActiveNames: string[];
@@ -19,6 +20,7 @@ export interface AllMembersRestParameters extends OnScreenChangesParameters, Con
     videoSetting: string;
     screenshareSetting: string;
     chatSetting: string;
+    socket: Socket;
     updateParticipantsAll: (participantsAll: Participant[]) => void;
     updateParticipants: (participants: Participant[]) => void;
     updateRequestList: (requestList: Request[]) => void;
@@ -37,6 +39,7 @@ export interface AllMembersRestParameters extends OnScreenChangesParameters, Con
     updateIsLoadingModalVisible: (visible: boolean) => void;
     onScreenChanges: OnScreenChangesType;
     connectIps: ConnectIpsType;
+    connectLocalIps?: ConnectLocalIpsType;
     sleep: SleepType;
     reorderStreams: ReorderStreamsType;
     getUpdatedAllParams: () => AllMembersRestParameters;
@@ -99,6 +102,7 @@ export type AllMembersRestType = (options: AllMembersRestOptions) => Promise<voi
  *     videoSetting: '',
  *     screenshareSetting: '',
  *     chatSetting: '',
+ *     socket: mySocket,
  *     updateParticipantsAll: (participantsAll) => console.log(participantsAll),
  *     updateParticipants: (participants) => console.log(participants),
  *     updateRequestList: (requestList) => console.log(requestList),
@@ -117,6 +121,7 @@ export type AllMembersRestType = (options: AllMembersRestOptions) => Promise<voi
  *     updateIsLoadingModalVisible: (visible) => console.log(visible),
  *     onScreenChanges: (params) => console.log('onScreenChanges called with', params),
  *     connectIps: async (params) => [['socket1'], ['ip1']],
+ *     connectLocalIps: async (params) => [['socket1'], ['ip1']],
  *     sleep: async ({ ms }) => new Promise((resolve) => setTimeout(resolve, ms)),
  *     reorderStreams: async (params) => console.log('reorderStreams called with', params),
  *   },

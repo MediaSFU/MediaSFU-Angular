@@ -54,10 +54,9 @@ export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTM
  */
 
 @Component({
-  selector: 'app-other-grid-component',
-  standalone: true,
-  imports: [CommonModule, MeetingProgressTimer],
-  template: `
+    selector: 'app-other-grid-component',
+    imports: [CommonModule, MeetingProgressTimer],
+    template: `
     <div
       [ngStyle]="{
         'background-color': backgroundColor,
@@ -81,7 +80,7 @@ export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTM
       ></app-meeting-progress-timer>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class OtherGridComponent {
   @Input() backgroundColor = 'transparent';

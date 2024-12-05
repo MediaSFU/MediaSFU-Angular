@@ -31,6 +31,7 @@ export interface BreakoutRoomsModalParameters {
   participants: Participant[];
   showAlert?: ShowAlert;
   socket: Socket;
+  localSocket?: Socket;
   itemPageLimit: number;
   meetingDisplayType: string;
   prevMeetingDisplayType: string;
@@ -117,7 +118,6 @@ export interface BreakoutRoomsModalOptions {
  **/
 @Component({
   selector: 'app-breakout-rooms-modal',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -126,7 +126,7 @@ export interface BreakoutRoomsModalOptions {
     EditRoomModalComponent,
   ],
   templateUrl: './breakout-rooms-modal.component.html',
-  styleUrls: ['./breakout-rooms-modal.component.css'],
+  styleUrls: ['./breakout-rooms-modal.component.css']
 })
 
 
@@ -378,6 +378,26 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
           }
         },
       );
+
+      if (this.parameters.localSocket && this.parameters.localSocket.id) {
+        try {
+          this.parameters.localSocket.emit(
+            emitName,
+            {
+              breakoutRooms: filteredBreakoutRooms,
+              newParticipantAction: this.newParticipantAction,
+              roomName: this.parameters.roomName,
+            },
+            (response: { success: any; reason: any }) => {
+              if (response.success) {
+                // do nothing
+              }
+            },
+          );
+        } catch (error) {
+          console.log('Error starting local breakout rooms:');
+        }
+      }
     }
   };
 
@@ -400,6 +420,23 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
         }
       },
     );
+
+    if (this.parameters.localSocket && this.parameters.localSocket.id) {
+      try {
+        this.parameters.localSocket.emit(
+          'stopBreakout',
+          { roomName: this.parameters.roomName },
+          (response: { success: any; reason: any }) => {
+            if (response.success) {
+              // do nothing
+            }
+          },
+        );
+      } catch (error) {
+        console.log('Error starting local breakout rooms:');
+      }
+
+    }
   }
 
   handleEditRoom(roomIndex: number) {

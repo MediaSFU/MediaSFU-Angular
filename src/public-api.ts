@@ -1,6 +1,12 @@
 //initial values
 import { initialValuesState } from './lib/methods/utils/initial-values.util';
 
+// new utils
+export * from './lib/methods/utils/join-room-on-media-sfu.service';
+export * from './lib/methods/utils/create-room-on-media-sfu.service';
+export * from './lib/methods/utils/check-limits-and-make-request.service';
+export * from './lib/methods/utils/create-response-join-room.util';
+
 //import components for display (samples)
 import { LoadingModal } from './lib/components/display-components/loading-modal/loading-modal.component';
 import { MainAspectComponent } from './lib/components/display-components/main-aspect-component/main-aspect-component.component';
@@ -65,6 +71,7 @@ import { LaunchConfigureWhiteboard } from './lib/methods/whiteboard-methods/laun
 // mediasfu functions -- examples
 import { SocketManager } from './lib/sockets/socket-manager.service';
 import { JoinRoomClient } from './lib/producer-client/producer-client-emits/join-room-client.service';
+import { JoinLocalRoom } from './lib/producers/producer-emits/join-local-room.service';
 import { UpdateRoomParametersClient } from './lib/producer-client/producer-client-emits/update-room-parameters-client.service';
 import { CreateDeviceClient } from './lib/producer-client/producer-client-emits/create-device-client.service';
 
@@ -128,6 +135,7 @@ import { SwitchUserAudio } from './lib/consumers/switch-user-audio.service';
 import { ReceiveRoomMessages } from './lib/consumers/receive-room-messages.service';
 import { FormatNumber } from './lib/methods/utils/format-number.service';
 import { ConnectIps } from './lib/consumers/connect-ips.service';
+import { ConnectLocalIps } from './lib/consumers/connect-local-ips.service';
 
 import { PollUpdated } from './lib/methods/polls-methods/poll-updated.service';
 import { HandleCreatePoll } from './lib/methods/polls-methods/handle-create-poll.service';
@@ -199,6 +207,13 @@ import { MiniCardAudio } from './lib/components/display-components/mini-card-aud
 import { MiniAudioPlayer } from './lib/methods/utils/mini-audio-player/mini-audio-player.component';
 import { SoundPlayer } from './lib/methods/utils/sound-player.service';
 
+// Export all New Utils
+import { CreateRoomOnMediaSFU } from './lib/methods/utils/create-room-on-media-sfu.service';
+import { JoinRoomOnMediaSFU } from './lib/methods/utils/join-room-on-media-sfu.service';
+import { CheckLimitsAndMakeRequest } from './lib/methods/utils/check-limits-and-make-request.service';
+import { createResponseJoinRoom } from './lib/methods/utils/create-response-join-room.util';
+
+
 export {
   initialValuesState,
   LoadingModal,
@@ -245,6 +260,7 @@ export {
   LaunchMessages,
   LaunchConfirmExit,
   JoinRoomClient,
+  JoinLocalRoom,
   UpdateRoomParametersClient,
   CreateDeviceClient,
   ClickVideo,
@@ -305,6 +321,7 @@ export {
   ReceiveRoomMessages,
   FormatNumber,
   ConnectIps,
+  ConnectLocalIps,
   StartMeetingProgressTimer,
   UpdateRecording,
   StopRecording,
@@ -376,4 +393,8 @@ export {
   Screenboard,
   ScreenboardModal,
   SocketManager,
+  CreateRoomOnMediaSFU,
+  JoinRoomOnMediaSFU,
+  CheckLimitsAndMakeRequest,
+  createResponseJoinRoom,
 };

@@ -12,12 +12,12 @@ export interface ShareButtonsComponentOptions {
     meetingID: string;
     shareButtons?: ShareButton[];
     eventType: EventType;
+    localLink?: string;
 }
 export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) => HTMLElement;
 /**
  * @component ShareButtonsComponent
  * @selector app-share-buttons-component
- * @standalone true
  * @description Displays a set of share buttons for sharing a meeting link on social media and email.
  *
  * @example
@@ -26,6 +26,7 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
  *   [meetingID]="'12345'"
  *   [eventType]="'broadcast'"
  *   [shareButtons]="customShareButtons"
+ *   [localLink]="'https://www.google.com'"
  * ></app-share-buttons-component>
  * ```
  *
@@ -40,9 +41,11 @@ export declare class ShareButtonsComponent {
     meetingID: string;
     shareButtons: ShareButton[];
     eventType: EventType;
+    localLink?: string;
     defaultShareButtons: ShareButton[];
     get shareName(): "chat" | "broadcast" | "meeting";
+    getShareUrl(): string;
     get filteredShareButtons(): ShareButton[];
     static ɵfac: i0.ɵɵFactoryDeclaration<ShareButtonsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ShareButtonsComponent, "app-share-buttons-component", never, { "meetingID": { "alias": "meetingID"; "required": false; }; "shareButtons": { "alias": "shareButtons"; "required": false; }; "eventType": { "alias": "eventType"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ShareButtonsComponent, "app-share-buttons-component", never, { "meetingID": { "alias": "meetingID"; "required": false; }; "shareButtons": { "alias": "shareButtons"; "required": false; }; "eventType": { "alias": "eventType"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; }, {}, never, never, true, never>;
 }

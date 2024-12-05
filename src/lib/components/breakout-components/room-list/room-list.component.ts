@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { BreakoutParticipant, Participant } from '../../../@types/types';
 
 @Component({
-  selector: 'app-room-list',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
-  templateUrl: './room-list.component.html',
-  styleUrls: ['./room-list.component.css'],
+    selector: 'app-room-list',
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './room-list.component.html',
+    styleUrls: ['./room-list.component.css']
 })
 export class RoomListComponent {
   @Input()

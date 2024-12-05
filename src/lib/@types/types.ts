@@ -76,6 +76,11 @@ export type {
   ConnectIpsParameters,
 } from '../consumers/connect-ips.service';
 export type {
+  ConnectLocalIpsOptions,
+  ConnectLocalIpsType,
+  ConnectLocalIpsParameters
+ } from '../consumers/connect-local-ips.service';
+export type {
   ConnectRecvTransportOptions,
   ConnectRecvTransportType,
   ConnectRecvTransportParameters,
@@ -543,6 +548,7 @@ export type {
   JoinConRoomType,
 } from '../producers/producer-emits/join-con-room.service';
 export type { JoinRoomOptions, JoinRoomType } from '../producers/producer-emits/join-room.service';
+export type { JoinLocalRoomOptions, JoinLocalRoomType } from '../producers/producer-emits/join-local-room.service';
 
 export type {
   AllMembersOptions,
@@ -677,6 +683,10 @@ export type {
   ConnectSocketType,
   DisconnectSocketType,
   DisconnectSocketOptions,
+  ConnectLocalSocketOptions,
+  ConnectLocalSocketType,
+  ResponseLocalConnection,
+  ResponseLocalConnectionData
 } from '../sockets/socket-manager.service';
 
 export type {
@@ -875,6 +885,13 @@ export type {
 
 export type { CustomButton } from '../components/menu-components/custom-buttons/custom-buttons.component';
 
+export type {
+  CreateJoinRoomType,
+  CreateRoomOnMediaSFUType,
+  CreateJoinRoomResponse,
+   CreateJoinRoomError
+} from '../methods/utils/join-room-on-media-sfu.service';
+
 export interface Participant {
   id?: string;
   audioID: string;
@@ -883,6 +900,7 @@ export interface Participant {
   ScreenOn?: boolean;
   islevel?: string;
   isAdmin?: boolean;
+  isHost?: boolean; // Community Edition support
   name: string;
   muted?: boolean;
   isBanned?: boolean;
@@ -1174,6 +1192,21 @@ export interface CreateRoomOptions {
   bufferType: 'images' | 'audio' | 'all'; // Type of buffer data
 }
 
+export interface ResponseJoinLocalRoom {
+  rtpCapabilities?: RtpCapabilities | null; // Object containing the RTP capabilities
+  isHost: boolean; // Indicates whether the user joining the room is the host.
+  eventStarted: boolean; // Indicates whether the event has started.
+  isBanned: boolean; // Indicates whether the user is banned from the room.
+  hostNotJoined: boolean; // Indicates whether the host has not joined the room.
+  eventRoomParams: MeetingRoomParams; // Object containing parameters related to the meeting room.
+  recordingParams: RecordingParams; // Object containing parameters related to recording.
+  secureCode: string; // Secure code (host password) associated with the host of the room.
+  mediasfuURL: string; // Media SFU URL
+  apiKey: string; // API key
+  apiUserName: string; // API username
+  allowRecord: boolean; // Indicates whether recording is allowed.
+}
+
 export interface ResponseJoinRoom {
   rtpCapabilities?: RtpCapabilities | null; // Object containing the RTP capabilities
   success: boolean; // Indicates whether the operation (joining the room) was successful.
@@ -1188,6 +1221,9 @@ export interface ResponseJoinRoom {
   safeRoomStarted: boolean; // Indicates whether the safe room has started.
   safeRoomEnded: boolean; // Indicates whether the safe room has ended.
   reason?: string; // Reason for the success or failure of the operation.
+  banned?: boolean; // Indicates whether the user is banned from the room.
+  suspended?: boolean; // Indicates whether the user is suspended from the room.
+  noAdmin?: boolean; // Indicates whether the room has no host in it.
 }
 
 export interface AllMembersData {

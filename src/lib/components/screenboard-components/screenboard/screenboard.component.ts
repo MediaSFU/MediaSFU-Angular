@@ -169,11 +169,10 @@ export type ScreenboardType = (options: ScreenboardOptions) => void;
  * ```
  */
 @Component({
-  selector: 'app-screenboard',
-  standalone: true,
-  templateUrl: './screenboard.component.html',
-  styleUrls: ['./screenboard.component.css'],
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
+    selector: 'app-screenboard',
+    templateUrl: './screenboard.component.html',
+    styleUrls: ['./screenboard.component.css'],
+    imports: [CommonModule, FontAwesomeModule, FormsModule]
 })
 export class Screenboard implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() customWidth!: number;

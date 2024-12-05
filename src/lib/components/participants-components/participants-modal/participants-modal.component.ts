@@ -86,11 +86,10 @@ export type ParticipantsModalType = (options: ParticipantsModalOptions) => HTMLE
 
 
 @Component({
-  selector: 'app-participants-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers],
-  templateUrl: './participants-modal.component.html',
-  styleUrls: ['./participants-modal.component.css'],
+    selector: 'app-participants-modal',
+    imports: [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers],
+    templateUrl: './participants-modal.component.html',
+    styleUrls: ['./participants-modal.component.css']
 })
 export class ParticipantsModal implements OnInit, OnChanges {
   @Input() isParticipantsModalVisible = false;

@@ -107,11 +107,10 @@ export type RecordingModalType = (options: RecordingModalOptions) => HTMLElement
  * ```
  */
 @Component({
-  selector: 'app-recording-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, StandardPanelComponent, AdvancedPanelComponent],
-  templateUrl: './recording-modal.component.html',
-  styleUrls: ['./recording-modal.component.css'],
+    selector: 'app-recording-modal',
+    imports: [CommonModule, FontAwesomeModule, StandardPanelComponent, AdvancedPanelComponent],
+    templateUrl: './recording-modal.component.html',
+    styleUrls: ['./recording-modal.component.css']
 })
 export class RecordingModal implements OnChanges {
   @Input() isRecordingModalVisible = false;

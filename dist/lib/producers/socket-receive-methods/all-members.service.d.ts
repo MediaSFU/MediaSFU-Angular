@@ -1,6 +1,7 @@
-import { Participant, Request, ReorderStreamsType, ReorderStreamsParameters, SleepType, ConnectIpsParameters, OnScreenChangesParameters, OnScreenChangesType, ConnectIpsType, ConsumeSocket, CoHostResponsibility, WaitingRoomParticipant } from '../../@types/types';
+import { Participant, Request, ReorderStreamsType, ReorderStreamsParameters, SleepType, ConnectIpsParameters, OnScreenChangesParameters, OnScreenChangesType, ConnectIpsType, ConnectLocalIpsType, ConnectLocalIpsParameters, ConsumeSocket, CoHostResponsibility, WaitingRoomParticipant } from '../../@types/types';
+import { Socket } from 'socket.io-client';
 import * as i0 from "@angular/core";
-export interface AllMembersParameters extends ReorderStreamsParameters, ConnectIpsParameters, OnScreenChangesParameters {
+export interface AllMembersParameters extends ReorderStreamsParameters, ConnectIpsParameters, OnScreenChangesParameters, ConnectLocalIpsParameters {
     participantsAll: Participant[];
     participants: Participant[];
     dispActiveNames: string[];
@@ -18,6 +19,7 @@ export interface AllMembersParameters extends ReorderStreamsParameters, ConnectI
     hostFirstSwitch: boolean;
     waitingRoomList: WaitingRoomParticipant[];
     islevel: string;
+    socket: Socket;
     updateParticipantsAll: (participantsAll: Participant[]) => void;
     updateParticipants: (participants: Participant[]) => void;
     updateRequestList: (requestList: Request[]) => void;
@@ -34,6 +36,7 @@ export interface AllMembersParameters extends ReorderStreamsParameters, ConnectI
     updateTotalReqWait: (total: number) => void;
     onScreenChanges: OnScreenChangesType;
     connectIps: ConnectIpsType;
+    connectLocalIps?: ConnectLocalIpsType;
     sleep: SleepType;
     reorderStreams: ReorderStreamsType;
     getUpdatedAllParams: () => AllMembersParameters;
@@ -96,6 +99,7 @@ export type AllMembersType = (options: AllMembersOptions) => Promise<void>;
  *     hostFirstSwitch: false,
  *     waitingRoomList: [],
  *     islevel: '1',
+ *     socket: socket,
  *     updateParticipantsAll: (participantsAll) => console.log(participantsAll),
  *     updateParticipants: (participants) => console.log(participants),
  *     updateRequestList: (requestList) => console.log(requestList),
@@ -112,6 +116,7 @@ export type AllMembersType = (options: AllMembersOptions) => Promise<void>;
  *     updateTotalReqWait: (total) => console.log(total),
  *     onScreenChanges: (params) => console.log('onScreenChanges called with', params),
  *     connectIps: async (params) => [['socket1'], ['ip1']],
+ *     connectLocalIps: async (params) => [['socket1'], ['ip1']],
  *     sleep: async ({ ms }) => new Promise((resolve) => setTimeout(resolve, ms)),
  *     reorderStreams: async (params) => console.log('reorderStreams called with', params),
  *   },

@@ -1,9 +1,11 @@
 import { RecordPauseTimer } from './record-pause-timer.service';
 import { ShowAlert } from '../../@types/types';
+import { Socket } from 'socket.io-client';
 import * as i0 from "@angular/core";
 export interface StopRecordingParameters {
     roomName: string;
-    socket: any;
+    socket: Socket;
+    localSocket?: Socket;
     showAlert?: ShowAlert;
     startReport: boolean;
     endReport: boolean;
@@ -35,6 +37,7 @@ export type StopRecordingType = (options: StopRecordingOptions) => Promise<void>
  * @param {Object} options.parameters - The parameters required for stopping the recording.
  * @param {string} options.parameters.roomName - The name of the room where the recording is being stopped.
  * @param {Socket} options.parameters.socket - The socket instance for communication.
+ * @param {Socket} [options.parameters.localSocket] - The local socket instance for communication.
  * @param {Function} options.parameters.showAlert - Function to show alerts.
  * @param {boolean} options.parameters.startReport - Flag indicating if the start report is active.
  * @param {boolean} options.parameters.endReport - Flag indicating if the end report is active.

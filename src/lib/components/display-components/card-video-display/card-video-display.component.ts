@@ -59,11 +59,10 @@ export type CardVideoDisplayType = (options: CardVideoDisplayOptions) => HTMLEle
 
 
 @Component({
-  selector: 'app-card-video-display',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './card-video-display.component.html',
-  styleUrls: ['./card-video-display.component.css'],
+    selector: 'app-card-video-display',
+    imports: [CommonModule],
+    templateUrl: './card-video-display.component.html',
+    styleUrls: ['./card-video-display.component.css']
 })
 export class CardVideoDisplay implements OnInit, OnChanges {
   @Input() remoteProducerId = '';

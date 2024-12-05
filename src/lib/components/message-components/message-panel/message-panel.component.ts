@@ -112,11 +112,10 @@ export type MessagePanelType = (options: MessagePanelOptions) => HTMLElement;
  */
 
 @Component({
-  selector: 'app-message-panel',
-  templateUrl: './message-panel.component.html',
-  styleUrls: ['./message-panel.component.css'],
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
+    selector: 'app-message-panel',
+    templateUrl: './message-panel.component.html',
+    styleUrls: ['./message-panel.component.css'],
+    imports: [CommonModule, FontAwesomeModule, FormsModule]
 })
 export class MessagePanel implements OnInit, OnChanges {
   @Input() messages: Array<any> = [];

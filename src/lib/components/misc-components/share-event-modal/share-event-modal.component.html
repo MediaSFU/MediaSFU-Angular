@@ -14,7 +14,7 @@
         <app-meeting-id-component [meetingID]="roomName"></app-meeting-id-component>
       </div>
       <div *ngIf="shareButtons">
-        <app-share-buttons-component [meetingID]="roomName" [eventType]="eventType"></app-share-buttons-component>
+        <app-share-buttons-component [meetingID]="roomName" [eventType]="eventType" [localLink]="localLink"></app-share-buttons-component>
       </div>
     </div>
   </div>

@@ -59,14 +59,13 @@ export type MainContainerComponentType = (options: MainContainerComponentOptions
  **/
 
 @Component({
-  selector: 'app-main-container-component',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-main-container-component',
+    imports: [CommonModule],
+    template: `
     <div [ngStyle]="containerStyles">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MainContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() backgroundColor = '';

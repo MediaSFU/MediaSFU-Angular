@@ -6,6 +6,7 @@ export interface BreakoutRoomsModalParameters {
     participants: Participant[];
     showAlert?: ShowAlert;
     socket: Socket;
+    localSocket?: Socket;
     itemPageLimit: number;
     meetingDisplayType: string;
     prevMeetingDisplayType: string;

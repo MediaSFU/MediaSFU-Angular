@@ -98,11 +98,10 @@ export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLEleme
 
 
 @Component({
-  selector: 'app-mini-audio-player',
-  standalone: true,
-  templateUrl: './mini-audio-player.component.html',
-  styleUrls: ['./mini-audio-player.component.css'],
-  imports: [CommonModule],
+    selector: 'app-mini-audio-player',
+    templateUrl: './mini-audio-player.component.html',
+    styleUrls: ['./mini-audio-player.component.css'],
+    imports: [CommonModule]
 })
 export class MiniAudioPlayer implements OnInit, OnDestroy {
   @Input() stream: MediaStream | null = null;

@@ -17,6 +17,7 @@ export interface ShareEventModalOptions {
   adminPasscode?: string;
   islevel?: string;
   eventType: EventType;
+  localLink?: string;
 }
 
 export type ShareEventModalType = (options: ShareEventModalOptions) => void;
@@ -40,6 +41,7 @@ export type ShareEventModalType = (options: ShareEventModalOptions) => void;
  * @property {string} position - Position of the modal on the screen (e.g., topRight, bottomLeft).
  * @property {boolean} shareButtons - Flag to display share buttons in the modal.
  * @property {EventType} eventType - Type of event (e.g., chat, broadcast, webinar).
+ * @property {string} localLink - Local link for the event (Community Edition server).
  *
  * @method handleClose - Closes the share event modal by invoking the onShareEventClose callback.
  *
@@ -57,21 +59,21 @@ export type ShareEventModalType = (options: ShareEventModalOptions) => void;
  *   [position]="'topRight'"
  *   [shareButtons]="true"
  *   [eventType]="eventType"
+ *   [localLink]="localLink"
  * ></app-share-event-modal>
  * ```
  */
 @Component({
-  selector: 'app-share-event-modal',
-  templateUrl: './share-event-modal.component.html',
-  styleUrls: ['./share-event-modal.component.css'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    MeetingIdComponent,
-    MeetingPasscodeComponent,
-    ShareButtonsComponent,
-  ],
+    selector: 'app-share-event-modal',
+    templateUrl: './share-event-modal.component.html',
+    styleUrls: ['./share-event-modal.component.css'],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        MeetingIdComponent,
+        MeetingPasscodeComponent,
+        ShareButtonsComponent,
+    ]
 })
 export class ShareEventModal {
   @Input() backgroundColor = 'rgba(255, 255, 255, 0.25)';
@@ -83,6 +85,7 @@ export class ShareEventModal {
   @Input() position = 'topRight';
   @Input() shareButtons = true;
   @Input() eventType!: EventType;
+  @Input() localLink: string = '';
 
   faTimes = faTimes;
 

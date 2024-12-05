@@ -28,6 +28,7 @@ import { LaunchBreakoutRooms } from '../../methods/breakout-room-methods/launch-
 import { LaunchConfigureWhiteboard } from '../../methods/whiteboard-methods/launch-configure-whiteboard.service';
 import { SocketManager } from '../../sockets/socket-manager.service';
 import { JoinRoomClient } from '../../producer-client/producer-client-emits/join-room-client.service';
+import { JoinLocalRoom } from '../../producers/producer-emits/join-local-room.service';
 import { UpdateRoomParametersClient } from '../../producer-client/producer-client-emits/update-room-parameters-client.service';
 import { CreateDeviceClient } from '../../producer-client/producer-client-emits/create-device-client.service';
 import { SwitchVideoAlt } from '../../methods/stream-methods/switch-video-alt.service';
@@ -87,6 +88,7 @@ import { SwitchUserAudio } from '../../consumers/switch-user-audio.service';
 import { ReceiveRoomMessages } from '../../consumers/receive-room-messages.service';
 import { FormatNumber } from '../../methods/utils/format-number.service';
 import { ConnectIps } from '../../consumers/connect-ips.service';
+import { ConnectLocalIps } from '../../consumers/connect-local-ips.service';
 import { PollUpdated } from '../../methods/polls-methods/poll-updated.service';
 import { HandleCreatePoll } from '../../methods/polls-methods/handle-create-poll.service';
 import { HandleVotePoll } from '../../methods/polls-methods/handle-vote-poll.service';
@@ -132,6 +134,8 @@ import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import * as i0 from "@angular/core";
 export type MediasfuGenericOptions = {
     PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
+    localLink?: string;
+    connectMediaSFU?: boolean;
     credentials?: {
         apiUserName: string;
         apiKey: string;
@@ -156,6 +160,9 @@ export type MediasfuGenericOptions = {
  * - Modals for user interactions, including participant management, event settings, breakout rooms, whiteboarding, and media settings.
  *
  * @input {any} PrejoinPage - Component for the prejoin page, defaults to `WelcomePage`.
+ * @input {MediasfuGenericOptions} options - Configuration options for the component.
+ * @input {boolean} connectMediaSFU - Flag to enable/disable connection to the MediaSFU server.
+ * @input {string} localLink - Local link for the Community Edition server.
  * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for secure access.
  * @input {boolean} useLocalUIMode - Flag to toggle local UI settings.
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
@@ -180,6 +187,8 @@ export type MediasfuGenericOptions = {
  * ```html
  * <app-mediasfu-generic
  *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [localLink]="'https://localhost:3000'"
+ *   [connectMediaSFU]="true"
  *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
@@ -238,6 +247,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     getDomains: GetDomains;
     formatNumber: FormatNumber;
     connectIps: ConnectIps;
+    connectLocalIps: ConnectLocalIps;
     createDeviceClient: CreateDeviceClient;
     handleCreatePoll: HandleCreatePoll;
     handleEndPoll: HandleEndPoll;
@@ -295,6 +305,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     breakoutRoomUpdated: BreakoutRoomUpdated;
     socketManager: SocketManager;
     joinRoomClient: JoinRoomClient;
+    joinLocalRoom: JoinLocalRoom;
     updateRoomParametersClient: UpdateRoomParametersClient;
     clickVideo: ClickVideo;
     clickAudio: ClickAudio;
@@ -308,6 +319,8 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     updateConsumingDomains: UpdateConsumingDomains;
     receiveRoomMessages: ReceiveRoomMessages;
     PrejoinPage: any;
+    localLink: string;
+    connectMediaSFU: boolean;
     credentials: {
         apiUserName: string;
         apiKey: string;
@@ -324,7 +337,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     private buttonSubscriptions;
     private ScreenboardSubscription;
     private recordingSubscription;
-    constructor(cdr: ChangeDetectorRef, injector: Injector, updateMiniCardsGrid: UpdateMiniCardsGrid, mixStreams: MixStreams, dispStreams: DispStreams, stopShareScreen: StopShareScreen, checkScreenShare: CheckScreenShare, startShareScreen: StartShareScreen, requestScreenShare: RequestScreenShare, reorderStreams: ReorderStreams, prepopulateUserMedia: PrepopulateUserMedia, getVideos: GetVideos, rePort: RePort, trigger: Trigger, consumerResume: ConsumerResume, connectSendTransport: ConnectSendTransport, connectSendTransportAudio: ConnectSendTransportAudio, connectSendTransportVideo: ConnectSendTransportVideo, connectSendTransportScreen: ConnectSendTransportScreen, processConsumerTransports: ProcessConsumerTransports, resumePauseStreams: ResumePauseStreams, readjust: Readjust, checkGrid: CheckGrid, getEstimate: GetEstimate, calculateRowsAndColumns: CalculateRowsAndColumns, addVideosGrid: AddVideosGrid, onScreenChanges: OnScreenChanges, changeVids: ChangeVids, compareActiveNames: CompareActiveNames, compareScreenStates: CompareScreenStates, createSendTransport: CreateSendTransport, resumeSendTransportAudio: ResumeSendTransportAudio, receiveAllPipedTransports: ReceiveAllPipedTransports, disconnectSendTransportVideo: DisconnectSendTransportVideo, disconnectSendTransportAudio: DisconnectSendTransportAudio, disconnectSendTransportScreen: DisconnectSendTransportScreen, getPipedProducersAlt: GetPipedProducersAlt, signalNewConsumerTransport: SignalNewConsumerTransport, connectRecvTransport: ConnectRecvTransport, reUpdateInter: ReUpdateInter, updateParticipantAudioDecibels: UpdateParticipantAudioDecibels, closeAndResize: CloseAndResize, autoAdjust: AutoAdjust, switchUserVideoAlt: SwitchUserVideoAlt, switchUserVideo: SwitchUserVideo, switchUserAudio: SwitchUserAudio, getDomains: GetDomains, formatNumber: FormatNumber, connectIps: ConnectIps, createDeviceClient: CreateDeviceClient, handleCreatePoll: HandleCreatePoll, handleEndPoll: HandleEndPoll, handleVotePoll: HandleVotePoll, captureCanvasStream: CaptureCanvasStream, resumePauseAudioStreams: ResumePauseAudioStreams, processConsumerTransportsAudio: ProcessConsumerTransportsAudio, launchMenuModal: LaunchMenuModal, launchRecording: LaunchRecording, startRecording: StartRecording, confirmRecording: ConfirmRecording, launchWaiting: LaunchWaiting, launchCoHost: launchCoHost, launchMediaSettings: LaunchMediaSettings, launchDisplaySettings: LaunchDisplaySettings, launchSettings: LaunchSettings, launchRequests: LaunchRequests, launchParticipants: LaunchParticipants, launchMessages: LaunchMessages, launchConfirmExit: LaunchConfirmExit, launchPoll: LaunchPoll, launchBreakoutRooms: LaunchBreakoutRooms, launchConfigureWhiteboard: LaunchConfigureWhiteboard, startMeetingProgressTimer: StartMeetingProgressTimer, updateRecording: UpdateRecording, stopRecording: StopRecording, userWaiting: UserWaiting, personJoined: PersonJoined, allWaitingRoomMembers: AllWaitingRoomMembers, roomRecordParams: RoomRecordParams, banParticipant: BanParticipant, updatedCoHost: UpdatedCoHost, participantRequested: ParticipantRequested, screenProducerId: ScreenProducerId, updateMediaSettings: UpdateMediaSettings, producerMediaPaused: ProducerMediaPaused, producerMediaResumed: ProducerMediaResumed, producerMediaClosed: ProducerMediaClosed, controlMediaHost: ControlMediaHost, meetingEnded: MeetingEnded, disconnectUserSelf: DisconnectUserSelf, receiveMessage: ReceiveMessage, meetingTimeRemaining: MeetingTimeRemaining, meetingStillThere: MeetingStillThere, startRecords: StartRecords, reInitiateRecording: ReInitiateRecording, recordingNotice: RecordingNotice, timeLeftRecording: TimeLeftRecording, stoppedRecording: StoppedRecording, hostRequestResponse: HostRequestResponse, allMembers: AllMembers, allMembersRest: AllMembersRest, disconnect: Disconnect, pollUpdated: PollUpdated, breakoutRoomUpdated: BreakoutRoomUpdated, socketManager: SocketManager, joinRoomClient: JoinRoomClient, updateRoomParametersClient: UpdateRoomParametersClient, clickVideo: ClickVideo, clickAudio: ClickAudio, clickScreenShare: ClickScreenShare, switchVideoAlt: SwitchVideoAlt, streamSuccessVideo: StreamSuccessVideo, streamSuccessAudio: StreamSuccessAudio, streamSuccessScreen: StreamSuccessScreen, streamSuccessAudioSwitch: StreamSuccessAudioSwitch, checkPermission: CheckPermission, updateConsumingDomains: UpdateConsumingDomains, receiveRoomMessages: ReceiveRoomMessages);
+    constructor(cdr: ChangeDetectorRef, injector: Injector, updateMiniCardsGrid: UpdateMiniCardsGrid, mixStreams: MixStreams, dispStreams: DispStreams, stopShareScreen: StopShareScreen, checkScreenShare: CheckScreenShare, startShareScreen: StartShareScreen, requestScreenShare: RequestScreenShare, reorderStreams: ReorderStreams, prepopulateUserMedia: PrepopulateUserMedia, getVideos: GetVideos, rePort: RePort, trigger: Trigger, consumerResume: ConsumerResume, connectSendTransport: ConnectSendTransport, connectSendTransportAudio: ConnectSendTransportAudio, connectSendTransportVideo: ConnectSendTransportVideo, connectSendTransportScreen: ConnectSendTransportScreen, processConsumerTransports: ProcessConsumerTransports, resumePauseStreams: ResumePauseStreams, readjust: Readjust, checkGrid: CheckGrid, getEstimate: GetEstimate, calculateRowsAndColumns: CalculateRowsAndColumns, addVideosGrid: AddVideosGrid, onScreenChanges: OnScreenChanges, changeVids: ChangeVids, compareActiveNames: CompareActiveNames, compareScreenStates: CompareScreenStates, createSendTransport: CreateSendTransport, resumeSendTransportAudio: ResumeSendTransportAudio, receiveAllPipedTransports: ReceiveAllPipedTransports, disconnectSendTransportVideo: DisconnectSendTransportVideo, disconnectSendTransportAudio: DisconnectSendTransportAudio, disconnectSendTransportScreen: DisconnectSendTransportScreen, getPipedProducersAlt: GetPipedProducersAlt, signalNewConsumerTransport: SignalNewConsumerTransport, connectRecvTransport: ConnectRecvTransport, reUpdateInter: ReUpdateInter, updateParticipantAudioDecibels: UpdateParticipantAudioDecibels, closeAndResize: CloseAndResize, autoAdjust: AutoAdjust, switchUserVideoAlt: SwitchUserVideoAlt, switchUserVideo: SwitchUserVideo, switchUserAudio: SwitchUserAudio, getDomains: GetDomains, formatNumber: FormatNumber, connectIps: ConnectIps, connectLocalIps: ConnectLocalIps, createDeviceClient: CreateDeviceClient, handleCreatePoll: HandleCreatePoll, handleEndPoll: HandleEndPoll, handleVotePoll: HandleVotePoll, captureCanvasStream: CaptureCanvasStream, resumePauseAudioStreams: ResumePauseAudioStreams, processConsumerTransportsAudio: ProcessConsumerTransportsAudio, launchMenuModal: LaunchMenuModal, launchRecording: LaunchRecording, startRecording: StartRecording, confirmRecording: ConfirmRecording, launchWaiting: LaunchWaiting, launchCoHost: launchCoHost, launchMediaSettings: LaunchMediaSettings, launchDisplaySettings: LaunchDisplaySettings, launchSettings: LaunchSettings, launchRequests: LaunchRequests, launchParticipants: LaunchParticipants, launchMessages: LaunchMessages, launchConfirmExit: LaunchConfirmExit, launchPoll: LaunchPoll, launchBreakoutRooms: LaunchBreakoutRooms, launchConfigureWhiteboard: LaunchConfigureWhiteboard, startMeetingProgressTimer: StartMeetingProgressTimer, updateRecording: UpdateRecording, stopRecording: StopRecording, userWaiting: UserWaiting, personJoined: PersonJoined, allWaitingRoomMembers: AllWaitingRoomMembers, roomRecordParams: RoomRecordParams, banParticipant: BanParticipant, updatedCoHost: UpdatedCoHost, participantRequested: ParticipantRequested, screenProducerId: ScreenProducerId, updateMediaSettings: UpdateMediaSettings, producerMediaPaused: ProducerMediaPaused, producerMediaResumed: ProducerMediaResumed, producerMediaClosed: ProducerMediaClosed, controlMediaHost: ControlMediaHost, meetingEnded: MeetingEnded, disconnectUserSelf: DisconnectUserSelf, receiveMessage: ReceiveMessage, meetingTimeRemaining: MeetingTimeRemaining, meetingStillThere: MeetingStillThere, startRecords: StartRecords, reInitiateRecording: ReInitiateRecording, recordingNotice: RecordingNotice, timeLeftRecording: TimeLeftRecording, stoppedRecording: StoppedRecording, hostRequestResponse: HostRequestResponse, allMembers: AllMembers, allMembersRest: AllMembersRest, disconnect: Disconnect, pollUpdated: PollUpdated, breakoutRoomUpdated: BreakoutRoomUpdated, socketManager: SocketManager, joinRoomClient: JoinRoomClient, joinLocalRoom: JoinLocalRoom, updateRoomParametersClient: UpdateRoomParametersClient, clickVideo: ClickVideo, clickAudio: ClickAudio, clickScreenShare: ClickScreenShare, switchVideoAlt: SwitchVideoAlt, streamSuccessVideo: StreamSuccessVideo, streamSuccessAudio: StreamSuccessAudio, streamSuccessScreen: StreamSuccessScreen, streamSuccessAudioSwitch: StreamSuccessAudioSwitch, checkPermission: CheckPermission, updateConsumingDomains: UpdateConsumingDomains, receiveRoomMessages: ReceiveRoomMessages);
     createInjector(inputs: any): Injector;
     mediaSFUFunctions: () => {
         updateMiniCardsGrid: ({ rows, cols, defal, actualRows, parameters, }: import("../../consumers/update-mini-cards-grid.service").UpdateMiniCardsGridOptions) => Promise<void>;
@@ -343,10 +356,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
         trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
         consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-        connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-        connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-        connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-        connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+        connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+        connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+        connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+        connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
         processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
         resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
         readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -361,11 +374,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
         createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
         resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-        receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+        receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
         disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
         disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
         disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-        getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+        getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
         signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
         connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
         reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -382,6 +395,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
         formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
         connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+        connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
         createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
         handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
         handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -404,6 +418,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     validated: BehaviorSubject<boolean>;
     localUIMode: BehaviorSubject<boolean>;
     socket: BehaviorSubject<Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>>;
+    localSocket?: BehaviorSubject<Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined> | undefined;
     roomData: BehaviorSubject<ResponseJoinRoom | null>;
     device: BehaviorSubject<Device | null>;
     apiKey: BehaviorSubject<string>;
@@ -589,6 +604,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     allAudioStreams: BehaviorSubject<(Stream | Participant)[]>;
     remoteScreenStream: BehaviorSubject<Stream[]>;
     screenProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    localScreenProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
     gotAllVids: BehaviorSubject<boolean>;
     paginationHeightWidth: BehaviorSubject<number>;
     paginationDirection: BehaviorSubject<"horizontal" | "vertical">;
@@ -604,6 +620,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     ref_participants: BehaviorSubject<Participant[]>;
     updateValidated: (value: boolean) => void;
     updateSocket: (value: Socket) => void;
+    updateLocalSocket: (value: Socket | null) => void;
     updateDevice: (value: Device | null) => void;
     updateRoomData: (value: ResponseJoinRoom | null) => void;
     updateApiKey: (value: string) => void;
@@ -786,6 +803,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     updateAllAudioStreams: (value: (Participant | Stream)[]) => void;
     updateRemoteScreenStream: (value: Stream[]) => void;
     updateScreenProducer: (value: Producer | null) => void;
+    updateLocalScreenProducer: (value: Producer | null) => void;
     updateGotAllVids: (value: boolean) => void;
     updatePaginationHeightWidth: (value: number) => void;
     updatePaginationDirection: (value: "horizontal" | "vertical") => void;
@@ -846,7 +864,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
+    recordingDisplayType: BehaviorSubject<"all" | "media" | "video">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -869,15 +887,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     hasCameraPermission: BehaviorSubject<boolean>;
     hasAudioPermission: BehaviorSubject<boolean>;
     transportCreated: BehaviorSubject<boolean>;
+    localTransportCreated: BehaviorSubject<boolean>;
     transportCreatedVideo: BehaviorSubject<boolean>;
     transportCreatedAudio: BehaviorSubject<boolean>;
     transportCreatedScreen: BehaviorSubject<boolean>;
     producerTransport: BehaviorSubject<Transport<import("mediasoup-client/lib/types").AppData> | null>;
+    localProducerTransport: BehaviorSubject<Transport<import("mediasoup-client/lib/types").AppData> | null>;
     videoProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    localVideoProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
     params: BehaviorSubject<ProducerOptions>;
     videoParams: BehaviorSubject<ProducerOptions>;
     audioParams: BehaviorSubject<ProducerOptions>;
     audioProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    localAudioProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
     consumerTransports: BehaviorSubject<TransportType[]>;
     consumingTransports: BehaviorSubject<string[]>;
     polls: BehaviorSubject<Poll[]>;
@@ -1007,15 +1029,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     requestPermissionCamera(): Promise<string>;
     requestPermissionAudio(): Promise<string>;
     updateTransportCreated: (value: boolean) => void;
+    updateLocalTransportCreated: (value: boolean) => void;
     updateTransportCreatedVideo: (value: boolean) => void;
     updateTransportCreatedAudio: (value: boolean) => void;
     updateTransportCreatedScreen: (value: boolean) => void;
     updateProducerTransport: (value: Transport | null) => void;
+    updateLocalProducerTransport: (value: Transport | null) => void;
     updateVideoProducer: (value: Producer | null) => void;
+    updateLocalVideoProducer: (value: Producer | null) => void;
     updateParams: (value: ProducerOptions) => void;
     updateVideoParams: (value: ProducerOptions) => void;
     updateAudioParams: (value: ProducerOptions) => void;
     updateAudioProducer: (value: Producer | null) => void;
+    updateLocalAudioProducer: (value: Producer | null) => void;
     updateConsumerTransports: (value: TransportType[]) => void;
     updateConsumingTransports: (value: string[]) => void;
     updatePolls: (value: Poll[]) => void;
@@ -1064,7 +1090,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "portrait" | "landscape";
+    checkOrientation: () => "landscape" | "portrait";
     showAlert: ({ message, type, duration, }: {
         message: string;
         type: "success" | "danger";
@@ -1307,7 +1333,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "all" | "media" | "video";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -1330,15 +1356,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         hasCameraPermission: boolean;
         hasAudioPermission: boolean;
         transportCreated: boolean;
+        localTransportCreated: boolean;
         transportCreatedVideo: boolean;
         transportCreatedAudio: boolean;
         transportCreatedScreen: boolean;
         producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+        localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
         videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         params: ProducerOptions;
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
         audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
         polls: Poll[];
@@ -1390,6 +1420,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         validated: boolean;
         device: Device | null;
         socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+        localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
         checkMediaPermission: boolean;
         onWeb: boolean;
         updateRoomName: (value: string) => void;
@@ -1640,15 +1671,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         updateHasCameraPermission: (value: boolean) => void;
         updateHasAudioPermission: (value: boolean) => void;
         updateTransportCreated: (value: boolean) => void;
+        updateLocalTransportCreated: (value: boolean) => void;
         updateTransportCreatedVideo: (value: boolean) => void;
         updateTransportCreatedAudio: (value: boolean) => void;
         updateTransportCreatedScreen: (value: boolean) => void;
         updateProducerTransport: (value: Transport | null) => void;
+        updateLocalProducerTransport: (value: Transport | null) => void;
         updateVideoProducer: (value: Producer | null) => void;
+        updateLocalVideoProducer: (value: Producer | null) => void;
         updateParams: (value: ProducerOptions) => void;
         updateVideoParams: (value: ProducerOptions) => void;
         updateAudioParams: (value: ProducerOptions) => void;
         updateAudioProducer: (value: Producer | null) => void;
+        updateLocalAudioProducer: (value: Producer | null) => void;
         updateConsumerTransports: (value: TransportType[]) => void;
         updateConsumingTransports: (value: string[]) => void;
         updatePolls: (value: Poll[]) => void;
@@ -1697,9 +1732,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "portrait" | "landscape";
+        checkOrientation: () => "landscape" | "portrait";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
+        updateLocalSocket: (value: Socket | null) => void;
         updateValidated: (value: boolean) => void;
         showAlert: ({ message, type, duration, }: {
             message: string;
@@ -1723,10 +1759,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
             trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
             consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-            connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-            connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-            connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-            connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+            connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+            connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+            connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+            connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
             processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
             resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
             readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -1741,11 +1777,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
             createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
             resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-            receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+            receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
             disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
             disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
             disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-            getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+            getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
             signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
             connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
             reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -1762,6 +1798,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
             formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
             connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+            connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
             createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
             handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
             handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -2016,7 +2053,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "all" | "media" | "video";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2039,15 +2076,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             hasCameraPermission: boolean;
             hasAudioPermission: boolean;
             transportCreated: boolean;
+            localTransportCreated: boolean;
             transportCreatedVideo: boolean;
             transportCreatedAudio: boolean;
             transportCreatedScreen: boolean;
             producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+            localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
             videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             params: ProducerOptions;
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
             audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
             polls: Poll[];
@@ -2099,6 +2140,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             validated: boolean;
             device: Device | null;
             socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+            localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
             checkMediaPermission: boolean;
             onWeb: boolean;
             updateRoomName: (value: string) => void;
@@ -2349,15 +2391,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             updateHasCameraPermission: (value: boolean) => void;
             updateHasAudioPermission: (value: boolean) => void;
             updateTransportCreated: (value: boolean) => void;
+            updateLocalTransportCreated: (value: boolean) => void;
             updateTransportCreatedVideo: (value: boolean) => void;
             updateTransportCreatedAudio: (value: boolean) => void;
             updateTransportCreatedScreen: (value: boolean) => void;
             updateProducerTransport: (value: Transport | null) => void;
+            updateLocalProducerTransport: (value: Transport | null) => void;
             updateVideoProducer: (value: Producer | null) => void;
+            updateLocalVideoProducer: (value: Producer | null) => void;
             updateParams: (value: ProducerOptions) => void;
             updateVideoParams: (value: ProducerOptions) => void;
             updateAudioParams: (value: ProducerOptions) => void;
             updateAudioProducer: (value: Producer | null) => void;
+            updateLocalAudioProducer: (value: Producer | null) => void;
             updateConsumerTransports: (value: TransportType[]) => void;
             updateConsumingTransports: (value: string[]) => void;
             updatePolls: (value: Poll[]) => void;
@@ -2406,9 +2452,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "portrait" | "landscape";
+            checkOrientation: () => "landscape" | "portrait";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
+            updateLocalSocket: (value: Socket | null) => void;
             updateValidated: (value: boolean) => void;
             showAlert: ({ message, type, duration, }: {
                 message: string;
@@ -2435,10 +2482,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
         trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
         consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-        connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-        connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-        connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-        connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+        connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+        connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+        connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+        connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
         processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
         resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
         readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -2453,11 +2500,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
         createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
         resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-        receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+        receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
         disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
         disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
         disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-        getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+        getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
         signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
         connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
         reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -2474,6 +2521,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
         formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
         connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+        connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
         createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
         handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
         handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -2728,7 +2776,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "all" | "media" | "video";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -2751,15 +2799,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         hasCameraPermission: boolean;
         hasAudioPermission: boolean;
         transportCreated: boolean;
+        localTransportCreated: boolean;
         transportCreatedVideo: boolean;
         transportCreatedAudio: boolean;
         transportCreatedScreen: boolean;
         producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+        localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
         videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         params: ProducerOptions;
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
         audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
         polls: Poll[];
@@ -2811,6 +2863,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         validated: boolean;
         device: Device | null;
         socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+        localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
         checkMediaPermission: boolean;
         onWeb: boolean;
         updateRoomName: (value: string) => void;
@@ -3061,15 +3114,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         updateHasCameraPermission: (value: boolean) => void;
         updateHasAudioPermission: (value: boolean) => void;
         updateTransportCreated: (value: boolean) => void;
+        updateLocalTransportCreated: (value: boolean) => void;
         updateTransportCreatedVideo: (value: boolean) => void;
         updateTransportCreatedAudio: (value: boolean) => void;
         updateTransportCreatedScreen: (value: boolean) => void;
         updateProducerTransport: (value: Transport | null) => void;
+        updateLocalProducerTransport: (value: Transport | null) => void;
         updateVideoProducer: (value: Producer | null) => void;
+        updateLocalVideoProducer: (value: Producer | null) => void;
         updateParams: (value: ProducerOptions) => void;
         updateVideoParams: (value: ProducerOptions) => void;
         updateAudioParams: (value: ProducerOptions) => void;
         updateAudioProducer: (value: Producer | null) => void;
+        updateLocalAudioProducer: (value: Producer | null) => void;
         updateConsumerTransports: (value: TransportType[]) => void;
         updateConsumingTransports: (value: string[]) => void;
         updatePolls: (value: Poll[]) => void;
@@ -3118,9 +3175,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "portrait" | "landscape";
+        checkOrientation: () => "landscape" | "portrait";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
+        updateLocalSocket: (value: Socket | null) => void;
         updateValidated: (value: boolean) => void;
         showAlert: ({ message, type, duration, }: {
             message: string;
@@ -3144,10 +3202,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
             trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
             consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-            connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-            connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-            connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-            connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+            connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+            connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+            connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+            connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
             processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
             resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
             readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -3162,11 +3220,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
             createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
             resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-            receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+            receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
             disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
             disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
             disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-            getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+            getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
             signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
             connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
             reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -3183,6 +3241,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
             formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
             connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+            connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
             createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
             handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
             handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -3437,7 +3496,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "all" | "media" | "video";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -3460,15 +3519,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             hasCameraPermission: boolean;
             hasAudioPermission: boolean;
             transportCreated: boolean;
+            localTransportCreated: boolean;
             transportCreatedVideo: boolean;
             transportCreatedAudio: boolean;
             transportCreatedScreen: boolean;
             producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+            localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
             videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             params: ProducerOptions;
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
             audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
             polls: Poll[];
@@ -3520,6 +3583,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             validated: boolean;
             device: Device | null;
             socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+            localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
             checkMediaPermission: boolean;
             onWeb: boolean;
             updateRoomName: (value: string) => void;
@@ -3770,15 +3834,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             updateHasCameraPermission: (value: boolean) => void;
             updateHasAudioPermission: (value: boolean) => void;
             updateTransportCreated: (value: boolean) => void;
+            updateLocalTransportCreated: (value: boolean) => void;
             updateTransportCreatedVideo: (value: boolean) => void;
             updateTransportCreatedAudio: (value: boolean) => void;
             updateTransportCreatedScreen: (value: boolean) => void;
             updateProducerTransport: (value: Transport | null) => void;
+            updateLocalProducerTransport: (value: Transport | null) => void;
             updateVideoProducer: (value: Producer | null) => void;
+            updateLocalVideoProducer: (value: Producer | null) => void;
             updateParams: (value: ProducerOptions) => void;
             updateVideoParams: (value: ProducerOptions) => void;
             updateAudioParams: (value: ProducerOptions) => void;
             updateAudioProducer: (value: Producer | null) => void;
+            updateLocalAudioProducer: (value: Producer | null) => void;
             updateConsumerTransports: (value: TransportType[]) => void;
             updateConsumingTransports: (value: string[]) => void;
             updatePolls: (value: Poll[]) => void;
@@ -3827,9 +3895,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "portrait" | "landscape";
+            checkOrientation: () => "landscape" | "portrait";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
+            updateLocalSocket: (value: Socket | null) => void;
             updateValidated: (value: boolean) => void;
             showAlert: ({ message, type, duration, }: {
                 message: string;
@@ -3856,10 +3925,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
         trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
         consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-        connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-        connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-        connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-        connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+        connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+        connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+        connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+        connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
         processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
         resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
         readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -3874,11 +3943,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
         createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
         resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-        receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+        receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
         disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
         disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
         disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-        getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+        getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
         signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
         connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
         reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -3895,6 +3964,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
         formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
         connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+        connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
         createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
         handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
         handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -4149,7 +4219,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "all" | "media" | "video";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -4172,15 +4242,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         hasCameraPermission: boolean;
         hasAudioPermission: boolean;
         transportCreated: boolean;
+        localTransportCreated: boolean;
         transportCreatedVideo: boolean;
         transportCreatedAudio: boolean;
         transportCreatedScreen: boolean;
         producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+        localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
         videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         params: ProducerOptions;
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
         audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
         polls: Poll[];
@@ -4232,6 +4306,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         validated: boolean;
         device: Device | null;
         socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+        localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
         checkMediaPermission: boolean;
         onWeb: boolean;
         updateRoomName: (value: string) => void;
@@ -4482,15 +4557,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         updateHasCameraPermission: (value: boolean) => void;
         updateHasAudioPermission: (value: boolean) => void;
         updateTransportCreated: (value: boolean) => void;
+        updateLocalTransportCreated: (value: boolean) => void;
         updateTransportCreatedVideo: (value: boolean) => void;
         updateTransportCreatedAudio: (value: boolean) => void;
         updateTransportCreatedScreen: (value: boolean) => void;
         updateProducerTransport: (value: Transport | null) => void;
+        updateLocalProducerTransport: (value: Transport | null) => void;
         updateVideoProducer: (value: Producer | null) => void;
+        updateLocalVideoProducer: (value: Producer | null) => void;
         updateParams: (value: ProducerOptions) => void;
         updateVideoParams: (value: ProducerOptions) => void;
         updateAudioParams: (value: ProducerOptions) => void;
         updateAudioProducer: (value: Producer | null) => void;
+        updateLocalAudioProducer: (value: Producer | null) => void;
         updateConsumerTransports: (value: TransportType[]) => void;
         updateConsumingTransports: (value: string[]) => void;
         updatePolls: (value: Poll[]) => void;
@@ -4539,9 +4618,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "portrait" | "landscape";
+        checkOrientation: () => "landscape" | "portrait";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
+        updateLocalSocket: (value: Socket | null) => void;
         updateValidated: (value: boolean) => void;
         showAlert: ({ message, type, duration, }: {
             message: string;
@@ -4565,10 +4645,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
             trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
             consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-            connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-            connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-            connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-            connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+            connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+            connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+            connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+            connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
             processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
             resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
             readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -4583,11 +4663,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
             createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
             resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-            receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+            receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
             disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
             disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
             disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-            getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+            getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
             signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
             connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
             reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -4604,6 +4684,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
             formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
             connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+            connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
             createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
             handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
             handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -4858,7 +4939,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "all" | "media" | "video";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -4881,15 +4962,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             hasCameraPermission: boolean;
             hasAudioPermission: boolean;
             transportCreated: boolean;
+            localTransportCreated: boolean;
             transportCreatedVideo: boolean;
             transportCreatedAudio: boolean;
             transportCreatedScreen: boolean;
             producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+            localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
             videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             params: ProducerOptions;
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
             audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
             polls: Poll[];
@@ -4941,6 +5026,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             validated: boolean;
             device: Device | null;
             socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+            localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
             checkMediaPermission: boolean;
             onWeb: boolean;
             updateRoomName: (value: string) => void;
@@ -5191,15 +5277,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             updateHasCameraPermission: (value: boolean) => void;
             updateHasAudioPermission: (value: boolean) => void;
             updateTransportCreated: (value: boolean) => void;
+            updateLocalTransportCreated: (value: boolean) => void;
             updateTransportCreatedVideo: (value: boolean) => void;
             updateTransportCreatedAudio: (value: boolean) => void;
             updateTransportCreatedScreen: (value: boolean) => void;
             updateProducerTransport: (value: Transport | null) => void;
+            updateLocalProducerTransport: (value: Transport | null) => void;
             updateVideoProducer: (value: Producer | null) => void;
+            updateLocalVideoProducer: (value: Producer | null) => void;
             updateParams: (value: ProducerOptions) => void;
             updateVideoParams: (value: ProducerOptions) => void;
             updateAudioParams: (value: ProducerOptions) => void;
             updateAudioProducer: (value: Producer | null) => void;
+            updateLocalAudioProducer: (value: Producer | null) => void;
             updateConsumerTransports: (value: TransportType[]) => void;
             updateConsumingTransports: (value: string[]) => void;
             updatePolls: (value: Poll[]) => void;
@@ -5248,9 +5338,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "portrait" | "landscape";
+            checkOrientation: () => "landscape" | "portrait";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
+            updateLocalSocket: (value: Socket | null) => void;
             updateValidated: (value: boolean) => void;
             showAlert: ({ message, type, duration, }: {
                 message: string;
@@ -5296,13 +5387,14 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         sec: string;
         apiUserName: string;
     }): Promise<ResponseJoinRoom | null>;
-    join_Room({ socket, roomName, islevel, member, sec, apiUserName, }: {
+    join_Room({ socket, roomName, islevel, member, sec, apiUserName, isLocal, }: {
         socket: Socket;
         roomName: string;
         islevel: string;
         member: string;
         sec: string;
         apiUserName: string;
+        isLocal?: boolean;
     }): Promise<void>;
     onParticipantsFilterChange: (value: string) => void;
     updateStatesToInitialValues: () => Promise<void>;
@@ -5369,10 +5461,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
                 trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
                 consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-                connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-                connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-                connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-                connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+                connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+                connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+                connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+                connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
                 processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
                 resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
                 readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -5387,11 +5479,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
                 createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
                 resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-                receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+                receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
                 disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
                 disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
                 disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-                getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+                getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
                 signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
                 connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
                 reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -5408,6 +5500,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
                 formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
                 connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+                connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
                 createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
                 handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
                 handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -5662,7 +5755,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 recordingVideoOptions: string;
                 recordingVideoType: string;
                 recordingVideoOptimized: boolean;
-                recordingDisplayType: "video" | "media" | "all";
+                recordingDisplayType: "all" | "media" | "video";
                 recordingAddHLS: boolean;
                 recordingAddText: boolean;
                 recordingCustomText: string;
@@ -5685,15 +5778,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 hasCameraPermission: boolean;
                 hasAudioPermission: boolean;
                 transportCreated: boolean;
+                localTransportCreated: boolean;
                 transportCreatedVideo: boolean;
                 transportCreatedAudio: boolean;
                 transportCreatedScreen: boolean;
                 producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+                localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
                 videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+                localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
                 params: ProducerOptions;
                 videoParams: ProducerOptions;
                 audioParams: ProducerOptions;
                 audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+                localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
                 consumerTransports: TransportType[];
                 consumingTransports: string[];
                 polls: Poll[];
@@ -5745,6 +5842,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 validated: boolean;
                 device: Device | null;
                 socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+                localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
                 checkMediaPermission: boolean;
                 onWeb: boolean;
                 updateRoomName: (value: string) => void;
@@ -5995,15 +6093,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 updateHasCameraPermission: (value: boolean) => void;
                 updateHasAudioPermission: (value: boolean) => void;
                 updateTransportCreated: (value: boolean) => void;
+                updateLocalTransportCreated: (value: boolean) => void;
                 updateTransportCreatedVideo: (value: boolean) => void;
                 updateTransportCreatedAudio: (value: boolean) => void;
                 updateTransportCreatedScreen: (value: boolean) => void;
                 updateProducerTransport: (value: Transport | null) => void;
+                updateLocalProducerTransport: (value: Transport | null) => void;
                 updateVideoProducer: (value: Producer | null) => void;
+                updateLocalVideoProducer: (value: Producer | null) => void;
                 updateParams: (value: ProducerOptions) => void;
                 updateVideoParams: (value: ProducerOptions) => void;
                 updateAudioParams: (value: ProducerOptions) => void;
                 updateAudioProducer: (value: Producer | null) => void;
+                updateLocalAudioProducer: (value: Producer | null) => void;
                 updateConsumerTransports: (value: TransportType[]) => void;
                 updateConsumingTransports: (value: string[]) => void;
                 updatePolls: (value: Poll[]) => void;
@@ -6052,9 +6154,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 updateAnnotateScreenStream: (value: boolean) => void;
                 updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                 updateIsScreenboardModalVisible: (value: boolean) => void;
-                checkOrientation: () => "portrait" | "landscape";
+                checkOrientation: () => "landscape" | "portrait";
                 updateDevice: (value: Device | null) => void;
                 updateSocket: (value: Socket) => void;
+                updateLocalSocket: (value: Socket | null) => void;
                 updateValidated: (value: boolean) => void;
                 showAlert: ({ message, type, duration, }: {
                     message: string;
@@ -6078,10 +6181,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
                     trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
                     consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
-                    connectSendTransport: ({ option, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
-                    connectSendTransportAudio: ({ audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
-                    connectSendTransportVideo: ({ videoParams, parameters, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
-                    connectSendTransportScreen: ({ stream, parameters, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
+                    connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
+                    connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
+                    connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
+                    connectSendTransportScreen: ({ stream, parameters, targetOption, }: import("../../consumers/connect-send-transport-screen.service").ConnectSendTransportScreenOptions) => Promise<void>;
                     processConsumerTransports: ({ consumerTransports, lStreams_, parameters, }: import("../../consumers/process-consumer-transports.service").ProcessConsumerTransportsOptions) => Promise<void>;
                     resumePauseStreams: ({ parameters }: import("../../consumers/resume-pause-streams.service").ResumePauseStreamsOptions) => Promise<void>;
                     readjust: ({ n, state, parameters }: import("../../consumers/readjust.service").ReadjustOptions) => Promise<void>;
@@ -6096,11 +6199,11 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     compareScreenStates: ({ restart, parameters, }: import("../../consumers/compare-screen-states.service").CompareScreenStatesOptions) => Promise<void>;
                     createSendTransport: ({ option, parameters }: import("../../consumers/create-send-transport.service").CreateSendTransportOptions) => Promise<void>;
                     resumeSendTransportAudio: ({ parameters }: import("../../consumers/resume-send-transport-audio.service").ResumeSendTransportAudioOptions) => Promise<void>;
-                    receiveAllPipedTransports: ({ nsock, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
+                    receiveAllPipedTransports: ({ nsock, community, parameters, }: import("../../consumers/receive-all-piped-transports.service").ReceiveAllPipedTransportsOptions) => Promise<void>;
                     disconnectSendTransportVideo: ({ parameters, }: import("../../consumers/disconnect-send-transport-video.service").DisconnectSendTransportVideoOptions) => Promise<void>;
                     disconnectSendTransportAudio: ({ parameters, }: import("../../consumers/disconnect-send-transport-audio.service").DisconnectSendTransportAudioOptions) => Promise<void>;
                     disconnectSendTransportScreen: ({ parameters, }: import("../../consumers/disconnect-send-transport-screen.service").DisconnectSendTransportScreenOptions) => Promise<void>;
-                    getPipedProducersAlt: ({ nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
+                    getPipedProducersAlt: ({ community, nsock, islevel, parameters, }: import("../../consumers/get-piped-producers-alt.service").GetPipedProducersAltOptions) => Promise<void>;
                     signalNewConsumerTransport: ({ remoteProducerId, islevel, nsock, parameters, }: import("../../consumers/signal-new-consumer-transport.service").SignalNewConsumerTransportOptions) => Promise<string[] | void>;
                     connectRecvTransport: ({ consumerTransport, remoteProducerId, serverConsumerTransportId, nsock, parameters, }: import("../../consumers/connect-recv-transport.service").ConnectRecvTransportOptions) => Promise<void>;
                     reUpdateInter: ({ name, add, force, average, parameters, }: import("../../consumers/re-update-inter.service").ReUpdateInterOptions) => Promise<void>;
@@ -6117,6 +6220,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     getDomains: ({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters, }: import("../../@types/types").GetDomainsOptions) => Promise<void>;
                     formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
                     connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
+                    connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
                     createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
                     handleCreatePoll: ({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: import("../../@types/types").HandleCreatePollOptions) => Promise<void>;
                     handleEndPoll: ({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: import("../../@types/types").HandleEndPollOptions) => Promise<void>;
@@ -6371,7 +6475,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     recordingVideoOptions: string;
                     recordingVideoType: string;
                     recordingVideoOptimized: boolean;
-                    recordingDisplayType: "video" | "media" | "all";
+                    recordingDisplayType: "all" | "media" | "video";
                     recordingAddHLS: boolean;
                     recordingAddText: boolean;
                     recordingCustomText: string;
@@ -6394,15 +6498,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     hasCameraPermission: boolean;
                     hasAudioPermission: boolean;
                     transportCreated: boolean;
+                    localTransportCreated: boolean;
                     transportCreatedVideo: boolean;
                     transportCreatedAudio: boolean;
                     transportCreatedScreen: boolean;
                     producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
+                    localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
                     videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+                    localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
                     params: ProducerOptions;
                     videoParams: ProducerOptions;
                     audioParams: ProducerOptions;
                     audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+                    localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
                     consumerTransports: TransportType[];
                     consumingTransports: string[];
                     polls: Poll[];
@@ -6454,6 +6562,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     validated: boolean;
                     device: Device | null;
                     socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+                    localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
                     checkMediaPermission: boolean;
                     onWeb: boolean;
                     updateRoomName: (value: string) => void;
@@ -6704,15 +6813,19 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     updateHasCameraPermission: (value: boolean) => void;
                     updateHasAudioPermission: (value: boolean) => void;
                     updateTransportCreated: (value: boolean) => void;
+                    updateLocalTransportCreated: (value: boolean) => void;
                     updateTransportCreatedVideo: (value: boolean) => void;
                     updateTransportCreatedAudio: (value: boolean) => void;
                     updateTransportCreatedScreen: (value: boolean) => void;
                     updateProducerTransport: (value: Transport | null) => void;
+                    updateLocalProducerTransport: (value: Transport | null) => void;
                     updateVideoProducer: (value: Producer | null) => void;
+                    updateLocalVideoProducer: (value: Producer | null) => void;
                     updateParams: (value: ProducerOptions) => void;
                     updateVideoParams: (value: ProducerOptions) => void;
                     updateAudioParams: (value: ProducerOptions) => void;
                     updateAudioProducer: (value: Producer | null) => void;
+                    updateLocalAudioProducer: (value: Producer | null) => void;
                     updateConsumerTransports: (value: TransportType[]) => void;
                     updateConsumingTransports: (value: string[]) => void;
                     updatePolls: (value: Poll[]) => void;
@@ -6761,9 +6874,10 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     updateAnnotateScreenStream: (value: boolean) => void;
                     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                     updateIsScreenboardModalVisible: (value: boolean) => void;
-                    checkOrientation: () => "portrait" | "landscape";
+                    checkOrientation: () => "landscape" | "portrait";
                     updateDevice: (value: Device | null) => void;
                     updateSocket: (value: Socket) => void;
+                    updateLocalSocket: (value: Socket | null) => void;
                     updateValidated: (value: boolean) => void;
                     showAlert: ({ message, type, duration, }: {
                         message: string;
@@ -6881,7 +6995,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         disabled?: undefined;
         alternateIconComponent?: undefined;
     })[];
-    connect_Socket(apiUserName: string, apiKey: string, apiToken: string): Promise<Socket | null>;
+    connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuGeneric, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuGeneric, "app-mediasfu-generic", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuGeneric, "app-mediasfu-generic", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; }, {}, never, never, true, never>;
 }

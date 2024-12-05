@@ -64,11 +64,10 @@ export type PollModalType = (options: PollModalOptions) => HTMLElement;
 
 
 @Component({
-  selector: 'app-poll-modal',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
-  templateUrl: './poll-modal.component.html',
-  styleUrls: ['./poll-modal.component.css'],
+    selector: 'app-poll-modal',
+    imports: [CommonModule, FontAwesomeModule, FormsModule],
+    templateUrl: './poll-modal.component.html',
+    styleUrls: ['./poll-modal.component.css']
 })
 export class PollModal implements OnInit, OnChanges {
   @Input() isPollModalVisible = false;

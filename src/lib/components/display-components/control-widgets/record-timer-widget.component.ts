@@ -19,16 +19,15 @@ import { CommonModule } from '@angular/common';
 
 
 @Component({
-  selector: 'app-record-timer-widget',
-  standalone: true,
-  template: `
+    selector: 'app-record-timer-widget',
+    template: `
     <div style="background-color: transparent; border-width: 0; padding: 0; margin: 2;">
       <span style="background-color: transparent; border-width: 0; padding: 0; margin: 0;">
         {{ recordingProgressTime }}
       </span>
     </div>
   `,
-  imports: [CommonModule],
+    imports: [CommonModule]
 })
 export class RecordTimerWidget {
   recordingProgressTime = '';

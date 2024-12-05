@@ -8,6 +8,7 @@ export interface ConfirmHereModalOptions {
     displayColor: string;
     onConfirmHereClose: () => void;
     socket: Socket;
+    localSocket?: Socket;
     roomName: string;
     member: string;
     countdownDuration?: number;
@@ -20,7 +21,6 @@ export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
  * @selector app-confirm-here-modal
  * @templateUrl ./confirm-here-modal.component.html
  * @styleUrls ./confirm-here-modal.component.css
- * @standalone true
  * @imports [CommonModule, FontAwesomeModule]
  *
  * @example
@@ -33,6 +33,7 @@ export type ConfirmHereModalType = (options: ConfirmHereModalOptions) => void;
  *   [onConfirmHereClose]="closeConfirmModal"
  *   [countdownDuration]="120"
  *   [socket]="socketInstance"
+ *   [localSocket]="localSocketInstance"
  *   [roomName]="'exampleRoom'"
  *   [member]="'exampleMember'"
  * ></app-confirm-here-modal>
@@ -46,6 +47,7 @@ export declare class ConfirmHereModal implements OnInit, OnDestroy {
     onConfirmHereClose: () => void;
     countdownDuration?: number;
     socket: Socket;
+    localSocket?: Socket;
     roomName: string;
     member: string;
     faSpinner: import("@fortawesome/fontawesome-common-types").IconDefinition;
@@ -71,5 +73,5 @@ export declare class ConfirmHereModal implements OnInit, OnDestroy {
         transform: string;
     };
     static ɵfac: i0.ɵɵFactoryDeclaration<ConfirmHereModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ConfirmHereModal, "app-confirm-here-modal", never, { "isConfirmHereModalVisible": { "alias": "isConfirmHereModalVisible"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "displayColor": { "alias": "displayColor"; "required": false; }; "onConfirmHereClose": { "alias": "onConfirmHereClose"; "required": false; }; "countdownDuration": { "alias": "countdownDuration"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "member": { "alias": "member"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ConfirmHereModal, "app-confirm-here-modal", never, { "isConfirmHereModalVisible": { "alias": "isConfirmHereModalVisible"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "displayColor": { "alias": "displayColor"; "required": false; }; "onConfirmHereClose": { "alias": "onConfirmHereClose"; "required": false; }; "countdownDuration": { "alias": "countdownDuration"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "localSocket": { "alias": "localSocket"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "member": { "alias": "member"; "required": false; }; }, {}, never, never, true, never>;
 }

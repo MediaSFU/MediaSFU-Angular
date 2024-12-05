@@ -1,16 +1,56 @@
-import { HttpClient } from '@angular/common/http';
+import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
 import { Socket } from 'socket.io-client';
-import { ConnectSocketType } from '../../../sockets/socket-manager.service';
-import { ShowAlert } from '../../../@types/types';
+import { ConnectSocketType, ShowAlert, ConnectLocalSocketType, ResponseLocalConnectionData, RecordingParams, MeetingRoomParams } from '../../../@types/types';
+import { CheckLimitsAndMakeRequest } from '../../../methods/utils/check-limits-and-make-request.service';
+import { CreateRoomOnMediaSFU } from '../../../methods/utils/create-room-on-media-sfu.service';
+import { JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
 import * as i0 from "@angular/core";
+export interface JoinLocalEventRoomParameters {
+    eventID: string;
+    userName: string;
+    secureCode?: string;
+    videoPreference?: string | null;
+    audioPreference?: string | null;
+    audioOutputPreference?: string | null;
+}
+export interface JoinLocalEventRoomOptions {
+    joinData: JoinLocalEventRoomParameters;
+    link?: string;
+}
+export interface CreateLocalRoomParameters {
+    eventID: string;
+    duration: number;
+    capacity: number;
+    userName: string;
+    scheduledDate: Date;
+    secureCode: string;
+    waitRoom?: boolean;
+    recordingParams?: RecordingParams;
+    eventRoomParams?: MeetingRoomParams;
+    videoPreference?: string | null;
+    audioPreference?: string | null;
+    audioOutputPreference?: string | null;
+    mediasfuURL?: string;
+}
+export interface CreateLocalRoomOptions {
+    createData: CreateLocalRoomParameters;
+    link?: string;
+}
+export interface CreateJoinLocalRoomResponse {
+    success: boolean;
+    secret: string;
+    reason?: string;
+    url?: string;
+}
 export interface PreJoinPageParameters {
     imgSrc?: string;
     showAlert?: ShowAlert;
     updateIsLoadingModalVisible: (visible: boolean) => void;
     connectSocket: ConnectSocketType;
+    connectLocalSocket?: ConnectLocalSocketType;
     updateSocket: (socket: Socket) => void;
+    updateLocalSocket?: (socket: Socket) => void;
     updateValidated: (validated: boolean) => void;
     updateApiUserName: (userName: string) => void;
     updateApiToken: (token: string) => void;
@@ -23,39 +63,12 @@ export interface Credentials {
     apiKey: string;
 }
 export interface PreJoinPageOptions {
+    localLink?: string;
+    connectMediaSFU?: boolean;
     parameters: PreJoinPageParameters;
     credentials?: Credentials;
 }
-export interface CreateJoinRoomResponse {
-    message: string;
-    roomName: string;
-    secureCode?: string;
-    publicURL: string;
-    link: string;
-    secret: string;
-    success: boolean;
-}
-export interface CreateJoinRoomError {
-    error: string;
-    success?: boolean;
-}
-export type CreateJoinRoomType = (options: {
-    payload: any;
-    apiUserName: string;
-    apiKey: string;
-}) => Promise<{
-    data: CreateJoinRoomResponse | CreateJoinRoomError | null;
-    success: boolean;
-}>;
-export type CreateRoomOnMediaSFUType = (options: {
-    payload: any;
-    apiUserName: string;
-    apiKey: string;
-}) => Promise<{
-    data: CreateJoinRoomResponse | CreateJoinRoomError | null;
-    success: boolean;
-}>;
-export type PreJoinPageType = (options: PreJoinPageOptions) => void;
+export type PreJoinPageType = (options: PreJoinPageOptions) => HTMLElement;
 /**
  * @fileoverview PreJoinPage component for handling room creation and joining on MediaSFU.
  *
@@ -119,49 +132,41 @@ export type PreJoinPageType = (options: PreJoinPageOptions) => void;
  * <app-pre-join-page
  *   [parameters]="preJoinPageParameters"
  *   [credentials]="{ apiUserName: 'username', apiKey: 'apiKey' }"
+ *   [localLink]="'http://localhost:3000'"
+ *   [connectMediaSFU]="false"
  * ></app-pre-join-page>
  * ```
  */
-export declare class PreJoinPage {
+export declare class PreJoinPage implements OnInit {
     private fb;
-    private http;
-    private cookieService;
+    private checkLimitsService;
+    private createRoomService;
+    private joinRoomService;
     parameters: PreJoinPageParameters;
-    credentials: {
-        apiUserName: string;
-        apiKey: string;
-    };
+    credentials: Credentials;
+    localLink: string | undefined;
+    connectMediaSFU: boolean | undefined;
     isCreateMode: boolean;
     preJoinForm: FormGroup;
     error: string;
     imgSrc: string;
-    constructor(fb: FormBuilder, http: HttpClient, cookieService: CookieService, injectedParameters: PreJoinPageParameters, injectedCredentials: Credentials);
+    localConnected: boolean;
+    localData: ResponseLocalConnectionData | undefined;
+    initSocket: Socket | undefined;
+    constructor(fb: FormBuilder, injectedParameters: PreJoinPageParameters, injectedCredentials: Credentials, injectedLocalLink: string, injectedConnectMediaSFU: boolean, checkLimitsService: CheckLimitsAndMakeRequest, createRoomService: CreateRoomOnMediaSFU, joinRoomService: JoinRoomOnMediaSFU);
+    ngOnInit(): void;
+    private connectLocalSocket;
     toggleMode(): void;
+    joinLocalRoom(options: JoinLocalEventRoomOptions): Promise<void>;
+    createLocalRoom(options: CreateLocalRoomOptions): Promise<void>;
+    roomCreator(options: {
+        payload: any;
+        apiUserName: string;
+        apiKey: string;
+        validate?: boolean;
+    }): Promise<any>;
     handleCreateRoom(): Promise<void>;
     handleJoinRoom(): Promise<void>;
-    checkLimitsAndMakeRequest({ apiUserName, apiToken, link, apiKey, userName, }: {
-        apiUserName: string;
-        apiToken: string;
-        link: string;
-        apiKey?: string;
-        userName: string;
-    }): Promise<void>;
-    createRoomOnMediaSFU({ payload, apiUserName, apiKey, }: {
-        payload: any;
-        apiUserName: string;
-        apiKey: string;
-    }): Promise<{
-        data: CreateJoinRoomResponse | CreateJoinRoomError | null;
-        success: boolean;
-    }>;
-    joinRoomOnMediaSFU({ payload, apiUserName, apiKey, }: {
-        payload: any;
-        apiUserName: string;
-        apiKey: string;
-    }): Promise<{
-        data: CreateJoinRoomResponse | CreateJoinRoomError | null;
-        success: boolean;
-    }>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<PreJoinPage, [null, null, null, { optional: true; }, { optional: true; }]>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<PreJoinPage, "app-pre-join-page", never, { "parameters": { "alias": "parameters"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PreJoinPage, [null, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, null, null, null]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PreJoinPage, "app-pre-join-page", never, { "parameters": { "alias": "parameters"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; }, {}, never, never, true, never>;
 }

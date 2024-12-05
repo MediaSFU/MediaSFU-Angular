@@ -4,8 +4,10 @@ import * as i0 from "@angular/core";
 export interface DisconnectSendTransportScreenParameters {
     screenProducer: Producer | null;
     socket: Socket;
+    localSocket?: Socket;
     roomName: string;
     updateScreenProducer: (screenProducer: Producer | null) => void;
+    updateLocalScreenProducer?: (localScreenProducer: Producer | null) => void;
     getUpdatedAllParams: () => DisconnectSendTransportScreenParameters;
     [key: string]: any;
 }
@@ -13,6 +15,7 @@ export interface DisconnectSendTransportScreenOptions {
     parameters: DisconnectSendTransportScreenParameters;
 }
 export type DisconnectSendTransportScreenType = (options: DisconnectSendTransportScreenOptions) => Promise<void>;
+export declare const disconnectLocalSendTransportScreen: ({ parameters }: DisconnectSendTransportScreenOptions) => Promise<void>;
 /**
  * Disconnects the send transport for screen sharing.
  *
@@ -24,33 +27,37 @@ export type DisconnectSendTransportScreenType = (options: DisconnectSendTranspor
  * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
  * @param {Producer | null} options.parameters.screenProducer - The screen producer to be closed.
  * @param {Socket} options.parameters.socket - The socket connection to notify the server.
+ * @param {Socket} [options.parameters.localSocket] - The local socket connection for communication.
  * @param {string} options.parameters.roomName - The name of the room.
  * @param {Function} options.parameters.updateScreenProducer - Function to update the screen producer state.
- *
+ * @param {Function} [options.parameters.updateLocalScreenProducer] - Function to update the local screen producer state.
  * @returns {Promise<void>} A promise that resolves when the disconnection process is complete.
- *
  * @throws {Error} If an error occurs during the disconnection process.
  *
  * @example
- * ```typescript
  * const options = {
  *   parameters: {
- *     screenProducer,
- *     socket,
- *     roomName: 'Room 101',
- *     updateScreenProducer: (producer) => { console.log(updated) },
- *     getUpdatedAllParams: () => ({}),
+ *     screenProducer: screenProducerInstance,
+ *     socket: socketInstance,
+ *     localSocket: localSocketInstance,
+ *     roomName: 'Room 1',
+ *     updateScreenProducer: (producer) => console.log('Updated screen producer:', producer),
+ *     updateLocalScreenProducer: (localProducer) => console.log('Updated local screen producer:', localProducer),
+ *     getUpdatedAllParams: () => ({
+ *       screenProducer: screenProducerInstance,
+ *       socket: socketInstance,
+ *       roomName: 'Room 1',
+ *     }),
  *   },
  * };
  *
- * disconnectSendTransportScreenService.disconnectSendTransportScreen(options)
+ * disconnectSendTransportScreen(options)
  *   .then(() => {
- *     console.log('Screen transport disconnected successfully');
+ *     console.log('Screen send transport disconnected successfully');
  *   })
  *   .catch((error) => {
- *     console.error('Error disconnecting screen transport:', error);
+ *     console.error('Error disconnecting screen send transport:', error);
  *   });
- * ```
  */
 export declare class DisconnectSendTransportScreen {
     /**
@@ -62,12 +69,39 @@ export declare class DisconnectSendTransportScreen {
      * @param {DisconnectSendTransportScreenOptions} options - The options for disconnecting the send transport.
      * @param {Object} options.parameters - The parameters required for disconnection.
      * @param {Function} options.parameters.getUpdatedAllParams - Function to get updated parameters.
-     * @param {Object} options.parameters.screenProducer - The screen producer to be closed.
-     * @param {Object} options.parameters.socket - The socket connection to notify the server.
+     * @param {Producer | null} options.parameters.screenProducer - The screen producer to be closed.
+     * @param {Socket} options.parameters.socket - The socket connection to notify the server.
+     * @param {Socket} [options.parameters.localSocket] - The local socket connection for communication.
      * @param {string} options.parameters.roomName - The name of the room.
      * @param {Function} options.parameters.updateScreenProducer - Function to update the screen producer state.
+     * @param {Function} [options.parameters.updateLocalScreenProducer] - Function to update the local screen producer state.
      * @returns {Promise<void>} A promise that resolves when the disconnection process is complete.
      * @throws {Error} If an error occurs during the disconnection process.
+     *
+     * @example
+     * const options = {
+     *   parameters: {
+     *     screenProducer: screenProducerInstance,
+     *     socket: socketInstance,
+     *     localSocket: localSocketInstance,
+     *     roomName: 'Room 1',
+     *     updateScreenProducer: (producer) => console.log('Updated screen producer:', producer),
+     *     updateLocalScreenProducer: (localProducer) => console.log('Updated local screen producer:', localProducer),
+     *     getUpdatedAllParams: () => ({
+     *       screenProducer: screenProducerInstance,
+     *       socket: socketInstance,
+     *       roomName: 'Room 1',
+     *     }),
+     *   },
+     * };
+     *
+     * disconnectSendTransportScreen(options)
+     *   .then(() => {
+     *     console.log('Screen send transport disconnected successfully');
+     *   })
+     *   .catch((error) => {
+     *     console.error('Error disconnecting screen send transport:', error);
+     *   });
      */
     disconnectSendTransportScreen({ parameters, }: DisconnectSendTransportScreenOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<DisconnectSendTransportScreen, never>;

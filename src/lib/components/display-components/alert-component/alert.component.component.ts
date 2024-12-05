@@ -45,11 +45,10 @@ export type AlertComponentType = (options: AlertComponentOptions) => HTMLElement
  * ```
  **/
 @Component({
-  selector: 'app-alert-component',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './alert.component.component.html',
-  styleUrls: ['./alert.component.component.css'],
+    selector: 'app-alert-component',
+    imports: [CommonModule],
+    templateUrl: './alert.component.component.html',
+    styleUrls: ['./alert.component.component.css']
 })
 
 

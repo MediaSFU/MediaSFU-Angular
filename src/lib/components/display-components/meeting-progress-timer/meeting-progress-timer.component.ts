@@ -56,10 +56,9 @@ export type MeetingProgressTimerType = (options: MeetingProgressTimerOptions) =>
  **/
 
 @Component({
-  selector: 'app-meeting-progress-timer',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-meeting-progress-timer',
+    imports: [CommonModule],
+    template: `
     <div [ngStyle]="positions[position]" class="badge-container">
       <div
         [ngStyle]="{
@@ -72,8 +71,8 @@ export type MeetingProgressTimerType = (options: MeetingProgressTimerOptions) =>
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .badge-container {
         padding: 5px;
         position: relative;
@@ -89,7 +88,7 @@ export type MeetingProgressTimerType = (options: MeetingProgressTimerOptions) =>
         color: black;
       }
     `,
-  ],
+    ]
 })
 export class MeetingProgressTimer implements OnChanges {
   @Input()

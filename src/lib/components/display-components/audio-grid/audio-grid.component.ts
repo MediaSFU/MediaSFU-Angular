@@ -30,10 +30,9 @@ export type AudioGridType = (options: AudioGridOptions) => HTMLElement;
  **/
 
 @Component({
-  selector: 'app-audio-grid',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-audio-grid',
+    imports: [CommonModule],
+    template: `
     <div style="z-index: 9">
       <ng-container *ngFor="let item of componentsToRender; let i = index">
         <div style="z-index: 9" [attr.key]="i">
@@ -44,7 +43,7 @@ export type AudioGridType = (options: AudioGridOptions) => HTMLElement;
       </ng-container>
     </div>
   `,
-  styleUrls: ['./audio-grid.component.css'],
+    styleUrls: ['./audio-grid.component.css']
 })
 
 

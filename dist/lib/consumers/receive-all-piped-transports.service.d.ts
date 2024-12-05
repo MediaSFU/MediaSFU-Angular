@@ -9,6 +9,7 @@ export interface ReceiveAllPipedTransportsParameters extends GetPipedProducersAl
 }
 export interface ReceiveAllPipedTransportsOptions {
     nsock: Socket;
+    community?: boolean;
     parameters: ReceiveAllPipedTransportsParameters;
 }
 export type ReceiveAllPipedTransportsType = (options: ReceiveAllPipedTransportsOptions) => Promise<void>;
@@ -20,6 +21,7 @@ export type ReceiveAllPipedTransportsType = (options: ReceiveAllPipedTransportsO
  *
  * @param {ReceiveAllPipedTransportsOptions} options - The options for receiving all piped transports.
  * @param {Socket} options.nsock - The socket instance used for communication.
+ * @param {boolean} options.community - Whether the room is a community edition room.
  * @param {ReceiveAllPipedTransportsParameters} options.parameters - The parameters for the operation.
  * @param {string} options.parameters.roomName - The name of the room.
  * @param {string} options.parameters.member - The member identifier.
@@ -33,6 +35,7 @@ export type ReceiveAllPipedTransportsType = (options: ReceiveAllPipedTransportsO
  * ```typescript
  * const options = {
  *   nsock: socketInstance,
+ *   community: true,
  *   parameters: {
  *     roomName: 'Room1',
  *     member: 'Member1',
@@ -49,6 +52,7 @@ export declare class ReceiveAllPipedTransports {
      *
      * @param {ReceiveAllPipedTransportsOptions} options - The options for receiving all piped transports.
      * @param {any} options.nsock - The socket instance used for communication.
+     * @param {boolean} options.community - Whether the room is a community edition room.
      * @param {Object} options.parameters - The parameters for the operation.
      * @param {string} options.parameters.roomName - The name of the room.
      * @param {string} options.parameters.member - The member identifier.
@@ -58,7 +62,7 @@ export declare class ReceiveAllPipedTransports {
      *
      * @throws Will log an error message if the operation fails.
      */
-    receiveAllPipedTransports: ({ nsock, parameters, }: ReceiveAllPipedTransportsOptions) => Promise<void>;
+    receiveAllPipedTransports: ({ nsock, community, parameters, }: ReceiveAllPipedTransportsOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ReceiveAllPipedTransports, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ReceiveAllPipedTransports>;
 }
