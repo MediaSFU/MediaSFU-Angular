@@ -16,6 +16,7 @@ import {
   ReUpdateInterParameters,
   Participant,
 } from '../../../@types/types';
+import { Consumer } from 'mediasoup-client/lib/types';
 
 export interface MiniAudioPlayerParameters extends ReUpdateInterParameters {
   breakOutRoomStarted: boolean;
@@ -32,6 +33,7 @@ export interface MiniAudioPlayerParameters extends ReUpdateInterParameters {
 
 export interface MiniAudioPlayerOptions {
   stream: MediaStream | null;
+  consumer: Consumer | null;
   remoteProducerId: string;
   parameters: MiniAudioPlayerParameters;
   MiniAudioComponent?: any;
@@ -49,12 +51,14 @@ export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLEleme
  * ```html
  * <app-mini-audio-player
  *    [stream]="audioStream"
+ *    [consumer]="audioConsumer"
  *    [remoteProducerId]="producerId"
  *    [parameters]="audioPlayerParameters">
  * </app-mini-audio-player>
  * ```
  *
  * @param {MediaStream} [stream] - The audio stream from the participant.
+ * @param {Consumer} [consumer] - The audio consumer for the participant.
  * @param {string} [remoteProducerId] - Unique ID for the remote producer of the audio stream.
  * @param {MiniAudioPlayerParameters} [parameters] - Configuration object with various parameters and utility functions for audio management.
  * @param {Component} [MiniAudioComponent] - Optional audio visualization component injected into the `MiniAudioPlayer`.
@@ -63,7 +67,7 @@ export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLEleme
  * @returns {HTMLElement} The created audio player element.
  *
  * @remarks
- * The `MiniAudioPlayer` leverages the `AudioContext` API to process audio data, analyze frequency, and manage audio levels.
+ * The `MiniAudioPlayer` processes audio data and manage audio levels.
  * It supports a dynamic breakout room feature that restricts audio visibility to limited participants, updates decibel levels for individual participants, and adjusts the waveforms based on audio activity.
  *
  * Key functionalities include:
@@ -72,7 +76,6 @@ export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLEleme
  * - Injecting configuration and parameter dependencies dynamically through `Injector`.
  *
  * @dependencies
- * - `AudioContext`: Web API for processing and analyzing audio data.
  * - `setInterval` for periodic volume level checks (auto-clears on component destruction).
  * - `ReUpdateInterType` and `UpdateParticipantAudioDecibelsType` for dynamic participant audio decibel management.
  *
@@ -90,6 +93,7 @@ export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLEleme
  * // Initialize component with required inputs
  * <app-mini-audio-player
  *   [stream]="audioStream"
+ *   [consumer]="audioConsumer"
  *   [remoteProducerId]="participantId"
  *   [parameters]="audioPlayerParameters"
  * ></app-mini-audio-player>
@@ -105,6 +109,7 @@ export type MiniAudioPlayerType = (options: MiniAudioPlayerOptions) => HTMLEleme
 })
 export class MiniAudioPlayer implements OnInit, OnDestroy {
   @Input() stream: MediaStream | null = null;
+  @Input() consumer: Consumer | null = null;
   @Input() remoteProducerId = '';
   @Input() parameters: MiniAudioPlayerParameters = {} as MiniAudioPlayerParameters;
   @Input() MiniAudioComponent: any;
@@ -114,7 +119,6 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
 
   showWaveModal = false;
   isMuted = false;
-  audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   intervalId: any;
   autoWaveCheck = false;
 
@@ -127,12 +131,14 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
   constructor(
     private injector: Injector,
     @Optional() @Inject('stream') injectedStream: MediaStream | null,
+    @Optional() @Inject('consumer') consumer: Consumer,
     @Optional() @Inject('remoteProducerId') injectedRemoteProducerId: string,
     @Optional() @Inject('parameters') injectedParameters: MiniAudioPlayerParameters,
     @Optional() @Inject('MiniAudioComponent') injectedMiniAudioComponent: any,
     @Optional() @Inject('miniAudioProps') injectedMiniAudioProps: Record<string, any>,
   ) {
     this.stream = injectedStream || this.stream;
+    this.consumer = consumer || this.consumer;
     this.remoteProducerId = injectedRemoteProducerId || this.remoteProducerId;
     this.parameters = injectedParameters || this.parameters;
     this.MiniAudioComponent = injectedMiniAudioComponent || this.MiniAudioComponent;
@@ -150,21 +156,28 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
       clearInterval(this.intervalId);
     }
   }
+    setupAudioProcessing() {
+    let averageLoudness = 128;
 
-  setupAudioProcessing() {
-    const analyser = this.audioContext.createAnalyser();
-    analyser.fftSize = 32;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const source = this.audioContext.createMediaStreamSource(this.stream!);
-    source.connect(analyser);
     let consLow = false;
 
     this.intervalId = setInterval(() => {
-      analyser.getByteTimeDomainData(dataArray);
-      let averageLoudness =
-        Array.from(dataArray).reduce((sum, value) => sum + value, 0) / bufferLength;
+      try {
+        const receiver = this.consumer?.rtpReceiver;
+        receiver?.getStats().then((stats) => {
+          stats.forEach((report) => {
+            if (
+              report.type === 'inbound-rtp' &&
+              report.kind === 'audio' &&
+              report.audioLevel
+            ) {
+              averageLoudness = 127.5 + report.audioLevel * 127.5;
+            }
+          });
+        });
+      } catch {
+        // Do nothing
+      }
 
       const updatedParams = this.parameters.getUpdatedAllParams();
       let {

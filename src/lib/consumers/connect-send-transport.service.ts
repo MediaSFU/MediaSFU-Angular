@@ -26,6 +26,8 @@ export interface ConnectSendTransportParameters
   connectSendTransportAudio: ConnectSendTransportAudioType;
   connectSendTransportVideo: ConnectSendTransportVideoType;
   connectSendTransportScreen: ConnectSendTransportScreenType;
+
+  getUpdatedAllParams: () => ConnectSendTransportParameters;
   [key: string]: any;
 }
 

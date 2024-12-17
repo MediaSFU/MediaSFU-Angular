@@ -11,7 +11,7 @@ import { MeetingRoomParams, RecordingParams } from "../@types/types";
 
 
 export interface ResponseLocalConnection {
-  socket? : Socket;
+  socket?: Socket;
   data?: ResponseLocalConnectionData;
 }
 
@@ -204,7 +204,7 @@ export class SocketManager {
    * ```
    */
 
-  connectLocalSocket = async({ link }: ConnectLocalSocketOptions): Promise<ResponseLocalConnection> => {
+  connectLocalSocket = async ({ link }: ConnectLocalSocketOptions): Promise<ResponseLocalConnection> => {
     if (!link) {
       throw new Error("Socket link required.");
     }
@@ -220,7 +220,16 @@ export class SocketManager {
 
       // Handle socket connection events
       socket.on("connection-success", (data: ResponseLocalConnectionData) => {
-        console.log("Connected to local media socket.", socket.id);
+        //check if link contains mediasfu.com and contains more than one c
+        let conn = 'media';
+        try {
+          if (link.includes('mediasfu.com') && (link.match(/c/g)?.length ?? 0) > 1) {
+            conn = 'consume';
+          }
+        } catch {
+          // do nothing
+        }
+        console.log(`Connected to ${conn} socket with ID: ${socket.id}`);
         resolve({ socket, data });
       });
 

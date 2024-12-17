@@ -1,5 +1,6 @@
 import { Socket } from 'socket.io-client';
 import { ReorderStreamsType, ReorderStreamsParameters, Participant, PrepopulateUserMediaType, PrepopulateUserMediaParameters, Stream, EventType } from '../@types/types';
+import { Consumer } from 'mediasoup-client/lib/types';
 import * as i0 from "@angular/core";
 export interface ConsumerResumeParameters extends ReorderStreamsParameters, PrepopulateUserMediaParameters {
     nStream: MediaStream | null;
@@ -63,6 +64,7 @@ export interface ConsumerResumeOptions {
     params: ResumeParams;
     parameters: ConsumerResumeParameters;
     nsock: Socket;
+    consumer: Consumer;
 }
 export type ConsumerResumeType = (options: ConsumerResumeOptions) => Promise<void>;
 /**
@@ -75,6 +77,7 @@ export type ConsumerResumeType = (options: ConsumerResumeOptions) => Promise<voi
  * @param {ResumeParams} options.params - Additional parameters related to the resumed consumer.
  * @param {ConsumerResumeParameters} options.parameters - The parameters object containing various utility functions and state.
  * @param {Socket} options.nsock - The socket associated with the consumer.
+ * @param {Consumer} options.consumer - The consumer to resume.
  * @throws Will throw an error if an issue occurs during the consumer resumption.
  *
  * @example
@@ -90,6 +93,7 @@ export type ConsumerResumeType = (options: ConsumerResumeOptions) => Promise<voi
  *   },
  *   parameters: consumerResumeParameters, // Parameters for the consumer
  *   nsock: socket, // Socket for communication
+ *   consumer: consumer, // Consumer to resume
  * };
  *
  * consumerResume(options)
@@ -112,9 +116,10 @@ export declare class ConsumerResume {
      * @param {Object} options.params - Additional parameters related to the resumed consumer.
      * @param {Object} options.parameters - The parameters object containing various utility functions and state.
      * @param {Object} options.nsock - The socket associated with the consumer.
+     * @param {Object} options.consumer - The consumer to resume.
      * @throws Throws an error if an issue occurs during the consumer resumption.
      */
-    consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: ConsumerResumeOptions) => Promise<void>;
+    consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: ConsumerResumeOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ConsumerResume, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConsumerResume>;
 }

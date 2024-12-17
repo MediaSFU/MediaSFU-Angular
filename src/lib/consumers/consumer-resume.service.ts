@@ -11,6 +11,7 @@ import {
   Stream,
   EventType,
 } from '../@types/types';
+import { Consumer } from 'mediasoup-client/lib/types';
 
 export interface ConsumerResumeParameters
   extends ReorderStreamsParameters,
@@ -80,6 +81,7 @@ export interface ConsumerResumeOptions {
   params: ResumeParams;
   parameters: ConsumerResumeParameters;
   nsock: Socket;
+  consumer: Consumer;
 }
 
 //export the type definition for the function
@@ -95,6 +97,7 @@ export type ConsumerResumeType = (options: ConsumerResumeOptions) => Promise<voi
    * @param {ResumeParams} options.params - Additional parameters related to the resumed consumer.
    * @param {ConsumerResumeParameters} options.parameters - The parameters object containing various utility functions and state.
    * @param {Socket} options.nsock - The socket associated with the consumer.
+   * @param {Consumer} options.consumer - The consumer to resume.
    * @throws Will throw an error if an issue occurs during the consumer resumption.
    *
    * @example
@@ -110,6 +113,7 @@ export type ConsumerResumeType = (options: ConsumerResumeOptions) => Promise<voi
    *   },
    *   parameters: consumerResumeParameters, // Parameters for the consumer
    *   nsock: socket, // Socket for communication
+   *   consumer: consumer, // Consumer to resume
    * };
    *
    * consumerResume(options)
@@ -137,6 +141,7 @@ export class ConsumerResume {
    * @param {Object} options.params - Additional parameters related to the resumed consumer.
    * @param {Object} options.parameters - The parameters object containing various utility functions and state.
    * @param {Object} options.nsock - The socket associated with the consumer.
+   * @param {Object} options.consumer - The consumer to resume.
    * @throws Throws an error if an issue occurs during the consumer resumption.
    */
   consumerResume = async ({
@@ -145,6 +150,7 @@ export class ConsumerResume {
     params,
     parameters,
     nsock,
+    consumer,
   }: ConsumerResumeOptions): Promise<void> => {
     try {
       // Get updated parameters
@@ -247,6 +253,7 @@ export class ConsumerResume {
           component: MiniAudioPlayer,
           inputs: {
             stream: nStream ? nStream : null,
+            consumer: consumer,
             remoteProducerId: remoteProducerId,
             parameters: parameters,
             MiniAudioComponent: MiniAudio,

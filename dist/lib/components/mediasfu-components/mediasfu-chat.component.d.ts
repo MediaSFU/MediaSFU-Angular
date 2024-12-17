@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Socket } from 'socket.io-client';
 import { WelcomePageOptions } from '../misc-components/welcome-page/welcome-page.component';
 import { MessageWidget } from '../display-components/control-widgets/message-widget.component';
-import { ButtonTouch, ResponseJoinRoom, CoHostResponsibility, EventType, Participant, ConsumeSocket, MeetingRoomParams, VidCons, HParamsType, VParamsType, ScreenParamsType, AParamsType, UserRecordingParams, Stream, AudioDecibels, ScreenState, GridSizes, CustomMediaComponent, Message, WaitingRoomParticipant, ComponentSizes, Transport as TransportType, Shape, Poll, BreakoutParticipant, WhiteboardUser, Request, SeedData, PreJoinPageOptions } from '../../@types/types';
+import { ButtonTouch, ResponseJoinRoom, CoHostResponsibility, EventType, Participant, ConsumeSocket, MeetingRoomParams, VidCons, HParamsType, VParamsType, ScreenParamsType, AParamsType, UserRecordingParams, Stream, AudioDecibels, ScreenState, GridSizes, CustomMediaComponent, Message, WaitingRoomParticipant, ComponentSizes, Transport as TransportType, Shape, Poll, BreakoutParticipant, WhiteboardUser, Request, SeedData, PreJoinPageOptions, CreateMediaSFURoomOptions, JoinMediaSFURoomOptions, JoinRoomOnMediaSFUType, CreateRoomOnMediaSFUType } from '../../@types/types';
 import { LaunchMessages } from '../../methods/message-methods/launch-messages.service';
 import { LaunchConfirmExit } from '../../methods/exit-methods/launch-confirm-exit.service';
 import { SocketManager } from '../../sockets/socket-manager.service';
@@ -101,6 +101,16 @@ export type MediasfuChatOptions = {
     seedData?: SeedData;
     useSeed?: boolean;
     imgSrc?: string;
+    sourceParameters?: {
+        [key: string]: any;
+    };
+    updateSourceParameters?: (data: {
+        [key: string]: any;
+    }) => void;
+    returnUI?: boolean;
+    noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+    joinMediaSFURoom?: JoinRoomOnMediaSFUType;
+    createMediaSFURoom?: CreateRoomOnMediaSFUType;
 };
 /**
  * MediasfuChat component provides an interface for chat-based streaming events. It includes a conditional prejoin screen, main content with flexible grids and modals, and supports chat-related settings.
@@ -125,6 +135,12 @@ export type MediasfuChatOptions = {
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Chat".
  *
@@ -144,11 +160,19 @@ export type MediasfuChatOptions = {
  * ```html
  * <app-mediasfu-chat
  *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [localLink]="'https://localhost:3000'"
+ *   [connectMediaSFU]="true"
  *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-chat>
  * ```
  */
@@ -247,6 +271,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     seedData?: SeedData;
     useSeed: boolean;
     imgSrc: string;
+    sourceParameters?: {
+        [key: string]: any;
+    };
+    updateSourceParameters?: ((data: {
+        [key: string]: any;
+    }) => void) | undefined;
+    returnUI?: boolean | undefined;
+    noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+    joinMediaSFURoom?: JoinRoomOnMediaSFUType;
+    createMediaSFURoom?: CreateRoomOnMediaSFUType;
     title: string;
     private mainHeightWidthSubscription;
     private validatedSubscription;
@@ -272,7 +306,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         getVideos: ({ participants, allVideoStreams, oldAllStreams, adminVidID, updateAllVideoStreams, updateOldAllStreams, }: import("../../consumers/get-videos.service").GetVideosOptions) => Promise<void>;
         rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
         trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
-        consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
+        consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
         connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
         connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
         connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
@@ -813,6 +847,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     videoParams: BehaviorSubject<ProducerOptions>;
     audioParams: BehaviorSubject<ProducerOptions>;
     audioProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    audioLevel: BehaviorSubject<number>;
     localAudioProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
     consumerTransports: BehaviorSubject<TransportType[]>;
     consumingTransports: BehaviorSubject<string[]>;
@@ -953,6 +988,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     updateVideoParams: (value: ProducerOptions) => void;
     updateAudioParams: (value: ProducerOptions) => void;
     updateAudioProducer: (value: Producer | null) => void;
+    updateAudioLevel: (value: number) => void;
     updateLocalAudioProducer: (value: Producer | null) => void;
     updateConsumerTransports: (value: TransportType[]) => void;
     updateConsumingTransports: (value: string[]) => void;
@@ -1280,6 +1316,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
         audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        audioLevel: number;
         localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
@@ -1595,6 +1632,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         updateVideoParams: (value: ProducerOptions) => void;
         updateAudioParams: (value: ProducerOptions) => void;
         updateAudioProducer: (value: Producer | null) => void;
+        updateAudioLevel: (value: number) => void;
         updateLocalAudioProducer: (value: Producer | null) => void;
         updateConsumerTransports: (value: TransportType[]) => void;
         updateConsumingTransports: (value: string[]) => void;
@@ -1670,7 +1708,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             getVideos: ({ participants, allVideoStreams, oldAllStreams, adminVidID, updateAllVideoStreams, updateOldAllStreams, }: import("../../consumers/get-videos.service").GetVideosOptions) => Promise<void>;
             rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
             trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
-            consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
+            consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
             connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
             connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
             connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
@@ -1997,6 +2035,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
             audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            audioLevel: number;
             localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
@@ -2312,6 +2351,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             updateVideoParams: (value: ProducerOptions) => void;
             updateAudioParams: (value: ProducerOptions) => void;
             updateAudioProducer: (value: Producer | null) => void;
+            updateAudioLevel: (value: number) => void;
             updateLocalAudioProducer: (value: Producer | null) => void;
             updateConsumerTransports: (value: TransportType[]) => void;
             updateConsumingTransports: (value: string[]) => void;
@@ -2390,7 +2430,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         getVideos: ({ participants, allVideoStreams, oldAllStreams, adminVidID, updateAllVideoStreams, updateOldAllStreams, }: import("../../consumers/get-videos.service").GetVideosOptions) => Promise<void>;
         rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
         trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
-        consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
+        consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
         connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
         connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
         connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
@@ -2717,6 +2757,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
         audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        audioLevel: number;
         localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
@@ -3032,6 +3073,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         updateVideoParams: (value: ProducerOptions) => void;
         updateAudioParams: (value: ProducerOptions) => void;
         updateAudioProducer: (value: Producer | null) => void;
+        updateAudioLevel: (value: number) => void;
         updateLocalAudioProducer: (value: Producer | null) => void;
         updateConsumerTransports: (value: TransportType[]) => void;
         updateConsumingTransports: (value: string[]) => void;
@@ -3107,7 +3149,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             getVideos: ({ participants, allVideoStreams, oldAllStreams, adminVidID, updateAllVideoStreams, updateOldAllStreams, }: import("../../consumers/get-videos.service").GetVideosOptions) => Promise<void>;
             rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
             trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
-            consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
+            consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
             connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
             connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
             connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
@@ -3434,6 +3476,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
             audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            audioLevel: number;
             localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
@@ -3749,6 +3792,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             updateVideoParams: (value: ProducerOptions) => void;
             updateAudioParams: (value: ProducerOptions) => void;
             updateAudioProducer: (value: Producer | null) => void;
+            updateAudioLevel: (value: number) => void;
             updateLocalAudioProducer: (value: Producer | null) => void;
             updateConsumerTransports: (value: TransportType[]) => void;
             updateConsumingTransports: (value: string[]) => void;
@@ -3827,7 +3871,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         getVideos: ({ participants, allVideoStreams, oldAllStreams, adminVidID, updateAllVideoStreams, updateOldAllStreams, }: import("../../consumers/get-videos.service").GetVideosOptions) => Promise<void>;
         rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
         trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
-        consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
+        consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
         connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
         connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
         connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
@@ -4154,6 +4198,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
         audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        audioLevel: number;
         localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
@@ -4469,6 +4514,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         updateVideoParams: (value: ProducerOptions) => void;
         updateAudioParams: (value: ProducerOptions) => void;
         updateAudioProducer: (value: Producer | null) => void;
+        updateAudioLevel: (value: number) => void;
         updateLocalAudioProducer: (value: Producer | null) => void;
         updateConsumerTransports: (value: TransportType[]) => void;
         updateConsumingTransports: (value: string[]) => void;
@@ -4544,7 +4590,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             getVideos: ({ participants, allVideoStreams, oldAllStreams, adminVidID, updateAllVideoStreams, updateOldAllStreams, }: import("../../consumers/get-videos.service").GetVideosOptions) => Promise<void>;
             rePort: ({ restart, parameters }: import("../../consumers/re-port.service").RePortOptions) => Promise<void>;
             trigger: ({ ref_ActiveNames, parameters }: import("../../consumers/trigger.service").TriggerOptions) => Promise<void>;
-            consumerResume: ({ track, remoteProducerId, params, parameters, nsock, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
+            consumerResume: ({ track, remoteProducerId, params, parameters, nsock, consumer, }: import("../../consumers/consumer-resume.service").ConsumerResumeOptions) => Promise<void>;
             connectSendTransport: ({ option, targetOption, parameters }: import("../../consumers/connect-send-transport.service").ConnectSendTransportOptions) => Promise<void>;
             connectSendTransportAudio: ({ targetOption, audioParams, parameters, }: import("../../consumers/connect-send-transport-audio.service").ConnectSendTransportAudioOptions) => Promise<void>;
             connectSendTransportVideo: ({ videoParams, parameters, targetOption, }: import("../../consumers/connect-send-transport-video.service").ConnectSendTransportVideoOptions) => Promise<void>;
@@ -4871,6 +4917,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
             audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            audioLevel: number;
             localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
@@ -5186,6 +5233,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             updateVideoParams: (value: ProducerOptions) => void;
             updateAudioParams: (value: ProducerOptions) => void;
             updateAudioProducer: (value: Producer | null) => void;
+            updateAudioLevel: (value: number) => void;
             updateLocalAudioProducer: (value: Producer | null) => void;
             updateConsumerTransports: (value: TransportType[]) => void;
             updateConsumingTransports: (value: string[]) => void;
@@ -5327,5 +5375,5 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     updateControlChatButtons(): void;
     connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuChat, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuChat, "app-mediasfu-chat", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuChat, "app-mediasfu-chat", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; }, {}, never, never, true, never>;
 }

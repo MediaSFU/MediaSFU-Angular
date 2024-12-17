@@ -208,7 +208,7 @@ export type { WaitingRoomModalOptions, WaitingRoomModalType, WaitingRoomModalPar
 export type { ConfigureWhiteboardModalOptions, ConfigureWhiteboardModalType, } from '../components/whiteboard-components/configure-whiteboard-modal/configure-whiteboard-modal.component';
 export type { WhiteboardOptions, WhiteboardType, WhiteboardParameters, Shape, } from '../components/whiteboard-components/whiteboard/whiteboard.component';
 export type { CustomButton } from '../components/menu-components/custom-buttons/custom-buttons.component';
-export type { CreateJoinRoomType, CreateRoomOnMediaSFUType, CreateJoinRoomResponse, CreateJoinRoomError } from '../methods/utils/join-room-on-media-sfu.service';
+export type { CreateJoinRoomType, CreateRoomOnMediaSFUType, CreateJoinRoomResponse, CreateJoinRoomError, JoinRoomOnMediaSFUType } from '../methods/utils/join-room-on-media-sfu.service';
 export interface Participant {
     id?: string;
     audioID: string;
@@ -475,6 +475,28 @@ export interface CreateRoomOptions {
     safeRoomAction: 'warn' | 'kick' | 'ban';
     dataBuffer: boolean;
     bufferType: 'images' | 'audio' | 'all';
+}
+export interface CreateMediaSFURoomOptions {
+    action: 'create';
+    duration: number;
+    capacity: number;
+    userName: string;
+    scheduledDate?: number;
+    secureCode?: string;
+    eventType?: 'conference' | 'webinar' | 'chat' | 'broadcast';
+    meetingRoomParams?: MeetingRoomParams;
+    recordingParams?: RecordingParams;
+    recordOnly?: boolean;
+    safeRoom?: boolean;
+    autoStartSafeRoom?: boolean;
+    safeRoomAction?: 'warn' | 'kick' | 'ban';
+    dataBuffer?: boolean;
+    bufferType?: 'images' | 'audio' | 'all';
+}
+export interface JoinMediaSFURoomOptions {
+    action: 'join';
+    meetingID: string;
+    userName: string;
 }
 export interface ResponseJoinLocalRoom {
     rtpCapabilities?: RtpCapabilities | null;

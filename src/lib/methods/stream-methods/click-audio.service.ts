@@ -367,7 +367,7 @@ export class ClickAudio {
             }
 
             updateLocalStream(localStream);
-            updateAudioAlreadyOn(audioAlreadyOn);
+
 
             if (micAction == true) {
               micAction = false;

@@ -5,11 +5,13 @@ import { Socket } from 'socket.io-client';
 import {
   ConnectSocketType, ShowAlert,
   ConnectLocalSocketType, ResponseLocalConnection,
-  ResponseLocalConnectionData, RecordingParams, MeetingRoomParams
+  ResponseLocalConnectionData, RecordingParams, MeetingRoomParams,
+  CreateMediaSFURoomOptions,JoinMediaSFURoomOptions,
 } from '../../../@types/types';
 import { CheckLimitsAndMakeRequest } from '../../../methods/utils/check-limits-and-make-request.service';
 import { CreateRoomOnMediaSFU } from '../../../methods/utils/create-room-on-media-sfu.service';
-import { JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
+import { CreateRoomOnMediaSFUType, JoinRoomOnMediaSFUType, JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 export interface JoinLocalEventRoomParameters {
   eventID: string;
@@ -79,6 +81,10 @@ export interface PreJoinPageOptions {
   connectMediaSFU?: boolean;
   parameters: PreJoinPageParameters;
   credentials?: Credentials;
+  returnUI?: boolean;
+  noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+  createMediaSFURoom?: CreateRoomOnMediaSFUType;
+  joinMediaSFURoom?: JoinRoomOnMediaSFUType;
 }
 
 export type PreJoinPageType = (options: PreJoinPageOptions) => HTMLElement;
@@ -163,6 +169,11 @@ export class PreJoinPage implements OnInit {
   @Input() credentials: Credentials = { apiUserName: 'yourAPIUSERNAME', apiKey: 'yourAPIKEY' };
   @Input() localLink: string | undefined = "";
   @Input() connectMediaSFU: boolean | undefined = true;
+  @Input() returnUI?: boolean;
+  @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+  @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
+  @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
+
 
   isCreateMode = false;
   preJoinForm: FormGroup;
@@ -174,12 +185,20 @@ export class PreJoinPage implements OnInit {
   localData: ResponseLocalConnectionData | undefined = undefined;
   initSocket: Socket | undefined = undefined;
 
+  pending = new BehaviorSubject<boolean>(false);
+
   constructor(
     private fb: FormBuilder,
     @Optional() @Inject('parameters') injectedParameters: PreJoinPageParameters,
     @Optional() @Inject('credentials') injectedCredentials: Credentials,
     @Optional() @Inject('localLink') injectedLocalLink: string,
     @Optional() @Inject('connectMediaSFU') injectedConnectMediaSFU: boolean,
+    @Optional() @Inject('returnUI') injectedReturnUI: boolean,
+    @Optional() @Inject('noUIPreJoinOptions') injectedNoUIPreJoinOptions: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions,
+    @Optional() @Inject('createMediaSFURoom') injectedCreateMediaSFURoom: CreateRoomOnMediaSFUType,
+    @Optional() @Inject('joinMediaSFURoom') injectedJoinMediaSFURoom: JoinRoomOnMediaSFUType,
+
+
     private checkLimitsService: CheckLimitsAndMakeRequest,
     private createRoomService: CreateRoomOnMediaSFU,
     private joinRoomService: JoinRoomOnMediaSFU
@@ -195,12 +214,22 @@ export class PreJoinPage implements OnInit {
     this.credentials = injectedCredentials || this.credentials;
     this.localLink = injectedLocalLink || this.localLink;
     this.connectMediaSFU = injectedConnectMediaSFU !== undefined ? injectedConnectMediaSFU : this.connectMediaSFU;
+    this.returnUI = injectedReturnUI !== undefined ? injectedReturnUI : this.returnUI;
+    this.noUIPreJoinOptions = injectedNoUIPreJoinOptions || this.noUIPreJoinOptions;
+    this.createMediaSFURoom = injectedCreateMediaSFURoom || this.createMediaSFURoom;
+    this.joinMediaSFURoom = injectedJoinMediaSFURoom || this.joinMediaSFURoom;
 
   }
 
   ngOnInit(): void {
+    // If we have a localLink and not connected yet, try to connect
     if (this.localLink && !this.localConnected && !this.initSocket) {
-      this.connectLocalSocket();
+      this.connectLocalSocket().then(() => {
+        this.checkProceed();
+      });
+    } else {
+      // If no localLink or already connected, try to proceed
+      this.checkProceed();
     }
   }
 
@@ -218,6 +247,27 @@ export class PreJoinPage implements OnInit {
         type: 'danger',
         duration: 3000,
       });
+    }
+  }
+
+  private async checkProceed(): Promise<void> {
+    // If we do not need to return UI and we have noUIPreJoinOptions, proceed like in the React code
+    if (!this.returnUI && this.noUIPreJoinOptions) {
+      if ('action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'create') {
+        const createOptions = this.noUIPreJoinOptions as CreateMediaSFURoomOptions;
+        if (!createOptions.userName || !createOptions.duration || !createOptions.eventType || !createOptions.capacity) {
+          throw new Error('Please provide all the required parameters: userName, duration, eventType, capacity');
+        }
+        await this.handleCreateRoom();
+      } else if ('action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'join') {
+        const joinOptions = this.noUIPreJoinOptions as JoinMediaSFURoomOptions;
+        if (!joinOptions.userName || !joinOptions.meetingID) {
+          throw new Error('Please provide all the required parameters: userName, meetingID');
+        }
+        await this.handleJoinRoom();
+      } else {
+        throw new Error('Invalid options provided for creating/joining a room without UI.');
+      }
     }
   }
 
@@ -265,10 +315,14 @@ export class PreJoinPage implements OnInit {
 
   async roomCreator(options: { payload: any; apiUserName: string; apiKey: string; validate?: boolean }): Promise<any> {
     const { payload, apiUserName, apiKey, validate = true } = options;
-    const response = await this.createRoomService.createRoomOnMediaSFU({
+    if (!this.createMediaSFURoom) {
+      this.createMediaSFURoom = this.createRoomService.createRoomOnMediaSFU;
+    }
+    const response = await this.createMediaSFURoom({
       payload,
       apiUserName,
       apiKey,
+      localLink: this.localLink,
     });
 
     if (response.success && response.data && 'roomName' in response.data) {
@@ -295,21 +349,37 @@ export class PreJoinPage implements OnInit {
 
   async handleCreateRoom(): Promise<void> {
 
-    const { name, duration, eventType, capacity } = this.preJoinForm.value;
-
-    if (!name || !duration || !eventType || !capacity) {
-      this.error = 'Please fill all the fields.';
+    if (this.pending.value) {
       return;
     }
+    this.pending.next(true);
+    let payload = {} as CreateMediaSFURoomOptions;
 
-    const payload = {
-      action: 'create',
-      duration: parseInt(duration),
-      capacity: parseInt(capacity),
-      eventType,
-      userName: name,
-      recordOnly: false,
-    };
+    if (this.returnUI) {
+        const { name, duration, eventType, capacity } = this.preJoinForm.value;
+
+        if (!name || !duration || !eventType || !capacity) {
+          this.error = 'Please fill all the fields.';
+          return;
+        }
+
+        payload = {
+          action: 'create',
+          duration: parseInt(duration),
+          capacity: parseInt(capacity),
+          eventType,
+          userName: name,
+          recordOnly: false,
+        };
+      } else {
+        if (this.noUIPreJoinOptions && 'action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'create') {
+          payload = this.noUIPreJoinOptions as CreateMediaSFURoomOptions;
+        } else {
+          this.error = 'Invalid options provided for creating a room without UI.';
+          this.pending.next(false);
+          return;
+        }
+      }
 
     this.parameters.updateIsLoadingModalVisible(true);
 
@@ -323,13 +393,13 @@ export class PreJoinPage implements OnInit {
         Math.floor(10 + Math.random() * 99).toString();
       eventID = 'm' + eventID;
       const eventRoomParams = this.localData?.meetingRoomParams_;
-      eventRoomParams!.type = eventType as 'chat' | 'broadcast' | 'webinar' | 'conference';
+      eventRoomParams!.type = payload.eventType as 'chat' | 'broadcast' | 'webinar' | 'conference';
 
       const createData: CreateLocalRoomParameters = {
         eventID: eventID,
-        duration: parseInt(duration, 10),
-        capacity: parseInt(capacity, 10),
-        userName: name,
+        duration: payload.duration,
+        capacity: payload.capacity,
+        userName: payload.userName,
         scheduledDate: new Date(),
         secureCode: secureCode,
         waitRoom: false,
@@ -362,12 +432,14 @@ export class PreJoinPage implements OnInit {
           createData.mediasfuURL = response.data.publicURL;
           await this.createLocalRoom({ createData: createData, link: response.data.link });
         } else {
+          this.pending.next(false);
           this.parameters.updateIsLoadingModalVisible(false);
           this.error = 'Unable to create room on MediaSFU.';
           try {
             this.parameters.updateSocket(this.initSocket!);
             await this.createLocalRoom({ createData: createData });
           } catch (error: any) {
+            this.pending.next(false);
             this.parameters.updateIsLoadingModalVisible(false);
             this.error = `Unable to create room. ${error}`;
           }
@@ -377,6 +449,7 @@ export class PreJoinPage implements OnInit {
           this.parameters.updateSocket(this.initSocket!);
           await this.createLocalRoom({ createData: createData });
         } catch (error: any) {
+          this.pending.next(false);
           this.parameters.updateIsLoadingModalVisible(false);
           this.error = `Unable to create room. ${error}`;
         }
@@ -388,32 +461,44 @@ export class PreJoinPage implements OnInit {
         apiKey: this.credentials.apiKey,
         validate: true,
       });
+      this.pending.next(false);
     }
   }
 
   async handleJoinRoom(): Promise<void> {
-    if (this.preJoinForm.invalid) {
-      this.error = 'Please fill all the fields.';
+    if (this.pending.value) {
       return;
     }
+    this.pending.next(true);
+    let payload = {} as JoinMediaSFURoomOptions;
 
-    const { name, eventID } = this.preJoinForm.value;
+    if (this.returnUI) {
+      const { name, eventID } = this.preJoinForm.value;
 
-    if (!name || !eventID) {
-      this.error = 'Please fill all the fields.';
-      return;
+      if (!name || !eventID) {
+        this.error = 'Please fill all the fields.';
+        return;
+      }
+
+      payload = {
+        action: 'join',
+        meetingID: eventID,
+        userName: name,
+      };
+    } else {
+      if (this.noUIPreJoinOptions && 'action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'join') {
+        payload = this.noUIPreJoinOptions as JoinMediaSFURoomOptions;
+      } else {
+        this.error = 'Invalid options provided for joining a room without UI.';
+        this.pending.next(false);
+        return;
+      }
     }
-
-    const payload = {
-      action: 'join',
-      meetingID: eventID,
-      userName: name,
-    };
 
     if (this.localLink && !this.localLink.includes('mediasfu.com')) {
-      const joinData = {
-        eventID: eventID,
-        userName: name,
+      const joinData: JoinLocalEventRoomParameters = {
+        eventID: payload.meetingID,
+        userName: payload.userName,
         secureCode: '',
         videoPreference: null,
         audioPreference: null,
@@ -421,15 +506,20 @@ export class PreJoinPage implements OnInit {
       };
 
       await this.joinLocalRoom({ joinData: joinData });
+      this.pending.next(false);
       return;
     }
 
     this.parameters.updateIsLoadingModalVisible(true);
     try {
-    const response = await this.joinRoomService.joinRoomOnMediaSFU({
+      if (!this.joinMediaSFURoom) {
+        this.joinMediaSFURoom = this.joinRoomService.joinRoomOnMediaSFU;
+      }
+    const response = await this.joinMediaSFURoom({
       payload,
       apiUserName: this.credentials.apiUserName,
       apiKey: this.credentials.apiKey,
+      localLink: this.localLink,
     });
 
     if (response.success && response.data && 'roomName' in response.data) {
@@ -437,13 +527,15 @@ export class PreJoinPage implements OnInit {
         apiUserName: response.data.roomName,
         apiToken: response.data.secret,
         link: response.data.link,
-        userName: name,
+        userName: payload.userName,
         parameters: this.parameters,
         validate: true,
       });
     this.error = '';
+    this.pending.next(false);
     } else {
       this.parameters.updateIsLoadingModalVisible(false);
+        this.pending.next(false);
         this.error = `Unable to connect to room. ${
         response.data ? ('error' in response.data ? response.data.error : '') : ''
       }`;

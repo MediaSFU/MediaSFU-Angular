@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
+import {
+  CreateMediaSFURoomOptions,
+  JoinMediaSFURoomOptions,
+} from '../../@types/types';
 
 export type CreateJoinRoomType = (options: {
-  payload: any;
+  payload: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   apiUserName: string;
   apiKey: string;
+  localLink?: string;
 }) => Promise<{
   data: CreateJoinRoomResponse | CreateJoinRoomError | null;
   success: boolean;
 }>;
 
 export type CreateRoomOnMediaSFUType = (options: {
-  payload: any;
+  payload: CreateMediaSFURoomOptions;
   apiUserName: string;
   apiKey: string;
+  localLink?: string;
 }) => Promise<{
   data: CreateJoinRoomResponse | CreateJoinRoomError | null;
   success: boolean;
@@ -34,11 +40,21 @@ export interface CreateJoinRoomError {
   success?: boolean;
 }
 
+export type JoinRoomOnMediaSFUType = (options: {
+  payload: JoinMediaSFURoomOptions;
+  apiUserName: string;
+  apiKey: string;
+  localLink?: string;
+}) => Promise<{
+  data: CreateJoinRoomResponse | CreateJoinRoomError | null;
+  success: boolean;
+}>;
+
 @Injectable({
   providedIn: 'root',
 })
 export class JoinRoomOnMediaSFU {
-  private readonly API_URL = 'https://mediasfu.com/v1/rooms/';
+  private API_URL = 'https://mediasfu.com/v1/rooms/';
 
   constructor() {}
 
@@ -48,16 +64,19 @@ export class JoinRoomOnMediaSFU {
    * @param payload - The payload for the API request.
    * @param apiUserName - The API username.
    * @param apiKey - The API key.
+   * @param localLink - The local link for the Community Edition.
    * @returns The API response.
    */
   async joinRoomOnMediaSFU({
     payload,
     apiUserName,
     apiKey,
+    localLink,
   }: {
-    payload: any;
+    payload: JoinMediaSFURoomOptions | CreateMediaSFURoomOptions;
     apiUserName: string;
     apiKey: string;
+    localLink?: string;
   }): Promise<{
     data: CreateJoinRoomResponse | CreateJoinRoomError | null;
     success: boolean;
@@ -73,6 +92,12 @@ export class JoinRoomOnMediaSFU {
       ) {
         return { data: { error: 'Invalid credentials' }, success: false };
       }
+
+      if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
+        localLink = localLink.replace(/\/$/, '');
+        this.API_URL = localLink + '/joinRoom';
+      }
+
 
       const response = await fetch(this.API_URL, {
         method: 'POST',

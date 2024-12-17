@@ -173,6 +173,7 @@ export class ConnectRecvTransport {
                       params,
                       parameters,
                       nsock,
+                      consumer,
                     });
                   } catch (error) {
                     // Handle error

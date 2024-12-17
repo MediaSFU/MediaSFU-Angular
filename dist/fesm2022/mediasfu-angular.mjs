@@ -13,9 +13,11 @@ import { FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { faFacebook, faWhatsapp, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import * as i3 from '@zxing/ngx-scanner';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import * as mediasoupClient from 'mediasoup-client';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import * as i2$2 from 'mediasoup-client/lib/types';
+import { BehaviorSubject as BehaviorSubject$1, combineLatest } from 'rxjs';
 
 const initialValuesState = {
     // The following are the initial values
@@ -411,9 +413,10 @@ class JoinRoomOnMediaSFU {
      * @param payload - The payload for the API request.
      * @param apiUserName - The API username.
      * @param apiKey - The API key.
+     * @param localLink - The local link for the Community Edition.
      * @returns The API response.
      */
-    async joinRoomOnMediaSFU({ payload, apiUserName, apiKey, }) {
+    async joinRoomOnMediaSFU({ payload, apiUserName, apiKey, localLink, }) {
         try {
             if (!apiUserName ||
                 !apiKey ||
@@ -422,6 +425,10 @@ class JoinRoomOnMediaSFU {
                 apiKey.length !== 64 ||
                 apiUserName.length < 6) {
                 return { data: { error: 'Invalid credentials' }, success: false };
+            }
+            if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
+                localLink = localLink.replace(/\/$/, '');
+                this.API_URL = localLink + '/joinRoom';
             }
             const response = await fetch(this.API_URL, {
                 method: 'POST',
@@ -459,16 +466,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
 /**
  * Async function to create a room on MediaSFU.
  *
- * @param {object} options - The options for creating a room.
+ * @param {CreateJoinRoomOptions} options - Contains: payload, apiUserName, apiKey, localLink.
  * @param {any} options.payload - The payload for the API request.
  * @param {string} options.apiUserName - The API username.
  * @param {string} options.apiKey - The API key.
+ * @param {string} options.localLink - The local link for Community Edition.
  * @returns {Promise<{ data: CreateJoinRoomResponse | CreateJoinRoomError | null; success: boolean; }>} The response from the API.
  */
 class CreateRoomOnMediaSFU {
     API_URL = 'https://mediasfu.com/v1/rooms/';
     constructor() { }
-    async createRoomOnMediaSFU({ payload, apiUserName, apiKey, }) {
+    async createRoomOnMediaSFU({ payload, apiUserName, apiKey, localLink, }) {
         try {
             if (!apiUserName ||
                 !apiKey ||
@@ -477,6 +485,10 @@ class CreateRoomOnMediaSFU {
                 apiKey.length !== 64 ||
                 apiUserName.length < 6) {
                 return { data: { error: 'Invalid credentials' }, success: false };
+            }
+            if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
+                localLink = localLink.replace(/\/$/, '');
+                this.API_URL = localLink + '/joinRoom';
             }
             const response = await fetch(this.API_URL, {
                 method: 'POST',
@@ -7120,6 +7132,10 @@ class PreJoinPage {
     credentials = { apiUserName: 'yourAPIUSERNAME', apiKey: 'yourAPIKEY' };
     localLink = "";
     connectMediaSFU = true;
+    returnUI;
+    noUIPreJoinOptions;
+    createMediaSFURoom;
+    joinMediaSFURoom;
     isCreateMode = false;
     preJoinForm;
     error = '';
@@ -7127,7 +7143,8 @@ class PreJoinPage {
     localConnected = false;
     localData = undefined;
     initSocket = undefined;
-    constructor(fb, injectedParameters, injectedCredentials, injectedLocalLink, injectedConnectMediaSFU, checkLimitsService, createRoomService, joinRoomService) {
+    pending = new BehaviorSubject(false);
+    constructor(fb, injectedParameters, injectedCredentials, injectedLocalLink, injectedConnectMediaSFU, injectedReturnUI, injectedNoUIPreJoinOptions, injectedCreateMediaSFURoom, injectedJoinMediaSFURoom, checkLimitsService, createRoomService, joinRoomService) {
         this.fb = fb;
         this.checkLimitsService = checkLimitsService;
         this.createRoomService = createRoomService;
@@ -7143,10 +7160,21 @@ class PreJoinPage {
         this.credentials = injectedCredentials || this.credentials;
         this.localLink = injectedLocalLink || this.localLink;
         this.connectMediaSFU = injectedConnectMediaSFU !== undefined ? injectedConnectMediaSFU : this.connectMediaSFU;
+        this.returnUI = injectedReturnUI !== undefined ? injectedReturnUI : this.returnUI;
+        this.noUIPreJoinOptions = injectedNoUIPreJoinOptions || this.noUIPreJoinOptions;
+        this.createMediaSFURoom = injectedCreateMediaSFURoom || this.createMediaSFURoom;
+        this.joinMediaSFURoom = injectedJoinMediaSFURoom || this.joinMediaSFURoom;
     }
     ngOnInit() {
+        // If we have a localLink and not connected yet, try to connect
         if (this.localLink && !this.localConnected && !this.initSocket) {
-            this.connectLocalSocket();
+            this.connectLocalSocket().then(() => {
+                this.checkProceed();
+            });
+        }
+        else {
+            // If no localLink or already connected, try to proceed
+            this.checkProceed();
         }
     }
     async connectLocalSocket() {
@@ -7164,6 +7192,28 @@ class PreJoinPage {
                 type: 'danger',
                 duration: 3000,
             });
+        }
+    }
+    async checkProceed() {
+        // If we do not need to return UI and we have noUIPreJoinOptions, proceed like in the React code
+        if (!this.returnUI && this.noUIPreJoinOptions) {
+            if ('action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'create') {
+                const createOptions = this.noUIPreJoinOptions;
+                if (!createOptions.userName || !createOptions.duration || !createOptions.eventType || !createOptions.capacity) {
+                    throw new Error('Please provide all the required parameters: userName, duration, eventType, capacity');
+                }
+                await this.handleCreateRoom();
+            }
+            else if ('action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'join') {
+                const joinOptions = this.noUIPreJoinOptions;
+                if (!joinOptions.userName || !joinOptions.meetingID) {
+                    throw new Error('Please provide all the required parameters: userName, meetingID');
+                }
+                await this.handleJoinRoom();
+            }
+            else {
+                throw new Error('Invalid options provided for creating/joining a room without UI.');
+            }
         }
     }
     toggleMode() {
@@ -7209,10 +7259,14 @@ class PreJoinPage {
     }
     async roomCreator(options) {
         const { payload, apiUserName, apiKey, validate = true } = options;
-        const response = await this.createRoomService.createRoomOnMediaSFU({
+        if (!this.createMediaSFURoom) {
+            this.createMediaSFURoom = this.createRoomService.createRoomOnMediaSFU;
+        }
+        const response = await this.createMediaSFURoom({
             payload,
             apiUserName,
             apiKey,
+            localLink: this.localLink,
         });
         if (response.success && response.data && 'roomName' in response.data) {
             await this.checkLimitsService.checkLimitsAndMakeRequest({
@@ -7235,19 +7289,36 @@ class PreJoinPage {
         }
     }
     async handleCreateRoom() {
-        const { name, duration, eventType, capacity } = this.preJoinForm.value;
-        if (!name || !duration || !eventType || !capacity) {
-            this.error = 'Please fill all the fields.';
+        if (this.pending.value) {
             return;
         }
-        const payload = {
-            action: 'create',
-            duration: parseInt(duration),
-            capacity: parseInt(capacity),
-            eventType,
-            userName: name,
-            recordOnly: false,
-        };
+        this.pending.next(true);
+        let payload = {};
+        if (this.returnUI) {
+            const { name, duration, eventType, capacity } = this.preJoinForm.value;
+            if (!name || !duration || !eventType || !capacity) {
+                this.error = 'Please fill all the fields.';
+                return;
+            }
+            payload = {
+                action: 'create',
+                duration: parseInt(duration),
+                capacity: parseInt(capacity),
+                eventType,
+                userName: name,
+                recordOnly: false,
+            };
+        }
+        else {
+            if (this.noUIPreJoinOptions && 'action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'create') {
+                payload = this.noUIPreJoinOptions;
+            }
+            else {
+                this.error = 'Invalid options provided for creating a room without UI.';
+                this.pending.next(false);
+                return;
+            }
+        }
         this.parameters.updateIsLoadingModalVisible(true);
         if (this.localLink) {
             const secureCode = Math.random().toString(30).substring(2, 14) +
@@ -7257,12 +7328,12 @@ class PreJoinPage {
                 Math.floor(10 + Math.random() * 99).toString();
             eventID = 'm' + eventID;
             const eventRoomParams = this.localData?.meetingRoomParams_;
-            eventRoomParams.type = eventType;
+            eventRoomParams.type = payload.eventType;
             const createData = {
                 eventID: eventID,
-                duration: parseInt(duration, 10),
-                capacity: parseInt(capacity, 10),
-                userName: name,
+                duration: payload.duration,
+                capacity: payload.capacity,
+                userName: payload.userName,
                 scheduledDate: new Date(),
                 secureCode: secureCode,
                 waitRoom: false,
@@ -7292,6 +7363,7 @@ class PreJoinPage {
                     await this.createLocalRoom({ createData: createData, link: response.data.link });
                 }
                 else {
+                    this.pending.next(false);
                     this.parameters.updateIsLoadingModalVisible(false);
                     this.error = 'Unable to create room on MediaSFU.';
                     try {
@@ -7299,6 +7371,7 @@ class PreJoinPage {
                         await this.createLocalRoom({ createData: createData });
                     }
                     catch (error) {
+                        this.pending.next(false);
                         this.parameters.updateIsLoadingModalVisible(false);
                         this.error = `Unable to create room. ${error}`;
                     }
@@ -7310,6 +7383,7 @@ class PreJoinPage {
                     await this.createLocalRoom({ createData: createData });
                 }
                 catch (error) {
+                    this.pending.next(false);
                     this.parameters.updateIsLoadingModalVisible(false);
                     this.error = `Unable to create room. ${error}`;
                 }
@@ -7322,55 +7396,76 @@ class PreJoinPage {
                 apiKey: this.credentials.apiKey,
                 validate: true,
             });
+            this.pending.next(false);
         }
     }
     async handleJoinRoom() {
-        if (this.preJoinForm.invalid) {
-            this.error = 'Please fill all the fields.';
+        if (this.pending.value) {
             return;
         }
-        const { name, eventID } = this.preJoinForm.value;
-        if (!name || !eventID) {
-            this.error = 'Please fill all the fields.';
-            return;
+        this.pending.next(true);
+        let payload = {};
+        if (this.returnUI) {
+            const { name, eventID } = this.preJoinForm.value;
+            if (!name || !eventID) {
+                this.error = 'Please fill all the fields.';
+                return;
+            }
+            payload = {
+                action: 'join',
+                meetingID: eventID,
+                userName: name,
+            };
         }
-        const payload = {
-            action: 'join',
-            meetingID: eventID,
-            userName: name,
-        };
+        else {
+            if (this.noUIPreJoinOptions && 'action' in this.noUIPreJoinOptions && this.noUIPreJoinOptions.action === 'join') {
+                payload = this.noUIPreJoinOptions;
+            }
+            else {
+                this.error = 'Invalid options provided for joining a room without UI.';
+                this.pending.next(false);
+                return;
+            }
+        }
         if (this.localLink && !this.localLink.includes('mediasfu.com')) {
             const joinData = {
-                eventID: eventID,
-                userName: name,
+                eventID: payload.meetingID,
+                userName: payload.userName,
                 secureCode: '',
                 videoPreference: null,
                 audioPreference: null,
                 audioOutputPreference: null,
             };
             await this.joinLocalRoom({ joinData: joinData });
+            this.pending.next(false);
             return;
         }
         this.parameters.updateIsLoadingModalVisible(true);
         try {
-            const response = await this.joinRoomService.joinRoomOnMediaSFU({
+            if (!this.joinMediaSFURoom) {
+                this.joinMediaSFURoom = this.joinRoomService.joinRoomOnMediaSFU;
+            }
+            const response = await this.joinMediaSFURoom({
                 payload,
                 apiUserName: this.credentials.apiUserName,
                 apiKey: this.credentials.apiKey,
+                localLink: this.localLink,
             });
             if (response.success && response.data && 'roomName' in response.data) {
                 await this.checkLimitsService.checkLimitsAndMakeRequest({
                     apiUserName: response.data.roomName,
                     apiToken: response.data.secret,
                     link: response.data.link,
-                    userName: name,
+                    userName: payload.userName,
                     parameters: this.parameters,
                     validate: true,
                 });
                 this.error = '';
+                this.pending.next(false);
             }
             else {
                 this.parameters.updateIsLoadingModalVisible(false);
+                this.pending.next(false);
                 this.error = `Unable to connect to room. ${response.data ? ('error' in response.data ? response.data.error : '') : ''}`;
             }
         }
@@ -7379,12 +7474,12 @@ class PreJoinPage {
             this.error = `Unable to connect. ${error.message}`;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PreJoinPage, deps: [{ token: i2$1.FormBuilder }, { token: 'parameters', optional: true }, { token: 'credentials', optional: true }, { token: 'localLink', optional: true }, { token: 'connectMediaSFU', optional: true }, { token: CheckLimitsAndMakeRequest }, { token: CreateRoomOnMediaSFU }, { token: JoinRoomOnMediaSFU }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: PreJoinPage, isStandalone: true, selector: "app-pre-join-page", inputs: { parameters: "parameters", credentials: "credentials", localLink: "localLink", connectMediaSFU: "connectMediaSFU" }, ngImport: i0, template: "<div class=\"container-fluid\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i2$1.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$1.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$1.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$1.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$1.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i2$1.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PreJoinPage, deps: [{ token: i2$1.FormBuilder }, { token: 'parameters', optional: true }, { token: 'credentials', optional: true }, { token: 'localLink', optional: true }, { token: 'connectMediaSFU', optional: true }, { token: 'returnUI', optional: true }, { token: 'noUIPreJoinOptions', optional: true }, { token: 'createMediaSFURoom', optional: true }, { token: 'joinMediaSFURoom', optional: true }, { token: CheckLimitsAndMakeRequest }, { token: CreateRoomOnMediaSFU }, { token: JoinRoomOnMediaSFU }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: PreJoinPage, isStandalone: true, selector: "app-pre-join-page", inputs: { parameters: "parameters", credentials: "credentials", localLink: "localLink", connectMediaSFU: "connectMediaSFU", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", createMediaSFURoom: "createMediaSFURoom", joinMediaSFURoom: "joinMediaSFURoom" }, ngImport: i0, template: "<div class=\"container-fluid\" *ngIf=\"returnUI !== false\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i2$1.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$1.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$1.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$1.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$1.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i2$1.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PreJoinPage, decorators: [{
             type: Component,
-            args: [{ selector: 'app-pre-join-page', imports: [CommonModule, ReactiveFormsModule], template: "<div class=\"container-fluid\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"] }]
+            args: [{ selector: 'app-pre-join-page', imports: [CommonModule, ReactiveFormsModule], template: "<div class=\"container-fluid\" *ngIf=\"returnUI !== false\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"] }]
         }], ctorParameters: () => [{ type: i2$1.FormBuilder }, { type: undefined, decorators: [{
                     type: Optional
                 }, {
@@ -7405,6 +7500,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 }, {
                     type: Inject,
                     args: ['connectMediaSFU']
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: ['returnUI']
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: ['noUIPreJoinOptions']
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: ['createMediaSFURoom']
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: ['joinMediaSFURoom']
                 }] }, { type: CheckLimitsAndMakeRequest }, { type: CreateRoomOnMediaSFU }, { type: JoinRoomOnMediaSFU }], propDecorators: { parameters: [{
                 type: Input
             }], credentials: [{
@@ -7412,6 +7527,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], localLink: [{
                 type: Input
             }], connectMediaSFU: [{
+                type: Input
+            }], returnUI: [{
+                type: Input
+            }], noUIPreJoinOptions: [{
+                type: Input
+            }], createMediaSFURoom: [{
+                type: Input
+            }], joinMediaSFURoom: [{
                 type: Input
             }] } });
 
@@ -14700,7 +14823,17 @@ class SocketManager {
             });
             // Handle socket connection events
             socket.on("connection-success", (data) => {
-                console.log("Connected to local media socket.", socket.id);
+                //check if link contains mediasfu.com and contains more than one c
+                let conn = 'media';
+                try {
+                    if (link.includes('mediasfu.com') && (link.match(/c/g)?.length ?? 0) > 1) {
+                        conn = 'consume';
+                    }
+                }
+                catch {
+                    // do nothing
+                }
+                console.log(`Connected to ${conn} socket with ID: ${socket.id}`);
                 resolve({ socket, data });
             });
             socket.on("connect_error", (error) => {
@@ -15194,6 +15327,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @param {string} options.islevel - The level of the user.
  * @param {Socket} options.socket - The socket instance to use for communication.
  * @param {PreJoinPageParameters} options.parameters - Additional parameters for pre-join page actions.
+ * @param {JoinRoomOnMediaSFUType} options.joinMediaSFURoom - The function to join a room on MediaSFU.
+ * @param {string} options.localLink - The local link to use for Community Edition.
  *
  * @returns {Promise<void>} A promise that resolves when the actions are complete.
  *
@@ -15213,6 +15348,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   parameters: {
  *     someParameter: "value",
  *   },
+ *   joinMediaSFURoom: joinRoomOnMediaSFU,
+ *   localLink: "https://socketserver.example.com",
  * };
  *
  * try {
@@ -15242,6 +15379,8 @@ class JoinLocalRoom {
      * @param {string} options.islevel - The level of the user.
      * @param {Socket} options.socket - The socket instance to use for communication.
      * @param {PreJoinPageParameters} options.parameters - Additional parameters for pre-join page actions.
+     * @param {JoinRoomOnMediaSFUType} options.joinMediaSFURoom - The function to join a room on MediaSFU.
+     * @param {string} options.localLink - The local link to use for Community Edition.
      *
      * @returns {Promise<void>} A promise that resolves when the actions are complete.
      *
@@ -15261,6 +15400,8 @@ class JoinLocalRoom {
      *   parameters: {
      *     someParameter: "value",
      *   },
+     *   joinMediaSFURoom: joinRoomOnMediaSFU,
+     *   localLink: "https://socketserver.example.com",
      * };
      *
      * try {
@@ -15272,7 +15413,7 @@ class JoinLocalRoom {
      * ```
      */
     async joinLocalRoom(options) {
-        const { socket, roomName, islevel, member, sec, apiUserName, parameters, checkConnect = false, } = options;
+        const { socket, roomName, islevel, member, sec, apiUserName, parameters, checkConnect = false, joinMediaSFURoom = this.joinRoomOnMediaSFU.joinRoomOnMediaSFU, localLink = '', } = options;
         return new Promise((resolve, reject) => {
             // Validate inputs
             if (!(sec && roomName && islevel && apiUserName && member)) {
@@ -15348,6 +15489,8 @@ class JoinLocalRoom {
                                 islevel,
                                 socket,
                                 parameters,
+                                joinMediaSFURoom,
+                                localLink,
                             });
                         }
                         else {
@@ -15384,9 +15527,12 @@ class JoinLocalRoom {
      *   - `islevel`: User's level indicator.
      *   - `socket`: Socket instance for communication.
      *   - `parameters`: Additional parameters for pre-join page actions.
+     *   - `joinMediaSFURoom`: Function to join a room on MediaSFU.
+     *   - `localLink`: Local link to use for Community Edition.
      */
     async checkMediasfuURL(options) {
-        const { data, member, roomName, islevel, socket, parameters } = options;
+        const { data, member, roomName, islevel, socket, parameters, localLink } = options;
+        let joinMediaSFURoom = options.joinMediaSFURoom;
         if (data.mediasfuURL && data.mediasfuURL.length > 10) {
             let link;
             let secretCode;
@@ -15425,10 +15571,14 @@ class JoinLocalRoom {
                 meetingID: roomName,
                 userName: member,
             };
-            const response = await this.joinRoomOnMediaSFU.joinRoomOnMediaSFU({
+            if (!joinMediaSFURoom) {
+                joinMediaSFURoom = this.joinRoomOnMediaSFU.joinRoomOnMediaSFU;
+            }
+            const response = await joinMediaSFURoom({
                 payload,
                 apiKey: data.apiKey,
                 apiUserName: data.apiUserName,
+                localLink,
             });
             if (response.success && response.data && 'roomName' in response.data) {
                 try {
@@ -16671,7 +16821,6 @@ class ClickAudio {
                             console.log("Error in resumeProducerAudio", error);
                         }
                         updateLocalStream(localStream);
-                        updateAudioAlreadyOn(audioAlreadyOn);
                         if (micAction == true) {
                             micAction = false;
                             updateMicAction(micAction);
@@ -22159,12 +22308,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * ```html
  * <app-mini-audio-player
  *    [stream]="audioStream"
+ *    [consumer]="audioConsumer"
  *    [remoteProducerId]="producerId"
  *    [parameters]="audioPlayerParameters">
  * </app-mini-audio-player>
  * ```
  *
  * @param {MediaStream} [stream] - The audio stream from the participant.
+ * @param {Consumer} [consumer] - The audio consumer for the participant.
  * @param {string} [remoteProducerId] - Unique ID for the remote producer of the audio stream.
  * @param {MiniAudioPlayerParameters} [parameters] - Configuration object with various parameters and utility functions for audio management.
  * @param {Component} [MiniAudioComponent] - Optional audio visualization component injected into the `MiniAudioPlayer`.
@@ -22173,7 +22324,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @returns {HTMLElement} The created audio player element.
  *
  * @remarks
- * The `MiniAudioPlayer` leverages the `AudioContext` API to process audio data, analyze frequency, and manage audio levels.
+ * The `MiniAudioPlayer` processes audio data and manage audio levels.
  * It supports a dynamic breakout room feature that restricts audio visibility to limited participants, updates decibel levels for individual participants, and adjusts the waveforms based on audio activity.
  *
  * Key functionalities include:
@@ -22182,7 +22333,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * - Injecting configuration and parameter dependencies dynamically through `Injector`.
  *
  * @dependencies
- * - `AudioContext`: Web API for processing and analyzing audio data.
  * - `setInterval` for periodic volume level checks (auto-clears on component destruction).
  * - `ReUpdateInterType` and `UpdateParticipantAudioDecibelsType` for dynamic participant audio decibel management.
  *
@@ -22200,6 +22350,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * // Initialize component with required inputs
  * <app-mini-audio-player
  *   [stream]="audioStream"
+ *   [consumer]="audioConsumer"
  *   [remoteProducerId]="participantId"
  *   [parameters]="audioPlayerParameters"
  * ></app-mini-audio-player>
@@ -22208,6 +22359,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
 class MiniAudioPlayer {
     injector;
     stream = null;
+    consumer = null;
     remoteProducerId = '';
     parameters = {};
     MiniAudioComponent;
@@ -22215,16 +22367,16 @@ class MiniAudioPlayer {
     audioElement;
     showWaveModal = false;
     isMuted = false;
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
     intervalId;
     autoWaveCheck = false;
     previousShowWaveModal = null;
     previousIsMuted = null;
     injectorCache = new WeakMap();
     cachedMiniAudioProps;
-    constructor(injector, injectedStream, injectedRemoteProducerId, injectedParameters, injectedMiniAudioComponent, injectedMiniAudioProps) {
+    constructor(injector, injectedStream, consumer, injectedRemoteProducerId, injectedParameters, injectedMiniAudioComponent, injectedMiniAudioProps) {
         this.injector = injector;
         this.stream = injectedStream || this.stream;
+        this.consumer = consumer || this.consumer;
         this.remoteProducerId = injectedRemoteProducerId || this.remoteProducerId;
         this.parameters = injectedParameters || this.parameters;
         this.MiniAudioComponent = injectedMiniAudioComponent || this.MiniAudioComponent;
@@ -22241,17 +22393,24 @@ class MiniAudioPlayer {
         }
     }
     setupAudioProcessing() {
-        const analyser = this.audioContext.createAnalyser();
-        analyser.fftSize = 32;
-        const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const source = this.audioContext.createMediaStreamSource(this.stream);
-        source.connect(analyser);
+        let averageLoudness = 128;
         let consLow = false;
         this.intervalId = setInterval(() => {
-            analyser.getByteTimeDomainData(dataArray);
-            let averageLoudness = Array.from(dataArray).reduce((sum, value) => sum + value, 0) / bufferLength;
+            try {
+                const receiver = this.consumer?.rtpReceiver;
+                receiver?.getStats().then((stats) => {
+                    stats.forEach((report) => {
+                        if (report.type === 'inbound-rtp' &&
+                            report.kind === 'audio' &&
+                            report.audioLevel) {
+                            averageLoudness = 127.5 + report.audioLevel * 127.5;
+                        }
+                    });
+                });
+            }
+            catch {
+                // Do nothing
+            }
             const updatedParams = this.parameters.getUpdatedAllParams();
             let { eventType, participants, paginatedStreams, currentUserPage, adminNameStream, dispActiveNames, activeSounds, reUpdateInter, updateParticipantAudioDecibels, updateActiveSounds, shared, shareScreenStarted, breakOutRoomStarted, breakOutRoomEnded, limitedBreakRoom, } = updatedParams;
             const participant = participants.find((obj) => obj.audioID == this.remoteProducerId);
@@ -22415,8 +22574,8 @@ class MiniAudioPlayer {
         }
         return this.cachedMiniAudioProps;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudioPlayer, deps: [{ token: i0.Injector }, { token: 'stream', optional: true }, { token: 'remoteProducerId', optional: true }, { token: 'parameters', optional: true }, { token: 'MiniAudioComponent', optional: true }, { token: 'miniAudioProps', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MiniAudioPlayer, isStandalone: true, selector: "app-mini-audio-player", inputs: { stream: "stream", remoteProducerId: "remoteProducerId", parameters: "parameters", MiniAudioComponent: "MiniAudioComponent", miniAudioProps: "miniAudioProps" }, viewQueries: [{ propertyName: "audioElement", first: true, predicate: ["audioElement"], descendants: true, static: true }], ngImport: i0, template: "<div class=\"container\">\r\n  <audio *ngIf=\"stream\" autoplay playsinline #audioElement [srcObject]=\"stream\"></audio>\r\n\r\n  <ng-container *ngIf=\"MiniAudioComponent\">\r\n    <ng-container *ngComponentOutlet=\"MiniAudioComponent; injector: createInjector(getMiniAudioProps())\"></ng-container>\r\n  </ng-container>\r\n</div>\r\n", styles: [".container{display:flex;justify-content:center;align-items:center;z-index:9}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudioPlayer, deps: [{ token: i0.Injector }, { token: 'stream', optional: true }, { token: 'consumer', optional: true }, { token: 'remoteProducerId', optional: true }, { token: 'parameters', optional: true }, { token: 'MiniAudioComponent', optional: true }, { token: 'miniAudioProps', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MiniAudioPlayer, isStandalone: true, selector: "app-mini-audio-player", inputs: { stream: "stream", consumer: "consumer", remoteProducerId: "remoteProducerId", parameters: "parameters", MiniAudioComponent: "MiniAudioComponent", miniAudioProps: "miniAudioProps" }, viewQueries: [{ propertyName: "audioElement", first: true, predicate: ["audioElement"], descendants: true, static: true }], ngImport: i0, template: "<div class=\"container\">\r\n  <audio *ngIf=\"stream\" autoplay playsinline #audioElement [srcObject]=\"stream\"></audio>\r\n\r\n  <ng-container *ngIf=\"MiniAudioComponent\">\r\n    <ng-container *ngComponentOutlet=\"MiniAudioComponent; injector: createInjector(getMiniAudioProps())\"></ng-container>\r\n  </ng-container>\r\n</div>\r\n", styles: [".container{display:flex;justify-content:center;align-items:center;z-index:9}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudioPlayer, decorators: [{
             type: Component,
@@ -22426,6 +22585,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 }, {
                     type: Inject,
                     args: ['stream']
+                }] }, { type: i2$2.Consumer, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: ['consumer']
                 }] }, { type: undefined, decorators: [{
                     type: Optional
                 }, {
@@ -22447,6 +22611,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                     type: Inject,
                     args: ['miniAudioProps']
                 }] }], propDecorators: { stream: [{
+                type: Input
+            }], consumer: [{
                 type: Input
             }], remoteProducerId: [{
                 type: Input
@@ -22471,6 +22637,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @param {ResumeParams} options.params - Additional parameters related to the resumed consumer.
  * @param {ConsumerResumeParameters} options.parameters - The parameters object containing various utility functions and state.
  * @param {Socket} options.nsock - The socket associated with the consumer.
+ * @param {Consumer} options.consumer - The consumer to resume.
  * @throws Will throw an error if an issue occurs during the consumer resumption.
  *
  * @example
@@ -22486,6 +22653,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   },
  *   parameters: consumerResumeParameters, // Parameters for the consumer
  *   nsock: socket, // Socket for communication
+ *   consumer: consumer, // Consumer to resume
  * };
  *
  * consumerResume(options)
@@ -22508,9 +22676,10 @@ class ConsumerResume {
      * @param {Object} options.params - Additional parameters related to the resumed consumer.
      * @param {Object} options.parameters - The parameters object containing various utility functions and state.
      * @param {Object} options.nsock - The socket associated with the consumer.
+     * @param {Object} options.consumer - The consumer to resume.
      * @throws Throws an error if an issue occurs during the consumer resumption.
      */
-    consumerResume = async ({ track, remoteProducerId, params, parameters, nsock, }) => {
+    consumerResume = async ({ track, remoteProducerId, params, parameters, nsock, consumer, }) => {
         try {
             // Get updated parameters
             parameters = parameters.getUpdatedAllParams();
@@ -22557,6 +22726,7 @@ class ConsumerResume {
                     component: MiniAudioPlayer,
                     inputs: {
                         stream: nStream ? nStream : null,
+                        consumer: consumer,
                         remoteProducerId: remoteProducerId,
                         parameters: parameters,
                         MiniAudioComponent: MiniAudio,
@@ -22825,6 +22995,24 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 }]
         }] });
 
+const updateMicLevel = async (audioProducer, updateAudioLevel) => {
+    try {
+        setInterval(() => {
+            const sender = audioProducer.rtpSender;
+            sender?.getStats().then((stats) => {
+                stats.forEach((report) => {
+                    if (report.type === 'media-source' && report.kind === 'audio' && report.audioLevel !== undefined) {
+                        const newLevel = 127.5 + (report.audioLevel * 127.5);
+                        updateAudioLevel(newLevel);
+                    }
+                });
+            });
+        }, 1000);
+    }
+    catch {
+        // Handle error
+    }
+};
 const connectLocalSendTransportAudio = async ({ parameters, audioParams }) => {
     try {
         let { localAudioProducer, localProducerTransport, updateLocalAudioProducer, updateLocalProducerTransport, } = parameters;
@@ -22849,6 +23037,9 @@ const connectLocalSendTransportAudio = async ({ parameters, audioParams }) => {
  * @param {Transport} options.parameters.producerTransport - The transport used to produce audio data.
  * @param {Function} options.parameters.updateAudioProducer - Function to update the audio producer.
  * @param {Function} options.parameters.updateProducerTransport - Function to update the producer transport.
+ * @param {Function} [options.parameters.updateLocalAudioProducer] - Function to update the local audio producer.
+ * @param {Function} [options.parameters.updateLocalProducerTransport] - Function to update the local producer transport.
+ * @param {Function} options.parameters.updateAudioLevel - Function to update the audio level.
  *
  * @returns {Promise<void>} A promise that resolves when the audio transport is successfully connected.
  *
@@ -22866,6 +23057,9 @@ const connectLocalSendTransportAudio = async ({ parameters, audioParams }) => {
  *   producerTransport: transport,
  *   updateAudioProducer: (producer) => { console.log(updated) },
   *   updateProducerTransport: (transport) => { console.log(updated) },
+  *  updateLocalAudioProducer: (localProducer) => { console.log(updated) },
+  *  updateLocalProducerTransport: (localTransport) => { console.log(updated) },
+  *  updateAudioLevel: (level) => { console.log(level) },
   * };
   *
   * connectSendTransportAudio({ audioParams, parameters })
@@ -22891,6 +23085,8 @@ class ConnectSendTransportAudio {
      * @param {(producer: Producer | null) => void} options.parameters.updateAudioProducer - The function to update the audio producer object.
      * @param {(transport: Transport | null) => void} options.parameters.updateProducerTransport - The function to update the producer transport object.
      * @param {(localProducer: Producer | null) => void} [options.parameters.updateLocalAudioProducer] - The function to update the local audio producer object.
+     * @param {(localTransport: Transport | null) => void} [options.parameters.updateLocalProducerTransport] - The function to update the local producer transport object.
+     * @param {(level: number) => void} options.parameters.updateAudioLevel - The function to update the audio level.
      * @returns {Promise<void>} A promise that resolves when the connection is established.
      *
      * @throws Will throw an error if the connection fails.
@@ -22925,6 +23121,8 @@ class ConnectSendTransportAudio {
             // Attempt to connect the primary send transport
             if (targetOption === "all" || targetOption === "remote") {
                 audioProducer = await producerTransport.produce(audioParams);
+                // Update the audio level
+                updateMicLevel(audioProducer, parameters.updateAudioLevel);
                 // Update state with the new producer and transport
                 updateAudioProducer(audioProducer);
                 updateProducerTransport(producerTransport);
@@ -22933,6 +23131,13 @@ class ConnectSendTransportAudio {
             if (targetOption === "all" || targetOption === "local") {
                 try {
                     await connectLocalSendTransportAudio({ parameters, audioParams });
+                    // Update the audio level
+                    if (targetOption === 'local' && parameters.updateAudioLevel) {
+                        if (!parameters.localAudioProducer) {
+                            parameters = parameters.getUpdatedAllParams();
+                        }
+                        updateMicLevel(parameters.localAudioProducer, parameters.updateAudioLevel);
+                    }
                 }
                 catch (localError) {
                     console.error("Local audio transport connection failed:", localError);
@@ -26499,6 +26704,7 @@ class ConnectRecvTransport {
                                     params,
                                     parameters,
                                     nsock,
+                                    consumer,
                                 });
                             }
                             catch (error) {
@@ -33347,6 +33553,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Generic".
  *
@@ -33372,7 +33584,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-generic>
  * ```
  */
@@ -33505,6 +33723,12 @@ class MediasfuGeneric {
     seedData;
     useSeed = false;
     imgSrc = 'https://mediasfu.com/images/logo192.png';
+    sourceParameters = {};
+    updateSourceParameters = (data) => { };
+    returnUI = true;
+    noUIPreJoinOptions;
+    joinMediaSFURoom;
+    createMediaSFURoom;
     title = 'MediaSFU-Generic';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -33915,74 +34139,74 @@ class MediasfuGeneric {
                 }),
         };
     };
-    validated = new BehaviorSubject(false);
-    localUIMode = new BehaviorSubject(false);
-    socket = new BehaviorSubject({});
-    localSocket = new BehaviorSubject(undefined);
-    roomData = new BehaviorSubject(null);
-    device = new BehaviorSubject(null);
-    apiKey = new BehaviorSubject('');
-    apiUserName = new BehaviorSubject('');
-    apiToken = new BehaviorSubject('');
-    link = new BehaviorSubject('');
-    roomName = new BehaviorSubject('');
-    member = new BehaviorSubject('');
-    adminPasscode = new BehaviorSubject('');
-    islevel = new BehaviorSubject('1');
-    coHost = new BehaviorSubject('No coHost');
-    coHostResponsibility = new BehaviorSubject([
+    validated = new BehaviorSubject$1(false);
+    localUIMode = new BehaviorSubject$1(false);
+    socket = new BehaviorSubject$1({});
+    localSocket = new BehaviorSubject$1(undefined);
+    roomData = new BehaviorSubject$1(null);
+    device = new BehaviorSubject$1(null);
+    apiKey = new BehaviorSubject$1('');
+    apiUserName = new BehaviorSubject$1('');
+    apiToken = new BehaviorSubject$1('');
+    link = new BehaviorSubject$1('');
+    roomName = new BehaviorSubject$1('');
+    member = new BehaviorSubject$1('');
+    adminPasscode = new BehaviorSubject$1('');
+    islevel = new BehaviorSubject$1('1');
+    coHost = new BehaviorSubject$1('No coHost');
+    coHostResponsibility = new BehaviorSubject$1([
         { name: 'participants', value: false, dedicated: false },
         { name: 'media', value: false, dedicated: false },
         { name: 'waiting', value: false, dedicated: false },
         { name: 'chat', value: false, dedicated: false },
     ]);
-    youAreCoHost = new BehaviorSubject(false);
-    youAreHost = new BehaviorSubject(false);
-    confirmedToRecord = new BehaviorSubject(false);
-    meetingDisplayType = new BehaviorSubject('media');
-    meetingVideoOptimized = new BehaviorSubject(false);
-    eventType = new BehaviorSubject('webinar');
-    participants = new BehaviorSubject([]);
-    filteredParticipants = new BehaviorSubject([]);
-    participantsCounter = new BehaviorSubject(0);
-    participantsFilter = new BehaviorSubject('');
-    consume_sockets = new BehaviorSubject([]);
-    rtpCapabilities = new BehaviorSubject(null);
-    roomRecvIPs = new BehaviorSubject([]);
-    meetingRoomParams = new BehaviorSubject(null);
-    itemPageLimit = new BehaviorSubject(4);
-    audioOnlyRoom = new BehaviorSubject(false);
-    addForBasic = new BehaviorSubject(false);
-    screenPageLimit = new BehaviorSubject(4);
-    shareScreenStarted = new BehaviorSubject(false);
-    shared = new BehaviorSubject(false);
-    targetOrientation = new BehaviorSubject('landscape');
-    targetResolution = new BehaviorSubject('sd');
-    targetResolutionHost = new BehaviorSubject('sd');
-    vidCons = new BehaviorSubject({ width: 640, height: 360 });
-    frameRate = new BehaviorSubject(10);
-    hParams = new BehaviorSubject({});
-    vParams = new BehaviorSubject({});
-    screenParams = new BehaviorSubject({});
-    aParams = new BehaviorSubject({});
-    recordingAudioPausesLimit = new BehaviorSubject(0);
-    recordingAudioPausesCount = new BehaviorSubject(0);
-    recordingAudioSupport = new BehaviorSubject(false);
-    recordingAudioPeopleLimit = new BehaviorSubject(0);
-    recordingAudioParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingVideoPausesCount = new BehaviorSubject(0);
-    recordingVideoPausesLimit = new BehaviorSubject(0);
-    recordingVideoSupport = new BehaviorSubject(false);
-    recordingVideoPeopleLimit = new BehaviorSubject(0);
-    recordingVideoParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingAllParticipantsSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsSupport = new BehaviorSubject(false);
-    recordingAllParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingPreferredOrientation = new BehaviorSubject('landscape');
-    recordingSupportForOtherOrientation = new BehaviorSubject(false);
-    recordingMultiFormatsSupport = new BehaviorSubject(false);
-    userRecordingParams = new BehaviorSubject({
+    youAreCoHost = new BehaviorSubject$1(false);
+    youAreHost = new BehaviorSubject$1(false);
+    confirmedToRecord = new BehaviorSubject$1(false);
+    meetingDisplayType = new BehaviorSubject$1('media');
+    meetingVideoOptimized = new BehaviorSubject$1(false);
+    eventType = new BehaviorSubject$1('webinar');
+    participants = new BehaviorSubject$1([]);
+    filteredParticipants = new BehaviorSubject$1([]);
+    participantsCounter = new BehaviorSubject$1(0);
+    participantsFilter = new BehaviorSubject$1('');
+    consume_sockets = new BehaviorSubject$1([]);
+    rtpCapabilities = new BehaviorSubject$1(null);
+    roomRecvIPs = new BehaviorSubject$1([]);
+    meetingRoomParams = new BehaviorSubject$1(null);
+    itemPageLimit = new BehaviorSubject$1(4);
+    audioOnlyRoom = new BehaviorSubject$1(false);
+    addForBasic = new BehaviorSubject$1(false);
+    screenPageLimit = new BehaviorSubject$1(4);
+    shareScreenStarted = new BehaviorSubject$1(false);
+    shared = new BehaviorSubject$1(false);
+    targetOrientation = new BehaviorSubject$1('landscape');
+    targetResolution = new BehaviorSubject$1('sd');
+    targetResolutionHost = new BehaviorSubject$1('sd');
+    vidCons = new BehaviorSubject$1({ width: 640, height: 360 });
+    frameRate = new BehaviorSubject$1(10);
+    hParams = new BehaviorSubject$1({});
+    vParams = new BehaviorSubject$1({});
+    screenParams = new BehaviorSubject$1({});
+    aParams = new BehaviorSubject$1({});
+    recordingAudioPausesLimit = new BehaviorSubject$1(0);
+    recordingAudioPausesCount = new BehaviorSubject$1(0);
+    recordingAudioSupport = new BehaviorSubject$1(false);
+    recordingAudioPeopleLimit = new BehaviorSubject$1(0);
+    recordingAudioParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingVideoPausesCount = new BehaviorSubject$1(0);
+    recordingVideoPausesLimit = new BehaviorSubject$1(0);
+    recordingVideoSupport = new BehaviorSubject$1(false);
+    recordingVideoPeopleLimit = new BehaviorSubject$1(0);
+    recordingVideoParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingAllParticipantsSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsSupport = new BehaviorSubject$1(false);
+    recordingAllParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingPreferredOrientation = new BehaviorSubject$1('landscape');
+    recordingSupportForOtherOrientation = new BehaviorSubject$1(false);
+    recordingMultiFormatsSupport = new BehaviorSubject$1(false);
+    userRecordingParams = new BehaviorSubject$1({
         mainSpecs: {
             mediaOptions: 'video', // 'audio', 'video'
             audioOptions: 'all', // 'all', 'onScreen', 'host'
@@ -33999,95 +34223,95 @@ class MediasfuGeneric {
             orientationVideo: 'portrait', // 'landscape', 'portrait', 'all'
         },
     });
-    canRecord = new BehaviorSubject(false);
-    startReport = new BehaviorSubject(false);
-    endReport = new BehaviorSubject(false);
-    recordTimerInterval = new BehaviorSubject(null);
-    recordStartTime = new BehaviorSubject(0);
-    recordElapsedTime = new BehaviorSubject(0);
-    isTimerRunning = new BehaviorSubject(false);
-    canPauseResume = new BehaviorSubject(false);
-    recordChangeSeconds = new BehaviorSubject(15000);
-    pauseLimit = new BehaviorSubject(0);
-    pauseRecordCount = new BehaviorSubject(0);
-    canLaunchRecord = new BehaviorSubject(true);
-    stopLaunchRecord = new BehaviorSubject(false);
-    participantsAll = new BehaviorSubject([]);
-    firstAll = new BehaviorSubject(false);
-    updateMainWindow = new BehaviorSubject(false);
-    first_round = new BehaviorSubject(false);
-    landScaped = new BehaviorSubject(false);
-    lock_screen = new BehaviorSubject(false);
-    screenId = new BehaviorSubject('');
-    allVideoStreams = new BehaviorSubject([]);
-    newLimitedStreams = new BehaviorSubject([]);
-    newLimitedStreamsIDs = new BehaviorSubject([]);
-    activeSounds = new BehaviorSubject([]);
-    screenShareIDStream = new BehaviorSubject('');
-    screenShareNameStream = new BehaviorSubject('');
-    adminIDStream = new BehaviorSubject('');
-    adminNameStream = new BehaviorSubject('');
-    youYouStream = new BehaviorSubject([]);
-    youYouStreamIDs = new BehaviorSubject([]);
-    localStream = new BehaviorSubject(null);
-    recordStarted = new BehaviorSubject(false);
-    recordResumed = new BehaviorSubject(false);
-    recordPaused = new BehaviorSubject(false);
-    recordStopped = new BehaviorSubject(false);
-    adminRestrictSetting = new BehaviorSubject(false);
-    videoRequestState = new BehaviorSubject(null);
-    videoRequestTime = new BehaviorSubject(0);
-    videoAction = new BehaviorSubject(false);
-    localStreamVideo = new BehaviorSubject(null);
-    userDefaultVideoInputDevice = new BehaviorSubject('');
-    currentFacingMode = new BehaviorSubject('user');
-    prevFacingMode = new BehaviorSubject('user');
-    defVideoID = new BehaviorSubject('');
-    allowed = new BehaviorSubject(false);
-    dispActiveNames = new BehaviorSubject([]);
-    p_dispActiveNames = new BehaviorSubject([]);
-    activeNames = new BehaviorSubject([]);
-    prevActiveNames = new BehaviorSubject([]);
-    p_activeNames = new BehaviorSubject([]);
-    membersReceived = new BehaviorSubject(false);
-    deferScreenReceived = new BehaviorSubject(false);
-    hostFirstSwitch = new BehaviorSubject(false);
-    micAction = new BehaviorSubject(false);
-    screenAction = new BehaviorSubject(false);
-    chatAction = new BehaviorSubject(false);
-    audioRequestState = new BehaviorSubject(null);
-    screenRequestState = new BehaviorSubject(null);
-    chatRequestState = new BehaviorSubject(null);
-    audioRequestTime = new BehaviorSubject(0);
-    screenRequestTime = new BehaviorSubject(0);
-    chatRequestTime = new BehaviorSubject(0);
-    updateRequestIntervalSeconds = new BehaviorSubject(240);
-    oldSoundIds = new BehaviorSubject([]);
-    hostLabel = new BehaviorSubject('Host');
-    mainScreenFilled = new BehaviorSubject(false);
-    localStreamScreen = new BehaviorSubject(null);
-    screenAlreadyOn = new BehaviorSubject(false);
-    chatAlreadyOn = new BehaviorSubject(false);
-    redirectURL = new BehaviorSubject('');
-    oldAllStreams = new BehaviorSubject([]);
-    adminVidID = new BehaviorSubject('');
-    streamNames = new BehaviorSubject([]);
-    non_alVideoStreams = new BehaviorSubject([]);
-    sortAudioLoudness = new BehaviorSubject(false);
-    audioDecibels = new BehaviorSubject([]);
-    mixed_alVideoStreams = new BehaviorSubject([]);
-    non_alVideoStreams_muted = new BehaviorSubject([]);
-    paginatedStreams = new BehaviorSubject([]);
-    localStreamAudio = new BehaviorSubject(null);
-    defAudioID = new BehaviorSubject('');
-    userDefaultAudioInputDevice = new BehaviorSubject('');
-    userDefaultAudioOutputDevice = new BehaviorSubject('');
-    prevAudioInputDevice = new BehaviorSubject('');
-    prevVideoInputDevice = new BehaviorSubject('');
-    audioPaused = new BehaviorSubject(false);
-    mainScreenPerson = new BehaviorSubject('');
-    adminOnMainScreen = new BehaviorSubject(false);
-    screenStates = new BehaviorSubject([
+    canRecord = new BehaviorSubject$1(false);
+    startReport = new BehaviorSubject$1(false);
+    endReport = new BehaviorSubject$1(false);
+    recordTimerInterval = new BehaviorSubject$1(null);
+    recordStartTime = new BehaviorSubject$1(0);
+    recordElapsedTime = new BehaviorSubject$1(0);
+    isTimerRunning = new BehaviorSubject$1(false);
+    canPauseResume = new BehaviorSubject$1(false);
+    recordChangeSeconds = new BehaviorSubject$1(15000);
+    pauseLimit = new BehaviorSubject$1(0);
+    pauseRecordCount = new BehaviorSubject$1(0);
+    canLaunchRecord = new BehaviorSubject$1(true);
+    stopLaunchRecord = new BehaviorSubject$1(false);
+    participantsAll = new BehaviorSubject$1([]);
+    firstAll = new BehaviorSubject$1(false);
+    updateMainWindow = new BehaviorSubject$1(false);
+    first_round = new BehaviorSubject$1(false);
+    landScaped = new BehaviorSubject$1(false);
+    lock_screen = new BehaviorSubject$1(false);
+    screenId = new BehaviorSubject$1('');
+    allVideoStreams = new BehaviorSubject$1([]);
+    newLimitedStreams = new BehaviorSubject$1([]);
+    newLimitedStreamsIDs = new BehaviorSubject$1([]);
+    activeSounds = new BehaviorSubject$1([]);
+    screenShareIDStream = new BehaviorSubject$1('');
+    screenShareNameStream = new BehaviorSubject$1('');
+    adminIDStream = new BehaviorSubject$1('');
+    adminNameStream = new BehaviorSubject$1('');
+    youYouStream = new BehaviorSubject$1([]);
+    youYouStreamIDs = new BehaviorSubject$1([]);
+    localStream = new BehaviorSubject$1(null);
+    recordStarted = new BehaviorSubject$1(false);
+    recordResumed = new BehaviorSubject$1(false);
+    recordPaused = new BehaviorSubject$1(false);
+    recordStopped = new BehaviorSubject$1(false);
+    adminRestrictSetting = new BehaviorSubject$1(false);
+    videoRequestState = new BehaviorSubject$1(null);
+    videoRequestTime = new BehaviorSubject$1(0);
+    videoAction = new BehaviorSubject$1(false);
+    localStreamVideo = new BehaviorSubject$1(null);
+    userDefaultVideoInputDevice = new BehaviorSubject$1('');
+    currentFacingMode = new BehaviorSubject$1('user');
+    prevFacingMode = new BehaviorSubject$1('user');
+    defVideoID = new BehaviorSubject$1('');
+    allowed = new BehaviorSubject$1(false);
+    dispActiveNames = new BehaviorSubject$1([]);
+    p_dispActiveNames = new BehaviorSubject$1([]);
+    activeNames = new BehaviorSubject$1([]);
+    prevActiveNames = new BehaviorSubject$1([]);
+    p_activeNames = new BehaviorSubject$1([]);
+    membersReceived = new BehaviorSubject$1(false);
+    deferScreenReceived = new BehaviorSubject$1(false);
+    hostFirstSwitch = new BehaviorSubject$1(false);
+    micAction = new BehaviorSubject$1(false);
+    screenAction = new BehaviorSubject$1(false);
+    chatAction = new BehaviorSubject$1(false);
+    audioRequestState = new BehaviorSubject$1(null);
+    screenRequestState = new BehaviorSubject$1(null);
+    chatRequestState = new BehaviorSubject$1(null);
+    audioRequestTime = new BehaviorSubject$1(0);
+    screenRequestTime = new BehaviorSubject$1(0);
+    chatRequestTime = new BehaviorSubject$1(0);
+    updateRequestIntervalSeconds = new BehaviorSubject$1(240);
+    oldSoundIds = new BehaviorSubject$1([]);
+    hostLabel = new BehaviorSubject$1('Host');
+    mainScreenFilled = new BehaviorSubject$1(false);
+    localStreamScreen = new BehaviorSubject$1(null);
+    screenAlreadyOn = new BehaviorSubject$1(false);
+    chatAlreadyOn = new BehaviorSubject$1(false);
+    redirectURL = new BehaviorSubject$1('');
+    oldAllStreams = new BehaviorSubject$1([]);
+    adminVidID = new BehaviorSubject$1('');
+    streamNames = new BehaviorSubject$1([]);
+    non_alVideoStreams = new BehaviorSubject$1([]);
+    sortAudioLoudness = new BehaviorSubject$1(false);
+    audioDecibels = new BehaviorSubject$1([]);
+    mixed_alVideoStreams = new BehaviorSubject$1([]);
+    non_alVideoStreams_muted = new BehaviorSubject$1([]);
+    paginatedStreams = new BehaviorSubject$1([]);
+    localStreamAudio = new BehaviorSubject$1(null);
+    defAudioID = new BehaviorSubject$1('');
+    userDefaultAudioInputDevice = new BehaviorSubject$1('');
+    userDefaultAudioOutputDevice = new BehaviorSubject$1('');
+    prevAudioInputDevice = new BehaviorSubject$1('');
+    prevVideoInputDevice = new BehaviorSubject$1('');
+    audioPaused = new BehaviorSubject$1(false);
+    mainScreenPerson = new BehaviorSubject$1('');
+    adminOnMainScreen = new BehaviorSubject$1(false);
+    screenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -34095,7 +34319,7 @@ class MediasfuGeneric {
             adminOnMainScreen: false,
         },
     ]);
-    prevScreenStates = new BehaviorSubject([
+    prevScreenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -34103,61 +34327,61 @@ class MediasfuGeneric {
             adminOnMainScreen: false,
         },
     ]);
-    updateDateState = new BehaviorSubject(null);
-    lastUpdate = new BehaviorSubject(null);
-    nForReadjustRecord = new BehaviorSubject(0);
-    fixedPageLimit = new BehaviorSubject(4);
-    removeAltGrid = new BehaviorSubject(false);
-    nForReadjust = new BehaviorSubject(0);
-    reorderInterval = new BehaviorSubject(30000);
-    fastReorderInterval = new BehaviorSubject(10000);
-    lastReorderTime = new BehaviorSubject(0);
-    audStreamNames = new BehaviorSubject([]);
-    currentUserPage = new BehaviorSubject(0);
-    mainHeightWidth = new BehaviorSubject(this.eventType.value == 'webinar' ? 67 : this.eventType.value == 'broadcast' ? 100 : 0);
-    prevMainHeightWidth = new BehaviorSubject(this.mainHeightWidth.value);
-    prevDoPaginate = new BehaviorSubject(false);
-    doPaginate = new BehaviorSubject(false);
-    shareEnded = new BehaviorSubject(false);
-    lStreams = new BehaviorSubject([]);
-    chatRefStreams = new BehaviorSubject([]);
-    controlHeight = new BehaviorSubject(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
-    isWideScreen = new BehaviorSubject(false);
-    isMediumScreen = new BehaviorSubject(false);
-    isSmallScreen = new BehaviorSubject(false);
-    addGrid = new BehaviorSubject(false);
-    addAltGrid = new BehaviorSubject(false);
-    gridRows = new BehaviorSubject(0);
-    gridCols = new BehaviorSubject(0);
-    altGridRows = new BehaviorSubject(0);
-    altGridCols = new BehaviorSubject(0);
-    numberPages = new BehaviorSubject(0);
-    currentStreams = new BehaviorSubject([]);
-    showMiniView = new BehaviorSubject(false);
-    nStream = new BehaviorSubject(null);
-    defer_receive = new BehaviorSubject(false);
-    allAudioStreams = new BehaviorSubject([]);
-    remoteScreenStream = new BehaviorSubject([]);
-    screenProducer = new BehaviorSubject(null);
-    localScreenProducer = new BehaviorSubject(null);
-    gotAllVids = new BehaviorSubject(false);
-    paginationHeightWidth = new BehaviorSubject(40);
-    paginationDirection = new BehaviorSubject('horizontal');
-    gridSizes = new BehaviorSubject({
+    updateDateState = new BehaviorSubject$1(null);
+    lastUpdate = new BehaviorSubject$1(null);
+    nForReadjustRecord = new BehaviorSubject$1(0);
+    fixedPageLimit = new BehaviorSubject$1(4);
+    removeAltGrid = new BehaviorSubject$1(false);
+    nForReadjust = new BehaviorSubject$1(0);
+    reorderInterval = new BehaviorSubject$1(30000);
+    fastReorderInterval = new BehaviorSubject$1(10000);
+    lastReorderTime = new BehaviorSubject$1(0);
+    audStreamNames = new BehaviorSubject$1([]);
+    currentUserPage = new BehaviorSubject$1(0);
+    mainHeightWidth = new BehaviorSubject$1(this.eventType.value == 'webinar' ? 67 : this.eventType.value == 'broadcast' ? 100 : 0);
+    prevMainHeightWidth = new BehaviorSubject$1(this.mainHeightWidth.value);
+    prevDoPaginate = new BehaviorSubject$1(false);
+    doPaginate = new BehaviorSubject$1(false);
+    shareEnded = new BehaviorSubject$1(false);
+    lStreams = new BehaviorSubject$1([]);
+    chatRefStreams = new BehaviorSubject$1([]);
+    controlHeight = new BehaviorSubject$1(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
+    isWideScreen = new BehaviorSubject$1(false);
+    isMediumScreen = new BehaviorSubject$1(false);
+    isSmallScreen = new BehaviorSubject$1(false);
+    addGrid = new BehaviorSubject$1(false);
+    addAltGrid = new BehaviorSubject$1(false);
+    gridRows = new BehaviorSubject$1(0);
+    gridCols = new BehaviorSubject$1(0);
+    altGridRows = new BehaviorSubject$1(0);
+    altGridCols = new BehaviorSubject$1(0);
+    numberPages = new BehaviorSubject$1(0);
+    currentStreams = new BehaviorSubject$1([]);
+    showMiniView = new BehaviorSubject$1(false);
+    nStream = new BehaviorSubject$1(null);
+    defer_receive = new BehaviorSubject$1(false);
+    allAudioStreams = new BehaviorSubject$1([]);
+    remoteScreenStream = new BehaviorSubject$1([]);
+    screenProducer = new BehaviorSubject$1(null);
+    localScreenProducer = new BehaviorSubject$1(null);
+    gotAllVids = new BehaviorSubject$1(false);
+    paginationHeightWidth = new BehaviorSubject$1(40);
+    paginationDirection = new BehaviorSubject$1('horizontal');
+    gridSizes = new BehaviorSubject$1({
         gridWidth: 0,
         gridHeight: 0,
         altGridWidth: 0,
         altGridHeight: 0,
     });
-    screenForceFullDisplay = new BehaviorSubject(false);
-    mainGridStream = new BehaviorSubject([]);
-    otherGridStreams = new BehaviorSubject([]);
-    audioOnlyStreams = new BehaviorSubject([]);
-    videoInputs = new BehaviorSubject([]);
-    audioInputs = new BehaviorSubject([]);
-    meetingProgressTime = new BehaviorSubject('00:00:00');
-    meetingElapsedTime = new BehaviorSubject(0);
-    ref_participants = new BehaviorSubject([]);
+    screenForceFullDisplay = new BehaviorSubject$1(false);
+    mainGridStream = new BehaviorSubject$1([]);
+    otherGridStreams = new BehaviorSubject$1([]);
+    audioOnlyStreams = new BehaviorSubject$1([]);
+    videoInputs = new BehaviorSubject$1([]);
+    audioInputs = new BehaviorSubject$1([]);
+    meetingProgressTime = new BehaviorSubject$1('00:00:00');
+    meetingElapsedTime = new BehaviorSubject$1(0);
+    ref_participants = new BehaviorSubject$1([]);
     updateValidated = (value) => {
         this.validated.next(value);
     };
@@ -34778,168 +35002,169 @@ class MediasfuGeneric {
         this.ref_participants.next(value);
     };
     // Messages
-    messages = new BehaviorSubject([]);
-    startDirectMessage = new BehaviorSubject(false);
-    directMessageDetails = new BehaviorSubject(null);
-    showMessagesBadge = new BehaviorSubject(false);
+    messages = new BehaviorSubject$1([]);
+    startDirectMessage = new BehaviorSubject$1(false);
+    directMessageDetails = new BehaviorSubject$1(null);
+    showMessagesBadge = new BehaviorSubject$1(false);
     // Event Settings
-    audioSetting = new BehaviorSubject('allow');
-    videoSetting = new BehaviorSubject('allow');
-    screenshareSetting = new BehaviorSubject('allow');
-    chatSetting = new BehaviorSubject('allow');
+    audioSetting = new BehaviorSubject$1('allow');
+    videoSetting = new BehaviorSubject$1('allow');
+    screenshareSetting = new BehaviorSubject$1('allow');
+    chatSetting = new BehaviorSubject$1('allow');
     // Display Settings
-    displayOption = new BehaviorSubject('media');
-    autoWave = new BehaviorSubject(true);
-    forceFullDisplay = new BehaviorSubject(true);
-    prevForceFullDisplay = new BehaviorSubject(false);
-    prevMeetingDisplayType = new BehaviorSubject('video');
+    displayOption = new BehaviorSubject$1('media');
+    autoWave = new BehaviorSubject$1(true);
+    forceFullDisplay = new BehaviorSubject$1(true);
+    prevForceFullDisplay = new BehaviorSubject$1(false);
+    prevMeetingDisplayType = new BehaviorSubject$1('video');
     // Waiting Room
-    waitingRoomFilter = new BehaviorSubject('');
-    waitingRoomList = new BehaviorSubject(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
-    waitingRoomCounter = new BehaviorSubject(0);
-    filteredWaitingRoomList = new BehaviorSubject(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
+    waitingRoomFilter = new BehaviorSubject$1('');
+    waitingRoomList = new BehaviorSubject$1(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
+    waitingRoomCounter = new BehaviorSubject$1(0);
+    filteredWaitingRoomList = new BehaviorSubject$1(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
     // Requests
-    requestFilter = new BehaviorSubject('');
-    requestList = new BehaviorSubject(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
-    requestCounter = new BehaviorSubject(0);
-    filteredRequestList = new BehaviorSubject(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
+    requestFilter = new BehaviorSubject$1('');
+    requestList = new BehaviorSubject$1(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
+    requestCounter = new BehaviorSubject$1(0);
+    filteredRequestList = new BehaviorSubject$1(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
     // Total Requests and Waiting Room
-    totalReqWait = new BehaviorSubject(0);
+    totalReqWait = new BehaviorSubject$1(0);
     // Alerts
-    alertVisible = new BehaviorSubject(false);
-    alertMessage = new BehaviorSubject('');
-    alertType = new BehaviorSubject('success');
-    alertDuration = new BehaviorSubject(3000);
+    alertVisible = new BehaviorSubject$1(false);
+    alertMessage = new BehaviorSubject$1('');
+    alertType = new BehaviorSubject$1('success');
+    alertDuration = new BehaviorSubject$1(3000);
     // Progress Timer
-    progressTimerVisible = new BehaviorSubject(true);
-    progressTimerValue = new BehaviorSubject(0);
+    progressTimerVisible = new BehaviorSubject$1(true);
+    progressTimerValue = new BehaviorSubject$1(0);
     // Menu Modals
-    isMenuModalVisible = new BehaviorSubject(false);
-    isRecordingModalVisible = new BehaviorSubject(false);
-    isSettingsModalVisible = new BehaviorSubject(false);
-    isRequestsModalVisible = new BehaviorSubject(false);
-    isWaitingModalVisible = new BehaviorSubject(false);
-    isCoHostModalVisible = new BehaviorSubject(false);
-    isMediaSettingsModalVisible = new BehaviorSubject(false);
-    isDisplaySettingsModalVisible = new BehaviorSubject(false);
+    isMenuModalVisible = new BehaviorSubject$1(false);
+    isRecordingModalVisible = new BehaviorSubject$1(false);
+    isSettingsModalVisible = new BehaviorSubject$1(false);
+    isRequestsModalVisible = new BehaviorSubject$1(false);
+    isWaitingModalVisible = new BehaviorSubject$1(false);
+    isCoHostModalVisible = new BehaviorSubject$1(false);
+    isMediaSettingsModalVisible = new BehaviorSubject$1(false);
+    isDisplaySettingsModalVisible = new BehaviorSubject$1(false);
     // Other Modals
-    isParticipantsModalVisible = new BehaviorSubject(false);
-    isMessagesModalVisible = new BehaviorSubject(false);
-    isConfirmExitModalVisible = new BehaviorSubject(false);
-    isConfirmHereModalVisible = new BehaviorSubject(false);
-    isShareEventModalVisible = new BehaviorSubject(false);
-    isLoadingModalVisible = new BehaviorSubject(false);
+    isParticipantsModalVisible = new BehaviorSubject$1(false);
+    isMessagesModalVisible = new BehaviorSubject$1(false);
+    isConfirmExitModalVisible = new BehaviorSubject$1(false);
+    isConfirmHereModalVisible = new BehaviorSubject$1(false);
+    isShareEventModalVisible = new BehaviorSubject$1(false);
+    isLoadingModalVisible = new BehaviorSubject$1(false);
     // Recording Options
-    recordingMediaOptions = new BehaviorSubject('video');
-    recordingAudioOptions = new BehaviorSubject('all');
-    recordingVideoOptions = new BehaviorSubject('all');
-    recordingVideoType = new BehaviorSubject('fullDisplay');
-    recordingVideoOptimized = new BehaviorSubject(false);
-    recordingDisplayType = new BehaviorSubject('video');
-    recordingAddHLS = new BehaviorSubject(true);
-    recordingNameTags = new BehaviorSubject(true);
-    recordingBackgroundColor = new BehaviorSubject('#83c0e9');
-    recordingNameTagsColor = new BehaviorSubject('#ffffff');
-    recordingAddText = new BehaviorSubject(false);
-    recordingCustomText = new BehaviorSubject('Add Text');
-    recordingCustomTextPosition = new BehaviorSubject('top');
-    recordingCustomTextColor = new BehaviorSubject('#ffffff');
-    recordingOrientationVideo = new BehaviorSubject('landscape');
-    clearedToResume = new BehaviorSubject(true);
-    clearedToRecord = new BehaviorSubject(true);
-    recordState = new BehaviorSubject('green');
-    showRecordButtons = new BehaviorSubject(false);
-    recordingProgressTime = new BehaviorSubject('00:00:00');
-    audioSwitching = new BehaviorSubject(false);
-    videoSwitching = new BehaviorSubject(false);
+    recordingMediaOptions = new BehaviorSubject$1('video');
+    recordingAudioOptions = new BehaviorSubject$1('all');
+    recordingVideoOptions = new BehaviorSubject$1('all');
+    recordingVideoType = new BehaviorSubject$1('fullDisplay');
+    recordingVideoOptimized = new BehaviorSubject$1(false);
+    recordingDisplayType = new BehaviorSubject$1('video');
+    recordingAddHLS = new BehaviorSubject$1(true);
+    recordingNameTags = new BehaviorSubject$1(true);
+    recordingBackgroundColor = new BehaviorSubject$1('#83c0e9');
+    recordingNameTagsColor = new BehaviorSubject$1('#ffffff');
+    recordingAddText = new BehaviorSubject$1(false);
+    recordingCustomText = new BehaviorSubject$1('Add Text');
+    recordingCustomTextPosition = new BehaviorSubject$1('top');
+    recordingCustomTextColor = new BehaviorSubject$1('#ffffff');
+    recordingOrientationVideo = new BehaviorSubject$1('landscape');
+    clearedToResume = new BehaviorSubject$1(true);
+    clearedToRecord = new BehaviorSubject$1(true);
+    recordState = new BehaviorSubject$1('green');
+    showRecordButtons = new BehaviorSubject$1(false);
+    recordingProgressTime = new BehaviorSubject$1('00:00:00');
+    audioSwitching = new BehaviorSubject$1(false);
+    videoSwitching = new BehaviorSubject$1(false);
     // Media States
-    videoAlreadyOn = new BehaviorSubject(false);
-    audioAlreadyOn = new BehaviorSubject(false);
-    componentSizes = new BehaviorSubject({
+    videoAlreadyOn = new BehaviorSubject$1(false);
+    audioAlreadyOn = new BehaviorSubject$1(false);
+    componentSizes = new BehaviorSubject$1({
         mainHeight: 0,
         otherHeight: 0,
         mainWidth: 0,
         otherWidth: 0,
     });
     // Permissions
-    hasCameraPermission = new BehaviorSubject(false);
-    hasAudioPermission = new BehaviorSubject(false);
+    hasCameraPermission = new BehaviorSubject$1(false);
+    hasAudioPermission = new BehaviorSubject$1(false);
     // Transports
-    transportCreated = new BehaviorSubject(false);
-    localTransportCreated = new BehaviorSubject(false);
-    transportCreatedVideo = new BehaviorSubject(false);
-    transportCreatedAudio = new BehaviorSubject(false);
-    transportCreatedScreen = new BehaviorSubject(false);
-    producerTransport = new BehaviorSubject(null);
-    localProducerTransport = new BehaviorSubject(null);
-    videoProducer = new BehaviorSubject(null);
-    localVideoProducer = new BehaviorSubject(null);
-    params = new BehaviorSubject({});
-    videoParams = new BehaviorSubject({});
-    audioParams = new BehaviorSubject({});
-    audioProducer = new BehaviorSubject(null);
-    localAudioProducer = new BehaviorSubject(null);
-    consumerTransports = new BehaviorSubject([]);
-    consumingTransports = new BehaviorSubject([]);
+    transportCreated = new BehaviorSubject$1(false);
+    localTransportCreated = new BehaviorSubject$1(false);
+    transportCreatedVideo = new BehaviorSubject$1(false);
+    transportCreatedAudio = new BehaviorSubject$1(false);
+    transportCreatedScreen = new BehaviorSubject$1(false);
+    producerTransport = new BehaviorSubject$1(null);
+    localProducerTransport = new BehaviorSubject$1(null);
+    videoProducer = new BehaviorSubject$1(null);
+    localVideoProducer = new BehaviorSubject$1(null);
+    params = new BehaviorSubject$1({});
+    videoParams = new BehaviorSubject$1({});
+    audioParams = new BehaviorSubject$1({});
+    audioProducer = new BehaviorSubject$1(null);
+    audioLevel = new BehaviorSubject$1(0);
+    localAudioProducer = new BehaviorSubject$1(null);
+    consumerTransports = new BehaviorSubject$1([]);
+    consumingTransports = new BehaviorSubject$1([]);
     // Polls
-    polls = new BehaviorSubject(this.useSeed && this.seedData?.polls ? this.seedData.polls : []);
-    poll = new BehaviorSubject(null);
-    isPollModalVisible = new BehaviorSubject(false);
+    polls = new BehaviorSubject$1(this.useSeed && this.seedData?.polls ? this.seedData.polls : []);
+    poll = new BehaviorSubject$1(null);
+    isPollModalVisible = new BehaviorSubject$1(false);
     // Background
-    customImage = new BehaviorSubject('');
-    selectedImage = new BehaviorSubject('');
-    segmentVideo = new BehaviorSubject(null);
-    selfieSegmentation = new BehaviorSubject(null);
-    pauseSegmentation = new BehaviorSubject(false);
-    processedStream = new BehaviorSubject(null);
-    keepBackground = new BehaviorSubject(false);
-    backgroundHasChanged = new BehaviorSubject(false);
-    virtualStream = new BehaviorSubject(null);
-    mainCanvas = new BehaviorSubject(null);
-    prevKeepBackground = new BehaviorSubject(false);
-    appliedBackground = new BehaviorSubject(false);
-    isBackgroundModalVisible = new BehaviorSubject(false);
-    autoClickBackground = new BehaviorSubject(false);
+    customImage = new BehaviorSubject$1('');
+    selectedImage = new BehaviorSubject$1('');
+    segmentVideo = new BehaviorSubject$1(null);
+    selfieSegmentation = new BehaviorSubject$1(null);
+    pauseSegmentation = new BehaviorSubject$1(false);
+    processedStream = new BehaviorSubject$1(null);
+    keepBackground = new BehaviorSubject$1(false);
+    backgroundHasChanged = new BehaviorSubject$1(false);
+    virtualStream = new BehaviorSubject$1(null);
+    mainCanvas = new BehaviorSubject$1(null);
+    prevKeepBackground = new BehaviorSubject$1(false);
+    appliedBackground = new BehaviorSubject$1(false);
+    isBackgroundModalVisible = new BehaviorSubject$1(false);
+    autoClickBackground = new BehaviorSubject$1(false);
     // Breakout Rooms
-    breakoutRooms = new BehaviorSubject(this.useSeed && this.seedData?.breakoutRooms ? this.seedData.breakoutRooms : []);
-    currentRoomIndex = new BehaviorSubject(0);
-    canStartBreakout = new BehaviorSubject(false);
-    breakOutRoomStarted = new BehaviorSubject(false);
-    breakOutRoomEnded = new BehaviorSubject(false);
-    hostNewRoom = new BehaviorSubject(-1);
-    limitedBreakRoom = new BehaviorSubject([]);
-    mainRoomsLength = new BehaviorSubject(0);
-    memberRoom = new BehaviorSubject(-1);
-    isBreakoutRoomsModalVisible = new BehaviorSubject(false);
+    breakoutRooms = new BehaviorSubject$1(this.useSeed && this.seedData?.breakoutRooms ? this.seedData.breakoutRooms : []);
+    currentRoomIndex = new BehaviorSubject$1(0);
+    canStartBreakout = new BehaviorSubject$1(false);
+    breakOutRoomStarted = new BehaviorSubject$1(false);
+    breakOutRoomEnded = new BehaviorSubject$1(false);
+    hostNewRoom = new BehaviorSubject$1(-1);
+    limitedBreakRoom = new BehaviorSubject$1([]);
+    mainRoomsLength = new BehaviorSubject$1(0);
+    memberRoom = new BehaviorSubject$1(-1);
+    isBreakoutRoomsModalVisible = new BehaviorSubject$1(false);
     // Whiteboard
-    whiteboardUsers = new BehaviorSubject(this.useSeed && this.seedData?.whiteboardUsers ? this.seedData.whiteboardUsers : []);
-    currentWhiteboardIndex = new BehaviorSubject(0);
-    canStartWhiteboard = new BehaviorSubject(false);
-    whiteboardStarted = new BehaviorSubject(false);
-    whiteboardEnded = new BehaviorSubject(false);
-    whiteboardLimit = new BehaviorSubject(4);
-    isWhiteboardModalVisible = new BehaviorSubject(false);
-    isConfigureWhiteboardModalVisible = new BehaviorSubject(false);
-    shapes = new BehaviorSubject([]);
-    useImageBackground = new BehaviorSubject(true);
-    redoStack = new BehaviorSubject([]);
-    undoStack = new BehaviorSubject([]);
-    canvasStream = new BehaviorSubject(null);
-    canvasWhiteboard = new BehaviorSubject(null);
+    whiteboardUsers = new BehaviorSubject$1(this.useSeed && this.seedData?.whiteboardUsers ? this.seedData.whiteboardUsers : []);
+    currentWhiteboardIndex = new BehaviorSubject$1(0);
+    canStartWhiteboard = new BehaviorSubject$1(false);
+    whiteboardStarted = new BehaviorSubject$1(false);
+    whiteboardEnded = new BehaviorSubject$1(false);
+    whiteboardLimit = new BehaviorSubject$1(4);
+    isWhiteboardModalVisible = new BehaviorSubject$1(false);
+    isConfigureWhiteboardModalVisible = new BehaviorSubject$1(false);
+    shapes = new BehaviorSubject$1([]);
+    useImageBackground = new BehaviorSubject$1(true);
+    redoStack = new BehaviorSubject$1([]);
+    undoStack = new BehaviorSubject$1([]);
+    canvasStream = new BehaviorSubject$1(null);
+    canvasWhiteboard = new BehaviorSubject$1(null);
     // Screenboard
-    canvasScreenboard = new BehaviorSubject(null);
-    processedScreenStream = new BehaviorSubject(null);
-    annotateScreenStream = new BehaviorSubject(false);
-    mainScreenCanvas = new BehaviorSubject(null);
-    isScreenboardModalVisible = new BehaviorSubject(false);
+    canvasScreenboard = new BehaviorSubject$1(null);
+    processedScreenStream = new BehaviorSubject$1(null);
+    annotateScreenStream = new BehaviorSubject$1(false);
+    mainScreenCanvas = new BehaviorSubject$1(null);
+    isScreenboardModalVisible = new BehaviorSubject$1(false);
     //state variables for the control buttons
-    micActive = new BehaviorSubject(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
-    videoActive = new BehaviorSubject(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
-    screenShareActive = new BehaviorSubject(false);
-    endCallActive = new BehaviorSubject(false);
-    participantsActive = new BehaviorSubject(false);
-    menuActive = new BehaviorSubject(false);
-    commentsActive = new BehaviorSubject(false);
+    micActive = new BehaviorSubject$1(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
+    videoActive = new BehaviorSubject$1(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
+    screenShareActive = new BehaviorSubject$1(false);
+    endCallActive = new BehaviorSubject$1(false);
+    participantsActive = new BehaviorSubject$1(false);
+    menuActive = new BehaviorSubject$1(false);
+    commentsActive = new BehaviorSubject$1(false);
     // Update functions
     updateMessages = (value) => {
         this.messages.next(value);
@@ -35268,6 +35493,9 @@ class MediasfuGeneric {
     };
     updateAudioProducer = (value) => {
         this.audioProducer.next(value);
+    };
+    updateAudioLevel = (value) => {
+        this.audioLevel.next(value);
     };
     updateLocalAudioProducer = (value) => {
         this.localAudioProducer.next(value);
@@ -35715,6 +35943,7 @@ class MediasfuGeneric {
             videoParams: this.videoParams.value,
             audioParams: this.audioParams.value,
             audioProducer: this.audioProducer.value,
+            audioLevel: this.audioLevel.value,
             localAudioProducer: this.localAudioProducer.value,
             consumerTransports: this.consumerTransports.value,
             consumingTransports: this.consumingTransports.value,
@@ -36049,6 +36278,7 @@ class MediasfuGeneric {
             updateVideoParams: this.updateVideoParams.bind(this),
             updateAudioParams: this.updateAudioParams.bind(this),
             updateAudioProducer: this.updateAudioProducer.bind(this),
+            updateAudioLevel: this.updateAudioLevel.bind(this),
             updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
             updateConsumerTransports: this.updateConsumerTransports.bind(this),
             updateConsumingTransports: this.updateConsumingTransports.bind(this),
@@ -36111,6 +36341,20 @@ class MediasfuGeneric {
             updateValidated: this.updateValidated.bind(this),
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
+                try {
+                    if (this.sourceParameters !== null) {
+                        this.sourceParameters = {
+                            ...this.getAllParams(),
+                            ...this.mediaSFUFunctions(),
+                        };
+                        if (this.updateSourceParameters) {
+                            this.updateSourceParameters(this.sourceParameters);
+                        }
+                    }
+                }
+                catch {
+                    console.log('error updateSourceParameters');
+                }
                 return {
                     ...this.getAllParams(),
                     ...this.mediaSFUFunctions(),
@@ -36209,6 +36453,10 @@ class MediasfuGeneric {
                 credentials: this.credentials,
                 localLink: this.localLink,
                 connectMediaSFU: this.connectMediaSFU,
+                returnUI: this.returnUI,
+                noUIPreJoinOptions: this.noUIPreJoinOptions,
+                joinMediaSFURoom: this.joinMediaSFURoom,
+                createMediaSFURoom: this.createMediaSFURoom,
             }),
         };
         this.PrejoinPageComponent = { ...PrejoinComp };
@@ -36376,6 +36624,20 @@ class MediasfuGeneric {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
+            try {
+                if (this.sourceParameters !== null) {
+                    this.sourceParameters = {
+                        ...this.getAllParams(),
+                        ...this.mediaSFUFunctions(),
+                    };
+                    if (this.updateSourceParameters) {
+                        this.updateSourceParameters(this.sourceParameters);
+                    }
+                }
+            }
+            catch {
+                console.log('error updateSourceParameters');
+            }
         }
     }
     async handleResize() {
@@ -36579,6 +36841,8 @@ class MediasfuGeneric {
                 checkConnect: this.localLink.length > 0 &&
                     this.connectMediaSFU === true &&
                     !this.link.value.includes('mediasfu.com'),
+                localLink: this.localLink,
+                joinMediaSFURoom: this.joinMediaSFURoom,
             });
             data = await createResponseJoinRoom({ localRoom: localData });
         }
@@ -37816,7 +38080,7 @@ class MediasfuGeneric {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuGeneric, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <div
       class="MediaSFU"
       [ngStyle]="{
@@ -37838,7 +38102,7 @@ class MediasfuGeneric {
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -38005,6 +38269,7 @@ class MediasfuGeneric {
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -38241,6 +38506,7 @@ class MediasfuGeneric {
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1$1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
 }
@@ -38303,7 +38569,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -38470,6 +38736,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -38706,6 +38973,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, providers: [CookieService] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
@@ -38723,6 +38991,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], useSeed: [{
                 type: Input
             }], imgSrc: [{
+                type: Input
+            }], sourceParameters: [{
+                type: Input
+            }], updateSourceParameters: [{
+                type: Input
+            }], returnUI: [{
+                type: Input
+            }], noUIPreJoinOptions: [{
+                type: Input
+            }], joinMediaSFURoom: [{
+                type: Input
+            }], createMediaSFURoom: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -38757,10 +39037,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
- * @property {string} title - The title of the broadcast.
- *
- * @providers [CookieService] - Service for managing cookies within the component.
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Broadcast".
  *
  * @styles
  * Custom styles specific to MediaSFU layout and interactions.
@@ -38782,7 +39066,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-broadcast>
  * ```
  */
@@ -38892,6 +39182,12 @@ class MediasfuBroadcast {
     seedData;
     useSeed = false;
     imgSrc = 'https://mediasfu.com/images/logo192.png';
+    sourceParameters = {};
+    updateSourceParameters = (data) => { };
+    returnUI = true;
+    noUIPreJoinOptions;
+    joinMediaSFURoom;
+    createMediaSFURoom;
     title = 'MediaSFU-Broadcast';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -39267,74 +39563,74 @@ class MediasfuBroadcast {
                 }),
         };
     };
-    validated = new BehaviorSubject(false);
-    localUIMode = new BehaviorSubject(false);
-    socket = new BehaviorSubject({});
-    localSocket = new BehaviorSubject(undefined);
-    roomData = new BehaviorSubject(null);
-    device = new BehaviorSubject(null);
-    apiKey = new BehaviorSubject('');
-    apiUserName = new BehaviorSubject('');
-    apiToken = new BehaviorSubject('');
-    link = new BehaviorSubject('');
-    roomName = new BehaviorSubject('');
-    member = new BehaviorSubject('');
-    adminPasscode = new BehaviorSubject('');
-    islevel = new BehaviorSubject('1');
-    coHost = new BehaviorSubject('No coHost');
-    coHostResponsibility = new BehaviorSubject([
+    validated = new BehaviorSubject$1(false);
+    localUIMode = new BehaviorSubject$1(false);
+    socket = new BehaviorSubject$1({});
+    localSocket = new BehaviorSubject$1(undefined);
+    roomData = new BehaviorSubject$1(null);
+    device = new BehaviorSubject$1(null);
+    apiKey = new BehaviorSubject$1('');
+    apiUserName = new BehaviorSubject$1('');
+    apiToken = new BehaviorSubject$1('');
+    link = new BehaviorSubject$1('');
+    roomName = new BehaviorSubject$1('');
+    member = new BehaviorSubject$1('');
+    adminPasscode = new BehaviorSubject$1('');
+    islevel = new BehaviorSubject$1('1');
+    coHost = new BehaviorSubject$1('No coHost');
+    coHostResponsibility = new BehaviorSubject$1([
         { name: 'participants', value: false, dedicated: false },
         { name: 'media', value: false, dedicated: false },
         { name: 'waiting', value: false, dedicated: false },
         { name: 'chat', value: false, dedicated: false },
     ]);
-    youAreCoHost = new BehaviorSubject(false);
-    youAreHost = new BehaviorSubject(false);
-    confirmedToRecord = new BehaviorSubject(false);
-    meetingDisplayType = new BehaviorSubject('media');
-    meetingVideoOptimized = new BehaviorSubject(false);
-    eventType = new BehaviorSubject('broadcast');
-    participants = new BehaviorSubject([]);
-    filteredParticipants = new BehaviorSubject([]);
-    participantsCounter = new BehaviorSubject(0);
-    participantsFilter = new BehaviorSubject('');
-    consume_sockets = new BehaviorSubject([]);
-    rtpCapabilities = new BehaviorSubject(null);
-    roomRecvIPs = new BehaviorSubject([]);
-    meetingRoomParams = new BehaviorSubject(null);
-    itemPageLimit = new BehaviorSubject(4);
-    audioOnlyRoom = new BehaviorSubject(false);
-    addForBasic = new BehaviorSubject(false);
-    screenPageLimit = new BehaviorSubject(4);
-    shareScreenStarted = new BehaviorSubject(false);
-    shared = new BehaviorSubject(false);
-    targetOrientation = new BehaviorSubject('landscape');
-    targetResolution = new BehaviorSubject('sd');
-    targetResolutionHost = new BehaviorSubject('sd');
-    vidCons = new BehaviorSubject({ width: 640, height: 360 });
-    frameRate = new BehaviorSubject(10);
-    hParams = new BehaviorSubject({});
-    vParams = new BehaviorSubject({});
-    screenParams = new BehaviorSubject({});
-    aParams = new BehaviorSubject({});
-    recordingAudioPausesLimit = new BehaviorSubject(0);
-    recordingAudioPausesCount = new BehaviorSubject(0);
-    recordingAudioSupport = new BehaviorSubject(false);
-    recordingAudioPeopleLimit = new BehaviorSubject(0);
-    recordingAudioParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingVideoPausesCount = new BehaviorSubject(0);
-    recordingVideoPausesLimit = new BehaviorSubject(0);
-    recordingVideoSupport = new BehaviorSubject(false);
-    recordingVideoPeopleLimit = new BehaviorSubject(0);
-    recordingVideoParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingAllParticipantsSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsSupport = new BehaviorSubject(false);
-    recordingAllParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingPreferredOrientation = new BehaviorSubject('landscape');
-    recordingSupportForOtherOrientation = new BehaviorSubject(false);
-    recordingMultiFormatsSupport = new BehaviorSubject(false);
-    userRecordingParams = new BehaviorSubject({
+    youAreCoHost = new BehaviorSubject$1(false);
+    youAreHost = new BehaviorSubject$1(false);
+    confirmedToRecord = new BehaviorSubject$1(false);
+    meetingDisplayType = new BehaviorSubject$1('media');
+    meetingVideoOptimized = new BehaviorSubject$1(false);
+    eventType = new BehaviorSubject$1('broadcast');
+    participants = new BehaviorSubject$1([]);
+    filteredParticipants = new BehaviorSubject$1([]);
+    participantsCounter = new BehaviorSubject$1(0);
+    participantsFilter = new BehaviorSubject$1('');
+    consume_sockets = new BehaviorSubject$1([]);
+    rtpCapabilities = new BehaviorSubject$1(null);
+    roomRecvIPs = new BehaviorSubject$1([]);
+    meetingRoomParams = new BehaviorSubject$1(null);
+    itemPageLimit = new BehaviorSubject$1(4);
+    audioOnlyRoom = new BehaviorSubject$1(false);
+    addForBasic = new BehaviorSubject$1(false);
+    screenPageLimit = new BehaviorSubject$1(4);
+    shareScreenStarted = new BehaviorSubject$1(false);
+    shared = new BehaviorSubject$1(false);
+    targetOrientation = new BehaviorSubject$1('landscape');
+    targetResolution = new BehaviorSubject$1('sd');
+    targetResolutionHost = new BehaviorSubject$1('sd');
+    vidCons = new BehaviorSubject$1({ width: 640, height: 360 });
+    frameRate = new BehaviorSubject$1(10);
+    hParams = new BehaviorSubject$1({});
+    vParams = new BehaviorSubject$1({});
+    screenParams = new BehaviorSubject$1({});
+    aParams = new BehaviorSubject$1({});
+    recordingAudioPausesLimit = new BehaviorSubject$1(0);
+    recordingAudioPausesCount = new BehaviorSubject$1(0);
+    recordingAudioSupport = new BehaviorSubject$1(false);
+    recordingAudioPeopleLimit = new BehaviorSubject$1(0);
+    recordingAudioParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingVideoPausesCount = new BehaviorSubject$1(0);
+    recordingVideoPausesLimit = new BehaviorSubject$1(0);
+    recordingVideoSupport = new BehaviorSubject$1(false);
+    recordingVideoPeopleLimit = new BehaviorSubject$1(0);
+    recordingVideoParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingAllParticipantsSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsSupport = new BehaviorSubject$1(false);
+    recordingAllParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingPreferredOrientation = new BehaviorSubject$1('landscape');
+    recordingSupportForOtherOrientation = new BehaviorSubject$1(false);
+    recordingMultiFormatsSupport = new BehaviorSubject$1(false);
+    userRecordingParams = new BehaviorSubject$1({
         mainSpecs: {
             mediaOptions: 'video', // 'audio', 'video'
             audioOptions: 'all', // 'all', 'onScreen', 'host'
@@ -39351,95 +39647,95 @@ class MediasfuBroadcast {
             orientationVideo: 'portrait', // 'landscape', 'portrait', 'all'
         },
     });
-    canRecord = new BehaviorSubject(false);
-    startReport = new BehaviorSubject(false);
-    endReport = new BehaviorSubject(false);
-    recordTimerInterval = new BehaviorSubject(null);
-    recordStartTime = new BehaviorSubject(0);
-    recordElapsedTime = new BehaviorSubject(0);
-    isTimerRunning = new BehaviorSubject(false);
-    canPauseResume = new BehaviorSubject(false);
-    recordChangeSeconds = new BehaviorSubject(15000);
-    pauseLimit = new BehaviorSubject(0);
-    pauseRecordCount = new BehaviorSubject(0);
-    canLaunchRecord = new BehaviorSubject(true);
-    stopLaunchRecord = new BehaviorSubject(false);
-    participantsAll = new BehaviorSubject([]);
-    firstAll = new BehaviorSubject(false);
-    updateMainWindow = new BehaviorSubject(false);
-    first_round = new BehaviorSubject(false);
-    landScaped = new BehaviorSubject(false);
-    lock_screen = new BehaviorSubject(false);
-    screenId = new BehaviorSubject('');
-    allVideoStreams = new BehaviorSubject([]);
-    newLimitedStreams = new BehaviorSubject([]);
-    newLimitedStreamsIDs = new BehaviorSubject([]);
-    activeSounds = new BehaviorSubject([]);
-    screenShareIDStream = new BehaviorSubject('');
-    screenShareNameStream = new BehaviorSubject('');
-    adminIDStream = new BehaviorSubject('');
-    adminNameStream = new BehaviorSubject('');
-    youYouStream = new BehaviorSubject([]);
-    youYouStreamIDs = new BehaviorSubject([]);
-    localStream = new BehaviorSubject(null);
-    recordStarted = new BehaviorSubject(false);
-    recordResumed = new BehaviorSubject(false);
-    recordPaused = new BehaviorSubject(false);
-    recordStopped = new BehaviorSubject(false);
-    adminRestrictSetting = new BehaviorSubject(false);
-    videoRequestState = new BehaviorSubject(null);
-    videoRequestTime = new BehaviorSubject(0);
-    videoAction = new BehaviorSubject(false);
-    localStreamVideo = new BehaviorSubject(null);
-    userDefaultVideoInputDevice = new BehaviorSubject('');
-    currentFacingMode = new BehaviorSubject('user');
-    prevFacingMode = new BehaviorSubject('user');
-    defVideoID = new BehaviorSubject('');
-    allowed = new BehaviorSubject(false);
-    dispActiveNames = new BehaviorSubject([]);
-    p_dispActiveNames = new BehaviorSubject([]);
-    activeNames = new BehaviorSubject([]);
-    prevActiveNames = new BehaviorSubject([]);
-    p_activeNames = new BehaviorSubject([]);
-    membersReceived = new BehaviorSubject(false);
-    deferScreenReceived = new BehaviorSubject(false);
-    hostFirstSwitch = new BehaviorSubject(false);
-    micAction = new BehaviorSubject(false);
-    screenAction = new BehaviorSubject(false);
-    chatAction = new BehaviorSubject(false);
-    audioRequestState = new BehaviorSubject(null);
-    screenRequestState = new BehaviorSubject(null);
-    chatRequestState = new BehaviorSubject(null);
-    audioRequestTime = new BehaviorSubject(0);
-    screenRequestTime = new BehaviorSubject(0);
-    chatRequestTime = new BehaviorSubject(0);
-    updateRequestIntervalSeconds = new BehaviorSubject(240);
-    oldSoundIds = new BehaviorSubject([]);
-    hostLabel = new BehaviorSubject('Host');
-    mainScreenFilled = new BehaviorSubject(false);
-    localStreamScreen = new BehaviorSubject(null);
-    screenAlreadyOn = new BehaviorSubject(false);
-    chatAlreadyOn = new BehaviorSubject(false);
-    redirectURL = new BehaviorSubject('');
-    oldAllStreams = new BehaviorSubject([]);
-    adminVidID = new BehaviorSubject('');
-    streamNames = new BehaviorSubject([]);
-    non_alVideoStreams = new BehaviorSubject([]);
-    sortAudioLoudness = new BehaviorSubject(false);
-    audioDecibels = new BehaviorSubject([]);
-    mixed_alVideoStreams = new BehaviorSubject([]);
-    non_alVideoStreams_muted = new BehaviorSubject([]);
-    paginatedStreams = new BehaviorSubject([]);
-    localStreamAudio = new BehaviorSubject(null);
-    defAudioID = new BehaviorSubject('');
-    userDefaultAudioInputDevice = new BehaviorSubject('');
-    userDefaultAudioOutputDevice = new BehaviorSubject('');
-    prevAudioInputDevice = new BehaviorSubject('');
-    prevVideoInputDevice = new BehaviorSubject('');
-    audioPaused = new BehaviorSubject(false);
-    mainScreenPerson = new BehaviorSubject('');
-    adminOnMainScreen = new BehaviorSubject(false);
-    screenStates = new BehaviorSubject([
+    canRecord = new BehaviorSubject$1(false);
+    startReport = new BehaviorSubject$1(false);
+    endReport = new BehaviorSubject$1(false);
+    recordTimerInterval = new BehaviorSubject$1(null);
+    recordStartTime = new BehaviorSubject$1(0);
+    recordElapsedTime = new BehaviorSubject$1(0);
+    isTimerRunning = new BehaviorSubject$1(false);
+    canPauseResume = new BehaviorSubject$1(false);
+    recordChangeSeconds = new BehaviorSubject$1(15000);
+    pauseLimit = new BehaviorSubject$1(0);
+    pauseRecordCount = new BehaviorSubject$1(0);
+    canLaunchRecord = new BehaviorSubject$1(true);
+    stopLaunchRecord = new BehaviorSubject$1(false);
+    participantsAll = new BehaviorSubject$1([]);
+    firstAll = new BehaviorSubject$1(false);
+    updateMainWindow = new BehaviorSubject$1(false);
+    first_round = new BehaviorSubject$1(false);
+    landScaped = new BehaviorSubject$1(false);
+    lock_screen = new BehaviorSubject$1(false);
+    screenId = new BehaviorSubject$1('');
+    allVideoStreams = new BehaviorSubject$1([]);
+    newLimitedStreams = new BehaviorSubject$1([]);
+    newLimitedStreamsIDs = new BehaviorSubject$1([]);
+    activeSounds = new BehaviorSubject$1([]);
+    screenShareIDStream = new BehaviorSubject$1('');
+    screenShareNameStream = new BehaviorSubject$1('');
+    adminIDStream = new BehaviorSubject$1('');
+    adminNameStream = new BehaviorSubject$1('');
+    youYouStream = new BehaviorSubject$1([]);
+    youYouStreamIDs = new BehaviorSubject$1([]);
+    localStream = new BehaviorSubject$1(null);
+    recordStarted = new BehaviorSubject$1(false);
+    recordResumed = new BehaviorSubject$1(false);
+    recordPaused = new BehaviorSubject$1(false);
+    recordStopped = new BehaviorSubject$1(false);
+    adminRestrictSetting = new BehaviorSubject$1(false);
+    videoRequestState = new BehaviorSubject$1(null);
+    videoRequestTime = new BehaviorSubject$1(0);
+    videoAction = new BehaviorSubject$1(false);
+    localStreamVideo = new BehaviorSubject$1(null);
+    userDefaultVideoInputDevice = new BehaviorSubject$1('');
+    currentFacingMode = new BehaviorSubject$1('user');
+    prevFacingMode = new BehaviorSubject$1('user');
+    defVideoID = new BehaviorSubject$1('');
+    allowed = new BehaviorSubject$1(false);
+    dispActiveNames = new BehaviorSubject$1([]);
+    p_dispActiveNames = new BehaviorSubject$1([]);
+    activeNames = new BehaviorSubject$1([]);
+    prevActiveNames = new BehaviorSubject$1([]);
+    p_activeNames = new BehaviorSubject$1([]);
+    membersReceived = new BehaviorSubject$1(false);
+    deferScreenReceived = new BehaviorSubject$1(false);
+    hostFirstSwitch = new BehaviorSubject$1(false);
+    micAction = new BehaviorSubject$1(false);
+    screenAction = new BehaviorSubject$1(false);
+    chatAction = new BehaviorSubject$1(false);
+    audioRequestState = new BehaviorSubject$1(null);
+    screenRequestState = new BehaviorSubject$1(null);
+    chatRequestState = new BehaviorSubject$1(null);
+    audioRequestTime = new BehaviorSubject$1(0);
+    screenRequestTime = new BehaviorSubject$1(0);
+    chatRequestTime = new BehaviorSubject$1(0);
+    updateRequestIntervalSeconds = new BehaviorSubject$1(240);
+    oldSoundIds = new BehaviorSubject$1([]);
+    hostLabel = new BehaviorSubject$1('Host');
+    mainScreenFilled = new BehaviorSubject$1(false);
+    localStreamScreen = new BehaviorSubject$1(null);
+    screenAlreadyOn = new BehaviorSubject$1(false);
+    chatAlreadyOn = new BehaviorSubject$1(false);
+    redirectURL = new BehaviorSubject$1('');
+    oldAllStreams = new BehaviorSubject$1([]);
+    adminVidID = new BehaviorSubject$1('');
+    streamNames = new BehaviorSubject$1([]);
+    non_alVideoStreams = new BehaviorSubject$1([]);
+    sortAudioLoudness = new BehaviorSubject$1(false);
+    audioDecibels = new BehaviorSubject$1([]);
+    mixed_alVideoStreams = new BehaviorSubject$1([]);
+    non_alVideoStreams_muted = new BehaviorSubject$1([]);
+    paginatedStreams = new BehaviorSubject$1([]);
+    localStreamAudio = new BehaviorSubject$1(null);
+    defAudioID = new BehaviorSubject$1('');
+    userDefaultAudioInputDevice = new BehaviorSubject$1('');
+    userDefaultAudioOutputDevice = new BehaviorSubject$1('');
+    prevAudioInputDevice = new BehaviorSubject$1('');
+    prevVideoInputDevice = new BehaviorSubject$1('');
+    audioPaused = new BehaviorSubject$1(false);
+    mainScreenPerson = new BehaviorSubject$1('');
+    adminOnMainScreen = new BehaviorSubject$1(false);
+    screenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -39447,7 +39743,7 @@ class MediasfuBroadcast {
             adminOnMainScreen: false,
         },
     ]);
-    prevScreenStates = new BehaviorSubject([
+    prevScreenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -39455,61 +39751,61 @@ class MediasfuBroadcast {
             adminOnMainScreen: false,
         },
     ]);
-    updateDateState = new BehaviorSubject(null);
-    lastUpdate = new BehaviorSubject(null);
-    nForReadjustRecord = new BehaviorSubject(0);
-    fixedPageLimit = new BehaviorSubject(4);
-    removeAltGrid = new BehaviorSubject(false);
-    nForReadjust = new BehaviorSubject(0);
-    reorderInterval = new BehaviorSubject(30000);
-    fastReorderInterval = new BehaviorSubject(10000);
-    lastReorderTime = new BehaviorSubject(0);
-    audStreamNames = new BehaviorSubject([]);
-    currentUserPage = new BehaviorSubject(0);
-    mainHeightWidth = new BehaviorSubject(100);
-    prevMainHeightWidth = new BehaviorSubject(this.mainHeightWidth.value);
-    prevDoPaginate = new BehaviorSubject(false);
-    doPaginate = new BehaviorSubject(false);
-    shareEnded = new BehaviorSubject(false);
-    lStreams = new BehaviorSubject([]);
-    chatRefStreams = new BehaviorSubject([]);
-    controlHeight = new BehaviorSubject(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
-    isWideScreen = new BehaviorSubject(false);
-    isMediumScreen = new BehaviorSubject(false);
-    isSmallScreen = new BehaviorSubject(false);
-    addGrid = new BehaviorSubject(false);
-    addAltGrid = new BehaviorSubject(false);
-    gridRows = new BehaviorSubject(0);
-    gridCols = new BehaviorSubject(0);
-    altGridRows = new BehaviorSubject(0);
-    altGridCols = new BehaviorSubject(0);
-    numberPages = new BehaviorSubject(0);
-    currentStreams = new BehaviorSubject([]);
-    showMiniView = new BehaviorSubject(false);
-    nStream = new BehaviorSubject(null);
-    defer_receive = new BehaviorSubject(false);
-    allAudioStreams = new BehaviorSubject([]);
-    remoteScreenStream = new BehaviorSubject([]);
-    screenProducer = new BehaviorSubject(null);
-    localScreenProducer = new BehaviorSubject(null);
-    gotAllVids = new BehaviorSubject(false);
-    paginationHeightWidth = new BehaviorSubject(40);
-    paginationDirection = new BehaviorSubject('horizontal');
-    gridSizes = new BehaviorSubject({
+    updateDateState = new BehaviorSubject$1(null);
+    lastUpdate = new BehaviorSubject$1(null);
+    nForReadjustRecord = new BehaviorSubject$1(0);
+    fixedPageLimit = new BehaviorSubject$1(4);
+    removeAltGrid = new BehaviorSubject$1(false);
+    nForReadjust = new BehaviorSubject$1(0);
+    reorderInterval = new BehaviorSubject$1(30000);
+    fastReorderInterval = new BehaviorSubject$1(10000);
+    lastReorderTime = new BehaviorSubject$1(0);
+    audStreamNames = new BehaviorSubject$1([]);
+    currentUserPage = new BehaviorSubject$1(0);
+    mainHeightWidth = new BehaviorSubject$1(100);
+    prevMainHeightWidth = new BehaviorSubject$1(this.mainHeightWidth.value);
+    prevDoPaginate = new BehaviorSubject$1(false);
+    doPaginate = new BehaviorSubject$1(false);
+    shareEnded = new BehaviorSubject$1(false);
+    lStreams = new BehaviorSubject$1([]);
+    chatRefStreams = new BehaviorSubject$1([]);
+    controlHeight = new BehaviorSubject$1(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
+    isWideScreen = new BehaviorSubject$1(false);
+    isMediumScreen = new BehaviorSubject$1(false);
+    isSmallScreen = new BehaviorSubject$1(false);
+    addGrid = new BehaviorSubject$1(false);
+    addAltGrid = new BehaviorSubject$1(false);
+    gridRows = new BehaviorSubject$1(0);
+    gridCols = new BehaviorSubject$1(0);
+    altGridRows = new BehaviorSubject$1(0);
+    altGridCols = new BehaviorSubject$1(0);
+    numberPages = new BehaviorSubject$1(0);
+    currentStreams = new BehaviorSubject$1([]);
+    showMiniView = new BehaviorSubject$1(false);
+    nStream = new BehaviorSubject$1(null);
+    defer_receive = new BehaviorSubject$1(false);
+    allAudioStreams = new BehaviorSubject$1([]);
+    remoteScreenStream = new BehaviorSubject$1([]);
+    screenProducer = new BehaviorSubject$1(null);
+    localScreenProducer = new BehaviorSubject$1(null);
+    gotAllVids = new BehaviorSubject$1(false);
+    paginationHeightWidth = new BehaviorSubject$1(40);
+    paginationDirection = new BehaviorSubject$1('horizontal');
+    gridSizes = new BehaviorSubject$1({
         gridWidth: 0,
         gridHeight: 0,
         altGridWidth: 0,
         altGridHeight: 0,
     });
-    screenForceFullDisplay = new BehaviorSubject(false);
-    mainGridStream = new BehaviorSubject([]);
-    otherGridStreams = new BehaviorSubject([]);
-    audioOnlyStreams = new BehaviorSubject([]);
-    videoInputs = new BehaviorSubject([]);
-    audioInputs = new BehaviorSubject([]);
-    meetingProgressTime = new BehaviorSubject('00:00:00');
-    meetingElapsedTime = new BehaviorSubject(0);
-    ref_participants = new BehaviorSubject([]);
+    screenForceFullDisplay = new BehaviorSubject$1(false);
+    mainGridStream = new BehaviorSubject$1([]);
+    otherGridStreams = new BehaviorSubject$1([]);
+    audioOnlyStreams = new BehaviorSubject$1([]);
+    videoInputs = new BehaviorSubject$1([]);
+    audioInputs = new BehaviorSubject$1([]);
+    meetingProgressTime = new BehaviorSubject$1('00:00:00');
+    meetingElapsedTime = new BehaviorSubject$1(0);
+    ref_participants = new BehaviorSubject$1([]);
     updateValidated = (value) => {
         this.validated.next(value);
     };
@@ -40120,168 +40416,169 @@ class MediasfuBroadcast {
         this.ref_participants.next(value);
     };
     // Messages
-    messages = new BehaviorSubject([]);
-    startDirectMessage = new BehaviorSubject(false);
-    directMessageDetails = new BehaviorSubject(null);
-    showMessagesBadge = new BehaviorSubject(false);
+    messages = new BehaviorSubject$1([]);
+    startDirectMessage = new BehaviorSubject$1(false);
+    directMessageDetails = new BehaviorSubject$1(null);
+    showMessagesBadge = new BehaviorSubject$1(false);
     // Event Settings
-    audioSetting = new BehaviorSubject('allow');
-    videoSetting = new BehaviorSubject('allow');
-    screenshareSetting = new BehaviorSubject('allow');
-    chatSetting = new BehaviorSubject('allow');
+    audioSetting = new BehaviorSubject$1('allow');
+    videoSetting = new BehaviorSubject$1('allow');
+    screenshareSetting = new BehaviorSubject$1('allow');
+    chatSetting = new BehaviorSubject$1('allow');
     // Display Settings
-    displayOption = new BehaviorSubject('media');
-    autoWave = new BehaviorSubject(true);
-    forceFullDisplay = new BehaviorSubject(true);
-    prevForceFullDisplay = new BehaviorSubject(false);
-    prevMeetingDisplayType = new BehaviorSubject('video');
+    displayOption = new BehaviorSubject$1('media');
+    autoWave = new BehaviorSubject$1(true);
+    forceFullDisplay = new BehaviorSubject$1(true);
+    prevForceFullDisplay = new BehaviorSubject$1(false);
+    prevMeetingDisplayType = new BehaviorSubject$1('video');
     // Waiting Room
-    waitingRoomFilter = new BehaviorSubject('');
-    waitingRoomList = new BehaviorSubject([]);
-    waitingRoomCounter = new BehaviorSubject(0);
-    filteredWaitingRoomList = new BehaviorSubject([]);
+    waitingRoomFilter = new BehaviorSubject$1('');
+    waitingRoomList = new BehaviorSubject$1([]);
+    waitingRoomCounter = new BehaviorSubject$1(0);
+    filteredWaitingRoomList = new BehaviorSubject$1([]);
     // Requests
-    requestFilter = new BehaviorSubject('');
-    requestList = new BehaviorSubject([]);
-    requestCounter = new BehaviorSubject(0);
-    filteredRequestList = new BehaviorSubject([]);
+    requestFilter = new BehaviorSubject$1('');
+    requestList = new BehaviorSubject$1([]);
+    requestCounter = new BehaviorSubject$1(0);
+    filteredRequestList = new BehaviorSubject$1([]);
     // Total Requests and Waiting Room
-    totalReqWait = new BehaviorSubject(0);
+    totalReqWait = new BehaviorSubject$1(0);
     // Alerts
-    alertVisible = new BehaviorSubject(false);
-    alertMessage = new BehaviorSubject('');
-    alertType = new BehaviorSubject('success');
-    alertDuration = new BehaviorSubject(3000);
+    alertVisible = new BehaviorSubject$1(false);
+    alertMessage = new BehaviorSubject$1('');
+    alertType = new BehaviorSubject$1('success');
+    alertDuration = new BehaviorSubject$1(3000);
     // Progress Timer
-    progressTimerVisible = new BehaviorSubject(true);
-    progressTimerValue = new BehaviorSubject(0);
+    progressTimerVisible = new BehaviorSubject$1(true);
+    progressTimerValue = new BehaviorSubject$1(0);
     // Menu Modals
-    isMenuModalVisible = new BehaviorSubject(false);
-    isRecordingModalVisible = new BehaviorSubject(false);
-    isSettingsModalVisible = new BehaviorSubject(false);
-    isRequestsModalVisible = new BehaviorSubject(false);
-    isWaitingModalVisible = new BehaviorSubject(false);
-    isCoHostModalVisible = new BehaviorSubject(false);
-    isMediaSettingsModalVisible = new BehaviorSubject(false);
-    isDisplaySettingsModalVisible = new BehaviorSubject(false);
+    isMenuModalVisible = new BehaviorSubject$1(false);
+    isRecordingModalVisible = new BehaviorSubject$1(false);
+    isSettingsModalVisible = new BehaviorSubject$1(false);
+    isRequestsModalVisible = new BehaviorSubject$1(false);
+    isWaitingModalVisible = new BehaviorSubject$1(false);
+    isCoHostModalVisible = new BehaviorSubject$1(false);
+    isMediaSettingsModalVisible = new BehaviorSubject$1(false);
+    isDisplaySettingsModalVisible = new BehaviorSubject$1(false);
     // Other Modals
-    isParticipantsModalVisible = new BehaviorSubject(false);
-    isMessagesModalVisible = new BehaviorSubject(false);
-    isConfirmExitModalVisible = new BehaviorSubject(false);
-    isConfirmHereModalVisible = new BehaviorSubject(false);
-    isShareEventModalVisible = new BehaviorSubject(false);
-    isLoadingModalVisible = new BehaviorSubject(false);
+    isParticipantsModalVisible = new BehaviorSubject$1(false);
+    isMessagesModalVisible = new BehaviorSubject$1(false);
+    isConfirmExitModalVisible = new BehaviorSubject$1(false);
+    isConfirmHereModalVisible = new BehaviorSubject$1(false);
+    isShareEventModalVisible = new BehaviorSubject$1(false);
+    isLoadingModalVisible = new BehaviorSubject$1(false);
     // Recording Options
-    recordingMediaOptions = new BehaviorSubject('video');
-    recordingAudioOptions = new BehaviorSubject('all');
-    recordingVideoOptions = new BehaviorSubject('all');
-    recordingVideoType = new BehaviorSubject('fullDisplay');
-    recordingVideoOptimized = new BehaviorSubject(false);
-    recordingDisplayType = new BehaviorSubject('video');
-    recordingAddHLS = new BehaviorSubject(true);
-    recordingNameTags = new BehaviorSubject(true);
-    recordingBackgroundColor = new BehaviorSubject('#83c0e9');
-    recordingNameTagsColor = new BehaviorSubject('#ffffff');
-    recordingAddText = new BehaviorSubject(false);
-    recordingCustomText = new BehaviorSubject('Add Text');
-    recordingCustomTextPosition = new BehaviorSubject('top');
-    recordingCustomTextColor = new BehaviorSubject('#ffffff');
-    recordingOrientationVideo = new BehaviorSubject('landscape');
-    clearedToResume = new BehaviorSubject(true);
-    clearedToRecord = new BehaviorSubject(true);
-    recordState = new BehaviorSubject('green');
-    showRecordButtons = new BehaviorSubject(false);
-    recordingProgressTime = new BehaviorSubject('00:00:00');
-    audioSwitching = new BehaviorSubject(false);
-    videoSwitching = new BehaviorSubject(false);
+    recordingMediaOptions = new BehaviorSubject$1('video');
+    recordingAudioOptions = new BehaviorSubject$1('all');
+    recordingVideoOptions = new BehaviorSubject$1('all');
+    recordingVideoType = new BehaviorSubject$1('fullDisplay');
+    recordingVideoOptimized = new BehaviorSubject$1(false);
+    recordingDisplayType = new BehaviorSubject$1('video');
+    recordingAddHLS = new BehaviorSubject$1(true);
+    recordingNameTags = new BehaviorSubject$1(true);
+    recordingBackgroundColor = new BehaviorSubject$1('#83c0e9');
+    recordingNameTagsColor = new BehaviorSubject$1('#ffffff');
+    recordingAddText = new BehaviorSubject$1(false);
+    recordingCustomText = new BehaviorSubject$1('Add Text');
+    recordingCustomTextPosition = new BehaviorSubject$1('top');
+    recordingCustomTextColor = new BehaviorSubject$1('#ffffff');
+    recordingOrientationVideo = new BehaviorSubject$1('landscape');
+    clearedToResume = new BehaviorSubject$1(true);
+    clearedToRecord = new BehaviorSubject$1(true);
+    recordState = new BehaviorSubject$1('green');
+    showRecordButtons = new BehaviorSubject$1(false);
+    recordingProgressTime = new BehaviorSubject$1('00:00:00');
+    audioSwitching = new BehaviorSubject$1(false);
+    videoSwitching = new BehaviorSubject$1(false);
     // Media States
-    videoAlreadyOn = new BehaviorSubject(false);
-    audioAlreadyOn = new BehaviorSubject(false);
-    componentSizes = new BehaviorSubject({
+    videoAlreadyOn = new BehaviorSubject$1(false);
+    audioAlreadyOn = new BehaviorSubject$1(false);
+    componentSizes = new BehaviorSubject$1({
         mainHeight: 0,
         otherHeight: 0,
         mainWidth: 0,
         otherWidth: 0,
     });
     // Permissions
-    hasCameraPermission = new BehaviorSubject(false);
-    hasAudioPermission = new BehaviorSubject(false);
+    hasCameraPermission = new BehaviorSubject$1(false);
+    hasAudioPermission = new BehaviorSubject$1(false);
     // Transports
-    transportCreated = new BehaviorSubject(false);
-    localTransportCreated = new BehaviorSubject(false);
-    transportCreatedVideo = new BehaviorSubject(false);
-    transportCreatedAudio = new BehaviorSubject(false);
-    transportCreatedScreen = new BehaviorSubject(false);
-    producerTransport = new BehaviorSubject(null);
-    localProducerTransport = new BehaviorSubject(null);
-    videoProducer = new BehaviorSubject(null);
-    localVideoProducer = new BehaviorSubject(null);
-    params = new BehaviorSubject({});
-    videoParams = new BehaviorSubject({});
-    audioParams = new BehaviorSubject({});
-    audioProducer = new BehaviorSubject(null);
-    localAudioProducer = new BehaviorSubject(null);
-    consumerTransports = new BehaviorSubject([]);
-    consumingTransports = new BehaviorSubject([]);
+    transportCreated = new BehaviorSubject$1(false);
+    localTransportCreated = new BehaviorSubject$1(false);
+    transportCreatedVideo = new BehaviorSubject$1(false);
+    transportCreatedAudio = new BehaviorSubject$1(false);
+    transportCreatedScreen = new BehaviorSubject$1(false);
+    producerTransport = new BehaviorSubject$1(null);
+    localProducerTransport = new BehaviorSubject$1(null);
+    videoProducer = new BehaviorSubject$1(null);
+    localVideoProducer = new BehaviorSubject$1(null);
+    params = new BehaviorSubject$1({});
+    videoParams = new BehaviorSubject$1({});
+    audioParams = new BehaviorSubject$1({});
+    audioProducer = new BehaviorSubject$1(null);
+    audioLevel = new BehaviorSubject$1(0);
+    localAudioProducer = new BehaviorSubject$1(null);
+    consumerTransports = new BehaviorSubject$1([]);
+    consumingTransports = new BehaviorSubject$1([]);
     // Polls
-    polls = new BehaviorSubject([]);
-    poll = new BehaviorSubject(null);
-    isPollModalVisible = new BehaviorSubject(false);
+    polls = new BehaviorSubject$1([]);
+    poll = new BehaviorSubject$1(null);
+    isPollModalVisible = new BehaviorSubject$1(false);
     // Background
-    customImage = new BehaviorSubject('');
-    selectedImage = new BehaviorSubject('');
-    segmentVideo = new BehaviorSubject(null);
-    selfieSegmentation = new BehaviorSubject(null);
-    pauseSegmentation = new BehaviorSubject(false);
-    processedStream = new BehaviorSubject(null);
-    keepBackground = new BehaviorSubject(false);
-    backgroundHasChanged = new BehaviorSubject(false);
-    virtualStream = new BehaviorSubject(null);
-    mainCanvas = new BehaviorSubject(null);
-    prevKeepBackground = new BehaviorSubject(false);
-    appliedBackground = new BehaviorSubject(false);
-    isBackgroundModalVisible = new BehaviorSubject(false);
-    autoClickBackground = new BehaviorSubject(false);
+    customImage = new BehaviorSubject$1('');
+    selectedImage = new BehaviorSubject$1('');
+    segmentVideo = new BehaviorSubject$1(null);
+    selfieSegmentation = new BehaviorSubject$1(null);
+    pauseSegmentation = new BehaviorSubject$1(false);
+    processedStream = new BehaviorSubject$1(null);
+    keepBackground = new BehaviorSubject$1(false);
+    backgroundHasChanged = new BehaviorSubject$1(false);
+    virtualStream = new BehaviorSubject$1(null);
+    mainCanvas = new BehaviorSubject$1(null);
+    prevKeepBackground = new BehaviorSubject$1(false);
+    appliedBackground = new BehaviorSubject$1(false);
+    isBackgroundModalVisible = new BehaviorSubject$1(false);
+    autoClickBackground = new BehaviorSubject$1(false);
     // Breakout Rooms
-    breakoutRooms = new BehaviorSubject([]);
-    currentRoomIndex = new BehaviorSubject(0);
-    canStartBreakout = new BehaviorSubject(false);
-    breakOutRoomStarted = new BehaviorSubject(false);
-    breakOutRoomEnded = new BehaviorSubject(false);
-    hostNewRoom = new BehaviorSubject(-1);
-    limitedBreakRoom = new BehaviorSubject([]);
-    mainRoomsLength = new BehaviorSubject(0);
-    memberRoom = new BehaviorSubject(-1);
-    isBreakoutRoomsModalVisible = new BehaviorSubject(false);
+    breakoutRooms = new BehaviorSubject$1([]);
+    currentRoomIndex = new BehaviorSubject$1(0);
+    canStartBreakout = new BehaviorSubject$1(false);
+    breakOutRoomStarted = new BehaviorSubject$1(false);
+    breakOutRoomEnded = new BehaviorSubject$1(false);
+    hostNewRoom = new BehaviorSubject$1(-1);
+    limitedBreakRoom = new BehaviorSubject$1([]);
+    mainRoomsLength = new BehaviorSubject$1(0);
+    memberRoom = new BehaviorSubject$1(-1);
+    isBreakoutRoomsModalVisible = new BehaviorSubject$1(false);
     // Whiteboard
-    whiteboardUsers = new BehaviorSubject([]);
-    currentWhiteboardIndex = new BehaviorSubject(0);
-    canStartWhiteboard = new BehaviorSubject(false);
-    whiteboardStarted = new BehaviorSubject(false);
-    whiteboardEnded = new BehaviorSubject(false);
-    whiteboardLimit = new BehaviorSubject(4);
-    isWhiteboardModalVisible = new BehaviorSubject(false);
-    isConfigureWhiteboardModalVisible = new BehaviorSubject(false);
-    shapes = new BehaviorSubject([]);
-    useImageBackground = new BehaviorSubject(true);
-    redoStack = new BehaviorSubject([]);
-    undoStack = new BehaviorSubject([]);
-    canvasStream = new BehaviorSubject(null);
-    canvasWhiteboard = new BehaviorSubject(null);
+    whiteboardUsers = new BehaviorSubject$1([]);
+    currentWhiteboardIndex = new BehaviorSubject$1(0);
+    canStartWhiteboard = new BehaviorSubject$1(false);
+    whiteboardStarted = new BehaviorSubject$1(false);
+    whiteboardEnded = new BehaviorSubject$1(false);
+    whiteboardLimit = new BehaviorSubject$1(4);
+    isWhiteboardModalVisible = new BehaviorSubject$1(false);
+    isConfigureWhiteboardModalVisible = new BehaviorSubject$1(false);
+    shapes = new BehaviorSubject$1([]);
+    useImageBackground = new BehaviorSubject$1(true);
+    redoStack = new BehaviorSubject$1([]);
+    undoStack = new BehaviorSubject$1([]);
+    canvasStream = new BehaviorSubject$1(null);
+    canvasWhiteboard = new BehaviorSubject$1(null);
     // Screenboard
-    canvasScreenboard = new BehaviorSubject(null);
-    processedScreenStream = new BehaviorSubject(null);
-    annotateScreenStream = new BehaviorSubject(false);
-    mainScreenCanvas = new BehaviorSubject(null);
-    isScreenboardModalVisible = new BehaviorSubject(false);
+    canvasScreenboard = new BehaviorSubject$1(null);
+    processedScreenStream = new BehaviorSubject$1(null);
+    annotateScreenStream = new BehaviorSubject$1(false);
+    mainScreenCanvas = new BehaviorSubject$1(null);
+    isScreenboardModalVisible = new BehaviorSubject$1(false);
     //state variables for the control buttons
-    micActive = new BehaviorSubject(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
-    videoActive = new BehaviorSubject(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
-    screenShareActive = new BehaviorSubject(false);
-    endCallActive = new BehaviorSubject(false);
-    participantsActive = new BehaviorSubject(false);
-    menuActive = new BehaviorSubject(false);
-    commentsActive = new BehaviorSubject(false);
+    micActive = new BehaviorSubject$1(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
+    videoActive = new BehaviorSubject$1(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
+    screenShareActive = new BehaviorSubject$1(false);
+    endCallActive = new BehaviorSubject$1(false);
+    participantsActive = new BehaviorSubject$1(false);
+    menuActive = new BehaviorSubject$1(false);
+    commentsActive = new BehaviorSubject$1(false);
     // Update functions
     updateMessages = (value) => {
         this.messages.next(value);
@@ -40582,6 +40879,9 @@ class MediasfuBroadcast {
     };
     updateAudioProducer = (value) => {
         this.audioProducer.next(value);
+    };
+    updateAudioLevel = (value) => {
+        this.audioLevel.next(value);
     };
     updateLocalAudioProducer = (value) => {
         this.localAudioProducer.next(value);
@@ -41029,6 +41329,7 @@ class MediasfuBroadcast {
             videoParams: this.videoParams.value,
             audioParams: this.audioParams.value,
             audioProducer: this.audioProducer.value,
+            audioLevel: this.audioLevel.value,
             localAudioProducer: this.localAudioProducer.value,
             consumerTransports: this.consumerTransports.value,
             consumingTransports: this.consumingTransports.value,
@@ -41363,6 +41664,7 @@ class MediasfuBroadcast {
             updateVideoParams: this.updateVideoParams.bind(this),
             updateAudioParams: this.updateAudioParams.bind(this),
             updateAudioProducer: this.updateAudioProducer.bind(this),
+            updateAudioLevel: this.updateAudioLevel.bind(this),
             updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
             updateConsumerTransports: this.updateConsumerTransports.bind(this),
             updateConsumingTransports: this.updateConsumingTransports.bind(this),
@@ -41425,6 +41727,20 @@ class MediasfuBroadcast {
             updateValidated: this.updateValidated.bind(this),
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
+                try {
+                    if (this.sourceParameters !== null) {
+                        this.sourceParameters = {
+                            ...this.getAllParams(),
+                            ...this.mediaSFUFunctions(),
+                        };
+                        if (this.updateSourceParameters) {
+                            this.updateSourceParameters(this.sourceParameters);
+                        }
+                    }
+                }
+                catch {
+                    console.log('error updateSourceParameters');
+                }
                 return {
                     ...this.getAllParams(),
                     ...this.mediaSFUFunctions(),
@@ -41470,6 +41786,10 @@ class MediasfuBroadcast {
                 credentials: this.credentials,
                 localLink: this.localLink,
                 connectMediaSFU: this.connectMediaSFU,
+                returnUI: this.returnUI,
+                noUIPreJoinOptions: this.noUIPreJoinOptions,
+                joinMediaSFURoom: this.joinMediaSFURoom,
+                createMediaSFURoom: this.createMediaSFURoom,
             }),
         };
         this.PrejoinPageComponent = { ...PrejoinComp };
@@ -41605,6 +41925,20 @@ class MediasfuBroadcast {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
+            try {
+                if (this.sourceParameters !== null) {
+                    this.sourceParameters = {
+                        ...this.getAllParams(),
+                        ...this.mediaSFUFunctions(),
+                    };
+                    if (this.updateSourceParameters) {
+                        this.updateSourceParameters(this.sourceParameters);
+                    }
+                }
+            }
+            catch {
+                console.log('error updateSourceParameters');
+            }
         }
     }
     async handleResize() {
@@ -41808,6 +42142,8 @@ class MediasfuBroadcast {
                 checkConnect: this.localLink.length > 0 &&
                     this.connectMediaSFU === true &&
                     !this.link.value.includes('mediasfu.com'),
+                localLink: this.localLink,
+                joinMediaSFURoom: this.joinMediaSFURoom,
             });
             data = await createResponseJoinRoom({ localRoom: localData });
         }
@@ -42567,7 +42903,7 @@ class MediasfuBroadcast {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuBroadcast, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: PersonJoined }, { token: RoomRecordParams }, { token: BanParticipant }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuBroadcast, isStandalone: true, selector: "app-mediasfu-broadcast", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuBroadcast, isStandalone: true, selector: "app-mediasfu-broadcast", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <div
       class="MediaSFU"
       [ngStyle]="{
@@ -42589,10 +42925,8 @@ class MediasfuBroadcast {
         </ng-container>
       </ng-container>
 
-      <!-- Main Content -->
       <ng-template #mainContent>
-        <app-main-container-component>
-          <!-- Main Aspect Component -->
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -42677,6 +43011,7 @@ class MediasfuBroadcast {
       </ng-template>
 
       <!-- Modals to include -->
+      <ng-container *ngIf="returnUI">
       <app-participants-modal
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
@@ -42782,6 +43117,7 @@ class MediasfuBroadcast {
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1$1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }] });
 }
@@ -42826,10 +43162,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         </ng-container>
       </ng-container>
 
-      <!-- Main Content -->
       <ng-template #mainContent>
-        <app-main-container-component>
-          <!-- Main Aspect Component -->
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -42914,6 +43248,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-template>
 
       <!-- Modals to include -->
+      <ng-container *ngIf="returnUI">
       <app-participants-modal
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
@@ -43019,6 +43354,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, providers: [CookieService] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: PersonJoined }, { type: RoomRecordParams }, { type: BanParticipant }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
@@ -43036,6 +43372,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], useSeed: [{
                 type: Input
             }], imgSrc: [{
+                type: Input
+            }], sourceParameters: [{
+                type: Input
+            }], updateSourceParameters: [{
+                type: Input
+            }], returnUI: [{
+                type: Input
+            }], noUIPreJoinOptions: [{
+                type: Input
+            }], joinMediaSFURoom: [{
+                type: Input
+            }], createMediaSFURoom: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -43067,8 +43415,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
- * @property {string} title - Title of the component, defaulting to "MediaSFU-Webinar".
+ * @property {string} title - The title of the component, defaults to "MediaSFU-Webinar".
  *
  * @styles
  * Component-specific styles with full-screen properties and customizable modal colors.
@@ -43083,15 +43437,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *
  * @example
  * ```html
- * <app-mediasfu-conference
+ * <app-mediasfu-webinar
  *   [PrejoinPage]="CustomPrejoinComponent"
  *   [localLink]="'https://localhost:3000'"
  *   [connectMediaSFU]="true"
  *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
  *   [useLocalUIMode]="true"
- *   [seedData]="initialData"
+ *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-webinar>
  * ```
  */
@@ -43223,6 +43583,12 @@ class MediasfuWebinar {
     seedData;
     useSeed = false;
     imgSrc = 'https://mediasfu.com/images/logo192.png';
+    sourceParameters = {};
+    updateSourceParameters = (data) => { };
+    returnUI = true;
+    noUIPreJoinOptions;
+    joinMediaSFURoom;
+    createMediaSFURoom;
     title = 'MediaSFU-Webinar';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -43628,74 +43994,74 @@ class MediasfuWebinar {
                 }),
         };
     };
-    validated = new BehaviorSubject(false);
-    localUIMode = new BehaviorSubject(false);
-    socket = new BehaviorSubject({});
-    localSocket = new BehaviorSubject(undefined);
-    roomData = new BehaviorSubject(null);
-    device = new BehaviorSubject(null);
-    apiKey = new BehaviorSubject('');
-    apiUserName = new BehaviorSubject('');
-    apiToken = new BehaviorSubject('');
-    link = new BehaviorSubject('');
-    roomName = new BehaviorSubject('');
-    member = new BehaviorSubject('');
-    adminPasscode = new BehaviorSubject('');
-    islevel = new BehaviorSubject('1');
-    coHost = new BehaviorSubject('No coHost');
-    coHostResponsibility = new BehaviorSubject([
+    validated = new BehaviorSubject$1(false);
+    localUIMode = new BehaviorSubject$1(false);
+    socket = new BehaviorSubject$1({});
+    localSocket = new BehaviorSubject$1(undefined);
+    roomData = new BehaviorSubject$1(null);
+    device = new BehaviorSubject$1(null);
+    apiKey = new BehaviorSubject$1('');
+    apiUserName = new BehaviorSubject$1('');
+    apiToken = new BehaviorSubject$1('');
+    link = new BehaviorSubject$1('');
+    roomName = new BehaviorSubject$1('');
+    member = new BehaviorSubject$1('');
+    adminPasscode = new BehaviorSubject$1('');
+    islevel = new BehaviorSubject$1('1');
+    coHost = new BehaviorSubject$1('No coHost');
+    coHostResponsibility = new BehaviorSubject$1([
         { name: 'participants', value: false, dedicated: false },
         { name: 'media', value: false, dedicated: false },
         { name: 'waiting', value: false, dedicated: false },
         { name: 'chat', value: false, dedicated: false },
     ]);
-    youAreCoHost = new BehaviorSubject(false);
-    youAreHost = new BehaviorSubject(false);
-    confirmedToRecord = new BehaviorSubject(false);
-    meetingDisplayType = new BehaviorSubject('media');
-    meetingVideoOptimized = new BehaviorSubject(false);
-    eventType = new BehaviorSubject('webinar');
-    participants = new BehaviorSubject([]);
-    filteredParticipants = new BehaviorSubject([]);
-    participantsCounter = new BehaviorSubject(0);
-    participantsFilter = new BehaviorSubject('');
-    consume_sockets = new BehaviorSubject([]);
-    rtpCapabilities = new BehaviorSubject(null);
-    roomRecvIPs = new BehaviorSubject([]);
-    meetingRoomParams = new BehaviorSubject(null);
-    itemPageLimit = new BehaviorSubject(4);
-    audioOnlyRoom = new BehaviorSubject(false);
-    addForBasic = new BehaviorSubject(false);
-    screenPageLimit = new BehaviorSubject(4);
-    shareScreenStarted = new BehaviorSubject(false);
-    shared = new BehaviorSubject(false);
-    targetOrientation = new BehaviorSubject('landscape');
-    targetResolution = new BehaviorSubject('sd');
-    targetResolutionHost = new BehaviorSubject('sd');
-    vidCons = new BehaviorSubject({ width: 640, height: 360 });
-    frameRate = new BehaviorSubject(10);
-    hParams = new BehaviorSubject({});
-    vParams = new BehaviorSubject({});
-    screenParams = new BehaviorSubject({});
-    aParams = new BehaviorSubject({});
-    recordingAudioPausesLimit = new BehaviorSubject(0);
-    recordingAudioPausesCount = new BehaviorSubject(0);
-    recordingAudioSupport = new BehaviorSubject(false);
-    recordingAudioPeopleLimit = new BehaviorSubject(0);
-    recordingAudioParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingVideoPausesCount = new BehaviorSubject(0);
-    recordingVideoPausesLimit = new BehaviorSubject(0);
-    recordingVideoSupport = new BehaviorSubject(false);
-    recordingVideoPeopleLimit = new BehaviorSubject(0);
-    recordingVideoParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingAllParticipantsSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsSupport = new BehaviorSubject(false);
-    recordingAllParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingPreferredOrientation = new BehaviorSubject('landscape');
-    recordingSupportForOtherOrientation = new BehaviorSubject(false);
-    recordingMultiFormatsSupport = new BehaviorSubject(false);
-    userRecordingParams = new BehaviorSubject({
+    youAreCoHost = new BehaviorSubject$1(false);
+    youAreHost = new BehaviorSubject$1(false);
+    confirmedToRecord = new BehaviorSubject$1(false);
+    meetingDisplayType = new BehaviorSubject$1('media');
+    meetingVideoOptimized = new BehaviorSubject$1(false);
+    eventType = new BehaviorSubject$1('webinar');
+    participants = new BehaviorSubject$1([]);
+    filteredParticipants = new BehaviorSubject$1([]);
+    participantsCounter = new BehaviorSubject$1(0);
+    participantsFilter = new BehaviorSubject$1('');
+    consume_sockets = new BehaviorSubject$1([]);
+    rtpCapabilities = new BehaviorSubject$1(null);
+    roomRecvIPs = new BehaviorSubject$1([]);
+    meetingRoomParams = new BehaviorSubject$1(null);
+    itemPageLimit = new BehaviorSubject$1(4);
+    audioOnlyRoom = new BehaviorSubject$1(false);
+    addForBasic = new BehaviorSubject$1(false);
+    screenPageLimit = new BehaviorSubject$1(4);
+    shareScreenStarted = new BehaviorSubject$1(false);
+    shared = new BehaviorSubject$1(false);
+    targetOrientation = new BehaviorSubject$1('landscape');
+    targetResolution = new BehaviorSubject$1('sd');
+    targetResolutionHost = new BehaviorSubject$1('sd');
+    vidCons = new BehaviorSubject$1({ width: 640, height: 360 });
+    frameRate = new BehaviorSubject$1(10);
+    hParams = new BehaviorSubject$1({});
+    vParams = new BehaviorSubject$1({});
+    screenParams = new BehaviorSubject$1({});
+    aParams = new BehaviorSubject$1({});
+    recordingAudioPausesLimit = new BehaviorSubject$1(0);
+    recordingAudioPausesCount = new BehaviorSubject$1(0);
+    recordingAudioSupport = new BehaviorSubject$1(false);
+    recordingAudioPeopleLimit = new BehaviorSubject$1(0);
+    recordingAudioParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingVideoPausesCount = new BehaviorSubject$1(0);
+    recordingVideoPausesLimit = new BehaviorSubject$1(0);
+    recordingVideoSupport = new BehaviorSubject$1(false);
+    recordingVideoPeopleLimit = new BehaviorSubject$1(0);
+    recordingVideoParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingAllParticipantsSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsSupport = new BehaviorSubject$1(false);
+    recordingAllParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingPreferredOrientation = new BehaviorSubject$1('landscape');
+    recordingSupportForOtherOrientation = new BehaviorSubject$1(false);
+    recordingMultiFormatsSupport = new BehaviorSubject$1(false);
+    userRecordingParams = new BehaviorSubject$1({
         mainSpecs: {
             mediaOptions: 'video', // 'audio', 'video'
             audioOptions: 'all', // 'all', 'onScreen', 'host'
@@ -43712,95 +44078,95 @@ class MediasfuWebinar {
             orientationVideo: 'portrait', // 'landscape', 'portrait', 'all'
         },
     });
-    canRecord = new BehaviorSubject(false);
-    startReport = new BehaviorSubject(false);
-    endReport = new BehaviorSubject(false);
-    recordTimerInterval = new BehaviorSubject(null);
-    recordStartTime = new BehaviorSubject(0);
-    recordElapsedTime = new BehaviorSubject(0);
-    isTimerRunning = new BehaviorSubject(false);
-    canPauseResume = new BehaviorSubject(false);
-    recordChangeSeconds = new BehaviorSubject(15000);
-    pauseLimit = new BehaviorSubject(0);
-    pauseRecordCount = new BehaviorSubject(0);
-    canLaunchRecord = new BehaviorSubject(true);
-    stopLaunchRecord = new BehaviorSubject(false);
-    participantsAll = new BehaviorSubject([]);
-    firstAll = new BehaviorSubject(false);
-    updateMainWindow = new BehaviorSubject(false);
-    first_round = new BehaviorSubject(false);
-    landScaped = new BehaviorSubject(false);
-    lock_screen = new BehaviorSubject(false);
-    screenId = new BehaviorSubject('');
-    allVideoStreams = new BehaviorSubject([]);
-    newLimitedStreams = new BehaviorSubject([]);
-    newLimitedStreamsIDs = new BehaviorSubject([]);
-    activeSounds = new BehaviorSubject([]);
-    screenShareIDStream = new BehaviorSubject('');
-    screenShareNameStream = new BehaviorSubject('');
-    adminIDStream = new BehaviorSubject('');
-    adminNameStream = new BehaviorSubject('');
-    youYouStream = new BehaviorSubject([]);
-    youYouStreamIDs = new BehaviorSubject([]);
-    localStream = new BehaviorSubject(null);
-    recordStarted = new BehaviorSubject(false);
-    recordResumed = new BehaviorSubject(false);
-    recordPaused = new BehaviorSubject(false);
-    recordStopped = new BehaviorSubject(false);
-    adminRestrictSetting = new BehaviorSubject(false);
-    videoRequestState = new BehaviorSubject(null);
-    videoRequestTime = new BehaviorSubject(0);
-    videoAction = new BehaviorSubject(false);
-    localStreamVideo = new BehaviorSubject(null);
-    userDefaultVideoInputDevice = new BehaviorSubject('');
-    currentFacingMode = new BehaviorSubject('user');
-    prevFacingMode = new BehaviorSubject('user');
-    defVideoID = new BehaviorSubject('');
-    allowed = new BehaviorSubject(false);
-    dispActiveNames = new BehaviorSubject([]);
-    p_dispActiveNames = new BehaviorSubject([]);
-    activeNames = new BehaviorSubject([]);
-    prevActiveNames = new BehaviorSubject([]);
-    p_activeNames = new BehaviorSubject([]);
-    membersReceived = new BehaviorSubject(false);
-    deferScreenReceived = new BehaviorSubject(false);
-    hostFirstSwitch = new BehaviorSubject(false);
-    micAction = new BehaviorSubject(false);
-    screenAction = new BehaviorSubject(false);
-    chatAction = new BehaviorSubject(false);
-    audioRequestState = new BehaviorSubject(null);
-    screenRequestState = new BehaviorSubject(null);
-    chatRequestState = new BehaviorSubject(null);
-    audioRequestTime = new BehaviorSubject(0);
-    screenRequestTime = new BehaviorSubject(0);
-    chatRequestTime = new BehaviorSubject(0);
-    updateRequestIntervalSeconds = new BehaviorSubject(240);
-    oldSoundIds = new BehaviorSubject([]);
-    hostLabel = new BehaviorSubject('Host');
-    mainScreenFilled = new BehaviorSubject(false);
-    localStreamScreen = new BehaviorSubject(null);
-    screenAlreadyOn = new BehaviorSubject(false);
-    chatAlreadyOn = new BehaviorSubject(false);
-    redirectURL = new BehaviorSubject('');
-    oldAllStreams = new BehaviorSubject([]);
-    adminVidID = new BehaviorSubject('');
-    streamNames = new BehaviorSubject([]);
-    non_alVideoStreams = new BehaviorSubject([]);
-    sortAudioLoudness = new BehaviorSubject(false);
-    audioDecibels = new BehaviorSubject([]);
-    mixed_alVideoStreams = new BehaviorSubject([]);
-    non_alVideoStreams_muted = new BehaviorSubject([]);
-    paginatedStreams = new BehaviorSubject([]);
-    localStreamAudio = new BehaviorSubject(null);
-    defAudioID = new BehaviorSubject('');
-    userDefaultAudioInputDevice = new BehaviorSubject('');
-    userDefaultAudioOutputDevice = new BehaviorSubject('');
-    prevAudioInputDevice = new BehaviorSubject('');
-    prevVideoInputDevice = new BehaviorSubject('');
-    audioPaused = new BehaviorSubject(false);
-    mainScreenPerson = new BehaviorSubject('');
-    adminOnMainScreen = new BehaviorSubject(false);
-    screenStates = new BehaviorSubject([
+    canRecord = new BehaviorSubject$1(false);
+    startReport = new BehaviorSubject$1(false);
+    endReport = new BehaviorSubject$1(false);
+    recordTimerInterval = new BehaviorSubject$1(null);
+    recordStartTime = new BehaviorSubject$1(0);
+    recordElapsedTime = new BehaviorSubject$1(0);
+    isTimerRunning = new BehaviorSubject$1(false);
+    canPauseResume = new BehaviorSubject$1(false);
+    recordChangeSeconds = new BehaviorSubject$1(15000);
+    pauseLimit = new BehaviorSubject$1(0);
+    pauseRecordCount = new BehaviorSubject$1(0);
+    canLaunchRecord = new BehaviorSubject$1(true);
+    stopLaunchRecord = new BehaviorSubject$1(false);
+    participantsAll = new BehaviorSubject$1([]);
+    firstAll = new BehaviorSubject$1(false);
+    updateMainWindow = new BehaviorSubject$1(false);
+    first_round = new BehaviorSubject$1(false);
+    landScaped = new BehaviorSubject$1(false);
+    lock_screen = new BehaviorSubject$1(false);
+    screenId = new BehaviorSubject$1('');
+    allVideoStreams = new BehaviorSubject$1([]);
+    newLimitedStreams = new BehaviorSubject$1([]);
+    newLimitedStreamsIDs = new BehaviorSubject$1([]);
+    activeSounds = new BehaviorSubject$1([]);
+    screenShareIDStream = new BehaviorSubject$1('');
+    screenShareNameStream = new BehaviorSubject$1('');
+    adminIDStream = new BehaviorSubject$1('');
+    adminNameStream = new BehaviorSubject$1('');
+    youYouStream = new BehaviorSubject$1([]);
+    youYouStreamIDs = new BehaviorSubject$1([]);
+    localStream = new BehaviorSubject$1(null);
+    recordStarted = new BehaviorSubject$1(false);
+    recordResumed = new BehaviorSubject$1(false);
+    recordPaused = new BehaviorSubject$1(false);
+    recordStopped = new BehaviorSubject$1(false);
+    adminRestrictSetting = new BehaviorSubject$1(false);
+    videoRequestState = new BehaviorSubject$1(null);
+    videoRequestTime = new BehaviorSubject$1(0);
+    videoAction = new BehaviorSubject$1(false);
+    localStreamVideo = new BehaviorSubject$1(null);
+    userDefaultVideoInputDevice = new BehaviorSubject$1('');
+    currentFacingMode = new BehaviorSubject$1('user');
+    prevFacingMode = new BehaviorSubject$1('user');
+    defVideoID = new BehaviorSubject$1('');
+    allowed = new BehaviorSubject$1(false);
+    dispActiveNames = new BehaviorSubject$1([]);
+    p_dispActiveNames = new BehaviorSubject$1([]);
+    activeNames = new BehaviorSubject$1([]);
+    prevActiveNames = new BehaviorSubject$1([]);
+    p_activeNames = new BehaviorSubject$1([]);
+    membersReceived = new BehaviorSubject$1(false);
+    deferScreenReceived = new BehaviorSubject$1(false);
+    hostFirstSwitch = new BehaviorSubject$1(false);
+    micAction = new BehaviorSubject$1(false);
+    screenAction = new BehaviorSubject$1(false);
+    chatAction = new BehaviorSubject$1(false);
+    audioRequestState = new BehaviorSubject$1(null);
+    screenRequestState = new BehaviorSubject$1(null);
+    chatRequestState = new BehaviorSubject$1(null);
+    audioRequestTime = new BehaviorSubject$1(0);
+    screenRequestTime = new BehaviorSubject$1(0);
+    chatRequestTime = new BehaviorSubject$1(0);
+    updateRequestIntervalSeconds = new BehaviorSubject$1(240);
+    oldSoundIds = new BehaviorSubject$1([]);
+    hostLabel = new BehaviorSubject$1('Host');
+    mainScreenFilled = new BehaviorSubject$1(false);
+    localStreamScreen = new BehaviorSubject$1(null);
+    screenAlreadyOn = new BehaviorSubject$1(false);
+    chatAlreadyOn = new BehaviorSubject$1(false);
+    redirectURL = new BehaviorSubject$1('');
+    oldAllStreams = new BehaviorSubject$1([]);
+    adminVidID = new BehaviorSubject$1('');
+    streamNames = new BehaviorSubject$1([]);
+    non_alVideoStreams = new BehaviorSubject$1([]);
+    sortAudioLoudness = new BehaviorSubject$1(false);
+    audioDecibels = new BehaviorSubject$1([]);
+    mixed_alVideoStreams = new BehaviorSubject$1([]);
+    non_alVideoStreams_muted = new BehaviorSubject$1([]);
+    paginatedStreams = new BehaviorSubject$1([]);
+    localStreamAudio = new BehaviorSubject$1(null);
+    defAudioID = new BehaviorSubject$1('');
+    userDefaultAudioInputDevice = new BehaviorSubject$1('');
+    userDefaultAudioOutputDevice = new BehaviorSubject$1('');
+    prevAudioInputDevice = new BehaviorSubject$1('');
+    prevVideoInputDevice = new BehaviorSubject$1('');
+    audioPaused = new BehaviorSubject$1(false);
+    mainScreenPerson = new BehaviorSubject$1('');
+    adminOnMainScreen = new BehaviorSubject$1(false);
+    screenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -43808,7 +44174,7 @@ class MediasfuWebinar {
             adminOnMainScreen: false,
         },
     ]);
-    prevScreenStates = new BehaviorSubject([
+    prevScreenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -43816,61 +44182,61 @@ class MediasfuWebinar {
             adminOnMainScreen: false,
         },
     ]);
-    updateDateState = new BehaviorSubject(null);
-    lastUpdate = new BehaviorSubject(null);
-    nForReadjustRecord = new BehaviorSubject(0);
-    fixedPageLimit = new BehaviorSubject(4);
-    removeAltGrid = new BehaviorSubject(false);
-    nForReadjust = new BehaviorSubject(0);
-    reorderInterval = new BehaviorSubject(30000);
-    fastReorderInterval = new BehaviorSubject(10000);
-    lastReorderTime = new BehaviorSubject(0);
-    audStreamNames = new BehaviorSubject([]);
-    currentUserPage = new BehaviorSubject(0);
-    mainHeightWidth = new BehaviorSubject(this.eventType.value == 'webinar' ? 67 : this.eventType.value == 'broadcast' ? 100 : 0);
-    prevMainHeightWidth = new BehaviorSubject(this.mainHeightWidth.value);
-    prevDoPaginate = new BehaviorSubject(false);
-    doPaginate = new BehaviorSubject(false);
-    shareEnded = new BehaviorSubject(false);
-    lStreams = new BehaviorSubject([]);
-    chatRefStreams = new BehaviorSubject([]);
-    controlHeight = new BehaviorSubject(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
-    isWideScreen = new BehaviorSubject(false);
-    isMediumScreen = new BehaviorSubject(false);
-    isSmallScreen = new BehaviorSubject(false);
-    addGrid = new BehaviorSubject(false);
-    addAltGrid = new BehaviorSubject(false);
-    gridRows = new BehaviorSubject(0);
-    gridCols = new BehaviorSubject(0);
-    altGridRows = new BehaviorSubject(0);
-    altGridCols = new BehaviorSubject(0);
-    numberPages = new BehaviorSubject(0);
-    currentStreams = new BehaviorSubject([]);
-    showMiniView = new BehaviorSubject(false);
-    nStream = new BehaviorSubject(null);
-    defer_receive = new BehaviorSubject(false);
-    allAudioStreams = new BehaviorSubject([]);
-    remoteScreenStream = new BehaviorSubject([]);
-    screenProducer = new BehaviorSubject(null);
-    localScreenProducer = new BehaviorSubject(null);
-    gotAllVids = new BehaviorSubject(false);
-    paginationHeightWidth = new BehaviorSubject(40);
-    paginationDirection = new BehaviorSubject('horizontal');
-    gridSizes = new BehaviorSubject({
+    updateDateState = new BehaviorSubject$1(null);
+    lastUpdate = new BehaviorSubject$1(null);
+    nForReadjustRecord = new BehaviorSubject$1(0);
+    fixedPageLimit = new BehaviorSubject$1(4);
+    removeAltGrid = new BehaviorSubject$1(false);
+    nForReadjust = new BehaviorSubject$1(0);
+    reorderInterval = new BehaviorSubject$1(30000);
+    fastReorderInterval = new BehaviorSubject$1(10000);
+    lastReorderTime = new BehaviorSubject$1(0);
+    audStreamNames = new BehaviorSubject$1([]);
+    currentUserPage = new BehaviorSubject$1(0);
+    mainHeightWidth = new BehaviorSubject$1(this.eventType.value == 'webinar' ? 67 : this.eventType.value == 'broadcast' ? 100 : 0);
+    prevMainHeightWidth = new BehaviorSubject$1(this.mainHeightWidth.value);
+    prevDoPaginate = new BehaviorSubject$1(false);
+    doPaginate = new BehaviorSubject$1(false);
+    shareEnded = new BehaviorSubject$1(false);
+    lStreams = new BehaviorSubject$1([]);
+    chatRefStreams = new BehaviorSubject$1([]);
+    controlHeight = new BehaviorSubject$1(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
+    isWideScreen = new BehaviorSubject$1(false);
+    isMediumScreen = new BehaviorSubject$1(false);
+    isSmallScreen = new BehaviorSubject$1(false);
+    addGrid = new BehaviorSubject$1(false);
+    addAltGrid = new BehaviorSubject$1(false);
+    gridRows = new BehaviorSubject$1(0);
+    gridCols = new BehaviorSubject$1(0);
+    altGridRows = new BehaviorSubject$1(0);
+    altGridCols = new BehaviorSubject$1(0);
+    numberPages = new BehaviorSubject$1(0);
+    currentStreams = new BehaviorSubject$1([]);
+    showMiniView = new BehaviorSubject$1(false);
+    nStream = new BehaviorSubject$1(null);
+    defer_receive = new BehaviorSubject$1(false);
+    allAudioStreams = new BehaviorSubject$1([]);
+    remoteScreenStream = new BehaviorSubject$1([]);
+    screenProducer = new BehaviorSubject$1(null);
+    localScreenProducer = new BehaviorSubject$1(null);
+    gotAllVids = new BehaviorSubject$1(false);
+    paginationHeightWidth = new BehaviorSubject$1(40);
+    paginationDirection = new BehaviorSubject$1('horizontal');
+    gridSizes = new BehaviorSubject$1({
         gridWidth: 0,
         gridHeight: 0,
         altGridWidth: 0,
         altGridHeight: 0,
     });
-    screenForceFullDisplay = new BehaviorSubject(false);
-    mainGridStream = new BehaviorSubject([]);
-    otherGridStreams = new BehaviorSubject([]);
-    audioOnlyStreams = new BehaviorSubject([]);
-    videoInputs = new BehaviorSubject([]);
-    audioInputs = new BehaviorSubject([]);
-    meetingProgressTime = new BehaviorSubject('00:00:00');
-    meetingElapsedTime = new BehaviorSubject(0);
-    ref_participants = new BehaviorSubject([]);
+    screenForceFullDisplay = new BehaviorSubject$1(false);
+    mainGridStream = new BehaviorSubject$1([]);
+    otherGridStreams = new BehaviorSubject$1([]);
+    audioOnlyStreams = new BehaviorSubject$1([]);
+    videoInputs = new BehaviorSubject$1([]);
+    audioInputs = new BehaviorSubject$1([]);
+    meetingProgressTime = new BehaviorSubject$1('00:00:00');
+    meetingElapsedTime = new BehaviorSubject$1(0);
+    ref_participants = new BehaviorSubject$1([]);
     updateValidated = (value) => {
         this.validated.next(value);
     };
@@ -44491,168 +44857,169 @@ class MediasfuWebinar {
         this.ref_participants.next(value);
     };
     // Messages
-    messages = new BehaviorSubject([]);
-    startDirectMessage = new BehaviorSubject(false);
-    directMessageDetails = new BehaviorSubject(null);
-    showMessagesBadge = new BehaviorSubject(false);
+    messages = new BehaviorSubject$1([]);
+    startDirectMessage = new BehaviorSubject$1(false);
+    directMessageDetails = new BehaviorSubject$1(null);
+    showMessagesBadge = new BehaviorSubject$1(false);
     // Event Settings
-    audioSetting = new BehaviorSubject('allow');
-    videoSetting = new BehaviorSubject('allow');
-    screenshareSetting = new BehaviorSubject('allow');
-    chatSetting = new BehaviorSubject('allow');
+    audioSetting = new BehaviorSubject$1('allow');
+    videoSetting = new BehaviorSubject$1('allow');
+    screenshareSetting = new BehaviorSubject$1('allow');
+    chatSetting = new BehaviorSubject$1('allow');
     // Display Settings
-    displayOption = new BehaviorSubject('media');
-    autoWave = new BehaviorSubject(true);
-    forceFullDisplay = new BehaviorSubject(true);
-    prevForceFullDisplay = new BehaviorSubject(false);
-    prevMeetingDisplayType = new BehaviorSubject('video');
+    displayOption = new BehaviorSubject$1('media');
+    autoWave = new BehaviorSubject$1(true);
+    forceFullDisplay = new BehaviorSubject$1(true);
+    prevForceFullDisplay = new BehaviorSubject$1(false);
+    prevMeetingDisplayType = new BehaviorSubject$1('video');
     // Waiting Room
-    waitingRoomFilter = new BehaviorSubject('');
-    waitingRoomList = new BehaviorSubject(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
-    waitingRoomCounter = new BehaviorSubject(0);
-    filteredWaitingRoomList = new BehaviorSubject(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
+    waitingRoomFilter = new BehaviorSubject$1('');
+    waitingRoomList = new BehaviorSubject$1(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
+    waitingRoomCounter = new BehaviorSubject$1(0);
+    filteredWaitingRoomList = new BehaviorSubject$1(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
     // Requests
-    requestFilter = new BehaviorSubject('');
-    requestList = new BehaviorSubject(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
-    requestCounter = new BehaviorSubject(0);
-    filteredRequestList = new BehaviorSubject(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
+    requestFilter = new BehaviorSubject$1('');
+    requestList = new BehaviorSubject$1(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
+    requestCounter = new BehaviorSubject$1(0);
+    filteredRequestList = new BehaviorSubject$1(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
     // Total Requests and Waiting Room
-    totalReqWait = new BehaviorSubject(0);
+    totalReqWait = new BehaviorSubject$1(0);
     // Alerts
-    alertVisible = new BehaviorSubject(false);
-    alertMessage = new BehaviorSubject('');
-    alertType = new BehaviorSubject('success');
-    alertDuration = new BehaviorSubject(3000);
+    alertVisible = new BehaviorSubject$1(false);
+    alertMessage = new BehaviorSubject$1('');
+    alertType = new BehaviorSubject$1('success');
+    alertDuration = new BehaviorSubject$1(3000);
     // Progress Timer
-    progressTimerVisible = new BehaviorSubject(true);
-    progressTimerValue = new BehaviorSubject(0);
+    progressTimerVisible = new BehaviorSubject$1(true);
+    progressTimerValue = new BehaviorSubject$1(0);
     // Menu Modals
-    isMenuModalVisible = new BehaviorSubject(false);
-    isRecordingModalVisible = new BehaviorSubject(false);
-    isSettingsModalVisible = new BehaviorSubject(false);
-    isRequestsModalVisible = new BehaviorSubject(false);
-    isWaitingModalVisible = new BehaviorSubject(false);
-    isCoHostModalVisible = new BehaviorSubject(false);
-    isMediaSettingsModalVisible = new BehaviorSubject(false);
-    isDisplaySettingsModalVisible = new BehaviorSubject(false);
+    isMenuModalVisible = new BehaviorSubject$1(false);
+    isRecordingModalVisible = new BehaviorSubject$1(false);
+    isSettingsModalVisible = new BehaviorSubject$1(false);
+    isRequestsModalVisible = new BehaviorSubject$1(false);
+    isWaitingModalVisible = new BehaviorSubject$1(false);
+    isCoHostModalVisible = new BehaviorSubject$1(false);
+    isMediaSettingsModalVisible = new BehaviorSubject$1(false);
+    isDisplaySettingsModalVisible = new BehaviorSubject$1(false);
     // Other Modals
-    isParticipantsModalVisible = new BehaviorSubject(false);
-    isMessagesModalVisible = new BehaviorSubject(false);
-    isConfirmExitModalVisible = new BehaviorSubject(false);
-    isConfirmHereModalVisible = new BehaviorSubject(false);
-    isShareEventModalVisible = new BehaviorSubject(false);
-    isLoadingModalVisible = new BehaviorSubject(false);
+    isParticipantsModalVisible = new BehaviorSubject$1(false);
+    isMessagesModalVisible = new BehaviorSubject$1(false);
+    isConfirmExitModalVisible = new BehaviorSubject$1(false);
+    isConfirmHereModalVisible = new BehaviorSubject$1(false);
+    isShareEventModalVisible = new BehaviorSubject$1(false);
+    isLoadingModalVisible = new BehaviorSubject$1(false);
     // Recording Options
-    recordingMediaOptions = new BehaviorSubject('video');
-    recordingAudioOptions = new BehaviorSubject('all');
-    recordingVideoOptions = new BehaviorSubject('all');
-    recordingVideoType = new BehaviorSubject('fullDisplay');
-    recordingVideoOptimized = new BehaviorSubject(false);
-    recordingDisplayType = new BehaviorSubject('video');
-    recordingAddHLS = new BehaviorSubject(true);
-    recordingNameTags = new BehaviorSubject(true);
-    recordingBackgroundColor = new BehaviorSubject('#83c0e9');
-    recordingNameTagsColor = new BehaviorSubject('#ffffff');
-    recordingAddText = new BehaviorSubject(false);
-    recordingCustomText = new BehaviorSubject('Add Text');
-    recordingCustomTextPosition = new BehaviorSubject('top');
-    recordingCustomTextColor = new BehaviorSubject('#ffffff');
-    recordingOrientationVideo = new BehaviorSubject('landscape');
-    clearedToResume = new BehaviorSubject(true);
-    clearedToRecord = new BehaviorSubject(true);
-    recordState = new BehaviorSubject('green');
-    showRecordButtons = new BehaviorSubject(false);
-    recordingProgressTime = new BehaviorSubject('00:00:00');
-    audioSwitching = new BehaviorSubject(false);
-    videoSwitching = new BehaviorSubject(false);
+    recordingMediaOptions = new BehaviorSubject$1('video');
+    recordingAudioOptions = new BehaviorSubject$1('all');
+    recordingVideoOptions = new BehaviorSubject$1('all');
+    recordingVideoType = new BehaviorSubject$1('fullDisplay');
+    recordingVideoOptimized = new BehaviorSubject$1(false);
+    recordingDisplayType = new BehaviorSubject$1('video');
+    recordingAddHLS = new BehaviorSubject$1(true);
+    recordingNameTags = new BehaviorSubject$1(true);
+    recordingBackgroundColor = new BehaviorSubject$1('#83c0e9');
+    recordingNameTagsColor = new BehaviorSubject$1('#ffffff');
+    recordingAddText = new BehaviorSubject$1(false);
+    recordingCustomText = new BehaviorSubject$1('Add Text');
+    recordingCustomTextPosition = new BehaviorSubject$1('top');
+    recordingCustomTextColor = new BehaviorSubject$1('#ffffff');
+    recordingOrientationVideo = new BehaviorSubject$1('landscape');
+    clearedToResume = new BehaviorSubject$1(true);
+    clearedToRecord = new BehaviorSubject$1(true);
+    recordState = new BehaviorSubject$1('green');
+    showRecordButtons = new BehaviorSubject$1(false);
+    recordingProgressTime = new BehaviorSubject$1('00:00:00');
+    audioSwitching = new BehaviorSubject$1(false);
+    videoSwitching = new BehaviorSubject$1(false);
     // Media States
-    videoAlreadyOn = new BehaviorSubject(false);
-    audioAlreadyOn = new BehaviorSubject(false);
-    componentSizes = new BehaviorSubject({
+    videoAlreadyOn = new BehaviorSubject$1(false);
+    audioAlreadyOn = new BehaviorSubject$1(false);
+    componentSizes = new BehaviorSubject$1({
         mainHeight: 0,
         otherHeight: 0,
         mainWidth: 0,
         otherWidth: 0,
     });
     // Permissions
-    hasCameraPermission = new BehaviorSubject(false);
-    hasAudioPermission = new BehaviorSubject(false);
+    hasCameraPermission = new BehaviorSubject$1(false);
+    hasAudioPermission = new BehaviorSubject$1(false);
     // Transports
-    transportCreated = new BehaviorSubject(false);
-    localTransportCreated = new BehaviorSubject(false);
-    transportCreatedVideo = new BehaviorSubject(false);
-    transportCreatedAudio = new BehaviorSubject(false);
-    transportCreatedScreen = new BehaviorSubject(false);
-    producerTransport = new BehaviorSubject(null);
-    localProducerTransport = new BehaviorSubject(null);
-    videoProducer = new BehaviorSubject(null);
-    localVideoProducer = new BehaviorSubject(null);
-    params = new BehaviorSubject({});
-    videoParams = new BehaviorSubject({});
-    audioParams = new BehaviorSubject({});
-    audioProducer = new BehaviorSubject(null);
-    localAudioProducer = new BehaviorSubject(null);
-    consumerTransports = new BehaviorSubject([]);
-    consumingTransports = new BehaviorSubject([]);
+    transportCreated = new BehaviorSubject$1(false);
+    localTransportCreated = new BehaviorSubject$1(false);
+    transportCreatedVideo = new BehaviorSubject$1(false);
+    transportCreatedAudio = new BehaviorSubject$1(false);
+    transportCreatedScreen = new BehaviorSubject$1(false);
+    producerTransport = new BehaviorSubject$1(null);
+    localProducerTransport = new BehaviorSubject$1(null);
+    videoProducer = new BehaviorSubject$1(null);
+    localVideoProducer = new BehaviorSubject$1(null);
+    params = new BehaviorSubject$1({});
+    videoParams = new BehaviorSubject$1({});
+    audioParams = new BehaviorSubject$1({});
+    audioProducer = new BehaviorSubject$1(null);
+    audioLevel = new BehaviorSubject$1(0);
+    localAudioProducer = new BehaviorSubject$1(null);
+    consumerTransports = new BehaviorSubject$1([]);
+    consumingTransports = new BehaviorSubject$1([]);
     // Polls
-    polls = new BehaviorSubject(this.useSeed && this.seedData?.polls ? this.seedData.polls : []);
-    poll = new BehaviorSubject(null);
-    isPollModalVisible = new BehaviorSubject(false);
+    polls = new BehaviorSubject$1(this.useSeed && this.seedData?.polls ? this.seedData.polls : []);
+    poll = new BehaviorSubject$1(null);
+    isPollModalVisible = new BehaviorSubject$1(false);
     // Background
-    customImage = new BehaviorSubject('');
-    selectedImage = new BehaviorSubject('');
-    segmentVideo = new BehaviorSubject(null);
-    selfieSegmentation = new BehaviorSubject(null);
-    pauseSegmentation = new BehaviorSubject(false);
-    processedStream = new BehaviorSubject(null);
-    keepBackground = new BehaviorSubject(false);
-    backgroundHasChanged = new BehaviorSubject(false);
-    virtualStream = new BehaviorSubject(null);
-    mainCanvas = new BehaviorSubject(null);
-    prevKeepBackground = new BehaviorSubject(false);
-    appliedBackground = new BehaviorSubject(false);
-    isBackgroundModalVisible = new BehaviorSubject(false);
-    autoClickBackground = new BehaviorSubject(false);
+    customImage = new BehaviorSubject$1('');
+    selectedImage = new BehaviorSubject$1('');
+    segmentVideo = new BehaviorSubject$1(null);
+    selfieSegmentation = new BehaviorSubject$1(null);
+    pauseSegmentation = new BehaviorSubject$1(false);
+    processedStream = new BehaviorSubject$1(null);
+    keepBackground = new BehaviorSubject$1(false);
+    backgroundHasChanged = new BehaviorSubject$1(false);
+    virtualStream = new BehaviorSubject$1(null);
+    mainCanvas = new BehaviorSubject$1(null);
+    prevKeepBackground = new BehaviorSubject$1(false);
+    appliedBackground = new BehaviorSubject$1(false);
+    isBackgroundModalVisible = new BehaviorSubject$1(false);
+    autoClickBackground = new BehaviorSubject$1(false);
     // Breakout Rooms
-    breakoutRooms = new BehaviorSubject(this.useSeed && this.seedData?.breakoutRooms ? this.seedData.breakoutRooms : []);
-    currentRoomIndex = new BehaviorSubject(0);
-    canStartBreakout = new BehaviorSubject(false);
-    breakOutRoomStarted = new BehaviorSubject(false);
-    breakOutRoomEnded = new BehaviorSubject(false);
-    hostNewRoom = new BehaviorSubject(-1);
-    limitedBreakRoom = new BehaviorSubject([]);
-    mainRoomsLength = new BehaviorSubject(0);
-    memberRoom = new BehaviorSubject(-1);
-    isBreakoutRoomsModalVisible = new BehaviorSubject(false);
+    breakoutRooms = new BehaviorSubject$1(this.useSeed && this.seedData?.breakoutRooms ? this.seedData.breakoutRooms : []);
+    currentRoomIndex = new BehaviorSubject$1(0);
+    canStartBreakout = new BehaviorSubject$1(false);
+    breakOutRoomStarted = new BehaviorSubject$1(false);
+    breakOutRoomEnded = new BehaviorSubject$1(false);
+    hostNewRoom = new BehaviorSubject$1(-1);
+    limitedBreakRoom = new BehaviorSubject$1([]);
+    mainRoomsLength = new BehaviorSubject$1(0);
+    memberRoom = new BehaviorSubject$1(-1);
+    isBreakoutRoomsModalVisible = new BehaviorSubject$1(false);
     // Whiteboard
-    whiteboardUsers = new BehaviorSubject(this.useSeed && this.seedData?.whiteboardUsers ? this.seedData.whiteboardUsers : []);
-    currentWhiteboardIndex = new BehaviorSubject(0);
-    canStartWhiteboard = new BehaviorSubject(false);
-    whiteboardStarted = new BehaviorSubject(false);
-    whiteboardEnded = new BehaviorSubject(false);
-    whiteboardLimit = new BehaviorSubject(4);
-    isWhiteboardModalVisible = new BehaviorSubject(false);
-    isConfigureWhiteboardModalVisible = new BehaviorSubject(false);
-    shapes = new BehaviorSubject([]);
-    useImageBackground = new BehaviorSubject(true);
-    redoStack = new BehaviorSubject([]);
-    undoStack = new BehaviorSubject([]);
-    canvasStream = new BehaviorSubject(null);
-    canvasWhiteboard = new BehaviorSubject(null);
+    whiteboardUsers = new BehaviorSubject$1(this.useSeed && this.seedData?.whiteboardUsers ? this.seedData.whiteboardUsers : []);
+    currentWhiteboardIndex = new BehaviorSubject$1(0);
+    canStartWhiteboard = new BehaviorSubject$1(false);
+    whiteboardStarted = new BehaviorSubject$1(false);
+    whiteboardEnded = new BehaviorSubject$1(false);
+    whiteboardLimit = new BehaviorSubject$1(4);
+    isWhiteboardModalVisible = new BehaviorSubject$1(false);
+    isConfigureWhiteboardModalVisible = new BehaviorSubject$1(false);
+    shapes = new BehaviorSubject$1([]);
+    useImageBackground = new BehaviorSubject$1(true);
+    redoStack = new BehaviorSubject$1([]);
+    undoStack = new BehaviorSubject$1([]);
+    canvasStream = new BehaviorSubject$1(null);
+    canvasWhiteboard = new BehaviorSubject$1(null);
     // Screenboard
-    canvasScreenboard = new BehaviorSubject(null);
-    processedScreenStream = new BehaviorSubject(null);
-    annotateScreenStream = new BehaviorSubject(false);
-    mainScreenCanvas = new BehaviorSubject(null);
-    isScreenboardModalVisible = new BehaviorSubject(false);
+    canvasScreenboard = new BehaviorSubject$1(null);
+    processedScreenStream = new BehaviorSubject$1(null);
+    annotateScreenStream = new BehaviorSubject$1(false);
+    mainScreenCanvas = new BehaviorSubject$1(null);
+    isScreenboardModalVisible = new BehaviorSubject$1(false);
     //state variables for the control buttons
-    micActive = new BehaviorSubject(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
-    videoActive = new BehaviorSubject(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
-    screenShareActive = new BehaviorSubject(false);
-    endCallActive = new BehaviorSubject(false);
-    participantsActive = new BehaviorSubject(false);
-    menuActive = new BehaviorSubject(false);
-    commentsActive = new BehaviorSubject(false);
+    micActive = new BehaviorSubject$1(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
+    videoActive = new BehaviorSubject$1(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
+    screenShareActive = new BehaviorSubject$1(false);
+    endCallActive = new BehaviorSubject$1(false);
+    participantsActive = new BehaviorSubject$1(false);
+    menuActive = new BehaviorSubject$1(false);
+    commentsActive = new BehaviorSubject$1(false);
     // Update functions
     updateMessages = (value) => {
         this.messages.next(value);
@@ -44981,6 +45348,9 @@ class MediasfuWebinar {
     };
     updateAudioProducer = (value) => {
         this.audioProducer.next(value);
+    };
+    updateAudioLevel = (value) => {
+        this.audioLevel.next(value);
     };
     updateLocalAudioProducer = (value) => {
         this.localAudioProducer.next(value);
@@ -45428,6 +45798,7 @@ class MediasfuWebinar {
             videoParams: this.videoParams.value,
             audioParams: this.audioParams.value,
             audioProducer: this.audioProducer.value,
+            audioLevel: this.audioLevel.value,
             localAudioProducer: this.localAudioProducer.value,
             consumerTransports: this.consumerTransports.value,
             consumingTransports: this.consumingTransports.value,
@@ -45762,6 +46133,7 @@ class MediasfuWebinar {
             updateVideoParams: this.updateVideoParams.bind(this),
             updateAudioParams: this.updateAudioParams.bind(this),
             updateAudioProducer: this.updateAudioProducer.bind(this),
+            updateAudioLevel: this.updateAudioLevel.bind(this),
             updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
             updateConsumerTransports: this.updateConsumerTransports.bind(this),
             updateConsumingTransports: this.updateConsumingTransports.bind(this),
@@ -45824,6 +46196,20 @@ class MediasfuWebinar {
             updateValidated: this.updateValidated.bind(this),
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
+                try {
+                    if (this.sourceParameters !== null) {
+                        this.sourceParameters = {
+                            ...this.getAllParams(),
+                            ...this.mediaSFUFunctions(),
+                        };
+                        if (this.updateSourceParameters) {
+                            this.updateSourceParameters(this.sourceParameters);
+                        }
+                    }
+                }
+                catch {
+                    console.log('error updateSourceParameters');
+                }
                 return {
                     ...this.getAllParams(),
                     ...this.mediaSFUFunctions(),
@@ -45922,6 +46308,10 @@ class MediasfuWebinar {
                 credentials: this.credentials,
                 localLink: this.localLink,
                 connectMediaSFU: this.connectMediaSFU,
+                returnUI: this.returnUI,
+                noUIPreJoinOptions: this.noUIPreJoinOptions,
+                joinMediaSFURoom: this.joinMediaSFURoom,
+                createMediaSFURoom: this.createMediaSFURoom,
             }),
         };
         this.PrejoinPageComponent = { ...PrejoinComp };
@@ -46081,6 +46471,20 @@ class MediasfuWebinar {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
+            try {
+                if (this.sourceParameters !== null) {
+                    this.sourceParameters = {
+                        ...this.getAllParams(),
+                        ...this.mediaSFUFunctions(),
+                    };
+                    if (this.updateSourceParameters) {
+                        this.updateSourceParameters(this.sourceParameters);
+                    }
+                }
+            }
+            catch {
+                console.log('error updateSourceParameters');
+            }
         }
     }
     async handleResize() {
@@ -46284,6 +46688,8 @@ class MediasfuWebinar {
                 checkConnect: this.localLink.length > 0 &&
                     this.connectMediaSFU === true &&
                     !this.link.value.includes('mediasfu.com'),
+                localLink: this.localLink,
+                joinMediaSFURoom: this.joinMediaSFURoom,
             });
             data = await createResponseJoinRoom({ localRoom: localData });
         }
@@ -47298,7 +47704,7 @@ class MediasfuWebinar {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuWebinar, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuWebinar, isStandalone: true, selector: "app-mediasfu-webinar", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuWebinar, isStandalone: true, selector: "app-mediasfu-webinar", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <div
       class="MediaSFU"
       [ngStyle]="{
@@ -47320,7 +47726,7 @@ class MediasfuWebinar {
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -47452,6 +47858,7 @@ class MediasfuWebinar {
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -47688,6 +48095,7 @@ class MediasfuWebinar {
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1$1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
 }
@@ -47749,7 +48157,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -47881,6 +48289,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -48117,6 +48526,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, providers: [CookieService] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
@@ -48134,6 +48544,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], useSeed: [{
                 type: Input
             }], imgSrc: [{
+                type: Input
+            }], sourceParameters: [{
+                type: Input
+            }], updateSourceParameters: [{
+                type: Input
+            }], returnUI: [{
+                type: Input
+            }], noUIPreJoinOptions: [{
+                type: Input
+            }], joinMediaSFURoom: [{
+                type: Input
+            }], createMediaSFURoom: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -48166,6 +48588,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Conference".
  *
@@ -48191,7 +48619,13 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-conference>
  * ```
  */
@@ -48323,6 +48757,12 @@ class MediasfuConference {
     seedData;
     useSeed = false;
     imgSrc = 'https://mediasfu.com/images/logo192.png';
+    sourceParameters = {};
+    updateSourceParameters = (data) => { };
+    returnUI = true;
+    noUIPreJoinOptions;
+    joinMediaSFURoom;
+    createMediaSFURoom;
     title = 'MediaSFU-Conference';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -48728,74 +49168,74 @@ class MediasfuConference {
                 }),
         };
     };
-    validated = new BehaviorSubject(false);
-    localUIMode = new BehaviorSubject(false);
-    socket = new BehaviorSubject({});
-    localSocket = new BehaviorSubject(undefined);
-    roomData = new BehaviorSubject(null);
-    device = new BehaviorSubject(null);
-    apiKey = new BehaviorSubject('');
-    apiUserName = new BehaviorSubject('');
-    apiToken = new BehaviorSubject('');
-    link = new BehaviorSubject('');
-    roomName = new BehaviorSubject('');
-    member = new BehaviorSubject('');
-    adminPasscode = new BehaviorSubject('');
-    islevel = new BehaviorSubject('1');
-    coHost = new BehaviorSubject('No coHost');
-    coHostResponsibility = new BehaviorSubject([
+    validated = new BehaviorSubject$1(false);
+    localUIMode = new BehaviorSubject$1(false);
+    socket = new BehaviorSubject$1({});
+    localSocket = new BehaviorSubject$1(undefined);
+    roomData = new BehaviorSubject$1(null);
+    device = new BehaviorSubject$1(null);
+    apiKey = new BehaviorSubject$1('');
+    apiUserName = new BehaviorSubject$1('');
+    apiToken = new BehaviorSubject$1('');
+    link = new BehaviorSubject$1('');
+    roomName = new BehaviorSubject$1('');
+    member = new BehaviorSubject$1('');
+    adminPasscode = new BehaviorSubject$1('');
+    islevel = new BehaviorSubject$1('1');
+    coHost = new BehaviorSubject$1('No coHost');
+    coHostResponsibility = new BehaviorSubject$1([
         { name: 'participants', value: false, dedicated: false },
         { name: 'media', value: false, dedicated: false },
         { name: 'waiting', value: false, dedicated: false },
         { name: 'chat', value: false, dedicated: false },
     ]);
-    youAreCoHost = new BehaviorSubject(false);
-    youAreHost = new BehaviorSubject(false);
-    confirmedToRecord = new BehaviorSubject(false);
-    meetingDisplayType = new BehaviorSubject('media');
-    meetingVideoOptimized = new BehaviorSubject(false);
-    eventType = new BehaviorSubject('conference');
-    participants = new BehaviorSubject([]);
-    filteredParticipants = new BehaviorSubject([]);
-    participantsCounter = new BehaviorSubject(0);
-    participantsFilter = new BehaviorSubject('');
-    consume_sockets = new BehaviorSubject([]);
-    rtpCapabilities = new BehaviorSubject(null);
-    roomRecvIPs = new BehaviorSubject([]);
-    meetingRoomParams = new BehaviorSubject(null);
-    itemPageLimit = new BehaviorSubject(4);
-    audioOnlyRoom = new BehaviorSubject(false);
-    addForBasic = new BehaviorSubject(false);
-    screenPageLimit = new BehaviorSubject(4);
-    shareScreenStarted = new BehaviorSubject(false);
-    shared = new BehaviorSubject(false);
-    targetOrientation = new BehaviorSubject('landscape');
-    targetResolution = new BehaviorSubject('sd');
-    targetResolutionHost = new BehaviorSubject('sd');
-    vidCons = new BehaviorSubject({ width: 640, height: 360 });
-    frameRate = new BehaviorSubject(10);
-    hParams = new BehaviorSubject({});
-    vParams = new BehaviorSubject({});
-    screenParams = new BehaviorSubject({});
-    aParams = new BehaviorSubject({});
-    recordingAudioPausesLimit = new BehaviorSubject(0);
-    recordingAudioPausesCount = new BehaviorSubject(0);
-    recordingAudioSupport = new BehaviorSubject(false);
-    recordingAudioPeopleLimit = new BehaviorSubject(0);
-    recordingAudioParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingVideoPausesCount = new BehaviorSubject(0);
-    recordingVideoPausesLimit = new BehaviorSubject(0);
-    recordingVideoSupport = new BehaviorSubject(false);
-    recordingVideoPeopleLimit = new BehaviorSubject(0);
-    recordingVideoParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingAllParticipantsSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsSupport = new BehaviorSubject(false);
-    recordingAllParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingPreferredOrientation = new BehaviorSubject('landscape');
-    recordingSupportForOtherOrientation = new BehaviorSubject(false);
-    recordingMultiFormatsSupport = new BehaviorSubject(false);
-    userRecordingParams = new BehaviorSubject({
+    youAreCoHost = new BehaviorSubject$1(false);
+    youAreHost = new BehaviorSubject$1(false);
+    confirmedToRecord = new BehaviorSubject$1(false);
+    meetingDisplayType = new BehaviorSubject$1('media');
+    meetingVideoOptimized = new BehaviorSubject$1(false);
+    eventType = new BehaviorSubject$1('conference');
+    participants = new BehaviorSubject$1([]);
+    filteredParticipants = new BehaviorSubject$1([]);
+    participantsCounter = new BehaviorSubject$1(0);
+    participantsFilter = new BehaviorSubject$1('');
+    consume_sockets = new BehaviorSubject$1([]);
+    rtpCapabilities = new BehaviorSubject$1(null);
+    roomRecvIPs = new BehaviorSubject$1([]);
+    meetingRoomParams = new BehaviorSubject$1(null);
+    itemPageLimit = new BehaviorSubject$1(4);
+    audioOnlyRoom = new BehaviorSubject$1(false);
+    addForBasic = new BehaviorSubject$1(false);
+    screenPageLimit = new BehaviorSubject$1(4);
+    shareScreenStarted = new BehaviorSubject$1(false);
+    shared = new BehaviorSubject$1(false);
+    targetOrientation = new BehaviorSubject$1('landscape');
+    targetResolution = new BehaviorSubject$1('sd');
+    targetResolutionHost = new BehaviorSubject$1('sd');
+    vidCons = new BehaviorSubject$1({ width: 640, height: 360 });
+    frameRate = new BehaviorSubject$1(10);
+    hParams = new BehaviorSubject$1({});
+    vParams = new BehaviorSubject$1({});
+    screenParams = new BehaviorSubject$1({});
+    aParams = new BehaviorSubject$1({});
+    recordingAudioPausesLimit = new BehaviorSubject$1(0);
+    recordingAudioPausesCount = new BehaviorSubject$1(0);
+    recordingAudioSupport = new BehaviorSubject$1(false);
+    recordingAudioPeopleLimit = new BehaviorSubject$1(0);
+    recordingAudioParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingVideoPausesCount = new BehaviorSubject$1(0);
+    recordingVideoPausesLimit = new BehaviorSubject$1(0);
+    recordingVideoSupport = new BehaviorSubject$1(false);
+    recordingVideoPeopleLimit = new BehaviorSubject$1(0);
+    recordingVideoParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingAllParticipantsSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsSupport = new BehaviorSubject$1(false);
+    recordingAllParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingPreferredOrientation = new BehaviorSubject$1('landscape');
+    recordingSupportForOtherOrientation = new BehaviorSubject$1(false);
+    recordingMultiFormatsSupport = new BehaviorSubject$1(false);
+    userRecordingParams = new BehaviorSubject$1({
         mainSpecs: {
             mediaOptions: 'video', // 'audio', 'video'
             audioOptions: 'all', // 'all', 'onScreen', 'host'
@@ -48812,95 +49252,95 @@ class MediasfuConference {
             orientationVideo: 'portrait', // 'landscape', 'portrait', 'all'
         },
     });
-    canRecord = new BehaviorSubject(false);
-    startReport = new BehaviorSubject(false);
-    endReport = new BehaviorSubject(false);
-    recordTimerInterval = new BehaviorSubject(null);
-    recordStartTime = new BehaviorSubject(0);
-    recordElapsedTime = new BehaviorSubject(0);
-    isTimerRunning = new BehaviorSubject(false);
-    canPauseResume = new BehaviorSubject(false);
-    recordChangeSeconds = new BehaviorSubject(15000);
-    pauseLimit = new BehaviorSubject(0);
-    pauseRecordCount = new BehaviorSubject(0);
-    canLaunchRecord = new BehaviorSubject(true);
-    stopLaunchRecord = new BehaviorSubject(false);
-    participantsAll = new BehaviorSubject([]);
-    firstAll = new BehaviorSubject(false);
-    updateMainWindow = new BehaviorSubject(false);
-    first_round = new BehaviorSubject(false);
-    landScaped = new BehaviorSubject(false);
-    lock_screen = new BehaviorSubject(false);
-    screenId = new BehaviorSubject('');
-    allVideoStreams = new BehaviorSubject([]);
-    newLimitedStreams = new BehaviorSubject([]);
-    newLimitedStreamsIDs = new BehaviorSubject([]);
-    activeSounds = new BehaviorSubject([]);
-    screenShareIDStream = new BehaviorSubject('');
-    screenShareNameStream = new BehaviorSubject('');
-    adminIDStream = new BehaviorSubject('');
-    adminNameStream = new BehaviorSubject('');
-    youYouStream = new BehaviorSubject([]);
-    youYouStreamIDs = new BehaviorSubject([]);
-    localStream = new BehaviorSubject(null);
-    recordStarted = new BehaviorSubject(false);
-    recordResumed = new BehaviorSubject(false);
-    recordPaused = new BehaviorSubject(false);
-    recordStopped = new BehaviorSubject(false);
-    adminRestrictSetting = new BehaviorSubject(false);
-    videoRequestState = new BehaviorSubject(null);
-    videoRequestTime = new BehaviorSubject(0);
-    videoAction = new BehaviorSubject(false);
-    localStreamVideo = new BehaviorSubject(null);
-    userDefaultVideoInputDevice = new BehaviorSubject('');
-    currentFacingMode = new BehaviorSubject('user');
-    prevFacingMode = new BehaviorSubject('user');
-    defVideoID = new BehaviorSubject('');
-    allowed = new BehaviorSubject(false);
-    dispActiveNames = new BehaviorSubject([]);
-    p_dispActiveNames = new BehaviorSubject([]);
-    activeNames = new BehaviorSubject([]);
-    prevActiveNames = new BehaviorSubject([]);
-    p_activeNames = new BehaviorSubject([]);
-    membersReceived = new BehaviorSubject(false);
-    deferScreenReceived = new BehaviorSubject(false);
-    hostFirstSwitch = new BehaviorSubject(false);
-    micAction = new BehaviorSubject(false);
-    screenAction = new BehaviorSubject(false);
-    chatAction = new BehaviorSubject(false);
-    audioRequestState = new BehaviorSubject(null);
-    screenRequestState = new BehaviorSubject(null);
-    chatRequestState = new BehaviorSubject(null);
-    audioRequestTime = new BehaviorSubject(0);
-    screenRequestTime = new BehaviorSubject(0);
-    chatRequestTime = new BehaviorSubject(0);
-    updateRequestIntervalSeconds = new BehaviorSubject(240);
-    oldSoundIds = new BehaviorSubject([]);
-    hostLabel = new BehaviorSubject('Host');
-    mainScreenFilled = new BehaviorSubject(false);
-    localStreamScreen = new BehaviorSubject(null);
-    screenAlreadyOn = new BehaviorSubject(false);
-    chatAlreadyOn = new BehaviorSubject(false);
-    redirectURL = new BehaviorSubject('');
-    oldAllStreams = new BehaviorSubject([]);
-    adminVidID = new BehaviorSubject('');
-    streamNames = new BehaviorSubject([]);
-    non_alVideoStreams = new BehaviorSubject([]);
-    sortAudioLoudness = new BehaviorSubject(false);
-    audioDecibels = new BehaviorSubject([]);
-    mixed_alVideoStreams = new BehaviorSubject([]);
-    non_alVideoStreams_muted = new BehaviorSubject([]);
-    paginatedStreams = new BehaviorSubject([]);
-    localStreamAudio = new BehaviorSubject(null);
-    defAudioID = new BehaviorSubject('');
-    userDefaultAudioInputDevice = new BehaviorSubject('');
-    userDefaultAudioOutputDevice = new BehaviorSubject('');
-    prevAudioInputDevice = new BehaviorSubject('');
-    prevVideoInputDevice = new BehaviorSubject('');
-    audioPaused = new BehaviorSubject(false);
-    mainScreenPerson = new BehaviorSubject('');
-    adminOnMainScreen = new BehaviorSubject(false);
-    screenStates = new BehaviorSubject([
+    canRecord = new BehaviorSubject$1(false);
+    startReport = new BehaviorSubject$1(false);
+    endReport = new BehaviorSubject$1(false);
+    recordTimerInterval = new BehaviorSubject$1(null);
+    recordStartTime = new BehaviorSubject$1(0);
+    recordElapsedTime = new BehaviorSubject$1(0);
+    isTimerRunning = new BehaviorSubject$1(false);
+    canPauseResume = new BehaviorSubject$1(false);
+    recordChangeSeconds = new BehaviorSubject$1(15000);
+    pauseLimit = new BehaviorSubject$1(0);
+    pauseRecordCount = new BehaviorSubject$1(0);
+    canLaunchRecord = new BehaviorSubject$1(true);
+    stopLaunchRecord = new BehaviorSubject$1(false);
+    participantsAll = new BehaviorSubject$1([]);
+    firstAll = new BehaviorSubject$1(false);
+    updateMainWindow = new BehaviorSubject$1(false);
+    first_round = new BehaviorSubject$1(false);
+    landScaped = new BehaviorSubject$1(false);
+    lock_screen = new BehaviorSubject$1(false);
+    screenId = new BehaviorSubject$1('');
+    allVideoStreams = new BehaviorSubject$1([]);
+    newLimitedStreams = new BehaviorSubject$1([]);
+    newLimitedStreamsIDs = new BehaviorSubject$1([]);
+    activeSounds = new BehaviorSubject$1([]);
+    screenShareIDStream = new BehaviorSubject$1('');
+    screenShareNameStream = new BehaviorSubject$1('');
+    adminIDStream = new BehaviorSubject$1('');
+    adminNameStream = new BehaviorSubject$1('');
+    youYouStream = new BehaviorSubject$1([]);
+    youYouStreamIDs = new BehaviorSubject$1([]);
+    localStream = new BehaviorSubject$1(null);
+    recordStarted = new BehaviorSubject$1(false);
+    recordResumed = new BehaviorSubject$1(false);
+    recordPaused = new BehaviorSubject$1(false);
+    recordStopped = new BehaviorSubject$1(false);
+    adminRestrictSetting = new BehaviorSubject$1(false);
+    videoRequestState = new BehaviorSubject$1(null);
+    videoRequestTime = new BehaviorSubject$1(0);
+    videoAction = new BehaviorSubject$1(false);
+    localStreamVideo = new BehaviorSubject$1(null);
+    userDefaultVideoInputDevice = new BehaviorSubject$1('');
+    currentFacingMode = new BehaviorSubject$1('user');
+    prevFacingMode = new BehaviorSubject$1('user');
+    defVideoID = new BehaviorSubject$1('');
+    allowed = new BehaviorSubject$1(false);
+    dispActiveNames = new BehaviorSubject$1([]);
+    p_dispActiveNames = new BehaviorSubject$1([]);
+    activeNames = new BehaviorSubject$1([]);
+    prevActiveNames = new BehaviorSubject$1([]);
+    p_activeNames = new BehaviorSubject$1([]);
+    membersReceived = new BehaviorSubject$1(false);
+    deferScreenReceived = new BehaviorSubject$1(false);
+    hostFirstSwitch = new BehaviorSubject$1(false);
+    micAction = new BehaviorSubject$1(false);
+    screenAction = new BehaviorSubject$1(false);
+    chatAction = new BehaviorSubject$1(false);
+    audioRequestState = new BehaviorSubject$1(null);
+    screenRequestState = new BehaviorSubject$1(null);
+    chatRequestState = new BehaviorSubject$1(null);
+    audioRequestTime = new BehaviorSubject$1(0);
+    screenRequestTime = new BehaviorSubject$1(0);
+    chatRequestTime = new BehaviorSubject$1(0);
+    updateRequestIntervalSeconds = new BehaviorSubject$1(240);
+    oldSoundIds = new BehaviorSubject$1([]);
+    hostLabel = new BehaviorSubject$1('Host');
+    mainScreenFilled = new BehaviorSubject$1(false);
+    localStreamScreen = new BehaviorSubject$1(null);
+    screenAlreadyOn = new BehaviorSubject$1(false);
+    chatAlreadyOn = new BehaviorSubject$1(false);
+    redirectURL = new BehaviorSubject$1('');
+    oldAllStreams = new BehaviorSubject$1([]);
+    adminVidID = new BehaviorSubject$1('');
+    streamNames = new BehaviorSubject$1([]);
+    non_alVideoStreams = new BehaviorSubject$1([]);
+    sortAudioLoudness = new BehaviorSubject$1(false);
+    audioDecibels = new BehaviorSubject$1([]);
+    mixed_alVideoStreams = new BehaviorSubject$1([]);
+    non_alVideoStreams_muted = new BehaviorSubject$1([]);
+    paginatedStreams = new BehaviorSubject$1([]);
+    localStreamAudio = new BehaviorSubject$1(null);
+    defAudioID = new BehaviorSubject$1('');
+    userDefaultAudioInputDevice = new BehaviorSubject$1('');
+    userDefaultAudioOutputDevice = new BehaviorSubject$1('');
+    prevAudioInputDevice = new BehaviorSubject$1('');
+    prevVideoInputDevice = new BehaviorSubject$1('');
+    audioPaused = new BehaviorSubject$1(false);
+    mainScreenPerson = new BehaviorSubject$1('');
+    adminOnMainScreen = new BehaviorSubject$1(false);
+    screenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -48908,7 +49348,7 @@ class MediasfuConference {
             adminOnMainScreen: false,
         },
     ]);
-    prevScreenStates = new BehaviorSubject([
+    prevScreenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -48916,61 +49356,61 @@ class MediasfuConference {
             adminOnMainScreen: false,
         },
     ]);
-    updateDateState = new BehaviorSubject(null);
-    lastUpdate = new BehaviorSubject(null);
-    nForReadjustRecord = new BehaviorSubject(0);
-    fixedPageLimit = new BehaviorSubject(4);
-    removeAltGrid = new BehaviorSubject(false);
-    nForReadjust = new BehaviorSubject(0);
-    reorderInterval = new BehaviorSubject(30000);
-    fastReorderInterval = new BehaviorSubject(10000);
-    lastReorderTime = new BehaviorSubject(0);
-    audStreamNames = new BehaviorSubject([]);
-    currentUserPage = new BehaviorSubject(0);
-    mainHeightWidth = new BehaviorSubject(this.eventType.value == 'webinar' ? 67 : this.eventType.value == 'broadcast' ? 100 : 0);
-    prevMainHeightWidth = new BehaviorSubject(this.mainHeightWidth.value);
-    prevDoPaginate = new BehaviorSubject(false);
-    doPaginate = new BehaviorSubject(false);
-    shareEnded = new BehaviorSubject(false);
-    lStreams = new BehaviorSubject([]);
-    chatRefStreams = new BehaviorSubject([]);
-    controlHeight = new BehaviorSubject(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
-    isWideScreen = new BehaviorSubject(false);
-    isMediumScreen = new BehaviorSubject(false);
-    isSmallScreen = new BehaviorSubject(false);
-    addGrid = new BehaviorSubject(false);
-    addAltGrid = new BehaviorSubject(false);
-    gridRows = new BehaviorSubject(0);
-    gridCols = new BehaviorSubject(0);
-    altGridRows = new BehaviorSubject(0);
-    altGridCols = new BehaviorSubject(0);
-    numberPages = new BehaviorSubject(0);
-    currentStreams = new BehaviorSubject([]);
-    showMiniView = new BehaviorSubject(false);
-    nStream = new BehaviorSubject(null);
-    defer_receive = new BehaviorSubject(false);
-    allAudioStreams = new BehaviorSubject([]);
-    remoteScreenStream = new BehaviorSubject([]);
-    screenProducer = new BehaviorSubject(null);
-    localScreenProducer = new BehaviorSubject(null);
-    gotAllVids = new BehaviorSubject(false);
-    paginationHeightWidth = new BehaviorSubject(40);
-    paginationDirection = new BehaviorSubject('horizontal');
-    gridSizes = new BehaviorSubject({
+    updateDateState = new BehaviorSubject$1(null);
+    lastUpdate = new BehaviorSubject$1(null);
+    nForReadjustRecord = new BehaviorSubject$1(0);
+    fixedPageLimit = new BehaviorSubject$1(4);
+    removeAltGrid = new BehaviorSubject$1(false);
+    nForReadjust = new BehaviorSubject$1(0);
+    reorderInterval = new BehaviorSubject$1(30000);
+    fastReorderInterval = new BehaviorSubject$1(10000);
+    lastReorderTime = new BehaviorSubject$1(0);
+    audStreamNames = new BehaviorSubject$1([]);
+    currentUserPage = new BehaviorSubject$1(0);
+    mainHeightWidth = new BehaviorSubject$1(this.eventType.value == 'webinar' ? 67 : this.eventType.value == 'broadcast' ? 100 : 0);
+    prevMainHeightWidth = new BehaviorSubject$1(this.mainHeightWidth.value);
+    prevDoPaginate = new BehaviorSubject$1(false);
+    doPaginate = new BehaviorSubject$1(false);
+    shareEnded = new BehaviorSubject$1(false);
+    lStreams = new BehaviorSubject$1([]);
+    chatRefStreams = new BehaviorSubject$1([]);
+    controlHeight = new BehaviorSubject$1(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
+    isWideScreen = new BehaviorSubject$1(false);
+    isMediumScreen = new BehaviorSubject$1(false);
+    isSmallScreen = new BehaviorSubject$1(false);
+    addGrid = new BehaviorSubject$1(false);
+    addAltGrid = new BehaviorSubject$1(false);
+    gridRows = new BehaviorSubject$1(0);
+    gridCols = new BehaviorSubject$1(0);
+    altGridRows = new BehaviorSubject$1(0);
+    altGridCols = new BehaviorSubject$1(0);
+    numberPages = new BehaviorSubject$1(0);
+    currentStreams = new BehaviorSubject$1([]);
+    showMiniView = new BehaviorSubject$1(false);
+    nStream = new BehaviorSubject$1(null);
+    defer_receive = new BehaviorSubject$1(false);
+    allAudioStreams = new BehaviorSubject$1([]);
+    remoteScreenStream = new BehaviorSubject$1([]);
+    screenProducer = new BehaviorSubject$1(null);
+    localScreenProducer = new BehaviorSubject$1(null);
+    gotAllVids = new BehaviorSubject$1(false);
+    paginationHeightWidth = new BehaviorSubject$1(40);
+    paginationDirection = new BehaviorSubject$1('horizontal');
+    gridSizes = new BehaviorSubject$1({
         gridWidth: 0,
         gridHeight: 0,
         altGridWidth: 0,
         altGridHeight: 0,
     });
-    screenForceFullDisplay = new BehaviorSubject(false);
-    mainGridStream = new BehaviorSubject([]);
-    otherGridStreams = new BehaviorSubject([]);
-    audioOnlyStreams = new BehaviorSubject([]);
-    videoInputs = new BehaviorSubject([]);
-    audioInputs = new BehaviorSubject([]);
-    meetingProgressTime = new BehaviorSubject('00:00:00');
-    meetingElapsedTime = new BehaviorSubject(0);
-    ref_participants = new BehaviorSubject([]);
+    screenForceFullDisplay = new BehaviorSubject$1(false);
+    mainGridStream = new BehaviorSubject$1([]);
+    otherGridStreams = new BehaviorSubject$1([]);
+    audioOnlyStreams = new BehaviorSubject$1([]);
+    videoInputs = new BehaviorSubject$1([]);
+    audioInputs = new BehaviorSubject$1([]);
+    meetingProgressTime = new BehaviorSubject$1('00:00:00');
+    meetingElapsedTime = new BehaviorSubject$1(0);
+    ref_participants = new BehaviorSubject$1([]);
     updateValidated = (value) => {
         this.validated.next(value);
     };
@@ -49591,168 +50031,169 @@ class MediasfuConference {
         this.ref_participants.next(value);
     };
     // Messages
-    messages = new BehaviorSubject([]);
-    startDirectMessage = new BehaviorSubject(false);
-    directMessageDetails = new BehaviorSubject(null);
-    showMessagesBadge = new BehaviorSubject(false);
+    messages = new BehaviorSubject$1([]);
+    startDirectMessage = new BehaviorSubject$1(false);
+    directMessageDetails = new BehaviorSubject$1(null);
+    showMessagesBadge = new BehaviorSubject$1(false);
     // Event Settings
-    audioSetting = new BehaviorSubject('allow');
-    videoSetting = new BehaviorSubject('allow');
-    screenshareSetting = new BehaviorSubject('allow');
-    chatSetting = new BehaviorSubject('allow');
+    audioSetting = new BehaviorSubject$1('allow');
+    videoSetting = new BehaviorSubject$1('allow');
+    screenshareSetting = new BehaviorSubject$1('allow');
+    chatSetting = new BehaviorSubject$1('allow');
     // Display Settings
-    displayOption = new BehaviorSubject('media');
-    autoWave = new BehaviorSubject(true);
-    forceFullDisplay = new BehaviorSubject(true);
-    prevForceFullDisplay = new BehaviorSubject(false);
-    prevMeetingDisplayType = new BehaviorSubject('video');
+    displayOption = new BehaviorSubject$1('media');
+    autoWave = new BehaviorSubject$1(true);
+    forceFullDisplay = new BehaviorSubject$1(true);
+    prevForceFullDisplay = new BehaviorSubject$1(false);
+    prevMeetingDisplayType = new BehaviorSubject$1('video');
     // Waiting Room
-    waitingRoomFilter = new BehaviorSubject('');
-    waitingRoomList = new BehaviorSubject(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
-    waitingRoomCounter = new BehaviorSubject(0);
-    filteredWaitingRoomList = new BehaviorSubject(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
+    waitingRoomFilter = new BehaviorSubject$1('');
+    waitingRoomList = new BehaviorSubject$1(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
+    waitingRoomCounter = new BehaviorSubject$1(0);
+    filteredWaitingRoomList = new BehaviorSubject$1(this.useSeed && this.seedData?.waitingList ? this.seedData.waitingList : []);
     // Requests
-    requestFilter = new BehaviorSubject('');
-    requestList = new BehaviorSubject(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
-    requestCounter = new BehaviorSubject(0);
-    filteredRequestList = new BehaviorSubject(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
+    requestFilter = new BehaviorSubject$1('');
+    requestList = new BehaviorSubject$1(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
+    requestCounter = new BehaviorSubject$1(0);
+    filteredRequestList = new BehaviorSubject$1(this.useSeed && this.seedData?.requests ? this.seedData.requests : []);
     // Total Requests and Waiting Room
-    totalReqWait = new BehaviorSubject(0);
+    totalReqWait = new BehaviorSubject$1(0);
     // Alerts
-    alertVisible = new BehaviorSubject(false);
-    alertMessage = new BehaviorSubject('');
-    alertType = new BehaviorSubject('success');
-    alertDuration = new BehaviorSubject(3000);
+    alertVisible = new BehaviorSubject$1(false);
+    alertMessage = new BehaviorSubject$1('');
+    alertType = new BehaviorSubject$1('success');
+    alertDuration = new BehaviorSubject$1(3000);
     // Progress Timer
-    progressTimerVisible = new BehaviorSubject(true);
-    progressTimerValue = new BehaviorSubject(0);
+    progressTimerVisible = new BehaviorSubject$1(true);
+    progressTimerValue = new BehaviorSubject$1(0);
     // Menu Modals
-    isMenuModalVisible = new BehaviorSubject(false);
-    isRecordingModalVisible = new BehaviorSubject(false);
-    isSettingsModalVisible = new BehaviorSubject(false);
-    isRequestsModalVisible = new BehaviorSubject(false);
-    isWaitingModalVisible = new BehaviorSubject(false);
-    isCoHostModalVisible = new BehaviorSubject(false);
-    isMediaSettingsModalVisible = new BehaviorSubject(false);
-    isDisplaySettingsModalVisible = new BehaviorSubject(false);
+    isMenuModalVisible = new BehaviorSubject$1(false);
+    isRecordingModalVisible = new BehaviorSubject$1(false);
+    isSettingsModalVisible = new BehaviorSubject$1(false);
+    isRequestsModalVisible = new BehaviorSubject$1(false);
+    isWaitingModalVisible = new BehaviorSubject$1(false);
+    isCoHostModalVisible = new BehaviorSubject$1(false);
+    isMediaSettingsModalVisible = new BehaviorSubject$1(false);
+    isDisplaySettingsModalVisible = new BehaviorSubject$1(false);
     // Other Modals
-    isParticipantsModalVisible = new BehaviorSubject(false);
-    isMessagesModalVisible = new BehaviorSubject(false);
-    isConfirmExitModalVisible = new BehaviorSubject(false);
-    isConfirmHereModalVisible = new BehaviorSubject(false);
-    isShareEventModalVisible = new BehaviorSubject(false);
-    isLoadingModalVisible = new BehaviorSubject(false);
+    isParticipantsModalVisible = new BehaviorSubject$1(false);
+    isMessagesModalVisible = new BehaviorSubject$1(false);
+    isConfirmExitModalVisible = new BehaviorSubject$1(false);
+    isConfirmHereModalVisible = new BehaviorSubject$1(false);
+    isShareEventModalVisible = new BehaviorSubject$1(false);
+    isLoadingModalVisible = new BehaviorSubject$1(false);
     // Recording Options
-    recordingMediaOptions = new BehaviorSubject('video');
-    recordingAudioOptions = new BehaviorSubject('all');
-    recordingVideoOptions = new BehaviorSubject('all');
-    recordingVideoType = new BehaviorSubject('fullDisplay');
-    recordingVideoOptimized = new BehaviorSubject(false);
-    recordingDisplayType = new BehaviorSubject('video');
-    recordingAddHLS = new BehaviorSubject(true);
-    recordingNameTags = new BehaviorSubject(true);
-    recordingBackgroundColor = new BehaviorSubject('#83c0e9');
-    recordingNameTagsColor = new BehaviorSubject('#ffffff');
-    recordingAddText = new BehaviorSubject(false);
-    recordingCustomText = new BehaviorSubject('Add Text');
-    recordingCustomTextPosition = new BehaviorSubject('top');
-    recordingCustomTextColor = new BehaviorSubject('#ffffff');
-    recordingOrientationVideo = new BehaviorSubject('landscape');
-    clearedToResume = new BehaviorSubject(true);
-    clearedToRecord = new BehaviorSubject(true);
-    recordState = new BehaviorSubject('green');
-    showRecordButtons = new BehaviorSubject(false);
-    recordingProgressTime = new BehaviorSubject('00:00:00');
-    audioSwitching = new BehaviorSubject(false);
-    videoSwitching = new BehaviorSubject(false);
+    recordingMediaOptions = new BehaviorSubject$1('video');
+    recordingAudioOptions = new BehaviorSubject$1('all');
+    recordingVideoOptions = new BehaviorSubject$1('all');
+    recordingVideoType = new BehaviorSubject$1('fullDisplay');
+    recordingVideoOptimized = new BehaviorSubject$1(false);
+    recordingDisplayType = new BehaviorSubject$1('video');
+    recordingAddHLS = new BehaviorSubject$1(true);
+    recordingNameTags = new BehaviorSubject$1(true);
+    recordingBackgroundColor = new BehaviorSubject$1('#83c0e9');
+    recordingNameTagsColor = new BehaviorSubject$1('#ffffff');
+    recordingAddText = new BehaviorSubject$1(false);
+    recordingCustomText = new BehaviorSubject$1('Add Text');
+    recordingCustomTextPosition = new BehaviorSubject$1('top');
+    recordingCustomTextColor = new BehaviorSubject$1('#ffffff');
+    recordingOrientationVideo = new BehaviorSubject$1('landscape');
+    clearedToResume = new BehaviorSubject$1(true);
+    clearedToRecord = new BehaviorSubject$1(true);
+    recordState = new BehaviorSubject$1('green');
+    showRecordButtons = new BehaviorSubject$1(false);
+    recordingProgressTime = new BehaviorSubject$1('00:00:00');
+    audioSwitching = new BehaviorSubject$1(false);
+    videoSwitching = new BehaviorSubject$1(false);
     // Media States
-    videoAlreadyOn = new BehaviorSubject(false);
-    audioAlreadyOn = new BehaviorSubject(false);
-    componentSizes = new BehaviorSubject({
+    videoAlreadyOn = new BehaviorSubject$1(false);
+    audioAlreadyOn = new BehaviorSubject$1(false);
+    componentSizes = new BehaviorSubject$1({
         mainHeight: 0,
         otherHeight: 0,
         mainWidth: 0,
         otherWidth: 0,
     });
     // Permissions
-    hasCameraPermission = new BehaviorSubject(false);
-    hasAudioPermission = new BehaviorSubject(false);
+    hasCameraPermission = new BehaviorSubject$1(false);
+    hasAudioPermission = new BehaviorSubject$1(false);
     // Transports
-    transportCreated = new BehaviorSubject(false);
-    localTransportCreated = new BehaviorSubject(false);
-    transportCreatedVideo = new BehaviorSubject(false);
-    transportCreatedAudio = new BehaviorSubject(false);
-    transportCreatedScreen = new BehaviorSubject(false);
-    producerTransport = new BehaviorSubject(null);
-    localProducerTransport = new BehaviorSubject(null);
-    videoProducer = new BehaviorSubject(null);
-    localVideoProducer = new BehaviorSubject(null);
-    params = new BehaviorSubject({});
-    videoParams = new BehaviorSubject({});
-    audioParams = new BehaviorSubject({});
-    audioProducer = new BehaviorSubject(null);
-    localAudioProducer = new BehaviorSubject(null);
-    consumerTransports = new BehaviorSubject([]);
-    consumingTransports = new BehaviorSubject([]);
+    transportCreated = new BehaviorSubject$1(false);
+    localTransportCreated = new BehaviorSubject$1(false);
+    transportCreatedVideo = new BehaviorSubject$1(false);
+    transportCreatedAudio = new BehaviorSubject$1(false);
+    transportCreatedScreen = new BehaviorSubject$1(false);
+    producerTransport = new BehaviorSubject$1(null);
+    localProducerTransport = new BehaviorSubject$1(null);
+    videoProducer = new BehaviorSubject$1(null);
+    localVideoProducer = new BehaviorSubject$1(null);
+    params = new BehaviorSubject$1({});
+    videoParams = new BehaviorSubject$1({});
+    audioParams = new BehaviorSubject$1({});
+    audioProducer = new BehaviorSubject$1(null);
+    audioLevel = new BehaviorSubject$1(0);
+    localAudioProducer = new BehaviorSubject$1(null);
+    consumerTransports = new BehaviorSubject$1([]);
+    consumingTransports = new BehaviorSubject$1([]);
     // Polls
-    polls = new BehaviorSubject(this.useSeed && this.seedData?.polls ? this.seedData.polls : []);
-    poll = new BehaviorSubject(null);
-    isPollModalVisible = new BehaviorSubject(false);
+    polls = new BehaviorSubject$1(this.useSeed && this.seedData?.polls ? this.seedData.polls : []);
+    poll = new BehaviorSubject$1(null);
+    isPollModalVisible = new BehaviorSubject$1(false);
     // Background
-    customImage = new BehaviorSubject('');
-    selectedImage = new BehaviorSubject('');
-    segmentVideo = new BehaviorSubject(null);
-    selfieSegmentation = new BehaviorSubject(null);
-    pauseSegmentation = new BehaviorSubject(false);
-    processedStream = new BehaviorSubject(null);
-    keepBackground = new BehaviorSubject(false);
-    backgroundHasChanged = new BehaviorSubject(false);
-    virtualStream = new BehaviorSubject(null);
-    mainCanvas = new BehaviorSubject(null);
-    prevKeepBackground = new BehaviorSubject(false);
-    appliedBackground = new BehaviorSubject(false);
-    isBackgroundModalVisible = new BehaviorSubject(false);
-    autoClickBackground = new BehaviorSubject(false);
+    customImage = new BehaviorSubject$1('');
+    selectedImage = new BehaviorSubject$1('');
+    segmentVideo = new BehaviorSubject$1(null);
+    selfieSegmentation = new BehaviorSubject$1(null);
+    pauseSegmentation = new BehaviorSubject$1(false);
+    processedStream = new BehaviorSubject$1(null);
+    keepBackground = new BehaviorSubject$1(false);
+    backgroundHasChanged = new BehaviorSubject$1(false);
+    virtualStream = new BehaviorSubject$1(null);
+    mainCanvas = new BehaviorSubject$1(null);
+    prevKeepBackground = new BehaviorSubject$1(false);
+    appliedBackground = new BehaviorSubject$1(false);
+    isBackgroundModalVisible = new BehaviorSubject$1(false);
+    autoClickBackground = new BehaviorSubject$1(false);
     // Breakout Rooms
-    breakoutRooms = new BehaviorSubject(this.useSeed && this.seedData?.breakoutRooms ? this.seedData.breakoutRooms : []);
-    currentRoomIndex = new BehaviorSubject(0);
-    canStartBreakout = new BehaviorSubject(false);
-    breakOutRoomStarted = new BehaviorSubject(false);
-    breakOutRoomEnded = new BehaviorSubject(false);
-    hostNewRoom = new BehaviorSubject(-1);
-    limitedBreakRoom = new BehaviorSubject([]);
-    mainRoomsLength = new BehaviorSubject(0);
-    memberRoom = new BehaviorSubject(-1);
-    isBreakoutRoomsModalVisible = new BehaviorSubject(false);
+    breakoutRooms = new BehaviorSubject$1(this.useSeed && this.seedData?.breakoutRooms ? this.seedData.breakoutRooms : []);
+    currentRoomIndex = new BehaviorSubject$1(0);
+    canStartBreakout = new BehaviorSubject$1(false);
+    breakOutRoomStarted = new BehaviorSubject$1(false);
+    breakOutRoomEnded = new BehaviorSubject$1(false);
+    hostNewRoom = new BehaviorSubject$1(-1);
+    limitedBreakRoom = new BehaviorSubject$1([]);
+    mainRoomsLength = new BehaviorSubject$1(0);
+    memberRoom = new BehaviorSubject$1(-1);
+    isBreakoutRoomsModalVisible = new BehaviorSubject$1(false);
     // Whiteboard
-    whiteboardUsers = new BehaviorSubject(this.useSeed && this.seedData?.whiteboardUsers ? this.seedData.whiteboardUsers : []);
-    currentWhiteboardIndex = new BehaviorSubject(0);
-    canStartWhiteboard = new BehaviorSubject(false);
-    whiteboardStarted = new BehaviorSubject(false);
-    whiteboardEnded = new BehaviorSubject(false);
-    whiteboardLimit = new BehaviorSubject(4);
-    isWhiteboardModalVisible = new BehaviorSubject(false);
-    isConfigureWhiteboardModalVisible = new BehaviorSubject(false);
-    shapes = new BehaviorSubject([]);
-    useImageBackground = new BehaviorSubject(true);
-    redoStack = new BehaviorSubject([]);
-    undoStack = new BehaviorSubject([]);
-    canvasStream = new BehaviorSubject(null);
-    canvasWhiteboard = new BehaviorSubject(null);
+    whiteboardUsers = new BehaviorSubject$1(this.useSeed && this.seedData?.whiteboardUsers ? this.seedData.whiteboardUsers : []);
+    currentWhiteboardIndex = new BehaviorSubject$1(0);
+    canStartWhiteboard = new BehaviorSubject$1(false);
+    whiteboardStarted = new BehaviorSubject$1(false);
+    whiteboardEnded = new BehaviorSubject$1(false);
+    whiteboardLimit = new BehaviorSubject$1(4);
+    isWhiteboardModalVisible = new BehaviorSubject$1(false);
+    isConfigureWhiteboardModalVisible = new BehaviorSubject$1(false);
+    shapes = new BehaviorSubject$1([]);
+    useImageBackground = new BehaviorSubject$1(true);
+    redoStack = new BehaviorSubject$1([]);
+    undoStack = new BehaviorSubject$1([]);
+    canvasStream = new BehaviorSubject$1(null);
+    canvasWhiteboard = new BehaviorSubject$1(null);
     // Screenboard
-    canvasScreenboard = new BehaviorSubject(null);
-    processedScreenStream = new BehaviorSubject(null);
-    annotateScreenStream = new BehaviorSubject(false);
-    mainScreenCanvas = new BehaviorSubject(null);
-    isScreenboardModalVisible = new BehaviorSubject(false);
+    canvasScreenboard = new BehaviorSubject$1(null);
+    processedScreenStream = new BehaviorSubject$1(null);
+    annotateScreenStream = new BehaviorSubject$1(false);
+    mainScreenCanvas = new BehaviorSubject$1(null);
+    isScreenboardModalVisible = new BehaviorSubject$1(false);
     //state variables for the control buttons
-    micActive = new BehaviorSubject(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
-    videoActive = new BehaviorSubject(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
-    screenShareActive = new BehaviorSubject(false);
-    endCallActive = new BehaviorSubject(false);
-    participantsActive = new BehaviorSubject(false);
-    menuActive = new BehaviorSubject(false);
-    commentsActive = new BehaviorSubject(false);
+    micActive = new BehaviorSubject$1(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
+    videoActive = new BehaviorSubject$1(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
+    screenShareActive = new BehaviorSubject$1(false);
+    endCallActive = new BehaviorSubject$1(false);
+    participantsActive = new BehaviorSubject$1(false);
+    menuActive = new BehaviorSubject$1(false);
+    commentsActive = new BehaviorSubject$1(false);
     // Update functions
     updateMessages = (value) => {
         this.messages.next(value);
@@ -50081,6 +50522,9 @@ class MediasfuConference {
     };
     updateAudioProducer = (value) => {
         this.audioProducer.next(value);
+    };
+    updateAudioLevel = (value) => {
+        this.audioLevel.next(value);
     };
     updateLocalAudioProducer = (value) => {
         this.localAudioProducer.next(value);
@@ -50528,6 +50972,7 @@ class MediasfuConference {
             videoParams: this.videoParams.value,
             audioParams: this.audioParams.value,
             audioProducer: this.audioProducer.value,
+            audioLevel: this.audioLevel.value,
             localAudioProducer: this.localAudioProducer.value,
             consumerTransports: this.consumerTransports.value,
             consumingTransports: this.consumingTransports.value,
@@ -50862,6 +51307,7 @@ class MediasfuConference {
             updateVideoParams: this.updateVideoParams.bind(this),
             updateAudioParams: this.updateAudioParams.bind(this),
             updateAudioProducer: this.updateAudioProducer.bind(this),
+            updateAudioLevel: this.updateAudioLevel.bind(this),
             updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
             updateConsumerTransports: this.updateConsumerTransports.bind(this),
             updateConsumingTransports: this.updateConsumingTransports.bind(this),
@@ -50924,6 +51370,20 @@ class MediasfuConference {
             updateValidated: this.updateValidated.bind(this),
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
+                try {
+                    if (this.sourceParameters !== null) {
+                        this.sourceParameters = {
+                            ...this.getAllParams(),
+                            ...this.mediaSFUFunctions(),
+                        };
+                        if (this.updateSourceParameters) {
+                            this.updateSourceParameters(this.sourceParameters);
+                        }
+                    }
+                }
+                catch {
+                    console.log('error updateSourceParameters');
+                }
                 return {
                     ...this.getAllParams(),
                     ...this.mediaSFUFunctions(),
@@ -51022,6 +51482,10 @@ class MediasfuConference {
                 credentials: this.credentials,
                 localLink: this.localLink,
                 connectMediaSFU: this.connectMediaSFU,
+                returnUI: this.returnUI,
+                noUIPreJoinOptions: this.noUIPreJoinOptions,
+                joinMediaSFURoom: this.joinMediaSFURoom,
+                createMediaSFURoom: this.createMediaSFURoom,
             }),
         };
         this.PrejoinPageComponent = { ...PrejoinComp };
@@ -51181,6 +51645,20 @@ class MediasfuConference {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
+            try {
+                if (this.sourceParameters !== null) {
+                    this.sourceParameters = {
+                        ...this.getAllParams(),
+                        ...this.mediaSFUFunctions(),
+                    };
+                    if (this.updateSourceParameters) {
+                        this.updateSourceParameters(this.sourceParameters);
+                    }
+                }
+            }
+            catch {
+                console.log('error updateSourceParameters');
+            }
         }
     }
     async handleResize() {
@@ -51384,6 +51862,8 @@ class MediasfuConference {
                 checkConnect: this.localLink.length > 0 &&
                     this.connectMediaSFU === true &&
                     !this.link.value.includes('mediasfu.com'),
+                localLink: this.localLink,
+                joinMediaSFURoom: this.joinMediaSFURoom,
             });
             data = await createResponseJoinRoom({ localRoom: localData });
         }
@@ -52399,7 +52879,7 @@ class MediasfuConference {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuConference, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuConference, isStandalone: true, selector: "app-mediasfu-conference", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuConference, isStandalone: true, selector: "app-mediasfu-conference", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <div
       class="MediaSFU"
       [ngStyle]="{
@@ -52421,7 +52901,7 @@ class MediasfuConference {
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -52553,6 +53033,7 @@ class MediasfuConference {
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -52789,6 +53270,7 @@ class MediasfuConference {
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1$1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
 }
@@ -52850,7 +53332,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -52982,6 +53464,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -53218,6 +53701,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, providers: [CookieService] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
@@ -53235,6 +53719,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], useSeed: [{
                 type: Input
             }], imgSrc: [{
+                type: Input
+            }], sourceParameters: [{
+                type: Input
+            }], updateSourceParameters: [{
+                type: Input
+            }], returnUI: [{
+                type: Input
+            }], noUIPreJoinOptions: [{
+                type: Input
+            }], joinMediaSFURoom: [{
+                type: Input
+            }], createMediaSFURoom: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -53267,6 +53763,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Chat".
  *
@@ -53286,11 +53788,19 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * ```html
  * <app-mediasfu-chat
  *   [PrejoinPage]="CustomPrejoinComponent"
+ *   [localLink]="'https://localhost:3000'"
+ *   [connectMediaSFU]="true"
  *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-chat>
  * ```
  */
@@ -53386,6 +53896,12 @@ class MediasfuChat {
     seedData;
     useSeed = false;
     imgSrc = 'https://mediasfu.com/images/logo192.png';
+    sourceParameters = {};
+    updateSourceParameters = (data) => { };
+    returnUI = true;
+    noUIPreJoinOptions;
+    joinMediaSFURoom;
+    createMediaSFURoom;
     title = 'MediaSFU-Chat';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -53746,74 +54262,74 @@ class MediasfuChat {
                 }),
         };
     };
-    validated = new BehaviorSubject(false);
-    localUIMode = new BehaviorSubject(false);
-    socket = new BehaviorSubject({});
-    localSocket = new BehaviorSubject(undefined);
-    roomData = new BehaviorSubject(null);
-    device = new BehaviorSubject(null);
-    apiKey = new BehaviorSubject('');
-    apiUserName = new BehaviorSubject('');
-    apiToken = new BehaviorSubject('');
-    link = new BehaviorSubject('');
-    roomName = new BehaviorSubject('');
-    member = new BehaviorSubject('');
-    adminPasscode = new BehaviorSubject('');
-    islevel = new BehaviorSubject('1');
-    coHost = new BehaviorSubject('No coHost');
-    coHostResponsibility = new BehaviorSubject([
+    validated = new BehaviorSubject$1(false);
+    localUIMode = new BehaviorSubject$1(false);
+    socket = new BehaviorSubject$1({});
+    localSocket = new BehaviorSubject$1(undefined);
+    roomData = new BehaviorSubject$1(null);
+    device = new BehaviorSubject$1(null);
+    apiKey = new BehaviorSubject$1('');
+    apiUserName = new BehaviorSubject$1('');
+    apiToken = new BehaviorSubject$1('');
+    link = new BehaviorSubject$1('');
+    roomName = new BehaviorSubject$1('');
+    member = new BehaviorSubject$1('');
+    adminPasscode = new BehaviorSubject$1('');
+    islevel = new BehaviorSubject$1('1');
+    coHost = new BehaviorSubject$1('No coHost');
+    coHostResponsibility = new BehaviorSubject$1([
         { name: 'participants', value: false, dedicated: false },
         { name: 'media', value: false, dedicated: false },
         { name: 'waiting', value: false, dedicated: false },
         { name: 'chat', value: false, dedicated: false },
     ]);
-    youAreCoHost = new BehaviorSubject(false);
-    youAreHost = new BehaviorSubject(false);
-    confirmedToRecord = new BehaviorSubject(false);
-    meetingDisplayType = new BehaviorSubject('media');
-    meetingVideoOptimized = new BehaviorSubject(false);
-    eventType = new BehaviorSubject('chat');
-    participants = new BehaviorSubject([]);
-    filteredParticipants = new BehaviorSubject([]);
-    participantsCounter = new BehaviorSubject(0);
-    participantsFilter = new BehaviorSubject('');
-    consume_sockets = new BehaviorSubject([]);
-    rtpCapabilities = new BehaviorSubject(null);
-    roomRecvIPs = new BehaviorSubject([]);
-    meetingRoomParams = new BehaviorSubject(null);
-    itemPageLimit = new BehaviorSubject(4);
-    audioOnlyRoom = new BehaviorSubject(false);
-    addForBasic = new BehaviorSubject(false);
-    screenPageLimit = new BehaviorSubject(4);
-    shareScreenStarted = new BehaviorSubject(false);
-    shared = new BehaviorSubject(false);
-    targetOrientation = new BehaviorSubject('landscape');
-    targetResolution = new BehaviorSubject('sd');
-    targetResolutionHost = new BehaviorSubject('sd');
-    vidCons = new BehaviorSubject({ width: 640, height: 360 });
-    frameRate = new BehaviorSubject(10);
-    hParams = new BehaviorSubject({});
-    vParams = new BehaviorSubject({});
-    screenParams = new BehaviorSubject({});
-    aParams = new BehaviorSubject({});
-    recordingAudioPausesLimit = new BehaviorSubject(0);
-    recordingAudioPausesCount = new BehaviorSubject(0);
-    recordingAudioSupport = new BehaviorSubject(false);
-    recordingAudioPeopleLimit = new BehaviorSubject(0);
-    recordingAudioParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingVideoPausesCount = new BehaviorSubject(0);
-    recordingVideoPausesLimit = new BehaviorSubject(0);
-    recordingVideoSupport = new BehaviorSubject(false);
-    recordingVideoPeopleLimit = new BehaviorSubject(0);
-    recordingVideoParticipantsTimeLimit = new BehaviorSubject(0);
-    recordingAllParticipantsSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsSupport = new BehaviorSubject(false);
-    recordingAllParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject(false);
-    recordingPreferredOrientation = new BehaviorSubject('landscape');
-    recordingSupportForOtherOrientation = new BehaviorSubject(false);
-    recordingMultiFormatsSupport = new BehaviorSubject(false);
-    userRecordingParams = new BehaviorSubject({
+    youAreCoHost = new BehaviorSubject$1(false);
+    youAreHost = new BehaviorSubject$1(false);
+    confirmedToRecord = new BehaviorSubject$1(false);
+    meetingDisplayType = new BehaviorSubject$1('media');
+    meetingVideoOptimized = new BehaviorSubject$1(false);
+    eventType = new BehaviorSubject$1('chat');
+    participants = new BehaviorSubject$1([]);
+    filteredParticipants = new BehaviorSubject$1([]);
+    participantsCounter = new BehaviorSubject$1(0);
+    participantsFilter = new BehaviorSubject$1('');
+    consume_sockets = new BehaviorSubject$1([]);
+    rtpCapabilities = new BehaviorSubject$1(null);
+    roomRecvIPs = new BehaviorSubject$1([]);
+    meetingRoomParams = new BehaviorSubject$1(null);
+    itemPageLimit = new BehaviorSubject$1(4);
+    audioOnlyRoom = new BehaviorSubject$1(false);
+    addForBasic = new BehaviorSubject$1(false);
+    screenPageLimit = new BehaviorSubject$1(4);
+    shareScreenStarted = new BehaviorSubject$1(false);
+    shared = new BehaviorSubject$1(false);
+    targetOrientation = new BehaviorSubject$1('landscape');
+    targetResolution = new BehaviorSubject$1('sd');
+    targetResolutionHost = new BehaviorSubject$1('sd');
+    vidCons = new BehaviorSubject$1({ width: 640, height: 360 });
+    frameRate = new BehaviorSubject$1(10);
+    hParams = new BehaviorSubject$1({});
+    vParams = new BehaviorSubject$1({});
+    screenParams = new BehaviorSubject$1({});
+    aParams = new BehaviorSubject$1({});
+    recordingAudioPausesLimit = new BehaviorSubject$1(0);
+    recordingAudioPausesCount = new BehaviorSubject$1(0);
+    recordingAudioSupport = new BehaviorSubject$1(false);
+    recordingAudioPeopleLimit = new BehaviorSubject$1(0);
+    recordingAudioParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingVideoPausesCount = new BehaviorSubject$1(0);
+    recordingVideoPausesLimit = new BehaviorSubject$1(0);
+    recordingVideoSupport = new BehaviorSubject$1(false);
+    recordingVideoPeopleLimit = new BehaviorSubject$1(0);
+    recordingVideoParticipantsTimeLimit = new BehaviorSubject$1(0);
+    recordingAllParticipantsSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsSupport = new BehaviorSubject$1(false);
+    recordingAllParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingVideoParticipantsFullRoomSupport = new BehaviorSubject$1(false);
+    recordingPreferredOrientation = new BehaviorSubject$1('landscape');
+    recordingSupportForOtherOrientation = new BehaviorSubject$1(false);
+    recordingMultiFormatsSupport = new BehaviorSubject$1(false);
+    userRecordingParams = new BehaviorSubject$1({
         mainSpecs: {
             mediaOptions: 'video', // 'audio', 'video'
             audioOptions: 'all', // 'all', 'onScreen', 'host'
@@ -53830,95 +54346,95 @@ class MediasfuChat {
             orientationVideo: 'portrait', // 'landscape', 'portrait', 'all'
         },
     });
-    canRecord = new BehaviorSubject(false);
-    startReport = new BehaviorSubject(false);
-    endReport = new BehaviorSubject(false);
-    recordTimerInterval = new BehaviorSubject(null);
-    recordStartTime = new BehaviorSubject(0);
-    recordElapsedTime = new BehaviorSubject(0);
-    isTimerRunning = new BehaviorSubject(false);
-    canPauseResume = new BehaviorSubject(false);
-    recordChangeSeconds = new BehaviorSubject(15000);
-    pauseLimit = new BehaviorSubject(0);
-    pauseRecordCount = new BehaviorSubject(0);
-    canLaunchRecord = new BehaviorSubject(true);
-    stopLaunchRecord = new BehaviorSubject(false);
-    participantsAll = new BehaviorSubject([]);
-    firstAll = new BehaviorSubject(false);
-    updateMainWindow = new BehaviorSubject(false);
-    first_round = new BehaviorSubject(false);
-    landScaped = new BehaviorSubject(false);
-    lock_screen = new BehaviorSubject(false);
-    screenId = new BehaviorSubject('');
-    allVideoStreams = new BehaviorSubject([]);
-    newLimitedStreams = new BehaviorSubject([]);
-    newLimitedStreamsIDs = new BehaviorSubject([]);
-    activeSounds = new BehaviorSubject([]);
-    screenShareIDStream = new BehaviorSubject('');
-    screenShareNameStream = new BehaviorSubject('');
-    adminIDStream = new BehaviorSubject('');
-    adminNameStream = new BehaviorSubject('');
-    youYouStream = new BehaviorSubject([]);
-    youYouStreamIDs = new BehaviorSubject([]);
-    localStream = new BehaviorSubject(null);
-    recordStarted = new BehaviorSubject(false);
-    recordResumed = new BehaviorSubject(false);
-    recordPaused = new BehaviorSubject(false);
-    recordStopped = new BehaviorSubject(false);
-    adminRestrictSetting = new BehaviorSubject(false);
-    videoRequestState = new BehaviorSubject(null);
-    videoRequestTime = new BehaviorSubject(0);
-    videoAction = new BehaviorSubject(false);
-    localStreamVideo = new BehaviorSubject(null);
-    userDefaultVideoInputDevice = new BehaviorSubject('');
-    currentFacingMode = new BehaviorSubject('user');
-    prevFacingMode = new BehaviorSubject('user');
-    defVideoID = new BehaviorSubject('');
-    allowed = new BehaviorSubject(false);
-    dispActiveNames = new BehaviorSubject([]);
-    p_dispActiveNames = new BehaviorSubject([]);
-    activeNames = new BehaviorSubject([]);
-    prevActiveNames = new BehaviorSubject([]);
-    p_activeNames = new BehaviorSubject([]);
-    membersReceived = new BehaviorSubject(false);
-    deferScreenReceived = new BehaviorSubject(false);
-    hostFirstSwitch = new BehaviorSubject(false);
-    micAction = new BehaviorSubject(false);
-    screenAction = new BehaviorSubject(false);
-    chatAction = new BehaviorSubject(false);
-    audioRequestState = new BehaviorSubject(null);
-    screenRequestState = new BehaviorSubject(null);
-    chatRequestState = new BehaviorSubject(null);
-    audioRequestTime = new BehaviorSubject(0);
-    screenRequestTime = new BehaviorSubject(0);
-    chatRequestTime = new BehaviorSubject(0);
-    updateRequestIntervalSeconds = new BehaviorSubject(240);
-    oldSoundIds = new BehaviorSubject([]);
-    hostLabel = new BehaviorSubject('Host');
-    mainScreenFilled = new BehaviorSubject(false);
-    localStreamScreen = new BehaviorSubject(null);
-    screenAlreadyOn = new BehaviorSubject(false);
-    chatAlreadyOn = new BehaviorSubject(false);
-    redirectURL = new BehaviorSubject('');
-    oldAllStreams = new BehaviorSubject([]);
-    adminVidID = new BehaviorSubject('');
-    streamNames = new BehaviorSubject([]);
-    non_alVideoStreams = new BehaviorSubject([]);
-    sortAudioLoudness = new BehaviorSubject(false);
-    audioDecibels = new BehaviorSubject([]);
-    mixed_alVideoStreams = new BehaviorSubject([]);
-    non_alVideoStreams_muted = new BehaviorSubject([]);
-    paginatedStreams = new BehaviorSubject([]);
-    localStreamAudio = new BehaviorSubject(null);
-    defAudioID = new BehaviorSubject('');
-    userDefaultAudioInputDevice = new BehaviorSubject('');
-    userDefaultAudioOutputDevice = new BehaviorSubject('');
-    prevAudioInputDevice = new BehaviorSubject('');
-    prevVideoInputDevice = new BehaviorSubject('');
-    audioPaused = new BehaviorSubject(false);
-    mainScreenPerson = new BehaviorSubject('');
-    adminOnMainScreen = new BehaviorSubject(false);
-    screenStates = new BehaviorSubject([
+    canRecord = new BehaviorSubject$1(false);
+    startReport = new BehaviorSubject$1(false);
+    endReport = new BehaviorSubject$1(false);
+    recordTimerInterval = new BehaviorSubject$1(null);
+    recordStartTime = new BehaviorSubject$1(0);
+    recordElapsedTime = new BehaviorSubject$1(0);
+    isTimerRunning = new BehaviorSubject$1(false);
+    canPauseResume = new BehaviorSubject$1(false);
+    recordChangeSeconds = new BehaviorSubject$1(15000);
+    pauseLimit = new BehaviorSubject$1(0);
+    pauseRecordCount = new BehaviorSubject$1(0);
+    canLaunchRecord = new BehaviorSubject$1(true);
+    stopLaunchRecord = new BehaviorSubject$1(false);
+    participantsAll = new BehaviorSubject$1([]);
+    firstAll = new BehaviorSubject$1(false);
+    updateMainWindow = new BehaviorSubject$1(false);
+    first_round = new BehaviorSubject$1(false);
+    landScaped = new BehaviorSubject$1(false);
+    lock_screen = new BehaviorSubject$1(false);
+    screenId = new BehaviorSubject$1('');
+    allVideoStreams = new BehaviorSubject$1([]);
+    newLimitedStreams = new BehaviorSubject$1([]);
+    newLimitedStreamsIDs = new BehaviorSubject$1([]);
+    activeSounds = new BehaviorSubject$1([]);
+    screenShareIDStream = new BehaviorSubject$1('');
+    screenShareNameStream = new BehaviorSubject$1('');
+    adminIDStream = new BehaviorSubject$1('');
+    adminNameStream = new BehaviorSubject$1('');
+    youYouStream = new BehaviorSubject$1([]);
+    youYouStreamIDs = new BehaviorSubject$1([]);
+    localStream = new BehaviorSubject$1(null);
+    recordStarted = new BehaviorSubject$1(false);
+    recordResumed = new BehaviorSubject$1(false);
+    recordPaused = new BehaviorSubject$1(false);
+    recordStopped = new BehaviorSubject$1(false);
+    adminRestrictSetting = new BehaviorSubject$1(false);
+    videoRequestState = new BehaviorSubject$1(null);
+    videoRequestTime = new BehaviorSubject$1(0);
+    videoAction = new BehaviorSubject$1(false);
+    localStreamVideo = new BehaviorSubject$1(null);
+    userDefaultVideoInputDevice = new BehaviorSubject$1('');
+    currentFacingMode = new BehaviorSubject$1('user');
+    prevFacingMode = new BehaviorSubject$1('user');
+    defVideoID = new BehaviorSubject$1('');
+    allowed = new BehaviorSubject$1(false);
+    dispActiveNames = new BehaviorSubject$1([]);
+    p_dispActiveNames = new BehaviorSubject$1([]);
+    activeNames = new BehaviorSubject$1([]);
+    prevActiveNames = new BehaviorSubject$1([]);
+    p_activeNames = new BehaviorSubject$1([]);
+    membersReceived = new BehaviorSubject$1(false);
+    deferScreenReceived = new BehaviorSubject$1(false);
+    hostFirstSwitch = new BehaviorSubject$1(false);
+    micAction = new BehaviorSubject$1(false);
+    screenAction = new BehaviorSubject$1(false);
+    chatAction = new BehaviorSubject$1(false);
+    audioRequestState = new BehaviorSubject$1(null);
+    screenRequestState = new BehaviorSubject$1(null);
+    chatRequestState = new BehaviorSubject$1(null);
+    audioRequestTime = new BehaviorSubject$1(0);
+    screenRequestTime = new BehaviorSubject$1(0);
+    chatRequestTime = new BehaviorSubject$1(0);
+    updateRequestIntervalSeconds = new BehaviorSubject$1(240);
+    oldSoundIds = new BehaviorSubject$1([]);
+    hostLabel = new BehaviorSubject$1('Host');
+    mainScreenFilled = new BehaviorSubject$1(false);
+    localStreamScreen = new BehaviorSubject$1(null);
+    screenAlreadyOn = new BehaviorSubject$1(false);
+    chatAlreadyOn = new BehaviorSubject$1(false);
+    redirectURL = new BehaviorSubject$1('');
+    oldAllStreams = new BehaviorSubject$1([]);
+    adminVidID = new BehaviorSubject$1('');
+    streamNames = new BehaviorSubject$1([]);
+    non_alVideoStreams = new BehaviorSubject$1([]);
+    sortAudioLoudness = new BehaviorSubject$1(false);
+    audioDecibels = new BehaviorSubject$1([]);
+    mixed_alVideoStreams = new BehaviorSubject$1([]);
+    non_alVideoStreams_muted = new BehaviorSubject$1([]);
+    paginatedStreams = new BehaviorSubject$1([]);
+    localStreamAudio = new BehaviorSubject$1(null);
+    defAudioID = new BehaviorSubject$1('');
+    userDefaultAudioInputDevice = new BehaviorSubject$1('');
+    userDefaultAudioOutputDevice = new BehaviorSubject$1('');
+    prevAudioInputDevice = new BehaviorSubject$1('');
+    prevVideoInputDevice = new BehaviorSubject$1('');
+    audioPaused = new BehaviorSubject$1(false);
+    mainScreenPerson = new BehaviorSubject$1('');
+    adminOnMainScreen = new BehaviorSubject$1(false);
+    screenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -53926,7 +54442,7 @@ class MediasfuChat {
             adminOnMainScreen: false,
         },
     ]);
-    prevScreenStates = new BehaviorSubject([
+    prevScreenStates = new BehaviorSubject$1([
         {
             mainScreenPerson: '',
             mainScreenProducerId: '',
@@ -53934,61 +54450,61 @@ class MediasfuChat {
             adminOnMainScreen: false,
         },
     ]);
-    updateDateState = new BehaviorSubject(null);
-    lastUpdate = new BehaviorSubject(null);
-    nForReadjustRecord = new BehaviorSubject(0);
-    fixedPageLimit = new BehaviorSubject(4);
-    removeAltGrid = new BehaviorSubject(false);
-    nForReadjust = new BehaviorSubject(0);
-    reorderInterval = new BehaviorSubject(30000);
-    fastReorderInterval = new BehaviorSubject(10000);
-    lastReorderTime = new BehaviorSubject(0);
-    audStreamNames = new BehaviorSubject([]);
-    currentUserPage = new BehaviorSubject(0);
-    mainHeightWidth = new BehaviorSubject(0);
-    prevMainHeightWidth = new BehaviorSubject(this.mainHeightWidth.value);
-    prevDoPaginate = new BehaviorSubject(false);
-    doPaginate = new BehaviorSubject(false);
-    shareEnded = new BehaviorSubject(false);
-    lStreams = new BehaviorSubject([]);
-    chatRefStreams = new BehaviorSubject([]);
-    controlHeight = new BehaviorSubject(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
-    isWideScreen = new BehaviorSubject(false);
-    isMediumScreen = new BehaviorSubject(false);
-    isSmallScreen = new BehaviorSubject(false);
-    addGrid = new BehaviorSubject(false);
-    addAltGrid = new BehaviorSubject(false);
-    gridRows = new BehaviorSubject(0);
-    gridCols = new BehaviorSubject(0);
-    altGridRows = new BehaviorSubject(0);
-    altGridCols = new BehaviorSubject(0);
-    numberPages = new BehaviorSubject(0);
-    currentStreams = new BehaviorSubject([]);
-    showMiniView = new BehaviorSubject(false);
-    nStream = new BehaviorSubject(null);
-    defer_receive = new BehaviorSubject(false);
-    allAudioStreams = new BehaviorSubject([]);
-    remoteScreenStream = new BehaviorSubject([]);
-    screenProducer = new BehaviorSubject(null);
-    localScreenProducer = new BehaviorSubject(null);
-    gotAllVids = new BehaviorSubject(false);
-    paginationHeightWidth = new BehaviorSubject(40);
-    paginationDirection = new BehaviorSubject('horizontal');
-    gridSizes = new BehaviorSubject({
+    updateDateState = new BehaviorSubject$1(null);
+    lastUpdate = new BehaviorSubject$1(null);
+    nForReadjustRecord = new BehaviorSubject$1(0);
+    fixedPageLimit = new BehaviorSubject$1(4);
+    removeAltGrid = new BehaviorSubject$1(false);
+    nForReadjust = new BehaviorSubject$1(0);
+    reorderInterval = new BehaviorSubject$1(30000);
+    fastReorderInterval = new BehaviorSubject$1(10000);
+    lastReorderTime = new BehaviorSubject$1(0);
+    audStreamNames = new BehaviorSubject$1([]);
+    currentUserPage = new BehaviorSubject$1(0);
+    mainHeightWidth = new BehaviorSubject$1(0);
+    prevMainHeightWidth = new BehaviorSubject$1(this.mainHeightWidth.value);
+    prevDoPaginate = new BehaviorSubject$1(false);
+    doPaginate = new BehaviorSubject$1(false);
+    shareEnded = new BehaviorSubject$1(false);
+    lStreams = new BehaviorSubject$1([]);
+    chatRefStreams = new BehaviorSubject$1([]);
+    controlHeight = new BehaviorSubject$1(this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06);
+    isWideScreen = new BehaviorSubject$1(false);
+    isMediumScreen = new BehaviorSubject$1(false);
+    isSmallScreen = new BehaviorSubject$1(false);
+    addGrid = new BehaviorSubject$1(false);
+    addAltGrid = new BehaviorSubject$1(false);
+    gridRows = new BehaviorSubject$1(0);
+    gridCols = new BehaviorSubject$1(0);
+    altGridRows = new BehaviorSubject$1(0);
+    altGridCols = new BehaviorSubject$1(0);
+    numberPages = new BehaviorSubject$1(0);
+    currentStreams = new BehaviorSubject$1([]);
+    showMiniView = new BehaviorSubject$1(false);
+    nStream = new BehaviorSubject$1(null);
+    defer_receive = new BehaviorSubject$1(false);
+    allAudioStreams = new BehaviorSubject$1([]);
+    remoteScreenStream = new BehaviorSubject$1([]);
+    screenProducer = new BehaviorSubject$1(null);
+    localScreenProducer = new BehaviorSubject$1(null);
+    gotAllVids = new BehaviorSubject$1(false);
+    paginationHeightWidth = new BehaviorSubject$1(40);
+    paginationDirection = new BehaviorSubject$1('horizontal');
+    gridSizes = new BehaviorSubject$1({
         gridWidth: 0,
         gridHeight: 0,
         altGridWidth: 0,
         altGridHeight: 0,
     });
-    screenForceFullDisplay = new BehaviorSubject(false);
-    mainGridStream = new BehaviorSubject([]);
-    otherGridStreams = new BehaviorSubject([]);
-    audioOnlyStreams = new BehaviorSubject([]);
-    videoInputs = new BehaviorSubject([]);
-    audioInputs = new BehaviorSubject([]);
-    meetingProgressTime = new BehaviorSubject('00:00:00');
-    meetingElapsedTime = new BehaviorSubject(0);
-    ref_participants = new BehaviorSubject([]);
+    screenForceFullDisplay = new BehaviorSubject$1(false);
+    mainGridStream = new BehaviorSubject$1([]);
+    otherGridStreams = new BehaviorSubject$1([]);
+    audioOnlyStreams = new BehaviorSubject$1([]);
+    videoInputs = new BehaviorSubject$1([]);
+    audioInputs = new BehaviorSubject$1([]);
+    meetingProgressTime = new BehaviorSubject$1('00:00:00');
+    meetingElapsedTime = new BehaviorSubject$1(0);
+    ref_participants = new BehaviorSubject$1([]);
     updateValidated = (value) => {
         this.validated.next(value);
     };
@@ -54593,168 +55109,169 @@ class MediasfuChat {
         this.ref_participants.next(value);
     };
     // Messages
-    messages = new BehaviorSubject([]);
-    startDirectMessage = new BehaviorSubject(false);
-    directMessageDetails = new BehaviorSubject(null);
-    showMessagesBadge = new BehaviorSubject(false);
+    messages = new BehaviorSubject$1([]);
+    startDirectMessage = new BehaviorSubject$1(false);
+    directMessageDetails = new BehaviorSubject$1(null);
+    showMessagesBadge = new BehaviorSubject$1(false);
     // Event Settings
-    audioSetting = new BehaviorSubject('allow');
-    videoSetting = new BehaviorSubject('allow');
-    screenshareSetting = new BehaviorSubject('allow');
-    chatSetting = new BehaviorSubject('allow');
+    audioSetting = new BehaviorSubject$1('allow');
+    videoSetting = new BehaviorSubject$1('allow');
+    screenshareSetting = new BehaviorSubject$1('allow');
+    chatSetting = new BehaviorSubject$1('allow');
     // Display Settings
-    displayOption = new BehaviorSubject('media');
-    autoWave = new BehaviorSubject(true);
-    forceFullDisplay = new BehaviorSubject(true);
-    prevForceFullDisplay = new BehaviorSubject(false);
-    prevMeetingDisplayType = new BehaviorSubject('video');
+    displayOption = new BehaviorSubject$1('media');
+    autoWave = new BehaviorSubject$1(true);
+    forceFullDisplay = new BehaviorSubject$1(true);
+    prevForceFullDisplay = new BehaviorSubject$1(false);
+    prevMeetingDisplayType = new BehaviorSubject$1('video');
     // Waiting Room
-    waitingRoomFilter = new BehaviorSubject('');
-    waitingRoomList = new BehaviorSubject([]);
-    waitingRoomCounter = new BehaviorSubject(0);
-    filteredWaitingRoomList = new BehaviorSubject([]);
+    waitingRoomFilter = new BehaviorSubject$1('');
+    waitingRoomList = new BehaviorSubject$1([]);
+    waitingRoomCounter = new BehaviorSubject$1(0);
+    filteredWaitingRoomList = new BehaviorSubject$1([]);
     // Requests
-    requestFilter = new BehaviorSubject('');
-    requestList = new BehaviorSubject([]);
-    requestCounter = new BehaviorSubject(0);
-    filteredRequestList = new BehaviorSubject([]);
+    requestFilter = new BehaviorSubject$1('');
+    requestList = new BehaviorSubject$1([]);
+    requestCounter = new BehaviorSubject$1(0);
+    filteredRequestList = new BehaviorSubject$1([]);
     // Total Requests and Waiting Room
-    totalReqWait = new BehaviorSubject(0);
+    totalReqWait = new BehaviorSubject$1(0);
     // Alerts
-    alertVisible = new BehaviorSubject(false);
-    alertMessage = new BehaviorSubject('');
-    alertType = new BehaviorSubject('success');
-    alertDuration = new BehaviorSubject(3000);
+    alertVisible = new BehaviorSubject$1(false);
+    alertMessage = new BehaviorSubject$1('');
+    alertType = new BehaviorSubject$1('success');
+    alertDuration = new BehaviorSubject$1(3000);
     // Progress Timer
-    progressTimerVisible = new BehaviorSubject(true);
-    progressTimerValue = new BehaviorSubject(0);
+    progressTimerVisible = new BehaviorSubject$1(true);
+    progressTimerValue = new BehaviorSubject$1(0);
     // Menu Modals
-    isMenuModalVisible = new BehaviorSubject(false);
-    isRecordingModalVisible = new BehaviorSubject(false);
-    isSettingsModalVisible = new BehaviorSubject(false);
-    isRequestsModalVisible = new BehaviorSubject(false);
-    isWaitingModalVisible = new BehaviorSubject(false);
-    isCoHostModalVisible = new BehaviorSubject(false);
-    isMediaSettingsModalVisible = new BehaviorSubject(false);
-    isDisplaySettingsModalVisible = new BehaviorSubject(false);
+    isMenuModalVisible = new BehaviorSubject$1(false);
+    isRecordingModalVisible = new BehaviorSubject$1(false);
+    isSettingsModalVisible = new BehaviorSubject$1(false);
+    isRequestsModalVisible = new BehaviorSubject$1(false);
+    isWaitingModalVisible = new BehaviorSubject$1(false);
+    isCoHostModalVisible = new BehaviorSubject$1(false);
+    isMediaSettingsModalVisible = new BehaviorSubject$1(false);
+    isDisplaySettingsModalVisible = new BehaviorSubject$1(false);
     // Other Modals
-    isParticipantsModalVisible = new BehaviorSubject(false);
-    isMessagesModalVisible = new BehaviorSubject(false);
-    isConfirmExitModalVisible = new BehaviorSubject(false);
-    isConfirmHereModalVisible = new BehaviorSubject(false);
-    isShareEventModalVisible = new BehaviorSubject(false);
-    isLoadingModalVisible = new BehaviorSubject(false);
+    isParticipantsModalVisible = new BehaviorSubject$1(false);
+    isMessagesModalVisible = new BehaviorSubject$1(false);
+    isConfirmExitModalVisible = new BehaviorSubject$1(false);
+    isConfirmHereModalVisible = new BehaviorSubject$1(false);
+    isShareEventModalVisible = new BehaviorSubject$1(false);
+    isLoadingModalVisible = new BehaviorSubject$1(false);
     // Recording Options
-    recordingMediaOptions = new BehaviorSubject('video');
-    recordingAudioOptions = new BehaviorSubject('all');
-    recordingVideoOptions = new BehaviorSubject('all');
-    recordingVideoType = new BehaviorSubject('fullDisplay');
-    recordingVideoOptimized = new BehaviorSubject(false);
-    recordingDisplayType = new BehaviorSubject('video');
-    recordingAddHLS = new BehaviorSubject(true);
-    recordingNameTags = new BehaviorSubject(true);
-    recordingBackgroundColor = new BehaviorSubject('#83c0e9');
-    recordingNameTagsColor = new BehaviorSubject('#ffffff');
-    recordingAddText = new BehaviorSubject(false);
-    recordingCustomText = new BehaviorSubject('Add Text');
-    recordingCustomTextPosition = new BehaviorSubject('top');
-    recordingCustomTextColor = new BehaviorSubject('#ffffff');
-    recordingOrientationVideo = new BehaviorSubject('landscape');
-    clearedToResume = new BehaviorSubject(true);
-    clearedToRecord = new BehaviorSubject(true);
-    recordState = new BehaviorSubject('green');
-    showRecordButtons = new BehaviorSubject(false);
-    recordingProgressTime = new BehaviorSubject('00:00:00');
-    audioSwitching = new BehaviorSubject(false);
-    videoSwitching = new BehaviorSubject(false);
+    recordingMediaOptions = new BehaviorSubject$1('video');
+    recordingAudioOptions = new BehaviorSubject$1('all');
+    recordingVideoOptions = new BehaviorSubject$1('all');
+    recordingVideoType = new BehaviorSubject$1('fullDisplay');
+    recordingVideoOptimized = new BehaviorSubject$1(false);
+    recordingDisplayType = new BehaviorSubject$1('video');
+    recordingAddHLS = new BehaviorSubject$1(true);
+    recordingNameTags = new BehaviorSubject$1(true);
+    recordingBackgroundColor = new BehaviorSubject$1('#83c0e9');
+    recordingNameTagsColor = new BehaviorSubject$1('#ffffff');
+    recordingAddText = new BehaviorSubject$1(false);
+    recordingCustomText = new BehaviorSubject$1('Add Text');
+    recordingCustomTextPosition = new BehaviorSubject$1('top');
+    recordingCustomTextColor = new BehaviorSubject$1('#ffffff');
+    recordingOrientationVideo = new BehaviorSubject$1('landscape');
+    clearedToResume = new BehaviorSubject$1(true);
+    clearedToRecord = new BehaviorSubject$1(true);
+    recordState = new BehaviorSubject$1('green');
+    showRecordButtons = new BehaviorSubject$1(false);
+    recordingProgressTime = new BehaviorSubject$1('00:00:00');
+    audioSwitching = new BehaviorSubject$1(false);
+    videoSwitching = new BehaviorSubject$1(false);
     // Media States
-    videoAlreadyOn = new BehaviorSubject(false);
-    audioAlreadyOn = new BehaviorSubject(false);
-    componentSizes = new BehaviorSubject({
+    videoAlreadyOn = new BehaviorSubject$1(false);
+    audioAlreadyOn = new BehaviorSubject$1(false);
+    componentSizes = new BehaviorSubject$1({
         mainHeight: 0,
         otherHeight: 0,
         mainWidth: 0,
         otherWidth: 0,
     });
     // Permissions
-    hasCameraPermission = new BehaviorSubject(false);
-    hasAudioPermission = new BehaviorSubject(false);
+    hasCameraPermission = new BehaviorSubject$1(false);
+    hasAudioPermission = new BehaviorSubject$1(false);
     // Transports
-    transportCreated = new BehaviorSubject(false);
-    localTransportCreated = new BehaviorSubject(false);
-    transportCreatedVideo = new BehaviorSubject(false);
-    transportCreatedAudio = new BehaviorSubject(false);
-    transportCreatedScreen = new BehaviorSubject(false);
-    producerTransport = new BehaviorSubject(null);
-    localProducerTransport = new BehaviorSubject(null);
-    videoProducer = new BehaviorSubject(null);
-    localVideoProducer = new BehaviorSubject(null);
-    params = new BehaviorSubject({});
-    videoParams = new BehaviorSubject({});
-    audioParams = new BehaviorSubject({});
-    audioProducer = new BehaviorSubject(null);
-    localAudioProducer = new BehaviorSubject(null);
-    consumerTransports = new BehaviorSubject([]);
-    consumingTransports = new BehaviorSubject([]);
+    transportCreated = new BehaviorSubject$1(false);
+    localTransportCreated = new BehaviorSubject$1(false);
+    transportCreatedVideo = new BehaviorSubject$1(false);
+    transportCreatedAudio = new BehaviorSubject$1(false);
+    transportCreatedScreen = new BehaviorSubject$1(false);
+    producerTransport = new BehaviorSubject$1(null);
+    localProducerTransport = new BehaviorSubject$1(null);
+    videoProducer = new BehaviorSubject$1(null);
+    localVideoProducer = new BehaviorSubject$1(null);
+    params = new BehaviorSubject$1({});
+    videoParams = new BehaviorSubject$1({});
+    audioParams = new BehaviorSubject$1({});
+    audioProducer = new BehaviorSubject$1(null);
+    audioLevel = new BehaviorSubject$1(0);
+    localAudioProducer = new BehaviorSubject$1(null);
+    consumerTransports = new BehaviorSubject$1([]);
+    consumingTransports = new BehaviorSubject$1([]);
     // Polls
-    polls = new BehaviorSubject([]);
-    poll = new BehaviorSubject(null);
-    isPollModalVisible = new BehaviorSubject(false);
+    polls = new BehaviorSubject$1([]);
+    poll = new BehaviorSubject$1(null);
+    isPollModalVisible = new BehaviorSubject$1(false);
     // Background
-    customImage = new BehaviorSubject('');
-    selectedImage = new BehaviorSubject('');
-    segmentVideo = new BehaviorSubject(null);
-    selfieSegmentation = new BehaviorSubject(null);
-    pauseSegmentation = new BehaviorSubject(false);
-    processedStream = new BehaviorSubject(null);
-    keepBackground = new BehaviorSubject(false);
-    backgroundHasChanged = new BehaviorSubject(false);
-    virtualStream = new BehaviorSubject(null);
-    mainCanvas = new BehaviorSubject(null);
-    prevKeepBackground = new BehaviorSubject(false);
-    appliedBackground = new BehaviorSubject(false);
-    isBackgroundModalVisible = new BehaviorSubject(false);
-    autoClickBackground = new BehaviorSubject(false);
+    customImage = new BehaviorSubject$1('');
+    selectedImage = new BehaviorSubject$1('');
+    segmentVideo = new BehaviorSubject$1(null);
+    selfieSegmentation = new BehaviorSubject$1(null);
+    pauseSegmentation = new BehaviorSubject$1(false);
+    processedStream = new BehaviorSubject$1(null);
+    keepBackground = new BehaviorSubject$1(false);
+    backgroundHasChanged = new BehaviorSubject$1(false);
+    virtualStream = new BehaviorSubject$1(null);
+    mainCanvas = new BehaviorSubject$1(null);
+    prevKeepBackground = new BehaviorSubject$1(false);
+    appliedBackground = new BehaviorSubject$1(false);
+    isBackgroundModalVisible = new BehaviorSubject$1(false);
+    autoClickBackground = new BehaviorSubject$1(false);
     // Breakout Rooms
-    breakoutRooms = new BehaviorSubject([]);
-    currentRoomIndex = new BehaviorSubject(0);
-    canStartBreakout = new BehaviorSubject(false);
-    breakOutRoomStarted = new BehaviorSubject(false);
-    breakOutRoomEnded = new BehaviorSubject(false);
-    hostNewRoom = new BehaviorSubject(-1);
-    limitedBreakRoom = new BehaviorSubject([]);
-    mainRoomsLength = new BehaviorSubject(0);
-    memberRoom = new BehaviorSubject(-1);
-    isBreakoutRoomsModalVisible = new BehaviorSubject(false);
+    breakoutRooms = new BehaviorSubject$1([]);
+    currentRoomIndex = new BehaviorSubject$1(0);
+    canStartBreakout = new BehaviorSubject$1(false);
+    breakOutRoomStarted = new BehaviorSubject$1(false);
+    breakOutRoomEnded = new BehaviorSubject$1(false);
+    hostNewRoom = new BehaviorSubject$1(-1);
+    limitedBreakRoom = new BehaviorSubject$1([]);
+    mainRoomsLength = new BehaviorSubject$1(0);
+    memberRoom = new BehaviorSubject$1(-1);
+    isBreakoutRoomsModalVisible = new BehaviorSubject$1(false);
     // Whiteboard
-    whiteboardUsers = new BehaviorSubject([]);
-    currentWhiteboardIndex = new BehaviorSubject(0);
-    canStartWhiteboard = new BehaviorSubject(false);
-    whiteboardStarted = new BehaviorSubject(false);
-    whiteboardEnded = new BehaviorSubject(false);
-    whiteboardLimit = new BehaviorSubject(4);
-    isWhiteboardModalVisible = new BehaviorSubject(false);
-    isConfigureWhiteboardModalVisible = new BehaviorSubject(false);
-    shapes = new BehaviorSubject([]);
-    useImageBackground = new BehaviorSubject(true);
-    redoStack = new BehaviorSubject([]);
-    undoStack = new BehaviorSubject([]);
-    canvasStream = new BehaviorSubject(null);
-    canvasWhiteboard = new BehaviorSubject(null);
+    whiteboardUsers = new BehaviorSubject$1([]);
+    currentWhiteboardIndex = new BehaviorSubject$1(0);
+    canStartWhiteboard = new BehaviorSubject$1(false);
+    whiteboardStarted = new BehaviorSubject$1(false);
+    whiteboardEnded = new BehaviorSubject$1(false);
+    whiteboardLimit = new BehaviorSubject$1(4);
+    isWhiteboardModalVisible = new BehaviorSubject$1(false);
+    isConfigureWhiteboardModalVisible = new BehaviorSubject$1(false);
+    shapes = new BehaviorSubject$1([]);
+    useImageBackground = new BehaviorSubject$1(true);
+    redoStack = new BehaviorSubject$1([]);
+    undoStack = new BehaviorSubject$1([]);
+    canvasStream = new BehaviorSubject$1(null);
+    canvasWhiteboard = new BehaviorSubject$1(null);
     // Screenboard
-    canvasScreenboard = new BehaviorSubject(null);
-    processedScreenStream = new BehaviorSubject(null);
-    annotateScreenStream = new BehaviorSubject(false);
-    mainScreenCanvas = new BehaviorSubject(null);
-    isScreenboardModalVisible = new BehaviorSubject(false);
+    canvasScreenboard = new BehaviorSubject$1(null);
+    processedScreenStream = new BehaviorSubject$1(null);
+    annotateScreenStream = new BehaviorSubject$1(false);
+    mainScreenCanvas = new BehaviorSubject$1(null);
+    isScreenboardModalVisible = new BehaviorSubject$1(false);
     //state variables for the control buttons
-    micActive = new BehaviorSubject(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
-    videoActive = new BehaviorSubject(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
-    screenShareActive = new BehaviorSubject(false);
-    endCallActive = new BehaviorSubject(false);
-    participantsActive = new BehaviorSubject(false);
-    menuActive = new BehaviorSubject(false);
-    commentsActive = new BehaviorSubject(false);
+    micActive = new BehaviorSubject$1(this.audioAlreadyOn.value ? this.audioAlreadyOn.value : false);
+    videoActive = new BehaviorSubject$1(this.videoAlreadyOn.value ? this.videoAlreadyOn.value : false);
+    screenShareActive = new BehaviorSubject$1(false);
+    endCallActive = new BehaviorSubject$1(false);
+    participantsActive = new BehaviorSubject$1(false);
+    menuActive = new BehaviorSubject$1(false);
+    commentsActive = new BehaviorSubject$1(false);
     // Update functions
     updateMessages = (value) => {
         this.messages.next(value);
@@ -55054,6 +55571,9 @@ class MediasfuChat {
     };
     updateAudioProducer = (value) => {
         this.audioProducer.next(value);
+    };
+    updateAudioLevel = (value) => {
+        this.audioLevel.next(value);
     };
     updateLocalAudioProducer = (value) => {
         this.localAudioProducer.next(value);
@@ -55501,6 +56021,7 @@ class MediasfuChat {
             videoParams: this.videoParams.value,
             audioParams: this.audioParams.value,
             audioProducer: this.audioProducer.value,
+            audioLevel: this.audioLevel.value,
             localAudioProducer: this.localAudioProducer.value,
             consumerTransports: this.consumerTransports.value,
             consumingTransports: this.consumingTransports.value,
@@ -55835,6 +56356,7 @@ class MediasfuChat {
             updateVideoParams: this.updateVideoParams.bind(this),
             updateAudioParams: this.updateAudioParams.bind(this),
             updateAudioProducer: this.updateAudioProducer.bind(this),
+            updateAudioLevel: this.updateAudioLevel.bind(this),
             updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
             updateConsumerTransports: this.updateConsumerTransports.bind(this),
             updateConsumingTransports: this.updateConsumingTransports.bind(this),
@@ -55897,6 +56419,20 @@ class MediasfuChat {
             updateValidated: this.updateValidated.bind(this),
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
+                try {
+                    if (this.sourceParameters !== null) {
+                        this.sourceParameters = {
+                            ...this.getAllParams(),
+                            ...this.mediaSFUFunctions(),
+                        };
+                        if (this.updateSourceParameters) {
+                            this.updateSourceParameters(this.sourceParameters);
+                        }
+                    }
+                }
+                catch {
+                    console.log('error updateSourceParameters');
+                }
                 return {
                     ...this.getAllParams(),
                     ...this.mediaSFUFunctions(),
@@ -55942,6 +56478,10 @@ class MediasfuChat {
                 credentials: this.credentials,
                 localLink: this.localLink,
                 connectMediaSFU: this.connectMediaSFU,
+                returnUI: this.returnUI,
+                noUIPreJoinOptions: this.noUIPreJoinOptions,
+                joinMediaSFURoom: this.joinMediaSFURoom,
+                createMediaSFURoom: this.createMediaSFURoom,
             }),
         };
         this.PrejoinPageComponent = { ...PrejoinComp };
@@ -56048,6 +56588,20 @@ class MediasfuChat {
                 startTime: Date.now() / 1000,
                 parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
+            try {
+                if (this.sourceParameters !== null) {
+                    this.sourceParameters = {
+                        ...this.getAllParams(),
+                        ...this.mediaSFUFunctions(),
+                    };
+                    if (this.updateSourceParameters) {
+                        this.updateSourceParameters(this.sourceParameters);
+                    }
+                }
+            }
+            catch {
+                console.log('error updateSourceParameters');
+            }
         }
     }
     async handleResize() {
@@ -56251,6 +56805,8 @@ class MediasfuChat {
                 checkConnect: this.localLink.length > 0 &&
                     this.connectMediaSFU === true &&
                     !this.link.value.includes('mediasfu.com'),
+                localLink: this.localLink,
+                joinMediaSFURoom: this.joinMediaSFURoom,
             });
             data = await createResponseJoinRoom({ localRoom: localData });
         }
@@ -56734,7 +57290,7 @@ class MediasfuChat {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuChat, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuChat, isStandalone: true, selector: "app-mediasfu-chat", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuChat, isStandalone: true, selector: "app-mediasfu-chat", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <div
       class="MediaSFU"
       [ngStyle]="{
@@ -56756,7 +57312,7 @@ class MediasfuChat {
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -56814,6 +57370,7 @@ class MediasfuChat {
       </ng-template>
 
       <!-- Modals to include -->
+      <ng-container *ngIf="returnUI">
       <app-messages-modal
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
@@ -56882,6 +57439,7 @@ class MediasfuChat {
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1$1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1$1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1$1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }] });
 }
@@ -56924,7 +57482,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -56982,6 +57540,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-template>
 
       <!-- Modals to include -->
+      <ng-container *ngIf="returnUI">
       <app-messages-modal
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
@@ -57050,6 +57609,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `, providers: [CookieService] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: StartMeetingProgressTimer }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
@@ -57067,6 +57627,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], useSeed: [{
                 type: Input
             }], imgSrc: [{
+                type: Input
+            }], sourceParameters: [{
+                type: Input
+            }], updateSourceParameters: [{
+                type: Input
+            }], returnUI: [{
+                type: Input
+            }], noUIPreJoinOptions: [{
+                type: Input
+            }], joinMediaSFURoom: [{
+                type: Input
+            }], createMediaSFURoom: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,

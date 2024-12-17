@@ -129,6 +129,10 @@ import {
   HostRequestResponseData,
   PollUpdatedData,
   PreJoinPageOptions,
+  CreateMediaSFURoomOptions,
+  JoinMediaSFURoomOptions,
+  JoinRoomOnMediaSFUType,
+  CreateRoomOnMediaSFUType,
 } from '../../@types/types';
 import { createResponseJoinRoom } from '../../methods/utils/create-response-join-room.util';
 
@@ -282,6 +286,12 @@ export type MediasfuConferenceOptions = {
   seedData?: SeedData;
   useSeed?: boolean;
   imgSrc?: string;
+  sourceParameters?: { [key: string]: any };
+  updateSourceParameters?: (data: { [key: string]: any }) => void;
+  returnUI?: boolean;
+  noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+  joinMediaSFURoom?: JoinRoomOnMediaSFUType;
+  createMediaSFURoom?: CreateRoomOnMediaSFUType;
 };
 
 /**
@@ -307,6 +317,12 @@ export type MediasfuConferenceOptions = {
  * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
  * @input {boolean} useSeed - Enable/disable use of seed data.
  * @input {string} imgSrc - URL for branding images or logos.
+ * @input {object} sourceParameters - Additional parameters for the source.
+ * @input {Function} updateSourceParameters - Function to update the source parameters.
+ * @input {boolean} returnUI - Flag to return the UI elements.
+ * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
+ * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
+ * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Conference".
  *
@@ -332,7 +348,13 @@ export type MediasfuConferenceOptions = {
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   imgSrc="https://example.com/logo.png">
+ *   [imgSrc]="https://example.com/logo.png">
+ *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
+ *   [updateSourceParameters]="updateSourceParameters"
+ *   [returnUI]="true"
+ *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
+ *   [joinMediaSFURoom]="joinMediaSFURoom"
+ *   [createMediaSFURoom]="createMediaSFURoom">
  * </app-mediasfu-conference>
  * ```
  */
@@ -397,7 +419,7 @@ export type MediasfuConferenceOptions = {
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component>
+        <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -529,6 +551,7 @@ export type MediasfuConferenceOptions = {
         </app-main-container-component>
       </ng-template>
 
+      <ng-container *ngIf="returnUI">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -765,6 +788,7 @@ export type MediasfuConferenceOptions = {
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         displayColor="black"
       ></app-loading-modal>
+    </ng-container>
     </div>
   `,
   styles: [
@@ -786,6 +810,12 @@ export class MediasfuConference implements OnInit, OnDestroy {
   @Input() seedData?: SeedData;
   @Input() useSeed = false;
   @Input() imgSrc = 'https://mediasfu.com/images/logo192.png';
+  @Input() sourceParameters?: { [key: string]: any } = {};
+  @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
+  @Input() returnUI? = true;
+  @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+  @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
+  @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
 
   title = 'MediaSFU-Conference';
 
@@ -2460,6 +2490,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
   videoParams = new BehaviorSubject<ProducerOptions>({} as ProducerOptions);
   audioParams = new BehaviorSubject<ProducerOptions>({} as ProducerOptions);
   audioProducer = new BehaviorSubject<Producer | null>(null);
+  audioLevel = new BehaviorSubject<number>(0);
   localAudioProducer = new BehaviorSubject<Producer | null>(null);
   consumerTransports = new BehaviorSubject<TransportType[]>([]);
   consumingTransports = new BehaviorSubject<string[]>([]);
@@ -2949,6 +2980,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
 
   updateAudioProducer = (value: Producer | null) => {
     this.audioProducer.next(value);
+  };
+
+  updateAudioLevel = (value: number) => {
+    this.audioLevel.next(value);
   };
 
   updateLocalAudioProducer = (value: Producer | null) => {
@@ -3478,6 +3513,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
       videoParams: this.videoParams.value,
       audioParams: this.audioParams.value,
       audioProducer: this.audioProducer.value,
+      audioLevel: this.audioLevel.value,
       localAudioProducer: this.localAudioProducer.value,
       consumerTransports: this.consumerTransports.value,
       consumingTransports: this.consumingTransports.value,
@@ -3842,6 +3878,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
       updateVideoParams: this.updateVideoParams.bind(this),
       updateAudioParams: this.updateAudioParams.bind(this),
       updateAudioProducer: this.updateAudioProducer.bind(this),
+      updateAudioLevel: this.updateAudioLevel.bind(this),
       updateLocalAudioProducer: this.updateLocalAudioProducer.bind(this),
       updateConsumerTransports: this.updateConsumerTransports.bind(this),
       updateConsumingTransports: this.updateConsumingTransports.bind(this),
@@ -3913,6 +3950,21 @@ export class MediasfuConference implements OnInit, OnDestroy {
 
       showAlert: this.showAlert.bind(this),
       getUpdatedAllParams: () => {
+
+        try {
+          if (this.sourceParameters !== null) {
+            this.sourceParameters = {
+              ...this.getAllParams(),
+              ...this.mediaSFUFunctions(),
+            };
+            if (this.updateSourceParameters) {
+              this.updateSourceParameters(this.sourceParameters);
+            }
+          }
+        } catch {
+          console.log('error updateSourceParameters');
+        }
+
         return {
           ...this.getAllParams(),
           ...this.mediaSFUFunctions(),
@@ -4020,6 +4072,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
         credentials: this.credentials,
         localLink: this.localLink,
         connectMediaSFU: this.connectMediaSFU,
+        returnUI: this.returnUI,
+        noUIPreJoinOptions: this.noUIPreJoinOptions,
+        joinMediaSFURoom: this.joinMediaSFURoom,
+        createMediaSFURoom: this.createMediaSFURoom,
       }),
     };
 
@@ -4224,6 +4280,20 @@ export class MediasfuConference implements OnInit, OnDestroy {
         startTime: Date.now() / 1000,
         parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
       });
+
+      try {
+        if (this.sourceParameters !== null) {
+          this.sourceParameters = {
+            ...this.getAllParams(),
+            ...this.mediaSFUFunctions(),
+          };
+          if (this.updateSourceParameters) {
+            this.updateSourceParameters(this.sourceParameters);
+          }
+        }
+      } catch {
+        console.log('error updateSourceParameters');
+      }
 
     }
   }
@@ -4501,6 +4571,8 @@ export class MediasfuConference implements OnInit, OnDestroy {
           this.localLink.length > 0 &&
           this.connectMediaSFU === true &&
           !this.link.value.includes('mediasfu.com'),
+        localLink: this.localLink,
+        joinMediaSFURoom: this.joinMediaSFURoom,
       });
 
       data = await createResponseJoinRoom({ localRoom: localData });
@@ -5235,7 +5307,6 @@ export class MediasfuConference implements OnInit, OnDestroy {
               parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
             });
           }
-
           await this.closeAndReset();
         });
 
@@ -5657,6 +5728,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
       // Check if localSocket has changed
       const localChanged =
         this.localSocket!.value && this.localSocket!.value.id && this.localSocket!.value.id !== socketAlt.id;
+
 
       if (!skipSockets && localChanged) {
         // Re-call connect_Socket with skipSockets = true

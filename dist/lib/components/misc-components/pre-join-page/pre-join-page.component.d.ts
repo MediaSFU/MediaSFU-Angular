@@ -1,10 +1,11 @@
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Socket } from 'socket.io-client';
-import { ConnectSocketType, ShowAlert, ConnectLocalSocketType, ResponseLocalConnectionData, RecordingParams, MeetingRoomParams } from '../../../@types/types';
+import { ConnectSocketType, ShowAlert, ConnectLocalSocketType, ResponseLocalConnectionData, RecordingParams, MeetingRoomParams, CreateMediaSFURoomOptions, JoinMediaSFURoomOptions } from '../../../@types/types';
 import { CheckLimitsAndMakeRequest } from '../../../methods/utils/check-limits-and-make-request.service';
 import { CreateRoomOnMediaSFU } from '../../../methods/utils/create-room-on-media-sfu.service';
-import { JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
+import { CreateRoomOnMediaSFUType, JoinRoomOnMediaSFUType, JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import * as i0 from "@angular/core";
 export interface JoinLocalEventRoomParameters {
     eventID: string;
@@ -67,6 +68,10 @@ export interface PreJoinPageOptions {
     connectMediaSFU?: boolean;
     parameters: PreJoinPageParameters;
     credentials?: Credentials;
+    returnUI?: boolean;
+    noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+    createMediaSFURoom?: CreateRoomOnMediaSFUType;
+    joinMediaSFURoom?: JoinRoomOnMediaSFUType;
 }
 export type PreJoinPageType = (options: PreJoinPageOptions) => HTMLElement;
 /**
@@ -146,6 +151,10 @@ export declare class PreJoinPage implements OnInit {
     credentials: Credentials;
     localLink: string | undefined;
     connectMediaSFU: boolean | undefined;
+    returnUI?: boolean;
+    noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
+    createMediaSFURoom?: CreateRoomOnMediaSFUType;
+    joinMediaSFURoom?: JoinRoomOnMediaSFUType;
     isCreateMode: boolean;
     preJoinForm: FormGroup;
     error: string;
@@ -153,9 +162,11 @@ export declare class PreJoinPage implements OnInit {
     localConnected: boolean;
     localData: ResponseLocalConnectionData | undefined;
     initSocket: Socket | undefined;
-    constructor(fb: FormBuilder, injectedParameters: PreJoinPageParameters, injectedCredentials: Credentials, injectedLocalLink: string, injectedConnectMediaSFU: boolean, checkLimitsService: CheckLimitsAndMakeRequest, createRoomService: CreateRoomOnMediaSFU, joinRoomService: JoinRoomOnMediaSFU);
+    pending: BehaviorSubject<boolean>;
+    constructor(fb: FormBuilder, injectedParameters: PreJoinPageParameters, injectedCredentials: Credentials, injectedLocalLink: string, injectedConnectMediaSFU: boolean, injectedReturnUI: boolean, injectedNoUIPreJoinOptions: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions, injectedCreateMediaSFURoom: CreateRoomOnMediaSFUType, injectedJoinMediaSFURoom: JoinRoomOnMediaSFUType, checkLimitsService: CheckLimitsAndMakeRequest, createRoomService: CreateRoomOnMediaSFU, joinRoomService: JoinRoomOnMediaSFU);
     ngOnInit(): void;
     private connectLocalSocket;
+    private checkProceed;
     toggleMode(): void;
     joinLocalRoom(options: JoinLocalEventRoomOptions): Promise<void>;
     createLocalRoom(options: CreateLocalRoomOptions): Promise<void>;
@@ -167,6 +178,6 @@ export declare class PreJoinPage implements OnInit {
     }): Promise<any>;
     handleCreateRoom(): Promise<void>;
     handleJoinRoom(): Promise<void>;
-    static ɵfac: i0.ɵɵFactoryDeclaration<PreJoinPage, [null, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, null, null, null]>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<PreJoinPage, "app-pre-join-page", never, { "parameters": { "alias": "parameters"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PreJoinPage, [null, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, null, null, null]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PreJoinPage, "app-pre-join-page", never, { "parameters": { "alias": "parameters"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; }, {}, never, never, true, never>;
 }

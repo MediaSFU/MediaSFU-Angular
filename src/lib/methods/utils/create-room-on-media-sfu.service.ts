@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CreateJoinRoomResponse, CreateJoinRoomError, CreateJoinRoomType } from '../../@types/types';
+import { CreateJoinRoomResponse, CreateJoinRoomError, CreateJoinRoomType, CreateMediaSFURoomOptions, JoinMediaSFURoomOptions } from '../../@types/types';
 
 /**
  * Async function to create a room on MediaSFU.
  *
- * @param {object} options - The options for creating a room.
+ * @param {CreateJoinRoomOptions} options - Contains: payload, apiUserName, apiKey, localLink.
  * @param {any} options.payload - The payload for the API request.
  * @param {string} options.apiUserName - The API username.
  * @param {string} options.apiKey - The API key.
+ * @param {string} options.localLink - The local link for Community Edition.
  * @returns {Promise<{ data: CreateJoinRoomResponse | CreateJoinRoomError | null; success: boolean; }>} The response from the API.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class CreateRoomOnMediaSFU {
-  private readonly API_URL = 'https://mediasfu.com/v1/rooms/';
+  private API_URL = 'https://mediasfu.com/v1/rooms/';
 
   constructor() {}
 
@@ -22,10 +23,12 @@ export class CreateRoomOnMediaSFU {
     payload,
     apiUserName,
     apiKey,
+    localLink,
   }: {
     payload: any;
     apiUserName: string;
     apiKey: string;
+    localLink?: string;
   }): Promise<{
     data: CreateJoinRoomResponse | CreateJoinRoomError | null;
     success: boolean;
@@ -40,6 +43,11 @@ export class CreateRoomOnMediaSFU {
         apiUserName.length < 6
       ) {
         return { data: { error: 'Invalid credentials' }, success: false };
+      }
+
+      if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
+        localLink = localLink.replace(/\/$/, '');
+        this.API_URL = localLink + '/joinRoom';
       }
 
       const response = await fetch(this.API_URL, {
