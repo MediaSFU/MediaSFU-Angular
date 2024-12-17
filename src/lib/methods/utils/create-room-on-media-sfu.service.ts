@@ -15,7 +15,7 @@ import { CreateJoinRoomResponse, CreateJoinRoomError, CreateJoinRoomType, Create
   providedIn: 'root',
 })
 export class CreateRoomOnMediaSFU {
-  private API_URL = 'https://mediasfu.com/v1/rooms/';
+
 
   constructor() {}
 
@@ -45,12 +45,14 @@ export class CreateRoomOnMediaSFU {
         return { data: { error: 'Invalid credentials' }, success: false };
       }
 
+      let API_URL =  'https://mediasfu.com/v1/rooms/';
+
       if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
         localLink = localLink.replace(/\/$/, '');
-        this.API_URL = localLink + '/joinRoom';
+        API_URL = localLink + '/createRoom';
       }
 
-      const response = await fetch(this.API_URL, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

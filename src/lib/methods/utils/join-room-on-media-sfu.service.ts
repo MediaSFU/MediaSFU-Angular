@@ -54,7 +54,6 @@ export type JoinRoomOnMediaSFUType = (options: {
   providedIn: 'root',
 })
 export class JoinRoomOnMediaSFU {
-  private API_URL = 'https://mediasfu.com/v1/rooms/';
 
   constructor() {}
 
@@ -93,13 +92,15 @@ export class JoinRoomOnMediaSFU {
         return { data: { error: 'Invalid credentials' }, success: false };
       }
 
+      let API_URL =  'https://mediasfu.com/v1/rooms/';
+
       if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
         localLink = localLink.replace(/\/$/, '');
-        this.API_URL = localLink + '/joinRoom';
+        API_URL = localLink + '/joinRoom';
       }
 
 
-      const response = await fetch(this.API_URL, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -115,8 +116,8 @@ export class JoinRoomOnMediaSFU {
 
       const data = await response.json();
       return { data, success: true };
-    } catch (error: any) {
-      const errorMessage = error.reason || error.message || 'unknown error';
+    } catch (error) {
+      const errorMessage = (error as any).reason ? (error as any).reason : 'unknown error';
       return {
         data: { error: `Unable to join room, ${errorMessage}` },
         success: false,

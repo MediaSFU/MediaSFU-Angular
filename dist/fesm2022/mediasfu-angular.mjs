@@ -405,7 +405,6 @@ const initialValuesState = {
 };
 
 class JoinRoomOnMediaSFU {
-    API_URL = 'https://mediasfu.com/v1/rooms/';
     constructor() { }
     /**
      * Joins a room on MediaSFU.
@@ -426,11 +425,12 @@ class JoinRoomOnMediaSFU {
                 apiUserName.length < 6) {
                 return { data: { error: 'Invalid credentials' }, success: false };
             }
+            let API_URL = 'https://mediasfu.com/v1/rooms/';
             if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
                 localLink = localLink.replace(/\/$/, '');
-                this.API_URL = localLink + '/joinRoom';
+                API_URL = localLink + '/joinRoom';
             }
-            const response = await fetch(this.API_URL, {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -446,7 +446,7 @@ class JoinRoomOnMediaSFU {
             return { data, success: true };
         }
         catch (error) {
-            const errorMessage = error.reason || error.message || 'unknown error';
+            const errorMessage = error.reason ? error.reason : 'unknown error';
             return {
                 data: { error: `Unable to join room, ${errorMessage}` },
                 success: false,
@@ -474,7 +474,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @returns {Promise<{ data: CreateJoinRoomResponse | CreateJoinRoomError | null; success: boolean; }>} The response from the API.
  */
 class CreateRoomOnMediaSFU {
-    API_URL = 'https://mediasfu.com/v1/rooms/';
     constructor() { }
     async createRoomOnMediaSFU({ payload, apiUserName, apiKey, localLink, }) {
         try {
@@ -486,11 +485,12 @@ class CreateRoomOnMediaSFU {
                 apiUserName.length < 6) {
                 return { data: { error: 'Invalid credentials' }, success: false };
             }
+            let API_URL = 'https://mediasfu.com/v1/rooms/';
             if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
                 localLink = localLink.replace(/\/$/, '');
-                this.API_URL = localLink + '/joinRoom';
+                API_URL = localLink + '/createRoom';
             }
-            const response = await fetch(this.API_URL, {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
