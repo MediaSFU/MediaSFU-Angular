@@ -115,7 +115,7 @@ export declare class MiniAudio implements OnInit, OnDestroy {
     handleMouseDown(event: MouseEvent): void;
     handleMouseMove(event: MouseEvent): void;
     handleMouseUp(): void;
-    getOverlayPosition(position: string): import("../../../@types/types").OverlayPositionStyle;
+    getOverlayPosition(position: string): import("mediasfu-angular").OverlayPositionStyle;
     static ɵfac: i0.ɵɵFactoryDeclaration<MiniAudio, [{ optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }]>;
     static ɵcmp: i0.ɵɵComponentDeclaration<MiniAudio, "app-mini-audio", never, { "visible": { "alias": "visible"; "required": false; }; "customStyle": { "alias": "customStyle"; "required": false; }; "name": { "alias": "name"; "required": false; }; "showWaveform": { "alias": "showWaveform"; "required": false; }; "overlayPosition": { "alias": "overlayPosition"; "required": false; }; "barColor": { "alias": "barColor"; "required": false; }; "textColor": { "alias": "textColor"; "required": false; }; "nameTextStyling": { "alias": "nameTextStyling"; "required": false; }; "imageSource": { "alias": "imageSource"; "required": false; }; "roundedImage": { "alias": "roundedImage"; "required": false; }; "imageStyle": { "alias": "imageStyle"; "required": false; }; }, {}, never, never, true, never>;
 }

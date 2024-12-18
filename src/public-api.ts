@@ -1,5 +1,6 @@
 //initial values
 import { initialValuesState } from './lib/methods/utils/initial-values.util';
+export * from './lib/@types/types';
 
 // new utils
 export * from './lib/methods/utils/join-room-on-media-sfu.service';

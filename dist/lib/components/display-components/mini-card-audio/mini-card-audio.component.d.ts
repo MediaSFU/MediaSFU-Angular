@@ -89,7 +89,7 @@ export declare class MiniCardAudio implements OnInit, OnDestroy {
     clearIntervals(): void;
     getAnimationDuration(index: number): number;
     getImageStyle(): any;
-    getOverlayPosition(position: string): import("../../../@types/types").OverlayPositionStyle;
+    getOverlayPosition(position: string): import("mediasfu-angular").OverlayPositionStyle;
     static ɵfac: i0.ɵɵFactoryDeclaration<MiniCardAudio, [{ optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }]>;
     static ɵcmp: i0.ɵɵComponentDeclaration<MiniCardAudio, "app-mini-card-audio", never, { "customStyle": { "alias": "customStyle"; "required": false; }; "name": { "alias": "name"; "required": false; }; "showWaveform": { "alias": "showWaveform"; "required": false; }; "overlayPosition": { "alias": "overlayPosition"; "required": false; }; "barColor": { "alias": "barColor"; "required": false; }; "textColor": { "alias": "textColor"; "required": false; }; "imageSource": { "alias": "imageSource"; "required": false; }; "roundedImage": { "alias": "roundedImage"; "required": false; }; "imageStyle": { "alias": "imageStyle"; "required": false; }; }, {}, never, never, true, never>;
 }

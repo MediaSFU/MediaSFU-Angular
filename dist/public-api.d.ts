@@ -1,4 +1,5 @@
 import { initialValuesState } from './lib/methods/utils/initial-values.util';
+export * from './lib/@types/types';
 export * from './lib/methods/utils/join-room-on-media-sfu.service';
 export * from './lib/methods/utils/create-room-on-media-sfu.service';
 export * from './lib/methods/utils/check-limits-and-make-request.service';
