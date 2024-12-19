@@ -11,8 +11,8 @@ import {
 } from '../@types/types';
 export interface StopShareScreenParameters
   extends DisconnectSendTransportScreenParameters,
-    PrepopulateUserMediaParameters,
-    ReorderStreamsParameters {
+  PrepopulateUserMediaParameters,
+  ReorderStreamsParameters {
   shared: boolean;
   shareScreenStarted: boolean;
   shareEnded: boolean;
@@ -224,7 +224,11 @@ export class StopShareScreen {
       });
     }
 
-    localStreamScreen?.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+    try {
+      localStreamScreen?.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+    } catch {
+      // do nothing
+    }
     updateLocalStreamScreen(localStreamScreen);
     await disconnectSendTransportScreen({ parameters });
 

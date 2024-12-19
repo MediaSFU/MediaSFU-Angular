@@ -17687,6 +17687,7 @@ class StreamSuccessScreen {
         updateScreenAction(screenAction);
         // Update the transport created state
         transportCreatedScreen = true;
+        transportCreated = true;
         updateTransportCreatedScreen(transportCreatedScreen);
         updateTransportCreated(transportCreated);
         // Handle screen annotation modal
@@ -19275,7 +19276,12 @@ class StopShareScreen {
                 updateOldAllStreams: parameters['updateOldAllStreams'],
             });
         }
-        localStreamScreen?.getTracks().forEach((track) => track.stop());
+        try {
+            localStreamScreen?.getTracks().forEach((track) => track.stop());
+        }
+        catch {
+            // do nothing
+        }
         updateLocalStreamScreen(localStreamScreen);
         await disconnectSendTransportScreen({ parameters });
         try {
@@ -25402,8 +25408,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
 const createLocalSendTransport = async ({ option, parameters, }) => {
     try {
         console.log("Creating local send transport...");
-        let { islevel, member, localSocket, device, localProducerTransport, localTransportCreated, updateLocalProducerTransport, updateLocalTransportCreated, connectSendTransport, } = parameters;
-        if (!localSocket || !localSocket.id) {
+        let { islevel, member, socket, localSocket, device, localProducerTransport, localTransportCreated, updateLocalProducerTransport, updateLocalTransportCreated, connectSendTransport, } = parameters;
+        if (!localSocket || !localSocket.id || socket?.id == localSocket?.id) {
             return;
         }
         localSocket.emit("createWebRtcTransport", { consumer: false, islevel }, async ({ params }) => {

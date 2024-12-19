@@ -268,6 +268,7 @@ export class StreamSuccessScreen {
 
     // Update the transport created state
     transportCreatedScreen = true;
+    transportCreated = true;
     updateTransportCreatedScreen(transportCreatedScreen);
     updateTransportCreated(transportCreated);
 

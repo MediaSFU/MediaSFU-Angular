@@ -873,7 +873,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     totalReqWait: BehaviorSubject<number>;
     alertVisible: BehaviorSubject<boolean>;
     alertMessage: BehaviorSubject<string>;
-    alertType: BehaviorSubject<"success" | "danger">;
+    alertType: BehaviorSubject<"danger" | "success">;
     alertDuration: BehaviorSubject<number>;
     progressTimerVisible: BehaviorSubject<boolean>;
     progressTimerValue: BehaviorSubject<number>;
@@ -896,7 +896,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
+    recordingDisplayType: BehaviorSubject<"video" | "all" | "media">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -1345,7 +1345,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "success" | "danger";
+        alertType: "danger" | "success";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -1367,7 +1367,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "video" | "all" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -2067,7 +2067,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "success" | "danger";
+            alertType: "danger" | "success";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -2089,7 +2089,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "video" | "all" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2792,7 +2792,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "success" | "danger";
+        alertType: "danger" | "success";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -2814,7 +2814,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "video" | "all" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -3514,7 +3514,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "success" | "danger";
+            alertType: "danger" | "success";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -3536,7 +3536,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "video" | "all" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -4239,7 +4239,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "success" | "danger";
+        alertType: "danger" | "success";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -4261,7 +4261,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "video" | "all" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -4961,7 +4961,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "success" | "danger";
+            alertType: "danger" | "success";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -4983,7 +4983,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "video" | "all" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -5779,7 +5779,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 totalReqWait: number;
                 alertVisible: boolean;
                 alertMessage: string;
-                alertType: "success" | "danger";
+                alertType: "danger" | "success";
                 alertDuration: number;
                 progressTimerVisible: boolean;
                 progressTimerValue: number;
@@ -5801,7 +5801,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                 recordingVideoOptions: string;
                 recordingVideoType: string;
                 recordingVideoOptimized: boolean;
-                recordingDisplayType: "video" | "media" | "all";
+                recordingDisplayType: "video" | "all" | "media";
                 recordingAddHLS: boolean;
                 recordingAddText: boolean;
                 recordingCustomText: string;
@@ -6501,7 +6501,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     totalReqWait: number;
                     alertVisible: boolean;
                     alertMessage: string;
-                    alertType: "success" | "danger";
+                    alertType: "danger" | "success";
                     alertDuration: number;
                     progressTimerVisible: boolean;
                     progressTimerValue: number;
@@ -6523,7 +6523,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
                     recordingVideoOptions: string;
                     recordingVideoType: string;
                     recordingVideoOptimized: boolean;
-                    recordingDisplayType: "video" | "media" | "all";
+                    recordingDisplayType: "video" | "all" | "media";
                     recordingAddHLS: boolean;
                     recordingAddText: boolean;
                     recordingCustomText: string;
