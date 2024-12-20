@@ -789,7 +789,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     totalReqWait: BehaviorSubject<number>;
     alertVisible: BehaviorSubject<boolean>;
     alertMessage: BehaviorSubject<string>;
-    alertType: BehaviorSubject<"danger" | "success">;
+    alertType: BehaviorSubject<"success" | "danger">;
     alertDuration: BehaviorSubject<number>;
     progressTimerVisible: BehaviorSubject<boolean>;
     progressTimerValue: BehaviorSubject<number>;
@@ -812,7 +812,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"video" | "all" | "media">;
+    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -1259,7 +1259,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "danger" | "success";
+        alertType: "success" | "danger";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -1281,7 +1281,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "all" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -1978,7 +1978,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "danger" | "success";
+            alertType: "success" | "danger";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -2000,7 +2000,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "all" | "media";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2700,7 +2700,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "danger" | "success";
+        alertType: "success" | "danger";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -2722,7 +2722,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "all" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -3419,7 +3419,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "danger" | "success";
+            alertType: "success" | "danger";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -3441,7 +3441,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "all" | "media";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -4141,7 +4141,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "danger" | "success";
+        alertType: "success" | "danger";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -4163,7 +4163,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "all" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -4860,7 +4860,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "danger" | "success";
+            alertType: "success" | "danger";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -4882,7 +4882,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "all" | "media";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
