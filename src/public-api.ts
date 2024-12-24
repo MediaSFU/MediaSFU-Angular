@@ -1,7 +1,213 @@
-//initial values
-import { initialValuesState } from './lib/methods/utils/initial-values.util';
 export * from './lib/@types/types';
 
+// Initial values
+export * from './lib/methods/utils/initial-values.util';
+
+// Components for display (samples)
+export * from './lib/components/display-components/loading-modal/loading-modal.component';
+export * from './lib/components/display-components/main-aspect-component/main-aspect-component.component';
+// export * from './lib/components/display-components/control-buttons-component/control-buttons-component.component';
+// export * from './lib/components/display-components/control-buttons-alt-component/control-buttons-alt-component.component';
+// export * from './lib/components/display-components/control-buttons-component-touch/control-buttons-component-touch.component';
+export * from './lib/components/display-components/other-grid-component/other-grid-component.component';
+export * from './lib/components/display-components/main-screen-component/main-screen-component.component';
+export * from './lib/components/display-components/main-grid-component/main-grid-component.component';
+export * from './lib/components/display-components/sub-aspect-component/sub-aspect-component.component';
+export * from './lib/components/display-components/main-container-component/main-container-component.component';
+export * from './lib/components/display-components/alert-component/alert.component.component';
+export * from './lib/components/menu-components/menu-modal/menu-modal.component';
+export * from './lib/components/recording-components/recording-modal/recording-modal.component';
+export * from './lib/components/requests-components/requests-modal/requests-modal.component';
+export * from './lib/components/waiting-components/waiting-room-modal.component';
+export * from './lib/components/display-settings-components/display-settings-modal.component';
+export * from './lib/components/event-settings-components/event-settings-modal/event-settings-modal.component';
+export * from './lib/components/co-host-components/co-host-modal/co-host-modal.component';
+export * from './lib/components/participants-components/participants-modal/participants-modal.component';
+export * from './lib/components/message-components/messages-modal/messages-modal.component';
+export * from './lib/components/media-settings-components/media-settings-modal/media-settings-modal.component';
+export * from './lib/components/exit-components/confirm-exit-modal/confirm-exit-modal.component';
+export * from './lib/components/misc-components/confirm-here-modal/confirm-here-modal.component';
+export * from './lib/components/misc-components/share-event-modal/share-event-modal.component';
+export * from './lib/components/misc-components/welcome-page/welcome-page.component';
+export * from './lib/components/misc-components/pre-join-page/pre-join-page.component';
+
+export * from './lib/components/polls-components/poll-modal/poll-modal.component';
+export * from './lib/components/background-components/background-modal/background-modal.component';
+export * from './lib/components/breakout-components/breakout-rooms-modal.component';
+export * from './lib/components/whiteboard-components/configure-whiteboard-modal/configure-whiteboard-modal.component';
+export * from './lib/components/whiteboard-components/whiteboard/whiteboard.component';
+export * from './lib/components/screenboard-components/screenboard/screenboard.component';
+export * from './lib/components/screenboard-components/screenboard-modal/screenboard-modal.component';
+
+// Pagination and media display (samples)
+export * from './lib/components/display-components/pagination/pagination.component';
+export * from './lib/components/display-components/flexible-grid/flexible-grid.component';
+export * from './lib/components/display-components/flexible-video/flexible-video.component';
+export * from './lib/components/display-components/audio-grid/audio-grid.component';
+
+// Methods for control (samples)
+export * from './lib/methods/menu-methods/launch-menu-modal.service';
+export * from './lib/methods/recording-methods/launch-recording.service';
+export * from './lib/methods/recording-methods/start-recording.service';
+export * from './lib/methods/recording-methods/confirm-recording.service';
+export * from './lib/methods/waiting-methods/launch-waiting.service';
+export * from './lib/methods/co-host-methods/launch-co-host.service';
+export * from './lib/methods/media-settings-methods/launch-media-settings.service';
+export * from './lib/methods/display-settings-methods/launch-display-settings.service';
+export * from './lib/methods/settings-methods/launch-settings.service';
+export * from './lib/methods/requests-methods/launch-requests.service';
+export * from './lib/methods/participants-methods/launch-participants.service';
+export * from './lib/methods/message-methods/launch-messages.service';
+export * from './lib/methods/exit-methods/launch-confirm-exit.service';
+export * from './lib/methods/polls-methods/launch-poll.service';
+export * from './lib/methods/background-methods/launch-background.service';
+export * from './lib/methods/breakout-room-methods/launch-breakout-rooms.service';
+export * from './lib/methods/whiteboard-methods/launch-configure-whiteboard.service';
+
+// Socket management and clients
+export * from './lib/sockets/socket-manager.service';
+export * from './lib/producer-client/producer-client-emits/join-room-client.service';
+export * from './lib/producer-client/producer-client-emits/update-room-parameters-client.service';
+export * from './lib/producer-client/producer-client-emits/create-device-client.service';
+
+// Stream control methods
+export * from './lib/methods/stream-methods/click-video.service';
+export * from './lib/methods/stream-methods/click-audio.service';
+export * from './lib/methods/stream-methods/click-screen-share.service';
+export * from './lib/consumers/stream-success-video.service';
+export * from './lib/consumers/stream-success-audio.service';
+export * from './lib/consumers/stream-success-screen.service';
+export * from './lib/consumers/stream-success-audio-switch.service';
+export * from './lib/consumers/check-permission.service';
+export * from './lib/consumers/socket-receive-methods/producer-closed.service';
+export * from './lib/consumers/socket-receive-methods/new-pipe-producer.service';
+
+// Stream functions
+export * from './lib/consumers/update-mini-cards-grid.service';
+export * from './lib/consumers/mix-streams.service';
+export * from './lib/consumers/disp-streams.service';
+export * from './lib/consumers/stop-share-screen.service';
+export * from './lib/consumers/check-screen-share.service';
+export * from './lib/consumers/start-share-screen.service';
+export * from './lib/consumers/request-screen-share.service';
+export * from './lib/consumers/reorder-streams.service';
+export * from './lib/consumers/prepopulate-user-media.service';
+export * from './lib/consumers/get-videos.service';
+export * from './lib/consumers/re-port.service';
+export * from './lib/consumers/trigger.service';
+export * from './lib/consumers/consumer-resume.service';
+export * from './lib/consumers/connect-send-transport-audio.service';
+export * from './lib/consumers/connect-send-transport-video.service';
+export * from './lib/consumers/connect-send-transport-screen.service';
+export * from './lib/consumers/process-consumer-transports.service';
+export * from './lib/consumers/resume-pause-streams.service';
+export * from './lib/consumers/readjust.service';
+export * from './lib/consumers/check-grid.service';
+export * from './lib/consumers/get-estimate.service';
+export * from './lib/consumers/calculate-rows-and-columns.service';
+export * from './lib/consumers/add-videos-grid.service';
+export * from './lib/consumers/on-screen-changes.service';
+export * from './lib/methods/utils/sleep.util';
+export * from './lib/consumers/change-vids.service';
+export * from './lib/consumers/compare-active-names.service';
+export * from './lib/consumers/compare-screen-states.service';
+export * from './lib/consumers/create-send-transport.service';
+export * from './lib/consumers/resume-send-transport-audio.service';
+export * from './lib/consumers/receive-all-piped-transports.service';
+export * from './lib/consumers/disconnect-send-transport-video.service';
+export * from './lib/consumers/disconnect-send-transport-audio.service';
+export * from './lib/consumers/disconnect-send-transport-screen.service';
+export * from './lib/consumers/connect-send-transport.service';
+export * from './lib/consumers/get-piped-producers-alt.service';
+export * from './lib/consumers/signal-new-consumer-transport.service';
+export * from './lib/consumers/connect-recv-transport.service';
+export * from './lib/consumers/re-update-inter.service';
+export * from './lib/consumers/update-participant-audio-decibels.service';
+export * from './lib/consumers/close-and-resize.service';
+export * from './lib/consumers/auto-adjust.service';
+export * from './lib/consumers/switch-user-video-alt.service';
+export * from './lib/consumers/switch-user-video.service';
+export * from './lib/consumers/switch-user-audio.service';
+export * from './lib/consumers/receive-room-messages.service';
+export * from './lib/methods/utils/format-number.service';
+export * from './lib/consumers/connect-ips.service';
+
+// Polls, breakout rooms, and events
+export * from './lib/methods/polls-methods/poll-updated.service';
+export * from './lib/methods/polls-methods/handle-create-poll.service';
+export * from './lib/methods/polls-methods/handle-vote-poll.service';
+export * from './lib/methods/polls-methods/handle-end-poll.service';
+export * from './lib/methods/breakout-room-methods/breakout-room-updated.service';
+
+// Meeting and recording utilities
+export * from './lib/methods/utils/meeting-timer/start-meeting-progress-timer.service';
+export * from './lib/methods/recording-methods/update-recording.service';
+export * from './lib/methods/recording-methods/stop-recording.service';
+
+// Socket receive methods
+export * from './lib/producers/socket-receive-methods/user-waiting.service';
+export * from './lib/producers/socket-receive-methods/person-joined.service';
+export * from './lib/producers/socket-receive-methods/all-waiting-room-members.service';
+export * from './lib/producers/socket-receive-methods/room-record-params.service';
+export * from './lib/producers/socket-receive-methods/ban-participant.service';
+export * from './lib/producers/socket-receive-methods/updated-co-host.service';
+export * from './lib/producers/socket-receive-methods/participant-requested.service';
+export * from './lib/producers/socket-receive-methods/screen-producer-id.service';
+export * from './lib/producers/socket-receive-methods/update-media-settings.service';
+export * from './lib/producers/socket-receive-methods/producer-media-paused.service';
+export * from './lib/producers/socket-receive-methods/producer-media-resumed.service';
+export * from './lib/producers/socket-receive-methods/producer-media-closed.service';
+export * from './lib/producers/socket-receive-methods/control-media-host.service';
+export * from './lib/producers/socket-receive-methods/meeting-ended.service';
+export * from './lib/producers/socket-receive-methods/disconnect-user-self.service';
+export * from './lib/producers/socket-receive-methods/receive-message.service';
+export * from './lib/producers/socket-receive-methods/meeting-time-remaining.service';
+export * from './lib/producers/socket-receive-methods/meeting-still-there.service';
+export * from './lib/producers/socket-receive-methods/start-records.service';
+export * from './lib/producers/socket-receive-methods/re-initiate-recording.service';
+export * from './lib/producers/socket-receive-methods/get-domains.service';
+export * from './lib/producers/socket-receive-methods/update-consuming-domains.service';
+export * from './lib/producers/socket-receive-methods/recording-notice.service';
+export * from './lib/producers/socket-receive-methods/time-left-recording.service';
+export * from './lib/producers/socket-receive-methods/stopped-recording.service';
+export * from './lib/producers/socket-receive-methods/host-request-response.service';
+export * from './lib/producers/socket-receive-methods/all-members.service';
+export * from './lib/producers/socket-receive-methods/all-members-rest.service';
+export * from './lib/producers/socket-receive-methods/disconnect.service';
+
+// Whiteboard and audio services
+export * from './lib/methods/whiteboard-methods/capture-canvas-stream.service';
+export * from './lib/consumers/resume-pause-audio-streams.service';
+export * from './lib/consumers/process-consumer-transports-audio.service';
+
+// Prebuilt Event Rooms
+export * from './lib/components/mediasfu-components/mediasfu-generic.component';
+export * from './lib/components/mediasfu-components/mediasfu-broadcast.component';
+export * from './lib/components/mediasfu-components/mediasfu-webinar.component';
+export * from './lib/components/mediasfu-components/mediasfu-conference.component';
+export * from './lib/components/mediasfu-components/mediasfu-chat.component';
+
+// Random Data
+export * from './lib/methods/utils/generate-random-participants.service';
+export * from './lib/methods/utils/generate-random-messages.service';
+export * from './lib/methods/utils/generate-random-request-list.service';
+export * from './lib/methods/utils/generate-random-waiting-room-list.service';
+export * from './lib/methods/utils/generate-random-polls.service';
+
+// Key UI Components
+export * from './lib/components/display-components/meeting-progress-timer/meeting-progress-timer.component';
+export * from './lib/components/display-components/mini-audio/mini-audio.component';
+export * from './lib/components/display-components/mini-card/mini-card.component';
+export * from './lib/components/display-components/audio-card/audio-card.component';
+export * from './lib/components/display-components/video-card/video-card.component';
+export * from './lib/components/display-components/card-video-display/card-video-display.component';
+export * from './lib/components/display-components/mini-card-audio/mini-card-audio.component';
+export * from './lib/methods/utils/mini-audio-player/mini-audio-player.component';
+export * from './lib/methods/utils/sound-player.service';
+
+
+//initial values
+import { initialValuesState } from './lib/methods/utils/initial-values.util';
 // new utils
 export * from './lib/methods/utils/join-room-on-media-sfu.service';
 export * from './lib/methods/utils/create-room-on-media-sfu.service';
@@ -49,6 +255,14 @@ import { Pagination } from './lib/components/display-components/pagination/pagin
 import { FlexibleGrid } from './lib/components/display-components/flexible-grid/flexible-grid.component';
 import { FlexibleVideo } from './lib/components/display-components/flexible-video/flexible-video.component';
 import { AudioGrid } from './lib/components/display-components/audio-grid/audio-grid.component';
+
+import { MenuWidget } from './lib/components/display-components/control-widgets/menu-widget.component';
+import { MessageWidget } from './lib/components/display-components/control-widgets/message-widget.component';
+import { MenuRecordWidget } from './lib/components/display-components/control-widgets/menu-record-widget.component';
+import { RecordTimerWidget } from './lib/components/display-components/control-widgets/record-timer-widget.component';
+import { MenuParticipantsWidget } from './lib/components/display-components/control-widgets/menu-participants-widget.component';
+import { ScreenShareWidget } from './lib/components/display-components/control-widgets/screenshare-widget.component';
+
 
 //import methods for control (samples)
 import { LaunchMenuModal } from './lib/methods/menu-methods/launch-menu-modal.service';
@@ -247,6 +461,12 @@ export {
   FlexibleGrid,
   FlexibleVideo,
   AudioGrid,
+  MenuWidget,
+  MessageWidget,
+  MenuRecordWidget,
+  RecordTimerWidget,
+  MenuParticipantsWidget,
+  ScreenShareWidget,
   LaunchMenuModal,
   LaunchRecording,
   StartRecording,

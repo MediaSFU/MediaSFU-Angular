@@ -256,6 +256,14 @@ import { FlexibleGrid } from './lib/components/display-components/flexible-grid/
 import { FlexibleVideo } from './lib/components/display-components/flexible-video/flexible-video.component';
 import { AudioGrid } from './lib/components/display-components/audio-grid/audio-grid.component';
 
+import { MenuWidget } from './lib/components/display-components/control-widgets/menu-widget.component';
+import { MessageWidget } from './lib/components/display-components/control-widgets/message-widget.component';
+import { MenuRecordWidget } from './lib/components/display-components/control-widgets/menu-record-widget.component';
+import { RecordTimerWidget } from './lib/components/display-components/control-widgets/record-timer-widget.component';
+import { MenuParticipantsWidget } from './lib/components/display-components/control-widgets/menu-participants-widget.component';
+import { ScreenShareWidget } from './lib/components/display-components/control-widgets/screenshare-widget.component';
+
+
 //import methods for control (samples)
 import { LaunchMenuModal } from './lib/methods/menu-methods/launch-menu-modal.service';
 import { LaunchRecording } from './lib/methods/recording-methods/launch-recording.service';
@@ -453,6 +461,12 @@ export {
   FlexibleGrid,
   FlexibleVideo,
   AudioGrid,
+  MenuWidget,
+  MessageWidget,
+  MenuRecordWidget,
+  RecordTimerWidget,
+  MenuParticipantsWidget,
+  ScreenShareWidget,
   LaunchMenuModal,
   LaunchRecording,
   StartRecording,

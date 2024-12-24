@@ -19,391 +19,6 @@ import * as i3 from '@zxing/ngx-scanner';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BehaviorSubject as BehaviorSubject$1, combineLatest } from 'rxjs';
 
-const initialValuesState = {
-    // The following are the initial values
-    roomName: '',
-    member: '',
-    adminPasscode: '',
-    islevel: '1',
-    coHost: 'No coHost',
-    coHostResponsibility: [
-        { name: 'participants', value: false, dedicated: false },
-        { name: 'media', value: false, dedicated: false },
-        { name: 'waiting', value: false, dedicated: false },
-        { name: 'chat', value: false, dedicated: false },
-    ],
-    youAreCoHost: false,
-    youAreHost: false,
-    confirmedToRecord: false,
-    meetingDisplayType: 'media',
-    meetingVideoOptimized: false,
-    eventType: 'webinar',
-    participants: [],
-    filteredParticipants: [],
-    participantsCounter: 0,
-    participantsFilter: '',
-    validated: false,
-    localUIMode: false,
-    socket: {},
-    localSocket: undefined,
-    roomData: null,
-    device: null,
-    apiKey: '',
-    apiUserName: '',
-    apiToken: '',
-    link: '',
-    consume_sockets: [],
-    rtpCapabilities: null,
-    roomRecvIPs: [],
-    meetingRoomParams: null,
-    itemPageLimit: 4,
-    audioOnlyRoom: false,
-    addForBasic: false,
-    screenPageLimit: 4,
-    shareScreenStarted: false,
-    shared: false,
-    targetOrientation: 'landscape',
-    targetResolution: 'sd',
-    targetResolutionHost: 'sd',
-    vidCons: { width: 640, height: 360 },
-    frameRate: 10,
-    hParams: {},
-    vParams: {},
-    screenParams: {},
-    aParams: {},
-    // Initial Values for New Recording Fields
-    recordingAudioPausesLimit: 0,
-    recordingAudioPausesCount: 0,
-    recordingAudioSupport: false,
-    recordingAudioPeopleLimit: 0,
-    recordingAudioParticipantsTimeLimit: 0,
-    recordingVideoPausesCount: 0,
-    recordingVideoPausesLimit: 0,
-    recordingVideoSupport: false,
-    recordingVideoPeopleLimit: 0,
-    recordingVideoParticipantsTimeLimit: 0,
-    recordingAllParticipantsSupport: false,
-    recordingVideoParticipantsSupport: false,
-    recordingAllParticipantsFullRoomSupport: false,
-    recordingVideoParticipantsFullRoomSupport: false,
-    recordingPreferredOrientation: 'landscape',
-    recordingSupportForOtherOrientation: false,
-    recordingMultiFormatsSupport: false,
-    userRecordingParams: {
-        mainSpecs: {
-            mediaOptions: 'video',
-            audioOptions: 'all',
-            videoOptions: 'all',
-            videoType: 'fullDisplay',
-            videoOptimized: false,
-            recordingDisplayType: 'media',
-            addHLS: false,
-        },
-        dispSpecs: {
-            nameTags: true,
-            backgroundColor: '#000000',
-            nameTagsColor: '#ffffff',
-            orientationVideo: 'portrait',
-        },
-    },
-    canRecord: false,
-    startReport: false,
-    endReport: false,
-    recordTimerInterval: null,
-    recordStartTime: 0,
-    recordElapsedTime: 0,
-    isTimerRunning: false,
-    canPauseResume: false,
-    recordChangeSeconds: 15000,
-    pauseLimit: 0,
-    pauseRecordCount: 0,
-    canLaunchRecord: true,
-    stopLaunchRecord: false,
-    // Room properties
-    participantsAll: [],
-    firstAll: false,
-    updateMainWindow: false,
-    first_round: false,
-    landScaped: false,
-    lock_screen: false,
-    screenId: '',
-    allVideoStreams: [],
-    newLimitedStreams: [],
-    newLimitedStreamsIDs: [],
-    activeSounds: [],
-    screenShareIDStream: '',
-    screenShareNameStream: '',
-    adminIDStream: '',
-    adminNameStream: '',
-    youYouStream: [],
-    youYouStreamIDs: [],
-    localStream: null,
-    recordStarted: false,
-    recordResumed: false,
-    recordPaused: false,
-    recordStopped: false,
-    adminRestrictSetting: false,
-    videoRequestState: null,
-    videoRequestTime: 0,
-    videoAction: false,
-    localStreamVideo: null,
-    userDefaultVideoInputDevice: '',
-    currentFacingMode: 'user',
-    prevFacingMode: 'user',
-    defVideoID: '',
-    allowed: false,
-    dispActiveNames: [],
-    activeNames: [],
-    prevActiveNames: [],
-    p_activeNames: [],
-    p_dispActiveNames: [],
-    membersReceived: false,
-    deferScreenReceived: false,
-    hostFirstSwitch: false,
-    micAction: false,
-    screenAction: false,
-    chatAction: false,
-    audioRequestState: null,
-    screenRequestState: null,
-    chatRequestState: null,
-    audioRequestTime: 0,
-    screenRequestTime: 0,
-    chatRequestTime: 0,
-    updateRequestIntervalSeconds: 240,
-    oldSoundIds: [],
-    hostLabel: 'Host',
-    mainScreenFilled: false,
-    localStreamScreen: null,
-    screenAlreadyOn: false,
-    chatAlreadyOn: false,
-    redirectURL: '',
-    oldAllStreams: [],
-    adminVidID: '',
-    streamNames: [],
-    non_alVideoStreams: [],
-    sortAudioLoudness: false,
-    audioDecibels: [],
-    mixed_alVideoStreams: [],
-    non_alVideoStreams_muted: [],
-    paginatedStreams: [],
-    localStreamAudio: null,
-    defAudioID: '',
-    userDefaultAudioInputDevice: '',
-    userDefaultAudioOutputDevice: '',
-    prevAudioInputDevice: '',
-    prevVideoInputDevice: '',
-    audioPaused: false,
-    mainScreenPerson: '',
-    adminOnMainScreen: false,
-    screenStates: [{
-            mainScreenPerson: "",
-            mainScreenProducerId: "",
-            mainScreenFilled: false,
-            adminOnMainScreen: false,
-        }],
-    prevScreenStates: [{
-            mainScreenPerson: "",
-            mainScreenProducerId: "",
-            mainScreenFilled: false,
-            adminOnMainScreen: false,
-        }],
-    updateDateState: null,
-    lastUpdate: null,
-    nForReadjustRecord: 0,
-    fixedPageLimit: 4,
-    removeAltGrid: false,
-    nForReadjust: 0,
-    reorderInterval: 30000,
-    fastReorderInterval: 10000,
-    lastReorderTime: 0,
-    audStreamNames: [],
-    currentUserPage: 0,
-    mainHeightWidth: 0,
-    prevMainHeightWidth: 0,
-    prevDoPaginate: false,
-    doPaginate: false,
-    shareEnded: false,
-    lStreams: [],
-    chatRefStreams: [],
-    controlHeight: 0,
-    isWideScreen: false,
-    isMediumScreen: false,
-    isSmallScreen: false,
-    addGrid: false,
-    addAltGrid: false,
-    gridRows: 0,
-    gridCols: 0,
-    altGridRows: 0,
-    altGridCols: 0,
-    numberPages: 0,
-    currentStreams: [],
-    showMiniView: false,
-    nStream: null,
-    defer_receive: false,
-    allAudioStreams: [],
-    remoteScreenStream: [],
-    screenProducer: null,
-    localScreenProducer: null,
-    gotAllVids: false,
-    paginationHeightWidth: 40,
-    paginationDirection: 'horizontal',
-    gridSizes: { gridWidth: 0, gridHeight: 0, altGridWidth: 0, altGridHeight: 0 },
-    screenForceFullDisplay: false,
-    mainGridStream: [],
-    otherGridStreams: [[], []],
-    audioOnlyStreams: [],
-    videoInputs: [],
-    audioInputs: [],
-    meetingProgressTime: '00:00:00',
-    meetingElapsedTime: 0,
-    ref_participants: [],
-    // Messaging, event, modals, and other UI states
-    messages: [],
-    startDirectMessage: false,
-    directMessageDetails: null,
-    showMessagesBadge: false,
-    audioSetting: 'allow',
-    videoSetting: 'allow',
-    screenshareSetting: 'allow',
-    chatSetting: 'allow',
-    displayOption: 'media',
-    autoWave: true,
-    forceFullDisplay: true,
-    prevForceFullDisplay: false,
-    prevMeetingDisplayType: 'video',
-    waitingRoomFilter: '',
-    waitingRoomList: [],
-    waitingRoomCounter: 0,
-    filteredWaitingRoomList: [],
-    requestFilter: '',
-    requestList: [],
-    requestCounter: 0,
-    filteredRequestList: [],
-    totalReqWait: 0,
-    alertVisible: false,
-    alertMessage: '',
-    alertType: 'success',
-    alertDuration: 3000,
-    progressTimerVisible: true,
-    progressTimerValue: 0,
-    isMenuModalVisible: false,
-    isRecordingModalVisible: false,
-    isSettingsModalVisible: false,
-    isRequestsModalVisible: false,
-    isWaitingModalVisible: false,
-    isCoHostModalVisible: false,
-    isMediaSettingsModalVisible: false,
-    isDisplaySettingsModalVisible: false,
-    isParticipantsModalVisible: false,
-    isMessagesModalVisible: false,
-    isConfirmExitModalVisible: false,
-    isConfirmHereModalVisible: false,
-    isShareEventModalVisible: false,
-    isLoadingModalVisible: false,
-    recordingMediaOptions: 'video',
-    recordingAudioOptions: 'all',
-    recordingVideoOptions: 'all',
-    recordingVideoType: 'fullDisplay',
-    recordingVideoOptimized: false,
-    recordingDisplayType: 'video',
-    recordingAddHLS: true,
-    recordingNameTags: true,
-    recordingBackgroundColor: '#83c0e9',
-    recordingNameTagsColor: '#ffffff',
-    recordingAddText: false,
-    recordingCustomText: 'Add Text',
-    recordingCustomTextPosition: 'top',
-    recordingCustomTextColor: '#ffffff',
-    recordingOrientationVideo: 'landscape',
-    clearedToResume: true,
-    clearedToRecord: true,
-    recordState: 'green',
-    showRecordButtons: false,
-    recordingProgressTime: '00:00:00',
-    audioSwitching: false,
-    videoSwitching: false,
-    videoAlreadyOn: false,
-    audioAlreadyOn: false,
-    componentSizes: { mainHeight: 0, otherHeight: 0, mainWidth: 0, otherWidth: 0 },
-    hasCameraPermission: false,
-    hasAudioPermission: false,
-    transportCreated: false,
-    localTransportCreated: false,
-    transportCreatedVideo: false,
-    transportCreatedAudio: false,
-    transportCreatedScreen: false,
-    producerTransport: null,
-    localProducerTransport: null,
-    videoProducer: null,
-    localVideoProducer: null,
-    params: {},
-    videoParams: {},
-    audioParams: {},
-    audioProducer: null,
-    localAudioProducer: null,
-    consumerTransports: [],
-    consumingTransports: [],
-    // Polls
-    polls: [],
-    poll: null,
-    isPollModalVisible: false,
-    // Background
-    customImage: '',
-    selectedImage: '',
-    segmentVideo: null,
-    selfieSegmentation: null,
-    pauseSegmentation: false,
-    processedStream: null,
-    keepBackground: false,
-    backgroundHasChanged: false,
-    virtualStream: null,
-    mainCanvas: null,
-    prevKeepBackground: false,
-    appliedBackground: false,
-    isBackgroundModalVisible: false,
-    autoClickBackground: false,
-    // Breakout Rooms
-    breakoutRooms: [],
-    currentRoomIndex: 0,
-    canStartBreakout: false,
-    breakOutRoomStarted: false,
-    breakOutRoomEnded: false,
-    hostNewRoom: -1,
-    limitedBreakRoom: [],
-    mainRoomsLength: 0,
-    memberRoom: -1,
-    isBreakoutRoomsModalVisible: false,
-    // Whiteboard
-    whiteboardUsers: [],
-    currentWhiteboardIndex: 0,
-    canStartWhiteboard: false,
-    whiteboardStarted: false,
-    whiteboardEnded: false,
-    whiteboardLimit: 4,
-    isWhiteboardModalVisible: false,
-    isConfigureWhiteboardModalVisible: false,
-    shapes: [],
-    useImageBackground: true,
-    redoStack: [],
-    undoStack: [],
-    canvasStream: null,
-    canvasWhiteboard: null,
-    // Screenboard
-    canvasScreenboard: null,
-    processedScreenStream: null,
-    annotateScreenStream: false,
-    mainScreenCanvas: null,
-    isScreenboardModalVisible: false,
-    // Control Buttons
-    micActive: false,
-    videoActive: false,
-    screenShareActive: false,
-    endCallActive: false,
-    participantsActive: false,
-    menuActive: false,
-    commentsActive: false,
-};
-
 /**
  * Service to validate if a given string contains only alphanumeric characters.
  *
@@ -17499,17 +17114,92 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 }]
         }] });
 
+/**
+ * Asynchronously joins a room on MediaSFU.
+ *
+ * This method sends a POST request to the MediaSFU API to join an existing room.
+ * It validates the provided credentials and dynamically constructs the API endpoint,
+ * including support for the Community Edition via a custom `localLink`.
+ *
+ * @param {object} options - Configuration options for joining the room.
+ * @param {JoinMediaSFURoomOptions | CreateMediaSFURoomOptions} options.payload -
+ *   The payload containing the room details and action (`join` or `create`).
+ * @param {string} options.apiUserName - The API username, used for authentication.
+ * @param {string} options.apiKey - The API key, used for authentication.
+ * @param {string} [options.localLink=""] -
+ *   The local link for Community Edition users. If provided, it overrides the default API URL.
+ *
+ * @returns {Promise<{
+*   data: CreateJoinRoomResponse | CreateJoinRoomError | null;
+*   success: boolean;
+* }>} A promise resolving to an object containing the API response:
+* - `data`: The response object, either `CreateJoinRoomResponse` or `CreateJoinRoomError`.
+* - `success`: Boolean indicating whether the operation was successful.
+*
+* @throws {Error} Throws an error if the request fails or if the provided credentials are invalid.
+*
+* @example
+* const response = await joinRoomOnMediaSFU.joinRoomOnMediaSFU({
+*   payload: {
+*     action: 'join',
+*     meetingID: '123456',
+*     userName: 'user123',
+*   },
+*   apiUserName: 'yourAPIUSERNAME',
+*   apiKey: 'yourAPIKEY',
+*   localLink: 'http://localhost:3000', // Optional for Community Edition
+* });
+*
+* if (response.success) {
+*   console.log('Joined room successfully:', response.data);
+* } else {
+*   console.error('Failed to join room:', response.data?.error);
+* }
+*/
 class JoinRoomOnMediaSFU {
     constructor() { }
     /**
-     * Joins a room on MediaSFU.
-     *
-     * @param payload - The payload for the API request.
-     * @param apiUserName - The API username.
-     * @param apiKey - The API key.
-     * @param localLink - The local link for the Community Edition.
-     * @returns The API response.
-     */
+   * Asynchronously joins a room on MediaSFU.
+   *
+   * This method sends a POST request to the MediaSFU API to join an existing room.
+   * It validates the provided credentials and dynamically constructs the API endpoint,
+   * including support for the Community Edition via a custom `localLink`.
+   *
+   * @param {object} options - Configuration options for joining the room.
+   * @param {JoinMediaSFURoomOptions | CreateMediaSFURoomOptions} options.payload -
+   *   The payload containing the room details and action (`join` or `create`).
+   * @param {string} options.apiUserName - The API username, used for authentication.
+   * @param {string} options.apiKey - The API key, used for authentication.
+   * @param {string} [options.localLink=""] -
+   *   The local link for Community Edition users. If provided, it overrides the default API URL.
+   *
+   * @returns {Promise<{
+   *   data: CreateJoinRoomResponse | CreateJoinRoomError | null;
+    *   success: boolean;
+    * }>} A promise resolving to an object containing the API response:
+    * - `data`: The response object, either `CreateJoinRoomResponse` or `CreateJoinRoomError`.
+    * - `success`: Boolean indicating whether the operation was successful.
+    *
+    * @throws {Error} Throws an error if the request fails or if the provided credentials are invalid.
+    *
+    * @example
+    * const response = await joinRoomOnMediaSFU.joinRoomOnMediaSFU({
+    *   payload: {
+    *     action: 'join',
+    *     meetingID: '123456',
+    *     userName: 'user123',
+    *   },
+    *   apiUserName: 'yourAPIUSERNAME',
+    *   apiKey: 'yourAPIKEY',
+    *   localLink: 'http://localhost:3000', // Optional for Community Edition
+    * });
+    *
+    * if (response.success) {
+    *   console.log('Joined room successfully:', response.data);
+    * } else {
+    *   console.error('Failed to join room:', response.data?.error);
+    * }
+    */
     async joinRoomOnMediaSFU({ payload, apiUserName, apiKey, localLink, }) {
         try {
             if (!apiUserName ||
@@ -28464,17 +28154,99 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }] } });
 
 /**
- * Async function to create a room on MediaSFU.
+ * Asynchronously creates a room on MediaSFU.
  *
- * @param {CreateJoinRoomOptions} options - Contains: payload, apiUserName, apiKey, localLink.
- * @param {any} options.payload - The payload for the API request.
- * @param {string} options.apiUserName - The API username.
- * @param {string} options.apiKey - The API key.
- * @param {string} options.localLink - The local link for Community Edition.
- * @returns {Promise<{ data: CreateJoinRoomResponse | CreateJoinRoomError | null; success: boolean; }>} The response from the API.
- */
+ * This method sends a POST request to the MediaSFU API to create a new room.
+ * It validates the provided credentials and dynamically constructs the API endpoint,
+ * supporting the Community Edition via a custom `localLink`.
+ *
+ * @param {object} options - Configuration options for creating the room.
+ * @param {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} options.payload -
+ *   The payload containing the room creation details.
+ * @param {string} options.apiUserName - The API username, used for authentication.
+ * @param {string} options.apiKey - The API key, used for authentication.
+ * @param {string} [options.localLink=""] -
+ *   The local link for Community Edition users. If provided, it overrides the default API URL.
+ *
+ * @returns {Promise<{
+*   data: CreateJoinRoomResponse | CreateJoinRoomError | null;
+*   success: boolean;
+* }>} A promise resolving to an object containing the API response:
+* - `data`: The response object, either `CreateJoinRoomResponse` or `CreateJoinRoomError`.
+* - `success`: Boolean indicating whether the operation was successful.
+*
+* @throws {Error} Throws an error if the request fails or if the provided credentials are invalid.
+*
+* @example
+* const response = await createRoomOnMediaSFU.createRoomOnMediaSFU({
+*   payload: {
+*     action: 'create',
+*     duration: 120, // Duration in minutes
+*     capacity: 20, // Max participants
+*     userName: 'hostUser',
+*     scheduledDate: Date.now() + 3600000, // One hour from now
+*     secureCode: 'secure123', // Optional
+*     eventType: 'webinar', // Optional
+*   },
+*   apiUserName: 'yourAPIUSERNAME',
+*   apiKey: 'yourAPIKEY',
+*   localLink: 'http://localhost:3000', // Optional for Community Edition
+* });
+*
+* if (response.success) {
+*   console.log('Room created successfully:', response.data);
+* } else {
+*   console.error('Failed to create room:', response.data?.error);
+* }
+*/
 class CreateRoomOnMediaSFU {
     constructor() { }
+    /**
+   * Asynchronously creates a room on MediaSFU.
+   *
+   * This method sends a POST request to the MediaSFU API to create a new room.
+   * It validates the provided credentials and dynamically constructs the API endpoint,
+   * supporting the Community Edition via a custom `localLink`.
+   *
+   * @param {object} options - Configuration options for creating the room.
+   * @param {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} options.payload -
+   *   The payload containing the room creation details.
+   * @param {string} options.apiUserName - The API username, used for authentication.
+   * @param {string} options.apiKey - The API key, used for authentication.
+   * @param {string} [options.localLink=""] -
+   *   The local link for Community Edition users. If provided, it overrides the default API URL.
+   *
+   * @returns {Promise<{
+   *   data: CreateJoinRoomResponse | CreateJoinRoomError | null;
+    *   success: boolean;
+    * }>} A promise resolving to an object containing the API response:
+    * - `data`: The response object, either `CreateJoinRoomResponse` or `CreateJoinRoomError`.
+    * - `success`: Boolean indicating whether the operation was successful.
+    *
+    * @throws {Error} Throws an error if the request fails or if the provided credentials are invalid.
+    *
+    * @example
+    * const response = await createRoomOnMediaSFU.createRoomOnMediaSFU({
+    *   payload: {
+    *     action: 'create',
+    *     duration: 120, // Duration in minutes
+    *     capacity: 20, // Max participants
+    *     userName: 'hostUser',
+    *     scheduledDate: Date.now() + 3600000, // One hour from now
+    *     secureCode: 'secure123', // Optional
+    *     eventType: 'webinar', // Optional
+    *   },
+    *   apiUserName: 'yourAPIUSERNAME',
+    *   apiKey: 'yourAPIKEY',
+    *   localLink: 'http://localhost:3000', // Optional for Community Edition
+    * });
+    *
+    * if (response.success) {
+    *   console.log('Room created successfully:', response.data);
+    * } else {
+    *   console.error('Failed to create room:', response.data?.error);
+    * }
+    */
     async createRoomOnMediaSFU({ payload, apiUserName, apiKey, localLink, }) {
         try {
             if (!apiUserName ||
@@ -33759,52 +33531,389 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
 
 // //consumers/socket-receive-methods
 
-/**
- * Creates a ResponseJoinRoom object from a ResponseJoinLocalRoom object.
- *
- * @param {CreateResponseJoinRoomOptions} options - The options containing the ResponseJoinLocalRoom object.
- * @returns {Promise<ResponseJoinRoom>} - A promise that resolves to a ResponseJoinRoom object.
- *
- * @example
- * ```typescript
- * const localRoom: ResponseJoinLocalRoom = {
- *   rtpCapabilities: null,
- *   isHost: true,
- *   eventStarted: false,
- *   isBanned: false,
- *   hostNotJoined: false,
- *   eventRoomParams: { /* MeetingRoomParams * / },
- *   recordingParams: { /* RecordingParams * / },
- *   secureCode: "12345",
- *   mediasfuURL: "https://example.com",
- *   apiKey: "api-key",
- *   apiUserName: "user-name",
- *   allowRecord: true,
- * };
- *
- * const joinRoom = await createResponseJoinRoom({ localRoom });
- * console.log(joinRoom);
- * ```
- */
-const createResponseJoinRoom = async ({ localRoom, }) => {
-    return {
-        rtpCapabilities: localRoom.rtpCapabilities ?? null,
-        success: localRoom.rtpCapabilities !== null,
-        roomRecvIPs: [], // Placeholder; populate with necessary values
-        meetingRoomParams: localRoom.eventRoomParams,
-        recordingParams: localRoom.recordingParams,
-        secureCode: localRoom.secureCode,
-        recordOnly: false, // Default assumption unless additional logic applies
-        isHost: localRoom.isHost,
-        safeRoom: false, // Default assumption unless additional logic applies
-        autoStartSafeRoom: false, // Default assumption unless additional logic applies
-        safeRoomStarted: false, // Default assumption unless additional logic applies
-        safeRoomEnded: false, // Default assumption unless additional logic applies
-        reason: localRoom.isBanned ? "User is banned from the room." : undefined,
-        banned: localRoom.isBanned,
-        suspended: false, // Default assumption unless additional logic applies
-        noAdmin: localRoom.hostNotJoined,
-    };
+const initialValuesState = {
+    // The following are the initial values
+    roomName: '',
+    member: '',
+    adminPasscode: '',
+    islevel: '1',
+    coHost: 'No coHost',
+    coHostResponsibility: [
+        { name: 'participants', value: false, dedicated: false },
+        { name: 'media', value: false, dedicated: false },
+        { name: 'waiting', value: false, dedicated: false },
+        { name: 'chat', value: false, dedicated: false },
+    ],
+    youAreCoHost: false,
+    youAreHost: false,
+    confirmedToRecord: false,
+    meetingDisplayType: 'media',
+    meetingVideoOptimized: false,
+    eventType: 'webinar',
+    participants: [],
+    filteredParticipants: [],
+    participantsCounter: 0,
+    participantsFilter: '',
+    validated: false,
+    localUIMode: false,
+    socket: {},
+    localSocket: undefined,
+    roomData: null,
+    device: null,
+    apiKey: '',
+    apiUserName: '',
+    apiToken: '',
+    link: '',
+    consume_sockets: [],
+    rtpCapabilities: null,
+    roomRecvIPs: [],
+    meetingRoomParams: null,
+    itemPageLimit: 4,
+    audioOnlyRoom: false,
+    addForBasic: false,
+    screenPageLimit: 4,
+    shareScreenStarted: false,
+    shared: false,
+    targetOrientation: 'landscape',
+    targetResolution: 'sd',
+    targetResolutionHost: 'sd',
+    vidCons: { width: 640, height: 360 },
+    frameRate: 10,
+    hParams: {},
+    vParams: {},
+    screenParams: {},
+    aParams: {},
+    // Initial Values for New Recording Fields
+    recordingAudioPausesLimit: 0,
+    recordingAudioPausesCount: 0,
+    recordingAudioSupport: false,
+    recordingAudioPeopleLimit: 0,
+    recordingAudioParticipantsTimeLimit: 0,
+    recordingVideoPausesCount: 0,
+    recordingVideoPausesLimit: 0,
+    recordingVideoSupport: false,
+    recordingVideoPeopleLimit: 0,
+    recordingVideoParticipantsTimeLimit: 0,
+    recordingAllParticipantsSupport: false,
+    recordingVideoParticipantsSupport: false,
+    recordingAllParticipantsFullRoomSupport: false,
+    recordingVideoParticipantsFullRoomSupport: false,
+    recordingPreferredOrientation: 'landscape',
+    recordingSupportForOtherOrientation: false,
+    recordingMultiFormatsSupport: false,
+    userRecordingParams: {
+        mainSpecs: {
+            mediaOptions: 'video',
+            audioOptions: 'all',
+            videoOptions: 'all',
+            videoType: 'fullDisplay',
+            videoOptimized: false,
+            recordingDisplayType: 'media',
+            addHLS: false,
+        },
+        dispSpecs: {
+            nameTags: true,
+            backgroundColor: '#000000',
+            nameTagsColor: '#ffffff',
+            orientationVideo: 'portrait',
+        },
+    },
+    canRecord: false,
+    startReport: false,
+    endReport: false,
+    recordTimerInterval: null,
+    recordStartTime: 0,
+    recordElapsedTime: 0,
+    isTimerRunning: false,
+    canPauseResume: false,
+    recordChangeSeconds: 15000,
+    pauseLimit: 0,
+    pauseRecordCount: 0,
+    canLaunchRecord: true,
+    stopLaunchRecord: false,
+    // Room properties
+    participantsAll: [],
+    firstAll: false,
+    updateMainWindow: false,
+    first_round: false,
+    landScaped: false,
+    lock_screen: false,
+    screenId: '',
+    allVideoStreams: [],
+    newLimitedStreams: [],
+    newLimitedStreamsIDs: [],
+    activeSounds: [],
+    screenShareIDStream: '',
+    screenShareNameStream: '',
+    adminIDStream: '',
+    adminNameStream: '',
+    youYouStream: [],
+    youYouStreamIDs: [],
+    localStream: null,
+    recordStarted: false,
+    recordResumed: false,
+    recordPaused: false,
+    recordStopped: false,
+    adminRestrictSetting: false,
+    videoRequestState: null,
+    videoRequestTime: 0,
+    videoAction: false,
+    localStreamVideo: null,
+    userDefaultVideoInputDevice: '',
+    currentFacingMode: 'user',
+    prevFacingMode: 'user',
+    defVideoID: '',
+    allowed: false,
+    dispActiveNames: [],
+    activeNames: [],
+    prevActiveNames: [],
+    p_activeNames: [],
+    p_dispActiveNames: [],
+    membersReceived: false,
+    deferScreenReceived: false,
+    hostFirstSwitch: false,
+    micAction: false,
+    screenAction: false,
+    chatAction: false,
+    audioRequestState: null,
+    screenRequestState: null,
+    chatRequestState: null,
+    audioRequestTime: 0,
+    screenRequestTime: 0,
+    chatRequestTime: 0,
+    updateRequestIntervalSeconds: 240,
+    oldSoundIds: [],
+    hostLabel: 'Host',
+    mainScreenFilled: false,
+    localStreamScreen: null,
+    screenAlreadyOn: false,
+    chatAlreadyOn: false,
+    redirectURL: '',
+    oldAllStreams: [],
+    adminVidID: '',
+    streamNames: [],
+    non_alVideoStreams: [],
+    sortAudioLoudness: false,
+    audioDecibels: [],
+    mixed_alVideoStreams: [],
+    non_alVideoStreams_muted: [],
+    paginatedStreams: [],
+    localStreamAudio: null,
+    defAudioID: '',
+    userDefaultAudioInputDevice: '',
+    userDefaultAudioOutputDevice: '',
+    prevAudioInputDevice: '',
+    prevVideoInputDevice: '',
+    audioPaused: false,
+    mainScreenPerson: '',
+    adminOnMainScreen: false,
+    screenStates: [{
+            mainScreenPerson: "",
+            mainScreenProducerId: "",
+            mainScreenFilled: false,
+            adminOnMainScreen: false,
+        }],
+    prevScreenStates: [{
+            mainScreenPerson: "",
+            mainScreenProducerId: "",
+            mainScreenFilled: false,
+            adminOnMainScreen: false,
+        }],
+    updateDateState: null,
+    lastUpdate: null,
+    nForReadjustRecord: 0,
+    fixedPageLimit: 4,
+    removeAltGrid: false,
+    nForReadjust: 0,
+    reorderInterval: 30000,
+    fastReorderInterval: 10000,
+    lastReorderTime: 0,
+    audStreamNames: [],
+    currentUserPage: 0,
+    mainHeightWidth: 0,
+    prevMainHeightWidth: 0,
+    prevDoPaginate: false,
+    doPaginate: false,
+    shareEnded: false,
+    lStreams: [],
+    chatRefStreams: [],
+    controlHeight: 0,
+    isWideScreen: false,
+    isMediumScreen: false,
+    isSmallScreen: false,
+    addGrid: false,
+    addAltGrid: false,
+    gridRows: 0,
+    gridCols: 0,
+    altGridRows: 0,
+    altGridCols: 0,
+    numberPages: 0,
+    currentStreams: [],
+    showMiniView: false,
+    nStream: null,
+    defer_receive: false,
+    allAudioStreams: [],
+    remoteScreenStream: [],
+    screenProducer: null,
+    localScreenProducer: null,
+    gotAllVids: false,
+    paginationHeightWidth: 40,
+    paginationDirection: 'horizontal',
+    gridSizes: { gridWidth: 0, gridHeight: 0, altGridWidth: 0, altGridHeight: 0 },
+    screenForceFullDisplay: false,
+    mainGridStream: [],
+    otherGridStreams: [[], []],
+    audioOnlyStreams: [],
+    videoInputs: [],
+    audioInputs: [],
+    meetingProgressTime: '00:00:00',
+    meetingElapsedTime: 0,
+    ref_participants: [],
+    // Messaging, event, modals, and other UI states
+    messages: [],
+    startDirectMessage: false,
+    directMessageDetails: null,
+    showMessagesBadge: false,
+    audioSetting: 'allow',
+    videoSetting: 'allow',
+    screenshareSetting: 'allow',
+    chatSetting: 'allow',
+    displayOption: 'media',
+    autoWave: true,
+    forceFullDisplay: true,
+    prevForceFullDisplay: false,
+    prevMeetingDisplayType: 'video',
+    waitingRoomFilter: '',
+    waitingRoomList: [],
+    waitingRoomCounter: 0,
+    filteredWaitingRoomList: [],
+    requestFilter: '',
+    requestList: [],
+    requestCounter: 0,
+    filteredRequestList: [],
+    totalReqWait: 0,
+    alertVisible: false,
+    alertMessage: '',
+    alertType: 'success',
+    alertDuration: 3000,
+    progressTimerVisible: true,
+    progressTimerValue: 0,
+    isMenuModalVisible: false,
+    isRecordingModalVisible: false,
+    isSettingsModalVisible: false,
+    isRequestsModalVisible: false,
+    isWaitingModalVisible: false,
+    isCoHostModalVisible: false,
+    isMediaSettingsModalVisible: false,
+    isDisplaySettingsModalVisible: false,
+    isParticipantsModalVisible: false,
+    isMessagesModalVisible: false,
+    isConfirmExitModalVisible: false,
+    isConfirmHereModalVisible: false,
+    isShareEventModalVisible: false,
+    isLoadingModalVisible: false,
+    recordingMediaOptions: 'video',
+    recordingAudioOptions: 'all',
+    recordingVideoOptions: 'all',
+    recordingVideoType: 'fullDisplay',
+    recordingVideoOptimized: false,
+    recordingDisplayType: 'video',
+    recordingAddHLS: true,
+    recordingNameTags: true,
+    recordingBackgroundColor: '#83c0e9',
+    recordingNameTagsColor: '#ffffff',
+    recordingAddText: false,
+    recordingCustomText: 'Add Text',
+    recordingCustomTextPosition: 'top',
+    recordingCustomTextColor: '#ffffff',
+    recordingOrientationVideo: 'landscape',
+    clearedToResume: true,
+    clearedToRecord: true,
+    recordState: 'green',
+    showRecordButtons: false,
+    recordingProgressTime: '00:00:00',
+    audioSwitching: false,
+    videoSwitching: false,
+    videoAlreadyOn: false,
+    audioAlreadyOn: false,
+    componentSizes: { mainHeight: 0, otherHeight: 0, mainWidth: 0, otherWidth: 0 },
+    hasCameraPermission: false,
+    hasAudioPermission: false,
+    transportCreated: false,
+    localTransportCreated: false,
+    transportCreatedVideo: false,
+    transportCreatedAudio: false,
+    transportCreatedScreen: false,
+    producerTransport: null,
+    localProducerTransport: null,
+    videoProducer: null,
+    localVideoProducer: null,
+    params: {},
+    videoParams: {},
+    audioParams: {},
+    audioProducer: null,
+    localAudioProducer: null,
+    consumerTransports: [],
+    consumingTransports: [],
+    // Polls
+    polls: [],
+    poll: null,
+    isPollModalVisible: false,
+    // Background
+    customImage: '',
+    selectedImage: '',
+    segmentVideo: null,
+    selfieSegmentation: null,
+    pauseSegmentation: false,
+    processedStream: null,
+    keepBackground: false,
+    backgroundHasChanged: false,
+    virtualStream: null,
+    mainCanvas: null,
+    prevKeepBackground: false,
+    appliedBackground: false,
+    isBackgroundModalVisible: false,
+    autoClickBackground: false,
+    // Breakout Rooms
+    breakoutRooms: [],
+    currentRoomIndex: 0,
+    canStartBreakout: false,
+    breakOutRoomStarted: false,
+    breakOutRoomEnded: false,
+    hostNewRoom: -1,
+    limitedBreakRoom: [],
+    mainRoomsLength: 0,
+    memberRoom: -1,
+    isBreakoutRoomsModalVisible: false,
+    // Whiteboard
+    whiteboardUsers: [],
+    currentWhiteboardIndex: 0,
+    canStartWhiteboard: false,
+    whiteboardStarted: false,
+    whiteboardEnded: false,
+    whiteboardLimit: 4,
+    isWhiteboardModalVisible: false,
+    isConfigureWhiteboardModalVisible: false,
+    shapes: [],
+    useImageBackground: true,
+    redoStack: [],
+    undoStack: [],
+    canvasStream: null,
+    canvasWhiteboard: null,
+    // Screenboard
+    canvasScreenboard: null,
+    processedScreenStream: null,
+    annotateScreenStream: false,
+    mainScreenCanvas: null,
+    isScreenboardModalVisible: false,
+    // Control Buttons
+    micActive: false,
+    videoActive: false,
+    screenShareActive: false,
+    endCallActive: false,
+    participantsActive: false,
+    menuActive: false,
+    commentsActive: false,
 };
 
 /**
@@ -34407,6 +34516,54 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 }] }], propDecorators: { disabled: [{
                 type: Input
             }] } });
+
+/**
+ * Creates a ResponseJoinRoom object from a ResponseJoinLocalRoom object.
+ *
+ * @param {CreateResponseJoinRoomOptions} options - The options containing the ResponseJoinLocalRoom object.
+ * @returns {Promise<ResponseJoinRoom>} - A promise that resolves to a ResponseJoinRoom object.
+ *
+ * @example
+ * ```typescript
+ * const localRoom: ResponseJoinLocalRoom = {
+ *   rtpCapabilities: null,
+ *   isHost: true,
+ *   eventStarted: false,
+ *   isBanned: false,
+ *   hostNotJoined: false,
+ *   eventRoomParams: { /* MeetingRoomParams * / },
+ *   recordingParams: { /* RecordingParams * / },
+ *   secureCode: "12345",
+ *   mediasfuURL: "https://example.com",
+ *   apiKey: "api-key",
+ *   apiUserName: "user-name",
+ *   allowRecord: true,
+ * };
+ *
+ * const joinRoom = await createResponseJoinRoom({ localRoom });
+ * console.log(joinRoom);
+ * ```
+ */
+const createResponseJoinRoom = async ({ localRoom, }) => {
+    return {
+        rtpCapabilities: localRoom.rtpCapabilities ?? null,
+        success: localRoom.rtpCapabilities !== null,
+        roomRecvIPs: [], // Placeholder; populate with necessary values
+        meetingRoomParams: localRoom.eventRoomParams,
+        recordingParams: localRoom.recordingParams,
+        secureCode: localRoom.secureCode,
+        recordOnly: false, // Default assumption unless additional logic applies
+        isHost: localRoom.isHost,
+        safeRoom: false, // Default assumption unless additional logic applies
+        autoStartSafeRoom: false, // Default assumption unless additional logic applies
+        safeRoomStarted: false, // Default assumption unless additional logic applies
+        safeRoomEnded: false, // Default assumption unless additional logic applies
+        reason: localRoom.isBanned ? "User is banned from the room." : undefined,
+        banned: localRoom.isBanned,
+        suspended: false, // Default assumption unless additional logic applies
+        noAdmin: localRoom.hostNotJoined,
+    };
+};
 
 /**
  * MediasfuGeneric component provides a customizable interface with a full suite of modal windows and flexible layout options for interactive media applications.
@@ -58526,11 +58683,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 args: ['window:orientationchange']
             }] } });
 
-//initial values
-
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { AParams, AddVideosGrid, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, EventSettingsModal, FlexibleGrid, FlexibleVideo, FormatNumber, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LoadingModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MessageParticipants, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OnScreenChanges, OtherGridComponent, Pagination, ParticipantRequested, ParticipantsModal, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordUpdateTimer, RecordingModal, RecordingNotice, RemoveParticipants, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, ScreenParams, ScreenProducerId, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TimeLeftRecording, Trigger, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, getModalPosition, getOverlayPosition, initialValuesState, launchCoHost, sleep, updateMicLevel };
+export { AParams, AddVideosGrid, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, EventSettingsModal, FlexibleGrid, FlexibleVideo, FormatNumber, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LoadingModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OnScreenChanges, OtherGridComponent, Pagination, ParticipantRequested, ParticipantsModal, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemoveParticipants, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TimeLeftRecording, Trigger, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, getModalPosition, getOverlayPosition, initialValuesState, launchCoHost, sleep, updateMicLevel };
 //# sourceMappingURL=mediasfu-angular.mjs.map
