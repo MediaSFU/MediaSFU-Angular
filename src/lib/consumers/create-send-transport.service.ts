@@ -86,7 +86,6 @@ export const createLocalSendTransport = async({
   parameters,
 }: CreateSendTransportOptions): Promise<void> => {
   try {
-    console.log("Creating local send transport...");
     let {
       islevel,
       member,

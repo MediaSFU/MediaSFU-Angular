@@ -5930,7 +5930,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  */
 const createLocalSendTransport = async ({ option, parameters, }) => {
     try {
-        console.log("Creating local send transport...");
         let { islevel, member, socket, localSocket, device, localProducerTransport, localTransportCreated, updateLocalProducerTransport, updateLocalTransportCreated, connectSendTransport, } = parameters;
         if (!localSocket || !localSocket.id || socket?.id == localSocket?.id) {
             return;
@@ -10950,6 +10949,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
  * @param {Function} options.parameters.showAlert - Function to show alert messages.
  * @param {Function} options.parameters.updateParticipants - Function to update the participants list.
+ * @param {Function} options.parameters.updateTransportCreated - Function to update the transport creation state.
  * @param {Function} options.parameters.updateTransportCreatedVideo - Function to update the transport creation state.
  * @param {Function} options.parameters.updateVideoAlreadyOn - Function to update the video status.
  * @param {Function} options.parameters.updateVideoAction - Function to update the video action state.
@@ -10997,7 +10997,7 @@ class StreamSuccessVideo {
         try {
             let { socket, participants, localStream, transportCreated, transportCreatedVideo, videoAlreadyOn, videoAction, videoParams, localStreamVideo, defVideoID, userDefaultVideoInputDevice, params, videoParamse, islevel, member, updateMainWindow, lock_screen, shared, shareScreenStarted, vParams, hParams, allowed, currentFacingMode, device, keepBackground, appliedBackground, videoProducer, 
             // update functions
-            updateTransportCreatedVideo, updateVideoAlreadyOn, updateVideoAction, updateLocalStream, updateLocalStreamVideo, updateUserDefaultVideoInputDevice, updateCurrentFacingMode, updateDefVideoID, updateAllowed, updateUpdateMainWindow, updateParticipants, updateVideoParams, updateIsBackgroundModalVisible, updateAutoClickBackground, 
+            updateTransportCreated, updateTransportCreatedVideo, updateVideoAlreadyOn, updateVideoAction, updateLocalStream, updateLocalStreamVideo, updateUserDefaultVideoInputDevice, updateCurrentFacingMode, updateDefVideoID, updateAllowed, updateUpdateMainWindow, updateParticipants, updateVideoParams, updateIsBackgroundModalVisible, updateAutoClickBackground, 
             // mediasfu functions
             createSendTransport, connectSendTransportVideo, showAlert, reorderStreams, sleep, } = parameters;
             localStreamVideo = stream;
@@ -11131,6 +11131,8 @@ class StreamSuccessVideo {
             updateParticipants(participants);
             // Update the transport created state
             transportCreatedVideo = true;
+            transportCreated = true;
+            updateTransportCreated(transportCreated);
             updateTransportCreatedVideo(transportCreatedVideo);
             // Reupdate the screen display
             if (lock_screen) {

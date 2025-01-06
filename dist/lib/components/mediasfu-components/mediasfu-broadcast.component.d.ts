@@ -844,7 +844,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
+    recordingDisplayType: BehaviorSubject<"video" | "all" | "media">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -1070,7 +1070,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "portrait" | "landscape";
+    checkOrientation: () => "landscape" | "portrait";
     showAlert: ({ message, type, duration, }: {
         message: string;
         type: "success" | "danger";
@@ -1313,7 +1313,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "video" | "all" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -1714,7 +1714,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "portrait" | "landscape";
+        checkOrientation: () => "landscape" | "portrait";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
@@ -2032,7 +2032,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "video" | "all" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2433,7 +2433,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "portrait" | "landscape";
+            checkOrientation: () => "landscape" | "portrait";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
@@ -2754,7 +2754,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "video" | "all" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -3155,7 +3155,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "portrait" | "landscape";
+        checkOrientation: () => "landscape" | "portrait";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
@@ -3473,7 +3473,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "video" | "all" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -3874,7 +3874,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "portrait" | "landscape";
+            checkOrientation: () => "landscape" | "portrait";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
@@ -4195,7 +4195,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "video" | "all" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -4596,7 +4596,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "portrait" | "landscape";
+        checkOrientation: () => "landscape" | "portrait";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
@@ -4914,7 +4914,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "video" | "all" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -5315,7 +5315,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "portrait" | "landscape";
+            checkOrientation: () => "landscape" | "portrait";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;

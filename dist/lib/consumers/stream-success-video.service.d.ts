@@ -30,6 +30,7 @@ export interface StreamSuccessVideoParameters extends CreateSendTransportParamet
     keepBackground: boolean;
     appliedBackground: boolean;
     videoProducer: Producer | null;
+    updateTransportCreated: (created: boolean) => void;
     updateTransportCreatedVideo: (created: boolean) => void;
     updateVideoAlreadyOn: (videoOn: boolean) => void;
     updateVideoAction: (videoAction: boolean) => void;
@@ -87,6 +88,7 @@ export type StreamSuccessVideoType = (options: StreamSuccessVideoOptions) => Pro
  * @param {boolean} options.parameters.videoAlreadyOn - Indicates if the video is already on.
  * @param {Function} options.parameters.showAlert - Function to show alert messages.
  * @param {Function} options.parameters.updateParticipants - Function to update the participants list.
+ * @param {Function} options.parameters.updateTransportCreated - Function to update the transport creation state.
  * @param {Function} options.parameters.updateTransportCreatedVideo - Function to update the transport creation state.
  * @param {Function} options.parameters.updateVideoAlreadyOn - Function to update the video status.
  * @param {Function} options.parameters.updateVideoAction - Function to update the video action state.
