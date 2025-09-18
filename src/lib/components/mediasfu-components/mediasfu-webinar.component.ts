@@ -322,6 +322,10 @@ export type MediasfuWebinarOptions = {
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Webinar".
  *
@@ -346,13 +350,17 @@ export type MediasfuWebinarOptions = {
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-webinar>
  * ```
  */
@@ -361,7 +369,6 @@ export type MediasfuWebinarOptions = {
 @Component({
   selector: 'app-mediasfu-webinar',
   imports: [
-    CommonModule,
     BreakoutRoomsModal,
     BackgroundModal,
     CoHostModal,
@@ -396,15 +403,21 @@ export type MediasfuWebinarOptions = {
     WaitingRoomModal,
   ],
   template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -417,6 +430,7 @@ export type MediasfuWebinarOptions = {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -476,22 +490,14 @@ export type MediasfuWebinarOptions = {
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -788,11 +794,31 @@ export type MediasfuWebinarOptions = {
       ></app-loading-modal>
     </ng-container>
     </div>
+
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <!-- All the modals that were inside the div should be duplicated here -->
+    </ng-container>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
   `,
   styles: [
     `
       .MediaSFU {
-        /* Add any component-specific styles here */
+        height: 100vh;
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 100vh;
+        overflow: hidden;
       }
     `,
   ],
@@ -814,6 +840,12 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
+
+  // Custom component inputs
+  @Input() customVideoCard: any;
+  @Input() customAudioCard: any;
+  @Input() customMiniCard: any;
+  @Input() customMainComponent: any;
 
   title = 'MediaSFU-Webinar';
 
@@ -3945,6 +3977,10 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+
+      customVideoCard: this.customVideoCard,
+      customAudioCard: this.customAudioCard,
+      customMiniCard: this.customMiniCard,
 
       showAlert: this.showAlert.bind(this),
       getUpdatedAllParams: () => {

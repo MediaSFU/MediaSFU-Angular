@@ -64,6 +64,9 @@ export * from './lib/methods/background-methods/launch-background.service';
 export * from './lib/methods/breakout-room-methods/launch-breakout-rooms.service';
 export * from './lib/methods/whiteboard-methods/launch-configure-whiteboard.service';
 
+// Custom component services
+export * from './lib/services/custom-component-injection.service';
+
 // Socket management and clients
 export * from './lib/sockets/socket-manager.service';
 export * from './lib/producer-client/producer-client-emits/join-room-client.service';

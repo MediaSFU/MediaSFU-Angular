@@ -1,12 +1,23 @@
+// types.ts
 import { Socket } from 'socket.io-client';
-import { Consumer, DtlsParameters, IceCandidate, IceParameters, RtpCapabilities } from 'mediasoup-client/lib/types';
+import {
+  Consumer,
+  DtlsParameters,
+  IceCandidate,
+  IceParameters,
+  RtpCapabilities,
+} from 'mediasoup-client/lib/types';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { CustomComponent } from '../components/display-components/control-buttons-component/control-buttons-component.component';
 import { CustomButton } from '../components/menu-components/custom-buttons/custom-buttons.component';
 import { ComponentType } from '@angular/cdk/portal';
+
+// //consumers/socket-receive-methods
 export * from '../consumers/socket-receive-methods/join-consume-room.service';
 export * from '../consumers/socket-receive-methods/producer-closed.service';
 export * from '../consumers/socket-receive-methods/new-pipe-producer.service';
+
+// Consumers
 export * from '../consumers/add-videos-grid.service';
 export * from '../consumers/auto-adjust.service';
 export * from '../consumers/calculate-rows-and-columns.service';
@@ -63,6 +74,8 @@ export * from '../consumers/switch-user-video-alt.service';
 export * from '../consumers/trigger.service';
 export * from '../consumers/update-mini-cards-grid.service';
 export * from '../consumers/update-participant-audio-decibels.service';
+
+// Utils
 export * from '../methods/utils/producer/a-params.service';
 export * from '../methods/utils/producer/h-params.service';
 export * from '../methods/utils/producer/screen-params.service';
@@ -111,6 +124,7 @@ export * from '../methods/stream-methods/click-video.service';
 export * from '../methods/stream-methods/switch-audio.service';
 export * from '../methods/stream-methods/switch-video.service';
 export * from '../methods/stream-methods/switch-video-alt.service';
+
 export * from '../methods/utils/join-room-on-media-sfu.service';
 export * from '../methods/utils/meeting-timer/start-meeting-progress-timer.service';
 export * from '../methods/utils/mini-audio-player/mini-audio-player.component';
@@ -124,16 +138,26 @@ export * from '../methods/utils/get-modal-position.util';
 export * from '../methods/utils/get-overlay-position.util';
 export * from '../methods/utils/sleep.util';
 export * from '../methods/utils/validate-alphanumeric.service';
+
+// Waiting Methods
 export * from '../methods/waiting-methods/launch-waiting.service';
 export * from '../methods/waiting-methods/respond-to-waiting.service';
+
+// Whiteboard Methods
 export * from '../methods/whiteboard-methods/launch-configure-whiteboard.service';
 export * from '../methods/whiteboard-methods/capture-canvas-stream.service';
+
+// Producer Client Emits
 export * from '../producer-client/producer-client-emits/create-device-client.service';
 export * from '../producer-client/producer-client-emits/join-room-client.service';
 export * from '../producer-client/producer-client-emits/update-room-parameters-client.service';
+
+// Producers Emits
 export * from '../producers/producer-emits/join-con-room.service';
 export * from '../producers/producer-emits/join-room.service';
 export * from '../producers/producer-emits/join-local-room.service';
+
+// Socket Receive Methods
 export * from '../producers/socket-receive-methods/all-members.service';
 export * from '../producers/socket-receive-methods/all-members-rest.service';
 export * from '../producers/socket-receive-methods/all-waiting-room-members.service';
@@ -163,7 +187,11 @@ export * from '../producers/socket-receive-methods/update-consuming-domains.serv
 export * from '../producers/socket-receive-methods/update-media-settings.service';
 export * from '../producers/socket-receive-methods/updated-co-host.service';
 export * from '../producers/socket-receive-methods/user-waiting.service';
+
+// Sockets
 export * from '../sockets/socket-manager.service';
+
+// Components
 export * from '../components/background-components/background-modal/background-modal.component';
 export * from '../components/breakout-components/breakout-rooms-modal.component';
 export * from '../components/co-host-components/co-host-modal/co-host-modal.component';
@@ -209,470 +237,553 @@ export * from '../components/waiting-components/waiting-room-modal.component';
 export * from '../components/whiteboard-components/configure-whiteboard-modal/configure-whiteboard-modal.component';
 export * from '../components/whiteboard-components/whiteboard/whiteboard.component';
 export * from '../components/menu-components/custom-buttons/custom-buttons.component';
+
 export * from '../methods/utils/join-room-on-media-sfu.service';
+
+
 export interface Participant {
-    id?: string;
-    audioID: string;
-    videoID: string;
-    ScreenID?: string;
-    ScreenOn?: boolean;
-    islevel?: string;
-    isAdmin?: boolean;
-    isHost?: boolean;
-    name: string;
-    muted?: boolean;
-    isBanned?: boolean;
-    isSuspended?: boolean;
-    useBoard?: boolean;
-    breakRoom?: number | null;
-    [key: string]: any;
+  id?: string;
+  audioID: string;
+  videoID: string;
+  ScreenID?: string;
+  ScreenOn?: boolean;
+  islevel?: string;
+  isAdmin?: boolean;
+  isHost?: boolean; // Community Edition support
+  name: string;
+  muted?: boolean;
+  isBanned?: boolean;
+  isSuspended?: boolean;
+  useBoard?: boolean;
+  breakRoom?: number | null;
+  [key: string]: any;
 }
+
 export interface Stream {
-    producerId: string;
-    muted?: boolean;
-    stream?: MediaStream;
-    socket_?: Socket;
-    name?: string;
-    [key: string]: any;
+  producerId: string;
+  muted?: boolean;
+  stream?: MediaStream;
+  socket_?: Socket;
+  name?: string;
+  [key: string]: any;
 }
+
 export interface Request {
-    id: string;
-    icon: string;
-    name?: string;
-    username?: string;
-    [key: string]: any;
+  id: string;
+  icon: string;
+  name?: string;
+  username?: string;
+  [key: string]: any;
 }
+
 export interface RequestResponse {
-    id: string;
-    icon?: string;
-    name?: string;
-    username?: string;
-    action?: string;
-    type?: string;
-    [key: string]: any;
+  id: string;
+  icon?: string;
+  name?: string;
+  username?: string;
+  action?: string;
+  type?: string;
+  [key: string]: any;
 }
+
 export interface Transport {
-    producerId: string;
-    consumer: Consumer;
-    socket_: Socket;
-    serverConsumerTransportId: string;
-    [key: string]: any;
+  producerId: string;
+  consumer: Consumer;
+  socket_: Socket;
+  serverConsumerTransportId: string;
+  [key: string]: any;
 }
+
 export interface ScreenState {
-    mainScreenPerson?: string;
-    mainScreenProducerId?: string;
-    mainScreenFilled: boolean;
-    adminOnMainScreen: boolean;
+  mainScreenPerson?: string;
+  mainScreenProducerId?: string;
+  mainScreenFilled: boolean;
+  adminOnMainScreen: boolean;
 }
+
 export interface GridSizes {
-    gridWidth?: number;
-    gridHeight?: number;
-    altGridWidth?: number;
-    altGridHeight?: number;
+  gridWidth?: number;
+  gridHeight?: number;
+  altGridWidth?: number;
+  altGridHeight?: number;
 }
+
 export interface ComponentSizes {
-    mainWidth: number;
-    mainHeight: number;
-    otherWidth: number;
-    otherHeight: number;
+  mainWidth: number;
+  mainHeight: number;
+  otherWidth: number;
+  otherHeight: number;
 }
+
 export interface AudioDecibels {
-    name: string;
-    averageLoudness: number;
+  name: string;
+  averageLoudness: number;
 }
+
 export type ShowAlert = (options: {
-    message: string;
-    type: 'success' | 'danger';
-    duration?: number;
+  message: string;
+  type: 'success' | 'danger';
+  duration?: number;
 }) => void;
+
 export interface CoHostResponsibility {
-    name: string;
-    value: boolean;
-    dedicated: boolean;
+  name: string;
+  value: boolean;
+  dedicated: boolean;
 }
+
 export interface VidCons {
-    width: number | {
-        ideal?: number;
-        max?: number;
-        min?: number;
-    };
-    height: number | {
-        ideal?: number;
-        max?: number;
-        min?: number;
-    };
+  width: number | { ideal?: number; max?: number; min?: number };
+  height: number | { ideal?: number; max?: number; min?: number };
 }
+
 export type Settings = [string, string, string, string];
+
 export interface Message {
-    sender: string;
-    receivers: string[];
-    message: string;
-    timestamp: string;
-    group: boolean;
+  sender: string;
+  receivers: string[];
+  message: string;
+  timestamp: string;
+  group: boolean;
 }
+
 export type MainSpecs = {
-    mediaOptions: string;
-    audioOptions: string;
-    videoOptions: string;
-    videoType: string;
-    videoOptimized: boolean;
-    recordingDisplayType: 'video' | 'media' | 'all';
-    addHLS: boolean;
+  mediaOptions: string;
+  audioOptions: string;
+  videoOptions: string;
+  videoType: string;
+  videoOptimized: boolean;
+  recordingDisplayType: 'video' | 'media' | 'all';
+  addHLS: boolean;
 };
+
 export type DispSpecs = {
-    nameTags: boolean;
-    backgroundColor: string;
-    nameTagsColor: string;
-    orientationVideo: string;
+  nameTags: boolean;
+  backgroundColor: string;
+  nameTagsColor: string;
+  orientationVideo: string;
 };
+
 export type TextSpecs = {
-    addText: boolean;
-    customText?: string;
-    customTextPosition?: string;
-    customTextColor?: string;
+  addText: boolean;
+  customText?: string;
+  customTextPosition?: string;
+  customTextColor?: string;
 };
+
 export interface UserRecordingParams {
-    mainSpecs: MainSpecs;
-    dispSpecs: DispSpecs;
-    textSpecs?: TextSpecs;
+  mainSpecs: MainSpecs;
+  dispSpecs: DispSpecs;
+  textSpecs?: TextSpecs;
 }
+
 export type AltDomains = {
-    [key: string]: string;
+  [key: string]: string;
 };
+
 export type RequestPermissionAudioType = () => Promise<string>;
 export type RequestPermissionCameraType = () => Promise<string>;
+
 export type ControlsPosition = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 export type InfoPosition = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+
 export interface Poll {
-    id: string;
-    question: string;
-    type: string;
-    options: string[];
-    votes: number[];
-    status: string;
-    voters?: Record<string, number>;
-    [key: string]: any;
+  id: string;
+  question: string;
+  type: string;
+  options: string[];
+  votes: number[];
+  status: string;
+  voters?: Record<string, number>;
+  [key: string]: any;
 }
+
 export interface WaitingRoomParticipant {
-    name: string;
-    id: string;
+  name: string;
+  id: string;
 }
+
 export interface ModalPositionStyle {
-    justifyContent: string;
-    alignItems: string;
+  justifyContent: string;
+  alignItems: string;
 }
+
 export interface OverlayPositionStyle {
-    top?: number;
-    left?: number;
-    right?: number;
-    bottom?: number;
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
 }
+
 export type EventType = 'conference' | 'webinar' | 'chat' | 'broadcast' | 'none';
+
 export interface PollUpdatedData {
-    polls?: Poll[];
-    poll: Poll;
-    status: string;
+  polls?: Poll[];
+  poll: Poll;
+  status: string;
 }
+
 export interface BreakoutParticipant {
-    name: string;
-    breakRoom?: number | null;
+  name: string;
+  breakRoom?: number | null;
 }
+
 export interface BreakoutRoomUpdatedData {
-    forHost?: boolean;
-    newRoom?: number;
-    members?: Participant[];
-    breakoutRooms?: BreakoutParticipant[][];
-    status?: string;
+  forHost?: boolean;
+  newRoom?: number;
+  members?: Participant[];
+  breakoutRooms?: BreakoutParticipant[][];
+  status?: string;
 }
+
 export interface ConsumeSocket {
-    [ip: string]: Socket;
+  [ip: string]: Socket;
 }
+
 export interface WhiteboardUser {
-    name: string;
-    useBoard: boolean;
+  name: string;
+  useBoard: boolean;
 }
+
 export interface ShapePayload {
-    type: string;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
-    color: string;
-    thickness: number;
-    lineType: string;
-    [key: string]: any;
+  type: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  color: string;
+  thickness: number;
+  lineType: string;
+  [key: string]: any;
 }
+
 export interface Shapes {
-    action: string;
-    payload: ShapePayload;
+  action: string;
+  payload: ShapePayload;
 }
 export interface WhiteboardData {
-    shapes: Shapes[];
-    redoStack: Shapes[];
-    undoStack: Shapes[];
-    useImageBackground: boolean;
+  shapes: Shapes[];
+  redoStack: Shapes[];
+  undoStack: Shapes[];
+  useImageBackground: boolean;
 }
+
 export type SeedData = {
-    member?: string;
-    host?: string;
-    eventType?: EventType;
-    participants?: Participant[];
-    messages?: Message[];
-    polls?: Poll[];
-    breakoutRooms?: BreakoutParticipant[][];
-    requests?: Request[];
-    waitingList?: WaitingRoomParticipant[];
-    whiteboardUsers?: WhiteboardUser[];
+  member?: string;
+  host?: string;
+  eventType?: EventType;
+  participants?: Participant[];
+  messages?: Message[];
+  polls?: Poll[];
+  breakoutRooms?: BreakoutParticipant[][];
+  requests?: Request[];
+  waitingList?: WaitingRoomParticipant[];
+  whiteboardUsers?: WhiteboardUser[];
 };
+
 export interface MeetingRoomParams {
-    itemPageLimit: number;
-    mediaType: 'audio' | 'video';
-    addCoHost: boolean;
-    targetOrientation: 'landscape' | 'neutral' | 'portrait';
-    targetOrientationHost: 'landscape' | 'neutral' | 'portrait';
-    targetResolution: 'qhd' | 'fhd' | 'hd' | 'sd' | 'QnHD';
-    targetResolutionHost: 'qhd' | 'fhd' | 'hd' | 'sd' | 'QnHD';
-    type: EventType;
-    audioSetting: 'allow' | 'approval' | 'disallow';
-    videoSetting: 'allow' | 'approval' | 'disallow';
-    screenshareSetting: 'allow' | 'approval' | 'disallow';
-    chatSetting: 'allow' | 'disallow';
+  itemPageLimit: number; // Limit for items per page
+  mediaType: 'audio' | 'video'; // Type of media, could be audio or video
+  addCoHost: boolean; // Whether co-hosts can be added
+  targetOrientation: 'landscape' | 'neutral' | 'portrait'; // Target orientation, landscape, neutral, or portrait
+  targetOrientationHost: 'landscape' | 'neutral' | 'portrait'; // Host's target orientation, landscape, neutral, or portrait
+  targetResolution: 'qhd' | 'fhd' | 'hd' | 'sd' | 'QnHD'; // Target resolution for participants
+  targetResolutionHost: 'qhd' | 'fhd' | 'hd' | 'sd' | 'QnHD'; // Target resolution for host  type: 'chat' | 'conference' | 'webinar' | 'broadcast'; // Room type: chat, conference, webinar, or broadcast
+  type: EventType; // Room type: chat, conference, webinar, or broadcast
+  audioSetting: 'allow' | 'approval' | 'disallow'; // Audio setting: allow, approval, or disallow
+  videoSetting: 'allow' | 'approval' | 'disallow'; // Video setting: allow, approval, or disallow
+  screenshareSetting: 'allow' | 'approval' | 'disallow'; // Screenshare setting: allow, approval, or disallow
+  chatSetting: 'allow' | 'disallow'; // Chat setting: allow or disallow
 }
+
 export interface RecordingParams {
-    recordingAudioPausesLimit: number;
-    recordingAudioSupport: boolean;
-    recordingAudioPeopleLimit: number;
-    recordingAudioParticipantsTimeLimit: number;
-    recordingVideoPausesLimit: number;
-    recordingVideoSupport: boolean;
-    recordingVideoPeopleLimit: number;
-    recordingVideoParticipantsTimeLimit: number;
-    recordingAllParticipantsSupport: boolean;
-    recordingVideoParticipantsSupport: boolean;
-    recordingAllParticipantsFullRoomSupport: boolean;
-    recordingVideoParticipantsFullRoomSupport: boolean;
-    recordingPreferredOrientation: 'landscape' | 'portrait';
-    recordingSupportForOtherOrientation: boolean;
-    recordingMultiFormatsSupport: boolean;
-    recordingHLSSupport: boolean;
-    recordingAudioPausesCount?: number;
-    recordingVideoPausesCount?: number;
+  recordingAudioPausesLimit: number; // Limit on audio recording pauses
+  recordingAudioSupport: boolean; // Whether audio recording is supported
+  recordingAudioPeopleLimit: number; // Maximum number of people for audio recording
+  recordingAudioParticipantsTimeLimit: number; // Time limit for audio participants in recording
+
+  recordingVideoPausesLimit: number; // Limit on video recording pauses
+  recordingVideoSupport: boolean; // Whether video recording is supported
+  recordingVideoPeopleLimit: number; // Maximum number of people for video recording
+  recordingVideoParticipantsTimeLimit: number; // Time limit for video participants in recording
+
+  recordingAllParticipantsSupport: boolean; // Whether recording all participants is supported
+  recordingVideoParticipantsSupport: boolean; // Whether video recording for participants is supported
+  recordingAllParticipantsFullRoomSupport: boolean; // Support for recording the entire room for all participants
+  recordingVideoParticipantsFullRoomSupport: boolean; // Support for recording the full room for video participants
+
+  recordingPreferredOrientation: 'landscape' | 'portrait'; // Preferred recording orientation
+  recordingSupportForOtherOrientation: boolean; // Support for orientations other than the preferred one
+  recordingMultiFormatsSupport: boolean; // Support for multiple recording formats
+  recordingHLSSupport: boolean; // Whether HLS recording is supported
+
+  recordingAudioPausesCount?: number; // Number of audio recording pauses
+  recordingVideoPausesCount?: number; // Number of video recording pauses
 }
+
 export interface CreateRoomOptions {
-    action: 'create' | 'join';
-    meetingID: string;
-    duration: number;
-    capacity: number;
-    userName: string;
-    scheduledDate: number;
-    secureCode: string;
-    eventType: 'conference' | 'webinar' | 'chat' | 'broadcast';
-    recordOnly: boolean;
-    eventStatus: 'active' | 'inactive';
-    startIndex: number;
-    pageSize: number;
-    safeRoom: boolean;
-    autoStartSafeRoom: boolean;
-    safeRoomAction: 'warn' | 'kick' | 'ban';
-    dataBuffer: boolean;
-    bufferType: 'images' | 'audio' | 'all';
+  action: 'create' | 'join'; // Either 'create' or 'join' based on the requirement
+  meetingID: string; // The meeting ID, initially an empty string
+  duration: number; // Duration of the meeting in minutes
+  capacity: number; // Max number of participants allowed
+  userName: string; // Username of the room host
+  scheduledDate: number; // Unix timestamp (in milliseconds) for the scheduled date
+  secureCode: string; // Secure code for the room host
+  eventType: 'conference' | 'webinar' | 'chat' | 'broadcast'; // Type of event
+  recordOnly: boolean; // Whether the room is for recording only
+  eventStatus: 'active' | 'inactive'; // Status of the event
+  startIndex: number; // Start index for pagination or data fetch
+  pageSize: number; // Number of items per page
+  safeRoom: boolean; // Whether the room is a safe room
+  autoStartSafeRoom: boolean; // Automatically start the safe room feature
+  safeRoomAction: 'warn' | 'kick' | 'ban'; // Action for the safe room
+  dataBuffer: boolean; // Whether to return data buffer
+  bufferType: 'images' | 'audio' | 'all'; // Type of buffer data
+  directionSIP: 'inbound' | 'outbound' | 'both'; // Direction of SIP
+  preferPCMA: boolean; // Whether to prefer PCMA codec for SIP
 }
+
 export interface CreateMediaSFURoomOptions {
-    action: 'create';
-    duration: number;
-    capacity: number;
-    userName: string;
-    scheduledDate?: number;
-    secureCode?: string;
-    eventType?: 'conference' | 'webinar' | 'chat' | 'broadcast';
-    meetingRoomParams?: MeetingRoomParams;
-    recordingParams?: RecordingParams;
-    recordOnly?: boolean;
-    safeRoom?: boolean;
-    autoStartSafeRoom?: boolean;
-    safeRoomAction?: 'warn' | 'kick' | 'ban';
-    dataBuffer?: boolean;
-    bufferType?: 'images' | 'audio' | 'all';
+  action: 'create'; // 'create' action
+  duration: number; // Duration of the meeting in minutes
+  capacity: number; // Max number of participants allowed
+  userName: string; // Username of the room host
+  scheduledDate?: number; // Unix timestamp (in milliseconds) for the scheduled date
+  secureCode?: string; // Secure code for the room host
+  eventType?: 'conference' | 'webinar' | 'chat' | 'broadcast'; // Type of event
+  meetingRoomParams?: MeetingRoomParams; // Object containing parameters related to the meeting room
+  recordingParams?: RecordingParams; // Object containing parameters related to recording
+  recordOnly?: boolean; // Whether the room is for media production only (egress)
+  safeRoom?: boolean; // Whether the room is a safe room
+  autoStartSafeRoom?: boolean; // Automatically start the safe room feature
+  safeRoomAction?: 'warn' | 'kick' | 'ban'; // Action for the safe room
+  dataBuffer?: boolean; // Whether to return data buffer
+  bufferType?: 'images' | 'audio' | 'all'; // Type of buffer data
+  directionSIP?: 'inbound' | 'outbound' | 'both'; // Direction of SIP
+  preferPCMA?: boolean; // Whether to prefer PCMA codec for SIP
 }
 export interface JoinMediaSFURoomOptions {
-    action: 'join';
-    meetingID: string;
-    userName: string;
+  action: 'join'; // 'join' action
+  meetingID: string; // The meeting ID
+  userName: string; // Username of the room host
 }
+
 export interface ResponseJoinLocalRoom {
-    rtpCapabilities?: RtpCapabilities | null;
-    isHost: boolean;
-    eventStarted: boolean;
-    isBanned: boolean;
-    hostNotJoined: boolean;
-    eventRoomParams: MeetingRoomParams;
-    recordingParams: RecordingParams;
-    secureCode: string;
-    mediasfuURL: string;
-    apiKey: string;
-    apiUserName: string;
-    allowRecord: boolean;
+  rtpCapabilities?: RtpCapabilities | null; // Object containing the RTP capabilities
+  isHost: boolean; // Indicates whether the user joining the room is the host.
+  eventStarted: boolean; // Indicates whether the event has started.
+  isBanned: boolean; // Indicates whether the user is banned from the room.
+  hostNotJoined: boolean; // Indicates whether the host has not joined the room.
+  eventRoomParams: MeetingRoomParams; // Object containing parameters related to the meeting room.
+  recordingParams: RecordingParams; // Object containing parameters related to recording.
+  secureCode: string; // Secure code (host password) associated with the host of the room.
+  mediasfuURL: string; // Media SFU URL
+  apiKey: string; // API key
+  apiUserName: string; // API username
+  allowRecord: boolean; // Indicates whether recording is allowed.
 }
+
 export interface ResponseJoinRoom {
-    rtpCapabilities?: RtpCapabilities | null;
-    success: boolean;
-    roomRecvIPs: string[];
-    meetingRoomParams: MeetingRoomParams;
-    recordingParams: RecordingParams;
-    secureCode: string;
-    recordOnly: boolean;
-    isHost: boolean;
-    safeRoom: boolean;
-    autoStartSafeRoom: boolean;
-    safeRoomStarted: boolean;
-    safeRoomEnded: boolean;
-    reason?: string;
-    banned?: boolean;
-    suspended?: boolean;
-    noAdmin?: boolean;
+  rtpCapabilities?: RtpCapabilities | null; // Object containing the RTP capabilities
+  success: boolean; // Indicates whether the operation (joining the room) was successful.
+  roomRecvIPs: string[]; // Array of strings containing information about the domains that must be connected to in order to receive media.
+  meetingRoomParams: MeetingRoomParams; // Object containing parameters related to the meeting room.
+  recordingParams: RecordingParams; // Object containing parameters related to recording.
+  secureCode: string; // Secure code (host password) associated with the host of the room.
+  recordOnly: boolean; // Indicates whether the room is for recording only.
+  isHost: boolean; // Indicates whether the user joining the room is the host.
+  safeRoom: boolean; // Indicates whether the room is a safe room.
+  autoStartSafeRoom: boolean; // Indicates whether the safe room will automatically start.
+  safeRoomStarted: boolean; // Indicates whether the safe room has started.
+  safeRoomEnded: boolean; // Indicates whether the safe room has ended.
+  reason?: string; // Reason for the success or failure of the operation.
+  banned?: boolean; // Indicates whether the user is banned from the room.
+  suspended?: boolean; // Indicates whether the user is suspended from the room.
+  noAdmin?: boolean; // Indicates whether the room has no host in it.
 }
+
 export interface AllMembersData {
-    members: Participant[];
-    requests: Request[];
-    coHost?: string;
-    coHostResponsibilities: CoHostResponsibility[];
+  members: Participant[]; // Array of objects containing information about all the members in the room.
+  requests: Request[]; // Array of objects containing information about the requests.
+  coHost?: string; // The co-host information.
+  coHostResponsibilities: CoHostResponsibility[]; // Array of objects containing information about the co-host responsibilities.
 }
+
 export interface AllMembersRestData {
-    members: Participant[];
-    settings: Settings;
-    coHost?: string;
-    coHostResponsibilities: CoHostResponsibility[];
+  members: Participant[]; // Array of objects containing information about all the members in the room.
+  settings: Settings; // Array of strings containing information about the settings.
+  coHost?: string; // The co-host information.
+  coHostResponsibilities: CoHostResponsibility[]; // Array of objects containing information about the co-host responsibilities.
 }
+
 export interface UserWaitingData {
-    name: string;
+  name: string; // Name of the user waiting to join the room.
 }
+
 export interface AllWaitingRoomMembersData {
-    waitingParticipants?: WaitingRoomParticipant[];
-    waitingParticipantss?: WaitingRoomParticipant[];
+  waitingParticipants?: WaitingRoomParticipant[]; // Array of objects containing information about the participants waiting to join the room.
+  waitingParticipantss?: WaitingRoomParticipant[];
 }
+
 export interface BanData {
-    name: string;
+  name: string; // Name of the user to ban.
 }
+
 export interface UpdatedCoHostData {
-    coHost: string;
-    coHostResponsibilities: CoHostResponsibility[];
+  coHost: string; // The co-host information.
+  coHostResponsibilities: CoHostResponsibility[]; // Array of objects containing information about the co-host responsibilities.
 }
+
 export interface ParticipantRequestedData {
-    userRequest: Request;
+  userRequest: Request; // Object containing information about the user request.
 }
+
 export interface ScreenProducerIdData {
-    producerId: string;
+  producerId: string; // The producer ID of the screen.
 }
+
 export interface UpdateMediaSettingsData {
-    settings: Settings;
+  settings: Settings; // Array of strings containing information about the settings.
 }
+
 export interface ProducerMediaPausedData {
-    producerId: string;
-    kind: 'audio';
-    name: string;
+  producerId: string; // The producer ID of the media that was paused.
+  kind: 'audio';
+  name: string; // The name of the media that was paused.
 }
+
 export interface ProducerMediaResumedData {
-    kind: 'audio';
-    name: string;
+  kind: 'audio';
+  name: string; // The name of the media that was resumed.
 }
+
 export interface ProducerMediaClosedData {
-    producerId: string;
-    kind: 'audio' | 'video' | 'screenshare';
-    name: string;
+  producerId: string; // The producer ID of the media that was stopped.
+  kind: 'audio' | 'video' | 'screenshare';
+  name: string; // The name of the media that was stopped.
 }
+
 export interface ControlMediaHostData {
-    type: 'all' | 'audio' | 'video' | 'screenshare';
+  type: 'all' | 'audio' | 'video' | 'screenshare'; // The type of media to control.
 }
+
 export interface ReceiveMessageData {
-    message: Message;
+  message: Message; // Object containing information about the message.
 }
+
 export interface MeetingTimeRemainingData {
-    timeRemaining: number;
+  timeRemaining: number; // The time remaining for the meeting.
 }
+
 export interface MeetingStillThereData {
-    timeRemaining: number;
+  timeRemaining: number; // The time remaining for the meeting.
 }
+
 export interface UpdateConsumingDomainsData {
-    domains: string[];
-    alt_domains: AltDomains;
+  domains: string[]; // Array of strings containing information about the domains to consume media from.
+  alt_domains: AltDomains; // Object containing information about the alternative domains to consume media from.
 }
+
 export interface RecordingNoticeData {
-    state: string;
-    userRecordingParam: UserRecordingParams;
-    pauseCount: number;
-    timeDone: number;
+  state: string; // The state of the recording.
+  userRecordingParam: UserRecordingParams; // Object containing information about the user recording parameters.
+  pauseCount: number; // The number of times the recording was paused.
+  timeDone: number; // The time the recording was paused.
 }
+
 export interface TimeLeftRecordingData {
-    timeLeft: number;
+  timeLeft: number; // The time left for recording.
 }
+
 export interface StoppedRecordingData {
-    state: string;
-    reason?: string;
+  state: string; // The state of the recording.
+  reason?: string; // The reason for stopping the recording.
 }
+
 export interface HostRequestResponseData {
-    requestResponse: RequestResponse;
+  requestResponse: RequestResponse; // Object containing information about the request response.
 }
+
 export interface SafeRoomNoticeData {
-    state: string;
+  state: string; // The state of the safe room.
 }
+
 export interface UnSafeData {
-    time: number;
-    evidence: ImageData;
+  time: number; // The time the room was unsafe.
+  evidence: ImageData; // The evidence for the room being unsafe.
 }
+
 export interface UnsafeAlertData {
-    name: string;
+  name: string; // The name of the user who triggered the unsafe alert.
 }
+
 export interface DataBufferNotice {
-    state: string;
+  state: string; // The state of the data buffer.
 }
+
 export interface AudioData {
-    audioBuffer: AudioBuffer;
+  audioBuffer: AudioBuffer; // The audio buffer.
 }
+
 export interface ImageData {
-    jpegBuffer: ImageData;
+  jpegBuffer: ImageData; // The JPEG buffer.
 }
+
 export interface WhiteboardUpdatedData {
-    status: 'started' | 'ended';
-    whiteboardUsers: WhiteboardUser[];
-    members: Participant[];
-    whiteboardData: WhiteboardData;
+  status: 'started' | 'ended'; // The status of the whiteboard.
+  whiteboardUsers: WhiteboardUser[]; // Array of objects containing information about the whiteboard users.
+  members: Participant[]; // Array of objects containing information about the members.
+  whiteboardData: WhiteboardData; // Object containing information about the whiteboard data.
 }
+
 export interface WhiteboardActionData {
-    action: string;
-    payload: ShapePayload;
+  action: string; // The action to be performed on the whiteboard.
+  payload: ShapePayload; // Object containing information about the shape payload.
 }
+
 export interface CustomMediaComponent {
-    component: ComponentType<any>;
-    inputs: any;
+  component: ComponentType<any>; // The custom media component.
+  inputs: any;
 }
+
 export interface GenericButton {
-    name?: string;
-    icon?: IconDefinition;
-    alternateIcon?: IconDefinition;
-    onPress?: () => void;
-    color?: string;
-    backgroundColor?: {
-        default?: string;
-    };
+  name?: string;
+  icon?: IconDefinition;
+  alternateIcon?: IconDefinition;
+  onPress?: () => void;
+  color?: string;
+  backgroundColor?: {
+    default?: string;
+  };
 }
+
 export interface MainButtonAlt extends GenericButton {
-    active?: boolean | (() => boolean);
-    customComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
-    iconComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
-    alternateIconComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
-    disabled?: boolean | (() => boolean);
-    show?: boolean | (() => boolean);
-    activeColor?: string | (() => string);
-    inActiveColor?: string | (() => string);
+  active?: boolean | (() => boolean);
+  customComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
+  iconComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
+  alternateIconComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
+  disabled?: boolean | (() => boolean);
+  show?: boolean | (() => boolean);
+  activeColor?: string | (() => string);
+  inActiveColor?: string | (() => string);
 }
-export type MainCustomButton = Pick<CustomButton, Exclude<keyof CustomButton, 'customComponent'>> & {
-    customComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
+
+export type MainCustomButton = Pick<
+  CustomButton,
+  Exclude<keyof CustomButton, 'customComponent'>
+> & {
+  customComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
 };
+
 export type { CustomComponent } from '../components/menu-components/custom-buttons/custom-buttons.component';
+
 export type CreateWebRTCTransportResponse = {
-    id: string;
-    dtlsParameters: DtlsParameters;
-    iceCandidates: IceCandidate[];
-    iceParameters: IceParameters;
-    error?: string;
+  id: string;
+  dtlsParameters: DtlsParameters;
+  iceCandidates: IceCandidate[];
+  iceParameters: IceParameters;
+  error?: string;
 };
+
+// Custom Component Types
+export * from './custom-component.types';

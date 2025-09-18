@@ -1,0 +1,50 @@
+/* General Styling */
+body {
+    font-family: 'Arial, sans-serif';
+    background-color: #f9f9f9;
+  }
+  
+  /* Header Styling */
+  .tsd-header {
+    background-color: #003366;
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .tsd-header .logo {
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .tsd-header h1 {
+    font-size: 24px;
+  }
+  
+  /* Footer Styling */
+  .tsd-footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Sidebar Styling */
+  .tsd-sidebar {
+    background-color: #f0f0f0;
+  }
+  
+  .tsd-sidebar a {
+    color: #003366;
+  }
+  
+  .tsd-sidebar a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Additional Custom Styles */
+  

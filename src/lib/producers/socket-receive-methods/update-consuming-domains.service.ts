@@ -116,14 +116,11 @@ export class UpdateConsumingDomains {
     parameters = parameters.getUpdatedAllParams();
     consume_sockets = parameters.consume_sockets;
 
-    console.log('Updating consuming domains...');
-
     try {
       // Check if participants array is not empty
       if (participants.length > 0) {
         // Check if alt_domains has keys and remove duplicates
         if (Object.keys(alt_domains).length > 0) {
-          console.log('Getting domains...');
           await getDomains({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters });
         } else {
           await connectIps({

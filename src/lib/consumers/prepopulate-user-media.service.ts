@@ -48,6 +48,11 @@ export interface PrepopulateUserMediaParameters extends AudioCardParameters {
   updateUpdateMainWindow: (update: boolean) => void;
   updateMainGridStream: (components: CustomMediaComponent[]) => void;
 
+  // Custom component builders
+  customVideoCard?: any;
+  customAudioCard?: any;
+  customMiniCard?: any;
+
   // mediasfu functions
   getUpdatedAllParams: () => PrepopulateUserMediaParameters;
   [key: string]: any;
@@ -381,7 +386,7 @@ export class PrepopulateUserMedia {
             // Whiteboard is active
           } else {
             newComponents.push({
-              component: VideoCard,
+              component: parameters.customVideoCard || VideoCard,
               inputs: {
                 videoStream: shared ? hostStream : hostStream.stream,
                 remoteProducerId: host.ScreenID,
@@ -423,7 +428,7 @@ export class PrepopulateUserMedia {
           if (islevel == '2' && videoAlreadyOn) {
             // Admin's video is on
             newComponents.push({
-              component: VideoCard,
+              component: parameters.customVideoCard || VideoCard,
               inputs: {
                 videoStream: keepBackground && virtualStream ? virtualStream : localStreamVideo,
                 remoteProducerId: host.videoID,
@@ -465,7 +470,7 @@ export class PrepopulateUserMedia {
               // Audio is on
               try {
                 newComponents.push({
-                  component: AudioCard,
+                  component: parameters.customAudioCard || AudioCard,
                   inputs: {
                     name: host.name,
                     barColor: 'red',
@@ -499,7 +504,7 @@ export class PrepopulateUserMedia {
               // Audio is off
               try {
                 newComponents.push({
-                  component: MiniCard,
+                  component: parameters.customMiniCard || MiniCard,
                   inputs: {
                     initials: name,
                     fontSize: 20,
@@ -531,7 +536,7 @@ export class PrepopulateUserMedia {
             } else {
               try {
                 newComponents.push({
-                  component: VideoCard,
+                  component: parameters.customVideoCard || VideoCard,
                   inputs: {
                     videoStream: shared ? hostStream : hostStream.stream,
                     remoteProducerId: host.ScreenID,
@@ -577,7 +582,7 @@ export class PrepopulateUserMedia {
             try {
               if (host['stream']) {
                 newComponents.push({
-                  component: VideoCard,
+                  component: parameters.customVideoCard || VideoCard,
                   inputs: {
                     videoStream: host['stream'],
                     remoteProducerId: host.videoID,
@@ -603,7 +608,7 @@ export class PrepopulateUserMedia {
                 mainScreenPerson = host.name ?? '';
               } else {
                 newComponents.push({
-                  component: MiniCard,
+                  component: parameters.customMiniCard || MiniCard,
                   inputs: {
                     initials: name,
                     fontSize: 20,
@@ -634,7 +639,7 @@ export class PrepopulateUserMedia {
         // Host is null, add a mini card
         try {
           newComponents.push({
-            component: MiniCard,
+            component: parameters.customMiniCard || MiniCard,
             inputs: {
               initials: name,
               fontSize: 20,

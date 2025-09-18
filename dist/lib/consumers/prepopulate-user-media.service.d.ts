@@ -37,6 +37,9 @@ export interface PrepopulateUserMediaParameters extends AudioCardParameters {
     updateScreenForceFullDisplay: (force: boolean) => void;
     updateUpdateMainWindow: (update: boolean) => void;
     updateMainGridStream: (components: CustomMediaComponent[]) => void;
+    customVideoCard?: any;
+    customAudioCard?: any;
+    customMiniCard?: any;
     getUpdatedAllParams: () => PrepopulateUserMediaParameters;
     [key: string]: any;
 }

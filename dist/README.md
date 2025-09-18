@@ -20,6 +20,26 @@
   </a>
 </p>
 
+---
+
+## 🚨 **BREAKING: AI Phone Agents at $0.10 per 1,000 minutes**
+
+📞 **Call our live AI demos right now:**
+- 🇺🇸 **+1 (785) 369-1724** - Mixed Support Demo  
+- 🇬🇧 **+44 7445 146575** - AI Conversation Demo  
+- 🇨🇦 **+1 (587) 407-1990** - Technical Support Demo  
+- 🇨🇦 **+1 (647) 558-6650** - Friendly AI Chat Demo  
+
+**Traditional providers charge $0.05 per minute. We charge $0.10 per 1,000 minutes. That's 500x cheaper.**
+
+✅ **Deploy AI phone agents in 30 minutes**  
+✅ **Works with ANY SIP provider** (Twilio, Telnyx, Zadarma, etc.)  
+✅ **Seamless AI-to-human handoffs**  
+✅ **Real-time call analytics & transcription**  
+
+📖 **[Complete SIP/PSTN Documentation →](https://mediasfu.com/telephony)**
+
+---
 
 MediaSFU offers a cutting-edge streaming experience that empowers users to customize their recordings and engage their audience with high-quality streams. Whether you're a content creator, educator, or business professional, MediaSFU provides the tools you need to elevate your streaming game.
 
@@ -48,6 +68,7 @@ MediaSFU offers a cutting-edge streaming experience that empowers users to custo
 - [Basic Usage Guide](#basic-usage-guide)
 - [Intermediate Usage Guide](#intermediate-usage-guide)
 - [Advanced Usage Guide](#advanced-usage-guide)
+  - [Custom Component Injection Service](#custom-component-injection-service)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -207,6 +228,103 @@ import { MediasfuGeneric } from 'mediasfu-angular';
   `,
 })
 export class AppComponent { }
+```
+
+That's it! With just 3 lines of code, you have a fully functional video conferencing application with:
+
+- 🎥 **Video & Audio Streaming** - High-quality real-time communication
+- 🖥️ **Screen Sharing** - Share your screen with annotation support  
+- 💬 **Interactive Chat** - Direct and group messaging
+- 👥 **Participant Management** - Join/leave controls and permissions
+- 🎨 **Customizable UI** - Professional, responsive design out of the box
+- 📱 **Mobile Responsive** - Works seamlessly on all devices
+- 🔧 **Zero Configuration** - No complex setup required
+
+## Why Choose MediaSFU?
+
+### ⚡ **Lightning Fast Setup**
+From `npm install` to a working video conference in under 2 minutes. No WebRTC knowledge required.
+
+### 🎯 **Multiple Event Types Ready**
+Choose from pre-built, production-ready templates:
+
+```typescript
+import { 
+  MediasfuGeneric,    // 🌐 All-purpose meetings
+  MediasfuBroadcast,  // 📺 Live streaming events  
+  MediasfuWebinar,    // 🎓 Educational sessions
+  MediasfuConference, // 💼 Professional meetings
+  MediasfuChat        // 💬 Interactive chat rooms
+} from 'mediasfu-angular';
+```
+
+### 🛠️ **Infinitely Customizable**
+
+**Replace Any Component:** Don't like our video card? Swap it with yours:
+
+```typescript
+// Your custom video component
+@Component({
+  selector: 'my-video-card',
+  template: `<div class="my-custom-video">{{ participant.name }}</div>`
+})
+export class MyVideoCard { }
+
+// Use it in MediaSFU
+const customVideoCard = this.customComponentService.createComponentWithInjector(
+  MyVideoCard, { participant: participantData }
+);
+
+// MediaSFU will use your component instead
+this.mediasfuParameters = { customVideoCard };
+```
+
+**Custom Layouts:** Build your own UI while keeping MediaSFU's powerful backend:
+
+```typescript
+// Your WhatsApp-style video call UI
+@Component({
+  template: `
+    <div class="whatsapp-style-layout">
+      <header>My Custom Header</header>
+      <main>Your video layout here</main>
+    </div>
+  `
+})
+export class MyCustomLayout { }
+
+// MediaSFU handles all the complex WebRTC, you handle the UI
+this.mediasfuParameters = { 
+  customMainComponent: MyCustomLayout,
+  returnUI: false // Disable default MediaSFU UI
+};
+```
+
+### 🚀 **Production-Ready Features**
+
+- **Cloud Recording** with custom watermarks and layouts
+- **Breakout Rooms** for team collaboration
+- **Polls & Surveys** for audience engagement  
+- **Waiting Rooms** with host controls
+- **Advanced Permissions** and moderation tools
+- **Real-time Analytics** and monitoring
+- **Enterprise Security** with end-to-end encryption
+
+### 🌍 **Flexible Deployment Options**
+
+```typescript
+// Option 1: MediaSFU Cloud (Fastest setup)
+const credentials = { apiUserName: 'your-key', apiKey: 'your-secret' };
+
+// Option 2: Self-hosted Community Edition (Free)
+const localLink = 'http://your-server.com';
+
+// Option 3: Hybrid (Best of both worlds)
+const config = { 
+  localLink: 'http://your-server.com',
+  connectMediaSFU: true, // Use cloud for advanced features
+  credentials: credentials
+};
 ```
 
 ## Programmatically Fetching Tokens
@@ -2471,6 +2589,335 @@ To create a custom UI, you can refer to existing MediaSFU implementations like:
 Once your custom components are built, modify the imports of `prepopulateUserMedia` and `addVideosGrid` to point to your custom implementations instead of the default MediaSFU ones.
 
 This allows for full flexibility in how media is displayed in both the main and mini grids, giving you the ability to tailor the user experience to your specific needs.
+
+## Custom Component Injection Service
+
+MediaSFU provides a powerful `CustomComponentInjectionService` that enables advanced custom component integration across all MediaSFU components. This service offers a comprehensive set of utilities for managing custom component rendering, validation, and lifecycle management.
+
+### Features
+
+- **Type-safe component validation**: Check if components are Angular components, HTML elements, or function components
+- **Dynamic component injection**: Create components with custom parameters and injectors
+- **Safe rendering utilities**: Handle different component types with proper error handling and fallbacks
+- **Component lifecycle management**: Proper cleanup and destruction of custom components
+- **Template integration helpers**: Utilities for the custom component pattern used throughout MediaSFU
+
+### Basic Usage
+
+First, import the service and types:
+
+```typescript
+import { 
+  CustomComponentInjectionService,
+  CustomComponent,
+  CustomComponentType,
+  CustomComponentParameters,
+  CustomComponentContext
+} from 'mediasfu-angular';
+```
+
+#### Injecting the Service
+
+```typescript
+import { Component, inject } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  template: `...`
+})
+export class MyComponent {
+  private customComponentService = inject(CustomComponentInjectionService);
+}
+```
+
+#### Creating Custom Components with Parameters
+
+```typescript
+// Create a custom component with injected parameters
+const customVideoCard = this.customComponentService.createComponentWithInjector(
+  MyCustomVideoCard,
+  {
+    participant: participantData,
+    options: videoOptions,
+    callbacks: eventHandlers
+  }
+);
+
+// Use in MediaSFU component
+const params = {
+  customVideoCard: customVideoCard,
+  // ... other parameters
+};
+```
+
+#### Component Type Validation
+
+```typescript
+// Check component types
+if (this.customComponentService.isCustomComponent(component)) {
+  // Handle Angular component with injector
+  console.log('Angular component detected');
+} else if (this.customComponentService.isHTMLElement(component)) {
+  // Handle HTML element
+  console.log('HTML element detected');
+} else if (this.customComponentService.isFunctionComponent(component)) {
+  // Handle function component
+  console.log('Function component detected');
+}
+```
+
+#### Safe HTML Element Access
+
+```typescript
+// Safely get outerHTML from components
+const htmlContent = this.customComponentService.getHtmlElementOuterHTML(component);
+if (htmlContent) {
+  // Use the HTML content
+  element.innerHTML = htmlContent;
+}
+```
+
+#### Component Resolution Pattern
+
+```typescript
+// Resolve between custom and default components
+const resolvedComponent = this.customComponentService.resolveComponent(
+  customComponent, // May be undefined
+  defaultComponent // Fallback component
+);
+
+// Check if custom main component should be used
+const useCustomLayout = this.customComponentService.shouldUseCustomMainComponent(
+  customMainComponent
+);
+```
+
+### Advanced Usage Examples
+
+#### 1. Dynamic Component Rendering
+
+```typescript
+@Component({
+  selector: 'app-dynamic-renderer',
+  template: `
+    <ng-container #dynamicContainer></ng-container>
+  `
+})
+export class DynamicRenderer {
+  @ViewChild('dynamicContainer', { read: ViewContainerRef }) 
+  container!: ViewContainerRef;
+  
+  private customComponentService = inject(CustomComponentInjectionService);
+  
+  renderCustomComponent(customComponent: CustomComponentType<any>) {
+    const context: CustomComponentContext = {
+      parameters: {
+        data: this.componentData,
+        events: this.eventHandlers
+      },
+      injector: this.injector,
+      config: {
+        enabled: true,
+        fallbackToDefault: true
+      }
+    };
+    
+    const componentRef = this.customComponentService.renderCustomComponent(
+      customComponent,
+      this.container,
+      context
+    );
+    
+    // Store reference for cleanup
+    this.activeComponents.push(componentRef);
+  }
+  
+  ngOnDestroy() {
+    // Clean up all custom components
+    this.activeComponents.forEach(component => {
+      this.customComponentService.destroyCustomComponent(component);
+    });
+  }
+}
+```
+
+#### 2. Custom Video Card Implementation
+
+```typescript
+// Define your custom video card component
+@Component({
+  selector: 'app-custom-video-card',
+  template: `
+    <div class="custom-video-wrapper">
+      <video [srcObject]="videoStream" autoplay playsinline></video>
+      <div class="custom-controls">
+        <button (click)="toggleAudio()">🎤</button>
+        <button (click)="toggleVideo()">📹</button>
+      </div>
+      <div class="custom-info">{{ participantName }}</div>
+    </div>
+  `,
+  imports: [CommonModule]
+})
+export class CustomVideoCard {
+  @Input() participant!: Participant;
+  @Input() videoStream!: MediaStream;
+  @Input() options!: any;
+  
+  get participantName() {
+    return this.participant?.name || 'Unknown';
+  }
+  
+  toggleAudio() {
+    // Custom audio toggle logic
+  }
+  
+  toggleVideo() {
+    // Custom video toggle logic
+  }
+}
+
+// In your main component
+export class MyMediaComponent {
+  private customComponentService = inject(CustomComponentInjectionService);
+  
+  ngOnInit() {
+    // Create custom video card with parameters
+    const customVideoCard = this.customComponentService.createComponentWithInjector(
+      CustomVideoCard,
+      {
+        participant: this.currentParticipant,
+        options: this.videoOptions
+      }
+    );
+    
+    // Use in MediaSFU parameters
+    this.mediasfuParameters = {
+      customVideoCard: customVideoCard,
+      // ... other parameters
+    };
+  }
+}
+```
+
+#### 3. Custom Main Component with Template Restructuring
+
+```typescript
+@Component({
+  selector: 'app-custom-main-layout',
+  template: `
+    <div class="custom-main-layout">
+      <header class="custom-header">
+        <h1>My Custom Stream</h1>
+        <div class="custom-controls">
+          <!-- Custom control buttons -->
+        </div>
+      </header>
+      
+      <main class="custom-content">
+        <div class="video-area">
+          <!-- Your custom video layout -->
+        </div>
+        <div class="participant-list">
+          <!-- Custom participant list -->
+        </div>
+      </main>
+      
+      <footer class="custom-footer">
+        <!-- Custom footer content -->
+      </footer>
+    </div>
+  `,
+  imports: [CommonModule]
+})
+export class CustomMainLayout {
+  @Input() parameters!: any;
+  @Input() credentials!: any;
+}
+
+// Usage
+const customMainComponent = this.customComponentService.createComponentWithInjector(
+  CustomMainLayout,
+  {
+    theme: 'dark',
+    layout: 'grid'
+  }
+);
+
+// MediaSFU will use this instead of default layout
+this.mediasfuParameters = {
+  customMainComponent: customMainComponent,
+  // ... other parameters
+};
+```
+
+### Component Validation and Error Handling
+
+```typescript
+// Validate before using
+if (this.customComponentService.validateCustomComponent(customComponent)) {
+  // Component is valid, proceed with rendering
+  this.renderComponent(customComponent);
+} else {
+  // Handle invalid component, use fallback
+  console.warn('Invalid custom component, using default');
+  this.renderComponent(this.defaultComponent);
+}
+
+// Merge options safely
+const mergedOptions = this.customComponentService.mergeComponentOptions(
+  customOptions,
+  defaultOptions
+);
+```
+
+### TypeScript Types
+
+The service works with these main types:
+
+```typescript
+// Union type for all supported component types
+type CustomComponentType<T = any> = CustomComponent<T> | HTMLElement | CustomComponentFunction;
+
+// Angular component with injector
+interface CustomComponent<T = any> {
+  component: Type<T>;
+  injector?: Injector;
+}
+
+// Function that returns HTMLElement
+type CustomComponentFunction = () => HTMLElement;
+
+// Parameters for component injection
+interface CustomComponentParameters {
+  [key: string]: any;
+}
+
+// Context for component rendering
+interface CustomComponentContext {
+  parameters: CustomComponentParameters;
+  injector?: Injector;
+  config?: ComponentInjectionConfig;
+}
+
+// Configuration options
+interface ComponentInjectionConfig {
+  enabled: boolean;
+  overrideDefaults: boolean;
+  fallbackToDefault: boolean;
+}
+```
+
+### Best Practices
+
+1. **Always validate components** before rendering
+2. **Use proper cleanup** to prevent memory leaks
+3. **Leverage type guards** for safe component handling
+4. **Provide fallbacks** for failed component rendering
+5. **Use meaningful parameter names** when creating injectors
+6. **Test custom components** in isolation before integration
+
+The `CustomComponentInjectionService` provides a robust foundation for building highly customizable MediaSFU applications while maintaining type safety and proper Angular practices.
 
 
 # API Reference <a name="api-reference"></a>

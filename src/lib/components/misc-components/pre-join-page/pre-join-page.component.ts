@@ -418,36 +418,118 @@ export class PreJoinPage implements OnInit {
         this.localData.apiUserName &&
         this.localData.apiKey
       ) {
-        payload.recordOnly = true; // allow production to MediaSFU only; no consumption
-        const response = await this.roomCreator({
-          payload,
-          apiUserName: this.localData.apiUserName,
-          apiKey: this.localData.apiKey,
-          validate: false,
-        });
+        // Store references to prevent race conditions
+        const apiUserName = this.localData.apiUserName;
+        const apiKey = this.localData.apiKey;
 
-        if (response && response.success && response.data && 'roomName' in response.data) {
-          createData.eventID = response.data.roomName;
-          createData.secureCode = response.data.secureCode;
-          createData.mediasfuURL = response.data.publicURL;
-          await this.createLocalRoom({ createData: createData, link: response.data.link });
-        } else {
-          this.pending.next(false);
-          this.parameters.updateIsLoadingModalVisible(false);
-          this.error = 'Unable to create room on MediaSFU.';
+        // Build a unique identifier for this create request
+        const roomIdentifier = `local_create_${payload.userName}_${payload.duration}_${payload.capacity}`;
+        const pendingKey = `prejoin_pending_${roomIdentifier}`;
+        const PENDING_TIMEOUT = 30 * 1000; // 30 seconds
+
+        // Check pending status to prevent duplicate requests
+        try {
+          const pendingRequest = localStorage.getItem(pendingKey);
+          if (pendingRequest) {
+            const pendingData = JSON.parse(pendingRequest);
+            const timeSincePending = Date.now() - (pendingData?.timestamp ?? 0);
+            if (timeSincePending < PENDING_TIMEOUT) {
+              this.pending.next(false);
+              this.parameters.updateIsLoadingModalVisible(false);
+              this.error = 'Room creation already in progress';
+              return;
+            } else {
+              // Stale lock, clear it
+              try {
+                localStorage.removeItem(pendingKey);
+              } catch {
+                // Ignore localStorage errors
+              }
+            }
+          }
+        } catch {
+          // Ignore localStorage read/JSON errors
+        }
+
+        // Mark request as pending
+        try {
+          localStorage.setItem(
+            pendingKey,
+            JSON.stringify({
+              timestamp: Date.now(),
+              payload: {
+                action: 'create',
+                userName: payload.userName,
+                duration: payload.duration,
+                capacity: payload.capacity,
+              },
+            })
+          );
+
+          // Auto-clear the pending flag after timeout to avoid stale locks
+          setTimeout(() => {
+            try {
+              localStorage.removeItem(pendingKey);
+            } catch {
+              // Ignore localStorage errors
+            }
+          }, PENDING_TIMEOUT);
+        } catch {
+          // Ignore localStorage write errors
+        }
+
+        payload.recordOnly = true; // allow production to MediaSFU only; no consumption
+
+        try {
+          const response = await this.roomCreator({
+            payload,
+            apiUserName: apiUserName,
+            apiKey: apiKey,
+            validate: false,
+          });
+
+          // Clear pending status on completion
           try {
-            this.parameters.updateSocket(this.initSocket!);
-            await this.createLocalRoom({ createData: createData });
-          } catch (error: any) {
+            localStorage.removeItem(pendingKey);
+          } catch {
+            /* ignore */
+          }
+
+          if (response && response.success && response.data && 'roomName' in response.data) {
+            createData.eventID = response.data.roomName;
+            createData.secureCode = response.data.secureCode;
+            createData.mediasfuURL = response.data.publicURL;
+            await this.createLocalRoom({ createData: createData, link: response.data.link });
+          } else {
             this.pending.next(false);
             this.parameters.updateIsLoadingModalVisible(false);
-            this.error = `Unable to create room. ${error}`;
+            this.error = 'Unable to create room on MediaSFU.';
+            try {
+              this.parameters.updateSocket(this.initSocket!);
+              await this.createLocalRoom({ createData: createData });
+              this.pending.next(false);
+            } catch (error: any) {
+              this.pending.next(false);
+              this.parameters.updateIsLoadingModalVisible(false);
+              this.error = `Unable to create room. ${error}`;
+            }
           }
+        } catch (error: any) {
+          // Clear pending status on error
+          try {
+            localStorage.removeItem(pendingKey);
+          } catch {
+            /* ignore */
+          }
+          this.pending.next(false);
+          this.parameters.updateIsLoadingModalVisible(false);
+          this.error = `Unable to create room on MediaSFU. ${error}`;
         }
       } else {
         try {
           this.parameters.updateSocket(this.initSocket!);
           await this.createLocalRoom({ createData: createData });
+          this.pending.next(false);
         } catch (error: any) {
           this.pending.next(false);
           this.parameters.updateIsLoadingModalVisible(false);
@@ -455,13 +537,89 @@ export class PreJoinPage implements OnInit {
         }
       }
     } else {
-      await this.roomCreator({
-        payload,
-        apiUserName: this.credentials.apiUserName,
-        apiKey: this.credentials.apiKey,
-        validate: true,
-      });
-      this.pending.next(false);
+      // Build a unique identifier for this create request (non-local)
+      const roomIdentifier = `mediasfu_create_${payload.userName}_${payload.duration}_${payload.capacity}`;
+      const pendingKey = `prejoin_pending_${roomIdentifier}`;
+      const PENDING_TIMEOUT = 30 * 1000; // 30 seconds
+
+      // Check pending status to prevent duplicate requests
+      try {
+        const pendingRequest = localStorage.getItem(pendingKey);
+        if (pendingRequest) {
+          const pendingData = JSON.parse(pendingRequest);
+          const timeSincePending = Date.now() - (pendingData?.timestamp ?? 0);
+          if (timeSincePending < PENDING_TIMEOUT) {
+            this.pending.next(false);
+            this.parameters.updateIsLoadingModalVisible(false);
+            this.error = 'Room creation already in progress';
+            return;
+          } else {
+            // Stale lock, clear it
+            try {
+              localStorage.removeItem(pendingKey);
+            } catch {
+              // Ignore localStorage errors
+            }
+          }
+        }
+      } catch {
+        // Ignore localStorage read/JSON errors
+      }
+
+      // Mark request as pending
+      try {
+        localStorage.setItem(
+          pendingKey,
+          JSON.stringify({
+            timestamp: Date.now(),
+            payload: {
+              action: 'create',
+              userName: payload.userName,
+              duration: payload.duration,
+              capacity: payload.capacity,
+            },
+          })
+        );
+
+        // Auto-clear the pending flag after timeout to avoid stale locks
+        setTimeout(() => {
+          try {
+            localStorage.removeItem(pendingKey);
+          } catch {
+            // Ignore localStorage errors
+          }
+        }, PENDING_TIMEOUT);
+      } catch {
+        // Ignore localStorage write errors
+      }
+
+      try {
+        await this.roomCreator({
+          payload,
+          apiUserName: this.credentials.apiUserName,
+          apiKey: this.credentials.apiKey,
+          validate: true,
+        });
+
+        // Clear pending status on completion
+        try {
+          localStorage.removeItem(pendingKey);
+        } catch {
+          /* ignore */
+        }
+
+        this.pending.next(false);
+      } catch (error: any) {
+        // Clear pending status on error
+        try {
+          localStorage.removeItem(pendingKey);
+        } catch {
+          /* ignore */
+        }
+        this.pending.next(false);
+        this.parameters.updateIsLoadingModalVisible(false);
+        this.error = `Unable to create room. ${error}`;
+      }
     }
   }
 

@@ -27,6 +27,11 @@ export interface AddVideosGridParameters
   otherGridStreams: CustomMediaComponent[][];
   updateOtherGridStreams: (otherGridStreams: CustomMediaComponent[][]) => void;
 
+  // Custom component builders
+  customVideoCard?: any;
+  customAudioCard?: any;
+  customMiniCard?: any;
+
   // mediasfu functions
   updateMiniCardsGrid: UpdateMiniCardsGridType;
   getUpdatedAllParams: () => AddVideosGridParameters;
@@ -160,7 +165,7 @@ export class AddVideosGrid {
           participant.audioID !== ''
         ) {
           newComponents[0].push({
-            component: AudioCard,
+            component: parameters.customAudioCard || AudioCard,
             inputs: {
               name: participant.name,
               barColor: 'red',
@@ -181,7 +186,7 @@ export class AddVideosGrid {
           });
         } else {
           newComponents[0].push({
-            component: MiniCard,
+            component: parameters.customMiniCard || MiniCard,
             inputs: {
               initials: participant.name,
               fontSize: 20,
@@ -206,7 +211,7 @@ export class AddVideosGrid {
             }
 
             newComponents[0].push({
-              component: MiniCard,
+              component: parameters.customMiniCard || MiniCard,
               inputs: {
                 initials: name,
                 fontSize: 20,
@@ -232,7 +237,7 @@ export class AddVideosGrid {
             remoteProducerId = 'youyouyou';
 
             newComponents[0].push({
-              component: VideoCard,
+              component: parameters.customVideoCard || VideoCard,
               inputs: {
                 videoStream: participant.stream ? participant.stream : null,
                 remoteProducerId: participant.stream ? participant.stream.id : null,
@@ -255,7 +260,7 @@ export class AddVideosGrid {
           participant_ = ref_participants.find((obj: any) => obj.videoID === remoteProducerId);
           if (participant_) {
             newComponents[0].push({
-              component: VideoCard,
+              component: parameters.customVideoCard || VideoCard,
               inputs: {
                 videoStream: participant.stream ? participant.stream : null,
                 remoteProducerId,
@@ -330,7 +335,7 @@ export class AddVideosGrid {
             participant.audioID !== ''
           ) {
             newComponents[1].push({
-              component: AudioCard,
+              component: parameters.customAudioCard || AudioCard,
               inputs: {
                 name: participant.name,
                 barColor: 'red',
@@ -351,7 +356,7 @@ export class AddVideosGrid {
             });
           } else {
             newComponents[1].push({
-              component: MiniCard,
+              component: parameters.customMiniCard || MiniCard,
               inputs: {
                 initials: participant.name,
                 fontSize: 20,
@@ -365,7 +370,7 @@ export class AddVideosGrid {
         } else {
           participant_ = ref_participants.find((obj: any) => obj.videoID === remoteProducerId);
           newComponents[1].push({
-            component: VideoCard,
+            component: parameters.customVideoCard || VideoCard,
             inputs: {
               videoStream: participant_ && participant_['stream'] ? participant_['stream'] : null,
               remoteProducerId,

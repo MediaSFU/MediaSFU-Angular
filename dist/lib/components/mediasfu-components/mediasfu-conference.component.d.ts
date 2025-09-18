@@ -183,6 +183,10 @@ export type MediasfuConferenceOptions = {
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Conference".
  *
@@ -208,13 +212,17 @@ export type MediasfuConferenceOptions = {
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-conference>
  * ```
  */
@@ -359,6 +367,10 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
     joinMediaSFURoom?: JoinRoomOnMediaSFUType;
     createMediaSFURoom?: CreateRoomOnMediaSFUType;
+    customVideoCard: any;
+    customAudioCard: any;
+    customMiniCard: any;
+    customMainComponent: any;
     title: string;
     private mainHeightWidthSubscription;
     private validatedSubscription;
@@ -893,7 +905,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"video" | "all" | "media">;
+    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -1121,7 +1133,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "landscape" | "portrait";
+    checkOrientation: () => "portrait" | "landscape";
     showAlert: ({ message, type, duration, }: {
         message: string;
         type: "success" | "danger";
@@ -1364,7 +1376,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "all" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -1765,11 +1777,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
         updateValidated: (value: boolean) => void;
+        customVideoCard: any;
+        customAudioCard: any;
+        customMiniCard: any;
         showAlert: ({ message, type, duration, }: {
             message: string;
             type: "success" | "danger";
@@ -2085,7 +2100,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "all" | "media";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2486,11 +2501,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
             updateValidated: (value: boolean) => void;
+            customVideoCard: any;
+            customAudioCard: any;
+            customMiniCard: any;
             showAlert: ({ message, type, duration, }: {
                 message: string;
                 type: "success" | "danger";
@@ -2809,7 +2827,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "all" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -3210,11 +3228,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
         updateValidated: (value: boolean) => void;
+        customVideoCard: any;
+        customAudioCard: any;
+        customMiniCard: any;
         showAlert: ({ message, type, duration, }: {
             message: string;
             type: "success" | "danger";
@@ -3530,7 +3551,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "all" | "media";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -3931,11 +3952,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
             updateValidated: (value: boolean) => void;
+            customVideoCard: any;
+            customAudioCard: any;
+            customMiniCard: any;
             showAlert: ({ message, type, duration, }: {
                 message: string;
                 type: "success" | "danger";
@@ -4254,7 +4278,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "all" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -4655,11 +4679,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         updateAnnotateScreenStream: (value: boolean) => void;
         updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
         updateIsScreenboardModalVisible: (value: boolean) => void;
-        checkOrientation: () => "landscape" | "portrait";
+        checkOrientation: () => "portrait" | "landscape";
         updateDevice: (value: Device | null) => void;
         updateSocket: (value: Socket) => void;
         updateLocalSocket: (value: Socket | null) => void;
         updateValidated: (value: boolean) => void;
+        customVideoCard: any;
+        customAudioCard: any;
+        customMiniCard: any;
         showAlert: ({ message, type, duration, }: {
             message: string;
             type: "success" | "danger";
@@ -4975,7 +5002,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "all" | "media";
+            recordingDisplayType: "video" | "media" | "all";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -5376,11 +5403,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
             updateAnnotateScreenStream: (value: boolean) => void;
             updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
             updateIsScreenboardModalVisible: (value: boolean) => void;
-            checkOrientation: () => "landscape" | "portrait";
+            checkOrientation: () => "portrait" | "landscape";
             updateDevice: (value: Device | null) => void;
             updateSocket: (value: Socket) => void;
             updateLocalSocket: (value: Socket | null) => void;
             updateValidated: (value: boolean) => void;
+            customVideoCard: any;
+            customAudioCard: any;
+            customMiniCard: any;
             showAlert: ({ message, type, duration, }: {
                 message: string;
                 type: "success" | "danger";
@@ -5790,7 +5820,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
                 recordingVideoOptions: string;
                 recordingVideoType: string;
                 recordingVideoOptimized: boolean;
-                recordingDisplayType: "video" | "all" | "media";
+                recordingDisplayType: "video" | "media" | "all";
                 recordingAddHLS: boolean;
                 recordingAddText: boolean;
                 recordingCustomText: string;
@@ -6191,11 +6221,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
                 updateAnnotateScreenStream: (value: boolean) => void;
                 updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                 updateIsScreenboardModalVisible: (value: boolean) => void;
-                checkOrientation: () => "landscape" | "portrait";
+                checkOrientation: () => "portrait" | "landscape";
                 updateDevice: (value: Device | null) => void;
                 updateSocket: (value: Socket) => void;
                 updateLocalSocket: (value: Socket | null) => void;
                 updateValidated: (value: boolean) => void;
+                customVideoCard: any;
+                customAudioCard: any;
+                customMiniCard: any;
                 showAlert: ({ message, type, duration, }: {
                     message: string;
                     type: "success" | "danger";
@@ -6511,7 +6544,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
                     recordingVideoOptions: string;
                     recordingVideoType: string;
                     recordingVideoOptimized: boolean;
-                    recordingDisplayType: "video" | "all" | "media";
+                    recordingDisplayType: "video" | "media" | "all";
                     recordingAddHLS: boolean;
                     recordingAddText: boolean;
                     recordingCustomText: string;
@@ -6912,11 +6945,14 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
                     updateAnnotateScreenStream: (value: boolean) => void;
                     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
                     updateIsScreenboardModalVisible: (value: boolean) => void;
-                    checkOrientation: () => "landscape" | "portrait";
+                    checkOrientation: () => "portrait" | "landscape";
                     updateDevice: (value: Device | null) => void;
                     updateSocket: (value: Socket) => void;
                     updateLocalSocket: (value: Socket | null) => void;
                     updateValidated: (value: boolean) => void;
+                    customVideoCard: any;
+                    customAudioCard: any;
+                    customMiniCard: any;
                     showAlert: ({ message, type, duration, }: {
                         message: string;
                         type: "success" | "danger";
@@ -7021,5 +7057,5 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     })[];
     connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuConference, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuConference, "app-mediasfu-conference", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuConference, "app-mediasfu-conference", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; }, {}, never, never, true, never>;
 }

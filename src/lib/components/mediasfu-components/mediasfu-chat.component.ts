@@ -239,6 +239,10 @@ export type MediasfuChatOptions = {
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Chat".
  *
@@ -264,13 +268,17 @@ export type MediasfuChatOptions = {
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-chat>
  * ```
  */
@@ -279,7 +287,6 @@ export type MediasfuChatOptions = {
 @Component({
   selector: 'app-mediasfu-chat',
   imports: [
-    CommonModule,
     AlertComponent,
     AudioGrid,
     ControlButtonsComponentTouch,
@@ -297,15 +304,21 @@ export type MediasfuChatOptions = {
 
   ],
   template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -318,6 +331,7 @@ export type MediasfuChatOptions = {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -372,11 +386,12 @@ export type MediasfuChatOptions = {
           </app-main-aspect-component>
 
           <!-- SubAspectComponent removed -->
-        </app-main-container-component>
+          </app-main-container-component>
       </ng-template>
+    </div>
 
-      <!-- Modals to include -->
-      <ng-container *ngIf="returnUI">
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
       <app-messages-modal
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
@@ -446,12 +461,26 @@ export type MediasfuChatOptions = {
         displayColor="black"
       ></app-loading-modal>
     </ng-container>
-    </div>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
   `,
   styles: [
     `
       .MediaSFU {
-        /* Add any component-specific styles here */
+        height: 100vh;
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 100vh;
+        overflow: hidden;
       }
     `,
   ],
@@ -473,6 +502,12 @@ export class MediasfuChat implements OnInit, OnDestroy {
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
+
+  // Custom component inputs
+  @Input() customVideoCard?: any;
+  @Input() customAudioCard?: any;
+  @Input() customMiniCard?: any;
+  @Input() customMainComponent?: any;
 
   title = 'MediaSFU-Chat';
 
@@ -3503,6 +3538,10 @@ export class MediasfuChat implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+
+      customVideoCard: this.customVideoCard,
+      customAudioCard: this.customAudioCard,
+      customMiniCard: this.customMiniCard,
 
       showAlert: this.showAlert.bind(this),
       getUpdatedAllParams: () => {

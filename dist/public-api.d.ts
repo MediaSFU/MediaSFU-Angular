@@ -51,6 +51,7 @@ export * from './lib/methods/polls-methods/launch-poll.service';
 export * from './lib/methods/background-methods/launch-background.service';
 export * from './lib/methods/breakout-room-methods/launch-breakout-rooms.service';
 export * from './lib/methods/whiteboard-methods/launch-configure-whiteboard.service';
+export * from './lib/services/custom-component-injection.service';
 export * from './lib/sockets/socket-manager.service';
 export * from './lib/producer-client/producer-client-emits/join-room-client.service';
 export * from './lib/producer-client/producer-client-emits/update-room-parameters-client.service';

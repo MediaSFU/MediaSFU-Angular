@@ -476,6 +476,8 @@ export interface CreateRoomOptions {
     safeRoomAction: 'warn' | 'kick' | 'ban';
     dataBuffer: boolean;
     bufferType: 'images' | 'audio' | 'all';
+    directionSIP: 'inbound' | 'outbound' | 'both';
+    preferPCMA: boolean;
 }
 export interface CreateMediaSFURoomOptions {
     action: 'create';
@@ -493,6 +495,8 @@ export interface CreateMediaSFURoomOptions {
     safeRoomAction?: 'warn' | 'kick' | 'ban';
     dataBuffer?: boolean;
     bufferType?: 'images' | 'audio' | 'all';
+    directionSIP?: 'inbound' | 'outbound' | 'both';
+    preferPCMA?: boolean;
 }
 export interface JoinMediaSFURoomOptions {
     action: 'join';
@@ -676,3 +680,4 @@ export type CreateWebRTCTransportResponse = {
     iceParameters: IceParameters;
     error?: string;
 };
+export * from './custom-component.types';

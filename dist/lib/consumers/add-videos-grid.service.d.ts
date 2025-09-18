@@ -12,6 +12,9 @@ export interface AddVideosGridParameters extends UpdateMiniCardsGridParameters, 
     forceFullDisplay: boolean;
     otherGridStreams: CustomMediaComponent[][];
     updateOtherGridStreams: (otherGridStreams: CustomMediaComponent[][]) => void;
+    customVideoCard?: any;
+    customAudioCard?: any;
+    customMiniCard?: any;
     updateMiniCardsGrid: UpdateMiniCardsGridType;
     getUpdatedAllParams: () => AddVideosGridParameters;
     [key: string]: any;

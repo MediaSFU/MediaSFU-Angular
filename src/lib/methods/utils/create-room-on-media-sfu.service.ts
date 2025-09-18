@@ -6,7 +6,8 @@ import { CreateJoinRoomResponse, CreateJoinRoomError, CreateJoinRoomType, Create
  *
  * This method sends a POST request to the MediaSFU API to create a new room.
  * It validates the provided credentials and dynamically constructs the API endpoint,
- * supporting the Community Edition via a custom `localLink`.
+ * supporting the Community Edition via a custom `localLink`. The method includes
+ * a 30-second protection mechanism to prevent duplicate room creation requests.
  *
  * @param {object} options - Configuration options for creating the room.
  * @param {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} options.payload -
@@ -29,12 +30,12 @@ import { CreateJoinRoomResponse, CreateJoinRoomError, CreateJoinRoomType, Create
 * const response = await createRoomOnMediaSFU.createRoomOnMediaSFU({
 *   payload: {
 *     action: 'create',
-*     duration: 120, // Duration in minutes
-*     capacity: 20, // Max participants
+*     duration: 60, // Duration in minutes
+*     capacity: 10, // Max participants
 *     userName: 'hostUser',
 *     scheduledDate: Date.now() + 3600000, // One hour from now
 *     secureCode: 'secure123', // Optional
-*     eventType: 'webinar', // Optional
+*     eventType: 'conference', // Optional
 *   },
 *   apiUserName: 'yourAPIUSERNAME',
 *   apiKey: 'yourAPIKEY',
@@ -61,7 +62,8 @@ export class CreateRoomOnMediaSFU {
  *
  * This method sends a POST request to the MediaSFU API to create a new room.
  * It validates the provided credentials and dynamically constructs the API endpoint,
- * supporting the Community Edition via a custom `localLink`.
+ * supporting the Community Edition via a custom `localLink`. The method includes
+ * a 30-second protection mechanism to prevent duplicate room creation requests.
  *
  * @param {object} options - Configuration options for creating the room.
  * @param {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} options.payload -
@@ -84,12 +86,12 @@ export class CreateRoomOnMediaSFU {
   * const response = await createRoomOnMediaSFU.createRoomOnMediaSFU({
   *   payload: {
   *     action: 'create',
-  *     duration: 120, // Duration in minutes
-  *     capacity: 20, // Max participants
+  *     duration: 60, // Duration in minutes
+  *     capacity: 10, // Max participants
   *     userName: 'hostUser',
   *     scheduledDate: Date.now() + 3600000, // One hour from now
   *     secureCode: 'secure123', // Optional
-  *     eventType: 'webinar', // Optional
+  *     eventType: 'conference', // Optional
   *   },
   *   apiUserName: 'yourAPIUSERNAME',
   *   apiKey: 'yourAPIKEY',
@@ -117,7 +119,32 @@ export class CreateRoomOnMediaSFU {
     data: CreateJoinRoomResponse | CreateJoinRoomError | null;
     success: boolean;
   }> {
+    // Create a unique key for this room creation request
+    const roomIdentifier = payload.action === 'create'
+      ? `create_${(payload as CreateMediaSFURoomOptions).userName}_${(payload as CreateMediaSFURoomOptions).duration}_${(payload as CreateMediaSFURoomOptions).capacity}`
+      : `join_${(payload as JoinMediaSFURoomOptions).meetingID}_${payload.userName}`;
+
+    const pendingKey = `mediasfu_pending_${roomIdentifier}`;
+    const PENDING_TIMEOUT = 30 * 1000; // 30 seconds
+
     try {
+      // Check if there's already a pending request for this room
+      const pendingRequest = localStorage.getItem(pendingKey);
+      if (pendingRequest) {
+        const pendingData = JSON.parse(pendingRequest);
+        const timeSincePending = Date.now() - pendingData.timestamp;
+
+        if (timeSincePending < PENDING_TIMEOUT) {
+          return {
+            data: { error: "Room creation already in progress" },
+            success: false,
+          };
+        } else {
+          // Timeout exceeded, clear stale pending request
+          localStorage.removeItem(pendingKey);
+        }
+      }
+
       if (
         !apiUserName ||
         !apiKey ||
@@ -129,12 +156,31 @@ export class CreateRoomOnMediaSFU {
         return { data: { error: 'Invalid credentials' }, success: false };
       }
 
-      let API_URL =  'https://mediasfu.com/v1/rooms/';
+      let API_URL = 'https://mediasfu.com/v1/rooms/';
 
       if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
         localLink = localLink.replace(/\/$/, '');
         API_URL = localLink + '/createRoom';
       }
+
+      // Mark request as pending
+      localStorage.setItem(pendingKey, JSON.stringify({
+        timestamp: Date.now(),
+        payload: {
+          action: payload.action,
+          userName: payload.userName,
+          meetingID: (payload as any).meetingID || 'create'
+        }
+      }));
+
+      // Set timeout to clear pending status
+      setTimeout(() => {
+        try {
+          localStorage.removeItem(pendingKey);
+        } catch (error) {
+          // Ignore localStorage errors
+        }
+      }, PENDING_TIMEOUT);
 
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -149,10 +195,21 @@ export class CreateRoomOnMediaSFU {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data: CreateJoinRoomResponse = await response.json();
+
+      // Clear pending status on success
+      localStorage.removeItem(pendingKey);
+
       return { data, success: true };
     } catch (error) {
-      const errorMessage = (error as any).reason ? (error as any).reason : 'unknown error';
+      // Clear pending status on error
+      try {
+        localStorage.removeItem(pendingKey);
+      } catch (e) {
+        // Ignore localStorage errors
+      }
+
+      const errorMessage = (error as Error).message || 'unknown error';
       return {
         data: { error: `Unable to create room, ${errorMessage}` },
         success: false,

@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, Component, Optional, Inject, Input, ViewChild, HostListener, Injector, EventEmitter, Output, ContentChildren, ViewEncapsulation } from '@angular/core';
+import { Injectable, Input, Optional, Inject, Component, ViewChild, HostListener, Injector, EventEmitter, Output, ContentChildren, ViewEncapsulation } from '@angular/core';
 import * as i1 from '@angular/common';
 import { CommonModule } from '@angular/common';
 import * as i2 from '@fortawesome/angular-fontawesome';
@@ -56,10 +56,10 @@ class ValidateAlphanumeric {
         }
         return true;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ValidateAlphanumeric, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ValidateAlphanumeric, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ValidateAlphanumeric, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ValidateAlphanumeric, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ValidateAlphanumeric, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ValidateAlphanumeric, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -205,10 +205,10 @@ class JoinConRoom {
             });
         });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinConRoom, deps: [{ token: ValidateAlphanumeric }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinConRoom, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinConRoom, deps: [{ token: ValidateAlphanumeric }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinConRoom, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinConRoom, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinConRoom, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -298,10 +298,10 @@ class JoinConsumeRoom {
             throw new Error('Failed to join the consumption room or set up necessary components.');
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinConsumeRoom, deps: [{ token: JoinConRoom }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinConsumeRoom, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinConsumeRoom, deps: [{ token: JoinConRoom }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinConsumeRoom, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinConsumeRoom, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinConsumeRoom, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -374,10 +374,10 @@ class ProducerClosed {
         // Close and resize the videos
         await closeAndResize({ producerId: remoteProducerId, kind: kind, parameters: parameters });
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerClosed, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerClosed, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerClosed, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerClosed, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerClosed, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerClosed, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -508,10 +508,10 @@ class SignalNewConsumerTransport {
             return;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SignalNewConsumerTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SignalNewConsumerTransport, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SignalNewConsumerTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SignalNewConsumerTransport, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SignalNewConsumerTransport, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SignalNewConsumerTransport, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -605,10 +605,10 @@ class NewPipeProducer {
             throw new Error('Failed to handle new pipe producer event.');
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: NewPipeProducer, deps: [{ token: SignalNewConsumerTransport }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: NewPipeProducer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: NewPipeProducer, deps: [{ token: SignalNewConsumerTransport }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: NewPipeProducer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: NewPipeProducer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: NewPipeProducer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -704,8 +704,8 @@ class MiniCard {
             'font-size': this.fontSize + 'px',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniCard, deps: [{ token: 'initials', optional: true }, { token: 'fontSize', optional: true }, { token: 'customStyle', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MiniCard, isStandalone: true, selector: "app-mini-card", inputs: { initials: "initials", fontSize: "fontSize", customStyle: "customStyle", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniCard, deps: [{ token: 'initials', optional: true }, { token: 'fontSize', optional: true }, { token: 'customStyle', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MiniCard, isStandalone: true, selector: "app-mini-card", inputs: { initials: "initials", fontSize: "fontSize", customStyle: "customStyle", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle" }, ngImport: i0, template: `
     <div class="mini-card" [ngStyle]="getMergedCardStyles()">
       <div *ngIf="imageSource; else noImage" class="image-container">
         <img [src]="imageSource" alt="Profile" [ngStyle]="getMergedImageStyles()" />
@@ -716,7 +716,7 @@ class MiniCard {
     </div>
   `, isInline: true, styles: [".mini-card{display:flex;justify-content:center;align-items:center;border-radius:0;width:100%;height:100%;color:#000;font-family:Nunito,sans-serif;overflow:hidden;border:2px solid black}.image-container{display:flex;justify-content:center;align-items:center;width:100%;height:100%}.backgroundImage{width:60%;height:60%;object-fit:cover}.roundedImage{border-radius:50%}.initials{text-align:center;font-size:14px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniCard, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniCard, decorators: [{
             type: Component,
             args: [{ selector: 'app-mini-card', imports: [CommonModule], template: `
     <div class="mini-card" [ngStyle]="getMergedCardStyles()">
@@ -874,10 +874,10 @@ class CardVideoDisplay {
         }
         return baseStyles;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CardVideoDisplay, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: CardVideoDisplay, isStandalone: true, selector: "app-card-video-display", inputs: { remoteProducerId: "remoteProducerId", eventType: "eventType", forceFullDisplay: "forceFullDisplay", videoStream: "videoStream", backgroundColor: "backgroundColor", doMirror: "doMirror" }, viewQueries: [{ propertyName: "videoElement", first: true, predicate: ["videoElement"], descendants: true, static: true }], usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"videoContainerStyle\">\r\n  <video #videoElement autoplay muted playsinline [ngStyle]=\"getVideoStyle()\"></video>\r\n</div>\r\n", styles: [".videoContainer{display:flex;justify-content:center;align-items:center;width:100%;height:100%;background-color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CardVideoDisplay, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: CardVideoDisplay, isStandalone: true, selector: "app-card-video-display", inputs: { remoteProducerId: "remoteProducerId", eventType: "eventType", forceFullDisplay: "forceFullDisplay", videoStream: "videoStream", backgroundColor: "backgroundColor", doMirror: "doMirror" }, viewQueries: [{ propertyName: "videoElement", first: true, predicate: ["videoElement"], descendants: true, static: true }], usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"videoContainerStyle\">\r\n  <video #videoElement autoplay muted playsinline [ngStyle]=\"getVideoStyle()\"></video>\r\n</div>\r\n", styles: [".videoContainer{display:flex;justify-content:center;align-items:center;width:100%;height:100%;background-color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CardVideoDisplay, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CardVideoDisplay, decorators: [{
             type: Component,
             args: [{ selector: 'app-card-video-display', imports: [CommonModule], template: "<div [ngStyle]=\"videoContainerStyle\">\r\n  <video #videoElement autoplay muted playsinline [ngStyle]=\"getVideoStyle()\"></video>\r\n</div>\r\n", styles: [".videoContainer{display:flex;justify-content:center;align-items:center;width:100%;height:100%;background-color:#000}\n"] }]
         }], propDecorators: { remoteProducerId: [{
@@ -1029,10 +1029,10 @@ class ControlMedia {
             // throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlMedia, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlMedia, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlMedia, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlMedia, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlMedia, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlMedia, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -1259,10 +1259,10 @@ class VideoCard {
     isFunctionComponent(comp) {
         return typeof comp === 'function';
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VideoCard, deps: [{ token: ControlMedia }, { token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }, { token: 'remoteProducerId', optional: true }, { token: 'eventType', optional: true }, { token: 'forceFullDisplay', optional: true }, { token: 'videoStream', optional: true }, { token: 'showControls', optional: true }, { token: 'showInfo', optional: true }, { token: 'videoInfoComponent', optional: true }, { token: 'videoControlsComponent', optional: true }, { token: 'controlsPosition', optional: true }, { token: 'infoPosition', optional: true }, { token: 'participant', optional: true }, { token: 'backgroundColor', optional: true }, { token: 'audioDecibels', optional: true }, { token: 'doMirror', optional: true }, { token: 'parameters', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: VideoCard, isStandalone: true, selector: "app-video-card", inputs: { customStyle: "customStyle", name: "name", barColor: "barColor", textColor: "textColor", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle", remoteProducerId: "remoteProducerId", eventType: "eventType", forceFullDisplay: "forceFullDisplay", videoStream: "videoStream", showControls: "showControls", showInfo: "showInfo", videoInfoComponent: "videoInfoComponent", videoControlsComponent: "videoControlsComponent", controlsPosition: "controlsPosition", infoPosition: "infoPosition", participant: "participant", backgroundColor: "backgroundColor", audioDecibels: "audioDecibels", doMirror: "doMirror", parameters: "parameters" }, ngImport: i0, template: "<div\r\n  [ngStyle]=\"customStyle\"\r\n  [style.backgroundColor]=\"backgroundColor\"\r\n  class=\"video-card\"\r\n>\r\n  <app-card-video-display\r\n    [remoteProducerId]=\"remoteProducerId\"\r\n    [eventType]=\"eventType\"\r\n    [forceFullDisplay]=\"forceFullDisplay\"\r\n    [videoStream]=\"videoStream\"\r\n    [backgroundColor]=\"backgroundColor\"\r\n    [doMirror]=\"doMirror\"\r\n  ></app-card-video-display>\r\n\r\n  <div\r\n    *ngIf=\"showInfo\"\r\n    [ngClass]=\"showControls ? 'overlayWeb' : 'overlayWebAlt'\"\r\n    [ngStyle]=\"getOverlayPosition(infoPosition)\"\r\n  >\r\n    <div class=\"nameColumn\">\r\n      <span class=\"nameText\" [style.color]=\"textColor\">{{\r\n        participant.name\r\n      }}</span>\r\n    </div>\r\n    <div *ngIf=\"showWaveform\" class=\"waveformWeb\">\r\n      <div\r\n        *ngFor=\"let animation of waveformAnimations; let i = index\"\r\n        class=\"bar\"\r\n        [ngStyle]=\"{\r\n          height: animation === 0 ? '1px' : '16px',\r\n          backgroundColor: barColor\r\n        }\"\r\n      ></div>\r\n    </div>\r\n  </div>\r\n\r\n  <div\r\n    *ngIf=\"showControls\"\r\n    class=\"overlayControls\"\r\n    [ngStyle]=\"getOverlayPosition(controlsPosition)\"\r\n  >\r\n    <ng-container *ngIf=\"!videoControlsComponent\">\r\n      <div class=\"overlayControls\">\r\n        <button class=\"controlButton\" (click)=\"toggleAudio()\">\r\n          <fa-icon\r\n            [icon]=\"participant.muted ? faMicrophoneSlash : faMicrophone\"\r\n            [style.color]=\"participant.muted ? 'red' : 'green'\"\r\n          ></fa-icon>\r\n        </button>\r\n        <button class=\"controlButton\" (click)=\"toggleVideo()\">\r\n          <fa-icon\r\n            [icon]=\"participant['videoOn'] ? faVideo : faVideoSlash\"\r\n            [style.color]=\"participant['videoOn'] ? 'green' : 'red'\"\r\n          ></fa-icon>\r\n        </button>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"videoControlsComponent\">\r\n      <ng-container *ngIf=\"isCustomComponent(videoControlsComponent)\">\r\n        <ng-container\r\n          *ngComponentOutlet=\"\r\n            videoControlsComponent.component;\r\n            injector: videoControlsComponent.injector\r\n          \"\r\n        ></ng-container>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isCustomComponent(videoControlsComponent)\">\r\n        <div [innerHTML]=\"videoControlsComponent.outerHTML\"></div>\r\n      </ng-container>\r\n    </ng-container>\r\n  </div>\r\n</div>\r\n", styles: [".video-card{width:100%;height:100%;margin:0;padding:0;background-color:#2c678f;border:2px solid black;position:relative}.overlayWeb{position:absolute;min-width:40%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.overlayWebAlt{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr;grid-gap:0px;top:0;right:0}.overlayControls{display:flex;flex-direction:row;padding:0;position:absolute;top:0;left:0}.controlButton{justify-content:center;align-items:center;background-color:#0003;padding:2px 4px;margin-right:2px;font-size:medium;border:none;cursor:pointer}.nameColumn{justify-content:center;align-items:center;background-color:#00000080;padding:5px;margin-right:2px;font-size:small;text-align:center}.nameText{font-size:small;font-weight:bolder}.waveformWeb{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row}.bar{flex:1;opacity:.35;margin:0 1px;transition:height .5s ease}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: CardVideoDisplay, selector: "app-card-video-display", inputs: ["remoteProducerId", "eventType", "forceFullDisplay", "videoStream", "backgroundColor", "doMirror"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VideoCard, deps: [{ token: ControlMedia }, { token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }, { token: 'remoteProducerId', optional: true }, { token: 'eventType', optional: true }, { token: 'forceFullDisplay', optional: true }, { token: 'videoStream', optional: true }, { token: 'showControls', optional: true }, { token: 'showInfo', optional: true }, { token: 'videoInfoComponent', optional: true }, { token: 'videoControlsComponent', optional: true }, { token: 'controlsPosition', optional: true }, { token: 'infoPosition', optional: true }, { token: 'participant', optional: true }, { token: 'backgroundColor', optional: true }, { token: 'audioDecibels', optional: true }, { token: 'doMirror', optional: true }, { token: 'parameters', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: VideoCard, isStandalone: true, selector: "app-video-card", inputs: { customStyle: "customStyle", name: "name", barColor: "barColor", textColor: "textColor", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle", remoteProducerId: "remoteProducerId", eventType: "eventType", forceFullDisplay: "forceFullDisplay", videoStream: "videoStream", showControls: "showControls", showInfo: "showInfo", videoInfoComponent: "videoInfoComponent", videoControlsComponent: "videoControlsComponent", controlsPosition: "controlsPosition", infoPosition: "infoPosition", participant: "participant", backgroundColor: "backgroundColor", audioDecibels: "audioDecibels", doMirror: "doMirror", parameters: "parameters" }, ngImport: i0, template: "<div\r\n  [ngStyle]=\"customStyle\"\r\n  [style.backgroundColor]=\"backgroundColor\"\r\n  class=\"video-card\"\r\n>\r\n  <app-card-video-display\r\n    [remoteProducerId]=\"remoteProducerId\"\r\n    [eventType]=\"eventType\"\r\n    [forceFullDisplay]=\"forceFullDisplay\"\r\n    [videoStream]=\"videoStream\"\r\n    [backgroundColor]=\"backgroundColor\"\r\n    [doMirror]=\"doMirror\"\r\n  ></app-card-video-display>\r\n\r\n  <div\r\n    *ngIf=\"showInfo\"\r\n    [ngClass]=\"showControls ? 'overlayWeb' : 'overlayWebAlt'\"\r\n    [ngStyle]=\"getOverlayPosition(infoPosition)\"\r\n  >\r\n    <div class=\"nameColumn\">\r\n      <span class=\"nameText\" [style.color]=\"textColor\">{{\r\n        participant.name\r\n      }}</span>\r\n    </div>\r\n    <div *ngIf=\"showWaveform\" class=\"waveformWeb\">\r\n      <div\r\n        *ngFor=\"let animation of waveformAnimations; let i = index\"\r\n        class=\"bar\"\r\n        [ngStyle]=\"{\r\n          height: animation === 0 ? '1px' : '16px',\r\n          backgroundColor: barColor\r\n        }\"\r\n      ></div>\r\n    </div>\r\n  </div>\r\n\r\n  <div\r\n    *ngIf=\"showControls\"\r\n    class=\"overlayControls\"\r\n    [ngStyle]=\"getOverlayPosition(controlsPosition)\"\r\n  >\r\n    <ng-container *ngIf=\"!videoControlsComponent\">\r\n      <div class=\"overlayControls\">\r\n        <button class=\"controlButton\" (click)=\"toggleAudio()\">\r\n          <fa-icon\r\n            [icon]=\"participant.muted ? faMicrophoneSlash : faMicrophone\"\r\n            [style.color]=\"participant.muted ? 'red' : 'green'\"\r\n          ></fa-icon>\r\n        </button>\r\n        <button class=\"controlButton\" (click)=\"toggleVideo()\">\r\n          <fa-icon\r\n            [icon]=\"participant['videoOn'] ? faVideo : faVideoSlash\"\r\n            [style.color]=\"participant['videoOn'] ? 'green' : 'red'\"\r\n          ></fa-icon>\r\n        </button>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"videoControlsComponent\">\r\n      <ng-container *ngIf=\"isCustomComponent(videoControlsComponent)\">\r\n        <ng-container\r\n          *ngComponentOutlet=\"\r\n            videoControlsComponent.component;\r\n            injector: videoControlsComponent.injector\r\n          \"\r\n        ></ng-container>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isCustomComponent(videoControlsComponent)\">\r\n        <div [innerHTML]=\"videoControlsComponent.outerHTML\"></div>\r\n      </ng-container>\r\n    </ng-container>\r\n  </div>\r\n</div>\r\n", styles: [".video-card{width:100%;height:100%;margin:0;padding:0;background-color:#2c678f;border:2px solid black;position:relative}.overlayWeb{position:absolute;min-width:40%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.overlayWebAlt{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr;grid-gap:0px;top:0;right:0}.overlayControls{display:flex;flex-direction:row;padding:0;position:absolute;top:0;left:0}.controlButton{justify-content:center;align-items:center;background-color:#0003;padding:2px 4px;margin-right:2px;font-size:medium;border:none;cursor:pointer}.nameColumn{justify-content:center;align-items:center;background-color:#00000080;padding:5px;margin-right:2px;font-size:small;text-align:center}.nameText{font-size:small;font-weight:bolder}.waveformWeb{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row}.bar{flex:1;opacity:.35;margin:0 1px;transition:height .5s ease}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: CardVideoDisplay, selector: "app-card-video-display", inputs: ["remoteProducerId", "eventType", "forceFullDisplay", "videoStream", "backgroundColor", "doMirror"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VideoCard, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VideoCard, decorators: [{
             type: Component,
             args: [{ selector: 'app-video-card', imports: [CommonModule, FontAwesomeModule, CardVideoDisplay], template: "<div\r\n  [ngStyle]=\"customStyle\"\r\n  [style.backgroundColor]=\"backgroundColor\"\r\n  class=\"video-card\"\r\n>\r\n  <app-card-video-display\r\n    [remoteProducerId]=\"remoteProducerId\"\r\n    [eventType]=\"eventType\"\r\n    [forceFullDisplay]=\"forceFullDisplay\"\r\n    [videoStream]=\"videoStream\"\r\n    [backgroundColor]=\"backgroundColor\"\r\n    [doMirror]=\"doMirror\"\r\n  ></app-card-video-display>\r\n\r\n  <div\r\n    *ngIf=\"showInfo\"\r\n    [ngClass]=\"showControls ? 'overlayWeb' : 'overlayWebAlt'\"\r\n    [ngStyle]=\"getOverlayPosition(infoPosition)\"\r\n  >\r\n    <div class=\"nameColumn\">\r\n      <span class=\"nameText\" [style.color]=\"textColor\">{{\r\n        participant.name\r\n      }}</span>\r\n    </div>\r\n    <div *ngIf=\"showWaveform\" class=\"waveformWeb\">\r\n      <div\r\n        *ngFor=\"let animation of waveformAnimations; let i = index\"\r\n        class=\"bar\"\r\n        [ngStyle]=\"{\r\n          height: animation === 0 ? '1px' : '16px',\r\n          backgroundColor: barColor\r\n        }\"\r\n      ></div>\r\n    </div>\r\n  </div>\r\n\r\n  <div\r\n    *ngIf=\"showControls\"\r\n    class=\"overlayControls\"\r\n    [ngStyle]=\"getOverlayPosition(controlsPosition)\"\r\n  >\r\n    <ng-container *ngIf=\"!videoControlsComponent\">\r\n      <div class=\"overlayControls\">\r\n        <button class=\"controlButton\" (click)=\"toggleAudio()\">\r\n          <fa-icon\r\n            [icon]=\"participant.muted ? faMicrophoneSlash : faMicrophone\"\r\n            [style.color]=\"participant.muted ? 'red' : 'green'\"\r\n          ></fa-icon>\r\n        </button>\r\n        <button class=\"controlButton\" (click)=\"toggleVideo()\">\r\n          <fa-icon\r\n            [icon]=\"participant['videoOn'] ? faVideo : faVideoSlash\"\r\n            [style.color]=\"participant['videoOn'] ? 'green' : 'red'\"\r\n          ></fa-icon>\r\n        </button>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"videoControlsComponent\">\r\n      <ng-container *ngIf=\"isCustomComponent(videoControlsComponent)\">\r\n        <ng-container\r\n          *ngComponentOutlet=\"\r\n            videoControlsComponent.component;\r\n            injector: videoControlsComponent.injector\r\n          \"\r\n        ></ng-container>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"!isCustomComponent(videoControlsComponent)\">\r\n        <div [innerHTML]=\"videoControlsComponent.outerHTML\"></div>\r\n      </ng-container>\r\n    </ng-container>\r\n  </div>\r\n</div>\r\n", styles: [".video-card{width:100%;height:100%;margin:0;padding:0;background-color:#2c678f;border:2px solid black;position:relative}.overlayWeb{position:absolute;min-width:40%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.overlayWebAlt{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr;grid-gap:0px;top:0;right:0}.overlayControls{display:flex;flex-direction:row;padding:0;position:absolute;top:0;left:0}.controlButton{justify-content:center;align-items:center;background-color:#0003;padding:2px 4px;margin-right:2px;font-size:medium;border:none;cursor:pointer}.nameColumn{justify-content:center;align-items:center;background-color:#00000080;padding:5px;margin-right:2px;font-size:small;text-align:center}.nameText{font-size:small;font-weight:bolder}.waveformWeb{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row}.bar{flex:1;opacity:.35;margin:0 1px;transition:height .5s ease}\n"] }]
         }], ctorParameters: () => [{ type: ControlMedia }, { type: undefined, decorators: [{
@@ -1633,10 +1633,10 @@ class AudioCard {
     isFunctionComponent(comp) {
         return typeof comp === 'function';
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AudioCard, deps: [{ token: i0.NgZone }, { token: ControlMedia }, { token: 'controlUserMedia', optional: true }, { token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }, { token: 'showControls', optional: true }, { token: 'showInfo', optional: true }, { token: 'videoInfoComponent', optional: true }, { token: 'videoControlsComponent', optional: true }, { token: 'controlsPosition', optional: true }, { token: 'infoPosition', optional: true }, { token: 'participant', optional: true }, { token: 'backgroundColor', optional: true }, { token: 'audioDecibels', optional: true }, { token: 'parameters', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: AudioCard, isStandalone: true, selector: "app-audio-card", inputs: { controlUserMedia: "controlUserMedia", customStyle: "customStyle", name: "name", barColor: "barColor", textColor: "textColor", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle", showControls: "showControls", showInfo: "showInfo", videoInfoComponent: "videoInfoComponent", videoControlsComponent: "videoControlsComponent", controlsPosition: "controlsPosition", infoPosition: "infoPosition", participant: "participant", backgroundColor: "backgroundColor", audioDecibels: "audioDecibels", parameters: "parameters" }, ngImport: i0, template: "<div\r\n  class=\"card\"\r\n  [ngStyle]=\"customStyle\"\r\n  [style.backgroundColor]=\"backgroundColor\"\r\n>\r\n  <ng-container *ngIf=\"imageSource; else noImage\">\r\n    <div class=\"imageContainer\">\r\n      <img\r\n        [src]=\"imageSource\"\r\n        [ngStyle]=\"\r\n          combineStyles(imageStyle, {\r\n            'border-radius': roundedImage ? '20%' : '0'\r\n          })\r\n        \"\r\n        class=\"backgroundImage\"\r\n      />\r\n    </div>\r\n  </ng-container>\r\n  <ng-template #noImage>\r\n    <div style=\"width: 100%; height: 100%\">\r\n      <app-mini-card [initials]=\"name\" [fontSize]=\"20\" [ngStyle]=\"{ 'border': parameters.eventType === 'broadcast' ? '2px solid black' : '0px solid black' }\"></app-mini-card>\r\n    </div>\r\n  </ng-template>\r\n\r\n  <ng-container *ngIf=\"showInfo\">\r\n    <div\r\n      class=\"overlay\"\r\n      [ngStyle]=\"getOverlayPosition(infoPosition)\"\r\n      [ngClass]=\"showControls ? 'overlayWeb' : 'overlayWebAlt'\"\r\n    >\r\n      <div class=\"nameColumn\">\r\n        <p [ngStyle]=\"{ color: textColor }\" class=\"nameText\">{{ name }}</p>\r\n      </div>\r\n      <div *ngIf=\"showWaveform\" class=\"waveformWeb\">\r\n        <div\r\n          *ngFor=\"let animation of waveformAnimations\"\r\n          [ngStyle]=\"{\r\n            height: animation === 0 ? '1px' : '12px',\r\n            backgroundColor: barColor\r\n          }\"\r\n          class=\"bar\"\r\n        ></div>\r\n      </div>\r\n    </div>\r\n  </ng-container>\r\n\r\n  <ng-container *ngIf=\"renderControls()\">\r\n    <div\r\n      class=\"overlayControls\"\r\n      [ngStyle]=\"getOverlayPosition(controlsPosition)\"\r\n    >\r\n      <ng-container *ngIf=\"!videoControlsComponent\">\r\n        <button class=\"controlButton\" (click)=\"toggleAudio()\">\r\n          <fa-icon\r\n            [icon]=\"participant?.muted ? faMicrophoneSlash : faMicrophone\"\r\n            [style.color]=\"participant?.muted ? 'red' : 'green'\"\r\n          ></fa-icon>\r\n        </button>\r\n        <button class=\"controlButton\" (click)=\"toggleVideo()\">\r\n          <fa-icon\r\n            [icon]=\"participant?.['videoOn'] ? faVideo : faVideoSlash\"\r\n            [style.color]=\"participant?.['videoOn'] ? 'green' : 'red'\"\r\n          ></fa-icon>\r\n        </button>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"videoControlsComponent\">\r\n        <ng-container *ngIf=\"isCustomComponent(videoControlsComponent)\">\r\n          <ng-container\r\n            *ngComponentOutlet=\"\r\n              videoControlsComponent.component;\r\n              injector: videoControlsComponent.injector\r\n            \"\r\n          ></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!isCustomComponent(videoControlsComponent)\">\r\n          <div [innerHTML]=\"videoControlsComponent.outerHTML\"></div>\r\n        </ng-container>\r\n      </ng-container>\r\n    </div>\r\n  </ng-container>\r\n</div>\r\n", styles: [".card{width:100%;height:100%;margin:0;padding:0;background-color:transparent;position:relative}.imageContainer{display:flex;justify-content:center;align-items:center;width:100%;height:100%}.backgroundImage{width:80px;height:80px;border-radius:50%}.overlayWeb{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.overlayWebAlt{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr;grid-gap:0px;top:0;right:0}.overlayControls{display:flex;flex-direction:row;padding:0;position:absolute;top:0;left:0}.controlButton{justify-content:center;align-items:center;background-color:#0003;padding:0 5px;margin-right:2px;font-size:medium;border:none;cursor:pointer}.nameColumn{justify-content:center;align-items:center;background-color:#00000080;padding:5px 0 0;margin-right:2px;font-size:small;text-align:center;min-height:4%;max-height:70%}.nameText{font-size:small;font-weight:bolder}.waveformWeb{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row;min-height:4%;max-height:70%}.waveformMobile{flex-direction:row;align-items:center;background-color:#0000000d;padding:0;max-width:25%;margin:0}.bar{flex:1;opacity:.75;margin:0 1px;transition:height .5s ease}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MiniCard, selector: "app-mini-card", inputs: ["initials", "fontSize", "customStyle", "imageSource", "roundedImage", "imageStyle"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AudioCard, deps: [{ token: i0.NgZone }, { token: ControlMedia }, { token: 'controlUserMedia', optional: true }, { token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }, { token: 'showControls', optional: true }, { token: 'showInfo', optional: true }, { token: 'videoInfoComponent', optional: true }, { token: 'videoControlsComponent', optional: true }, { token: 'controlsPosition', optional: true }, { token: 'infoPosition', optional: true }, { token: 'participant', optional: true }, { token: 'backgroundColor', optional: true }, { token: 'audioDecibels', optional: true }, { token: 'parameters', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: AudioCard, isStandalone: true, selector: "app-audio-card", inputs: { controlUserMedia: "controlUserMedia", customStyle: "customStyle", name: "name", barColor: "barColor", textColor: "textColor", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle", showControls: "showControls", showInfo: "showInfo", videoInfoComponent: "videoInfoComponent", videoControlsComponent: "videoControlsComponent", controlsPosition: "controlsPosition", infoPosition: "infoPosition", participant: "participant", backgroundColor: "backgroundColor", audioDecibels: "audioDecibels", parameters: "parameters" }, ngImport: i0, template: "<div\r\n  class=\"card\"\r\n  [ngStyle]=\"customStyle\"\r\n  [style.backgroundColor]=\"backgroundColor\"\r\n>\r\n  <ng-container *ngIf=\"imageSource; else noImage\">\r\n    <div class=\"imageContainer\">\r\n      <img\r\n        [src]=\"imageSource\"\r\n        [ngStyle]=\"\r\n          combineStyles(imageStyle, {\r\n            'border-radius': roundedImage ? '20%' : '0'\r\n          })\r\n        \"\r\n        class=\"backgroundImage\"\r\n      />\r\n    </div>\r\n  </ng-container>\r\n  <ng-template #noImage>\r\n    <div style=\"width: 100%; height: 100%\">\r\n      <app-mini-card [initials]=\"name\" [fontSize]=\"20\" [ngStyle]=\"{ 'border': parameters.eventType === 'broadcast' ? '2px solid black' : '0px solid black' }\"></app-mini-card>\r\n    </div>\r\n  </ng-template>\r\n\r\n  <ng-container *ngIf=\"showInfo\">\r\n    <div\r\n      class=\"overlay\"\r\n      [ngStyle]=\"getOverlayPosition(infoPosition)\"\r\n      [ngClass]=\"showControls ? 'overlayWeb' : 'overlayWebAlt'\"\r\n    >\r\n      <div class=\"nameColumn\">\r\n        <p [ngStyle]=\"{ color: textColor }\" class=\"nameText\">{{ name }}</p>\r\n      </div>\r\n      <div *ngIf=\"showWaveform\" class=\"waveformWeb\">\r\n        <div\r\n          *ngFor=\"let animation of waveformAnimations\"\r\n          [ngStyle]=\"{\r\n            height: animation === 0 ? '1px' : '12px',\r\n            backgroundColor: barColor\r\n          }\"\r\n          class=\"bar\"\r\n        ></div>\r\n      </div>\r\n    </div>\r\n  </ng-container>\r\n\r\n  <ng-container *ngIf=\"renderControls()\">\r\n    <div\r\n      class=\"overlayControls\"\r\n      [ngStyle]=\"getOverlayPosition(controlsPosition)\"\r\n    >\r\n      <ng-container *ngIf=\"!videoControlsComponent\">\r\n        <button class=\"controlButton\" (click)=\"toggleAudio()\">\r\n          <fa-icon\r\n            [icon]=\"participant?.muted ? faMicrophoneSlash : faMicrophone\"\r\n            [style.color]=\"participant?.muted ? 'red' : 'green'\"\r\n          ></fa-icon>\r\n        </button>\r\n        <button class=\"controlButton\" (click)=\"toggleVideo()\">\r\n          <fa-icon\r\n            [icon]=\"participant?.['videoOn'] ? faVideo : faVideoSlash\"\r\n            [style.color]=\"participant?.['videoOn'] ? 'green' : 'red'\"\r\n          ></fa-icon>\r\n        </button>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"videoControlsComponent\">\r\n        <ng-container *ngIf=\"isCustomComponent(videoControlsComponent)\">\r\n          <ng-container\r\n            *ngComponentOutlet=\"\r\n              videoControlsComponent.component;\r\n              injector: videoControlsComponent.injector\r\n            \"\r\n          ></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!isCustomComponent(videoControlsComponent)\">\r\n          <div [innerHTML]=\"videoControlsComponent.outerHTML\"></div>\r\n        </ng-container>\r\n      </ng-container>\r\n    </div>\r\n  </ng-container>\r\n</div>\r\n", styles: [".card{width:100%;height:100%;margin:0;padding:0;background-color:transparent;position:relative}.imageContainer{display:flex;justify-content:center;align-items:center;width:100%;height:100%}.backgroundImage{width:80px;height:80px;border-radius:50%}.overlayWeb{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.overlayWebAlt{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr;grid-gap:0px;top:0;right:0}.overlayControls{display:flex;flex-direction:row;padding:0;position:absolute;top:0;left:0}.controlButton{justify-content:center;align-items:center;background-color:#0003;padding:0 5px;margin-right:2px;font-size:medium;border:none;cursor:pointer}.nameColumn{justify-content:center;align-items:center;background-color:#00000080;padding:5px 0 0;margin-right:2px;font-size:small;text-align:center;min-height:4%;max-height:70%}.nameText{font-size:small;font-weight:bolder}.waveformWeb{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row;min-height:4%;max-height:70%}.waveformMobile{flex-direction:row;align-items:center;background-color:#0000000d;padding:0;max-width:25%;margin:0}.bar{flex:1;opacity:.75;margin:0 1px;transition:height .5s ease}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MiniCard, selector: "app-mini-card", inputs: ["initials", "fontSize", "customStyle", "imageSource", "roundedImage", "imageStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AudioCard, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AudioCard, decorators: [{
             type: Component,
             args: [{ selector: 'app-audio-card', imports: [CommonModule, FontAwesomeModule, MiniCard], template: "<div\r\n  class=\"card\"\r\n  [ngStyle]=\"customStyle\"\r\n  [style.backgroundColor]=\"backgroundColor\"\r\n>\r\n  <ng-container *ngIf=\"imageSource; else noImage\">\r\n    <div class=\"imageContainer\">\r\n      <img\r\n        [src]=\"imageSource\"\r\n        [ngStyle]=\"\r\n          combineStyles(imageStyle, {\r\n            'border-radius': roundedImage ? '20%' : '0'\r\n          })\r\n        \"\r\n        class=\"backgroundImage\"\r\n      />\r\n    </div>\r\n  </ng-container>\r\n  <ng-template #noImage>\r\n    <div style=\"width: 100%; height: 100%\">\r\n      <app-mini-card [initials]=\"name\" [fontSize]=\"20\" [ngStyle]=\"{ 'border': parameters.eventType === 'broadcast' ? '2px solid black' : '0px solid black' }\"></app-mini-card>\r\n    </div>\r\n  </ng-template>\r\n\r\n  <ng-container *ngIf=\"showInfo\">\r\n    <div\r\n      class=\"overlay\"\r\n      [ngStyle]=\"getOverlayPosition(infoPosition)\"\r\n      [ngClass]=\"showControls ? 'overlayWeb' : 'overlayWebAlt'\"\r\n    >\r\n      <div class=\"nameColumn\">\r\n        <p [ngStyle]=\"{ color: textColor }\" class=\"nameText\">{{ name }}</p>\r\n      </div>\r\n      <div *ngIf=\"showWaveform\" class=\"waveformWeb\">\r\n        <div\r\n          *ngFor=\"let animation of waveformAnimations\"\r\n          [ngStyle]=\"{\r\n            height: animation === 0 ? '1px' : '12px',\r\n            backgroundColor: barColor\r\n          }\"\r\n          class=\"bar\"\r\n        ></div>\r\n      </div>\r\n    </div>\r\n  </ng-container>\r\n\r\n  <ng-container *ngIf=\"renderControls()\">\r\n    <div\r\n      class=\"overlayControls\"\r\n      [ngStyle]=\"getOverlayPosition(controlsPosition)\"\r\n    >\r\n      <ng-container *ngIf=\"!videoControlsComponent\">\r\n        <button class=\"controlButton\" (click)=\"toggleAudio()\">\r\n          <fa-icon\r\n            [icon]=\"participant?.muted ? faMicrophoneSlash : faMicrophone\"\r\n            [style.color]=\"participant?.muted ? 'red' : 'green'\"\r\n          ></fa-icon>\r\n        </button>\r\n        <button class=\"controlButton\" (click)=\"toggleVideo()\">\r\n          <fa-icon\r\n            [icon]=\"participant?.['videoOn'] ? faVideo : faVideoSlash\"\r\n            [style.color]=\"participant?.['videoOn'] ? 'green' : 'red'\"\r\n          ></fa-icon>\r\n        </button>\r\n      </ng-container>\r\n      <ng-container *ngIf=\"videoControlsComponent\">\r\n        <ng-container *ngIf=\"isCustomComponent(videoControlsComponent)\">\r\n          <ng-container\r\n            *ngComponentOutlet=\"\r\n              videoControlsComponent.component;\r\n              injector: videoControlsComponent.injector\r\n            \"\r\n          ></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!isCustomComponent(videoControlsComponent)\">\r\n          <div [innerHTML]=\"videoControlsComponent.outerHTML\"></div>\r\n        </ng-container>\r\n      </ng-container>\r\n    </div>\r\n  </ng-container>\r\n</div>\r\n", styles: [".card{width:100%;height:100%;margin:0;padding:0;background-color:transparent;position:relative}.imageContainer{display:flex;justify-content:center;align-items:center;width:100%;height:100%}.backgroundImage{width:80px;height:80px;border-radius:50%}.overlayWeb{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.overlayWebAlt{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr;grid-gap:0px;top:0;right:0}.overlayControls{display:flex;flex-direction:row;padding:0;position:absolute;top:0;left:0}.controlButton{justify-content:center;align-items:center;background-color:#0003;padding:0 5px;margin-right:2px;font-size:medium;border:none;cursor:pointer}.nameColumn{justify-content:center;align-items:center;background-color:#00000080;padding:5px 0 0;margin-right:2px;font-size:small;text-align:center;min-height:4%;max-height:70%}.nameText{font-size:small;font-weight:bolder}.waveformWeb{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row;min-height:4%;max-height:70%}.waveformMobile{flex-direction:row;align-items:center;background-color:#0000000d;padding:0;max-width:25%;margin:0}.bar{flex:1;opacity:.75;margin:0 1px;transition:height .5s ease}\n"] }]
         }], ctorParameters: () => [{ type: i0.NgZone }, { type: ControlMedia }, { type: undefined, decorators: [{
@@ -1841,7 +1841,7 @@ class AddVideosGrid {
                     participant.audioID != null &&
                     participant.audioID !== '') {
                     newComponents[0].push({
-                        component: AudioCard,
+                        component: parameters.customAudioCard || AudioCard,
                         inputs: {
                             name: participant.name,
                             barColor: 'red',
@@ -1863,7 +1863,7 @@ class AddVideosGrid {
                 }
                 else {
                     newComponents[0].push({
-                        component: MiniCard,
+                        component: parameters.customMiniCard || MiniCard,
                         inputs: {
                             initials: participant.name,
                             fontSize: 20,
@@ -1887,7 +1887,7 @@ class AddVideosGrid {
                             name = 'You (Host)';
                         }
                         newComponents[0].push({
-                            component: MiniCard,
+                            component: parameters.customMiniCard || MiniCard,
                             inputs: {
                                 initials: name,
                                 fontSize: 20,
@@ -1913,7 +1913,7 @@ class AddVideosGrid {
                         };
                         remoteProducerId = 'youyouyou';
                         newComponents[0].push({
-                            component: VideoCard,
+                            component: parameters.customVideoCard || VideoCard,
                             inputs: {
                                 videoStream: participant.stream ? participant.stream : null,
                                 remoteProducerId: participant.stream ? participant.stream.id : null,
@@ -1937,7 +1937,7 @@ class AddVideosGrid {
                     participant_ = ref_participants.find((obj) => obj.videoID === remoteProducerId);
                     if (participant_) {
                         newComponents[0].push({
-                            component: VideoCard,
+                            component: parameters.customVideoCard || VideoCard,
                             inputs: {
                                 videoStream: participant.stream ? participant.stream : null,
                                 remoteProducerId,
@@ -2001,7 +2001,7 @@ class AddVideosGrid {
                         participant.audioID != null &&
                         participant.audioID !== '') {
                         newComponents[1].push({
-                            component: AudioCard,
+                            component: parameters.customAudioCard || AudioCard,
                             inputs: {
                                 name: participant.name,
                                 barColor: 'red',
@@ -2023,7 +2023,7 @@ class AddVideosGrid {
                     }
                     else {
                         newComponents[1].push({
-                            component: MiniCard,
+                            component: parameters.customMiniCard || MiniCard,
                             inputs: {
                                 initials: participant.name,
                                 fontSize: 20,
@@ -2038,7 +2038,7 @@ class AddVideosGrid {
                 else {
                     participant_ = ref_participants.find((obj) => obj.videoID === remoteProducerId);
                     newComponents[1].push({
-                        component: VideoCard,
+                        component: parameters.customVideoCard || VideoCard,
                         inputs: {
                             videoStream: participant_ && participant_['stream'] ? participant_['stream'] : null,
                             remoteProducerId,
@@ -2097,10 +2097,10 @@ class AddVideosGrid {
             });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AddVideosGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AddVideosGrid, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AddVideosGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AddVideosGrid, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AddVideosGrid, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AddVideosGrid, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -2204,10 +2204,10 @@ class AutoAdjust {
         // Return an array with adjusted values
         return [val1, val2];
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AutoAdjust, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AutoAdjust, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AutoAdjust, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AutoAdjust, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AutoAdjust, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AutoAdjust, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -2262,10 +2262,10 @@ class CalculateRowsAndColumns {
         // Return an array with the calculated number of rows and columns
         return [rows, cols];
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CalculateRowsAndColumns, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CalculateRowsAndColumns, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CalculateRowsAndColumns, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CalculateRowsAndColumns, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CalculateRowsAndColumns, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CalculateRowsAndColumns, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -2811,10 +2811,10 @@ class ChangeVids {
             console.log('changeVids error', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ChangeVids, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ChangeVids, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ChangeVids, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ChangeVids, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ChangeVids, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ChangeVids, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -2902,10 +2902,10 @@ class CheckGrid {
             throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckGrid, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckGrid, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckGrid, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckGrid, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3005,10 +3005,10 @@ class CheckPermission {
             return 2;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckPermission, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckPermission, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckPermission, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckPermission, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckPermission, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckPermission, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3109,10 +3109,10 @@ class CheckScreenShare {
             // throw error;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckScreenShare, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckScreenShare, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckScreenShare, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckScreenShare, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckScreenShare, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckScreenShare, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3438,10 +3438,10 @@ class CloseAndResize {
             await reorderStreams({ add: false, screenChanged: true, parameters });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CloseAndResize, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CloseAndResize, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CloseAndResize, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CloseAndResize, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CloseAndResize, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CloseAndResize, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3542,10 +3542,10 @@ class CompareActiveNames {
             console.log('compareActiveNames error', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CompareActiveNames, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CompareActiveNames, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CompareActiveNames, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CompareActiveNames, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CompareActiveNames, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CompareActiveNames, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3638,10 +3638,10 @@ class CompareScreenStates {
             console.log('compareScreenStates error', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CompareScreenStates, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CompareScreenStates, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CompareScreenStates, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CompareScreenStates, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CompareScreenStates, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CompareScreenStates, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3848,10 +3848,10 @@ class SocketManager {
         }
         return false;
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SocketManager, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SocketManager, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SocketManager, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SocketManager, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SocketManager, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SocketManager, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -3996,10 +3996,10 @@ class ConnectIps {
             console.log('connectIps error', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectIps, deps: [{ token: SocketManager }, { token: NewPipeProducer }, { token: ProducerClosed }, { token: JoinConsumeRoom }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectIps, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectIps, deps: [{ token: SocketManager }, { token: NewPipeProducer }, { token: ProducerClosed }, { token: JoinConsumeRoom }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectIps, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectIps, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectIps, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -4084,10 +4084,10 @@ class ConnectLocalIps {
             console.log('connectLocalIps error', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectLocalIps, deps: [{ token: NewPipeProducer }, { token: ProducerClosed }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectLocalIps, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectLocalIps, deps: [{ token: NewPipeProducer }, { token: ProducerClosed }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectLocalIps, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectLocalIps, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectLocalIps, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -4229,10 +4229,10 @@ class ConnectRecvTransport {
             console.log('connectRecvTransport error', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectRecvTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectRecvTransport, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectRecvTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectRecvTransport, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectRecvTransport, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectRecvTransport, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -4376,10 +4376,10 @@ class ConnectSendTransport {
             console.log('connectSendTransport error', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransport, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransport, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransport, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransport, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -4540,10 +4540,10 @@ class ConnectSendTransportAudio {
             throw new Error("Failed to connect to audio transport.");
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -4702,10 +4702,10 @@ class ConnectSendTransportScreen {
             throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportScreen, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportScreen, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportScreen, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportScreen, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -4861,10 +4861,10 @@ class ConnectSendTransportVideo {
             throw error;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportVideo, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportVideo, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConnectSendTransportVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConnectSendTransportVideo, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -5026,8 +5026,8 @@ class MiniAudio {
     getOverlayPosition(position) {
         return getOverlayPosition({ position });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudio, deps: [{ token: 'visible', optional: true }, { token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'showWaveform', optional: true }, { token: 'overlayPosition', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'nameTextStyling', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MiniAudio, isStandalone: true, selector: "app-mini-audio", inputs: { visible: "visible", customStyle: "customStyle", name: "name", showWaveform: "showWaveform", overlayPosition: "overlayPosition", barColor: "barColor", textColor: "textColor", nameTextStyling: "nameTextStyling", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle" }, host: { listeners: { "document:mousemove": "handleMouseMove($event)", "document:mouseup": "handleMouseUp()" } }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniAudio, deps: [{ token: 'visible', optional: true }, { token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'showWaveform', optional: true }, { token: 'overlayPosition', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'nameTextStyling', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MiniAudio, isStandalone: true, selector: "app-mini-audio", inputs: { visible: "visible", customStyle: "customStyle", name: "name", showWaveform: "showWaveform", overlayPosition: "overlayPosition", barColor: "barColor", textColor: "textColor", nameTextStyling: "nameTextStyling", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle" }, host: { listeners: { "document:mousemove": "handleMouseMove($event)", "document:mouseup": "handleMouseUp()" } }, ngImport: i0, template: `
     <div
       *ngIf="visible"
       class="modal-container"
@@ -5063,7 +5063,7 @@ class MiniAudio {
     </div>
   `, isInline: true, styles: [".modal-container{position:absolute;top:0;right:0;padding:0;margin:0;width:100px;height:100px;display:flex;justify-content:center;align-items:center;background-color:#002d2180;z-index:8;elevation:8}.card{width:100%;height:100%;margin:0;padding:0;background-color:#2c678f}.background-image{position:absolute;width:70px;height:70px;justify-content:center;align-items:center;align-self:center;top:40%;left:50%;transform:translate(-35px,-10px)}.name-text{font-size:20px;font-weight:700;display:flex;justify-content:center;align-items:center;background-color:#00000080;width:100%;padding-top:5px;padding-bottom:5px;text-align:center;z-index:2}.overlay-web{position:absolute;width:100%;height:100%;display:grid;grid-template-columns:1fr 12fr 1fr;grid-gap:3px;z-index:3}.waveform-web{display:flex;justify-content:center;align-items:center;background-color:#0000000d;padding:0;flex-direction:row}.bar{flex:1;opacity:.35;margin-right:.5px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniAudio, decorators: [{
             type: Component,
             args: [{ selector: 'app-mini-audio', imports: [CommonModule], template: `
     <div
@@ -5460,10 +5460,10 @@ class MiniAudioPlayer {
         }
         return this.cachedMiniAudioProps;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudioPlayer, deps: [{ token: i0.Injector }, { token: 'stream', optional: true }, { token: 'consumer', optional: true }, { token: 'remoteProducerId', optional: true }, { token: 'parameters', optional: true }, { token: 'MiniAudioComponent', optional: true }, { token: 'miniAudioProps', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MiniAudioPlayer, isStandalone: true, selector: "app-mini-audio-player", inputs: { stream: "stream", consumer: "consumer", remoteProducerId: "remoteProducerId", parameters: "parameters", MiniAudioComponent: "MiniAudioComponent", miniAudioProps: "miniAudioProps" }, viewQueries: [{ propertyName: "audioElement", first: true, predicate: ["audioElement"], descendants: true, static: true }], ngImport: i0, template: "<div class=\"container\">\r\n  <audio *ngIf=\"stream\" autoplay playsinline #audioElement [srcObject]=\"stream\"></audio>\r\n\r\n  <ng-container *ngIf=\"MiniAudioComponent\">\r\n    <ng-container *ngComponentOutlet=\"MiniAudioComponent; injector: createInjector(getMiniAudioProps())\"></ng-container>\r\n  </ng-container>\r\n</div>\r\n", styles: [".container{display:flex;justify-content:center;align-items:center;z-index:9}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniAudioPlayer, deps: [{ token: i0.Injector }, { token: 'stream', optional: true }, { token: 'consumer', optional: true }, { token: 'remoteProducerId', optional: true }, { token: 'parameters', optional: true }, { token: 'MiniAudioComponent', optional: true }, { token: 'miniAudioProps', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MiniAudioPlayer, isStandalone: true, selector: "app-mini-audio-player", inputs: { stream: "stream", consumer: "consumer", remoteProducerId: "remoteProducerId", parameters: "parameters", MiniAudioComponent: "MiniAudioComponent", miniAudioProps: "miniAudioProps" }, viewQueries: [{ propertyName: "audioElement", first: true, predicate: ["audioElement"], descendants: true, static: true }], ngImport: i0, template: "<div class=\"container\">\r\n  <audio *ngIf=\"stream\" autoplay playsinline #audioElement [srcObject]=\"stream\"></audio>\r\n\r\n  <ng-container *ngIf=\"MiniAudioComponent\">\r\n    <ng-container *ngComponentOutlet=\"MiniAudioComponent; injector: createInjector(getMiniAudioProps())\"></ng-container>\r\n  </ng-container>\r\n</div>\r\n", styles: [".container{display:flex;justify-content:center;align-items:center;z-index:9}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniAudioPlayer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniAudioPlayer, decorators: [{
             type: Component,
             args: [{ selector: 'app-mini-audio-player', imports: [CommonModule], template: "<div class=\"container\">\r\n  <audio *ngIf=\"stream\" autoplay playsinline #audioElement [srcObject]=\"stream\"></audio>\r\n\r\n  <ng-container *ngIf=\"MiniAudioComponent\">\r\n    <ng-container *ngComponentOutlet=\"MiniAudioComponent; injector: createInjector(getMiniAudioProps())\"></ng-container>\r\n  </ng-container>\r\n</div>\r\n", styles: [".container{display:flex;justify-content:center;align-items:center;z-index:9}\n"] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: MediaStream, decorators: [{
@@ -5871,10 +5871,10 @@ class ConsumerResume {
             // throw error;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConsumerResume, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConsumerResume, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConsumerResume, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConsumerResume, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConsumerResume, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConsumerResume, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -6186,10 +6186,10 @@ class CreateSendTransport {
             console.log('Error creating send transport:', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateSendTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateSendTransport, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateSendTransport, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateSendTransport, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateSendTransport, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateSendTransport, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -6352,10 +6352,10 @@ class DisconnectSendTransportAudio {
             console.error('disconnectSendTransportAudio error', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -6512,10 +6512,10 @@ class DisconnectSendTransportVideo {
             console.log('Error disconnecting send transport for video:', error.message);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportVideo, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportVideo, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportVideo, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -6648,10 +6648,10 @@ class DisconnectSendTransportScreen {
             // Handle errors during the disconnection process
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportScreen, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportScreen, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectSendTransportScreen, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectSendTransportScreen, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7159,10 +7159,10 @@ class DispStreams {
             await rePort({ parameters });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DispStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DispStreams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DispStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DispStreams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DispStreams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DispStreams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7263,10 +7263,10 @@ class GeneratePageContent {
             console.log('Error generating page content:', error.message);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GeneratePageContent, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GeneratePageContent, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GeneratePageContent, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GeneratePageContent, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GeneratePageContent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GeneratePageContent, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7381,10 +7381,10 @@ class GetEstimate {
             return [0, 0, 0];
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetEstimate, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetEstimate, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetEstimate, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetEstimate, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetEstimate, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetEstimate, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7465,10 +7465,10 @@ class GetPipedProducersAlt {
             // throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetPipedProducersAlt, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetPipedProducersAlt, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetPipedProducersAlt, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetPipedProducersAlt, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetPipedProducersAlt, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetPipedProducersAlt, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7542,10 +7542,10 @@ class GetProducersPiped {
             // throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetProducersPiped, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetProducersPiped, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetProducersPiped, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetProducersPiped, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetProducersPiped, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetProducersPiped, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7631,10 +7631,10 @@ class GetVideos {
             // throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetVideos, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetVideos, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetVideos, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetVideos, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetVideos, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetVideos, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7724,10 +7724,10 @@ class MixStreams {
             throw error;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MixStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MixStreams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MixStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MixStreams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MixStreams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MixStreams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -7825,10 +7825,10 @@ class OnScreenChanges {
             // throw error;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: OnScreenChanges, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: OnScreenChanges, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: OnScreenChanges, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: OnScreenChanges, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: OnScreenChanges, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: OnScreenChanges, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -8086,7 +8086,7 @@ class PrepopulateUserMedia {
                     }
                     else {
                         newComponents.push({
-                            component: VideoCard,
+                            component: parameters.customVideoCard || VideoCard,
                             inputs: {
                                 videoStream: shared ? hostStream : hostStream.stream,
                                 remoteProducerId: host.ScreenID,
@@ -8122,7 +8122,7 @@ class PrepopulateUserMedia {
                     if (islevel == '2' && videoAlreadyOn) {
                         // Admin's video is on
                         newComponents.push({
-                            component: VideoCard,
+                            component: parameters.customVideoCard || VideoCard,
                             inputs: {
                                 videoStream: keepBackground && virtualStream ? virtualStream : localStreamVideo,
                                 remoteProducerId: host.videoID,
@@ -8163,7 +8163,7 @@ class PrepopulateUserMedia {
                             // Audio is on
                             try {
                                 newComponents.push({
-                                    component: AudioCard,
+                                    component: parameters.customAudioCard || AudioCard,
                                     inputs: {
                                         name: host.name,
                                         barColor: 'red',
@@ -8197,7 +8197,7 @@ class PrepopulateUserMedia {
                             // Audio is off
                             try {
                                 newComponents.push({
-                                    component: MiniCard,
+                                    component: parameters.customMiniCard || MiniCard,
                                     inputs: {
                                         initials: name,
                                         fontSize: 20,
@@ -8231,7 +8231,7 @@ class PrepopulateUserMedia {
                         else {
                             try {
                                 newComponents.push({
-                                    component: VideoCard,
+                                    component: parameters.customVideoCard || VideoCard,
                                     inputs: {
                                         videoStream: shared ? hostStream : hostStream.stream,
                                         remoteProducerId: host.ScreenID,
@@ -8275,7 +8275,7 @@ class PrepopulateUserMedia {
                         try {
                             if (host['stream']) {
                                 newComponents.push({
-                                    component: VideoCard,
+                                    component: parameters.customVideoCard || VideoCard,
                                     inputs: {
                                         videoStream: host['stream'],
                                         remoteProducerId: host.videoID,
@@ -8300,7 +8300,7 @@ class PrepopulateUserMedia {
                             }
                             else {
                                 newComponents.push({
-                                    component: MiniCard,
+                                    component: parameters.customMiniCard || MiniCard,
                                     inputs: {
                                         initials: name,
                                         fontSize: 20,
@@ -8329,7 +8329,7 @@ class PrepopulateUserMedia {
                 // Host is null, add a mini card
                 try {
                     newComponents.push({
-                        component: MiniCard,
+                        component: parameters.customMiniCard || MiniCard,
                         inputs: {
                             initials: name,
                             fontSize: 20,
@@ -8361,10 +8361,10 @@ class PrepopulateUserMedia {
             return [];
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PrepopulateUserMedia, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PrepopulateUserMedia, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PrepopulateUserMedia, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PrepopulateUserMedia, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PrepopulateUserMedia, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PrepopulateUserMedia, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -8487,10 +8487,10 @@ class ProcessConsumerTransports {
             // throw new Error(`Error processing consumer transports: ${error.message}`);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProcessConsumerTransports, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProcessConsumerTransports, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProcessConsumerTransports, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProcessConsumerTransports, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProcessConsumerTransports, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProcessConsumerTransports, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -8586,10 +8586,10 @@ class ProcessConsumerTransportsAudio {
             console.log(`Error in processConsumerTransportsAudio: ${error.message}`);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProcessConsumerTransportsAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProcessConsumerTransportsAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProcessConsumerTransportsAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProcessConsumerTransportsAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProcessConsumerTransportsAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProcessConsumerTransportsAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -8757,10 +8757,10 @@ class Readjust {
             // throw error;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Readjust, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Readjust, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Readjust, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Readjust, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Readjust, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Readjust, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -8847,10 +8847,10 @@ class ReceiveAllPipedTransports {
             // throw error;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveAllPipedTransports, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveAllPipedTransports, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveAllPipedTransports, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveAllPipedTransports, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveAllPipedTransports, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveAllPipedTransports, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9084,10 +9084,10 @@ class ReorderStreams {
         //reflect the changes on the ui
         await changeVids({ screenChanged, parameters });
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReorderStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReorderStreams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReorderStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReorderStreams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReorderStreams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReorderStreams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9196,10 +9196,10 @@ class RePort {
             console.error('Error during rePorting: ', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RePort, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RePort, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RePort, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RePort, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RePort, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RePort, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9295,10 +9295,10 @@ class RequestScreenShare {
             console.error('Error during requesting screen share: ', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RequestScreenShare, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RequestScreenShare, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RequestScreenShare, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RequestScreenShare, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RequestScreenShare, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RequestScreenShare, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9443,10 +9443,10 @@ class ResumePauseAudioStreams {
             console.log('Error in resumePauseAudioStreams:', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumePauseAudioStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumePauseAudioStreams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumePauseAudioStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumePauseAudioStreams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumePauseAudioStreams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumePauseAudioStreams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9544,10 +9544,10 @@ class ResumePauseStreams {
             // throw new Error(`Error during resuming or pausing streams: ${error.message}`);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumePauseStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumePauseStreams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumePauseStreams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumePauseStreams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumePauseStreams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumePauseStreams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9684,10 +9684,10 @@ class ResumeSendTransportAudio {
             throw new Error(`Error during resuming audio send transport: ${error.message}`);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumeSendTransportAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumeSendTransportAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumeSendTransportAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumeSendTransportAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ResumeSendTransportAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ResumeSendTransportAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -9921,10 +9921,10 @@ class ReUpdateInter {
             updateOldSoundIds(oldSoundIds);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReUpdateInter, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReUpdateInter, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReUpdateInter, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReUpdateInter, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReUpdateInter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReUpdateInter, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -10039,10 +10039,10 @@ class StartShareScreen {
             console.log('Error starting screen share', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartShareScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartShareScreen, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartShareScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartShareScreen, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartShareScreen, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartShareScreen, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -10217,10 +10217,10 @@ class StopShareScreen {
         first_round = false;
         updateFirst_round(first_round);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StopShareScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StopShareScreen, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StopShareScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StopShareScreen, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StopShareScreen, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StopShareScreen, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -10425,10 +10425,10 @@ class StreamSuccessAudio {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -10717,10 +10717,10 @@ class StreamSuccessAudioSwitch {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessAudioSwitch, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessAudioSwitch, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessAudioSwitch, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessAudioSwitch, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessAudioSwitch, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessAudioSwitch, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -10909,10 +10909,10 @@ class StreamSuccessScreen {
             //console.log('Error handling screen annotation:', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessScreen, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessScreen, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessScreen, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessScreen, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessScreen, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -11170,10 +11170,10 @@ class StreamSuccessVideo {
             });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessVideo, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessVideo, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StreamSuccessVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StreamSuccessVideo, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -11288,10 +11288,10 @@ class SwitchUserAudio {
             });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -11568,10 +11568,10 @@ class ClickVideo {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickVideo, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickVideo, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickVideo, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -11737,10 +11737,10 @@ class SwitchUserVideo {
             });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserVideo, deps: [{ token: ClickVideo }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserVideo, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserVideo, deps: [{ token: ClickVideo }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserVideo, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserVideo, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -11994,10 +11994,10 @@ class SwitchUserVideoAlt {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserVideoAlt, deps: [{ token: ClickVideo }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserVideoAlt, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserVideoAlt, deps: [{ token: ClickVideo }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserVideoAlt, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchUserVideoAlt, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchUserVideoAlt, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12208,10 +12208,10 @@ class Trigger {
             console.log('Error triggering updateScreen:', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Trigger, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Trigger, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Trigger, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Trigger, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Trigger, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Trigger, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12341,10 +12341,10 @@ class UpdateMiniCardsGrid {
             updateGridSizes(gridSizes);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateMiniCardsGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateMiniCardsGrid, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateMiniCardsGrid, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateMiniCardsGrid, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateMiniCardsGrid, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateMiniCardsGrid, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12423,10 +12423,10 @@ class UpdateParticipantAudioDecibels {
         // Update the audioDecibels array
         updateAudioDecibels(audioDecibels);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateParticipantAudioDecibels, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateParticipantAudioDecibels, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateParticipantAudioDecibels, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateParticipantAudioDecibels, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateParticipantAudioDecibels, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateParticipantAudioDecibels, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12479,10 +12479,10 @@ class AParams {
             },
         ],
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AParams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AParams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AParams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AParams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12564,10 +12564,10 @@ class HParams {
             videoGoogleStartBitrate: 320,
         },
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HParams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HParams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HParams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HParams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12623,10 +12623,10 @@ class ScreenParams {
             videoGoogleStartBitrate: 1000,
         },
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenParams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenParams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenParams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenParams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12708,10 +12708,10 @@ class VParams {
             videoGoogleStartBitrate: 320,
         },
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VParams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VParams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VParams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VParams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12754,10 +12754,10 @@ class LaunchBackground {
     launchBackground({ updateIsBackgroundModalVisible, isBackgroundModalVisible, }) {
         updateIsBackgroundModalVisible(!isBackgroundModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchBackground, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchBackground, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchBackground, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchBackground, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchBackground, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchBackground, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12798,10 +12798,10 @@ class LaunchBreakoutRooms {
     launchBreakoutRooms({ updateIsBreakoutRoomsModalVisible, isBreakoutRoomsModalVisible, }) {
         updateIsBreakoutRoomsModalVisible(!isBreakoutRoomsModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchBreakoutRooms, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchBreakoutRooms, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchBreakoutRooms, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchBreakoutRooms, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchBreakoutRooms, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchBreakoutRooms, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -12979,10 +12979,10 @@ class BreakoutRoomUpdated {
             // console.log('Error updating breakout room:', error.message);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BreakoutRoomUpdated, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BreakoutRoomUpdated, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BreakoutRoomUpdated, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BreakoutRoomUpdated, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BreakoutRoomUpdated, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BreakoutRoomUpdated, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13023,10 +13023,10 @@ class launchCoHost {
     launchCoHost({ updateIsCoHostModalVisible, isCoHostModalVisible }) {
         updateIsCoHostModalVisible(!isCoHostModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: launchCoHost, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: launchCoHost, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: launchCoHost, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: launchCoHost, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: launchCoHost, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: launchCoHost, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13125,10 +13125,10 @@ class ModifyCoHostSettings {
         // Close the co-host modal
         updateIsCoHostModalVisible(false);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifyCoHostSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifyCoHostSettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifyCoHostSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifyCoHostSettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifyCoHostSettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifyCoHostSettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13169,10 +13169,10 @@ class LaunchDisplaySettings {
         // Toggle the visibility of the display settings modal.
         updateIsDisplaySettingsModalVisible(!isDisplaySettingsModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchDisplaySettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchDisplaySettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchDisplaySettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchDisplaySettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchDisplaySettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchDisplaySettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13361,10 +13361,10 @@ class ModifyDisplaySettings {
             updatePrevMeetingDisplayType(meetingDisplayType);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifyDisplaySettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifyDisplaySettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifyDisplaySettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifyDisplaySettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifyDisplaySettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifyDisplaySettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13401,10 +13401,10 @@ class LaunchConfirmExit {
     launchConfirmExit({ updateIsConfirmExitModalVisible, isConfirmExitModalVisible, }) {
         updateIsConfirmExitModalVisible(!isConfirmExitModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchConfirmExit, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchConfirmExit, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchConfirmExit, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchConfirmExit, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchConfirmExit, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchConfirmExit, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13462,10 +13462,10 @@ class ConfirmExit {
             });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmExit, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmExit, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmExit, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmExit, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmExit, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmExit, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13545,10 +13545,10 @@ class LaunchMediaSettings {
             updateIsMediaSettingsModalVisible(false);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMediaSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMediaSettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMediaSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMediaSettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMediaSettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMediaSettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13587,10 +13587,10 @@ class LaunchMenuModal {
     launchMenuModal({ updateIsMenuModalVisible, isMenuModalVisible }) {
         updateIsMenuModalVisible(!isMenuModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMenuModal, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMenuModal, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMenuModal, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMenuModal, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMenuModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMenuModal, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13630,10 +13630,10 @@ class LaunchMessages {
     launchMessages({ updateIsMessagesModalVisible, isMessagesModalVisible, }) {
         updateIsMessagesModalVisible(!isMessagesModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMessages, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMessages, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMessages, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMessages, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchMessages, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchMessages, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13771,10 +13771,10 @@ class SendMessage {
             roomName: roomName,
         });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SendMessage, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SendMessage, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SendMessage, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SendMessage, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SendMessage, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SendMessage, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13816,10 +13816,10 @@ class LaunchParticipants {
     launchParticipants({ updateIsParticipantsModalVisible, isParticipantsModalVisible, }) {
         updateIsParticipantsModalVisible(!isParticipantsModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchParticipants, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchParticipants, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchParticipants, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchParticipants, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -13912,10 +13912,10 @@ class MessageParticipants {
             return;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessageParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessageParticipants, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessageParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessageParticipants, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessageParticipants, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessageParticipants, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14006,10 +14006,10 @@ class MuteParticipants {
             });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MuteParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MuteParticipants, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MuteParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MuteParticipants, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MuteParticipants, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MuteParticipants, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14111,10 +14111,10 @@ class RemoveParticipants {
             });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RemoveParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RemoveParticipants, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RemoveParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RemoveParticipants, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RemoveParticipants, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RemoveParticipants, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14184,10 +14184,10 @@ class HandleCreatePoll {
             /* handle error */
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleCreatePoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleCreatePoll, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleCreatePoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleCreatePoll, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleCreatePoll, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleCreatePoll, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14254,10 +14254,10 @@ class HandleEndPoll {
             console.log(error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleEndPoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleEndPoll, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleEndPoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleEndPoll, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleEndPoll, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleEndPoll, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14335,10 +14335,10 @@ class HandleVotePoll {
             // console.log(error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleVotePoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleVotePoll, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleVotePoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleVotePoll, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HandleVotePoll, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HandleVotePoll, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14376,10 +14376,10 @@ class LaunchPoll {
     launchPoll({ updateIsPollModalVisible, isPollModalVisible }) {
         updateIsPollModalVisible(!isPollModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchPoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchPoll, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchPoll, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchPoll, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchPoll, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchPoll, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14469,10 +14469,10 @@ class PollUpdated {
             // console.log(error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PollUpdated, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PollUpdated, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PollUpdated, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PollUpdated, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PollUpdated, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PollUpdated, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14536,10 +14536,10 @@ class CheckPauseState {
             return false;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckPauseState, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckPauseState, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckPauseState, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckPauseState, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckPauseState, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckPauseState, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14590,10 +14590,10 @@ class CheckResumeState {
         }
         return pauseRecordCount <= ref_limit;
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckResumeState, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckResumeState, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckResumeState, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckResumeState, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckResumeState, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckResumeState, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14866,10 +14866,10 @@ class ConfirmRecording {
         updateRecordingPreferredOrientation(recordingPreferredOrientation);
         updateRecordingMultiFormatsSupport(recordingMultiFormatsSupport);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -14989,10 +14989,10 @@ class LaunchRecording {
         // Update the visibility of the recording modal
         updateIsRecordingModalVisible(!isRecordingModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15054,10 +15054,10 @@ class RecordPauseTimer {
             return false;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordPauseTimer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordPauseTimer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordPauseTimer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordPauseTimer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordPauseTimer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordPauseTimer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15132,10 +15132,10 @@ class RecordUpdateTimer {
         const formattedTime = padNumber(hours) + ':' + padNumber(minutes) + ':' + padNumber(seconds);
         updateRecordingProgressTime(formattedTime);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordUpdateTimer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordUpdateTimer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordUpdateTimer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordUpdateTimer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordUpdateTimer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordUpdateTimer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15259,10 +15259,10 @@ class RecordResumeTimer {
             return false;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordResumeTimer, deps: [{ token: RecordUpdateTimer }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordResumeTimer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordResumeTimer, deps: [{ token: RecordUpdateTimer }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordResumeTimer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordResumeTimer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordResumeTimer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15390,10 +15390,10 @@ class RecordStartTimer {
             setTimeout(enablePauseResume, recordChangeSeconds); // Enable pause/resume actions after specified time
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordStartTimer, deps: [{ token: RecordUpdateTimer }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordStartTimer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordStartTimer, deps: [{ token: RecordUpdateTimer }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordStartTimer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordStartTimer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordStartTimer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15586,10 +15586,10 @@ class StartRecording {
         updateIsRecordingModalVisible(false);
         return recAttempt;
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartRecording, deps: [{ token: RecordStartTimer }, { token: RecordResumeTimer }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartRecording, deps: [{ token: RecordStartTimer }, { token: RecordResumeTimer }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15697,10 +15697,10 @@ class StopRecording {
             showAlert?.({ message: 'Recording is not started yet or already stopped', type: 'danger' });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StopRecording, deps: [{ token: RecordPauseTimer }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StopRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StopRecording, deps: [{ token: RecordPauseTimer }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StopRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StopRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StopRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -15966,10 +15966,10 @@ class UpdateRecording {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateRecording, deps: [{ token: CheckPauseState }, { token: CheckResumeState }, { token: RecordPauseTimer }, { token: RecordResumeTimer }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateRecording, deps: [{ token: CheckPauseState }, { token: CheckResumeState }, { token: RecordPauseTimer }, { token: RecordResumeTimer }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16015,10 +16015,10 @@ class LaunchRequests {
         // Toggle the visibility of the display settings modal.
         updateIsRequestsModalVisible(!isRequestsModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchRequests, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchRequests, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchRequests, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchRequests, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchRequests, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchRequests, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16097,10 +16097,10 @@ class RespondToRequests {
         // Emit the response via the socket
         socket.emit('updateUserofRequestStatus', { requestResponse, roomName });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RespondToRequests, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RespondToRequests, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RespondToRequests, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RespondToRequests, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RespondToRequests, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RespondToRequests, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16146,10 +16146,10 @@ class LaunchSettings {
         // Toggle the visibility of the display settings modal.
         updateIsSettingsModalVisible(!isSettingsModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchSettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchSettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchSettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchSettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16253,10 +16253,10 @@ class ModifySettings {
         // Close modal
         updateIsSettingsModalVisible(false);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifySettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifySettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifySettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifySettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ModifySettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ModifySettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16535,10 +16535,10 @@ class ClickAudio {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16608,10 +16608,10 @@ class ClickChat {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickChat, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickChat, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickChat, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickChat, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickChat, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickChat, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16784,10 +16784,10 @@ class ClickScreenShare {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickScreenShare, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickScreenShare, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickScreenShare, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickScreenShare, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ClickScreenShare, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ClickScreenShare, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16862,10 +16862,10 @@ class SwitchAudio {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchAudio, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchAudio, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchAudio, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchAudio, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -16992,10 +16992,10 @@ class SwitchVideo {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchVideo, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchVideo, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchVideo, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchVideo, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17106,10 +17106,10 @@ class SwitchVideoAlt {
         updateIsMediaSettingsModalVisible(false);
         await switchUserVideoAlt({ videoPreference: newFacingMode, checkoff, parameters });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchVideoAlt, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchVideoAlt, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchVideoAlt, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchVideoAlt, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SwitchVideoAlt, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SwitchVideoAlt, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17240,10 +17240,10 @@ class JoinRoomOnMediaSFU {
             };
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoomOnMediaSFU, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoomOnMediaSFU, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoomOnMediaSFU, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoomOnMediaSFU, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoomOnMediaSFU, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoomOnMediaSFU, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17334,10 +17334,10 @@ class StartMeetingProgressTimer {
             this.timeProgress = null;
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartMeetingProgressTimer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartMeetingProgressTimer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartMeetingProgressTimer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartMeetingProgressTimer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartMeetingProgressTimer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartMeetingProgressTimer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17389,10 +17389,10 @@ class FormatNumber {
         // Return undefined for falsy input values
         return undefined;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FormatNumber, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FormatNumber, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FormatNumber, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FormatNumber, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FormatNumber, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FormatNumber, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17507,10 +17507,10 @@ class GenerateRandomMessages {
         });
         return messages;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomMessages, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomMessages, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomMessages, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomMessages, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomMessages, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomMessages, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17631,10 +17631,10 @@ class GenerateRandomParticipants {
         }
         return participants;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomParticipants, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomParticipants, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomParticipants, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomParticipants, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomParticipants, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17707,10 +17707,10 @@ class GenerateRandomPolls {
         }
         return polls;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomPolls, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomPolls, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomPolls, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomPolls, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomPolls, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomPolls, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17795,10 +17795,10 @@ class GenerateRandomRequestList {
         });
         return requestList;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomRequestList, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomRequestList, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomRequestList, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomRequestList, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomRequestList, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomRequestList, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17852,10 +17852,10 @@ class GenerateRandomWaitingRoomList {
         }
         return waitingRoomList;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomWaitingRoomList, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomWaitingRoomList, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomWaitingRoomList, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomWaitingRoomList, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GenerateRandomWaitingRoomList, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GenerateRandomWaitingRoomList, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -17940,10 +17940,10 @@ class LaunchWaiting {
         // Open or close the menu modal
         updateIsWaitingModalVisible(!isWaitingModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchWaiting, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchWaiting, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchWaiting, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchWaiting, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchWaiting, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchWaiting, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18007,10 +18007,10 @@ class RespondToWaiting {
             roomName,
         });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RespondToWaiting, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RespondToWaiting, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RespondToWaiting, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RespondToWaiting, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RespondToWaiting, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RespondToWaiting, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18049,10 +18049,10 @@ class LaunchConfigureWhiteboard {
         // Open or close the menu modal
         updateIsConfigureWhiteboardModalVisible(!isConfigureWhiteboardModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchConfigureWhiteboard, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchConfigureWhiteboard, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchConfigureWhiteboard, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchConfigureWhiteboard, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LaunchConfigureWhiteboard, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LaunchConfigureWhiteboard, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18185,10 +18185,10 @@ class CaptureCanvasStream {
             console.log('Error in captureCanvasStream:', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CaptureCanvasStream, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CaptureCanvasStream, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CaptureCanvasStream, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CaptureCanvasStream, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CaptureCanvasStream, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CaptureCanvasStream, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18256,10 +18256,10 @@ class CreateDeviceClient {
             throw error; // Propagate other errors
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateDeviceClient, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateDeviceClient, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateDeviceClient, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateDeviceClient, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateDeviceClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateDeviceClient, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18405,10 +18405,10 @@ class JoinRoom {
             });
         });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoom, deps: [{ token: ValidateAlphanumeric }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoom, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoom, deps: [{ token: ValidateAlphanumeric }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoom, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoom, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoom, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18497,10 +18497,10 @@ class JoinRoomClient {
             throw new Error('Failed to join the room. Please check your connection and try again.');
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoomClient, deps: [{ token: JoinRoom }, { token: JoinConRoom }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoomClient, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoomClient, deps: [{ token: JoinRoom }, { token: JoinConRoom }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoomClient, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinRoomClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinRoomClient, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18579,10 +18579,10 @@ class VideoCaptureConstraints {
     fhdFrameRate = 20;
     qhdFrameRate = 30;
     screenFrameRate = 30;
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VideoCaptureConstraints, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VideoCaptureConstraints, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VideoCaptureConstraints, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VideoCaptureConstraints, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: VideoCaptureConstraints, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: VideoCaptureConstraints, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18848,10 +18848,10 @@ class UpdateRoomParametersClient {
             });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateRoomParametersClient, deps: [{ token: VideoCaptureConstraints }, { token: HParams }, { token: VParams }, { token: ScreenParams }, { token: AParams }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateRoomParametersClient, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateRoomParametersClient, deps: [{ token: VideoCaptureConstraints }, { token: HParams }, { token: VParams }, { token: ScreenParams }, { token: AParams }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateRoomParametersClient, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateRoomParametersClient, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateRoomParametersClient, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -18960,10 +18960,10 @@ class CheckLimitsAndMakeRequest {
             parameters.updateIsLoadingModalVisible(false);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckLimitsAndMakeRequest, deps: [{ token: i1$1.CookieService }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckLimitsAndMakeRequest, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckLimitsAndMakeRequest, deps: [{ token: i1$1.CookieService }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckLimitsAndMakeRequest, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CheckLimitsAndMakeRequest, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CheckLimitsAndMakeRequest, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -19253,10 +19253,10 @@ class JoinLocalRoom {
             return;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinLocalRoom, deps: [{ token: ValidateAlphanumeric }, { token: CheckLimitsAndMakeRequest }, { token: JoinRoomOnMediaSFU }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinLocalRoom, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinLocalRoom, deps: [{ token: ValidateAlphanumeric }, { token: CheckLimitsAndMakeRequest }, { token: JoinRoomOnMediaSFU }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinLocalRoom, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: JoinLocalRoom, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: JoinLocalRoom, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -19483,10 +19483,10 @@ class AllMembers {
             console.log('allMembers OnScreen', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllMembers, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllMembers, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllMembers, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllMembers, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllMembers, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllMembers, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -19723,10 +19723,10 @@ class AllMembersRest {
             console.log('allMembersRest Settings', error);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllMembersRest, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllMembersRest, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllMembersRest, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllMembersRest, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllMembersRest, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllMembersRest, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -19778,10 +19778,10 @@ class AllWaitingRoomMembers {
         // Update the total count of waiting room participants
         updateTotalReqWait(totalReqs);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllWaitingRoomMembers, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllWaitingRoomMembers, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllWaitingRoomMembers, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllWaitingRoomMembers, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AllWaitingRoomMembers, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AllWaitingRoomMembers, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -19852,10 +19852,10 @@ class BanParticipant {
             await reorderStreams({ add: false, screenChanged: true, parameters });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BanParticipant, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BanParticipant, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BanParticipant, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BanParticipant, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BanParticipant, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BanParticipant, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20033,10 +20033,10 @@ class ControlMediaHost {
             console.error('Error in controlMediaHost:', error);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlMediaHost, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlMediaHost, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlMediaHost, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlMediaHost, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlMediaHost, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlMediaHost, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20095,10 +20095,10 @@ class Disconnect {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Disconnect, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Disconnect, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Disconnect, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Disconnect, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Disconnect, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Disconnect, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20159,10 +20159,10 @@ class DisconnectUserSelf {
             // Do nothing
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectUserSelf, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectUserSelf, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectUserSelf, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectUserSelf, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisconnectUserSelf, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisconnectUserSelf, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20235,10 +20235,10 @@ class GetDomains {
             throw new Error('Failed to retrieve domains.');
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetDomains, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetDomains, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetDomains, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetDomains, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: GetDomains, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: GetDomains, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20383,10 +20383,10 @@ class HostRequestResponse {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HostRequestResponse, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HostRequestResponse, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HostRequestResponse, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HostRequestResponse, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: HostRequestResponse, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: HostRequestResponse, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20454,10 +20454,10 @@ class MeetingEnded {
             // }, 2000);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingEnded, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingEnded, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingEnded, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingEnded, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingEnded, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingEnded, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20499,10 +20499,10 @@ class MeetingStillThere {
         // Update the visibility of the "still there?" modal
         updateIsConfirmHereModalVisible(true);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingStillThere, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingStillThere, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingStillThere, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingStillThere, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingStillThere, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingStillThere, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20560,10 +20560,10 @@ class MeetingTimeRemaining {
             });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingTimeRemaining, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingTimeRemaining, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingTimeRemaining, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingTimeRemaining, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingTimeRemaining, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingTimeRemaining, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20621,10 +20621,10 @@ class ParticipantRequested {
         const reqCount = updatedRequestList.length + waitingRoomList.length;
         updateTotalReqWait(reqCount);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantRequested, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantRequested, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantRequested, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantRequested, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantRequested, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantRequested, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20673,10 +20673,10 @@ class PersonJoined {
             duration: 3000,
         });
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PersonJoined, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PersonJoined, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PersonJoined, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PersonJoined, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PersonJoined, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PersonJoined, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20800,10 +20800,10 @@ class ProducerMediaClosed {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaClosed, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaClosed, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaClosed, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaClosed, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaClosed, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaClosed, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -20950,10 +20950,10 @@ class ProducerMediaPaused {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaPaused, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaPaused, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaPaused, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaPaused, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaPaused, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaPaused, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21047,10 +21047,10 @@ class ProducerMediaResumed {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaResumed, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaResumed, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaResumed, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaResumed, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ProducerMediaResumed, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ProducerMediaResumed, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21112,10 +21112,10 @@ class ReInitiateRecording {
             });
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReInitiateRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReInitiateRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReInitiateRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReInitiateRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReInitiateRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReInitiateRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21244,10 +21244,10 @@ class ReceiveMessage {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveMessage, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveMessage, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveMessage, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveMessage, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveMessage, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveMessage, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21303,10 +21303,10 @@ class SoundPlayer {
         const audio = new Audio(soundUrl);
         audio.play().catch((error) => console.error('Error playing sound:', error));
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SoundPlayer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SoundPlayer, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SoundPlayer, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SoundPlayer, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SoundPlayer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SoundPlayer, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21535,10 +21535,10 @@ class RecordingNotice {
     padNumber = (number) => {
         return number.toString().padStart(2, '0');
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordingNotice, deps: [{ token: SoundPlayer }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordingNotice, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordingNotice, deps: [{ token: SoundPlayer }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordingNotice, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordingNotice, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordingNotice, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21654,10 +21654,10 @@ class RoomRecordParams {
         updateRecordingSupportForOtherOrientation(recordParams.recordingSupportForOtherOrientation);
         updateRecordingMultiFormatsSupport(recordParams.recordingMultiFormatsSupport);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RoomRecordParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RoomRecordParams, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RoomRecordParams, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RoomRecordParams, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RoomRecordParams, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RoomRecordParams, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21738,10 +21738,10 @@ class ScreenProducerId {
             updateDeferScreenReceived(deferScreenReceived);
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenProducerId, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenProducerId, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenProducerId, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenProducerId, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenProducerId, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenProducerId, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21796,10 +21796,10 @@ class StartRecords {
             }
         });
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartRecords, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartRecords, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartRecords, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartRecords, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StartRecords, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StartRecords, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21856,10 +21856,10 @@ class StoppedRecording {
             // throw new Error("Failed to display the recording stopped alert message.");
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StoppedRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StoppedRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StoppedRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StoppedRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StoppedRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StoppedRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21911,10 +21911,10 @@ class TimeLeftRecording {
             // throw new Error("Failed to display the time left alert message.");
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: TimeLeftRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: TimeLeftRecording, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: TimeLeftRecording, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: TimeLeftRecording, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: TimeLeftRecording, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: TimeLeftRecording, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -21988,13 +21988,11 @@ class UpdateConsumingDomains {
         let { participants, getDomains, consume_sockets, connectIps } = parameters;
         parameters = parameters.getUpdatedAllParams();
         consume_sockets = parameters.consume_sockets;
-        console.log('Updating consuming domains...');
         try {
             // Check if participants array is not empty
             if (participants.length > 0) {
                 // Check if alt_domains has keys and remove duplicates
                 if (Object.keys(alt_domains).length > 0) {
-                    console.log('Getting domains...');
                     await getDomains({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters });
                 }
                 else {
@@ -22014,10 +22012,10 @@ class UpdateConsumingDomains {
             // throw new Error('Failed to update consuming domains.');
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateConsumingDomains, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateConsumingDomains, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateConsumingDomains, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateConsumingDomains, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateConsumingDomains, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateConsumingDomains, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -22078,10 +22076,10 @@ class UpdateMediaSettings {
         // Update chat setting
         updateChatSetting(chatSetting);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateMediaSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateMediaSettings, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateMediaSettings, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateMediaSettings, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdateMediaSettings, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdateMediaSettings, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -22172,10 +22170,10 @@ class UpdatedCoHost {
             }
         }
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdatedCoHost, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdatedCoHost, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdatedCoHost, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdatedCoHost, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UpdatedCoHost, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UpdatedCoHost, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -22222,10 +22220,10 @@ class UserWaiting {
         const totalReqs = totalReqWait + 1;
         updateTotalReqWait(totalReqs);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UserWaiting, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UserWaiting, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UserWaiting, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UserWaiting, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: UserWaiting, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: UserWaiting, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -22996,10 +22994,10 @@ class BackgroundModal {
     hideLoading() {
         this.loadingOverlayRef.nativeElement.classList.add('d-none');
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BackgroundModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: BackgroundModal, isStandalone: true, selector: "app-background-modal", inputs: { isVisible: "isVisible", parameters: "parameters", position: "position", backgroundColor: "backgroundColor", onClose: "onClose" }, viewQueries: [{ propertyName: "defaultImagesContainerRef", first: true, predicate: ["defaultImagesContainer"], descendants: true }, { propertyName: "uploadImageInputRef", first: true, predicate: ["uploadImageInput"], descendants: true }, { propertyName: "backgroundCanvasRef", first: true, predicate: ["backgroundCanvas"], descendants: true }, { propertyName: "videoPreviewRef", first: true, predicate: ["videoPreview"], descendants: true }, { propertyName: "captureVideoRef", first: true, predicate: ["captureVideo"], descendants: true }, { propertyName: "loadingOverlayRef", first: true, predicate: ["loadingOverlay"], descendants: true }, { propertyName: "applyBackgroundButtonRef", first: true, predicate: ["applyBackgroundButton"], descendants: true }, { propertyName: "saveBackgroundButtonRef", first: true, predicate: ["saveBackgroundButton"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: isVisible ? 'block' : 'none', zIndex: 999 }\">\r\n    <div [ngStyle]=\"{ position: 'fixed', backgroundColor: backgroundColor, borderRadius: '10px', padding: '10px', width: '80%', maxWidth: '500px', maxHeight: '75%', overflowY: 'auto', overflowX: 'hidden', top: position.includes('top') ? '10px' : 'auto', bottom: position.includes('bottom') ? '10px' : 'auto', left: position.includes('Left') ? '10px' : 'auto', right: position.includes('Right') ? '10px' : 'auto' }\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">Background Settings</h2>\r\n        <button (click)=\"onClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr style=\"height: 1px; background-color: black; margin-top: 5px; margin-bottom: 5px;\" />\r\n      <div style=\"max-width: 95%; overflow-x: auto;\">\r\n        <div id=\"defaultImages\" #defaultImagesContainer></div>\r\n        <div class=\"form-group\" style=\"max-width: 70%; overflow-x: auto;\">\r\n          <label for=\"uploadImage\">Upload Custom Image</label>\r\n          <input type=\"file\" class=\"form-control\" id=\"uploadImage\" #uploadImageInput (change)=\"handleImageUpload($event)\" />\r\n        </div>\r\n        <canvas id=\"mainCanvas\" #mainCanvas class=\"d-none\"></canvas>\r\n        <canvas id=\"backgroundCanvas\" #backgroundCanvas class=\"d-none\" style=\"width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;\"></canvas>\r\n        <video id=\"captureVideo\" #captureVideo class=\"d-none\" muted autoplay playsinline></video>\r\n        <video id=\"previewVideo\" #videoPreview class=\"d-none\" muted autoplay playsinline style=\"width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;\"></video>\r\n        <div id=\"loadingOverlay\" #loadingOverlay class=\"d-none\" [ngStyle]=\"{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 'justify-content': 'center', 'align-items': 'center', zIndex: 1000 }\">\r\n          <div [ngStyle]=\"{ width: '50px', height: '50px', border: '5px solid rgba(255, 255, 255, 0.3)', borderRadius: '50%', borderTop: '5px solid white', animation: 'spin 1s linear infinite' }\"></div>\r\n        </div>\r\n        <br />\r\n        <button id=\"applyBackgroundButton\" #applyBackgroundButton class=\"btn btn-primary\" (click)=\"applyBackground()\">Preview Background</button>\r\n        <button id=\"saveBackgroundButton\" #saveBackgroundButton class=\"btn btn-success d-none\" (click)=\"saveBackground()\">Save Background</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n", styles: ["@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BackgroundModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: BackgroundModal, isStandalone: true, selector: "app-background-modal", inputs: { isVisible: "isVisible", parameters: "parameters", position: "position", backgroundColor: "backgroundColor", onClose: "onClose" }, viewQueries: [{ propertyName: "defaultImagesContainerRef", first: true, predicate: ["defaultImagesContainer"], descendants: true }, { propertyName: "uploadImageInputRef", first: true, predicate: ["uploadImageInput"], descendants: true }, { propertyName: "backgroundCanvasRef", first: true, predicate: ["backgroundCanvas"], descendants: true }, { propertyName: "videoPreviewRef", first: true, predicate: ["videoPreview"], descendants: true }, { propertyName: "captureVideoRef", first: true, predicate: ["captureVideo"], descendants: true }, { propertyName: "loadingOverlayRef", first: true, predicate: ["loadingOverlay"], descendants: true }, { propertyName: "applyBackgroundButtonRef", first: true, predicate: ["applyBackgroundButton"], descendants: true }, { propertyName: "saveBackgroundButtonRef", first: true, predicate: ["saveBackgroundButton"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: isVisible ? 'block' : 'none', zIndex: 999 }\">\r\n    <div [ngStyle]=\"{ position: 'fixed', backgroundColor: backgroundColor, borderRadius: '10px', padding: '10px', width: '80%', maxWidth: '500px', maxHeight: '75%', overflowY: 'auto', overflowX: 'hidden', top: position.includes('top') ? '10px' : 'auto', bottom: position.includes('bottom') ? '10px' : 'auto', left: position.includes('Left') ? '10px' : 'auto', right: position.includes('Right') ? '10px' : 'auto' }\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">Background Settings</h2>\r\n        <button (click)=\"onClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr style=\"height: 1px; background-color: black; margin-top: 5px; margin-bottom: 5px;\" />\r\n      <div style=\"max-width: 95%; overflow-x: auto;\">\r\n        <div id=\"defaultImages\" #defaultImagesContainer></div>\r\n        <div class=\"form-group\" style=\"max-width: 70%; overflow-x: auto;\">\r\n          <label for=\"uploadImage\">Upload Custom Image</label>\r\n          <input type=\"file\" class=\"form-control\" id=\"uploadImage\" #uploadImageInput (change)=\"handleImageUpload($event)\" />\r\n        </div>\r\n        <canvas id=\"mainCanvas\" #mainCanvas class=\"d-none\"></canvas>\r\n        <canvas id=\"backgroundCanvas\" #backgroundCanvas class=\"d-none\" style=\"width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;\"></canvas>\r\n        <video id=\"captureVideo\" #captureVideo class=\"d-none\" muted autoplay playsinline></video>\r\n        <video id=\"previewVideo\" #videoPreview class=\"d-none\" muted autoplay playsinline style=\"width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;\"></video>\r\n        <div id=\"loadingOverlay\" #loadingOverlay class=\"d-none\" [ngStyle]=\"{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 'justify-content': 'center', 'align-items': 'center', zIndex: 1000 }\">\r\n          <div [ngStyle]=\"{ width: '50px', height: '50px', border: '5px solid rgba(255, 255, 255, 0.3)', borderRadius: '50%', borderTop: '5px solid white', animation: 'spin 1s linear infinite' }\"></div>\r\n        </div>\r\n        <br />\r\n        <button id=\"applyBackgroundButton\" #applyBackgroundButton class=\"btn btn-primary\" (click)=\"applyBackground()\">Preview Background</button>\r\n        <button id=\"saveBackgroundButton\" #saveBackgroundButton class=\"btn btn-success d-none\" (click)=\"saveBackground()\">Save Background</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n", styles: ["@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BackgroundModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BackgroundModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-background-modal', imports: [CommonModule, FontAwesomeModule], template: "<div [ngStyle]=\"{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: isVisible ? 'block' : 'none', zIndex: 999 }\">\r\n    <div [ngStyle]=\"{ position: 'fixed', backgroundColor: backgroundColor, borderRadius: '10px', padding: '10px', width: '80%', maxWidth: '500px', maxHeight: '75%', overflowY: 'auto', overflowX: 'hidden', top: position.includes('top') ? '10px' : 'auto', bottom: position.includes('bottom') ? '10px' : 'auto', left: position.includes('Left') ? '10px' : 'auto', right: position.includes('Right') ? '10px' : 'auto' }\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">Background Settings</h2>\r\n        <button (click)=\"onClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr style=\"height: 1px; background-color: black; margin-top: 5px; margin-bottom: 5px;\" />\r\n      <div style=\"max-width: 95%; overflow-x: auto;\">\r\n        <div id=\"defaultImages\" #defaultImagesContainer></div>\r\n        <div class=\"form-group\" style=\"max-width: 70%; overflow-x: auto;\">\r\n          <label for=\"uploadImage\">Upload Custom Image</label>\r\n          <input type=\"file\" class=\"form-control\" id=\"uploadImage\" #uploadImageInput (change)=\"handleImageUpload($event)\" />\r\n        </div>\r\n        <canvas id=\"mainCanvas\" #mainCanvas class=\"d-none\"></canvas>\r\n        <canvas id=\"backgroundCanvas\" #backgroundCanvas class=\"d-none\" style=\"width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;\"></canvas>\r\n        <video id=\"captureVideo\" #captureVideo class=\"d-none\" muted autoplay playsinline></video>\r\n        <video id=\"previewVideo\" #videoPreview class=\"d-none\" muted autoplay playsinline style=\"width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;\"></video>\r\n        <div id=\"loadingOverlay\" #loadingOverlay class=\"d-none\" [ngStyle]=\"{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 'justify-content': 'center', 'align-items': 'center', zIndex: 1000 }\">\r\n          <div [ngStyle]=\"{ width: '50px', height: '50px', border: '5px solid rgba(255, 255, 255, 0.3)', borderRadius: '50%', borderTop: '5px solid white', animation: 'spin 1s linear infinite' }\"></div>\r\n        </div>\r\n        <br />\r\n        <button id=\"applyBackgroundButton\" #applyBackgroundButton class=\"btn btn-primary\" (click)=\"applyBackground()\">Preview Background</button>\r\n        <button id=\"saveBackgroundButton\" #saveBackgroundButton class=\"btn btn-success d-none\" (click)=\"saveBackground()\">Save Background</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n", styles: ["@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}\n"] }]
         }], propDecorators: { isVisible: [{
@@ -23055,10 +23053,10 @@ class RoomListComponent {
     handleRemoveParticipant(roomIndex, participant) {
         this.removeParticipant.emit({ roomIndex, participant });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RoomListComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: RoomListComponent, isStandalone: true, selector: "app-room-list", inputs: { rooms: "rooms" }, outputs: { editRoom: "editRoom", deleteRoom: "deleteRoom", removeParticipant: "removeParticipant" }, ngImport: i0, template: "<div *ngFor=\"let room of rooms; let roomIndex = index\" class=\"card mb-3 text-dark\">\r\n    <div class=\"card-header d-flex justify-content-between align-items-center\">\r\n      <span>Room {{ roomIndex + 1 }} <fa-icon [icon]=\"faUsers\"></fa-icon></span>\r\n      <div>\r\n        <button class=\"btn btn-secondary btn-sm\" (click)=\"handleEditRoom(roomIndex)\">\r\n          <fa-icon [icon]=\"faPen\"></fa-icon>\r\n        </button>\r\n        <button class=\"btn btn-danger btn-sm\" (click)=\"handleDeleteRoom(roomIndex)\">\r\n          <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <ul class=\"list-group\">\r\n        <li *ngFor=\"let participant of room; let index = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n          {{ participant.name }}\r\n          <button class=\"btn btn-danger btn-sm\" (click)=\"handleRemoveParticipant(roomIndex, participant)\">\r\n            <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n          </button>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RoomListComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: RoomListComponent, isStandalone: true, selector: "app-room-list", inputs: { rooms: "rooms" }, outputs: { editRoom: "editRoom", deleteRoom: "deleteRoom", removeParticipant: "removeParticipant" }, ngImport: i0, template: "<div *ngFor=\"let room of rooms; let roomIndex = index\" class=\"card mb-3 text-dark\">\r\n    <div class=\"card-header d-flex justify-content-between align-items-center\">\r\n      <span>Room {{ roomIndex + 1 }} <fa-icon [icon]=\"faUsers\"></fa-icon></span>\r\n      <div>\r\n        <button class=\"btn btn-secondary btn-sm\" (click)=\"handleEditRoom(roomIndex)\">\r\n          <fa-icon [icon]=\"faPen\"></fa-icon>\r\n        </button>\r\n        <button class=\"btn btn-danger btn-sm\" (click)=\"handleDeleteRoom(roomIndex)\">\r\n          <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <ul class=\"list-group\">\r\n        <li *ngFor=\"let participant of room; let index = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n          {{ participant.name }}\r\n          <button class=\"btn btn-danger btn-sm\" (click)=\"handleRemoveParticipant(roomIndex, participant)\">\r\n            <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n          </button>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RoomListComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RoomListComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-room-list', imports: [CommonModule, FontAwesomeModule], template: "<div *ngFor=\"let room of rooms; let roomIndex = index\" class=\"card mb-3 text-dark\">\r\n    <div class=\"card-header d-flex justify-content-between align-items-center\">\r\n      <span>Room {{ roomIndex + 1 }} <fa-icon [icon]=\"faUsers\"></fa-icon></span>\r\n      <div>\r\n        <button class=\"btn btn-secondary btn-sm\" (click)=\"handleEditRoom(roomIndex)\">\r\n          <fa-icon [icon]=\"faPen\"></fa-icon>\r\n        </button>\r\n        <button class=\"btn btn-danger btn-sm\" (click)=\"handleDeleteRoom(roomIndex)\">\r\n          <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <ul class=\"list-group\">\r\n        <li *ngFor=\"let participant of room; let index = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n          {{ participant.name }}\r\n          <button class=\"btn btn-danger btn-sm\" (click)=\"handleRemoveParticipant(roomIndex, participant)\">\r\n            <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n          </button>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n" }]
         }], propDecorators: { rooms: [{
@@ -23181,10 +23179,10 @@ class EditRoomModalComponent {
     unassignedParticipants() {
         return this.participantsRef.filter((participant) => participant['breakRoom'] == null);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: EditRoomModalComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: EditRoomModalComponent, isStandalone: true, selector: "app-edit-room-modal", inputs: { editRoomModalVisible: "editRoomModalVisible", currentRoom: "currentRoom", participantsRef: "participantsRef", currentRoomIndex: "currentRoomIndex", position: "position", backgroundColor: "backgroundColor" }, outputs: { setEditRoomModalVisible: "setEditRoomModalVisible", addParticipant: "addParticipant", removeParticipant: "removeParticipant" }, ngImport: i0, template: "<div *ngIf=\"editRoomModalVisible\" class=\"modal-container\" [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content text-dark\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <h5 class=\"modal-title\">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]=\"faPen\"></fa-icon></h5>\r\n      <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <div class=\"list-container\">\r\n        <h5>Assigned Participants <fa-icon [icon]=\"faUsers\"></fa-icon></h5>\r\n        <ul class=\"list-group\">\r\n          <li *ngFor=\"let participant of currentRoom; let i = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            {{ participant.name }}\r\n            <button class=\"btn btn-danger btn-sm\" (click)=\"handleRemoveParticipant(currentRoomIndex, participant)\">\r\n              <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n            </button>\r\n          </li>\r\n          <li *ngIf=\"currentRoom.length === 0\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            None assigned\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"list-container\">\r\n        <h5>Unassigned Participants <fa-icon [icon]=\"faUsers\"></fa-icon></h5>\r\n        <ul class=\"list-group\">\r\n          <li *ngFor=\"let participant of unassignedParticipants(); let i = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            {{ participant.name }}\r\n            <button class=\"btn btn-primary btn-sm\" (click)=\"handleAddParticipant(currentRoomIndex, participant)\">\r\n              <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n            </button>\r\n          </li>\r\n          <li *ngIf=\"unassignedParticipants().length === 0\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            None pending\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-content{background-color:#fff;border-radius:10px;padding:20px;max-width:500px;max-height:80%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-title{font-size:1.25rem;font-weight:700}.list-container{border:1px solid #ccc;border-radius:5px;padding:10px;margin-bottom:20px}.list-group-item{display:flex;justify-content:space-between;align-items:center}.modal-footer{display:flex;justify-content:flex-end;margin-top:20px}.close-button{border:none;background:none;cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: EditRoomModalComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: EditRoomModalComponent, isStandalone: true, selector: "app-edit-room-modal", inputs: { editRoomModalVisible: "editRoomModalVisible", currentRoom: "currentRoom", participantsRef: "participantsRef", currentRoomIndex: "currentRoomIndex", position: "position", backgroundColor: "backgroundColor" }, outputs: { setEditRoomModalVisible: "setEditRoomModalVisible", addParticipant: "addParticipant", removeParticipant: "removeParticipant" }, ngImport: i0, template: "<div *ngIf=\"editRoomModalVisible\" class=\"modal-container\" [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content text-dark\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <h5 class=\"modal-title\">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]=\"faPen\"></fa-icon></h5>\r\n      <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <div class=\"list-container\">\r\n        <h5>Assigned Participants <fa-icon [icon]=\"faUsers\"></fa-icon></h5>\r\n        <ul class=\"list-group\">\r\n          <li *ngFor=\"let participant of currentRoom; let i = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            {{ participant.name }}\r\n            <button class=\"btn btn-danger btn-sm\" (click)=\"handleRemoveParticipant(currentRoomIndex, participant)\">\r\n              <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n            </button>\r\n          </li>\r\n          <li *ngIf=\"currentRoom.length === 0\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            None assigned\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"list-container\">\r\n        <h5>Unassigned Participants <fa-icon [icon]=\"faUsers\"></fa-icon></h5>\r\n        <ul class=\"list-group\">\r\n          <li *ngFor=\"let participant of unassignedParticipants(); let i = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            {{ participant.name }}\r\n            <button class=\"btn btn-primary btn-sm\" (click)=\"handleAddParticipant(currentRoomIndex, participant)\">\r\n              <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n            </button>\r\n          </li>\r\n          <li *ngIf=\"unassignedParticipants().length === 0\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            None pending\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-content{background-color:#fff;border-radius:10px;padding:20px;max-width:500px;max-height:80%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-title{font-size:1.25rem;font-weight:700}.list-container{border:1px solid #ccc;border-radius:5px;padding:10px;margin-bottom:20px}.list-group-item{display:flex;justify-content:space-between;align-items:center}.modal-footer{display:flex;justify-content:flex-end;margin-top:20px}.close-button{border:none;background:none;cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: EditRoomModalComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: EditRoomModalComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-edit-room-modal', imports: [CommonModule, FontAwesomeModule], template: "<div *ngIf=\"editRoomModalVisible\" class=\"modal-container\" [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content text-dark\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <h5 class=\"modal-title\">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]=\"faPen\"></fa-icon></h5>\r\n      <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <div class=\"list-container\">\r\n        <h5>Assigned Participants <fa-icon [icon]=\"faUsers\"></fa-icon></h5>\r\n        <ul class=\"list-group\">\r\n          <li *ngFor=\"let participant of currentRoom; let i = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            {{ participant.name }}\r\n            <button class=\"btn btn-danger btn-sm\" (click)=\"handleRemoveParticipant(currentRoomIndex, participant)\">\r\n              <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n            </button>\r\n          </li>\r\n          <li *ngIf=\"currentRoom.length === 0\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            None assigned\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"list-container\">\r\n        <h5>Unassigned Participants <fa-icon [icon]=\"faUsers\"></fa-icon></h5>\r\n        <ul class=\"list-group\">\r\n          <li *ngFor=\"let participant of unassignedParticipants(); let i = index\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            {{ participant.name }}\r\n            <button class=\"btn btn-primary btn-sm\" (click)=\"handleAddParticipant(currentRoomIndex, participant)\">\r\n              <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n            </button>\r\n          </li>\r\n          <li *ngIf=\"unassignedParticipants().length === 0\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n            None pending\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-content{background-color:#fff;border-radius:10px;padding:20px;max-width:500px;max-height:80%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-title{font-size:1.25rem;font-weight:700}.list-container{border:1px solid #ccc;border-radius:5px;padding:10px;margin-bottom:20px}.list-group-item{display:flex;justify-content:space-between;align-items:center}.modal-footer{display:flex;justify-content:flex-end;margin-top:20px}.close-button{border:none;background:none;cursor:pointer}\n"] }]
         }], propDecorators: { editRoomModalVisible: [{
@@ -23563,10 +23561,10 @@ class BreakoutRoomsModal {
             this.handleEditRoom(this.parameters.currentRoomIndex);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BreakoutRoomsModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: BreakoutRoomsModal, isStandalone: true, selector: "app-breakout-rooms-modal", inputs: { isVisible: "isVisible", parameters: "parameters", position: "position", backgroundColor: "backgroundColor", onBreakoutRoomsClose: "onBreakoutRoomsClose" }, viewQueries: [{ propertyName: "roomsContainerRef", first: true, predicate: ["roomsContainer"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isVisible\" class=\"modal-container\" [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <h2>Breakout Rooms <fa-icon [icon]=\"faDoorOpen\"></fa-icon></h2>\r\n      <button class=\"close-btn\" (click)=\"onBreakoutRoomsClose()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <hr>\r\n    <div class=\"form-group\">\r\n      <label for=\"numRooms\">Number of Rooms <fa-icon [icon]=\"faUsers\"></fa-icon></label>\r\n      <input type=\"number\" class=\"form-control\" id=\"numRooms\" [(ngModel)]=\"numRooms\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <button class=\"btn btn-primary\" (click)=\"handleRandomAssign()\">Random Assign <fa-icon [icon]=\"faRandom\"></fa-icon></button>\r\n      <button class=\"btn btn-secondary\" (click)=\"handleManualAssign()\">Manual Assign <fa-icon [icon]=\"faHandPointer\"></fa-icon></button>\r\n      <button class=\"btn btn-success\" (click)=\"handleAddRoom()\">Add Room <fa-icon [icon]=\"faPlus\"></fa-icon></button>\r\n      <button class=\"btn btn-info\" (click)=\"handleSaveRooms()\">Save Rooms <fa-icon [icon]=\"faSave\"></fa-icon></button>\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"newParticipantAction\">New Participant Action <fa-icon [icon]=\"faUsers\"></fa-icon></label>\r\n      <select class=\"form-control\" id=\"newParticipantAction\" [(ngModel)]=\"newParticipantAction\">\r\n        <option value=\"autoAssignNewRoom\">Add to new room</option>\r\n        <option value=\"autoAssignAvailableRoom\">Add to open room</option>\r\n        <option value=\"manualAssign\">No action</option>\r\n      </select>\r\n    </div>\r\n    <div #roomsContainer>\r\n      <app-room-list [rooms]=\"breakoutRoomsRef\" (editRoom)=\"handleEditRoom($event)\" (deleteRoom)=\"handleDeleteRoom($event)\" (removeParticipant)=\"handleRemoveParticipant($event)\"></app-room-list>\r\n    </div>\r\n    <div *ngIf=\"startBreakoutButtonVisible\">\r\n      <button class=\"btn btn-primary mr-2 mb-2\" (click)=\"handleStartBreakout()\">\r\n        {{ parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? 'Update Breakout' : 'Start Breakout' }} <fa-icon [icon]=\"parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? faSyncAlt : faPlay\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <div *ngIf=\"stopBreakoutButtonVisible\">\r\n      <button class=\"btn btn-danger mr-2 mb-2\" (click)=\"handleStopBreakout()\">\r\n        Stop Breakout <fa-icon [icon]=\"faStop\"></fa-icon>\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <app-edit-room-modal [editRoomModalVisible]=\"editRoomModalVisible\" [currentRoom]=\"currentRoom!\" [participantsRef]=\"participantsRef\" [currentRoomIndex]=\"parameters.currentRoomIndex!\" (setEditRoomModalVisible)=\"editRoomModalVisible = $event\" (addParticipant)=\"handleAddParticipant($event)\" (removeParticipant)=\"handleRemoveParticipant($event)\"></app-edit-room-modal>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.NumberValueAccessor, selector: "input[type=number][formControlName],input[type=number][formControl],input[type=number][ngModel]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: RoomListComponent, selector: "app-room-list", inputs: ["rooms"], outputs: ["editRoom", "deleteRoom", "removeParticipant"] }, { kind: "component", type: EditRoomModalComponent, selector: "app-edit-room-modal", inputs: ["editRoomModalVisible", "currentRoom", "participantsRef", "currentRoomIndex", "position", "backgroundColor"], outputs: ["setEditRoomModalVisible", "addParticipant", "removeParticipant"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BreakoutRoomsModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: BreakoutRoomsModal, isStandalone: true, selector: "app-breakout-rooms-modal", inputs: { isVisible: "isVisible", parameters: "parameters", position: "position", backgroundColor: "backgroundColor", onBreakoutRoomsClose: "onBreakoutRoomsClose" }, viewQueries: [{ propertyName: "roomsContainerRef", first: true, predicate: ["roomsContainer"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isVisible\" class=\"modal-container\" [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <h2>Breakout Rooms <fa-icon [icon]=\"faDoorOpen\"></fa-icon></h2>\r\n      <button class=\"close-btn\" (click)=\"onBreakoutRoomsClose()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <hr>\r\n    <div class=\"form-group\">\r\n      <label for=\"numRooms\">Number of Rooms <fa-icon [icon]=\"faUsers\"></fa-icon></label>\r\n      <input type=\"number\" class=\"form-control\" id=\"numRooms\" [(ngModel)]=\"numRooms\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <button class=\"btn btn-primary\" (click)=\"handleRandomAssign()\">Random Assign <fa-icon [icon]=\"faRandom\"></fa-icon></button>\r\n      <button class=\"btn btn-secondary\" (click)=\"handleManualAssign()\">Manual Assign <fa-icon [icon]=\"faHandPointer\"></fa-icon></button>\r\n      <button class=\"btn btn-success\" (click)=\"handleAddRoom()\">Add Room <fa-icon [icon]=\"faPlus\"></fa-icon></button>\r\n      <button class=\"btn btn-info\" (click)=\"handleSaveRooms()\">Save Rooms <fa-icon [icon]=\"faSave\"></fa-icon></button>\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"newParticipantAction\">New Participant Action <fa-icon [icon]=\"faUsers\"></fa-icon></label>\r\n      <select class=\"form-control\" id=\"newParticipantAction\" [(ngModel)]=\"newParticipantAction\">\r\n        <option value=\"autoAssignNewRoom\">Add to new room</option>\r\n        <option value=\"autoAssignAvailableRoom\">Add to open room</option>\r\n        <option value=\"manualAssign\">No action</option>\r\n      </select>\r\n    </div>\r\n    <div #roomsContainer>\r\n      <app-room-list [rooms]=\"breakoutRoomsRef\" (editRoom)=\"handleEditRoom($event)\" (deleteRoom)=\"handleDeleteRoom($event)\" (removeParticipant)=\"handleRemoveParticipant($event)\"></app-room-list>\r\n    </div>\r\n    <div *ngIf=\"startBreakoutButtonVisible\">\r\n      <button class=\"btn btn-primary mr-2 mb-2\" (click)=\"handleStartBreakout()\">\r\n        {{ parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? 'Update Breakout' : 'Start Breakout' }} <fa-icon [icon]=\"parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? faSyncAlt : faPlay\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <div *ngIf=\"stopBreakoutButtonVisible\">\r\n      <button class=\"btn btn-danger mr-2 mb-2\" (click)=\"handleStopBreakout()\">\r\n        Stop Breakout <fa-icon [icon]=\"faStop\"></fa-icon>\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <app-edit-room-modal [editRoomModalVisible]=\"editRoomModalVisible\" [currentRoom]=\"currentRoom!\" [participantsRef]=\"participantsRef\" [currentRoomIndex]=\"parameters.currentRoomIndex!\" (setEditRoomModalVisible)=\"editRoomModalVisible = $event\" (addParticipant)=\"handleAddParticipant($event)\" (removeParticipant)=\"handleRemoveParticipant($event)\"></app-edit-room-modal>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.NumberValueAccessor, selector: "input[type=number][formControlName],input[type=number][formControl],input[type=number][ngModel]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: RoomListComponent, selector: "app-room-list", inputs: ["rooms"], outputs: ["editRoom", "deleteRoom", "removeParticipant"] }, { kind: "component", type: EditRoomModalComponent, selector: "app-edit-room-modal", inputs: ["editRoomModalVisible", "currentRoom", "participantsRef", "currentRoomIndex", "position", "backgroundColor"], outputs: ["setEditRoomModalVisible", "addParticipant", "removeParticipant"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: BreakoutRoomsModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: BreakoutRoomsModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-breakout-rooms-modal', imports: [
                         CommonModule,
@@ -23789,10 +23787,10 @@ class CoHostModal {
             right: this.position.includes('Right') ? '10px' : 'auto',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CoHostModal, deps: [{ token: ModifyCoHostSettings }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: CoHostModal, isStandalone: true, selector: "app-co-host-modal", inputs: { isCoHostModalVisible: "isCoHostModalVisible", currentCohost: "currentCohost", participants: "participants", coHostResponsibility: "coHostResponsibility", position: "position", backgroundColor: "backgroundColor", roomName: "roomName", showAlert: "showAlert", updateCoHostResponsibility: "updateCoHostResponsibility", updateCoHost: "updateCoHost", updateIsCoHostModalVisible: "updateIsCoHostModalVisible", socket: "socket", onCoHostClose: "onCoHostClose", onModifyCoHost: "onModifyCoHost" }, usesOnChanges: true, ngImport: i0, template: "<!-- co-host-modal.component.html -->\r\n<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Manage Co-Host</div>\r\n      <div class=\"btn-close-settings\" (click)=\"handleClose()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"font-weight-bold\">Current Co-host:</label>\r\n        <input class=\"form-control\" [value]=\"currentCohost\" readonly />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"font-weight-bold\">Select New Co-host:</label>\r\n        <select class=\"form-control\" [(ngModel)]=\"selectedCohost\">\r\n          <option value=\"\">Select a participant</option>\r\n          <option *ngFor=\"let participant of filteredParticipants\" [value]=\"participant.name\">\r\n            {{ participant.name }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-5\">\r\n          <label style=\"font-weight: bold\">Responsibility</label>\r\n        </div>\r\n        <div class=\"col-3\">\r\n          <label style=\"font-weight: bold\">Select</label>\r\n        </div>\r\n        <div class=\"col-4\">\r\n          <label style=\"font-weight: bold\">Dedicated</label>\r\n        </div>\r\n      </div>\r\n      <div *ngFor=\"let key of responsibilityKeys\" class=\"row\" style=\"margin-bottom: 10px;\">\r\n        <div class=\"col-5\" style=\"font-weight: bold\">{{ key.manageKey.replace('manage', '') }}</div>\r\n        <div class=\"col-3\">\r\n          <input type=\"checkbox\" [(ngModel)]=\"responsibilities[key.manageKey]\" (change)=\"handleToggleSwitch(key.manageKey)\">\r\n        </div>\r\n        <div class=\"col-4\">\r\n          <input type=\"checkbox\" [(ngModel)]=\"responsibilities[key.dedicateKey]\" (change)=\"handleToggleSwitch(key.dedicateKey)\" [disabled]=\"!responsibilities[key.manageKey]\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"btn-apply-settings\" (click)=\"handleSave()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#e7caca80;z-index:999;display:flex;justify-content:center;align-items:center}.modal-content{background-color:#83c0e9;border-radius:10px;padding:10px;width:400px;max-height:65%;overflow-x:hidden;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center}.modal-title{font-size:1.25rem;font-weight:700}.btn-close-settings{cursor:pointer}.hr{margin:10px 0}.form-group{margin-bottom:15px}.modal-footer{display:flex;justify-content:flex-end}.btn-apply-settings{background-color:#007bff;color:#fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer}.btn-apply-settings:hover{background-color:#0056b3}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.CheckboxControlValueAccessor, selector: "input[type=checkbox][formControlName],input[type=checkbox][formControl],input[type=checkbox][ngModel]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CoHostModal, deps: [{ token: ModifyCoHostSettings }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: CoHostModal, isStandalone: true, selector: "app-co-host-modal", inputs: { isCoHostModalVisible: "isCoHostModalVisible", currentCohost: "currentCohost", participants: "participants", coHostResponsibility: "coHostResponsibility", position: "position", backgroundColor: "backgroundColor", roomName: "roomName", showAlert: "showAlert", updateCoHostResponsibility: "updateCoHostResponsibility", updateCoHost: "updateCoHost", updateIsCoHostModalVisible: "updateIsCoHostModalVisible", socket: "socket", onCoHostClose: "onCoHostClose", onModifyCoHost: "onModifyCoHost" }, usesOnChanges: true, ngImport: i0, template: "<!-- co-host-modal.component.html -->\r\n<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Manage Co-Host</div>\r\n      <div class=\"btn-close-settings\" (click)=\"handleClose()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"font-weight-bold\">Current Co-host:</label>\r\n        <input class=\"form-control\" [value]=\"currentCohost\" readonly />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"font-weight-bold\">Select New Co-host:</label>\r\n        <select class=\"form-control\" [(ngModel)]=\"selectedCohost\">\r\n          <option value=\"\">Select a participant</option>\r\n          <option *ngFor=\"let participant of filteredParticipants\" [value]=\"participant.name\">\r\n            {{ participant.name }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-5\">\r\n          <label style=\"font-weight: bold\">Responsibility</label>\r\n        </div>\r\n        <div class=\"col-3\">\r\n          <label style=\"font-weight: bold\">Select</label>\r\n        </div>\r\n        <div class=\"col-4\">\r\n          <label style=\"font-weight: bold\">Dedicated</label>\r\n        </div>\r\n      </div>\r\n      <div *ngFor=\"let key of responsibilityKeys\" class=\"row\" style=\"margin-bottom: 10px;\">\r\n        <div class=\"col-5\" style=\"font-weight: bold\">{{ key.manageKey.replace('manage', '') }}</div>\r\n        <div class=\"col-3\">\r\n          <input type=\"checkbox\" [(ngModel)]=\"responsibilities[key.manageKey]\" (change)=\"handleToggleSwitch(key.manageKey)\">\r\n        </div>\r\n        <div class=\"col-4\">\r\n          <input type=\"checkbox\" [(ngModel)]=\"responsibilities[key.dedicateKey]\" (change)=\"handleToggleSwitch(key.dedicateKey)\" [disabled]=\"!responsibilities[key.manageKey]\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"btn-apply-settings\" (click)=\"handleSave()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#e7caca80;z-index:999;display:flex;justify-content:center;align-items:center}.modal-content{background-color:#83c0e9;border-radius:10px;padding:10px;width:400px;max-height:65%;overflow-x:hidden;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center}.modal-title{font-size:1.25rem;font-weight:700}.btn-close-settings{cursor:pointer}.hr{margin:10px 0}.form-group{margin-bottom:15px}.modal-footer{display:flex;justify-content:flex-end}.btn-apply-settings{background-color:#007bff;color:#fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer}.btn-apply-settings:hover{background-color:#0056b3}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.CheckboxControlValueAccessor, selector: "input[type=checkbox][formControlName],input[type=checkbox][formControl],input[type=checkbox][ngModel]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CoHostModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CoHostModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-co-host-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<!-- co-host-modal.component.html -->\r\n<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Manage Co-Host</div>\r\n      <div class=\"btn-close-settings\" (click)=\"handleClose()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"font-weight-bold\">Current Co-host:</label>\r\n        <input class=\"form-control\" [value]=\"currentCohost\" readonly />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"font-weight-bold\">Select New Co-host:</label>\r\n        <select class=\"form-control\" [(ngModel)]=\"selectedCohost\">\r\n          <option value=\"\">Select a participant</option>\r\n          <option *ngFor=\"let participant of filteredParticipants\" [value]=\"participant.name\">\r\n            {{ participant.name }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-5\">\r\n          <label style=\"font-weight: bold\">Responsibility</label>\r\n        </div>\r\n        <div class=\"col-3\">\r\n          <label style=\"font-weight: bold\">Select</label>\r\n        </div>\r\n        <div class=\"col-4\">\r\n          <label style=\"font-weight: bold\">Dedicated</label>\r\n        </div>\r\n      </div>\r\n      <div *ngFor=\"let key of responsibilityKeys\" class=\"row\" style=\"margin-bottom: 10px;\">\r\n        <div class=\"col-5\" style=\"font-weight: bold\">{{ key.manageKey.replace('manage', '') }}</div>\r\n        <div class=\"col-3\">\r\n          <input type=\"checkbox\" [(ngModel)]=\"responsibilities[key.manageKey]\" (change)=\"handleToggleSwitch(key.manageKey)\">\r\n        </div>\r\n        <div class=\"col-4\">\r\n          <input type=\"checkbox\" [(ngModel)]=\"responsibilities[key.dedicateKey]\" (change)=\"handleToggleSwitch(key.dedicateKey)\" [disabled]=\"!responsibilities[key.manageKey]\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"btn-apply-settings\" (click)=\"handleSave()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#e7caca80;z-index:999;display:flex;justify-content:center;align-items:center}.modal-content{background-color:#83c0e9;border-radius:10px;padding:10px;width:400px;max-height:65%;overflow-x:hidden;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center}.modal-title{font-size:1.25rem;font-weight:700}.btn-close-settings{cursor:pointer}.hr{margin:10px 0}.form-group{margin-bottom:15px}.modal-footer{display:flex;justify-content:flex-end}.btn-apply-settings{background-color:#007bff;color:#fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer}.btn-apply-settings:hover{background-color:#0056b3}\n"] }]
         }], ctorParameters: () => [{ type: ModifyCoHostSettings }], propDecorators: { isCoHostModalVisible: [{
@@ -23880,10 +23878,10 @@ class AlertComponent {
     handlePress() {
         this.onHide();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AlertComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: AlertComponent, isStandalone: true, selector: "app-alert-component", inputs: { visible: "visible", message: "message", type: "type", duration: "duration", textColor: "textColor", onHide: "onHide" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"visible\" (click)=\"handlePress()\" class=\"centeredView\">\r\n  <div [ngStyle]=\"{ 'background-color': alertType === 'success' ? 'green' : 'red' }\" class=\"modalView\">\r\n    <p [ngStyle]=\"{ color: textColor }\" class=\"modalText\">{{ message }}</p>\r\n  </div>\r\n</div>\r\n", styles: [".centeredView{display:flex;justify-content:center;align-items:center;position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:1000}.modalView{background-color:#fff;border-radius:10px;padding:20px;max-width:400px;box-shadow:0 4px 6px #0000001a}.modalText{color:#000;font-size:16px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AlertComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: AlertComponent, isStandalone: true, selector: "app-alert-component", inputs: { visible: "visible", message: "message", type: "type", duration: "duration", textColor: "textColor", onHide: "onHide" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"visible\" (click)=\"handlePress()\" class=\"centeredView\">\r\n  <div [ngStyle]=\"{ 'background-color': alertType === 'success' ? 'green' : 'red' }\" class=\"modalView\">\r\n    <p [ngStyle]=\"{ color: textColor }\" class=\"modalText\">{{ message }}</p>\r\n  </div>\r\n</div>\r\n", styles: [".centeredView{display:flex;justify-content:center;align-items:center;position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:1000}.modalView{background-color:#fff;border-radius:10px;padding:20px;max-width:400px;box-shadow:0 4px 6px #0000001a}.modalText{color:#000;font-size:16px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AlertComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AlertComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-alert-component', imports: [CommonModule], template: "<div *ngIf=\"visible\" (click)=\"handlePress()\" class=\"centeredView\">\r\n  <div [ngStyle]=\"{ 'background-color': alertType === 'success' ? 'green' : 'red' }\" class=\"modalView\">\r\n    <p [ngStyle]=\"{ color: textColor }\" class=\"modalText\">{{ message }}</p>\r\n  </div>\r\n</div>\r\n", styles: [".centeredView{display:flex;justify-content:center;align-items:center;position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:1000}.modalView{background-color:#fff;border-radius:10px;padding:20px;max-width:400px;box-shadow:0 4px 6px #0000001a}.modalText{color:#000;font-size:16px}\n"] }]
         }], propDecorators: { visible: [{
@@ -23946,8 +23944,8 @@ class AudioGrid {
     clearInjectorCache() {
         this.injectorCache = new WeakMap();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AudioGrid, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: AudioGrid, isStandalone: true, selector: "app-audio-grid", inputs: { componentsToRender: "componentsToRender" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AudioGrid, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: AudioGrid, isStandalone: true, selector: "app-audio-grid", inputs: { componentsToRender: "componentsToRender" }, usesOnChanges: true, ngImport: i0, template: `
     <div style="z-index: 9">
       <ng-container *ngFor="let item of componentsToRender; let i = index">
         <div style="z-index: 9" [attr.key]="i">
@@ -23957,9 +23955,9 @@ class AudioGrid {
         </div>
       </ng-container>
     </div>
-  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }] });
+  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AudioGrid, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AudioGrid, decorators: [{
             type: Component,
             args: [{ selector: 'app-audio-grid', imports: [CommonModule], template: `
     <div style="z-index: 9">
@@ -24013,8 +24011,8 @@ class ControlButtonsComponent {
     isFunctionComponent(comp) {
         return typeof comp === 'function';
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlButtonsComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ControlButtonsComponent, isStandalone: true, selector: "app-control-buttons-component", inputs: { buttons: "buttons", buttonColor: "buttonColor", buttonBackgroundColor: "buttonBackgroundColor", alignment: "alignment", vertical: "vertical", buttonsContainerStyle: "buttonsContainerStyle" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlButtonsComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ControlButtonsComponent, isStandalone: true, selector: "app-control-buttons-component", inputs: { buttons: "buttons", buttonColor: "buttonColor", buttonBackgroundColor: "buttonBackgroundColor", alignment: "alignment", vertical: "vertical", buttonsContainerStyle: "buttonsContainerStyle" }, ngImport: i0, template: `
     <div class="container" [ngStyle]="mergeStyles(getAlignmentStyle(), buttonsContainerStyle)">
       <button
         *ngFor="let button of buttons; let i = index"
@@ -24098,9 +24096,9 @@ class ControlButtonsComponent {
         </span>
       </button>
     </div>
-  `, isInline: true, styles: [".container{display:flex;width:100%;flex-direction:row;margin-top:0}.buttonContainer{display:flex;align-items:center;justify-content:center;padding:8px;border-radius:5px;margin-right:4px;font-size:medium;border:none}.buttonContainer:hover{cursor:pointer}.verticalButton{flex-direction:column}.buttonText{font-size:12px;margin-top:5px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+  `, isInline: true, styles: [".container{display:flex;width:100%;flex-direction:row;margin-top:0}.buttonContainer{display:flex;align-items:center;justify-content:center;padding:8px;border-radius:5px;margin-right:4px;font-size:medium;border:none}.buttonContainer:hover{cursor:pointer}.verticalButton{flex-direction:column}.buttonText{font-size:12px;margin-top:5px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlButtonsComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlButtonsComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-control-buttons-component', imports: [CommonModule, FontAwesomeModule], template: `
     <div class="container" [ngStyle]="mergeStyles(getAlignmentStyle(), buttonsContainerStyle)">
@@ -24313,10 +24311,10 @@ class ControlButtonsAltComponent {
             marginTop: '5px',
         },
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlButtonsAltComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ControlButtonsAltComponent, isStandalone: true, selector: "app-control-buttons-alt-component", inputs: { buttons: "buttons", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", showAspect: "showAspect" }, ngImport: i0, template: "<div [ngStyle]=\"getContainerStyle()\">\r\n  <div\r\n    *ngFor=\"let button of buttons; let i = index\"\r\n    [ngStyle]=\"getButtonStyle(button)\"\r\n    (click)=\"button.onPress && button.onPress()\"\r\n  >\r\n    <ng-container *ngIf=\"button.icon\">\r\n      <fa-icon\r\n        *ngIf=\"button.active\"\r\n        [icon]=\"button.alternateIcon || button.icon\"\r\n        [style.color]=\"button.inActiveColor || 'transparent'\"\r\n      ></fa-icon>\r\n      <fa-icon\r\n        *ngIf=\"!button.active\"\r\n        [icon]=\"button.icon\"\r\n        [style.color]=\"button.inActiveColor || 'transparent'\"\r\n      ></fa-icon>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!button.icon\">\r\n      <ng-container *ngIf=\"button.customComponent\">\r\n        <ng-container *ngIf=\"isCustomComponent(button.customComponent)\">\r\n          <ng-container\r\n            *ngComponentOutlet=\"\r\n              button.customComponent.component;\r\n              injector: button.customComponent.injector\r\n            \"\r\n          ></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!isCustomComponent(button.customComponent) && !isFunctionComponent(button.customComponent)\">\r\n          <!-- Handle the HTMLElement case, e.g., render it using [innerHTML] -->\r\n          <div [innerHTML]=\"button.customComponent.outerHTML\"></div>\r\n        </ng-container>\r\n      </ng-container>\r\n    </ng-container>\r\n    <span *ngIf=\"button.name\" [ngStyle]=\"getTextStyle(button)\">{{\r\n      button.name\r\n    }}</span>\r\n  </div>\r\n</div>\r\n", styles: [".container{margin-top:5px;margin-bottom:5px;z-index:9}.buttonContainer{display:flex;align-items:center;padding:10px;border-radius:5px;margin-left:5px;margin-right:5px;cursor:pointer}.verticalButton{flex-direction:column}.buttonText{font-size:12px;margin-top:5px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlButtonsAltComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ControlButtonsAltComponent, isStandalone: true, selector: "app-control-buttons-alt-component", inputs: { buttons: "buttons", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", showAspect: "showAspect" }, ngImport: i0, template: "<div [ngStyle]=\"getContainerStyle()\">\r\n  <div\r\n    *ngFor=\"let button of buttons; let i = index\"\r\n    [ngStyle]=\"getButtonStyle(button)\"\r\n    (click)=\"button.onPress && button.onPress()\"\r\n  >\r\n    <ng-container *ngIf=\"button.icon\">\r\n      <fa-icon\r\n        *ngIf=\"button.active\"\r\n        [icon]=\"button.alternateIcon || button.icon\"\r\n        [style.color]=\"button.inActiveColor || 'transparent'\"\r\n      ></fa-icon>\r\n      <fa-icon\r\n        *ngIf=\"!button.active\"\r\n        [icon]=\"button.icon\"\r\n        [style.color]=\"button.inActiveColor || 'transparent'\"\r\n      ></fa-icon>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!button.icon\">\r\n      <ng-container *ngIf=\"button.customComponent\">\r\n        <ng-container *ngIf=\"isCustomComponent(button.customComponent)\">\r\n          <ng-container\r\n            *ngComponentOutlet=\"\r\n              button.customComponent.component;\r\n              injector: button.customComponent.injector\r\n            \"\r\n          ></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!isCustomComponent(button.customComponent) && !isFunctionComponent(button.customComponent)\">\r\n          <!-- Handle the HTMLElement case, e.g., render it using [innerHTML] -->\r\n          <div [innerHTML]=\"button.customComponent.outerHTML\"></div>\r\n        </ng-container>\r\n      </ng-container>\r\n    </ng-container>\r\n    <span *ngIf=\"button.name\" [ngStyle]=\"getTextStyle(button)\">{{\r\n      button.name\r\n    }}</span>\r\n  </div>\r\n</div>\r\n", styles: [".container{margin-top:5px;margin-bottom:5px;z-index:9}.buttonContainer{display:flex;align-items:center;padding:10px;border-radius:5px;margin-left:5px;margin-right:5px;cursor:pointer}.verticalButton{flex-direction:column}.buttonText{font-size:12px;margin-top:5px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlButtonsAltComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlButtonsAltComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-control-buttons-alt-component', imports: [CommonModule, FontAwesomeModule], template: "<div [ngStyle]=\"getContainerStyle()\">\r\n  <div\r\n    *ngFor=\"let button of buttons; let i = index\"\r\n    [ngStyle]=\"getButtonStyle(button)\"\r\n    (click)=\"button.onPress && button.onPress()\"\r\n  >\r\n    <ng-container *ngIf=\"button.icon\">\r\n      <fa-icon\r\n        *ngIf=\"button.active\"\r\n        [icon]=\"button.alternateIcon || button.icon\"\r\n        [style.color]=\"button.inActiveColor || 'transparent'\"\r\n      ></fa-icon>\r\n      <fa-icon\r\n        *ngIf=\"!button.active\"\r\n        [icon]=\"button.icon\"\r\n        [style.color]=\"button.inActiveColor || 'transparent'\"\r\n      ></fa-icon>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!button.icon\">\r\n      <ng-container *ngIf=\"button.customComponent\">\r\n        <ng-container *ngIf=\"isCustomComponent(button.customComponent)\">\r\n          <ng-container\r\n            *ngComponentOutlet=\"\r\n              button.customComponent.component;\r\n              injector: button.customComponent.injector\r\n            \"\r\n          ></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!isCustomComponent(button.customComponent) && !isFunctionComponent(button.customComponent)\">\r\n          <!-- Handle the HTMLElement case, e.g., render it using [innerHTML] -->\r\n          <div [innerHTML]=\"button.customComponent.outerHTML\"></div>\r\n        </ng-container>\r\n      </ng-container>\r\n    </ng-container>\r\n    <span *ngIf=\"button.name\" [ngStyle]=\"getTextStyle(button)\">{{\r\n      button.name\r\n    }}</span>\r\n  </div>\r\n</div>\r\n", styles: [".container{margin-top:5px;margin-bottom:5px;z-index:9}.buttonContainer{display:flex;align-items:center;padding:10px;border-radius:5px;margin-left:5px;margin-right:5px;cursor:pointer}.verticalButton{flex-direction:column}.buttonText{font-size:12px;margin-top:5px}\n"] }]
         }], propDecorators: { buttons: [{
@@ -24407,8 +24405,8 @@ class ControlButtonsComponentTouch {
     isFunctionComponent(comp) {
         return typeof comp === 'function';
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlButtonsComponentTouch, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ControlButtonsComponentTouch, isStandalone: true, selector: "app-control-buttons-component-touch", inputs: { buttons: "buttons", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", showAspect: "showAspect" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlButtonsComponentTouch, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ControlButtonsComponentTouch, isStandalone: true, selector: "app-control-buttons-component-touch", inputs: { buttons: "buttons", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", showAspect: "showAspect" }, ngImport: i0, template: `
     <div
       [ngStyle]="
         mergeStyles(getAlignmentStyle(), buttonsContainerStyle, {
@@ -24499,9 +24497,9 @@ class ControlButtonsComponentTouch {
         </span>
       </button>
     </div>
-  `, isInline: true, styles: [":host{display:flex;justify-content:center;align-items:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+  `, isInline: true, styles: [":host{display:flex;justify-content:center;align-items:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ControlButtonsComponentTouch, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ControlButtonsComponentTouch, decorators: [{
             type: Component,
             args: [{ selector: 'app-control-buttons-component-touch', imports: [CommonModule, FontAwesomeModule], template: `
     <div
@@ -24699,8 +24697,8 @@ class FlexibleGrid {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.injectorCache.get(inputs);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FlexibleGrid, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: FlexibleGrid, isStandalone: true, selector: "app-flexible-grid", inputs: { customWidth: "customWidth", customHeight: "customHeight", rows: "rows", columns: "columns", componentsToRender: "componentsToRender", backgroundColor: "backgroundColor" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FlexibleGrid, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: FlexibleGrid, isStandalone: true, selector: "app-flexible-grid", inputs: { customWidth: "customWidth", customHeight: "customHeight", rows: "rows", columns: "columns", componentsToRender: "componentsToRender", backgroundColor: "backgroundColor" }, usesOnChanges: true, ngImport: i0, template: `
     <div style="padding: 0;">
       <div
         *ngFor="let rowComponents of grid; let rowIndex = index"
@@ -24716,9 +24714,9 @@ class FlexibleGrid {
         </div>
       </div>
     </div>
-  `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
+  `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FlexibleGrid, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FlexibleGrid, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-flexible-grid',
@@ -24872,8 +24870,8 @@ class FlexibleVideo {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.injectorCache.get(inputs);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FlexibleVideo, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: FlexibleVideo, isStandalone: true, selector: "app-flexible-video", inputs: { customWidth: "customWidth", customHeight: "customHeight", rows: "rows", columns: "columns", componentsToRender: "componentsToRender", showAspect: "showAspect", backgroundColor: "backgroundColor", Screenboard: "Screenboard", annotateScreenStream: "annotateScreenStream", localStreamScreen: "localStreamScreen" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FlexibleVideo, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: FlexibleVideo, isStandalone: true, selector: "app-flexible-video", inputs: { customWidth: "customWidth", customHeight: "customHeight", rows: "rows", columns: "columns", componentsToRender: "componentsToRender", showAspect: "showAspect", backgroundColor: "backgroundColor", Screenboard: "Screenboard", annotateScreenStream: "annotateScreenStream", localStreamScreen: "localStreamScreen" }, usesOnChanges: true, ngImport: i0, template: `
     <div
       style="padding: 0; flex: 1; margin: 0; position: relative; display: {{
         showAspect ? 'flex' : 'none'
@@ -24921,9 +24919,9 @@ class FlexibleVideo {
         ></ng-container>
       </div>
     </div>
-  `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
+  `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: FlexibleVideo, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: FlexibleVideo, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-flexible-video',
@@ -25070,8 +25068,8 @@ class LoadingModal {
             color: this.displayColor,
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LoadingModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: LoadingModal, isStandalone: true, selector: "app-loading-modal", inputs: { isVisible: "isVisible", backgroundColor: "backgroundColor", displayColor: "displayColor" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LoadingModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: LoadingModal, isStandalone: true, selector: "app-loading-modal", inputs: { isVisible: "isVisible", backgroundColor: "backgroundColor", displayColor: "displayColor" }, ngImport: i0, template: `
     <div *ngIf="isVisible" [ngStyle]="modalContainerStyle">
       <div [ngStyle]="modalContentStyle" class="modal-content">
         <div class="spinner" [ngStyle]="spinnerContainerStyle"></div>
@@ -25080,7 +25078,7 @@ class LoadingModal {
     </div>
   `, isInline: true, styles: [".spinner{border:12px solid #f3f3f3;border-top:12px solid black;border-radius:50%;width:50px;height:50px;animation:spin 2s linear infinite}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.modal-content{display:flex;flex-direction:column;align-items:center}.loading-text{margin-top:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: LoadingModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: LoadingModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-loading-modal', imports: [CommonModule], template: `
     <div *ngIf="isVisible" [ngStyle]="modalContainerStyle">
@@ -25194,8 +25192,8 @@ class MainAspectComponent {
             width: parentWidth + 'px',
         };
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainAspectComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MainAspectComponent, isStandalone: true, selector: "app-main-aspect-component", inputs: { backgroundColor: "backgroundColor", showControls: "showControls", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", defaultFraction: "defaultFraction", updateIsWideScreen: "updateIsWideScreen", updateIsMediumScreen: "updateIsMediumScreen", updateIsSmallScreen: "updateIsSmallScreen" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainAspectComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MainAspectComponent, isStandalone: true, selector: "app-main-aspect-component", inputs: { backgroundColor: "backgroundColor", showControls: "showControls", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", defaultFraction: "defaultFraction", updateIsWideScreen: "updateIsWideScreen", updateIsMediumScreen: "updateIsMediumScreen", updateIsSmallScreen: "updateIsSmallScreen" }, usesOnChanges: true, ngImport: i0, template: `
     <div
       [ngStyle]="aspectStyles"
       [style.backgroundColor]="backgroundColor"
@@ -25205,7 +25203,7 @@ class MainAspectComponent {
     </div>
   `, isInline: true, styles: [".aspect-container{overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainAspectComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainAspectComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-main-aspect-component', imports: [CommonModule], template: `
     <div
@@ -25324,14 +25322,14 @@ class MainContainerComponent {
             overflow: 'hidden',
         };
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MainContainerComponent, isStandalone: true, selector: "app-main-container-component", inputs: { backgroundColor: "backgroundColor", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", marginLeft: "marginLeft", marginRight: "marginRight", marginTop: "marginTop", marginBottom: "marginBottom", padding: "padding" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainContainerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MainContainerComponent, isStandalone: true, selector: "app-main-container-component", inputs: { backgroundColor: "backgroundColor", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", marginLeft: "marginLeft", marginRight: "marginRight", marginTop: "marginTop", marginBottom: "marginBottom", padding: "padding" }, usesOnChanges: true, ngImport: i0, template: `
     <div [ngStyle]="containerStyles">
       <ng-content></ng-content>
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainContainerComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainContainerComponent, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-main-container-component',
@@ -25429,8 +25427,8 @@ class MeetingProgressTimer {
             this.showTimer = changes['showTimer'].currentValue;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingProgressTimer, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MeetingProgressTimer, isStandalone: true, selector: "app-meeting-progress-timer", inputs: { meetingProgressTime: "meetingProgressTime", initialBackgroundColor: "initialBackgroundColor", position: "position", textStyle: "textStyle", showTimer: "showTimer" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingProgressTimer, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MeetingProgressTimer, isStandalone: true, selector: "app-meeting-progress-timer", inputs: { meetingProgressTime: "meetingProgressTime", initialBackgroundColor: "initialBackgroundColor", position: "position", textStyle: "textStyle", showTimer: "showTimer" }, usesOnChanges: true, ngImport: i0, template: `
     <div [ngStyle]="positions[position]" class="badge-container">
       <div
         [ngStyle]="{
@@ -25444,7 +25442,7 @@ class MeetingProgressTimer {
     </div>
   `, isInline: true, styles: [".badge-container{padding:5px;position:relative;z-index:1000}.progress-timer{background-color:green;padding:5px;border-radius:5px;color:#fff}.progress-timer-text{color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingProgressTimer, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingProgressTimer, decorators: [{
             type: Component,
             args: [{ selector: 'app-meeting-progress-timer', imports: [CommonModule], template: `
     <div [ngStyle]="positions[position]" class="badge-container">
@@ -25539,8 +25537,8 @@ class MainGridComponent {
             borderWidth: '4px',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainGridComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MainGridComponent, isStandalone: true, selector: "app-main-grid-component", inputs: { backgroundColor: "backgroundColor", mainSize: "mainSize", height: "height", width: "width", showAspect: "showAspect", timeBackgroundColor: "timeBackgroundColor", showTimer: "showTimer", meetingProgressTime: "meetingProgressTime" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainGridComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MainGridComponent, isStandalone: true, selector: "app-main-grid-component", inputs: { backgroundColor: "backgroundColor", mainSize: "mainSize", height: "height", width: "width", showAspect: "showAspect", timeBackgroundColor: "timeBackgroundColor", showTimer: "showTimer", meetingProgressTime: "meetingProgressTime" }, ngImport: i0, template: `
     <div [ngStyle]="maingridContainerStyle">
       <app-meeting-progress-timer
         *ngIf="showTimer"
@@ -25551,7 +25549,7 @@ class MainGridComponent {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: MeetingProgressTimer, selector: "app-meeting-progress-timer", inputs: ["meetingProgressTime", "initialBackgroundColor", "position", "textStyle", "showTimer"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainGridComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainGridComponent, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-main-grid-component',
@@ -25744,14 +25742,14 @@ class MainScreenComponent {
             });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainScreenComponent, deps: [{ token: i0.Renderer2 }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MainScreenComponent, isStandalone: true, selector: "app-main-screen-component", inputs: { mainSize: "mainSize", doStack: "doStack", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", defaultFraction: "defaultFraction", showControls: "showControls", updateComponentSizes: "updateComponentSizes" }, queries: [{ propertyName: "children", predicate: ["child"] }], usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainScreenComponent, deps: [{ token: i0.Renderer2 }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MainScreenComponent, isStandalone: true, selector: "app-main-screen-component", inputs: { mainSize: "mainSize", doStack: "doStack", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", defaultFraction: "defaultFraction", showControls: "showControls", updateComponentSizes: "updateComponentSizes" }, queries: [{ propertyName: "children", predicate: ["child"] }], usesOnChanges: true, ngImport: i0, template: `
     <div [ngStyle]="containerStyle">
       <ng-content></ng-content>
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MainScreenComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MainScreenComponent, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-main-screen-component',
@@ -25897,8 +25895,8 @@ class MiniCardAudio {
     getOverlayPosition(position) {
         return getOverlayPosition({ position });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniCardAudio, deps: [{ token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'showWaveform', optional: true }, { token: 'overlayPosition', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MiniCardAudio, isStandalone: true, selector: "app-mini-card-audio", inputs: { customStyle: "customStyle", name: "name", showWaveform: "showWaveform", overlayPosition: "overlayPosition", barColor: "barColor", textColor: "textColor", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniCardAudio, deps: [{ token: 'customStyle', optional: true }, { token: 'name', optional: true }, { token: 'showWaveform', optional: true }, { token: 'overlayPosition', optional: true }, { token: 'barColor', optional: true }, { token: 'textColor', optional: true }, { token: 'imageSource', optional: true }, { token: 'roundedImage', optional: true }, { token: 'imageStyle', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MiniCardAudio, isStandalone: true, selector: "app-mini-card-audio", inputs: { customStyle: "customStyle", name: "name", showWaveform: "showWaveform", overlayPosition: "overlayPosition", barColor: "barColor", textColor: "textColor", imageSource: "imageSource", roundedImage: "roundedImage", imageStyle: "imageStyle" }, ngImport: i0, template: `
     <div class="card" [ngStyle]="customStyle">
       <img *ngIf="imageSource" [src]="imageSource" [ngStyle]="getImageStyle()" alt="Background" />
       <div [ngStyle]="getOverlayPosition(overlayPosition)" [class.overlay-web]="true">
@@ -25919,7 +25917,7 @@ class MiniCardAudio {
     </div>
   `, isInline: true, styles: [".card{width:100%;height:100%;margin:0;padding:0;background-color:#2c678f}.overlay-web{position:absolute;min-width:50%;min-height:5%;max-height:100%;display:grid;grid-template-columns:4fr 2fr;grid-gap:3px}.name-column{display:flex;justify-content:center;align-items:center;background-color:#00000080;padding:5px 10px;margin-right:2px;font-size:14px}.name-text{font-size:14px;color:#fff}.waveform-web{display:flex;justify-content:left;align-items:center;background-color:#0000000d;padding:0;flex-direction:row}.bar{flex:1;opacity:.35;margin:0 1px}.background-image{position:absolute;width:80px;height:80px;display:flex;justify-content:center;align-items:center;top:50%;left:50%;transform:translate(-40px,-40px)}.rounded-image{border-radius:20%}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MiniCardAudio, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MiniCardAudio, decorators: [{
             type: Component,
             args: [{ selector: 'app-mini-card-audio', imports: [CommonModule], template: `
     <div class="card" [ngStyle]="customStyle">
@@ -26052,8 +26050,8 @@ class OtherGridComponent {
     timeBackgroundColor = 'green';
     showTimer = false;
     meetingProgressTime = '00:00:00';
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: OtherGridComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: OtherGridComponent, isStandalone: true, selector: "app-other-grid-component", inputs: { backgroundColor: "backgroundColor", width: "width", height: "height", showAspect: "showAspect", timeBackgroundColor: "timeBackgroundColor", showTimer: "showTimer", meetingProgressTime: "meetingProgressTime" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: OtherGridComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: OtherGridComponent, isStandalone: true, selector: "app-other-grid-component", inputs: { backgroundColor: "backgroundColor", width: "width", height: "height", showAspect: "showAspect", timeBackgroundColor: "timeBackgroundColor", showTimer: "showTimer", meetingProgressTime: "meetingProgressTime" }, ngImport: i0, template: `
     <div
       [ngStyle]="{
         'background-color': backgroundColor,
@@ -26079,7 +26077,7 @@ class OtherGridComponent {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: MeetingProgressTimer, selector: "app-meeting-progress-timer", inputs: ["meetingProgressTime", "initialBackgroundColor", "position", "textStyle", "showTimer"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: OtherGridComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: OtherGridComponent, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-other-grid-component',
@@ -26298,8 +26296,8 @@ class Pagination {
         }
         return item.toString();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Pagination, deps: [{ token: GeneratePageContent }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: Pagination, isStandalone: true, selector: "app-pagination", inputs: { totalPages: "totalPages", currentUserPage: "currentUserPage", handlePageChange: "handlePageChange", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", activePageStyle: "activePageStyle", inactivePageStyle: "inactivePageStyle", backgroundColor: "backgroundColor", paginationHeight: "paginationHeight", showAspect: "showAspect", parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Pagination, deps: [{ token: GeneratePageContent }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: Pagination, isStandalone: true, selector: "app-pagination", inputs: { totalPages: "totalPages", currentUserPage: "currentUserPage", handlePageChange: "handlePageChange", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", activePageStyle: "activePageStyle", inactivePageStyle: "inactivePageStyle", backgroundColor: "backgroundColor", paginationHeight: "paginationHeight", showAspect: "showAspect", parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: `
     <div
       [ngStyle]="{
         'background-color': backgroundColor,
@@ -26361,7 +26359,7 @@ class Pagination {
     </div>
   `, isInline: true, styles: [".pageButton.active{background-color:#2c678f}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Pagination, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Pagination, decorators: [{
             type: Component,
             args: [{ selector: 'app-pagination', imports: [CommonModule, FontAwesomeModule], template: `
     <div
@@ -26514,8 +26512,8 @@ class SubAspectComponent {
             width: this.containerWidthFraction ? this.containerWidthFraction * windowWidth : windowWidth,
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SubAspectComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: SubAspectComponent, isStandalone: true, selector: "app-sub-aspect-component", inputs: { backgroundColor: "backgroundColor", showControls: "showControls", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", defaultFractionSub: "defaultFractionSub" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SubAspectComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: SubAspectComponent, isStandalone: true, selector: "app-sub-aspect-component", inputs: { backgroundColor: "backgroundColor", showControls: "showControls", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", defaultFractionSub: "defaultFractionSub" }, usesOnChanges: true, ngImport: i0, template: `
     <div
       *ngIf="showControls"
       [ngStyle]="{
@@ -26531,7 +26529,7 @@ class SubAspectComponent {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: SubAspectComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: SubAspectComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-sub-aspect-component', imports: [CommonModule], template: `
     <div
@@ -26636,10 +26634,10 @@ class DisplaySettingsModal {
             },
         });
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisplaySettingsModal, deps: [{ token: ModifyDisplaySettings }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: DisplaySettingsModal, isStandalone: true, selector: "app-display-settings-modal", inputs: { isDisplaySettingsModalVisible: "isDisplaySettingsModalVisible", onDisplaySettingsClose: "onDisplaySettingsClose", onModifyDisplaySettings: "onModifyDisplaySettings", parameters: "parameters", position: "position", backgroundColor: "backgroundColor" }, ngImport: i0, template: "<div *ngIf=\"isDisplaySettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{ 'background-color': backgroundColor }\">\r\n    <div class=\"modal-header\">\r\n      <h2>Display Settings</h2>\r\n      <div class=\"btn-close-media-settings\" (click)=\"onDisplaySettingsClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"modal-divider\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"setting-group\">\r\n        <label>Display Option:</label>\r\n        <select [(ngModel)]=\"meetingDisplayTypeState\" class=\"select-control\">\r\n          <option value=\"video\">Video Participants Only</option>\r\n          <option value=\"media\">Media Participants Only</option>\r\n          <option value=\"all\">Show All Participants</option>\r\n        </select>\r\n      </div>\r\n      <hr class=\"modal-divider\" />\r\n      <div class=\"setting-group\">\r\n        <div class=\"setting-toggle\">\r\n          <label>Display Audiographs</label>\r\n          <button (click)=\"autoWaveState = !autoWaveState\" [ngClass]=\"{ 'active': autoWaveState }\">\r\n            <span class=\"toggle-icon\">{{ autoWaveState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n        <div class=\"setting-toggle\">\r\n          <label>Force Full Display</label>\r\n          <button (click)=\"forceFullDisplayState = !forceFullDisplayState\" [ngClass]=\"{ 'active': forceFullDisplayState }\">\r\n            <span class=\"toggle-icon\">{{ forceFullDisplayState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n        <div class=\"setting-toggle\">\r\n          <label>Force Video Participants</label>\r\n          <button (click)=\"meetingVideoOptimizedState = !meetingVideoOptimizedState\" [ngClass]=\"{ 'active': meetingVideoOptimizedState }\">\r\n            <span class=\"toggle-icon\">{{ meetingVideoOptimizedState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"save-button\" (click)=\"handleSaveSettings()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:80vw;max-width:350px;max-height:65%;overflow-y:auto;top:10px;right:10px}.modal-header{display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-divider{height:1px;background-color:#000;margin:5px 0}.modal-body{flex:1}.setting-group{margin-bottom:10px}.setting-toggle{display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:10px}.select-control{font-size:medium;padding:12px 30px 12px 10px;border:1px solid gray;border-radius:4px;color:#000;background-color:#fff}.toggle-icon{font-size:large;font-weight:bolder}.active{color:green}.inactive{color:red}.modal-footer{margin-top:10px;display:flex;justify-content:flex-end}.save-button{padding:5px;border-radius:5px;background-color:#000;color:#fff;font-size:medium}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisplaySettingsModal, deps: [{ token: ModifyDisplaySettings }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: DisplaySettingsModal, isStandalone: true, selector: "app-display-settings-modal", inputs: { isDisplaySettingsModalVisible: "isDisplaySettingsModalVisible", onDisplaySettingsClose: "onDisplaySettingsClose", onModifyDisplaySettings: "onModifyDisplaySettings", parameters: "parameters", position: "position", backgroundColor: "backgroundColor" }, ngImport: i0, template: "<div *ngIf=\"isDisplaySettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{ 'background-color': backgroundColor }\">\r\n    <div class=\"modal-header\">\r\n      <h2>Display Settings</h2>\r\n      <div class=\"btn-close-media-settings\" (click)=\"onDisplaySettingsClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"modal-divider\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"setting-group\">\r\n        <label>Display Option:</label>\r\n        <select [(ngModel)]=\"meetingDisplayTypeState\" class=\"select-control\">\r\n          <option value=\"video\">Video Participants Only</option>\r\n          <option value=\"media\">Media Participants Only</option>\r\n          <option value=\"all\">Show All Participants</option>\r\n        </select>\r\n      </div>\r\n      <hr class=\"modal-divider\" />\r\n      <div class=\"setting-group\">\r\n        <div class=\"setting-toggle\">\r\n          <label>Display Audiographs</label>\r\n          <button (click)=\"autoWaveState = !autoWaveState\" [ngClass]=\"{ 'active': autoWaveState }\">\r\n            <span class=\"toggle-icon\">{{ autoWaveState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n        <div class=\"setting-toggle\">\r\n          <label>Force Full Display</label>\r\n          <button (click)=\"forceFullDisplayState = !forceFullDisplayState\" [ngClass]=\"{ 'active': forceFullDisplayState }\">\r\n            <span class=\"toggle-icon\">{{ forceFullDisplayState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n        <div class=\"setting-toggle\">\r\n          <label>Force Video Participants</label>\r\n          <button (click)=\"meetingVideoOptimizedState = !meetingVideoOptimizedState\" [ngClass]=\"{ 'active': meetingVideoOptimizedState }\">\r\n            <span class=\"toggle-icon\">{{ meetingVideoOptimizedState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"save-button\" (click)=\"handleSaveSettings()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:80vw;max-width:350px;max-height:65%;overflow-y:auto;top:10px;right:10px}.modal-header{display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-divider{height:1px;background-color:#000;margin:5px 0}.modal-body{flex:1}.setting-group{margin-bottom:10px}.setting-toggle{display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:10px}.select-control{font-size:medium;padding:12px 30px 12px 10px;border:1px solid gray;border-radius:4px;color:#000;background-color:#fff}.toggle-icon{font-size:large;font-weight:bolder}.active{color:green}.inactive{color:red}.modal-footer{margin-top:10px;display:flex;justify-content:flex-end}.save-button{padding:5px;border-radius:5px;background-color:#000;color:#fff;font-size:medium}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: DisplaySettingsModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: DisplaySettingsModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-display-settings-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div *ngIf=\"isDisplaySettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{ 'background-color': backgroundColor }\">\r\n    <div class=\"modal-header\">\r\n      <h2>Display Settings</h2>\r\n      <div class=\"btn-close-media-settings\" (click)=\"onDisplaySettingsClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"modal-divider\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"setting-group\">\r\n        <label>Display Option:</label>\r\n        <select [(ngModel)]=\"meetingDisplayTypeState\" class=\"select-control\">\r\n          <option value=\"video\">Video Participants Only</option>\r\n          <option value=\"media\">Media Participants Only</option>\r\n          <option value=\"all\">Show All Participants</option>\r\n        </select>\r\n      </div>\r\n      <hr class=\"modal-divider\" />\r\n      <div class=\"setting-group\">\r\n        <div class=\"setting-toggle\">\r\n          <label>Display Audiographs</label>\r\n          <button (click)=\"autoWaveState = !autoWaveState\" [ngClass]=\"{ 'active': autoWaveState }\">\r\n            <span class=\"toggle-icon\">{{ autoWaveState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n        <div class=\"setting-toggle\">\r\n          <label>Force Full Display</label>\r\n          <button (click)=\"forceFullDisplayState = !forceFullDisplayState\" [ngClass]=\"{ 'active': forceFullDisplayState }\">\r\n            <span class=\"toggle-icon\">{{ forceFullDisplayState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n        <div class=\"setting-toggle\">\r\n          <label>Force Video Participants</label>\r\n          <button (click)=\"meetingVideoOptimizedState = !meetingVideoOptimizedState\" [ngClass]=\"{ 'active': meetingVideoOptimizedState }\">\r\n            <span class=\"toggle-icon\">{{ meetingVideoOptimizedState ? '&#10003;' : '&#10007;' }}</span>\r\n          </button>\r\n        </div>\r\n        <hr class=\"modal-divider\" />\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"save-button\" (click)=\"handleSaveSettings()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:80vw;max-width:350px;max-height:65%;overflow-y:auto;top:10px;right:10px}.modal-header{display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-divider{height:1px;background-color:#000;margin:5px 0}.modal-body{flex:1}.setting-group{margin-bottom:10px}.setting-toggle{display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:10px}.select-control{font-size:medium;padding:12px 30px 12px 10px;border:1px solid gray;border-radius:4px;color:#000;background-color:#fff}.toggle-icon{font-size:large;font-weight:bolder}.active{color:green}.inactive{color:red}.modal-footer{margin-top:10px;display:flex;justify-content:flex-end}.save-button{padding:5px;border-radius:5px;background-color:#000;color:#fff;font-size:medium}\n"] }]
         }], ctorParameters: () => [{ type: ModifyDisplaySettings }], propDecorators: { isDisplaySettingsModalVisible: [{
@@ -26803,10 +26801,10 @@ class EventSettingsModal {
     closeModal() {
         this.onEventSettingsClose();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: EventSettingsModal, deps: [{ token: ModifySettings }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: EventSettingsModal, isStandalone: true, selector: "app-event-settings-modal", inputs: { isEventSettingsModalVisible: "isEventSettingsModalVisible", onEventSettingsClose: "onEventSettingsClose", onModifyEventSettings: "onModifyEventSettings", position: "position", backgroundColor: "backgroundColor", audioSetting: "audioSetting", videoSetting: "videoSetting", screenshareSetting: "screenshareSetting", chatSetting: "chatSetting", updateAudioSetting: "updateAudioSetting", updateVideoSetting: "updateVideoSetting", updateScreenshareSetting: "updateScreenshareSetting", updateChatSetting: "updateChatSetting", updateIsSettingsModalVisible: "updateIsSettingsModalVisible", roomName: "roomName", socket: "socket", showAlert: "showAlert" }, usesOnChanges: true, ngImport: i0, template: "<!-- event-settings-modal.component.html -->\r\n\r\n<div *ngIf=\"isEventSettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"getModalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Event Settings</div>\r\n      <div (click)=\"closeModal()\" class=\"icon-close\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User audio:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"audioState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User video:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"videoState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User screenshare:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"screenshareState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User chat:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"chatState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n        </select>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"btn-apply-settings\" (click)=\"handleSaveSettings()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:999}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.icon-close{cursor:pointer}.hr{height:1px;background-color:#000;margin:5px 0}.modal-body .form-group{margin-bottom:10px}.label{font-size:medium;color:#000;margin-bottom:5px;font-weight:700;margin-right:10px}.picker-select{font-size:medium;padding:6px 5px;border:1px solid gray;border-radius:4px;color:#000;background-color:#fff}.sep{height:1px;background-color:#fff;margin:2px 0}.modal-footer{margin-top:10px;display:flex;justify-content:flex-end}.btn-apply-settings{padding:5px 10px;border-radius:5px;background-color:#000;color:#fff;font-size:medium;cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: EventSettingsModal, deps: [{ token: ModifySettings }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: EventSettingsModal, isStandalone: true, selector: "app-event-settings-modal", inputs: { isEventSettingsModalVisible: "isEventSettingsModalVisible", onEventSettingsClose: "onEventSettingsClose", onModifyEventSettings: "onModifyEventSettings", position: "position", backgroundColor: "backgroundColor", audioSetting: "audioSetting", videoSetting: "videoSetting", screenshareSetting: "screenshareSetting", chatSetting: "chatSetting", updateAudioSetting: "updateAudioSetting", updateVideoSetting: "updateVideoSetting", updateScreenshareSetting: "updateScreenshareSetting", updateChatSetting: "updateChatSetting", updateIsSettingsModalVisible: "updateIsSettingsModalVisible", roomName: "roomName", socket: "socket", showAlert: "showAlert" }, usesOnChanges: true, ngImport: i0, template: "<!-- event-settings-modal.component.html -->\r\n\r\n<div *ngIf=\"isEventSettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"getModalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Event Settings</div>\r\n      <div (click)=\"closeModal()\" class=\"icon-close\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User audio:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"audioState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User video:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"videoState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User screenshare:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"screenshareState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User chat:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"chatState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n        </select>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"btn-apply-settings\" (click)=\"handleSaveSettings()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:999}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.icon-close{cursor:pointer}.hr{height:1px;background-color:#000;margin:5px 0}.modal-body .form-group{margin-bottom:10px}.label{font-size:medium;color:#000;margin-bottom:5px;font-weight:700;margin-right:10px}.picker-select{font-size:medium;padding:6px 5px;border:1px solid gray;border-radius:4px;color:#000;background-color:#fff}.sep{height:1px;background-color:#fff;margin:2px 0}.modal-footer{margin-top:10px;display:flex;justify-content:flex-end}.btn-apply-settings{padding:5px 10px;border-radius:5px;background-color:#000;color:#fff;font-size:medium;cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: EventSettingsModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: EventSettingsModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-event-settings-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<!-- event-settings-modal.component.html -->\r\n\r\n<div *ngIf=\"isEventSettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"getModalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Event Settings</div>\r\n      <div (click)=\"closeModal()\" class=\"icon-close\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User audio:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"audioState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User video:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"videoState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User screenshare:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"screenshareState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n          <option value=\"approval\">Upon approval</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"sep\"></div>\r\n      <div class=\"form-group\">\r\n        <label class=\"label\">User chat:</label>\r\n        <select class=\"picker-select\" [(ngModel)]=\"chatState\">\r\n          <option value=\"disallow\">Disallow</option>\r\n          <option value=\"allow\">Allow</option>\r\n        </select>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button class=\"btn-apply-settings\" (click)=\"handleSaveSettings()\">Save</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:999}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.icon-close{cursor:pointer}.hr{height:1px;background-color:#000;margin:5px 0}.modal-body .form-group{margin-bottom:10px}.label{font-size:medium;color:#000;margin-bottom:5px;font-weight:700;margin-right:10px}.picker-select{font-size:medium;padding:6px 5px;border:1px solid gray;border-radius:4px;color:#000;background-color:#fff}.sep{height:1px;background-color:#fff;margin:2px 0}.modal-footer{margin-top:10px;display:flex;justify-content:flex-end}.btn-apply-settings{padding:5px 10px;border-radius:5px;background-color:#000;color:#fff;font-size:medium;cursor:pointer}\n"] }]
         }], ctorParameters: () => [{ type: ModifySettings }], propDecorators: { isEventSettingsModalVisible: [{
@@ -26940,10 +26938,10 @@ class ConfirmExitModal {
         });
         this.onConfirmExitClose();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmExitModal, deps: [{ token: ConfirmExit }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ConfirmExitModal, isStandalone: true, selector: "app-confirm-exit-modal", inputs: { isConfirmExitModalVisible: "isConfirmExitModalVisible", onConfirmExitClose: "onConfirmExitClose", position: "position", backgroundColor: "backgroundColor", exitEventOnConfirm: "exitEventOnConfirm", member: "member", ban: "ban", roomName: "roomName", socket: "socket", islevel: "islevel" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isConfirmExitModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}\r\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\r\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit()\">\r\n        {{ islevel === '2' ? 'End Event' : 'Exit' }}\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end}.cancel-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000;margin-right:20px}.confirm-button{background-color:red}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmExitModal, deps: [{ token: ConfirmExit }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ConfirmExitModal, isStandalone: true, selector: "app-confirm-exit-modal", inputs: { isConfirmExitModalVisible: "isConfirmExitModalVisible", onConfirmExitClose: "onConfirmExitClose", position: "position", backgroundColor: "backgroundColor", exitEventOnConfirm: "exitEventOnConfirm", member: "member", ban: "ban", roomName: "roomName", socket: "socket", islevel: "islevel" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isConfirmExitModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}\r\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\r\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit()\">\r\n        {{ islevel === '2' ? 'End Event' : 'Exit' }}\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end}.cancel-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000;margin-right:20px}.confirm-button{background-color:red}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmExitModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmExitModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-confirm-exit-modal', imports: [CommonModule, FormsModule, FontAwesomeModule], template: "<div *ngIf=\"isConfirmExitModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}\r\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\r\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit()\">\r\n        {{ islevel === '2' ? 'End Event' : 'Exit' }}\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end}.cancel-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000;margin-right:20px}.confirm-button{background-color:red}\n"] }]
         }], ctorParameters: () => [{ type: ConfirmExit }], propDecorators: { isConfirmExitModalVisible: [{
@@ -27152,10 +27150,10 @@ class MediaSettingsModal {
     showVirtual() {
         this.parameters.updateIsBackgroundModalVisible(!this.parameters.isBackgroundModalVisible);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediaSettingsModal, deps: [{ token: SwitchAudio }, { token: SwitchVideo }, { token: SwitchVideoAlt }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediaSettingsModal, isStandalone: true, selector: "app-media-settings-modal", inputs: { isMediaSettingsModalVisible: "isMediaSettingsModalVisible", onMediaSettingsClose: "onMediaSettingsClose", switchCameraOnPress: "switchCameraOnPress", switchVideoOnPress: "switchVideoOnPress", switchAudioOnPress: "switchAudioOnPress", parameters: "parameters", position: "position", backgroundColor: "backgroundColor" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isMediaSettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Media Settings</div>\r\n      <div (click)=\"handleModalClose()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label>\r\n          <fa-icon [icon]=\"faCamera\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Select Camera:\r\n        </label>\r\n        <select [(ngModel)]=\"selectedVideoInput\" (change)=\"handleVideoSwitch($event)\" class=\"form-control\">\r\n          <option *ngFor=\"let input of parameters.videoInputs\" [value]=\"input.deviceId\">\r\n            {{ input.label }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>\r\n          <fa-icon [icon]=\"faMicrophone\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Select Microphone:\r\n        </label>\r\n        <select [(ngModel)]=\"selectedAudioInput\" (change)=\"handleAudioSwitch($event)\" class=\"form-control\">\r\n          <option *ngFor=\"let input of parameters.audioInputs\" [value]=\"input.deviceId\">\r\n            {{ input.label }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <hr class=\"hr\" />\r\n      <div class=\"form-group\">\r\n        <button (click)=\"handleSwitchCamera()\" class=\"btn-switch\">\r\n          <fa-icon [icon]=\"faSyncAlt\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Switch Camera\r\n        </button>\r\n      </div>\r\n      <hr class=\"hr\" />\r\n      <div class=\"form-group\">\r\n        <button (click)=\"showVirtual()\" class=\"btn-virtual\">\r\n          <fa-icon [icon]=\"faPhotoFilm\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Virtual Background\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:999}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}.modal-title{font-size:18px;font-weight:700;color:#000}.icon{cursor:pointer;color:#000;font-size:24px;font-weight:700}.form-group{margin-bottom:15px}.form-group label{display:flex;align-items:center;font-size:16px;margin-bottom:5px}.form-control{width:100%;padding:8px;font-size:16px;border:1px solid #ccc;border-radius:4px}.hr{margin:10px 0;border:none;border-top:1px solid #ccc}.btn-switch,.btn-virtual{width:100%;padding:10px;border:none;border-radius:5px;cursor:pointer;font-size:16px;margin-bottom:10px}.btn-switch,.btn-virtual{background-color:#83c0e9;color:#000}.btn-switch:hover,.btn-virtual:hover{background-color:#6aa6d1}.btn-switch:focus,.btn-virtual:focus{outline:none}.button{border-radius:5px;color:#fff;padding:5px 10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediaSettingsModal, deps: [{ token: SwitchAudio }, { token: SwitchVideo }, { token: SwitchVideoAlt }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MediaSettingsModal, isStandalone: true, selector: "app-media-settings-modal", inputs: { isMediaSettingsModalVisible: "isMediaSettingsModalVisible", onMediaSettingsClose: "onMediaSettingsClose", switchCameraOnPress: "switchCameraOnPress", switchVideoOnPress: "switchVideoOnPress", switchAudioOnPress: "switchAudioOnPress", parameters: "parameters", position: "position", backgroundColor: "backgroundColor" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isMediaSettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Media Settings</div>\r\n      <div (click)=\"handleModalClose()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label>\r\n          <fa-icon [icon]=\"faCamera\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Select Camera:\r\n        </label>\r\n        <select [(ngModel)]=\"selectedVideoInput\" (change)=\"handleVideoSwitch($event)\" class=\"form-control\">\r\n          <option *ngFor=\"let input of parameters.videoInputs\" [value]=\"input.deviceId\">\r\n            {{ input.label }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>\r\n          <fa-icon [icon]=\"faMicrophone\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Select Microphone:\r\n        </label>\r\n        <select [(ngModel)]=\"selectedAudioInput\" (change)=\"handleAudioSwitch($event)\" class=\"form-control\">\r\n          <option *ngFor=\"let input of parameters.audioInputs\" [value]=\"input.deviceId\">\r\n            {{ input.label }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <hr class=\"hr\" />\r\n      <div class=\"form-group\">\r\n        <button (click)=\"handleSwitchCamera()\" class=\"btn-switch\">\r\n          <fa-icon [icon]=\"faSyncAlt\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Switch Camera\r\n        </button>\r\n      </div>\r\n      <hr class=\"hr\" />\r\n      <div class=\"form-group\">\r\n        <button (click)=\"showVirtual()\" class=\"btn-virtual\">\r\n          <fa-icon [icon]=\"faPhotoFilm\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Virtual Background\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:999}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}.modal-title{font-size:18px;font-weight:700;color:#000}.icon{cursor:pointer;color:#000;font-size:24px;font-weight:700}.form-group{margin-bottom:15px}.form-group label{display:flex;align-items:center;font-size:16px;margin-bottom:5px}.form-control{width:100%;padding:8px;font-size:16px;border:1px solid #ccc;border-radius:4px}.hr{margin:10px 0;border:none;border-top:1px solid #ccc}.btn-switch,.btn-virtual{width:100%;padding:10px;border:none;border-radius:5px;cursor:pointer;font-size:16px;margin-bottom:10px}.btn-switch,.btn-virtual{background-color:#83c0e9;color:#000}.btn-switch:hover,.btn-virtual:hover{background-color:#6aa6d1}.btn-switch:focus,.btn-virtual:focus{outline:none}.button{border-radius:5px;color:#fff;padding:5px 10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediaSettingsModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediaSettingsModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-media-settings-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div *ngIf=\"isMediaSettingsModalVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Media Settings</div>\r\n      <div (click)=\"handleModalClose()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <label>\r\n          <fa-icon [icon]=\"faCamera\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Select Camera:\r\n        </label>\r\n        <select [(ngModel)]=\"selectedVideoInput\" (change)=\"handleVideoSwitch($event)\" class=\"form-control\">\r\n          <option *ngFor=\"let input of parameters.videoInputs\" [value]=\"input.deviceId\">\r\n            {{ input.label }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>\r\n          <fa-icon [icon]=\"faMicrophone\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Select Microphone:\r\n        </label>\r\n        <select [(ngModel)]=\"selectedAudioInput\" (change)=\"handleAudioSwitch($event)\" class=\"form-control\">\r\n          <option *ngFor=\"let input of parameters.audioInputs\" [value]=\"input.deviceId\">\r\n            {{ input.label }}\r\n          </option>\r\n        </select>\r\n      </div>\r\n      <hr class=\"hr\" />\r\n      <div class=\"form-group\">\r\n        <button (click)=\"handleSwitchCamera()\" class=\"btn-switch\">\r\n          <fa-icon [icon]=\"faSyncAlt\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Switch Camera\r\n        </button>\r\n      </div>\r\n      <hr class=\"hr\" />\r\n      <div class=\"form-group\">\r\n        <button (click)=\"showVirtual()\" class=\"btn-virtual\">\r\n          <fa-icon [icon]=\"faPhotoFilm\" [ngStyle]=\"{'margin-right': '8px'}\"></fa-icon> Virtual Background\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:999}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}.modal-title{font-size:18px;font-weight:700;color:#000}.icon{cursor:pointer;color:#000;font-size:24px;font-weight:700}.form-group{margin-bottom:15px}.form-group label{display:flex;align-items:center;font-size:16px;margin-bottom:5px}.form-control{width:100%;padding:8px;font-size:16px;border:1px solid #ccc;border-radius:4px}.hr{margin:10px 0;border:none;border-top:1px solid #ccc}.btn-switch,.btn-virtual{width:100%;padding:10px;border:none;border-radius:5px;cursor:pointer;font-size:16px;margin-bottom:10px}.btn-switch,.btn-virtual{background-color:#83c0e9;color:#000}.btn-switch:hover,.btn-virtual:hover{background-color:#6aa6d1}.btn-switch:focus,.btn-virtual:focus{outline:none}.button{border-radius:5px;color:#fff;padding:5px 10px}\n"] }]
         }], ctorParameters: () => [{ type: SwitchAudio }, { type: SwitchVideo }, { type: SwitchVideoAlt }], propDecorators: { isMediaSettingsModalVisible: [{
@@ -27241,10 +27239,10 @@ class CustomButtons {
     isCustomComponentConfig(obj) {
         return obj && typeof obj === 'object' && 'component' in obj && 'injector' in obj;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CustomButtons, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: CustomButtons, isStandalone: true, selector: "app-custom-buttons", inputs: { buttons: "buttons" }, ngImport: i0, template: "<div class=\"customButtonsContainer\">\r\n  <button\r\n    *ngFor=\"let button of buttons; let i = index\"\r\n    (click)=\"button.action()\"\r\n    class=\"customButton\"\r\n    [ngStyle]=\"{\r\n      'background-color': button.show ? button.backgroundColor : 'transparent',\r\n      'display': button.show ? 'flex' : 'none'\r\n    }\"\r\n    [disabled]=\"button.disabled\"\r\n  >\r\n    <div class=\"buttonContent\">\r\n      <ng-container *ngIf=\"button.icon; else customOrSpinner\">\r\n        <fa-icon [icon]=\"button.icon\" [ngStyle]=\"mergeStyles(customButtonIcon, button.iconStyle)\"></fa-icon>\r\n        <span *ngIf=\"button.text\" class=\"customButtonText\" [ngStyle]=\"button.textStyle\">{{ button.text }}</span>\r\n      </ng-container>\r\n      <ng-template #customOrSpinner>\r\n        <ng-container *ngIf=\"isCustomComponentConfig(button.customComponent)\">\r\n          <ng-container *ngComponentOutlet=\"button.customComponent.component; injector: button.customComponent.injector\"></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"button.customComponent && !isCustomComponentConfig(button.customComponent)\">\r\n          <div #customElementContainer></div>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!button.customComponent\">\r\n          <fa-icon [icon]=\"faSpinner\"></fa-icon>\r\n        </ng-container>\r\n      </ng-template>\r\n    </div>\r\n  </button>\r\n</div>\r\n", styles: [".customButtonsContainer{display:flex;flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:left}.customButton{width:100%;margin:10px 0;padding:10px;border-radius:5px;background-color:transparent;align-items:left;justify-content:left;border:none}.buttonContent{display:flex;align-items:left;justify-content:left}.customButtonIcon{font-size:20px;color:#000;margin-right:4px}.customButtonText{color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CustomButtons, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: CustomButtons, isStandalone: true, selector: "app-custom-buttons", inputs: { buttons: "buttons" }, ngImport: i0, template: "<div class=\"customButtonsContainer\">\r\n  <button\r\n    *ngFor=\"let button of buttons; let i = index\"\r\n    (click)=\"button.action()\"\r\n    class=\"customButton\"\r\n    [ngStyle]=\"{\r\n      'background-color': button.show ? button.backgroundColor : 'transparent',\r\n      'display': button.show ? 'flex' : 'none'\r\n    }\"\r\n    [disabled]=\"button.disabled\"\r\n  >\r\n    <div class=\"buttonContent\">\r\n      <ng-container *ngIf=\"button.icon; else customOrSpinner\">\r\n        <fa-icon [icon]=\"button.icon\" [ngStyle]=\"mergeStyles(customButtonIcon, button.iconStyle)\"></fa-icon>\r\n        <span *ngIf=\"button.text\" class=\"customButtonText\" [ngStyle]=\"button.textStyle\">{{ button.text }}</span>\r\n      </ng-container>\r\n      <ng-template #customOrSpinner>\r\n        <ng-container *ngIf=\"isCustomComponentConfig(button.customComponent)\">\r\n          <ng-container *ngComponentOutlet=\"button.customComponent.component; injector: button.customComponent.injector\"></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"button.customComponent && !isCustomComponentConfig(button.customComponent)\">\r\n          <div #customElementContainer></div>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!button.customComponent\">\r\n          <fa-icon [icon]=\"faSpinner\"></fa-icon>\r\n        </ng-container>\r\n      </ng-template>\r\n    </div>\r\n  </button>\r\n</div>\r\n", styles: [".customButtonsContainer{display:flex;flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:left}.customButton{width:100%;margin:10px 0;padding:10px;border-radius:5px;background-color:transparent;align-items:left;justify-content:left;border:none}.buttonContent{display:flex;align-items:left;justify-content:left}.customButtonIcon{font-size:20px;color:#000;margin-right:4px}.customButtonText{color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CustomButtons, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CustomButtons, decorators: [{
             type: Component,
             args: [{ selector: 'app-custom-buttons', imports: [CommonModule, FormsModule, FontAwesomeModule], template: "<div class=\"customButtonsContainer\">\r\n  <button\r\n    *ngFor=\"let button of buttons; let i = index\"\r\n    (click)=\"button.action()\"\r\n    class=\"customButton\"\r\n    [ngStyle]=\"{\r\n      'background-color': button.show ? button.backgroundColor : 'transparent',\r\n      'display': button.show ? 'flex' : 'none'\r\n    }\"\r\n    [disabled]=\"button.disabled\"\r\n  >\r\n    <div class=\"buttonContent\">\r\n      <ng-container *ngIf=\"button.icon; else customOrSpinner\">\r\n        <fa-icon [icon]=\"button.icon\" [ngStyle]=\"mergeStyles(customButtonIcon, button.iconStyle)\"></fa-icon>\r\n        <span *ngIf=\"button.text\" class=\"customButtonText\" [ngStyle]=\"button.textStyle\">{{ button.text }}</span>\r\n      </ng-container>\r\n      <ng-template #customOrSpinner>\r\n        <ng-container *ngIf=\"isCustomComponentConfig(button.customComponent)\">\r\n          <ng-container *ngComponentOutlet=\"button.customComponent.component; injector: button.customComponent.injector\"></ng-container>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"button.customComponent && !isCustomComponentConfig(button.customComponent)\">\r\n          <div #customElementContainer></div>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!button.customComponent\">\r\n          <fa-icon [icon]=\"faSpinner\"></fa-icon>\r\n        </ng-container>\r\n      </ng-template>\r\n    </div>\r\n  </button>\r\n</div>\r\n", styles: [".customButtonsContainer{display:flex;flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:left}.customButton{width:100%;margin:10px 0;padding:10px;border-radius:5px;background-color:transparent;align-items:left;justify-content:left;border:none}.buttonContent{display:flex;align-items:left;justify-content:left}.customButtonIcon{font-size:20px;color:#000;margin-right:4px}.customButtonText{color:#000}\n"] }]
         }], propDecorators: { buttons: [{
@@ -27266,10 +27264,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  */
 class MeetingIdComponent {
     meetingID = '';
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingIdComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MeetingIdComponent, isStandalone: true, selector: "app-meeting-id-component", inputs: { meetingID: "meetingID" }, ngImport: i0, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event ID:</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingID\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingIdComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MeetingIdComponent, isStandalone: true, selector: "app-meeting-id-component", inputs: { meetingID: "meetingID" }, ngImport: i0, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event ID:</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingID\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingIdComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingIdComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-meeting-id-component', standalone: true, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event ID:</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingID\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] }]
         }], propDecorators: { meetingID: [{
@@ -27291,10 +27289,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  */
 class MeetingPasscodeComponent {
     meetingPasscode = '';
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingPasscodeComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MeetingPasscodeComponent, isStandalone: true, selector: "app-meeting-passcode-component", inputs: { meetingPasscode: "meetingPasscode" }, ngImport: i0, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event Passcode (Host):</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingPasscode\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingPasscodeComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MeetingPasscodeComponent, isStandalone: true, selector: "app-meeting-passcode-component", inputs: { meetingPasscode: "meetingPasscode" }, ngImport: i0, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event Passcode (Host):</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingPasscode\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MeetingPasscodeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MeetingPasscodeComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-meeting-passcode-component', standalone: true, template: "<div class=\"form-group\">\r\n  <label class=\"label\">Event Passcode (Host):</label>\r\n  <input\r\n    class=\"disabled-input\"\r\n    [value]=\"meetingPasscode\"\r\n    readonly\r\n  />\r\n</div>\r\n", styles: [".form-group{margin-top:10px;max-width:300px}.label{font-weight:700}.disabled-input{border-width:1px;border-color:gray;padding:10px;margin-top:5px;background-color:#f0f0f0;color:#000;width:100%;border-radius:5px}\n"] }]
         }], propDecorators: { meetingPasscode: [{
@@ -27392,10 +27390,10 @@ class ShareButtonsComponent {
             ? this.shareButtons.filter((button) => button.show)
             : this.defaultShareButtons.filter((button) => button.show);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ShareButtonsComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ShareButtonsComponent, isStandalone: true, selector: "app-share-buttons-component", inputs: { meetingID: "meetingID", shareButtons: "shareButtons", eventType: "eventType", localLink: "localLink" }, ngImport: i0, template: "<div class=\"share-buttons-container\">\r\n  <div\r\n    *ngFor=\"let button of filteredShareButtons; let i = index\"\r\n    (click)=\"button.action()\"\r\n    [ngStyle]=\"{\r\n      'background-color': button.color || 'black',\r\n      'margin-right': i !== filteredShareButtons.length - 1 ? '10px' : '0'\r\n    }\"\r\n    class=\"share-button\"\r\n  >\r\n    <fa-icon [icon]=\"button.icon\" [ngStyle]=\"{ color: button.iconColor || '#ffffff', 'font-size': '24px' }\"></fa-icon>\r\n  </div>\r\n</div>\r\n", styles: [".share-buttons-container{display:flex;flex-direction:row;margin:10px 0}.share-button{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:5px;margin:0 5px;cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ShareButtonsComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ShareButtonsComponent, isStandalone: true, selector: "app-share-buttons-component", inputs: { meetingID: "meetingID", shareButtons: "shareButtons", eventType: "eventType", localLink: "localLink" }, ngImport: i0, template: "<div class=\"share-buttons-container\">\r\n  <div\r\n    *ngFor=\"let button of filteredShareButtons; let i = index\"\r\n    (click)=\"button.action()\"\r\n    [ngStyle]=\"{\r\n      'background-color': button.color || 'black',\r\n      'margin-right': i !== filteredShareButtons.length - 1 ? '10px' : '0'\r\n    }\"\r\n    class=\"share-button\"\r\n  >\r\n    <fa-icon [icon]=\"button.icon\" [ngStyle]=\"{ color: button.iconColor || '#ffffff', 'font-size': '24px' }\"></fa-icon>\r\n  </div>\r\n</div>\r\n", styles: [".share-buttons-container{display:flex;flex-direction:row;margin:10px 0}.share-button{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:5px;margin:0 5px;cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ShareButtonsComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ShareButtonsComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-share-buttons-component', imports: [CommonModule, FontAwesomeModule], template: "<div class=\"share-buttons-container\">\r\n  <div\r\n    *ngFor=\"let button of filteredShareButtons; let i = index\"\r\n    (click)=\"button.action()\"\r\n    [ngStyle]=\"{\r\n      'background-color': button.color || 'black',\r\n      'margin-right': i !== filteredShareButtons.length - 1 ? '10px' : '0'\r\n    }\"\r\n    class=\"share-button\"\r\n  >\r\n    <fa-icon [icon]=\"button.icon\" [ngStyle]=\"{ color: button.iconColor || '#ffffff', 'font-size': '24px' }\"></fa-icon>\r\n  </div>\r\n</div>\r\n", styles: [".share-buttons-container{display:flex;flex-direction:row;margin:10px 0}.share-button{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:5px;margin:0 5px;cursor:pointer}\n"] }]
         }], propDecorators: { meetingID: [{
@@ -27489,10 +27487,10 @@ class MenuModal {
     handleClose() {
         this.onClose();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MenuModal, isStandalone: true, selector: "app-menu-modal", inputs: { backgroundColor: "backgroundColor", isVisible: "isVisible", customButtons: "customButtons", shareButtons: "shareButtons", position: "position", roomName: "roomName", adminPasscode: "adminPasscode", islevel: "islevel", eventType: "eventType", localLink: "localLink", onClose: "onClose" }, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;\">\r\n      <div style=\"font-size: 18px; font-weight: bold; color: black;\">\r\n        <fa-icon [icon]=\"faBars\" style=\"font-size: 20px; color: black;\"></fa-icon> Menu\r\n      </div>\r\n      <div (click)=\"handleClose()\" style=\"padding: 5px;\">\r\n        <fa-icon [icon]=\"faTimes\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n    <div style=\"flex: 1;\">\r\n      <div style=\"max-height: calc(70% - 70px); overflow-y: auto;\">\r\n        <app-custom-buttons [buttons]=\"customButtons\"></app-custom-buttons>\r\n        <div style=\"height: 1px; background-color: #ffffff; margin: 10px 0;\"></div>\r\n        <ng-container *ngIf=\"islevel === '2'\">\r\n          <app-meeting-passcode-component\r\n            [meetingPasscode]=\"adminPasscode\"\r\n          ></app-meeting-passcode-component>\r\n        </ng-container>\r\n        <div style=\"margin-bottom: 10px;\">\r\n          <app-meeting-id-component [meetingID]=\"roomName\"></app-meeting-id-component>\r\n        </div>\r\n        <ng-container *ngIf=\"true\">\r\n          <app-share-buttons-component [meetingID]=\"roomName\" [eventType]=\"eventType\" [localLink]=\"localLink\"></app-share-buttons-component>\r\n        </ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:9}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "component", type: CustomButtons, selector: "app-custom-buttons", inputs: ["buttons"] }, { kind: "component", type: MeetingIdComponent, selector: "app-meeting-id-component", inputs: ["meetingID"] }, { kind: "component", type: MeetingPasscodeComponent, selector: "app-meeting-passcode-component", inputs: ["meetingPasscode"] }, { kind: "component", type: ShareButtonsComponent, selector: "app-share-buttons-component", inputs: ["meetingID", "shareButtons", "eventType", "localLink"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MenuModal, isStandalone: true, selector: "app-menu-modal", inputs: { backgroundColor: "backgroundColor", isVisible: "isVisible", customButtons: "customButtons", shareButtons: "shareButtons", position: "position", roomName: "roomName", adminPasscode: "adminPasscode", islevel: "islevel", eventType: "eventType", localLink: "localLink", onClose: "onClose" }, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div class=\"modal-content\" [ngStyle]=\"modalContentStyle()\">\r\n    <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;\">\r\n      <div style=\"font-size: 18px; font-weight: bold; color: black;\">\r\n        <fa-icon [icon]=\"faBars\" style=\"font-size: 20px; color: black;\"></fa-icon> Menu\r\n      </div>\r\n      <div (click)=\"handleClose()\" style=\"padding: 5px;\">\r\n        <fa-icon [icon]=\"faTimes\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n    <div style=\"flex: 1;\">\r\n      <div style=\"max-height: calc(70% - 70px); overflow-y: auto;\">\r\n        <app-custom-buttons [buttons]=\"customButtons\"></app-custom-buttons>\r\n        <div style=\"height: 1px; background-color: #ffffff; margin: 10px 0;\"></div>\r\n        <ng-container *ngIf=\"islevel === '2'\">\r\n          <app-meeting-passcode-component\r\n            [meetingPasscode]=\"adminPasscode\"\r\n          ></app-meeting-passcode-component>\r\n        </ng-container>\r\n        <div style=\"margin-bottom: 10px;\">\r\n          <app-meeting-id-component [meetingID]=\"roomName\"></app-meeting-id-component>\r\n        </div>\r\n        <ng-container *ngIf=\"true\">\r\n          <app-share-buttons-component [meetingID]=\"roomName\" [eventType]=\"eventType\" [localLink]=\"localLink\"></app-share-buttons-component>\r\n        </ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:flex;justify-content:center;align-items:center;z-index:9}.modal-content{position:absolute;display:flex;flex-direction:column}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "component", type: CustomButtons, selector: "app-custom-buttons", inputs: ["buttons"] }, { kind: "component", type: MeetingIdComponent, selector: "app-meeting-id-component", inputs: ["meetingID"] }, { kind: "component", type: MeetingPasscodeComponent, selector: "app-meeting-passcode-component", inputs: ["meetingPasscode"] }, { kind: "component", type: ShareButtonsComponent, selector: "app-share-buttons-component", inputs: ["meetingID", "shareButtons", "eventType", "localLink"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-menu-modal', imports: [
                         CommonModule,
@@ -27699,10 +27697,10 @@ class MessagePanel {
         this.replyInfo = null;
         this.senderId = null;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessagePanel, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MessagePanel, isStandalone: true, selector: "app-message-panel", inputs: { messages: "messages", messagesLength: "messagesLength", type: "type", username: "username", onSendMessagePress: "onSendMessagePress", backgroundColor: "backgroundColor", focusedInput: "focusedInput", eventType: "eventType", member: "member", islevel: "islevel", startDirectMessage: "startDirectMessage", updateStartDirectMessage: "updateStartDirectMessage", directMessageDetails: "directMessageDetails", updateDirectMessageDetails: "updateDirectMessageDetails", coHostResponsibility: "coHostResponsibility", coHost: "coHost", roomName: "roomName", socket: "socket", chatSetting: "chatSetting", showAlert: "showAlert" }, usesOnChanges: true, ngImport: i0, template: "<div [style.maxHeight]=\"'100%'\" [style.backgroundColor]=\"backgroundColor\" style=\"overflow-y: auto;\">\r\n  <!-- Message rendering logic -->\r\n  <div *ngFor=\"let message of messages; let index = index\" [ngStyle]=\"{ marginBottom: '10px' }\">\r\n    <div [ngStyle]=\"{ display: 'flex', flexDirection: 'column', alignItems: message.sender === username ? 'flex-end' : 'flex-start', marginBottom: '10px' }\">\r\n      <div [ngStyle]=\"{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '3px' }\">\r\n        <span *ngIf=\"message.sender === username && !message.group\" [ngStyle]=\"{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginLeft: '6px' }\">To: {{ message.receivers.join(', ') }}</span>\r\n        <span [ngStyle]=\"{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginRight: '10px' }\">{{ message.sender === username ? '' : message.sender }}</span>\r\n        <span [ngStyle]=\"{ fontSize: '8px', color: '#0D0D0DFF' }\">{{ message.timestamp }}</span>\r\n        <div *ngIf=\"message.sender !== username && !message.group\" (click)=\"openReplyInput(message.sender)\" [ngStyle]=\"{ padding: '1px', marginLeft: '5px', borderRadius: '2px', backgroundColor: 'transparent' }\">\r\n          <fa-icon [icon]=\"faReply\" size=\"xs\" color=\"black\"></fa-icon>\r\n        </div>\r\n      </div>\r\n      <div [ngStyle]=\"{ backgroundColor: message.sender === member ? '#DCF8C6' : '#1ce5c7', padding: '10px', borderRadius: '10px' }\">\r\n        <span [ngStyle]=\"{ color: 'black' }\">{{ message.message }}</span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Reply info -->\r\n  <div *ngIf=\"replyInfo\" [ngStyle]=\"{ flexDirection: 'row', alignItems: 'center', padding: '2px', backgroundColor: '#e6e6e6', borderRadius: '5px', marginBottom: '1px' }\">\r\n    <span [ngStyle]=\"{ fontWeight: 'bold', marginRight: '2px', fontSize: '8px' }\">Replying to: </span>\r\n    <span [ngStyle]=\"{ color: 'red', fontSize: '8px' }\">{{ replyInfo.username }}</span>\r\n  </div>\r\n\r\n  <!-- Input area -->\r\n  <div [ngStyle]=\"{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', marginTop: 'auto' }\">\r\n    <input\r\n      type=\"text\"\r\n      [ngStyle]=\"{ flex: 1, minHeight: '40px', maxHeight: '80px', resize: 'vertical', border: '1px solid gray', borderRadius: '5px', padding: '10px', overflowY: 'auto' }\"\r\n      placeholder=\"{{ type === 'direct' ? (focusedInput && startDirectMessage && directMessageDetails ? 'Send a direct message to ' + directMessageDetails.name : 'Select a message to reply to') : (eventType === 'chat' ? 'Send a message' : 'Send a message to everyone') }}\"\r\n      maxLength=\"350\"\r\n      (input)=\"handleTextInputChange($event)\"\r\n      [value]=\"type === 'direct' ? directMessageText : groupMessageText\"\r\n    />\r\n    <button [ngStyle]=\"{ backgroundColor: '#83c0e9', padding: '10px', borderRadius: '5px', display: 'flex', alignItems: 'center' }\" (click)=\"handleSendButton()\">\r\n      <fa-icon [icon]=\"faPaperPlane\" size=\"sm\" color=\"white\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessagePanel, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MessagePanel, isStandalone: true, selector: "app-message-panel", inputs: { messages: "messages", messagesLength: "messagesLength", type: "type", username: "username", onSendMessagePress: "onSendMessagePress", backgroundColor: "backgroundColor", focusedInput: "focusedInput", eventType: "eventType", member: "member", islevel: "islevel", startDirectMessage: "startDirectMessage", updateStartDirectMessage: "updateStartDirectMessage", directMessageDetails: "directMessageDetails", updateDirectMessageDetails: "updateDirectMessageDetails", coHostResponsibility: "coHostResponsibility", coHost: "coHost", roomName: "roomName", socket: "socket", chatSetting: "chatSetting", showAlert: "showAlert" }, usesOnChanges: true, ngImport: i0, template: "<div [style.maxHeight]=\"'100%'\" [style.backgroundColor]=\"backgroundColor\" style=\"overflow-y: auto;\">\r\n  <!-- Message rendering logic -->\r\n  <div *ngFor=\"let message of messages; let index = index\" [ngStyle]=\"{ marginBottom: '10px' }\">\r\n    <div [ngStyle]=\"{ display: 'flex', flexDirection: 'column', alignItems: message.sender === username ? 'flex-end' : 'flex-start', marginBottom: '10px' }\">\r\n      <div [ngStyle]=\"{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '3px' }\">\r\n        <span *ngIf=\"message.sender === username && !message.group\" [ngStyle]=\"{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginLeft: '6px' }\">To: {{ message.receivers.join(', ') }}</span>\r\n        <span [ngStyle]=\"{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginRight: '10px' }\">{{ message.sender === username ? '' : message.sender }}</span>\r\n        <span [ngStyle]=\"{ fontSize: '8px', color: '#0D0D0DFF' }\">{{ message.timestamp }}</span>\r\n        <div *ngIf=\"message.sender !== username && !message.group\" (click)=\"openReplyInput(message.sender)\" [ngStyle]=\"{ padding: '1px', marginLeft: '5px', borderRadius: '2px', backgroundColor: 'transparent' }\">\r\n          <fa-icon [icon]=\"faReply\" size=\"xs\" color=\"black\"></fa-icon>\r\n        </div>\r\n      </div>\r\n      <div [ngStyle]=\"{ backgroundColor: message.sender === member ? '#DCF8C6' : '#1ce5c7', padding: '10px', borderRadius: '10px' }\">\r\n        <span [ngStyle]=\"{ color: 'black' }\">{{ message.message }}</span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Reply info -->\r\n  <div *ngIf=\"replyInfo\" [ngStyle]=\"{ flexDirection: 'row', alignItems: 'center', padding: '2px', backgroundColor: '#e6e6e6', borderRadius: '5px', marginBottom: '1px' }\">\r\n    <span [ngStyle]=\"{ fontWeight: 'bold', marginRight: '2px', fontSize: '8px' }\">Replying to: </span>\r\n    <span [ngStyle]=\"{ color: 'red', fontSize: '8px' }\">{{ replyInfo.username }}</span>\r\n  </div>\r\n\r\n  <!-- Input area -->\r\n  <div [ngStyle]=\"{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', marginTop: 'auto' }\">\r\n    <input\r\n      type=\"text\"\r\n      [ngStyle]=\"{ flex: 1, minHeight: '40px', maxHeight: '80px', resize: 'vertical', border: '1px solid gray', borderRadius: '5px', padding: '10px', overflowY: 'auto' }\"\r\n      placeholder=\"{{ type === 'direct' ? (focusedInput && startDirectMessage && directMessageDetails ? 'Send a direct message to ' + directMessageDetails.name : 'Select a message to reply to') : (eventType === 'chat' ? 'Send a message' : 'Send a message to everyone') }}\"\r\n      maxLength=\"350\"\r\n      (input)=\"handleTextInputChange($event)\"\r\n      [value]=\"type === 'direct' ? directMessageText : groupMessageText\"\r\n    />\r\n    <button [ngStyle]=\"{ backgroundColor: '#83c0e9', padding: '10px', borderRadius: '5px', display: 'flex', alignItems: 'center' }\" (click)=\"handleSendButton()\">\r\n      <fa-icon [icon]=\"faPaperPlane\" size=\"sm\" color=\"white\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessagePanel, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessagePanel, decorators: [{
             type: Component,
             args: [{ selector: 'app-message-panel', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div [style.maxHeight]=\"'100%'\" [style.backgroundColor]=\"backgroundColor\" style=\"overflow-y: auto;\">\r\n  <!-- Message rendering logic -->\r\n  <div *ngFor=\"let message of messages; let index = index\" [ngStyle]=\"{ marginBottom: '10px' }\">\r\n    <div [ngStyle]=\"{ display: 'flex', flexDirection: 'column', alignItems: message.sender === username ? 'flex-end' : 'flex-start', marginBottom: '10px' }\">\r\n      <div [ngStyle]=\"{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '3px' }\">\r\n        <span *ngIf=\"message.sender === username && !message.group\" [ngStyle]=\"{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginLeft: '6px' }\">To: {{ message.receivers.join(', ') }}</span>\r\n        <span [ngStyle]=\"{ fontWeight: 'bold', color: 'black', fontSize: '8px', marginRight: '10px' }\">{{ message.sender === username ? '' : message.sender }}</span>\r\n        <span [ngStyle]=\"{ fontSize: '8px', color: '#0D0D0DFF' }\">{{ message.timestamp }}</span>\r\n        <div *ngIf=\"message.sender !== username && !message.group\" (click)=\"openReplyInput(message.sender)\" [ngStyle]=\"{ padding: '1px', marginLeft: '5px', borderRadius: '2px', backgroundColor: 'transparent' }\">\r\n          <fa-icon [icon]=\"faReply\" size=\"xs\" color=\"black\"></fa-icon>\r\n        </div>\r\n      </div>\r\n      <div [ngStyle]=\"{ backgroundColor: message.sender === member ? '#DCF8C6' : '#1ce5c7', padding: '10px', borderRadius: '10px' }\">\r\n        <span [ngStyle]=\"{ color: 'black' }\">{{ message.message }}</span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Reply info -->\r\n  <div *ngIf=\"replyInfo\" [ngStyle]=\"{ flexDirection: 'row', alignItems: 'center', padding: '2px', backgroundColor: '#e6e6e6', borderRadius: '5px', marginBottom: '1px' }\">\r\n    <span [ngStyle]=\"{ fontWeight: 'bold', marginRight: '2px', fontSize: '8px' }\">Replying to: </span>\r\n    <span [ngStyle]=\"{ color: 'red', fontSize: '8px' }\">{{ replyInfo.username }}</span>\r\n  </div>\r\n\r\n  <!-- Input area -->\r\n  <div [ngStyle]=\"{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', marginTop: 'auto' }\">\r\n    <input\r\n      type=\"text\"\r\n      [ngStyle]=\"{ flex: 1, minHeight: '40px', maxHeight: '80px', resize: 'vertical', border: '1px solid gray', borderRadius: '5px', padding: '10px', overflowY: 'auto' }\"\r\n      placeholder=\"{{ type === 'direct' ? (focusedInput && startDirectMessage && directMessageDetails ? 'Send a direct message to ' + directMessageDetails.name : 'Select a message to reply to') : (eventType === 'chat' ? 'Send a message' : 'Send a message to everyone') }}\"\r\n      maxLength=\"350\"\r\n      (input)=\"handleTextInputChange($event)\"\r\n      [value]=\"type === 'direct' ? directMessageText : groupMessageText\"\r\n    />\r\n    <button [ngStyle]=\"{ backgroundColor: '#83c0e9', padding: '10px', borderRadius: '5px', display: 'flex', alignItems: 'center' }\" (click)=\"handleSendButton()\">\r\n      <fa-icon [icon]=\"faPaperPlane\" size=\"sm\" color=\"white\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n" }]
         }], propDecorators: { messages: [{
@@ -27967,10 +27965,10 @@ class MessagesModal {
             },
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessagesModal, deps: [{ token: SendMessage }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MessagesModal, isStandalone: true, selector: "app-messages-modal", inputs: { isMessagesModalVisible: "isMessagesModalVisible", onMessagesClose: "onMessagesClose", onSendMessagePress: "onSendMessagePress", messages: "messages", position: "position", backgroundColor: "backgroundColor", activeTabBackgroundColor: "activeTabBackgroundColor", eventType: "eventType", member: "member", islevel: "islevel", coHostResponsibility: "coHostResponsibility", coHost: "coHost", startDirectMessage: "startDirectMessage", directMessageDetails: "directMessageDetails", updateStartDirectMessage: "updateStartDirectMessage", updateDirectMessageDetails: "updateDirectMessageDetails", showAlert: "showAlert", roomName: "roomName", socket: "socket", chatSetting: "chatSetting" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div\r\n      [ngStyle]=\"{\r\n        flexDirection: 'row',\r\n        justifyContent: 'space-between',\r\n        alignItems: 'center'\r\n      }\"\r\n    >\r\n      <button\r\n        *ngIf=\"eventType === 'webinar' || eventType === 'conference'\"\r\n        (click)=\"switchToDirectTab()\"\r\n        [ngStyle]=\"getTabStyle('direct')\"\r\n      >\r\n        Direct\r\n      </button>\r\n      <button\r\n        *ngIf=\"eventType === 'webinar' || eventType === 'conference'\"\r\n        (click)=\"switchToGroupTab()\"\r\n        [ngStyle]=\"getTabStyle('group')\"\r\n      >\r\n        Group\r\n      </button>\r\n      <span (click)=\"closeMessagesModal()\" [ngStyle]=\"getButtonCloseStyle()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\" size=\"xl\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr [ngStyle]=\"styles.separator\" />\r\n    <div [ngStyle]=\"styles.modalBody\">\r\n      <app-message-panel\r\n        *ngIf=\"\r\n          activeTab === 'direct' &&\r\n          (eventType === 'webinar' || eventType === 'conference')\r\n        \"\r\n        [messages]=\"directMessages\"\r\n        [messagesLength]=\"messages.length\"\r\n        type=\"direct\"\r\n        [onSendMessagePress]=\"onSendMessagePress\"\r\n        [username]=\"member\"\r\n        [backgroundColor]=\"backgroundColor\"\r\n        [focusedInput]=\"focusedInput\"\r\n        [showAlert]=\"showAlert\"\r\n        [eventType]=\"eventType\"\r\n        [member]=\"member\"\r\n        [islevel]=\"islevel\"\r\n        [coHostResponsibility]=\"coHostResponsibility\"\r\n        [coHost]=\"coHost\"\r\n        [directMessageDetails]=\"directMessageDetails\"\r\n        [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n        [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n        [roomName]=\"roomName\"\r\n        [socket]=\"socket\"\r\n        [chatSetting]=\"chatSetting\"\r\n        [startDirectMessage]=\"startDirectMessage\"\r\n      >\r\n      </app-message-panel>\r\n\r\n      <app-message-panel\r\n        *ngIf=\"activeTab === 'group'\"\r\n        [messages]=\"groupMessages\"\r\n        [messagesLength]=\"messages.length\"\r\n        type=\"group\"\r\n        [onSendMessagePress]=\"onSendMessagePress\"\r\n        [username]=\"member\"\r\n        [backgroundColor]=\"backgroundColor\"\r\n        [focusedInput]=\"focusedInput\"\r\n        [showAlert]=\"showAlert\"\r\n        [eventType]=\"eventType\"\r\n        [member]=\"member\"\r\n        [islevel]=\"islevel\"\r\n        [coHostResponsibility]=\"coHostResponsibility\"\r\n        [coHost]=\"coHost\"\r\n        [directMessageDetails]=\"directMessageDetails\"\r\n        [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n        [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n        [roomName]=\"roomName\"\r\n        [socket]=\"socket\"\r\n        [chatSetting]=\"chatSetting\"\r\n        [startDirectMessage]=\"startDirectMessage\"\r\n      >\r\n      </app-message-panel>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modalContent{border-radius:10px;padding:10px}.modalBody{margin-top:10px}.tabText{padding:5px 10px;font-weight:700;margin-right:10px;margin-left:10px}.activeTabText{color:#fff;background-color:#2b7ce5;border-radius:4px}.separator{height:1px;background-color:#000;margin-top:1px;margin-bottom:1px}.btnCloseMessages{padding:5px 0 5px 5px;margin-right:0}.icon{font-size:24px;color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MessagePanel, selector: "app-message-panel", inputs: ["messages", "messagesLength", "type", "username", "onSendMessagePress", "backgroundColor", "focusedInput", "eventType", "member", "islevel", "startDirectMessage", "updateStartDirectMessage", "directMessageDetails", "updateDirectMessageDetails", "coHostResponsibility", "coHost", "roomName", "socket", "chatSetting", "showAlert"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessagesModal, deps: [{ token: SendMessage }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MessagesModal, isStandalone: true, selector: "app-messages-modal", inputs: { isMessagesModalVisible: "isMessagesModalVisible", onMessagesClose: "onMessagesClose", onSendMessagePress: "onSendMessagePress", messages: "messages", position: "position", backgroundColor: "backgroundColor", activeTabBackgroundColor: "activeTabBackgroundColor", eventType: "eventType", member: "member", islevel: "islevel", coHostResponsibility: "coHostResponsibility", coHost: "coHost", startDirectMessage: "startDirectMessage", directMessageDetails: "directMessageDetails", updateStartDirectMessage: "updateStartDirectMessage", updateDirectMessageDetails: "updateDirectMessageDetails", showAlert: "showAlert", roomName: "roomName", socket: "socket", chatSetting: "chatSetting" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div\r\n      [ngStyle]=\"{\r\n        flexDirection: 'row',\r\n        justifyContent: 'space-between',\r\n        alignItems: 'center'\r\n      }\"\r\n    >\r\n      <button\r\n        *ngIf=\"eventType === 'webinar' || eventType === 'conference'\"\r\n        (click)=\"switchToDirectTab()\"\r\n        [ngStyle]=\"getTabStyle('direct')\"\r\n      >\r\n        Direct\r\n      </button>\r\n      <button\r\n        *ngIf=\"eventType === 'webinar' || eventType === 'conference'\"\r\n        (click)=\"switchToGroupTab()\"\r\n        [ngStyle]=\"getTabStyle('group')\"\r\n      >\r\n        Group\r\n      </button>\r\n      <span (click)=\"closeMessagesModal()\" [ngStyle]=\"getButtonCloseStyle()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\" size=\"xl\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr [ngStyle]=\"styles.separator\" />\r\n    <div [ngStyle]=\"styles.modalBody\">\r\n      <app-message-panel\r\n        *ngIf=\"\r\n          activeTab === 'direct' &&\r\n          (eventType === 'webinar' || eventType === 'conference')\r\n        \"\r\n        [messages]=\"directMessages\"\r\n        [messagesLength]=\"messages.length\"\r\n        type=\"direct\"\r\n        [onSendMessagePress]=\"onSendMessagePress\"\r\n        [username]=\"member\"\r\n        [backgroundColor]=\"backgroundColor\"\r\n        [focusedInput]=\"focusedInput\"\r\n        [showAlert]=\"showAlert\"\r\n        [eventType]=\"eventType\"\r\n        [member]=\"member\"\r\n        [islevel]=\"islevel\"\r\n        [coHostResponsibility]=\"coHostResponsibility\"\r\n        [coHost]=\"coHost\"\r\n        [directMessageDetails]=\"directMessageDetails\"\r\n        [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n        [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n        [roomName]=\"roomName\"\r\n        [socket]=\"socket\"\r\n        [chatSetting]=\"chatSetting\"\r\n        [startDirectMessage]=\"startDirectMessage\"\r\n      >\r\n      </app-message-panel>\r\n\r\n      <app-message-panel\r\n        *ngIf=\"activeTab === 'group'\"\r\n        [messages]=\"groupMessages\"\r\n        [messagesLength]=\"messages.length\"\r\n        type=\"group\"\r\n        [onSendMessagePress]=\"onSendMessagePress\"\r\n        [username]=\"member\"\r\n        [backgroundColor]=\"backgroundColor\"\r\n        [focusedInput]=\"focusedInput\"\r\n        [showAlert]=\"showAlert\"\r\n        [eventType]=\"eventType\"\r\n        [member]=\"member\"\r\n        [islevel]=\"islevel\"\r\n        [coHostResponsibility]=\"coHostResponsibility\"\r\n        [coHost]=\"coHost\"\r\n        [directMessageDetails]=\"directMessageDetails\"\r\n        [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n        [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n        [roomName]=\"roomName\"\r\n        [socket]=\"socket\"\r\n        [chatSetting]=\"chatSetting\"\r\n        [startDirectMessage]=\"startDirectMessage\"\r\n      >\r\n      </app-message-panel>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modalContent{border-radius:10px;padding:10px}.modalBody{margin-top:10px}.tabText{padding:5px 10px;font-weight:700;margin-right:10px;margin-left:10px}.activeTabText{color:#fff;background-color:#2b7ce5;border-radius:4px}.separator{height:1px;background-color:#000;margin-top:1px;margin-bottom:1px}.btnCloseMessages{padding:5px 0 5px 5px;margin-right:0}.icon{font-size:24px;color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MessagePanel, selector: "app-message-panel", inputs: ["messages", "messagesLength", "type", "username", "onSendMessagePress", "backgroundColor", "focusedInput", "eventType", "member", "islevel", "startDirectMessage", "updateStartDirectMessage", "directMessageDetails", "updateDirectMessageDetails", "coHostResponsibility", "coHost", "roomName", "socket", "chatSetting", "showAlert"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessagesModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessagesModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-messages-modal', imports: [CommonModule, FontAwesomeModule, MessagePanel], template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div\r\n      [ngStyle]=\"{\r\n        flexDirection: 'row',\r\n        justifyContent: 'space-between',\r\n        alignItems: 'center'\r\n      }\"\r\n    >\r\n      <button\r\n        *ngIf=\"eventType === 'webinar' || eventType === 'conference'\"\r\n        (click)=\"switchToDirectTab()\"\r\n        [ngStyle]=\"getTabStyle('direct')\"\r\n      >\r\n        Direct\r\n      </button>\r\n      <button\r\n        *ngIf=\"eventType === 'webinar' || eventType === 'conference'\"\r\n        (click)=\"switchToGroupTab()\"\r\n        [ngStyle]=\"getTabStyle('group')\"\r\n      >\r\n        Group\r\n      </button>\r\n      <span (click)=\"closeMessagesModal()\" [ngStyle]=\"getButtonCloseStyle()\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\" size=\"xl\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr [ngStyle]=\"styles.separator\" />\r\n    <div [ngStyle]=\"styles.modalBody\">\r\n      <app-message-panel\r\n        *ngIf=\"\r\n          activeTab === 'direct' &&\r\n          (eventType === 'webinar' || eventType === 'conference')\r\n        \"\r\n        [messages]=\"directMessages\"\r\n        [messagesLength]=\"messages.length\"\r\n        type=\"direct\"\r\n        [onSendMessagePress]=\"onSendMessagePress\"\r\n        [username]=\"member\"\r\n        [backgroundColor]=\"backgroundColor\"\r\n        [focusedInput]=\"focusedInput\"\r\n        [showAlert]=\"showAlert\"\r\n        [eventType]=\"eventType\"\r\n        [member]=\"member\"\r\n        [islevel]=\"islevel\"\r\n        [coHostResponsibility]=\"coHostResponsibility\"\r\n        [coHost]=\"coHost\"\r\n        [directMessageDetails]=\"directMessageDetails\"\r\n        [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n        [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n        [roomName]=\"roomName\"\r\n        [socket]=\"socket\"\r\n        [chatSetting]=\"chatSetting\"\r\n        [startDirectMessage]=\"startDirectMessage\"\r\n      >\r\n      </app-message-panel>\r\n\r\n      <app-message-panel\r\n        *ngIf=\"activeTab === 'group'\"\r\n        [messages]=\"groupMessages\"\r\n        [messagesLength]=\"messages.length\"\r\n        type=\"group\"\r\n        [onSendMessagePress]=\"onSendMessagePress\"\r\n        [username]=\"member\"\r\n        [backgroundColor]=\"backgroundColor\"\r\n        [focusedInput]=\"focusedInput\"\r\n        [showAlert]=\"showAlert\"\r\n        [eventType]=\"eventType\"\r\n        [member]=\"member\"\r\n        [islevel]=\"islevel\"\r\n        [coHostResponsibility]=\"coHostResponsibility\"\r\n        [coHost]=\"coHost\"\r\n        [directMessageDetails]=\"directMessageDetails\"\r\n        [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n        [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n        [roomName]=\"roomName\"\r\n        [socket]=\"socket\"\r\n        [chatSetting]=\"chatSetting\"\r\n        [startDirectMessage]=\"startDirectMessage\"\r\n      >\r\n      </app-message-panel>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modalContent{border-radius:10px;padding:10px}.modalBody{margin-top:10px}.tabText{padding:5px 10px;font-weight:700;margin-right:10px;margin-left:10px}.activeTabText{color:#fff;background-color:#2b7ce5;border-radius:4px}.separator{height:1px;background-color:#000;margin-top:1px;margin-bottom:1px}.btnCloseMessages{padding:5px 0 5px 5px;margin-right:0}.icon{font-size:24px;color:#000}\n"] }]
         }], ctorParameters: () => [{ type: SendMessage }], propDecorators: { isMessagesModalVisible: [{
@@ -28127,10 +28125,10 @@ class ConfirmHereModal {
             transform: 'translate(-50%, -50%)',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmHereModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ConfirmHereModal, isStandalone: true, selector: "app-confirm-here-modal", inputs: { isConfirmHereModalVisible: "isConfirmHereModalVisible", position: "position", backgroundColor: "backgroundColor", displayColor: "displayColor", onConfirmHereClose: "onConfirmHereClose", countdownDuration: "countdownDuration", socket: "socket", localSocket: "localSocket", roomName: "roomName", member: "member" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isConfirmHereModalVisible\" [ngStyle]=\"modalContainerStyle\" class=\"modal-container\">\r\n  <div [ngStyle]=\"modalContentStyle\" class=\"modal-content\">\r\n    <div class=\"spinner\" [ngStyle]=\"spinnerContainerStyle\"></div>\r\n    <h2 style=\"font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: black;\">Are you still there?</h2>\r\n    <p style=\"font-size: 1rem; color: black; margin-bottom: 1.5rem;\">Please confirm if you are still present.</p>\r\n    <p style=\"font-size: 0.9rem; color: black; margin-bottom: 1rem;\">Time remaining: <strong>{{ counter }}</strong></p>\r\n    <button (click)=\"handleConfirmHere()\" style=\"background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; font-size: 1rem;\">\r\n      Yes\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:100%;max-height:100%;overflow-y:auto}\n", ".spinner{border:12px solid #f3f3f3;border-top:12px solid black;border-radius:50%;width:50px;height:50px;animation:spin 2s linear infinite}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.modal-content{display:flex;flex-direction:column;align-items:center}.loading-text{margin-top:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmHereModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ConfirmHereModal, isStandalone: true, selector: "app-confirm-here-modal", inputs: { isConfirmHereModalVisible: "isConfirmHereModalVisible", position: "position", backgroundColor: "backgroundColor", displayColor: "displayColor", onConfirmHereClose: "onConfirmHereClose", countdownDuration: "countdownDuration", socket: "socket", localSocket: "localSocket", roomName: "roomName", member: "member" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isConfirmHereModalVisible\" [ngStyle]=\"modalContainerStyle\" class=\"modal-container\">\r\n  <div [ngStyle]=\"modalContentStyle\" class=\"modal-content\">\r\n    <div class=\"spinner\" [ngStyle]=\"spinnerContainerStyle\"></div>\r\n    <h2 style=\"font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: black;\">Are you still there?</h2>\r\n    <p style=\"font-size: 1rem; color: black; margin-bottom: 1.5rem;\">Please confirm if you are still present.</p>\r\n    <p style=\"font-size: 0.9rem; color: black; margin-bottom: 1rem;\">Time remaining: <strong>{{ counter }}</strong></p>\r\n    <button (click)=\"handleConfirmHere()\" style=\"background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; font-size: 1rem;\">\r\n      Yes\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:100%;max-height:100%;overflow-y:auto}\n", ".spinner{border:12px solid #f3f3f3;border-top:12px solid black;border-radius:50%;width:50px;height:50px;animation:spin 2s linear infinite}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.modal-content{display:flex;flex-direction:column;align-items:center}.loading-text{margin-top:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfirmHereModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfirmHereModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-confirm-here-modal', imports: [CommonModule, FontAwesomeModule], template: "<div *ngIf=\"isConfirmHereModalVisible\" [ngStyle]=\"modalContainerStyle\" class=\"modal-container\">\r\n  <div [ngStyle]=\"modalContentStyle\" class=\"modal-content\">\r\n    <div class=\"spinner\" [ngStyle]=\"spinnerContainerStyle\"></div>\r\n    <h2 style=\"font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: black;\">Are you still there?</h2>\r\n    <p style=\"font-size: 1rem; color: black; margin-bottom: 1.5rem;\">Please confirm if you are still present.</p>\r\n    <p style=\"font-size: 0.9rem; color: black; margin-bottom: 1rem;\">Time remaining: <strong>{{ counter }}</strong></p>\r\n    <button (click)=\"handleConfirmHere()\" style=\"background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; font-size: 1rem;\">\r\n      Yes\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:100%;max-height:100%;overflow-y:auto}\n", ".spinner{border:12px solid #f3f3f3;border-top:12px solid black;border-radius:50%;width:50px;height:50px;animation:spin 2s linear infinite}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.modal-content{display:flex;flex-direction:column;align-items:center}.loading-text{margin-top:10px}\n"] }]
         }], propDecorators: { isConfirmHereModalVisible: [{
@@ -28160,7 +28158,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *
  * This method sends a POST request to the MediaSFU API to create a new room.
  * It validates the provided credentials and dynamically constructs the API endpoint,
- * supporting the Community Edition via a custom `localLink`.
+ * supporting the Community Edition via a custom `localLink`. The method includes
+ * a 30-second protection mechanism to prevent duplicate room creation requests.
  *
  * @param {object} options - Configuration options for creating the room.
  * @param {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} options.payload -
@@ -28183,12 +28182,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
 * const response = await createRoomOnMediaSFU.createRoomOnMediaSFU({
 *   payload: {
 *     action: 'create',
-*     duration: 120, // Duration in minutes
-*     capacity: 20, // Max participants
+*     duration: 60, // Duration in minutes
+*     capacity: 10, // Max participants
 *     userName: 'hostUser',
 *     scheduledDate: Date.now() + 3600000, // One hour from now
 *     secureCode: 'secure123', // Optional
-*     eventType: 'webinar', // Optional
+*     eventType: 'conference', // Optional
 *   },
 *   apiUserName: 'yourAPIUSERNAME',
 *   apiKey: 'yourAPIKEY',
@@ -28208,7 +28207,8 @@ class CreateRoomOnMediaSFU {
    *
    * This method sends a POST request to the MediaSFU API to create a new room.
    * It validates the provided credentials and dynamically constructs the API endpoint,
-   * supporting the Community Edition via a custom `localLink`.
+   * supporting the Community Edition via a custom `localLink`. The method includes
+   * a 30-second protection mechanism to prevent duplicate room creation requests.
    *
    * @param {object} options - Configuration options for creating the room.
    * @param {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} options.payload -
@@ -28231,12 +28231,12 @@ class CreateRoomOnMediaSFU {
     * const response = await createRoomOnMediaSFU.createRoomOnMediaSFU({
     *   payload: {
     *     action: 'create',
-    *     duration: 120, // Duration in minutes
-    *     capacity: 20, // Max participants
+    *     duration: 60, // Duration in minutes
+    *     capacity: 10, // Max participants
     *     userName: 'hostUser',
     *     scheduledDate: Date.now() + 3600000, // One hour from now
     *     secureCode: 'secure123', // Optional
-    *     eventType: 'webinar', // Optional
+    *     eventType: 'conference', // Optional
     *   },
     *   apiUserName: 'yourAPIUSERNAME',
     *   apiKey: 'yourAPIKEY',
@@ -28250,7 +28250,29 @@ class CreateRoomOnMediaSFU {
     * }
     */
     async createRoomOnMediaSFU({ payload, apiUserName, apiKey, localLink, }) {
+        // Create a unique key for this room creation request
+        const roomIdentifier = payload.action === 'create'
+            ? `create_${payload.userName}_${payload.duration}_${payload.capacity}`
+            : `join_${payload.meetingID}_${payload.userName}`;
+        const pendingKey = `mediasfu_pending_${roomIdentifier}`;
+        const PENDING_TIMEOUT = 30 * 1000; // 30 seconds
         try {
+            // Check if there's already a pending request for this room
+            const pendingRequest = localStorage.getItem(pendingKey);
+            if (pendingRequest) {
+                const pendingData = JSON.parse(pendingRequest);
+                const timeSincePending = Date.now() - pendingData.timestamp;
+                if (timeSincePending < PENDING_TIMEOUT) {
+                    return {
+                        data: { error: "Room creation already in progress" },
+                        success: false,
+                    };
+                }
+                else {
+                    // Timeout exceeded, clear stale pending request
+                    localStorage.removeItem(pendingKey);
+                }
+            }
             if (!apiUserName ||
                 !apiKey ||
                 apiUserName === 'yourAPIUSERNAME' ||
@@ -28264,6 +28286,24 @@ class CreateRoomOnMediaSFU {
                 localLink = localLink.replace(/\/$/, '');
                 API_URL = localLink + '/createRoom';
             }
+            // Mark request as pending
+            localStorage.setItem(pendingKey, JSON.stringify({
+                timestamp: Date.now(),
+                payload: {
+                    action: payload.action,
+                    userName: payload.userName,
+                    meetingID: payload.meetingID || 'create'
+                }
+            }));
+            // Set timeout to clear pending status
+            setTimeout(() => {
+                try {
+                    localStorage.removeItem(pendingKey);
+                }
+                catch (error) {
+                    // Ignore localStorage errors
+                }
+            }, PENDING_TIMEOUT);
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
@@ -28276,20 +28316,29 @@ class CreateRoomOnMediaSFU {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
+            // Clear pending status on success
+            localStorage.removeItem(pendingKey);
             return { data, success: true };
         }
         catch (error) {
-            const errorMessage = error.reason ? error.reason : 'unknown error';
+            // Clear pending status on error
+            try {
+                localStorage.removeItem(pendingKey);
+            }
+            catch (e) {
+                // Ignore localStorage errors
+            }
+            const errorMessage = error.message || 'unknown error';
             return {
                 data: { error: `Unable to create room, ${errorMessage}` },
                 success: false,
             };
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateRoomOnMediaSFU, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateRoomOnMediaSFU, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateRoomOnMediaSFU, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateRoomOnMediaSFU, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: CreateRoomOnMediaSFU, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CreateRoomOnMediaSFU, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -28590,38 +28639,118 @@ class PreJoinPage {
                 this.localData &&
                 this.localData.apiUserName &&
                 this.localData.apiKey) {
-                payload.recordOnly = true; // allow production to MediaSFU only; no consumption
-                const response = await this.roomCreator({
-                    payload,
-                    apiUserName: this.localData.apiUserName,
-                    apiKey: this.localData.apiKey,
-                    validate: false,
-                });
-                if (response && response.success && response.data && 'roomName' in response.data) {
-                    createData.eventID = response.data.roomName;
-                    createData.secureCode = response.data.secureCode;
-                    createData.mediasfuURL = response.data.publicURL;
-                    await this.createLocalRoom({ createData: createData, link: response.data.link });
-                }
-                else {
-                    this.pending.next(false);
-                    this.parameters.updateIsLoadingModalVisible(false);
-                    this.error = 'Unable to create room on MediaSFU.';
-                    try {
-                        this.parameters.updateSocket(this.initSocket);
-                        await this.createLocalRoom({ createData: createData });
+                // Store references to prevent race conditions
+                const apiUserName = this.localData.apiUserName;
+                const apiKey = this.localData.apiKey;
+                // Build a unique identifier for this create request
+                const roomIdentifier = `local_create_${payload.userName}_${payload.duration}_${payload.capacity}`;
+                const pendingKey = `prejoin_pending_${roomIdentifier}`;
+                const PENDING_TIMEOUT = 30 * 1000; // 30 seconds
+                // Check pending status to prevent duplicate requests
+                try {
+                    const pendingRequest = localStorage.getItem(pendingKey);
+                    if (pendingRequest) {
+                        const pendingData = JSON.parse(pendingRequest);
+                        const timeSincePending = Date.now() - (pendingData?.timestamp ?? 0);
+                        if (timeSincePending < PENDING_TIMEOUT) {
+                            this.pending.next(false);
+                            this.parameters.updateIsLoadingModalVisible(false);
+                            this.error = 'Room creation already in progress';
+                            return;
+                        }
+                        else {
+                            // Stale lock, clear it
+                            try {
+                                localStorage.removeItem(pendingKey);
+                            }
+                            catch {
+                                // Ignore localStorage errors
+                            }
+                        }
                     }
-                    catch (error) {
+                }
+                catch {
+                    // Ignore localStorage read/JSON errors
+                }
+                // Mark request as pending
+                try {
+                    localStorage.setItem(pendingKey, JSON.stringify({
+                        timestamp: Date.now(),
+                        payload: {
+                            action: 'create',
+                            userName: payload.userName,
+                            duration: payload.duration,
+                            capacity: payload.capacity,
+                        },
+                    }));
+                    // Auto-clear the pending flag after timeout to avoid stale locks
+                    setTimeout(() => {
+                        try {
+                            localStorage.removeItem(pendingKey);
+                        }
+                        catch {
+                            // Ignore localStorage errors
+                        }
+                    }, PENDING_TIMEOUT);
+                }
+                catch {
+                    // Ignore localStorage write errors
+                }
+                payload.recordOnly = true; // allow production to MediaSFU only; no consumption
+                try {
+                    const response = await this.roomCreator({
+                        payload,
+                        apiUserName: apiUserName,
+                        apiKey: apiKey,
+                        validate: false,
+                    });
+                    // Clear pending status on completion
+                    try {
+                        localStorage.removeItem(pendingKey);
+                    }
+                    catch {
+                        /* ignore */
+                    }
+                    if (response && response.success && response.data && 'roomName' in response.data) {
+                        createData.eventID = response.data.roomName;
+                        createData.secureCode = response.data.secureCode;
+                        createData.mediasfuURL = response.data.publicURL;
+                        await this.createLocalRoom({ createData: createData, link: response.data.link });
+                    }
+                    else {
                         this.pending.next(false);
                         this.parameters.updateIsLoadingModalVisible(false);
-                        this.error = `Unable to create room. ${error}`;
+                        this.error = 'Unable to create room on MediaSFU.';
+                        try {
+                            this.parameters.updateSocket(this.initSocket);
+                            await this.createLocalRoom({ createData: createData });
+                            this.pending.next(false);
+                        }
+                        catch (error) {
+                            this.pending.next(false);
+                            this.parameters.updateIsLoadingModalVisible(false);
+                            this.error = `Unable to create room. ${error}`;
+                        }
                     }
+                }
+                catch (error) {
+                    // Clear pending status on error
+                    try {
+                        localStorage.removeItem(pendingKey);
+                    }
+                    catch {
+                        /* ignore */
+                    }
+                    this.pending.next(false);
+                    this.parameters.updateIsLoadingModalVisible(false);
+                    this.error = `Unable to create room on MediaSFU. ${error}`;
                 }
             }
             else {
                 try {
                     this.parameters.updateSocket(this.initSocket);
                     await this.createLocalRoom({ createData: createData });
+                    this.pending.next(false);
                 }
                 catch (error) {
                     this.pending.next(false);
@@ -28631,13 +28760,88 @@ class PreJoinPage {
             }
         }
         else {
-            await this.roomCreator({
-                payload,
-                apiUserName: this.credentials.apiUserName,
-                apiKey: this.credentials.apiKey,
-                validate: true,
-            });
-            this.pending.next(false);
+            // Build a unique identifier for this create request (non-local)
+            const roomIdentifier = `mediasfu_create_${payload.userName}_${payload.duration}_${payload.capacity}`;
+            const pendingKey = `prejoin_pending_${roomIdentifier}`;
+            const PENDING_TIMEOUT = 30 * 1000; // 30 seconds
+            // Check pending status to prevent duplicate requests
+            try {
+                const pendingRequest = localStorage.getItem(pendingKey);
+                if (pendingRequest) {
+                    const pendingData = JSON.parse(pendingRequest);
+                    const timeSincePending = Date.now() - (pendingData?.timestamp ?? 0);
+                    if (timeSincePending < PENDING_TIMEOUT) {
+                        this.pending.next(false);
+                        this.parameters.updateIsLoadingModalVisible(false);
+                        this.error = 'Room creation already in progress';
+                        return;
+                    }
+                    else {
+                        // Stale lock, clear it
+                        try {
+                            localStorage.removeItem(pendingKey);
+                        }
+                        catch {
+                            // Ignore localStorage errors
+                        }
+                    }
+                }
+            }
+            catch {
+                // Ignore localStorage read/JSON errors
+            }
+            // Mark request as pending
+            try {
+                localStorage.setItem(pendingKey, JSON.stringify({
+                    timestamp: Date.now(),
+                    payload: {
+                        action: 'create',
+                        userName: payload.userName,
+                        duration: payload.duration,
+                        capacity: payload.capacity,
+                    },
+                }));
+                // Auto-clear the pending flag after timeout to avoid stale locks
+                setTimeout(() => {
+                    try {
+                        localStorage.removeItem(pendingKey);
+                    }
+                    catch {
+                        // Ignore localStorage errors
+                    }
+                }, PENDING_TIMEOUT);
+            }
+            catch {
+                // Ignore localStorage write errors
+            }
+            try {
+                await this.roomCreator({
+                    payload,
+                    apiUserName: this.credentials.apiUserName,
+                    apiKey: this.credentials.apiKey,
+                    validate: true,
+                });
+                // Clear pending status on completion
+                try {
+                    localStorage.removeItem(pendingKey);
+                }
+                catch {
+                    /* ignore */
+                }
+                this.pending.next(false);
+            }
+            catch (error) {
+                // Clear pending status on error
+                try {
+                    localStorage.removeItem(pendingKey);
+                }
+                catch {
+                    /* ignore */
+                }
+                this.pending.next(false);
+                this.parameters.updateIsLoadingModalVisible(false);
+                this.error = `Unable to create room. ${error}`;
+            }
         }
     }
     async handleJoinRoom() {
@@ -28715,10 +28919,10 @@ class PreJoinPage {
             this.error = `Unable to connect. ${error.message}`;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PreJoinPage, deps: [{ token: i2$2.FormBuilder }, { token: 'parameters', optional: true }, { token: 'credentials', optional: true }, { token: 'localLink', optional: true }, { token: 'connectMediaSFU', optional: true }, { token: 'returnUI', optional: true }, { token: 'noUIPreJoinOptions', optional: true }, { token: 'createMediaSFURoom', optional: true }, { token: 'joinMediaSFURoom', optional: true }, { token: CheckLimitsAndMakeRequest }, { token: CreateRoomOnMediaSFU }, { token: JoinRoomOnMediaSFU }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: PreJoinPage, isStandalone: true, selector: "app-pre-join-page", inputs: { parameters: "parameters", credentials: "credentials", localLink: "localLink", connectMediaSFU: "connectMediaSFU", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", createMediaSFURoom: "createMediaSFURoom", joinMediaSFURoom: "joinMediaSFURoom" }, ngImport: i0, template: "<div class=\"container-fluid\" *ngIf=\"returnUI !== false\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i2$2.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$2.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i2$2.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PreJoinPage, deps: [{ token: i2$2.FormBuilder }, { token: 'parameters', optional: true }, { token: 'credentials', optional: true }, { token: 'localLink', optional: true }, { token: 'connectMediaSFU', optional: true }, { token: 'returnUI', optional: true }, { token: 'noUIPreJoinOptions', optional: true }, { token: 'createMediaSFURoom', optional: true }, { token: 'joinMediaSFURoom', optional: true }, { token: CheckLimitsAndMakeRequest }, { token: CreateRoomOnMediaSFU }, { token: JoinRoomOnMediaSFU }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: PreJoinPage, isStandalone: true, selector: "app-pre-join-page", inputs: { parameters: "parameters", credentials: "credentials", localLink: "localLink", connectMediaSFU: "connectMediaSFU", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", createMediaSFURoom: "createMediaSFURoom", joinMediaSFURoom: "joinMediaSFURoom" }, ngImport: i0, template: "<div class=\"container-fluid\" *ngIf=\"returnUI !== false\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i2$2.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$2.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i2$2.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PreJoinPage, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PreJoinPage, decorators: [{
             type: Component,
             args: [{ selector: 'app-pre-join-page', imports: [CommonModule, ReactiveFormsModule], template: "<div class=\"container-fluid\" *ngIf=\"returnUI !== false\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <div class=\"input-container\">\r\n    <form [formGroup]=\"preJoinForm\">\r\n      <input type=\"text\" placeholder=\"Display Name\" formControlName=\"name\" class=\"input-field\" />\r\n      <div *ngIf=\"isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Duration (minutes)\" formControlName=\"duration\" class=\"input-field\" />\r\n        <select formControlName=\"eventType\" class=\"select-field\">\r\n          <option value=\"\">Select Event Type</option>\r\n          <option value=\"chat\">Chat</option>\r\n          <option value=\"broadcast\">Broadcast</option>\r\n          <option value=\"webinar\">Webinar</option>\r\n          <option value=\"conference\">Conference</option>\r\n        </select>\r\n        <input type=\"text\" placeholder=\"Room Capacity\" formControlName=\"capacity\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleCreateRoom()\" class=\"action-button\">Create Room</button>\r\n      </div>\r\n      <div *ngIf=\"!isCreateMode\">\r\n        <input type=\"text\" placeholder=\"Event ID\" formControlName=\"eventID\" class=\"input-field\" />\r\n        <button type=\"button\" (click)=\"handleJoinRoom()\" class=\"action-button\">Join Room</button>\r\n      </div>\r\n      <p *ngIf=\"error\" class=\"error\">{{ error }}</p>\r\n    </form>\r\n  </div>\r\n  <div class=\"or-container\">\r\n    <span class=\"or-text\">OR</span>\r\n  </div>\r\n  <div class=\"toggle-container\">\r\n    <button type=\"button\" (click)=\"toggleMode()\" class=\"toggle-button\">\r\n      {{ isCreateMode ? 'Switch to Join Mode' : 'Switch to Create Mode' }}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container-fluid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;height:100vh;background-color:#53c6e0;overflow:auto}.logo-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}.input-field,.select-field{display:block;width:100%;max-width:300px;height:30px;border:1px solid gray;margin-bottom:10px;padding:0 5px;border-radius:5px}.action-button,.toggle-button{display:block;width:100%;max-width:300px;background-color:#000;color:#fff;padding:5px 20px;border-radius:5px;margin-bottom:10px;margin-top:10px;text-align:center;cursor:pointer}.error{color:red;margin-bottom:10px;width:100%;max-width:300px;text-align:center}.or-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:10px 0}.or-text{color:#000;font-size:medium;font-weight:700;text-align:center}.toggle-container{display:flex;flex-direction:column;align-items:center;justify-content:center}\n"] }]
         }], ctorParameters: () => [{ type: i2$2.FormBuilder }, { type: undefined, decorators: [{
@@ -28867,10 +29071,10 @@ class ShareEventModal {
             right: this.position.includes('Right') ? '10px' : 'auto',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ShareEventModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ShareEventModal, isStandalone: true, selector: "app-share-event-modal", inputs: { backgroundColor: "backgroundColor", isShareEventModalVisible: "isShareEventModalVisible", onShareEventClose: "onShareEventClose", roomName: "roomName", adminPasscode: "adminPasscode", islevel: "islevel", position: "position", shareButtons: "shareButtons", eventType: "eventType", localLink: "localLink" }, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div style=\"display: flex; flex-direction: row-reverse; margin-bottom: 15px;\">\r\n      <div (click)=\"handleClose()\" style=\"padding: 5px;\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n    <div style=\"flex: 1;\">\r\n      <div style=\"margin-bottom: 10px;\" *ngIf=\"islevel === '2'\">\r\n        <app-meeting-passcode-component [meetingPasscode]=\"adminPasscode\"></app-meeting-passcode-component>\r\n      </div>\r\n      <div style=\"margin-bottom: 10px;\">\r\n        <app-meeting-id-component [meetingID]=\"roomName\"></app-meeting-id-component>\r\n      </div>\r\n      <div *ngIf=\"shareButtons\">\r\n        <app-share-buttons-component [meetingID]=\"roomName\" [eventType]=\"eventType\" [localLink]=\"localLink\"></app-share-buttons-component>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MeetingIdComponent, selector: "app-meeting-id-component", inputs: ["meetingID"] }, { kind: "component", type: MeetingPasscodeComponent, selector: "app-meeting-passcode-component", inputs: ["meetingPasscode"] }, { kind: "component", type: ShareButtonsComponent, selector: "app-share-buttons-component", inputs: ["meetingID", "shareButtons", "eventType", "localLink"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ShareEventModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ShareEventModal, isStandalone: true, selector: "app-share-event-modal", inputs: { backgroundColor: "backgroundColor", isShareEventModalVisible: "isShareEventModalVisible", onShareEventClose: "onShareEventClose", roomName: "roomName", adminPasscode: "adminPasscode", islevel: "islevel", position: "position", shareButtons: "shareButtons", eventType: "eventType", localLink: "localLink" }, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div style=\"display: flex; flex-direction: row-reverse; margin-bottom: 15px;\">\r\n      <div (click)=\"handleClose()\" style=\"padding: 5px;\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n    <div style=\"flex: 1;\">\r\n      <div style=\"margin-bottom: 10px;\" *ngIf=\"islevel === '2'\">\r\n        <app-meeting-passcode-component [meetingPasscode]=\"adminPasscode\"></app-meeting-passcode-component>\r\n      </div>\r\n      <div style=\"margin-bottom: 10px;\">\r\n        <app-meeting-id-component [meetingID]=\"roomName\"></app-meeting-id-component>\r\n      </div>\r\n      <div *ngIf=\"shareButtons\">\r\n        <app-share-buttons-component [meetingID]=\"roomName\" [eventType]=\"eventType\" [localLink]=\"localLink\"></app-share-buttons-component>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MeetingIdComponent, selector: "app-meeting-id-component", inputs: ["meetingID"] }, { kind: "component", type: MeetingPasscodeComponent, selector: "app-meeting-passcode-component", inputs: ["meetingPasscode"] }, { kind: "component", type: ShareButtonsComponent, selector: "app-share-buttons-component", inputs: ["meetingID", "shareButtons", "eventType", "localLink"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ShareEventModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ShareEventModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-share-event-modal', imports: [
                         CommonModule,
@@ -29115,10 +29319,10 @@ class WelcomePage {
         const { name, secret, eventID, link } = this.welcomeForm.value;
         await this.checkLimitsAndMakeRequest(eventID, secret, link, name);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: WelcomePage, deps: [{ token: i2$2.FormBuilder }, { token: i1$1.CookieService }, { token: 'parameters', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: WelcomePage, isStandalone: true, selector: "app-welcome-page", providers: [CookieService], ngImport: i0, template: "<div class=\"container\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <form [formGroup]=\"welcomeForm\" (ngSubmit)=\"handleConfirm()\">\r\n    <div class=\"input-container\">\r\n      <input\r\n        formControlName=\"name\"\r\n        type=\"text\"\r\n        placeholder=\"Event Display Name\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"secret\"\r\n        type=\"text\"\r\n        placeholder=\"Event Token (Secret)\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"eventID\"\r\n        type=\"text\"\r\n        placeholder=\"Event ID\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"link\"\r\n        type=\"text\"\r\n        placeholder=\"Event Link\"\r\n        class=\"input-field\"\r\n      />\r\n    </div>\r\n    <button type=\"submit\" class=\"confirm-button\">Confirm</button>\r\n  </form>\r\n\r\n  <div class=\"scanner-container\">\r\n    <div class=\"or-container\">\r\n      <hr class=\"horizontal-line\" />\r\n      <span class=\"or-text\">OR</span>\r\n      <hr class=\"horizontal-line\" />\r\n    </div>\r\n    <div *ngIf=\"isScannerVisible\" class=\"scanner-wrapper\">\r\n      <zxing-scanner\r\n        [device]=\"currentDevice!\"\r\n        (scanSuccess)=\"handleScanSuccess($event)\"\r\n        [tryHarder]=\"true\"\r\n      ></zxing-scanner>\r\n    </div>\r\n    <div class=\"scan-button-container\" *ngIf=\"!isScannerVisible\">\r\n      <button (click)=\"toggleScanner()\" class=\"scan-button\">\r\n        <fa-icon [icon]=\"faQrcode\" style=\"margin-right: 5px\"></fa-icon>\r\n        Scan QR Code\r\n      </button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"additional-options-container\">\r\n    <p>\r\n      Provide the event details either by typing manually or scanning the\r\n      QR-code to autofill.\r\n    </p>\r\n    <p>Don't have a secret?</p>\r\n    <a\r\n      href=\"https://meeting.mediasfu.com/meeting/start/\"\r\n      target=\"_blank\"\r\n      class=\"link\"\r\n      >Get one from mediasfu.com</a\r\n    >\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;max-width:100vw;max-height:100vh;margin:0;padding:0;background-color:#53c6e0;overflow:auto}.logo-container{margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{margin-bottom:10px;display:flex;flex-direction:column;align-items:center;justify-content:center}.input-field{height:30px;border-color:gray;border-width:1px;margin-bottom:10px;padding:0 5px;border-radius:5px}.confirm-button{background-color:#000;color:#fff;padding:5px;border-radius:5px;margin-bottom:10px;width:100%}.scanner-container{margin-bottom:10px;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}.additional-options-container{text-align:center}.link{color:#00f;text-decoration:none;font-weight:700;margin-left:5px}.scan-button{background-color:#000;color:#fff;padding:10px 20px;border-radius:5px;margin-bottom:20px}.scan-button-container{display:flex;justify-content:center;align-items:center}.or-container{display:flex;align-items:center;justify-content:center;width:100%;margin:10px 0}.horizontal-line{flex-grow:1;height:1px;background-color:gray;margin:0 10px}.or-text{color:#000;font-size:medium;font-weight:700}.scanner-wrapper{width:300px;height:300px;max-width:300px;max-height:300px;overflow:hidden;position:relative}zxing-scanner{width:100%;height:100%;object-fit:cover}\n"], dependencies: [{ kind: "ngmodule", type: ZXingScannerModule }, { kind: "component", type: i3.ZXingScannerComponent, selector: "zxing-scanner", inputs: ["autofocusEnabled", "timeBetweenScans", "delayBetweenScanSuccess", "autostart", "previewFitMode", "poster", "device", "formats", "videoConstraints", "torch", "enable", "tryHarder"], outputs: ["autostarted", "autostarting", "torchCompatible", "scanSuccess", "scanFailure", "scanError", "scanComplete", "camerasFound", "camerasNotFound", "permissionResponse", "hasDevices", "deviceChange"] }, { kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i2$2.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$2.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i2$2.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: WelcomePage, deps: [{ token: i2$2.FormBuilder }, { token: i1$1.CookieService }, { token: 'parameters', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: WelcomePage, isStandalone: true, selector: "app-welcome-page", providers: [CookieService], ngImport: i0, template: "<div class=\"container\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <form [formGroup]=\"welcomeForm\" (ngSubmit)=\"handleConfirm()\">\r\n    <div class=\"input-container\">\r\n      <input\r\n        formControlName=\"name\"\r\n        type=\"text\"\r\n        placeholder=\"Event Display Name\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"secret\"\r\n        type=\"text\"\r\n        placeholder=\"Event Token (Secret)\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"eventID\"\r\n        type=\"text\"\r\n        placeholder=\"Event ID\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"link\"\r\n        type=\"text\"\r\n        placeholder=\"Event Link\"\r\n        class=\"input-field\"\r\n      />\r\n    </div>\r\n    <button type=\"submit\" class=\"confirm-button\">Confirm</button>\r\n  </form>\r\n\r\n  <div class=\"scanner-container\">\r\n    <div class=\"or-container\">\r\n      <hr class=\"horizontal-line\" />\r\n      <span class=\"or-text\">OR</span>\r\n      <hr class=\"horizontal-line\" />\r\n    </div>\r\n    <div *ngIf=\"isScannerVisible\" class=\"scanner-wrapper\">\r\n      <zxing-scanner\r\n        [device]=\"currentDevice!\"\r\n        (scanSuccess)=\"handleScanSuccess($event)\"\r\n        [tryHarder]=\"true\"\r\n      ></zxing-scanner>\r\n    </div>\r\n    <div class=\"scan-button-container\" *ngIf=\"!isScannerVisible\">\r\n      <button (click)=\"toggleScanner()\" class=\"scan-button\">\r\n        <fa-icon [icon]=\"faQrcode\" style=\"margin-right: 5px\"></fa-icon>\r\n        Scan QR Code\r\n      </button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"additional-options-container\">\r\n    <p>\r\n      Provide the event details either by typing manually or scanning the\r\n      QR-code to autofill.\r\n    </p>\r\n    <p>Don't have a secret?</p>\r\n    <a\r\n      href=\"https://meeting.mediasfu.com/meeting/start/\"\r\n      target=\"_blank\"\r\n      class=\"link\"\r\n      >Get one from mediasfu.com</a\r\n    >\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;max-width:100vw;max-height:100vh;margin:0;padding:0;background-color:#53c6e0;overflow:auto}.logo-container{margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{margin-bottom:10px;display:flex;flex-direction:column;align-items:center;justify-content:center}.input-field{height:30px;border-color:gray;border-width:1px;margin-bottom:10px;padding:0 5px;border-radius:5px}.confirm-button{background-color:#000;color:#fff;padding:5px;border-radius:5px;margin-bottom:10px;width:100%}.scanner-container{margin-bottom:10px;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}.additional-options-container{text-align:center}.link{color:#00f;text-decoration:none;font-weight:700;margin-left:5px}.scan-button{background-color:#000;color:#fff;padding:10px 20px;border-radius:5px;margin-bottom:20px}.scan-button-container{display:flex;justify-content:center;align-items:center}.or-container{display:flex;align-items:center;justify-content:center;width:100%;margin:10px 0}.horizontal-line{flex-grow:1;height:1px;background-color:gray;margin:0 10px}.or-text{color:#000;font-size:medium;font-weight:700}.scanner-wrapper{width:300px;height:300px;max-width:300px;max-height:300px;overflow:hidden;position:relative}zxing-scanner{width:100%;height:100%;object-fit:cover}\n"], dependencies: [{ kind: "ngmodule", type: ZXingScannerModule }, { kind: "component", type: i3.ZXingScannerComponent, selector: "zxing-scanner", inputs: ["autofocusEnabled", "timeBetweenScans", "delayBetweenScanSuccess", "autostart", "previewFitMode", "poster", "device", "formats", "videoConstraints", "torch", "enable", "tryHarder"], outputs: ["autostarted", "autostarting", "torchCompatible", "scanSuccess", "scanFailure", "scanError", "scanComplete", "camerasFound", "camerasNotFound", "permissionResponse", "hasDevices", "deviceChange"] }, { kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i2$2.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$2.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i2$2.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: WelcomePage, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: WelcomePage, decorators: [{
             type: Component,
             args: [{ selector: 'app-welcome-page', imports: [ZXingScannerModule, CommonModule, FontAwesomeModule, ReactiveFormsModule], providers: [CookieService], template: "<div class=\"container\">\r\n  <div class=\"logo-container\">\r\n    <img [src]=\"imgSrc || 'https://mediasfu.com/images/logo192.png'\" class=\"logo-image\" alt=\"Logo\" />\r\n  </div>\r\n  <form [formGroup]=\"welcomeForm\" (ngSubmit)=\"handleConfirm()\">\r\n    <div class=\"input-container\">\r\n      <input\r\n        formControlName=\"name\"\r\n        type=\"text\"\r\n        placeholder=\"Event Display Name\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"secret\"\r\n        type=\"text\"\r\n        placeholder=\"Event Token (Secret)\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"eventID\"\r\n        type=\"text\"\r\n        placeholder=\"Event ID\"\r\n        class=\"input-field\"\r\n      />\r\n      <input\r\n        formControlName=\"link\"\r\n        type=\"text\"\r\n        placeholder=\"Event Link\"\r\n        class=\"input-field\"\r\n      />\r\n    </div>\r\n    <button type=\"submit\" class=\"confirm-button\">Confirm</button>\r\n  </form>\r\n\r\n  <div class=\"scanner-container\">\r\n    <div class=\"or-container\">\r\n      <hr class=\"horizontal-line\" />\r\n      <span class=\"or-text\">OR</span>\r\n      <hr class=\"horizontal-line\" />\r\n    </div>\r\n    <div *ngIf=\"isScannerVisible\" class=\"scanner-wrapper\">\r\n      <zxing-scanner\r\n        [device]=\"currentDevice!\"\r\n        (scanSuccess)=\"handleScanSuccess($event)\"\r\n        [tryHarder]=\"true\"\r\n      ></zxing-scanner>\r\n    </div>\r\n    <div class=\"scan-button-container\" *ngIf=\"!isScannerVisible\">\r\n      <button (click)=\"toggleScanner()\" class=\"scan-button\">\r\n        <fa-icon [icon]=\"faQrcode\" style=\"margin-right: 5px\"></fa-icon>\r\n        Scan QR Code\r\n      </button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"additional-options-container\">\r\n    <p>\r\n      Provide the event details either by typing manually or scanning the\r\n      QR-code to autofill.\r\n    </p>\r\n    <p>Don't have a secret?</p>\r\n    <a\r\n      href=\"https://meeting.mediasfu.com/meeting/start/\"\r\n      target=\"_blank\"\r\n      class=\"link\"\r\n      >Get one from mediasfu.com</a\r\n    >\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;max-width:100vw;max-height:100vh;margin:0;padding:0;background-color:#53c6e0;overflow:auto}.logo-container{margin-top:30px;padding-top:10px;margin-bottom:10px}.logo-image{width:100px;height:100px;border-radius:50%}.input-container{margin-bottom:10px;display:flex;flex-direction:column;align-items:center;justify-content:center}.input-field{height:30px;border-color:gray;border-width:1px;margin-bottom:10px;padding:0 5px;border-radius:5px}.confirm-button{background-color:#000;color:#fff;padding:5px;border-radius:5px;margin-bottom:10px;width:100%}.scanner-container{margin-bottom:10px;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}.additional-options-container{text-align:center}.link{color:#00f;text-decoration:none;font-weight:700;margin-left:5px}.scan-button{background-color:#000;color:#fff;padding:10px 20px;border-radius:5px;margin-bottom:20px}.scan-button-container{display:flex;justify-content:center;align-items:center}.or-container{display:flex;align-items:center;justify-content:center;width:100%;margin:10px 0}.horizontal-line{flex-grow:1;height:1px;background-color:gray;margin:0 10px}.or-text{color:#000;font-size:medium;font-weight:700}.scanner-wrapper{width:300px;height:300px;max-width:300px;max-height:300px;overflow:hidden;position:relative}zxing-scanner{width:100%;height:100%;object-fit:cover}\n"] }]
         }], ctorParameters: () => [{ type: i2$2.FormBuilder }, { type: i1$1.CookieService }, { type: undefined, decorators: [{
@@ -29218,10 +29422,10 @@ class ParticipantListItem {
             });
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantListItem, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ParticipantListItem, isStandalone: true, selector: "app-participant-list-item", inputs: { participant: "participant", isBroadcast: "isBroadcast", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", socket: "socket", coHostResponsibility: "coHostResponsibility", member: "member", islevel: "islevel", showAlert: "showAlert", coHost: "coHost", roomName: "roomName", updateIsMessagesModalVisible: "updateIsMessagesModalVisible", updateDirectMessageDetails: "updateDirectMessageDetails", updateStartDirectMessage: "updateStartDirectMessage", participants: "participants", updateParticipants: "updateParticipants" }, ngImport: i0, template: "<div class=\"container\" style=\"display: flex; flex-direction: row; align-items: center; margin-bottom: 0px; margin-top: 0px;\">\r\n  <div class=\"nameContainer\" style=\"flex: 4;\">\r\n    <p class=\"nameText\" style=\"font-size: 16px;\">\r\n      {{ participant.islevel === '2' ? participant.name + ' (host)' : participant.name }}\r\n    </p>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"iconContainer\" style=\"flex: 1; align-items: center;\">\r\n    <fa-icon [icon]=\"participant.muted ? faDotCircle : faDotCircle\" [style.font-size.px]=\"20\" [style.color]=\"participant.muted ? 'red' : 'green'\"></fa-icon>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"muteParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;\">\r\n      <fa-icon [icon]=\"getIconName()\" style=\"font-size: 20px;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"messageParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;\">\r\n      <fa-icon [icon]=\"faComment\" style=\"font-size: 20px; color: white;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"removeParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #dc3545; color: white;\">\r\n      <fa-icon [icon]=\"faTrash\" style=\"font-size: 20px; color: white;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:row;align-items:center;margin-bottom:0;margin-top:0}.nameContainer{flex:4}.nameText{font-size:16px}.iconContainer,.buttonContainer{flex:2;align-items:center}button{padding:5px;border-radius:5px;background-color:#007bff;color:#fff}button.remove{background-color:#dc3545}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantListItem, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ParticipantListItem, isStandalone: true, selector: "app-participant-list-item", inputs: { participant: "participant", isBroadcast: "isBroadcast", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", socket: "socket", coHostResponsibility: "coHostResponsibility", member: "member", islevel: "islevel", showAlert: "showAlert", coHost: "coHost", roomName: "roomName", updateIsMessagesModalVisible: "updateIsMessagesModalVisible", updateDirectMessageDetails: "updateDirectMessageDetails", updateStartDirectMessage: "updateStartDirectMessage", participants: "participants", updateParticipants: "updateParticipants" }, ngImport: i0, template: "<div class=\"container\" style=\"display: flex; flex-direction: row; align-items: center; margin-bottom: 0px; margin-top: 0px;\">\r\n  <div class=\"nameContainer\" style=\"flex: 4;\">\r\n    <p class=\"nameText\" style=\"font-size: 16px;\">\r\n      {{ participant.islevel === '2' ? participant.name + ' (host)' : participant.name }}\r\n    </p>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"iconContainer\" style=\"flex: 1; align-items: center;\">\r\n    <fa-icon [icon]=\"participant.muted ? faDotCircle : faDotCircle\" [style.font-size.px]=\"20\" [style.color]=\"participant.muted ? 'red' : 'green'\"></fa-icon>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"muteParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;\">\r\n      <fa-icon [icon]=\"getIconName()\" style=\"font-size: 20px;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"messageParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;\">\r\n      <fa-icon [icon]=\"faComment\" style=\"font-size: 20px; color: white;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"removeParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #dc3545; color: white;\">\r\n      <fa-icon [icon]=\"faTrash\" style=\"font-size: 20px; color: white;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:row;align-items:center;margin-bottom:0;margin-top:0}.nameContainer{flex:4}.nameText{font-size:16px}.iconContainer,.buttonContainer{flex:2;align-items:center}button{padding:5px;border-radius:5px;background-color:#007bff;color:#fff}button.remove{background-color:#dc3545}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantListItem, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantListItem, decorators: [{
             type: Component,
             args: [{ selector: 'app-participant-list-item', imports: [CommonModule, FontAwesomeModule], template: "<div class=\"container\" style=\"display: flex; flex-direction: row; align-items: center; margin-bottom: 0px; margin-top: 0px;\">\r\n  <div class=\"nameContainer\" style=\"flex: 4;\">\r\n    <p class=\"nameText\" style=\"font-size: 16px;\">\r\n      {{ participant.islevel === '2' ? participant.name + ' (host)' : participant.name }}\r\n    </p>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"iconContainer\" style=\"flex: 1; align-items: center;\">\r\n    <fa-icon [icon]=\"participant.muted ? faDotCircle : faDotCircle\" [style.font-size.px]=\"20\" [style.color]=\"participant.muted ? 'red' : 'green'\"></fa-icon>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"muteParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;\">\r\n      <fa-icon [icon]=\"getIconName()\" style=\"font-size: 20px;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div *ngIf=\"!isBroadcast\" class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"messageParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #007bff; color: white;\">\r\n      <fa-icon [icon]=\"faComment\" style=\"font-size: 20px; color: white;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div class=\"buttonContainer\" style=\"flex: 2; align-items: flex-end;\">\r\n    <button (click)=\"removeParticipant()\" style=\"padding: 5px; border-radius: 5px; align-items: center; background-color: #dc3545; color: white;\">\r\n      <fa-icon [icon]=\"faTrash\" style=\"font-size: 20px; color: white;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:row;align-items:center;margin-bottom:0;margin-top:0}.nameContainer{flex:4}.nameText{font-size:16px}.iconContainer,.buttonContainer{flex:2;align-items:center}button{padding:5px;border-radius:5px;background-color:#007bff;color:#fff}button.remove{background-color:#dc3545}\n"] }]
         }], propDecorators: { participant: [{
@@ -29297,10 +29501,10 @@ class ParticipantList {
     updateDirectMessageDetails = () => { };
     updateStartDirectMessage = () => { };
     updateParticipants = () => { };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantList, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ParticipantList, isStandalone: true, selector: "app-participant-list", inputs: { participants: "participants", isBroadcast: "isBroadcast", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", socket: "socket", coHostResponsibility: "coHostResponsibility", member: "member", islevel: "islevel", showAlert: "showAlert", coHost: "coHost", roomName: "roomName", updateIsMessagesModalVisible: "updateIsMessagesModalVisible", updateDirectMessageDetails: "updateDirectMessageDetails", updateStartDirectMessage: "updateStartDirectMessage", updateParticipants: "updateParticipants" }, ngImport: i0, template: "<div *ngFor=\"let participant of participants; let i = index\">\r\n  <app-participant-list-item\r\n    [participant]=\"participant\"\r\n    [isBroadcast]=\"isBroadcast\"\r\n    [onMuteParticipants]=\"onMuteParticipants\"\r\n    [onMessageParticipants]=\"onMessageParticipants\"\r\n    [onRemoveParticipants]=\"onRemoveParticipants\"\r\n    [socket]=\"socket\"\r\n    [coHostResponsibility]=\"coHostResponsibility\"\r\n    [coHost]=\"coHost\"\r\n    [member]=\"member\"\r\n    [islevel]=\"islevel\"\r\n    [roomName]=\"roomName\"\r\n    [participants]=\"participants\"\r\n    [updateIsMessagesModalVisible]=\"updateIsMessagesModalVisible\"\r\n    [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n    [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n    [updateParticipants]=\"updateParticipants\"\r\n  ></app-participant-list-item>\r\n  <hr *ngIf=\"i < participants.length - 1\" class=\"separator\" />\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "component", type: ParticipantListItem, selector: "app-participant-list-item", inputs: ["participant", "isBroadcast", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "socket", "coHostResponsibility", "member", "islevel", "showAlert", "coHost", "roomName", "updateIsMessagesModalVisible", "updateDirectMessageDetails", "updateStartDirectMessage", "participants", "updateParticipants"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantList, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ParticipantList, isStandalone: true, selector: "app-participant-list", inputs: { participants: "participants", isBroadcast: "isBroadcast", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", socket: "socket", coHostResponsibility: "coHostResponsibility", member: "member", islevel: "islevel", showAlert: "showAlert", coHost: "coHost", roomName: "roomName", updateIsMessagesModalVisible: "updateIsMessagesModalVisible", updateDirectMessageDetails: "updateDirectMessageDetails", updateStartDirectMessage: "updateStartDirectMessage", updateParticipants: "updateParticipants" }, ngImport: i0, template: "<div *ngFor=\"let participant of participants; let i = index\">\r\n  <app-participant-list-item\r\n    [participant]=\"participant\"\r\n    [isBroadcast]=\"isBroadcast\"\r\n    [onMuteParticipants]=\"onMuteParticipants\"\r\n    [onMessageParticipants]=\"onMessageParticipants\"\r\n    [onRemoveParticipants]=\"onRemoveParticipants\"\r\n    [socket]=\"socket\"\r\n    [coHostResponsibility]=\"coHostResponsibility\"\r\n    [coHost]=\"coHost\"\r\n    [member]=\"member\"\r\n    [islevel]=\"islevel\"\r\n    [roomName]=\"roomName\"\r\n    [participants]=\"participants\"\r\n    [updateIsMessagesModalVisible]=\"updateIsMessagesModalVisible\"\r\n    [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n    [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n    [updateParticipants]=\"updateParticipants\"\r\n  ></app-participant-list-item>\r\n  <hr *ngIf=\"i < participants.length - 1\" class=\"separator\" />\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "component", type: ParticipantListItem, selector: "app-participant-list-item", inputs: ["participant", "isBroadcast", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "socket", "coHostResponsibility", "member", "islevel", "showAlert", "coHost", "roomName", "updateIsMessagesModalVisible", "updateDirectMessageDetails", "updateStartDirectMessage", "participants", "updateParticipants"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantList, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantList, decorators: [{
             type: Component,
             args: [{ selector: 'app-participant-list', imports: [CommonModule, ParticipantListItem], template: "<div *ngFor=\"let participant of participants; let i = index\">\r\n  <app-participant-list-item\r\n    [participant]=\"participant\"\r\n    [isBroadcast]=\"isBroadcast\"\r\n    [onMuteParticipants]=\"onMuteParticipants\"\r\n    [onMessageParticipants]=\"onMessageParticipants\"\r\n    [onRemoveParticipants]=\"onRemoveParticipants\"\r\n    [socket]=\"socket\"\r\n    [coHostResponsibility]=\"coHostResponsibility\"\r\n    [coHost]=\"coHost\"\r\n    [member]=\"member\"\r\n    [islevel]=\"islevel\"\r\n    [roomName]=\"roomName\"\r\n    [participants]=\"participants\"\r\n    [updateIsMessagesModalVisible]=\"updateIsMessagesModalVisible\"\r\n    [updateStartDirectMessage]=\"updateStartDirectMessage\"\r\n    [updateDirectMessageDetails]=\"updateDirectMessageDetails\"\r\n    [updateParticipants]=\"updateParticipants\"\r\n  ></app-participant-list-item>\r\n  <hr *ngIf=\"i < participants.length - 1\" class=\"separator\" />\r\n</div>\r\n" }]
         }], propDecorators: { participants: [{
@@ -29377,10 +29581,10 @@ class ParticipantListOthersItem {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantListOthersItem, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ParticipantListOthersItem, isStandalone: true, selector: "app-participant-list-others-item", inputs: { participant: "participant", member: "member", coHost: "coHost" }, ngImport: i0, template: "<div class=\"container\">\r\n  <div class=\"name-container\">\r\n    <span class=\"name-text\">\r\n      {{ getParticipantDisplayName() }}\r\n    </span>\r\n  </div>\r\n  <div class=\"icon-container\">\r\n    <fa-icon [icon]=\"faCircle\" [style.color]=\"participant.muted ? 'red' : 'green'\"></fa-icon>\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:row;align-items:center;margin-bottom:10px}.name-container{flex:8}.name-text{font-size:16px}.icon-container{flex:4;display:flex;align-items:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantListOthersItem, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ParticipantListOthersItem, isStandalone: true, selector: "app-participant-list-others-item", inputs: { participant: "participant", member: "member", coHost: "coHost" }, ngImport: i0, template: "<div class=\"container\">\r\n  <div class=\"name-container\">\r\n    <span class=\"name-text\">\r\n      {{ getParticipantDisplayName() }}\r\n    </span>\r\n  </div>\r\n  <div class=\"icon-container\">\r\n    <fa-icon [icon]=\"faCircle\" [style.color]=\"participant.muted ? 'red' : 'green'\"></fa-icon>\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:row;align-items:center;margin-bottom:10px}.name-container{flex:8}.name-text{font-size:16px}.icon-container{flex:4;display:flex;align-items:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantListOthersItem, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantListOthersItem, decorators: [{
             type: Component,
             args: [{ selector: 'app-participant-list-others-item', imports: [CommonModule, FontAwesomeModule], template: "<div class=\"container\">\r\n  <div class=\"name-container\">\r\n    <span class=\"name-text\">\r\n      {{ getParticipantDisplayName() }}\r\n    </span>\r\n  </div>\r\n  <div class=\"icon-container\">\r\n    <fa-icon [icon]=\"faCircle\" [style.color]=\"participant.muted ? 'red' : 'green'\"></fa-icon>\r\n  </div>\r\n</div>\r\n", styles: [".container{display:flex;flex-direction:row;align-items:center;margin-bottom:10px}.name-container{flex:8}.name-text{font-size:16px}.icon-container{flex:4;display:flex;align-items:center}\n"] }]
         }], propDecorators: { participant: [{
@@ -29412,10 +29616,10 @@ class ParticipantListOthers {
     participants = [];
     coHost = '';
     member = '';
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantListOthers, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ParticipantListOthers, isStandalone: true, selector: "app-participant-list-others", inputs: { participants: "participants", coHost: "coHost", member: "member" }, ngImport: i0, template: "<div *ngFor=\"let participant of participants; let i = index\">\r\n  <app-participant-list-others-item\r\n    [participant]=\"participant\"\r\n    [coHost]=\"coHost\"\r\n    [member]=\"member\"\r\n  ></app-participant-list-others-item>\r\n  <hr *ngIf=\"i < participants.length - 1\" class=\"separator\" />\r\n</div>\r\n", styles: [".separator{border:none;border-top:1px solid #e0e0e0;margin:10px 0}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "component", type: ParticipantListOthersItem, selector: "app-participant-list-others-item", inputs: ["participant", "member", "coHost"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantListOthers, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ParticipantListOthers, isStandalone: true, selector: "app-participant-list-others", inputs: { participants: "participants", coHost: "coHost", member: "member" }, ngImport: i0, template: "<div *ngFor=\"let participant of participants; let i = index\">\r\n  <app-participant-list-others-item\r\n    [participant]=\"participant\"\r\n    [coHost]=\"coHost\"\r\n    [member]=\"member\"\r\n  ></app-participant-list-others-item>\r\n  <hr *ngIf=\"i < participants.length - 1\" class=\"separator\" />\r\n</div>\r\n", styles: [".separator{border:none;border-top:1px solid #e0e0e0;margin:10px 0}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "component", type: ParticipantListOthersItem, selector: "app-participant-list-others-item", inputs: ["participant", "member", "coHost"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantListOthers, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantListOthers, decorators: [{
             type: Component,
             args: [{ selector: 'app-participant-list-others', imports: [CommonModule, ParticipantListOthersItem], template: "<div *ngFor=\"let participant of participants; let i = index\">\r\n  <app-participant-list-others-item\r\n    [participant]=\"participant\"\r\n    [coHost]=\"coHost\"\r\n    [member]=\"member\"\r\n  ></app-participant-list-others-item>\r\n  <hr *ngIf=\"i < participants.length - 1\" class=\"separator\" />\r\n</div>\r\n", styles: [".separator{border:none;border-top:1px solid #e0e0e0;margin:10px 0}\n"] }]
         }], propDecorators: { participants: [{
@@ -29510,10 +29714,10 @@ class ParticipantsModal {
         return (this.parameters.islevel === '2' ||
             (this.parameters.coHost === this.parameters.member && participantsValue === true));
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantsModal, deps: [{ token: MuteParticipants }, { token: MessageParticipants }, { token: RemoveParticipants }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ParticipantsModal, isStandalone: true, selector: "app-participants-modal", inputs: { isParticipantsModalVisible: "isParticipantsModalVisible", onParticipantsClose: "onParticipantsClose", onParticipantsFilterChange: "onParticipantsFilterChange", participantsCounter: "participantsCounter", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", parameters: "parameters", position: "position", backgroundColor: "backgroundColor" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isParticipantsModalVisible\" class=\"modal-container\" [ngStyle]=\"{'background-color': 'rgba(0, 0, 0, 0.5)'}\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}\">\r\n    <div class=\"modal-header\">\r\n      <div>\r\n        Participants <span class=\"badge\">{{ participantsCounter_s }}</span>\r\n      </div>\r\n      <div class=\"close-icon\" (click)=\"handleClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <input type=\"text\" class=\"filter-input\" placeholder=\"Search ...\" (input)=\"handleFilterChange($event)\">\r\n      <ng-container *ngIf=\"parameters.participants\">\r\n        <ng-container *ngIf=\"canShowParticipantList()\">\r\n          <app-participant-list\r\n            [participants]=\"participant_s\"\r\n            [isBroadcast]=\"parameters.eventType === 'broadcast'\"\r\n            [onMuteParticipants]=\"onMuteParticipants\"\r\n            [onMessageParticipants]=\"onMessageParticipants\"\r\n            [onRemoveParticipants]=\"onRemoveParticipants\"\r\n            [socket]=\"parameters.socket\"\r\n            [coHostResponsibility]=\"parameters.coHostResponsibility\"\r\n            [coHost]=\"parameters.coHost\"\r\n            [member]=\"parameters.member\"\r\n            [islevel]=\"parameters.islevel\"\r\n            [roomName]=\"parameters.roomName\"\r\n            [updateIsMessagesModalVisible]=\"parameters.updateIsMessagesModalVisible\"\r\n            [updateStartDirectMessage]=\"parameters.updateStartDirectMessage\"\r\n            [updateDirectMessageDetails]=\"parameters.updateDirectMessageDetails\"\r\n            [updateParticipants]=\"parameters.updateParticipants\"\r\n          >\r\n          </app-participant-list>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!canShowParticipantList()\">\r\n          <app-participant-list-others\r\n            [participants]=\"participant_s\"\r\n            [coHost]=\"parameters.coHost\"\r\n            [member]=\"parameters.member\"\r\n            >\r\n          </app-participant-list-others>\r\n        </ng-container>\r\n      </ng-container>\r\n      <div *ngIf=\"!parameters.participants\">No participants</div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:80%;max-width:400px;max-height:75%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center}.badge{background-color:#fff;color:#000;border-radius:10px;padding:5px}.close-icon{padding:5px;cursor:pointer}.modal-body{margin-top:10px}.filter-input{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: ParticipantList, selector: "app-participant-list", inputs: ["participants", "isBroadcast", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "socket", "coHostResponsibility", "member", "islevel", "showAlert", "coHost", "roomName", "updateIsMessagesModalVisible", "updateDirectMessageDetails", "updateStartDirectMessage", "updateParticipants"] }, { kind: "component", type: ParticipantListOthers, selector: "app-participant-list-others", inputs: ["participants", "coHost", "member"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantsModal, deps: [{ token: MuteParticipants }, { token: MessageParticipants }, { token: RemoveParticipants }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ParticipantsModal, isStandalone: true, selector: "app-participants-modal", inputs: { isParticipantsModalVisible: "isParticipantsModalVisible", onParticipantsClose: "onParticipantsClose", onParticipantsFilterChange: "onParticipantsFilterChange", participantsCounter: "participantsCounter", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", parameters: "parameters", position: "position", backgroundColor: "backgroundColor" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isParticipantsModalVisible\" class=\"modal-container\" [ngStyle]=\"{'background-color': 'rgba(0, 0, 0, 0.5)'}\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}\">\r\n    <div class=\"modal-header\">\r\n      <div>\r\n        Participants <span class=\"badge\">{{ participantsCounter_s }}</span>\r\n      </div>\r\n      <div class=\"close-icon\" (click)=\"handleClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <input type=\"text\" class=\"filter-input\" placeholder=\"Search ...\" (input)=\"handleFilterChange($event)\">\r\n      <ng-container *ngIf=\"parameters.participants\">\r\n        <ng-container *ngIf=\"canShowParticipantList()\">\r\n          <app-participant-list\r\n            [participants]=\"participant_s\"\r\n            [isBroadcast]=\"parameters.eventType === 'broadcast'\"\r\n            [onMuteParticipants]=\"onMuteParticipants\"\r\n            [onMessageParticipants]=\"onMessageParticipants\"\r\n            [onRemoveParticipants]=\"onRemoveParticipants\"\r\n            [socket]=\"parameters.socket\"\r\n            [coHostResponsibility]=\"parameters.coHostResponsibility\"\r\n            [coHost]=\"parameters.coHost\"\r\n            [member]=\"parameters.member\"\r\n            [islevel]=\"parameters.islevel\"\r\n            [roomName]=\"parameters.roomName\"\r\n            [updateIsMessagesModalVisible]=\"parameters.updateIsMessagesModalVisible\"\r\n            [updateStartDirectMessage]=\"parameters.updateStartDirectMessage\"\r\n            [updateDirectMessageDetails]=\"parameters.updateDirectMessageDetails\"\r\n            [updateParticipants]=\"parameters.updateParticipants\"\r\n          >\r\n          </app-participant-list>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!canShowParticipantList()\">\r\n          <app-participant-list-others\r\n            [participants]=\"participant_s\"\r\n            [coHost]=\"parameters.coHost\"\r\n            [member]=\"parameters.member\"\r\n            >\r\n          </app-participant-list-others>\r\n        </ng-container>\r\n      </ng-container>\r\n      <div *ngIf=\"!parameters.participants\">No participants</div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:80%;max-width:400px;max-height:75%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center}.badge{background-color:#fff;color:#000;border-radius:10px;padding:5px}.close-icon{padding:5px;cursor:pointer}.modal-body{margin-top:10px}.filter-input{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: ParticipantList, selector: "app-participant-list", inputs: ["participants", "isBroadcast", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "socket", "coHostResponsibility", "member", "islevel", "showAlert", "coHost", "roomName", "updateIsMessagesModalVisible", "updateDirectMessageDetails", "updateStartDirectMessage", "updateParticipants"] }, { kind: "component", type: ParticipantListOthers, selector: "app-participant-list-others", inputs: ["participants", "coHost", "member"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ParticipantsModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ParticipantsModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-participants-modal', imports: [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers], template: "<div *ngIf=\"isParticipantsModalVisible\" class=\"modal-container\" [ngStyle]=\"{'background-color': 'rgba(0, 0, 0, 0.5)'}\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}\">\r\n    <div class=\"modal-header\">\r\n      <div>\r\n        Participants <span class=\"badge\">{{ participantsCounter_s }}</span>\r\n      </div>\r\n      <div class=\"close-icon\" (click)=\"handleClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"xl\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <input type=\"text\" class=\"filter-input\" placeholder=\"Search ...\" (input)=\"handleFilterChange($event)\">\r\n      <ng-container *ngIf=\"parameters.participants\">\r\n        <ng-container *ngIf=\"canShowParticipantList()\">\r\n          <app-participant-list\r\n            [participants]=\"participant_s\"\r\n            [isBroadcast]=\"parameters.eventType === 'broadcast'\"\r\n            [onMuteParticipants]=\"onMuteParticipants\"\r\n            [onMessageParticipants]=\"onMessageParticipants\"\r\n            [onRemoveParticipants]=\"onRemoveParticipants\"\r\n            [socket]=\"parameters.socket\"\r\n            [coHostResponsibility]=\"parameters.coHostResponsibility\"\r\n            [coHost]=\"parameters.coHost\"\r\n            [member]=\"parameters.member\"\r\n            [islevel]=\"parameters.islevel\"\r\n            [roomName]=\"parameters.roomName\"\r\n            [updateIsMessagesModalVisible]=\"parameters.updateIsMessagesModalVisible\"\r\n            [updateStartDirectMessage]=\"parameters.updateStartDirectMessage\"\r\n            [updateDirectMessageDetails]=\"parameters.updateDirectMessageDetails\"\r\n            [updateParticipants]=\"parameters.updateParticipants\"\r\n          >\r\n          </app-participant-list>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!canShowParticipantList()\">\r\n          <app-participant-list-others\r\n            [participants]=\"participant_s\"\r\n            [coHost]=\"parameters.coHost\"\r\n            [member]=\"parameters.member\"\r\n            >\r\n          </app-participant-list-others>\r\n        </ng-container>\r\n      </ng-container>\r\n      <div *ngIf=\"!parameters.participants\">No participants</div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;width:80%;max-width:400px;max-height:75%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center}.badge{background-color:#fff;color:#000;border-radius:10px;padding:5px}.close-icon{padding:5px;cursor:pointer}.modal-body{margin-top:10px}.filter-input{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}\n"] }]
         }], ctorParameters: () => [{ type: MuteParticipants }, { type: MessageParticipants }, { type: RemoveParticipants }], propDecorators: { isParticipantsModalVisible: [{
@@ -29692,10 +29896,10 @@ class PollModal {
             right: this.position.includes('Right') ? '10px' : 'auto',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PollModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: PollModal, isStandalone: true, selector: "app-poll-modal", inputs: { isPollModalVisible: "isPollModalVisible", onClose: "onClose", position: "position", backgroundColor: "backgroundColor", member: "member", islevel: "islevel", polls: "polls", poll: "poll", socket: "socket", roomName: "roomName", showAlert: "showAlert", updateIsPollModalVisible: "updateIsPollModalVisible", handleCreatePoll: "handleCreatePoll", handleEndPoll: "handleEndPoll", handleVotePoll: "handleVotePoll" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\">\r\n      <h2>Polls</h2>\r\n      <button (click)=\"onClose()\" class=\"close-button\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <!-- Previous Polls Section -->\r\n      <div *ngIf=\"islevel === '2'\">\r\n        <div class=\"previous-polls\">\r\n          <h5>Previous Polls</h5>\r\n          <div *ngIf=\"polls.length === 0\">No polls available</div>\r\n\r\n          <!-- Using ng-container to avoid multiple structural directives on the same element -->\r\n          <ng-container *ngFor=\"let polled of polls\">\r\n            <div\r\n              *ngIf=\"!poll || polled.id !== poll.id || poll.status !== 'active'\"\r\n              class=\"poll\"\r\n            >\r\n              <h6>Question:</h6>\r\n              <textarea\r\n                class=\"form-control\"\r\n                rows=\"3\"\r\n                [disabled]=\"true\"\r\n                [value]=\"polled.question\"\r\n              ></textarea>\r\n              <br />\r\n              <h6>Options:</h6>\r\n              <div *ngFor=\"let option of polled.options; let i = index\">\r\n                {{ option }}: {{ polled.votes[i] }} votes ({{\r\n                  calculatePercentage(polled.votes, i)\r\n                }}%)\r\n              </div>\r\n              <!-- End Poll Button (if poll is active) -->\r\n              <button\r\n                *ngIf=\"polled.status === 'active'\"\r\n                class=\"btn btn-danger\"\r\n                (click)=\"handledEndPoll(polled.id)\"\r\n              >\r\n                End Poll\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </div>\r\n        <hr />\r\n\r\n        <!-- Create Poll Section -->\r\n        <div class=\"create-poll\">\r\n          <h5>Create a New Poll</h5>\r\n          <form (ngSubmit)=\"validateAndCreatePoll()\">\r\n            <div class=\"form-group\">\r\n              <label for=\"pollQuestion\">Poll Question</label>\r\n              <textarea\r\n                class=\"form-control\"\r\n                id=\"pollQuestion\"\r\n                rows=\"3\"\r\n                maxLength=\"300\"\r\n                required\r\n                [(ngModel)]=\"newPoll.question\"\r\n                name=\"question\"\r\n              ></textarea>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"pollType\">Select Poll Answer Type</label>\r\n              <select\r\n                class=\"form-control\"\r\n                id=\"pollType\"\r\n                required\r\n                (change)=\"handlePollTypeChange($event)\"\r\n                [(ngModel)]=\"newPoll.type\"\r\n                name=\"type\"\r\n              >\r\n                <option value=\"\">Choose...</option>\r\n                <option value=\"trueFalse\">True/False</option>\r\n                <option value=\"yesNo\">Yes/No</option>\r\n                <option value=\"custom\">Custom</option>\r\n              </select>\r\n            </div>\r\n\r\n            <!-- Render Poll Options -->\r\n            <div\r\n              *ngIf=\"newPoll.type === 'trueFalse' || newPoll.type === 'yesNo'\"\r\n            >\r\n              <div\r\n                *ngFor=\"let option of newPoll.options; let i = index\"\r\n                class=\"form-check\"\r\n              >\r\n                <input\r\n                  class=\"form-check-input\"\r\n                  type=\"radio\"\r\n                  name=\"pollOption\"\r\n                  [value]=\"option.toLowerCase()\"\r\n                  [id]=\"'option' + option\"\r\n                />\r\n                <label class=\"form-check-label\" [for]=\"'option' + option\">{{\r\n                  option\r\n                }}</label>\r\n              </div>\r\n            </div>\r\n            <div *ngIf=\"newPoll.type === 'custom'\">\r\n              <div\r\n                *ngFor=\"let option of newPoll.options; let i = index\"\r\n                class=\"form-group\"\r\n              >\r\n                <input\r\n                  type=\"text\"\r\n                  class=\"form-control\"\r\n                  placeholder=\"Option {{ i + 1 }}\"\r\n                  maxLength=\"50\"\r\n                  [(ngModel)]=\"newPoll.options[i]\"\r\n                  name=\"option{{ i }}\"\r\n                />\r\n              </div>\r\n            </div>\r\n            <button type=\"submit\" class=\"btn btn-primary\">Create Poll</button>\r\n          </form>\r\n        </div>\r\n        <hr />\r\n      </div>\r\n\r\n      <!-- Current Poll Section -->\r\n      <div class=\"current-poll\">\r\n        <h5>Current Poll</h5>\r\n        <div *ngIf=\"poll && poll.status === 'active'\">\r\n          <h6>Question:</h6>\r\n          <textarea\r\n            class=\"form-control\"\r\n            rows=\"3\"\r\n            [disabled]=\"true\"\r\n            [value]=\"poll.question\"\r\n          ></textarea>\r\n          <h6>Options:</h6>\r\n          <div\r\n            *ngFor=\"let option of poll.options; let i = index\"\r\n            class=\"form-check\"\r\n          >\r\n            <input\r\n              class=\"form-check-input\"\r\n              type=\"radio\"\r\n              name=\"pollOption\"\r\n              [value]=\"i\"\r\n              id=\"pollOption{{ i }}\"\r\n              [checked]=\"poll.voters?.[member] === i\"\r\n              (change)=\"handledVotePoll(poll.id, i)\"\r\n            />\r\n            <label class=\"form-check-label\" [for]=\"'pollOption' + i\">{{\r\n              option\r\n            }}</label>\r\n          </div>\r\n          <button\r\n            *ngIf=\"poll.status === 'active' && islevel === '2'\"\r\n            class=\"btn btn-danger\"\r\n            (click)=\"handledEndPoll(poll.id)\"\r\n          >\r\n            End Poll\r\n          </button>\r\n        </div>\r\n        <div *ngIf=\"!poll || poll.status !== 'active'\">\r\n          <hr />\r\n          No active poll\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-body{display:flex;flex-direction:column;gap:10px}.previous-polls,.create-poll,.current-poll{overflow-y:auto;max-height:20%}.poll{margin-bottom:15px}.close-button{border:none;background:none;cursor:pointer}.form-group{max-width:80%;overflow-x:auto}textarea.form-control{resize:none}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$2.RequiredValidator, selector: ":not([type=checkbox])[required][formControlName],:not([type=checkbox])[required][formControl],:not([type=checkbox])[required][ngModel]", inputs: ["required"] }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "directive", type: i2$2.NgForm, selector: "form:not([ngNoForm]):not([formGroup]),ng-form,[ngForm]", inputs: ["ngFormOptions"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PollModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: PollModal, isStandalone: true, selector: "app-poll-modal", inputs: { isPollModalVisible: "isPollModalVisible", onClose: "onClose", position: "position", backgroundColor: "backgroundColor", member: "member", islevel: "islevel", polls: "polls", poll: "poll", socket: "socket", roomName: "roomName", showAlert: "showAlert", updateIsPollModalVisible: "updateIsPollModalVisible", handleCreatePoll: "handleCreatePoll", handleEndPoll: "handleEndPoll", handleVotePoll: "handleVotePoll" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\">\r\n      <h2>Polls</h2>\r\n      <button (click)=\"onClose()\" class=\"close-button\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <!-- Previous Polls Section -->\r\n      <div *ngIf=\"islevel === '2'\">\r\n        <div class=\"previous-polls\">\r\n          <h5>Previous Polls</h5>\r\n          <div *ngIf=\"polls.length === 0\">No polls available</div>\r\n\r\n          <!-- Using ng-container to avoid multiple structural directives on the same element -->\r\n          <ng-container *ngFor=\"let polled of polls\">\r\n            <div\r\n              *ngIf=\"!poll || polled.id !== poll.id || poll.status !== 'active'\"\r\n              class=\"poll\"\r\n            >\r\n              <h6>Question:</h6>\r\n              <textarea\r\n                class=\"form-control\"\r\n                rows=\"3\"\r\n                [disabled]=\"true\"\r\n                [value]=\"polled.question\"\r\n              ></textarea>\r\n              <br />\r\n              <h6>Options:</h6>\r\n              <div *ngFor=\"let option of polled.options; let i = index\">\r\n                {{ option }}: {{ polled.votes[i] }} votes ({{\r\n                  calculatePercentage(polled.votes, i)\r\n                }}%)\r\n              </div>\r\n              <!-- End Poll Button (if poll is active) -->\r\n              <button\r\n                *ngIf=\"polled.status === 'active'\"\r\n                class=\"btn btn-danger\"\r\n                (click)=\"handledEndPoll(polled.id)\"\r\n              >\r\n                End Poll\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </div>\r\n        <hr />\r\n\r\n        <!-- Create Poll Section -->\r\n        <div class=\"create-poll\">\r\n          <h5>Create a New Poll</h5>\r\n          <form (ngSubmit)=\"validateAndCreatePoll()\">\r\n            <div class=\"form-group\">\r\n              <label for=\"pollQuestion\">Poll Question</label>\r\n              <textarea\r\n                class=\"form-control\"\r\n                id=\"pollQuestion\"\r\n                rows=\"3\"\r\n                maxLength=\"300\"\r\n                required\r\n                [(ngModel)]=\"newPoll.question\"\r\n                name=\"question\"\r\n              ></textarea>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"pollType\">Select Poll Answer Type</label>\r\n              <select\r\n                class=\"form-control\"\r\n                id=\"pollType\"\r\n                required\r\n                (change)=\"handlePollTypeChange($event)\"\r\n                [(ngModel)]=\"newPoll.type\"\r\n                name=\"type\"\r\n              >\r\n                <option value=\"\">Choose...</option>\r\n                <option value=\"trueFalse\">True/False</option>\r\n                <option value=\"yesNo\">Yes/No</option>\r\n                <option value=\"custom\">Custom</option>\r\n              </select>\r\n            </div>\r\n\r\n            <!-- Render Poll Options -->\r\n            <div\r\n              *ngIf=\"newPoll.type === 'trueFalse' || newPoll.type === 'yesNo'\"\r\n            >\r\n              <div\r\n                *ngFor=\"let option of newPoll.options; let i = index\"\r\n                class=\"form-check\"\r\n              >\r\n                <input\r\n                  class=\"form-check-input\"\r\n                  type=\"radio\"\r\n                  name=\"pollOption\"\r\n                  [value]=\"option.toLowerCase()\"\r\n                  [id]=\"'option' + option\"\r\n                />\r\n                <label class=\"form-check-label\" [for]=\"'option' + option\">{{\r\n                  option\r\n                }}</label>\r\n              </div>\r\n            </div>\r\n            <div *ngIf=\"newPoll.type === 'custom'\">\r\n              <div\r\n                *ngFor=\"let option of newPoll.options; let i = index\"\r\n                class=\"form-group\"\r\n              >\r\n                <input\r\n                  type=\"text\"\r\n                  class=\"form-control\"\r\n                  placeholder=\"Option {{ i + 1 }}\"\r\n                  maxLength=\"50\"\r\n                  [(ngModel)]=\"newPoll.options[i]\"\r\n                  name=\"option{{ i }}\"\r\n                />\r\n              </div>\r\n            </div>\r\n            <button type=\"submit\" class=\"btn btn-primary\">Create Poll</button>\r\n          </form>\r\n        </div>\r\n        <hr />\r\n      </div>\r\n\r\n      <!-- Current Poll Section -->\r\n      <div class=\"current-poll\">\r\n        <h5>Current Poll</h5>\r\n        <div *ngIf=\"poll && poll.status === 'active'\">\r\n          <h6>Question:</h6>\r\n          <textarea\r\n            class=\"form-control\"\r\n            rows=\"3\"\r\n            [disabled]=\"true\"\r\n            [value]=\"poll.question\"\r\n          ></textarea>\r\n          <h6>Options:</h6>\r\n          <div\r\n            *ngFor=\"let option of poll.options; let i = index\"\r\n            class=\"form-check\"\r\n          >\r\n            <input\r\n              class=\"form-check-input\"\r\n              type=\"radio\"\r\n              name=\"pollOption\"\r\n              [value]=\"i\"\r\n              id=\"pollOption{{ i }}\"\r\n              [checked]=\"poll.voters?.[member] === i\"\r\n              (change)=\"handledVotePoll(poll.id, i)\"\r\n            />\r\n            <label class=\"form-check-label\" [for]=\"'pollOption' + i\">{{\r\n              option\r\n            }}</label>\r\n          </div>\r\n          <button\r\n            *ngIf=\"poll.status === 'active' && islevel === '2'\"\r\n            class=\"btn btn-danger\"\r\n            (click)=\"handledEndPoll(poll.id)\"\r\n          >\r\n            End Poll\r\n          </button>\r\n        </div>\r\n        <div *ngIf=\"!poll || poll.status !== 'active'\">\r\n          <hr />\r\n          No active poll\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-body{display:flex;flex-direction:column;gap:10px}.previous-polls,.create-poll,.current-poll{overflow-y:auto;max-height:20%}.poll{margin-bottom:15px}.close-button{border:none;background:none;cursor:pointer}.form-group{max-width:80%;overflow-x:auto}textarea.form-control{resize:none}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i2$2.RequiredValidator, selector: ":not([type=checkbox])[required][formControlName],:not([type=checkbox])[required][formControl],:not([type=checkbox])[required][ngModel]", inputs: ["required"] }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "directive", type: i2$2.NgForm, selector: "form:not([ngNoForm]):not([formGroup]),ng-form,[ngForm]", inputs: ["ngFormOptions"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: PollModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: PollModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-poll-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\">\r\n      <h2>Polls</h2>\r\n      <button (click)=\"onClose()\" class=\"close-button\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <!-- Previous Polls Section -->\r\n      <div *ngIf=\"islevel === '2'\">\r\n        <div class=\"previous-polls\">\r\n          <h5>Previous Polls</h5>\r\n          <div *ngIf=\"polls.length === 0\">No polls available</div>\r\n\r\n          <!-- Using ng-container to avoid multiple structural directives on the same element -->\r\n          <ng-container *ngFor=\"let polled of polls\">\r\n            <div\r\n              *ngIf=\"!poll || polled.id !== poll.id || poll.status !== 'active'\"\r\n              class=\"poll\"\r\n            >\r\n              <h6>Question:</h6>\r\n              <textarea\r\n                class=\"form-control\"\r\n                rows=\"3\"\r\n                [disabled]=\"true\"\r\n                [value]=\"polled.question\"\r\n              ></textarea>\r\n              <br />\r\n              <h6>Options:</h6>\r\n              <div *ngFor=\"let option of polled.options; let i = index\">\r\n                {{ option }}: {{ polled.votes[i] }} votes ({{\r\n                  calculatePercentage(polled.votes, i)\r\n                }}%)\r\n              </div>\r\n              <!-- End Poll Button (if poll is active) -->\r\n              <button\r\n                *ngIf=\"polled.status === 'active'\"\r\n                class=\"btn btn-danger\"\r\n                (click)=\"handledEndPoll(polled.id)\"\r\n              >\r\n                End Poll\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </div>\r\n        <hr />\r\n\r\n        <!-- Create Poll Section -->\r\n        <div class=\"create-poll\">\r\n          <h5>Create a New Poll</h5>\r\n          <form (ngSubmit)=\"validateAndCreatePoll()\">\r\n            <div class=\"form-group\">\r\n              <label for=\"pollQuestion\">Poll Question</label>\r\n              <textarea\r\n                class=\"form-control\"\r\n                id=\"pollQuestion\"\r\n                rows=\"3\"\r\n                maxLength=\"300\"\r\n                required\r\n                [(ngModel)]=\"newPoll.question\"\r\n                name=\"question\"\r\n              ></textarea>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"pollType\">Select Poll Answer Type</label>\r\n              <select\r\n                class=\"form-control\"\r\n                id=\"pollType\"\r\n                required\r\n                (change)=\"handlePollTypeChange($event)\"\r\n                [(ngModel)]=\"newPoll.type\"\r\n                name=\"type\"\r\n              >\r\n                <option value=\"\">Choose...</option>\r\n                <option value=\"trueFalse\">True/False</option>\r\n                <option value=\"yesNo\">Yes/No</option>\r\n                <option value=\"custom\">Custom</option>\r\n              </select>\r\n            </div>\r\n\r\n            <!-- Render Poll Options -->\r\n            <div\r\n              *ngIf=\"newPoll.type === 'trueFalse' || newPoll.type === 'yesNo'\"\r\n            >\r\n              <div\r\n                *ngFor=\"let option of newPoll.options; let i = index\"\r\n                class=\"form-check\"\r\n              >\r\n                <input\r\n                  class=\"form-check-input\"\r\n                  type=\"radio\"\r\n                  name=\"pollOption\"\r\n                  [value]=\"option.toLowerCase()\"\r\n                  [id]=\"'option' + option\"\r\n                />\r\n                <label class=\"form-check-label\" [for]=\"'option' + option\">{{\r\n                  option\r\n                }}</label>\r\n              </div>\r\n            </div>\r\n            <div *ngIf=\"newPoll.type === 'custom'\">\r\n              <div\r\n                *ngFor=\"let option of newPoll.options; let i = index\"\r\n                class=\"form-group\"\r\n              >\r\n                <input\r\n                  type=\"text\"\r\n                  class=\"form-control\"\r\n                  placeholder=\"Option {{ i + 1 }}\"\r\n                  maxLength=\"50\"\r\n                  [(ngModel)]=\"newPoll.options[i]\"\r\n                  name=\"option{{ i }}\"\r\n                />\r\n              </div>\r\n            </div>\r\n            <button type=\"submit\" class=\"btn btn-primary\">Create Poll</button>\r\n          </form>\r\n        </div>\r\n        <hr />\r\n      </div>\r\n\r\n      <!-- Current Poll Section -->\r\n      <div class=\"current-poll\">\r\n        <h5>Current Poll</h5>\r\n        <div *ngIf=\"poll && poll.status === 'active'\">\r\n          <h6>Question:</h6>\r\n          <textarea\r\n            class=\"form-control\"\r\n            rows=\"3\"\r\n            [disabled]=\"true\"\r\n            [value]=\"poll.question\"\r\n          ></textarea>\r\n          <h6>Options:</h6>\r\n          <div\r\n            *ngFor=\"let option of poll.options; let i = index\"\r\n            class=\"form-check\"\r\n          >\r\n            <input\r\n              class=\"form-check-input\"\r\n              type=\"radio\"\r\n              name=\"pollOption\"\r\n              [value]=\"i\"\r\n              id=\"pollOption{{ i }}\"\r\n              [checked]=\"poll.voters?.[member] === i\"\r\n              (change)=\"handledVotePoll(poll.id, i)\"\r\n            />\r\n            <label class=\"form-check-label\" [for]=\"'pollOption' + i\">{{\r\n              option\r\n            }}</label>\r\n          </div>\r\n          <button\r\n            *ngIf=\"poll.status === 'active' && islevel === '2'\"\r\n            class=\"btn btn-danger\"\r\n            (click)=\"handledEndPoll(poll.id)\"\r\n          >\r\n            End Poll\r\n          </button>\r\n        </div>\r\n        <div *ngIf=\"!poll || poll.status !== 'active'\">\r\n          <hr />\r\n          No active poll\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-body{display:flex;flex-direction:column;gap:10px}.previous-polls,.create-poll,.current-poll{overflow-y:auto;max-height:20%}.poll{margin-bottom:15px}.close-button{border:none;background:none;cursor:pointer}.form-group{max-width:80%;overflow-x:auto}textarea.form-control{resize:none}\n"] }]
         }], propDecorators: { isPollModalVisible: [{
@@ -29804,10 +30008,10 @@ class StandardPanelComponent {
         this.selectedRecordingAddHLS = value;
         this.parameters.updateRecordingAddHLS(value);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StandardPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: StandardPanelComponent, isStandalone: true, selector: "app-standard-panel-component", inputs: { parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: "<div>\r\n  <!-- Media Options -->\r\n  <div>\r\n    <label style=\"margin-right:10px; font-weight: bold;\">Media Options:</label>\r\n    <select [(ngModel)]=\"selectedRecordingMediaOptions\" (change)=\"handleMediaOptionsChange($event)\">\r\n      <option value=\"video\">Record Video</option>\r\n      <option value=\"audio\">Record Audio Only</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Specific Audios -->\r\n  <div *ngIf=\"parameters.eventType !== 'broadcast'\">\r\n    <div>\r\n      <label style=\"margin-right:10px; font-weight: bold;\">Specific Audios:</label>\r\n      <select [(ngModel)]=\"selectedRecordingAudioOptions\" (change)=\"handleAudioOptionsChange($event)\">\r\n        <option value=\"all\">Add All</option>\r\n        <option value=\"onScreen\">Add All On Screen</option>\r\n        <option value=\"host\">Add Host Only</option>\r\n      </select>\r\n    </div>\r\n    <hr />\r\n\r\n    <!-- Specific Videos -->\r\n    <div id=\"conditionalConference\">\r\n      <label style=\"margin-right:10px; font-weight: bold;\">Specific Videos:</label>\r\n      <select [(ngModel)]=\"selectedRecordingVideoOptions\" (change)=\"handleVideoOptionsChange($event)\">\r\n        <option value=\"all\">Add All</option>\r\n        <option value=\"mainScreen\">Big Screen Only (includes screenshare)</option>\r\n      </select>\r\n    </div>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Add HLS -->\r\n  <div id=\"addHLSPart\">\r\n    <label style=\"margin-right:10px; font-weight: bold;\">Add HLS:</label>\r\n    <select [(ngModel)]=\"selectedRecordingAddHLS\" (change)=\"handleAddHLSChange($event)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StandardPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: StandardPanelComponent, isStandalone: true, selector: "app-standard-panel-component", inputs: { parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: "<div>\r\n  <!-- Media Options -->\r\n  <div>\r\n    <label style=\"margin-right:10px; font-weight: bold;\">Media Options:</label>\r\n    <select [(ngModel)]=\"selectedRecordingMediaOptions\" (change)=\"handleMediaOptionsChange($event)\">\r\n      <option value=\"video\">Record Video</option>\r\n      <option value=\"audio\">Record Audio Only</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Specific Audios -->\r\n  <div *ngIf=\"parameters.eventType !== 'broadcast'\">\r\n    <div>\r\n      <label style=\"margin-right:10px; font-weight: bold;\">Specific Audios:</label>\r\n      <select [(ngModel)]=\"selectedRecordingAudioOptions\" (change)=\"handleAudioOptionsChange($event)\">\r\n        <option value=\"all\">Add All</option>\r\n        <option value=\"onScreen\">Add All On Screen</option>\r\n        <option value=\"host\">Add Host Only</option>\r\n      </select>\r\n    </div>\r\n    <hr />\r\n\r\n    <!-- Specific Videos -->\r\n    <div id=\"conditionalConference\">\r\n      <label style=\"margin-right:10px; font-weight: bold;\">Specific Videos:</label>\r\n      <select [(ngModel)]=\"selectedRecordingVideoOptions\" (change)=\"handleVideoOptionsChange($event)\">\r\n        <option value=\"all\">Add All</option>\r\n        <option value=\"mainScreen\">Big Screen Only (includes screenshare)</option>\r\n      </select>\r\n    </div>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Add HLS -->\r\n  <div id=\"addHLSPart\">\r\n    <label style=\"margin-right:10px; font-weight: bold;\">Add HLS:</label>\r\n    <select [(ngModel)]=\"selectedRecordingAddHLS\" (change)=\"handleAddHLSChange($event)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: StandardPanelComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: StandardPanelComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-standard-panel-component', imports: [CommonModule, FormsModule], template: "<div>\r\n  <!-- Media Options -->\r\n  <div>\r\n    <label style=\"margin-right:10px; font-weight: bold;\">Media Options:</label>\r\n    <select [(ngModel)]=\"selectedRecordingMediaOptions\" (change)=\"handleMediaOptionsChange($event)\">\r\n      <option value=\"video\">Record Video</option>\r\n      <option value=\"audio\">Record Audio Only</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Specific Audios -->\r\n  <div *ngIf=\"parameters.eventType !== 'broadcast'\">\r\n    <div>\r\n      <label style=\"margin-right:10px; font-weight: bold;\">Specific Audios:</label>\r\n      <select [(ngModel)]=\"selectedRecordingAudioOptions\" (change)=\"handleAudioOptionsChange($event)\">\r\n        <option value=\"all\">Add All</option>\r\n        <option value=\"onScreen\">Add All On Screen</option>\r\n        <option value=\"host\">Add Host Only</option>\r\n      </select>\r\n    </div>\r\n    <hr />\r\n\r\n    <!-- Specific Videos -->\r\n    <div id=\"conditionalConference\">\r\n      <label style=\"margin-right:10px; font-weight: bold;\">Specific Videos:</label>\r\n      <select [(ngModel)]=\"selectedRecordingVideoOptions\" (change)=\"handleVideoOptionsChange($event)\">\r\n        <option value=\"all\">Add All</option>\r\n        <option value=\"mainScreen\">Big Screen Only (includes screenshare)</option>\r\n      </select>\r\n    </div>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Add HLS -->\r\n  <div id=\"addHLSPart\">\r\n    <label style=\"margin-right:10px; font-weight: bold;\">Add HLS:</label>\r\n    <select [(ngModel)]=\"selectedRecordingAddHLS\" (change)=\"handleAddHLSChange($event)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n</div>\r\n" }]
         }], propDecorators: { parameters: [{
@@ -29890,10 +30094,10 @@ class AdvancedPanelComponent {
             this.parameters.updateRecordingNameTagsColor(color);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AdvancedPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: AdvancedPanelComponent, isStandalone: true, selector: "app-advanced-panel-component", inputs: { parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: "<div>\r\n  <!-- Video Type -->\r\n  <div>\r\n    <label class=\"label\">Video Type:</label>\r\n    <select [(ngModel)]=\"selectedRecordingVideoType\" (change)=\"parameters.updateRecordingVideoType(selectedRecordingVideoType)\">\r\n      <option value=\"fullDisplay\">Full Display (no background)</option>\r\n      <option value=\"bestDisplay\">Full Video</option>\r\n      <option value=\"all\">All</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Display Type -->\r\n  <div *ngIf=\"parameters.eventType !== 'broadcast'\">\r\n    <label class=\"label\">Display Type:</label>\r\n    <select [(ngModel)]=\"selectedRecordingDisplayType\" (change)=\"parameters.updateRecordingDisplayType(selectedRecordingDisplayType)\">\r\n      <option value=\"video\">Only Video Participants</option>\r\n      <option value=\"videoOpt\">Only Video Participants (optimized)</option>\r\n      <option value=\"media\">Participants with media</option>\r\n      <option value=\"all\">All Participants</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Background Color -->\r\n  <div>\r\n    <label class=\"label\">Background Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingBackgroundColor}\">\r\n      {{ parameters.recordingBackgroundColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingBackgroundColor\" (change)=\"handleColorChange('backgroundColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Add Text -->\r\n  <div>\r\n    <label class=\"label\">Add Text:</label>\r\n    <select [(ngModel)]=\"recordingText\" (change)=\"handleTextChange(recordingText)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Custom Text -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text:</label>\r\n    <input type=\"text\" [(ngModel)]=\"customText\" (input)=\"onChangeTextHandler(customText)\" />\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Custom Text Position -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text Position:</label>\r\n    <select [(ngModel)]=\"recordingPosition\" (change)=\"parameters.updateRecordingCustomTextPosition(recordingPosition)\">\r\n      <option value=\"top\">Top</option>\r\n      <option value=\"middle\">Middle</option>\r\n      <option value=\"bottom\">Bottom</option>\r\n    </select>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Custom Text Color -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingCustomTextColor}\">\r\n      {{ parameters.recordingCustomTextColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingCustomTextColor\" (change)=\"handleColorChange('customTextColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Add Name Tags -->\r\n  <div>\r\n    <label class=\"label\">Add Name Tags:</label>\r\n    <select [(ngModel)]=\"selectedRecordingNameTags\" (change)=\"parameters.updateRecordingNameTags(selectedRecordingNameTags)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Name Tags Color -->\r\n  <div>\r\n    <label class=\"label\">Name Tags Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingNameTagsColor}\">\r\n      {{ parameters.recordingNameTagsColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingNameTagsColor\" (change)=\"handleColorChange('nameTagsColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Orientation (Video) -->\r\n  <div>\r\n    <label class=\"label\">Orientation (Video):</label>\r\n    <select [(ngModel)]=\"selectedOrientationVideo\" (change)=\"parameters.updateRecordingOrientationVideo(selectedOrientationVideo)\">\r\n      <option value=\"landscape\">Landscape</option>\r\n      <option value=\"portrait\">Portrait</option>\r\n      <option value=\"all\">All</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AdvancedPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: AdvancedPanelComponent, isStandalone: true, selector: "app-advanced-panel-component", inputs: { parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: "<div>\r\n  <!-- Video Type -->\r\n  <div>\r\n    <label class=\"label\">Video Type:</label>\r\n    <select [(ngModel)]=\"selectedRecordingVideoType\" (change)=\"parameters.updateRecordingVideoType(selectedRecordingVideoType)\">\r\n      <option value=\"fullDisplay\">Full Display (no background)</option>\r\n      <option value=\"bestDisplay\">Full Video</option>\r\n      <option value=\"all\">All</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Display Type -->\r\n  <div *ngIf=\"parameters.eventType !== 'broadcast'\">\r\n    <label class=\"label\">Display Type:</label>\r\n    <select [(ngModel)]=\"selectedRecordingDisplayType\" (change)=\"parameters.updateRecordingDisplayType(selectedRecordingDisplayType)\">\r\n      <option value=\"video\">Only Video Participants</option>\r\n      <option value=\"videoOpt\">Only Video Participants (optimized)</option>\r\n      <option value=\"media\">Participants with media</option>\r\n      <option value=\"all\">All Participants</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Background Color -->\r\n  <div>\r\n    <label class=\"label\">Background Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingBackgroundColor}\">\r\n      {{ parameters.recordingBackgroundColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingBackgroundColor\" (change)=\"handleColorChange('backgroundColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Add Text -->\r\n  <div>\r\n    <label class=\"label\">Add Text:</label>\r\n    <select [(ngModel)]=\"recordingText\" (change)=\"handleTextChange(recordingText)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Custom Text -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text:</label>\r\n    <input type=\"text\" [(ngModel)]=\"customText\" (input)=\"onChangeTextHandler(customText)\" />\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Custom Text Position -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text Position:</label>\r\n    <select [(ngModel)]=\"recordingPosition\" (change)=\"parameters.updateRecordingCustomTextPosition(recordingPosition)\">\r\n      <option value=\"top\">Top</option>\r\n      <option value=\"middle\">Middle</option>\r\n      <option value=\"bottom\">Bottom</option>\r\n    </select>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Custom Text Color -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingCustomTextColor}\">\r\n      {{ parameters.recordingCustomTextColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingCustomTextColor\" (change)=\"handleColorChange('customTextColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Add Name Tags -->\r\n  <div>\r\n    <label class=\"label\">Add Name Tags:</label>\r\n    <select [(ngModel)]=\"selectedRecordingNameTags\" (change)=\"parameters.updateRecordingNameTags(selectedRecordingNameTags)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Name Tags Color -->\r\n  <div>\r\n    <label class=\"label\">Name Tags Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingNameTagsColor}\">\r\n      {{ parameters.recordingNameTagsColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingNameTagsColor\" (change)=\"handleColorChange('nameTagsColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Orientation (Video) -->\r\n  <div>\r\n    <label class=\"label\">Orientation (Video):</label>\r\n    <select [(ngModel)]=\"selectedOrientationVideo\" (change)=\"parameters.updateRecordingOrientationVideo(selectedOrientationVideo)\">\r\n      <option value=\"landscape\">Landscape</option>\r\n      <option value=\"portrait\">Portrait</option>\r\n      <option value=\"all\">All</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: AdvancedPanelComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: AdvancedPanelComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-advanced-panel-component', imports: [CommonModule, FormsModule], template: "<div>\r\n  <!-- Video Type -->\r\n  <div>\r\n    <label class=\"label\">Video Type:</label>\r\n    <select [(ngModel)]=\"selectedRecordingVideoType\" (change)=\"parameters.updateRecordingVideoType(selectedRecordingVideoType)\">\r\n      <option value=\"fullDisplay\">Full Display (no background)</option>\r\n      <option value=\"bestDisplay\">Full Video</option>\r\n      <option value=\"all\">All</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Display Type -->\r\n  <div *ngIf=\"parameters.eventType !== 'broadcast'\">\r\n    <label class=\"label\">Display Type:</label>\r\n    <select [(ngModel)]=\"selectedRecordingDisplayType\" (change)=\"parameters.updateRecordingDisplayType(selectedRecordingDisplayType)\">\r\n      <option value=\"video\">Only Video Participants</option>\r\n      <option value=\"videoOpt\">Only Video Participants (optimized)</option>\r\n      <option value=\"media\">Participants with media</option>\r\n      <option value=\"all\">All Participants</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Background Color -->\r\n  <div>\r\n    <label class=\"label\">Background Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingBackgroundColor}\">\r\n      {{ parameters.recordingBackgroundColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingBackgroundColor\" (change)=\"handleColorChange('backgroundColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Add Text -->\r\n  <div>\r\n    <label class=\"label\">Add Text:</label>\r\n    <select [(ngModel)]=\"recordingText\" (change)=\"handleTextChange(recordingText)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Custom Text -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text:</label>\r\n    <input type=\"text\" [(ngModel)]=\"customText\" (input)=\"onChangeTextHandler(customText)\" />\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Custom Text Position -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text Position:</label>\r\n    <select [(ngModel)]=\"recordingPosition\" (change)=\"parameters.updateRecordingCustomTextPosition(recordingPosition)\">\r\n      <option value=\"top\">Top</option>\r\n      <option value=\"middle\">Middle</option>\r\n      <option value=\"bottom\">Bottom</option>\r\n    </select>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Custom Text Color -->\r\n  <div *ngIf=\"recordingText\">\r\n    <label class=\"label\">Custom Text Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingCustomTextColor}\">\r\n      {{ parameters.recordingCustomTextColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingCustomTextColor\" (change)=\"handleColorChange('customTextColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n    <hr />\r\n  </div>\r\n\r\n  <!-- Add Name Tags -->\r\n  <div>\r\n    <label class=\"label\">Add Name Tags:</label>\r\n    <select [(ngModel)]=\"selectedRecordingNameTags\" (change)=\"parameters.updateRecordingNameTags(selectedRecordingNameTags)\">\r\n      <option [ngValue]=\"true\">True</option>\r\n      <option [ngValue]=\"false\">False</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Name Tags Color -->\r\n  <div>\r\n    <label class=\"label\">Name Tags Color:</label>\r\n    <div class=\"color-preview\" [ngStyle]=\"{'background-color': parameters.recordingNameTagsColor}\">\r\n      {{ parameters.recordingNameTagsColor }}\r\n    </div>\r\n    <input type=\"color\" [(ngModel)]=\"parameters.recordingNameTagsColor\" (change)=\"handleColorChange('nameTagsColor', $event)\" />\r\n    <span class=\"label\">Click to select color</span>\r\n  </div>\r\n  <hr />\r\n\r\n  <!-- Orientation (Video) -->\r\n  <div>\r\n    <label class=\"label\">Orientation (Video):</label>\r\n    <select [(ngModel)]=\"selectedOrientationVideo\" (change)=\"parameters.updateRecordingOrientationVideo(selectedOrientationVideo)\">\r\n      <option value=\"landscape\">Landscape</option>\r\n      <option value=\"portrait\">Portrait</option>\r\n      <option value=\"all\">All</option>\r\n    </select>\r\n  </div>\r\n  <hr />\r\n</div>\r\n" }]
         }], propDecorators: { parameters: [{
@@ -30002,10 +30206,10 @@ class RecordingModal {
             parameters: { ...this.parameters },
         });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordingModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: RecordingModal, isStandalone: true, selector: "app-recording-modal", inputs: { isRecordingModalVisible: "isRecordingModalVisible", onClose: "onClose", backgroundColor: "backgroundColor", position: "position", confirmRecording: "confirmRecording", startRecording: "startRecording", parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div style=\"display: flex; flex-direction: column;\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">\r\n          Recording Settings\r\n        </h2>\r\n        <button (click)=\"onClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n      <div style=\"flex: 1;\">\r\n        <div style=\"overflow-y: auto; max-height: calc(100% - 120px); padding: 0;\">\r\n          <div style=\"margin: 0; padding: 0;\">\r\n            <app-standard-panel-component [parameters]=\"parameters\"></app-standard-panel-component>\r\n            <app-advanced-panel-component [parameters]=\"parameters\"></app-advanced-panel-component>\r\n          </div>\r\n        </div>\r\n        <div style=\"height: 1px; background-color: white; \"></div>\r\n        <div style=\"display: flex; justify-content: space-between; margin-top: 20px;\">\r\n          <button\r\n            (click)=\"confirm()\"\r\n            style=\"flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #4CAF50; cursor: pointer;\">\r\n            <span style=\"color: black; font-size: 14px;\">Confirm</span>\r\n          </button>\r\n          <button *ngIf=\"!parameters.recordPaused\"\r\n            (click)=\"start()\"\r\n            style=\"flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #f44336; cursor: pointer;\">\r\n            <span style=\"color: black; font-size: 14px;\">Start <fa-icon [icon]=\"faPlay\"></fa-icon></span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: StandardPanelComponent, selector: "app-standard-panel-component", inputs: ["parameters"] }, { kind: "component", type: AdvancedPanelComponent, selector: "app-advanced-panel-component", inputs: ["parameters"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordingModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: RecordingModal, isStandalone: true, selector: "app-recording-modal", inputs: { isRecordingModalVisible: "isRecordingModalVisible", onClose: "onClose", backgroundColor: "backgroundColor", position: "position", confirmRecording: "confirmRecording", startRecording: "startRecording", parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div style=\"display: flex; flex-direction: column;\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">\r\n          Recording Settings\r\n        </h2>\r\n        <button (click)=\"onClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n      <div style=\"flex: 1;\">\r\n        <div style=\"overflow-y: auto; max-height: calc(100% - 120px); padding: 0;\">\r\n          <div style=\"margin: 0; padding: 0;\">\r\n            <app-standard-panel-component [parameters]=\"parameters\"></app-standard-panel-component>\r\n            <app-advanced-panel-component [parameters]=\"parameters\"></app-advanced-panel-component>\r\n          </div>\r\n        </div>\r\n        <div style=\"height: 1px; background-color: white; \"></div>\r\n        <div style=\"display: flex; justify-content: space-between; margin-top: 20px;\">\r\n          <button\r\n            (click)=\"confirm()\"\r\n            style=\"flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #4CAF50; cursor: pointer;\">\r\n            <span style=\"color: black; font-size: 14px;\">Confirm</span>\r\n          </button>\r\n          <button *ngIf=\"!parameters.recordPaused\"\r\n            (click)=\"start()\"\r\n            style=\"flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #f44336; cursor: pointer;\">\r\n            <span style=\"color: black; font-size: 14px;\">Start <fa-icon [icon]=\"faPlay\"></fa-icon></span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: StandardPanelComponent, selector: "app-standard-panel-component", inputs: ["parameters"] }, { kind: "component", type: AdvancedPanelComponent, selector: "app-advanced-panel-component", inputs: ["parameters"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordingModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordingModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-recording-modal', imports: [CommonModule, FontAwesomeModule, StandardPanelComponent, AdvancedPanelComponent], template: "<div [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div style=\"display: flex; flex-direction: column;\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">\r\n          Recording Settings\r\n        </h2>\r\n        <button (click)=\"onClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr style=\"height: 1px; background-color: black; margin: 5px 0;\" />\r\n      <div style=\"flex: 1;\">\r\n        <div style=\"overflow-y: auto; max-height: calc(100% - 120px); padding: 0;\">\r\n          <div style=\"margin: 0; padding: 0;\">\r\n            <app-standard-panel-component [parameters]=\"parameters\"></app-standard-panel-component>\r\n            <app-advanced-panel-component [parameters]=\"parameters\"></app-advanced-panel-component>\r\n          </div>\r\n        </div>\r\n        <div style=\"height: 1px; background-color: white; \"></div>\r\n        <div style=\"display: flex; justify-content: space-between; margin-top: 20px;\">\r\n          <button\r\n            (click)=\"confirm()\"\r\n            style=\"flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #4CAF50; cursor: pointer;\">\r\n            <span style=\"color: black; font-size: 14px;\">Confirm</span>\r\n          </button>\r\n          <button *ngIf=\"!parameters.recordPaused\"\r\n            (click)=\"start()\"\r\n            style=\"flex: 1; padding: 5px; border-radius: 5px; justify-content: center; align-items: center; margin: 0 10px; background: #f44336; cursor: pointer;\">\r\n            <span style=\"color: black; font-size: 14px;\">Start <fa-icon [icon]=\"faPlay\"></fa-icon></span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n" }]
         }], propDecorators: { isRecordingModalVisible: [{
@@ -30078,10 +30282,10 @@ class RenderRequestComponent {
             socket: this.socket,
         });
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RenderRequestComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: RenderRequestComponent, isStandalone: true, selector: "app-render-request-component", inputs: { request: "request", requestList: "requestList", roomName: "roomName", socket: "socket", onRequestItemPress: "onRequestItemPress", updateRequestList: "updateRequestList" }, ngImport: i0, template: "<div class=\"request-container\" *ngIf=\"request\">\r\n  <div class=\"request-name\">{{ request.name }}</div>\r\n  <div class=\"request-icon\">\r\n    <fa-icon [icon]=\"getIcon(request.icon)\" size=\"lg\" color=\"black\"></fa-icon>\r\n  </div>\r\n  <div class=\"request-action accept\">\r\n    <button (click)=\"handleRequestAction('accepted')\">\r\n      <fa-icon [icon]=\"faCheck\" size=\"lg\" style=\"color: green;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div class=\"request-action reject\">\r\n    <button (click)=\"handleRequestAction('rejected')\">\r\n      <fa-icon [icon]=\"faTimes\" size=\"lg\" style=\"color: red;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".request-container{display:flex;flex-direction:row;align-items:center;margin:10px 0;padding-bottom:5px}.request-name{flex:5}.request-icon,.request-action{flex:2;display:flex;justify-content:center;align-items:center}.request-action{padding-right:10px}.request-action.accept,.request-action.reject{margin-right:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RenderRequestComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: RenderRequestComponent, isStandalone: true, selector: "app-render-request-component", inputs: { request: "request", requestList: "requestList", roomName: "roomName", socket: "socket", onRequestItemPress: "onRequestItemPress", updateRequestList: "updateRequestList" }, ngImport: i0, template: "<div class=\"request-container\" *ngIf=\"request\">\r\n  <div class=\"request-name\">{{ request.name }}</div>\r\n  <div class=\"request-icon\">\r\n    <fa-icon [icon]=\"getIcon(request.icon)\" size=\"lg\" color=\"black\"></fa-icon>\r\n  </div>\r\n  <div class=\"request-action accept\">\r\n    <button (click)=\"handleRequestAction('accepted')\">\r\n      <fa-icon [icon]=\"faCheck\" size=\"lg\" style=\"color: green;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div class=\"request-action reject\">\r\n    <button (click)=\"handleRequestAction('rejected')\">\r\n      <fa-icon [icon]=\"faTimes\" size=\"lg\" style=\"color: red;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".request-container{display:flex;flex-direction:row;align-items:center;margin:10px 0;padding-bottom:5px}.request-name{flex:5}.request-icon,.request-action{flex:2;display:flex;justify-content:center;align-items:center}.request-action{padding-right:10px}.request-action.accept,.request-action.reject{margin-right:10px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RenderRequestComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RenderRequestComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-render-request-component', imports: [CommonModule, FontAwesomeModule], template: "<div class=\"request-container\" *ngIf=\"request\">\r\n  <div class=\"request-name\">{{ request.name }}</div>\r\n  <div class=\"request-icon\">\r\n    <fa-icon [icon]=\"getIcon(request.icon)\" size=\"lg\" color=\"black\"></fa-icon>\r\n  </div>\r\n  <div class=\"request-action accept\">\r\n    <button (click)=\"handleRequestAction('accepted')\">\r\n      <fa-icon [icon]=\"faCheck\" size=\"lg\" style=\"color: green;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n  <div class=\"request-action reject\">\r\n    <button (click)=\"handleRequestAction('rejected')\">\r\n      <fa-icon [icon]=\"faTimes\" size=\"lg\" style=\"color: red;\"></fa-icon>\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".request-container{display:flex;flex-direction:row;align-items:center;margin:10px 0;padding-bottom:5px}.request-name{flex:5}.request-icon,.request-action{flex:2;display:flex;justify-content:center;align-items:center}.request-action{padding-right:10px}.request-action.accept,.request-action.reject{margin-right:10px}\n"] }]
         }], propDecorators: { request: [{
@@ -30204,10 +30408,10 @@ class RequestsModal {
         this.parameters = this.parameters.getUpdatedAllParams();
         this.reRender = !this.reRender;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RequestsModal, deps: [{ token: RespondToRequests }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: RequestsModal, isStandalone: true, selector: "app-requests-modal", inputs: { isRequestsModalVisible: "isRequestsModalVisible", requestCounter: "requestCounter", requestList: "requestList", roomName: "roomName", socket: "socket", backgroundColor: "backgroundColor", position: "position", parameters: "parameters", onRequestClose: "onRequestClose", onRequestFilterChange: "onRequestFilterChange", onRequestItemPress: "onRequestItemPress", updateRequestList: "updateRequestList" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isRequestsModalVisible\" class=\"modal-container\" [ngStyle]=\"{'background-color': 'rgba(0, 0, 0, 0.5)'}\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}\">\r\n    <div class=\"modal-header\">\r\n      <div>\r\n        Requests <span class=\"badge text-dark\">{{ requestCounter_s }}</span>\r\n      </div>\r\n      <div class=\"close-icon\" (click)=\"handleModalClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"separator\" />\r\n    <div class=\"modal-body\">\r\n      <input type=\"text\" class=\"filter-input\" placeholder=\"Search ...\" (input)=\"handleFilterChange($event)\">\r\n      <div class=\"request-list\">\r\n        <ng-container *ngFor=\"let requestItem of requestList_s; let i = index\">\r\n          <app-render-request-component\r\n            [request]=\"requestItem\"\r\n            [requestList]=\"requestList\"\r\n            [roomName]=\"roomName\"\r\n            [socket]=\"socket\"\r\n            [onRequestItemPress]=\"onRequestItemPress\"\r\n            [updateRequestList]=\"updateRequestList\">\r\n          </app-render-request-component>\r\n        </ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto;top:10px;right:10px}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.close-button{border:none;background:none;cursor:pointer}.separator{height:1px;background-color:#000;margin:5px 0}.modal-body{margin-bottom:20px}.filter-input{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}.request-list{max-height:calc(100% - 150px);overflow-y:auto}.icon{font-size:20px;color:#000}.text-dark{color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: RenderRequestComponent, selector: "app-render-request-component", inputs: ["request", "requestList", "roomName", "socket", "onRequestItemPress", "updateRequestList"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RequestsModal, deps: [{ token: RespondToRequests }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: RequestsModal, isStandalone: true, selector: "app-requests-modal", inputs: { isRequestsModalVisible: "isRequestsModalVisible", requestCounter: "requestCounter", requestList: "requestList", roomName: "roomName", socket: "socket", backgroundColor: "backgroundColor", position: "position", parameters: "parameters", onRequestClose: "onRequestClose", onRequestFilterChange: "onRequestFilterChange", onRequestItemPress: "onRequestItemPress", updateRequestList: "updateRequestList" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isRequestsModalVisible\" class=\"modal-container\" [ngStyle]=\"{'background-color': 'rgba(0, 0, 0, 0.5)'}\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}\">\r\n    <div class=\"modal-header\">\r\n      <div>\r\n        Requests <span class=\"badge text-dark\">{{ requestCounter_s }}</span>\r\n      </div>\r\n      <div class=\"close-icon\" (click)=\"handleModalClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"separator\" />\r\n    <div class=\"modal-body\">\r\n      <input type=\"text\" class=\"filter-input\" placeholder=\"Search ...\" (input)=\"handleFilterChange($event)\">\r\n      <div class=\"request-list\">\r\n        <ng-container *ngFor=\"let requestItem of requestList_s; let i = index\">\r\n          <app-render-request-component\r\n            [request]=\"requestItem\"\r\n            [requestList]=\"requestList\"\r\n            [roomName]=\"roomName\"\r\n            [socket]=\"socket\"\r\n            [onRequestItemPress]=\"onRequestItemPress\"\r\n            [updateRequestList]=\"updateRequestList\">\r\n          </app-render-request-component>\r\n        </ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto;top:10px;right:10px}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.close-button{border:none;background:none;cursor:pointer}.separator{height:1px;background-color:#000;margin:5px 0}.modal-body{margin-bottom:20px}.filter-input{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}.request-list{max-height:calc(100% - 150px);overflow-y:auto}.icon{font-size:20px;color:#000}.text-dark{color:#000}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: RenderRequestComponent, selector: "app-render-request-component", inputs: ["request", "requestList", "roomName", "socket", "onRequestItemPress", "updateRequestList"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RequestsModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RequestsModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-requests-modal', imports: [CommonModule, FontAwesomeModule, RenderRequestComponent], template: "<div *ngIf=\"isRequestsModalVisible\" class=\"modal-container\" [ngStyle]=\"{'background-color': 'rgba(0, 0, 0, 0.5)'}\">\r\n  <div class=\"modal-content\" [ngStyle]=\"{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}\">\r\n    <div class=\"modal-header\">\r\n      <div>\r\n        Requests <span class=\"badge text-dark\">{{ requestCounter_s }}</span>\r\n      </div>\r\n      <div class=\"close-icon\" (click)=\"handleModalClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"separator\" />\r\n    <div class=\"modal-body\">\r\n      <input type=\"text\" class=\"filter-input\" placeholder=\"Search ...\" (input)=\"handleFilterChange($event)\">\r\n      <div class=\"request-list\">\r\n        <ng-container *ngFor=\"let requestItem of requestList_s; let i = index\">\r\n          <app-render-request-component\r\n            [request]=\"requestItem\"\r\n            [requestList]=\"requestList\"\r\n            [roomName]=\"roomName\"\r\n            [socket]=\"socket\"\r\n            [onRequestItemPress]=\"onRequestItemPress\"\r\n            [updateRequestList]=\"updateRequestList\">\r\n          </app-render-request-component>\r\n        </ng-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto;top:10px;right:10px}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.close-button{border:none;background:none;cursor:pointer}.separator{height:1px;background-color:#000;margin:5px 0}.modal-body{margin-bottom:20px}.filter-input{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}.request-list{max-height:calc(100% - 150px);overflow-y:auto}.icon{font-size:20px;color:#000}.text-dark{color:#000}\n"] }]
         }], ctorParameters: () => [{ type: RespondToRequests }], propDecorators: { isRequestsModalVisible: [{
@@ -30809,10 +31013,10 @@ class Screenboard {
         await this.parameters.sleep({ ms: 500 });
         this.parameters.updateIsScreenboardModalVisible(false);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Screenboard, deps: [{ token: 'customWidth', optional: true }, { token: 'customHeight', optional: true }, { token: 'parameters', optional: true }, { token: 'showAspect', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: Screenboard, isStandalone: true, selector: "app-screenboard", inputs: { customWidth: "customWidth", customHeight: "customHeight", parameters: "parameters", showAspect: "showAspect" }, viewQueries: [{ propertyName: "canvasRef", first: true, predicate: ["canvasRef"], descendants: true }, { propertyName: "screenboardRef", first: true, predicate: ["screenboardRef"], descendants: true }, { propertyName: "screenboardContentRef", first: true, predicate: ["screenboardContentRef"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\" #screenboardRef>\r\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000; background-color: transparent;\" [style.display]=\"toolbarVisible ? 'block' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"padding: 0; margin: 0;\" #canvasRef></canvas>\r\n  </div>\r\n</div>\r\n", styles: ["#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group button,.toolbarScreen .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:transparent;color:\"black\"}.toolbarScreen .btn-group button{color:#060606;border:none}.toolbarScreen .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbarScreen .btn-group button.active{background-color:#454d55}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:2px auto;width:28px;height:28px;background-color:#d6d1d166;color:#000;border-radius:4px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Screenboard, deps: [{ token: 'customWidth', optional: true }, { token: 'customHeight', optional: true }, { token: 'parameters', optional: true }, { token: 'showAspect', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: Screenboard, isStandalone: true, selector: "app-screenboard", inputs: { customWidth: "customWidth", customHeight: "customHeight", parameters: "parameters", showAspect: "showAspect" }, viewQueries: [{ propertyName: "canvasRef", first: true, predicate: ["canvasRef"], descendants: true }, { propertyName: "screenboardRef", first: true, predicate: ["screenboardRef"], descendants: true }, { propertyName: "screenboardContentRef", first: true, predicate: ["screenboardContentRef"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\" #screenboardRef>\r\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000; background-color: transparent;\" [style.display]=\"toolbarVisible ? 'block' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"padding: 0; margin: 0;\" #canvasRef></canvas>\r\n  </div>\r\n</div>\r\n", styles: ["#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group button,.toolbarScreen .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:transparent;color:\"black\"}.toolbarScreen .btn-group button{color:#060606;border:none}.toolbarScreen .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbarScreen .btn-group button.active{background-color:#454d55}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:2px auto;width:28px;height:28px;background-color:#d6d1d166;color:#000;border-radius:4px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Screenboard, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Screenboard, decorators: [{
             type: Component,
             args: [{ selector: 'app-screenboard', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\" #screenboardRef>\r\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000; background-color: transparent;\" [style.display]=\"toolbarVisible ? 'block' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"padding: 0; margin: 0;\" #canvasRef></canvas>\r\n  </div>\r\n</div>\r\n", styles: ["#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group button,.toolbarScreen .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:transparent;color:\"black\"}.toolbarScreen .btn-group button{color:#060606;border:none}.toolbarScreen .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbarScreen .btn-group button.active{background-color:#454d55}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:2px auto;width:28px;height:28px;background-color:#d6d1d166;color:#000;border-radius:4px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"] }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
@@ -31213,10 +31417,10 @@ class ScreenboardModal {
         }
         this.clonedStreamScreen = null;
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenboardModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ScreenboardModal, isStandalone: true, selector: "app-screenboard-modal", inputs: { parameters: "parameters", isVisible: "isVisible", onClose: "onClose", position: "position", backgroundColor: "backgroundColor" }, viewQueries: [{ propertyName: "screenVideoRef", first: true, predicate: ["screenVideo"], descendants: true }, { propertyName: "screenCanvasRef", first: true, predicate: ["screenCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Screen Annotation</div>\r\n      <div class=\"modal-close\" (click)=\"hideModal()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <video #screenVideo id=\"screenVideo\" class=\"d-none\" autoplay></video>\r\n      <canvas #screenCanvas id=\"screenCanvas\"></canvas>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:500px;max-height:75%;overflow-y:auto;overflow-x:hidden;top:10px;right:10px}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.modal-close{padding:5px}.modal-body{flex:1}#screenCanvas{width:100%;height:auto}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenboardModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ScreenboardModal, isStandalone: true, selector: "app-screenboard-modal", inputs: { parameters: "parameters", isVisible: "isVisible", onClose: "onClose", position: "position", backgroundColor: "backgroundColor" }, viewQueries: [{ propertyName: "screenVideoRef", first: true, predicate: ["screenVideo"], descendants: true }, { propertyName: "screenCanvasRef", first: true, predicate: ["screenCanvas"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Screen Annotation</div>\r\n      <div class=\"modal-close\" (click)=\"hideModal()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <video #screenVideo id=\"screenVideo\" class=\"d-none\" autoplay></video>\r\n      <canvas #screenCanvas id=\"screenCanvas\"></canvas>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:500px;max-height:75%;overflow-y:auto;overflow-x:hidden;top:10px;right:10px}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.modal-close{padding:5px}.modal-body{flex:1}#screenCanvas{width:100%;height:auto}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenboardModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenboardModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-screenboard-modal', imports: [CommonModule, FormsModule, FontAwesomeModule], template: "<div *ngIf=\"isVisible\" class=\"modal-container\">\r\n  <div class=\"modal-content\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">Screen Annotation</div>\r\n      <div class=\"modal-close\" (click)=\"hideModal()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <video #screenVideo id=\"screenVideo\" class=\"d-none\" autoplay></video>\r\n      <canvas #screenCanvas id=\"screenCanvas\"></canvas>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:500px;max-height:75%;overflow-y:auto;overflow-x:hidden;top:10px;right:10px}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-title{font-size:18px;font-weight:700;color:#000}.modal-close{padding:5px}.modal-body{flex:1}#screenCanvas{width:100%;height:auto}\n"] }]
         }], propDecorators: { parameters: [{
@@ -31397,10 +31601,10 @@ class WaitingRoomModal {
             marginBottom: '10px',
         };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: WaitingRoomModal, deps: [{ token: RespondToWaiting }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: WaitingRoomModal, isStandalone: true, selector: "app-waiting-room-modal", inputs: { isWaitingModalVisible: "isWaitingModalVisible", waitingRoomCounter: "waitingRoomCounter", waitingRoomList: "waitingRoomList", roomName: "roomName", socket: "socket", position: "position", backgroundColor: "backgroundColor", parameters: "parameters", onWaitingRoomClose: "onWaitingRoomClose", onWaitingRoomFilterChange: "onWaitingRoomFilterChange", updateWaitingList: "updateWaitingList", onWaitingRoomItemPress: "onWaitingRoomItemPress" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isWaitingModalVisible\" [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">\r\n        Waiting <span class=\"badge\">{{ waitingRoomCounter_s }}</span>\r\n      </div>\r\n      <div (click)=\"handleModalClose()\" class=\"btn-close-waitings\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <input\r\n          class=\"form-control\"\r\n          [ngStyle]=\"inputStyle\"\r\n          placeholder=\"Search ...\"\r\n          (input)=\"handleFilterChange($event)\"\r\n        />\r\n      </div>\r\n      <div class=\"waiting-list\">\r\n        <div\r\n          *ngFor=\"let participant of waitingRoomList_s\"\r\n          class=\"waiting-item\"\r\n        >\r\n          <div class=\"col7\">{{ participant.name }}</div>\r\n          <div class=\"col2\">\r\n            <button (click)=\"handleItemPress(participant, true)\">\r\n              <fa-icon [icon]=\"faCheck\" size=\"lg\" color=\"green\"></fa-icon>\r\n            </button>\r\n          </div>\r\n          <div class=\"col2\">\r\n            <button (click)=\"handleItemPress(participant, false)\">\r\n              <fa-icon [icon]=\"faTimes\" size=\"lg\" color=\"red\"></fa-icon>\r\n            </button>\r\n          </div>\r\n          <div class=\"col1\"></div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;max-height:65%;overflow-y:auto;top:10px;right:10px;width:80vw;max-width:350px}.form-control{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}.modal-header{display:flex;justify-content:space-between;align-items:center}.modal-title{font-size:1.2em}.badge{background-color:#fff;color:#000;border-radius:10px;padding:5px}.btn-close-waitings{cursor:pointer}.waiting-list{display:flex;flex-direction:column}.waiting-item{display:flex;flex-direction:row;margin-top:5px}.col7{flex:5;display:flex;align-items:center}.col2{flex:2;display:flex;align-items:center;justify-content:center}.col1{flex:1}.hr{margin:.5em 0;border:0;border-top:1px solid #ccc}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: WaitingRoomModal, deps: [{ token: RespondToWaiting }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: WaitingRoomModal, isStandalone: true, selector: "app-waiting-room-modal", inputs: { isWaitingModalVisible: "isWaitingModalVisible", waitingRoomCounter: "waitingRoomCounter", waitingRoomList: "waitingRoomList", roomName: "roomName", socket: "socket", position: "position", backgroundColor: "backgroundColor", parameters: "parameters", onWaitingRoomClose: "onWaitingRoomClose", onWaitingRoomFilterChange: "onWaitingRoomFilterChange", updateWaitingList: "updateWaitingList", onWaitingRoomItemPress: "onWaitingRoomItemPress" }, usesOnChanges: true, ngImport: i0, template: "<div *ngIf=\"isWaitingModalVisible\" [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">\r\n        Waiting <span class=\"badge\">{{ waitingRoomCounter_s }}</span>\r\n      </div>\r\n      <div (click)=\"handleModalClose()\" class=\"btn-close-waitings\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <input\r\n          class=\"form-control\"\r\n          [ngStyle]=\"inputStyle\"\r\n          placeholder=\"Search ...\"\r\n          (input)=\"handleFilterChange($event)\"\r\n        />\r\n      </div>\r\n      <div class=\"waiting-list\">\r\n        <div\r\n          *ngFor=\"let participant of waitingRoomList_s\"\r\n          class=\"waiting-item\"\r\n        >\r\n          <div class=\"col7\">{{ participant.name }}</div>\r\n          <div class=\"col2\">\r\n            <button (click)=\"handleItemPress(participant, true)\">\r\n              <fa-icon [icon]=\"faCheck\" size=\"lg\" color=\"green\"></fa-icon>\r\n            </button>\r\n          </div>\r\n          <div class=\"col2\">\r\n            <button (click)=\"handleItemPress(participant, false)\">\r\n              <fa-icon [icon]=\"faTimes\" size=\"lg\" color=\"red\"></fa-icon>\r\n            </button>\r\n          </div>\r\n          <div class=\"col1\"></div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;max-height:65%;overflow-y:auto;top:10px;right:10px;width:80vw;max-width:350px}.form-control{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}.modal-header{display:flex;justify-content:space-between;align-items:center}.modal-title{font-size:1.2em}.badge{background-color:#fff;color:#000;border-radius:10px;padding:5px}.btn-close-waitings{cursor:pointer}.waiting-list{display:flex;flex-direction:column}.waiting-item{display:flex;flex-direction:row;margin-top:5px}.col7{flex:5;display:flex;align-items:center}.col2{flex:2;display:flex;align-items:center;justify-content:center}.col1{flex:1}.hr{margin:.5em 0;border:0;border-top:1px solid #ccc}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: WaitingRoomModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: WaitingRoomModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-waiting-room-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div *ngIf=\"isWaitingModalVisible\" [ngStyle]=\"modalContainerStyle\">\r\n  <div [ngStyle]=\"modalContentStyle\">\r\n    <div class=\"modal-header\">\r\n      <div class=\"modal-title\">\r\n        Waiting <span class=\"badge\">{{ waitingRoomCounter_s }}</span>\r\n      </div>\r\n      <div (click)=\"handleModalClose()\" class=\"btn-close-waitings\">\r\n        <fa-icon [icon]=\"faTimes\" class=\"icon\"></fa-icon>\r\n      </div>\r\n    </div>\r\n    <hr class=\"hr\" />\r\n    <div class=\"modal-body\">\r\n      <div class=\"form-group\">\r\n        <input\r\n          class=\"form-control\"\r\n          [ngStyle]=\"inputStyle\"\r\n          placeholder=\"Search ...\"\r\n          (input)=\"handleFilterChange($event)\"\r\n        />\r\n      </div>\r\n      <div class=\"waiting-list\">\r\n        <div\r\n          *ngFor=\"let participant of waitingRoomList_s\"\r\n          class=\"waiting-item\"\r\n        >\r\n          <div class=\"col7\">{{ participant.name }}</div>\r\n          <div class=\"col2\">\r\n            <button (click)=\"handleItemPress(participant, true)\">\r\n              <fa-icon [icon]=\"faCheck\" size=\"lg\" color=\"green\"></fa-icon>\r\n            </button>\r\n          </div>\r\n          <div class=\"col2\">\r\n            <button (click)=\"handleItemPress(participant, false)\">\r\n              <fa-icon [icon]=\"faTimes\" size=\"lg\" color=\"red\"></fa-icon>\r\n            </button>\r\n          </div>\r\n          <div class=\"col1\"></div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;display:block;z-index:999}.modal-content{position:fixed;border-radius:10px;padding:10px;max-height:65%;overflow-y:auto;top:10px;right:10px;width:80vw;max-width:350px}.form-control{width:90%;padding:10px;border-radius:5px;border:1px solid #000;font-size:16px;margin-bottom:10px}.modal-header{display:flex;justify-content:space-between;align-items:center}.modal-title{font-size:1.2em}.badge{background-color:#fff;color:#000;border-radius:10px;padding:5px}.btn-close-waitings{cursor:pointer}.waiting-list{display:flex;flex-direction:column}.waiting-item{display:flex;flex-direction:row;margin-top:5px}.col7{flex:5;display:flex;align-items:center}.col2{flex:2;display:flex;align-items:center;justify-content:center}.col1{flex:1}.hr{margin:.5em 0;border:0;border-top:1px solid #ccc}\n"] }]
         }], ctorParameters: () => [{ type: RespondToWaiting }], propDecorators: { isWaitingModalVisible: [{
@@ -31689,10 +31893,10 @@ class ConfigureWhiteboardModal {
         this.assignedParticipants = this.participantsCopy.filter((p) => p.useBoard);
         this.unassignedParticipants = this.participantsCopy.filter((p) => !p.useBoard);
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfigureWhiteboardModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ConfigureWhiteboardModal, isStandalone: true, selector: "app-configure-whiteboard-modal", inputs: { isVisible: "isVisible", parameters: "parameters", backgroundColor: "backgroundColor", position: "position", onConfigureWhiteboardClose: "onConfigureWhiteboardClose" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div [ngStyle]=\"modalContentStyle()\">\r\n    <div style=\"display: flex; flex-direction: column;\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">\r\n          Configure Whiteboard\r\n        </h2>\r\n        <button (click)=\"onConfigureWhiteboardClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6 mb-3\">\r\n            <h6>Assigned</h6>\r\n            <ul class=\"list-group\" style=\"max-height: 200px; overflow-y: auto; border: 1px solid #ccc;\">\r\n              <ng-container *ngIf=\"assignedParticipants.length > 0; else noAssignedParticipants\">\r\n                <li *ngFor=\"let participant of assignedParticipants\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2\">\r\n                  {{ participant.name }}\r\n                  <button class=\"btn btn-danger btn-sm mr-2 ml-2\" (click)=\"toggleParticipant(participant, false)\">\r\n                    <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n                  </button>\r\n                </li>\r\n              </ng-container>\r\n              <ng-template #noAssignedParticipants>\r\n                <li class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n                  None\r\n                </li>\r\n              </ng-template>\r\n            </ul>\r\n          </div>\r\n          <div class=\"col-md-6 mt-xs-3 mb-3\">\r\n            <h6>Pending</h6>\r\n            <ul class=\"list-group\" style=\"max-height: 200px; overflow-y: auto; border: 1px solid #ccc;\">\r\n              <ng-container *ngIf=\"unassignedParticipants.length > 0; else noPendingParticipants\">\r\n                <li *ngFor=\"let participant of unassignedParticipants\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2\">\r\n                  {{ participant.name }}\r\n                  <button class=\"btn btn-primary btn-sm mr-2 ml-2\" (click)=\"toggleParticipant(participant, true)\">\r\n                    <fa-icon [icon]=\"faCheck\"></fa-icon>\r\n                  </button>\r\n                </li>\r\n              </ng-container>\r\n              <ng-template #noPendingParticipants>\r\n                <li class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n                  None\r\n                </li>\r\n              </ng-template>\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-info\" (click)=\"handleSaveWhiteboard()\">\r\n          Save <fa-icon [icon]=\"faSave\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr />\r\n      <div *ngIf=\"!isEditing\">\r\n        <button *ngIf=\"canStartWhiteboard && whiteboardStarted && !whiteboardEnded\" class=\"btn btn-warning mb-2 mr-2\" (click)=\"handleStartWhiteboard()\">\r\n          Update <fa-icon [icon]=\"faSyncAlt\"></fa-icon>\r\n        </button>\r\n        <button *ngIf=\"canStartWhiteboard && !whiteboardStarted\" class=\"btn btn-success mb-2 mr-2\" (click)=\"handleStartWhiteboard()\">\r\n          Start <fa-icon [icon]=\"faPlay\"></fa-icon>\r\n        </button>\r\n        <button *ngIf=\"whiteboardStarted && !whiteboardEnded\" class=\"btn btn-danger mb-2 ml-2\" (click)=\"handleStopWhiteboard()\">\r\n          Stop <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-body{max-height:400px;overflow-y:auto}.list-group-item{cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfigureWhiteboardModal, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ConfigureWhiteboardModal, isStandalone: true, selector: "app-configure-whiteboard-modal", inputs: { isVisible: "isVisible", parameters: "parameters", backgroundColor: "backgroundColor", position: "position", onConfigureWhiteboardClose: "onConfigureWhiteboardClose" }, usesOnChanges: true, ngImport: i0, template: "<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div [ngStyle]=\"modalContentStyle()\">\r\n    <div style=\"display: flex; flex-direction: column;\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">\r\n          Configure Whiteboard\r\n        </h2>\r\n        <button (click)=\"onConfigureWhiteboardClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6 mb-3\">\r\n            <h6>Assigned</h6>\r\n            <ul class=\"list-group\" style=\"max-height: 200px; overflow-y: auto; border: 1px solid #ccc;\">\r\n              <ng-container *ngIf=\"assignedParticipants.length > 0; else noAssignedParticipants\">\r\n                <li *ngFor=\"let participant of assignedParticipants\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2\">\r\n                  {{ participant.name }}\r\n                  <button class=\"btn btn-danger btn-sm mr-2 ml-2\" (click)=\"toggleParticipant(participant, false)\">\r\n                    <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n                  </button>\r\n                </li>\r\n              </ng-container>\r\n              <ng-template #noAssignedParticipants>\r\n                <li class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n                  None\r\n                </li>\r\n              </ng-template>\r\n            </ul>\r\n          </div>\r\n          <div class=\"col-md-6 mt-xs-3 mb-3\">\r\n            <h6>Pending</h6>\r\n            <ul class=\"list-group\" style=\"max-height: 200px; overflow-y: auto; border: 1px solid #ccc;\">\r\n              <ng-container *ngIf=\"unassignedParticipants.length > 0; else noPendingParticipants\">\r\n                <li *ngFor=\"let participant of unassignedParticipants\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2\">\r\n                  {{ participant.name }}\r\n                  <button class=\"btn btn-primary btn-sm mr-2 ml-2\" (click)=\"toggleParticipant(participant, true)\">\r\n                    <fa-icon [icon]=\"faCheck\"></fa-icon>\r\n                  </button>\r\n                </li>\r\n              </ng-container>\r\n              <ng-template #noPendingParticipants>\r\n                <li class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n                  None\r\n                </li>\r\n              </ng-template>\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-info\" (click)=\"handleSaveWhiteboard()\">\r\n          Save <fa-icon [icon]=\"faSave\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr />\r\n      <div *ngIf=\"!isEditing\">\r\n        <button *ngIf=\"canStartWhiteboard && whiteboardStarted && !whiteboardEnded\" class=\"btn btn-warning mb-2 mr-2\" (click)=\"handleStartWhiteboard()\">\r\n          Update <fa-icon [icon]=\"faSyncAlt\"></fa-icon>\r\n        </button>\r\n        <button *ngIf=\"canStartWhiteboard && !whiteboardStarted\" class=\"btn btn-success mb-2 mr-2\" (click)=\"handleStartWhiteboard()\">\r\n          Start <fa-icon [icon]=\"faPlay\"></fa-icon>\r\n        </button>\r\n        <button *ngIf=\"whiteboardStarted && !whiteboardEnded\" class=\"btn btn-danger mb-2 ml-2\" (click)=\"handleStopWhiteboard()\">\r\n          Stop <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-body{max-height:400px;overflow-y:auto}.list-group-item{cursor:pointer}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ConfigureWhiteboardModal, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ConfigureWhiteboardModal, decorators: [{
             type: Component,
             args: [{ selector: 'app-configure-whiteboard-modal', imports: [CommonModule, FontAwesomeModule], template: "<div [ngStyle]=\"modalContainerStyle()\">\r\n  <div [ngStyle]=\"modalContentStyle()\">\r\n    <div style=\"display: flex; flex-direction: column;\">\r\n      <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;\">\r\n        <h2 style=\"font-size: x-large; font-weight: bold; color: black;\">\r\n          Configure Whiteboard\r\n        </h2>\r\n        <button (click)=\"onConfigureWhiteboardClose()\" style=\"border: none; background: none; cursor: pointer;\">\r\n          <fa-icon [icon]=\"faTimes\" size=\"xl\" style=\"font-size: 20px; color: black;\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <div class=\"row\">\r\n          <div class=\"col-md-6 mb-3\">\r\n            <h6>Assigned</h6>\r\n            <ul class=\"list-group\" style=\"max-height: 200px; overflow-y: auto; border: 1px solid #ccc;\">\r\n              <ng-container *ngIf=\"assignedParticipants.length > 0; else noAssignedParticipants\">\r\n                <li *ngFor=\"let participant of assignedParticipants\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2\">\r\n                  {{ participant.name }}\r\n                  <button class=\"btn btn-danger btn-sm mr-2 ml-2\" (click)=\"toggleParticipant(participant, false)\">\r\n                    <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n                  </button>\r\n                </li>\r\n              </ng-container>\r\n              <ng-template #noAssignedParticipants>\r\n                <li class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n                  None\r\n                </li>\r\n              </ng-template>\r\n            </ul>\r\n          </div>\r\n          <div class=\"col-md-6 mt-xs-3 mb-3\">\r\n            <h6>Pending</h6>\r\n            <ul class=\"list-group\" style=\"max-height: 200px; overflow-y: auto; border: 1px solid #ccc;\">\r\n              <ng-container *ngIf=\"unassignedParticipants.length > 0; else noPendingParticipants\">\r\n                <li *ngFor=\"let participant of unassignedParticipants\" class=\"list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2\">\r\n                  {{ participant.name }}\r\n                  <button class=\"btn btn-primary btn-sm mr-2 ml-2\" (click)=\"toggleParticipant(participant, true)\">\r\n                    <fa-icon [icon]=\"faCheck\"></fa-icon>\r\n                  </button>\r\n                </li>\r\n              </ng-container>\r\n              <ng-template #noPendingParticipants>\r\n                <li class=\"list-group-item d-flex justify-content-between align-items-center text-dark\">\r\n                  None\r\n                </li>\r\n              </ng-template>\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-info\" (click)=\"handleSaveWhiteboard()\">\r\n          Save <fa-icon [icon]=\"faSave\"></fa-icon>\r\n        </button>\r\n      </div>\r\n      <hr />\r\n      <div *ngIf=\"!isEditing\">\r\n        <button *ngIf=\"canStartWhiteboard && whiteboardStarted && !whiteboardEnded\" class=\"btn btn-warning mb-2 mr-2\" (click)=\"handleStartWhiteboard()\">\r\n          Update <fa-icon [icon]=\"faSyncAlt\"></fa-icon>\r\n        </button>\r\n        <button *ngIf=\"canStartWhiteboard && !whiteboardStarted\" class=\"btn btn-success mb-2 mr-2\" (click)=\"handleStartWhiteboard()\">\r\n          Start <fa-icon [icon]=\"faPlay\"></fa-icon>\r\n        </button>\r\n        <button *ngIf=\"whiteboardStarted && !whiteboardEnded\" class=\"btn btn-danger mb-2 ml-2\" (click)=\"handleStopWhiteboard()\">\r\n          Stop <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-body{max-height:400px;overflow-y:auto}.list-group-item{cursor:pointer}\n"] }]
         }], propDecorators: { isVisible: [{
@@ -33500,10 +33704,10 @@ class Whiteboard {
             this.saveState();
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Whiteboard, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: Whiteboard, isStandalone: true, selector: "app-whiteboard", inputs: { customWidth: "customWidth", customHeight: "customHeight", parameters: "parameters", showAspect: "showAspect" }, viewQueries: [{ propertyName: "canvasRef", first: true, predicate: ["canvasRef"], descendants: true }, { propertyName: "textInputRef", first: true, predicate: ["textInputRef"], descendants: true }, { propertyName: "toggleBackgroundRef", first: true, predicate: ["toggleBackgroundRef"], descendants: true }, { propertyName: "downloadLinkRef", first: true, predicate: ["downloadLinkRef"], descendants: true }, { propertyName: "tempCanvasRef", first: true, predicate: ["tempCanvasRef"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div id=\"whiteboard-interface\" [style.width.px]=\"customWidth\" [style.height.px]=\"customHeight\" [style.display]=\"showAspect ? 'block' : 'none'\" style=\"position: relative; display: flex; justify-content: center; align-items: center; border: 2px solid #000; background-color: #f0f0f0;\">\r\n  <div id=\"whiteboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\">\r\n    <button id=\"toolbarToggle\" class=\"btn btnBoard btn-primary\" style=\"position: absolute; top: 5px; left: 55px; z-index: 10;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronLeft : faChevronRight\"></fa-icon>\r\n    </button>\r\n    <div *ngIf=\"toolbarVisible\" class=\"toolbar mb-3\" id=\"toolbar\" style=\"position: absolute; top: 5px; left: 100px; z-index: 10; background-color: transparent;\">\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"drawMode\" (click)=\"handleDropdownClick('drawMode')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'XX-Small (3px)', value: 3 }, { label: 'X-Small (6px)', value: 6 }, { label: 'Small (12px)', value: 12 }, { label: 'Medium (18px)', value: 18 }, { label: 'Large (24px)', value: 24 }, { label: 'X-Large (36px)', value: 36 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateLineThickness, 'draw', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"freehandMode\" (click)=\"handleDropdownClick('freehandMode')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateBrushThickness, 'freehand', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"shapeMode\" (click)=\"handleDropdownClick('shapeMode')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/square.svg\\' alt=\\'Square\\' class=\\'shape-icon\\' />', value: 'square' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/rectangle.svg\\' alt=\\'Rectangle\\' class=\\'shape-icon\\' />', value: 'rectangle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/circle.svg\\' alt=\\'Circle\\' class=\\'shape-icon\\' />', value: 'circle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/triangle.svg\\' alt=\\'Triangle\\' class=\\'shape-icon\\' />', value: 'triangle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/hexagon.svg\\' alt=\\'Hexagon\\' class=\\'shape-icon\\' />', value: 'hexagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/pentagon.svg\\' alt=\\'Pentagon\\' class=\\'shape-icon\\' />', value: 'pentagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/rhombus.svg\\' alt=\\'Rhombus\\' class=\\'shape-icon\\' />', value: 'rhombus' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/octagon.svg\\' alt=\\'Octagon\\' class=\\'shape-icon\\' />', value: 'octagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/parallelogram.svg\\' alt=\\'Parallelogram\\' class=\\'shape-icon\\' />', value: 'parallelogram' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/oval.svg\\' alt=\\'Oval\\' class=\\'shape-icon\\' />', value: 'oval' }\r\n          ]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateShape, 'shape', item.value)\" style=\"padding: 5px;\" [innerHTML]=\"item.label\">\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"selectMode\" (click)=\"changeMode('select')\">\r\n        <fa-icon [icon]=\"faMousePointer\"></fa-icon>\r\n      </button>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-danger dropdown-toggle\" id=\"eraseMode\" (click)=\"handleDropdownClick('eraseMode')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (30px)', value: 30 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateEraserThickness, 'erase', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-info\" id=\"panMode\" (click)=\"changeMode('pan')\">\r\n        <fa-icon [icon]=\"faHandPaper\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomIn\" (click)=\"zoomCanvas(1.2, $event)\">\r\n        <fa-icon [icon]=\"faSearchPlus\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomReset\" (click)=\"zoomCanvas(10, $event)\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomOut\" (click)=\"zoomCanvas(0.8, $event)\">\r\n        <fa-icon [icon]=\"faSearchMinus\"></fa-icon>\r\n      </button>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"addText\" (click)=\"handleDropdownClick('addText')\">\r\n          <fa-icon [icon]=\"faFont\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'addText'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'Arial', value: 'Arial' }, { label: 'Times New Roman', value: 'Times New Roman' }, { label: 'Courier New', value: 'Courier New' }, { label: 'Verdana', value: 'Verdana' }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateFont, 'text', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"fontSize\" (click)=\"handleDropdownClick('fontSize')\">\r\n          <fa-icon [icon]=\"faTextHeight\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'fontSize'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateFontSize, '', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"undo\" (click)=\"undo()\">\r\n        <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"redo\" (click)=\"redo()\">\r\n        <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"save\" (click)=\"saveCanvas()\">\r\n        <fa-icon [icon]=\"faSave\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-danger\" id=\"delete\" (click)=\"deleteShape()\">\r\n        <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"clearCanvas\" (click)=\"clearCanvas()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n      <button id=\"toggleBackgroundRef\" #toggleBackgroundRef class=\"btn btnBoard btn-secondary\" (click)=\"toggleBackground()\">\r\n        <img src=\"https://mediasfu.com/images/svg/graph.jpg\" alt=\"Background\" class=\"toggle-icon\" id=\"backgroundIcon\" />\r\n      </button>\r\n      <input type=\"file\" id=\"uploadBoardImage\" accept=\"image/*\" style=\"display: none;\" (change)=\"uploadImage($event)\" />\r\n      <label for=\"uploadBoardImage\" class=\"btn btnBoard btn-primary\">\r\n        <fa-icon [icon]=\"faUpload\"></fa-icon>\r\n      </label>\r\n      <input type=\"color\" id=\"colorPicker\" class=\"btn\" [(ngModel)]=\"color\" />\r\n      <select id=\"lineTypePicker\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" style=\"border: 2px solid red;\" #canvasRef></canvas>\r\n    <textarea id=\"textInputRef\" class=\"form-control\" #textInputRef style=\"display: none; position: absolute;\"></textarea>\r\n    <a href=\"#\" id=\"downloadLinkRef\" #downloadLinkRef style=\"display: none;\">Download</a>\r\n    <canvas id=\"tempCanvasRef\" #tempCanvasRef style=\"display: none;\"></canvas>\r\n  </div>\r\n</div>\r\n", styles: ["#whiteboardCanvas,#canvsRef{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput,#textInputRef{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px!important;height:20px!important;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group button,.toolbarScreen .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s;color:\"black\"}.toolbarScreen .btn-group button{background-color:#e3e7eb;border:none}.toolbarScreen .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbarScreen .btn-group button:hover,.toolbarScreen .dropdown-menu a:hover{background-color:#d6d1d166;color:#000}.toolbarScreen .btn-group button.active{background-color:#454d55}#toolbarToggleScreen{background-color:#d6d1d166;border:\"1px solid black\"}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.8rem;padding:2px auto;width:32px;height:32px;background-color:#d6d1d166;color:#000}.toggle-icon{width:34px;height:34px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }], encapsulation: i0.ViewEncapsulation.None });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Whiteboard, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: Whiteboard, isStandalone: true, selector: "app-whiteboard", inputs: { customWidth: "customWidth", customHeight: "customHeight", parameters: "parameters", showAspect: "showAspect" }, viewQueries: [{ propertyName: "canvasRef", first: true, predicate: ["canvasRef"], descendants: true }, { propertyName: "textInputRef", first: true, predicate: ["textInputRef"], descendants: true }, { propertyName: "toggleBackgroundRef", first: true, predicate: ["toggleBackgroundRef"], descendants: true }, { propertyName: "downloadLinkRef", first: true, predicate: ["downloadLinkRef"], descendants: true }, { propertyName: "tempCanvasRef", first: true, predicate: ["tempCanvasRef"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div id=\"whiteboard-interface\" [style.width.px]=\"customWidth\" [style.height.px]=\"customHeight\" [style.display]=\"showAspect ? 'block' : 'none'\" style=\"position: relative; display: flex; justify-content: center; align-items: center; border: 2px solid #000; background-color: #f0f0f0;\">\r\n  <div id=\"whiteboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\">\r\n    <button id=\"toolbarToggle\" class=\"btn btnBoard btn-primary\" style=\"position: absolute; top: 5px; left: 55px; z-index: 10;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronLeft : faChevronRight\"></fa-icon>\r\n    </button>\r\n    <div *ngIf=\"toolbarVisible\" class=\"toolbar mb-3\" id=\"toolbar\" style=\"position: absolute; top: 5px; left: 100px; z-index: 10; background-color: transparent;\">\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"drawMode\" (click)=\"handleDropdownClick('drawMode')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'XX-Small (3px)', value: 3 }, { label: 'X-Small (6px)', value: 6 }, { label: 'Small (12px)', value: 12 }, { label: 'Medium (18px)', value: 18 }, { label: 'Large (24px)', value: 24 }, { label: 'X-Large (36px)', value: 36 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateLineThickness, 'draw', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"freehandMode\" (click)=\"handleDropdownClick('freehandMode')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateBrushThickness, 'freehand', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"shapeMode\" (click)=\"handleDropdownClick('shapeMode')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/square.svg\\' alt=\\'Square\\' class=\\'shape-icon\\' />', value: 'square' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/rectangle.svg\\' alt=\\'Rectangle\\' class=\\'shape-icon\\' />', value: 'rectangle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/circle.svg\\' alt=\\'Circle\\' class=\\'shape-icon\\' />', value: 'circle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/triangle.svg\\' alt=\\'Triangle\\' class=\\'shape-icon\\' />', value: 'triangle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/hexagon.svg\\' alt=\\'Hexagon\\' class=\\'shape-icon\\' />', value: 'hexagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/pentagon.svg\\' alt=\\'Pentagon\\' class=\\'shape-icon\\' />', value: 'pentagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/rhombus.svg\\' alt=\\'Rhombus\\' class=\\'shape-icon\\' />', value: 'rhombus' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/octagon.svg\\' alt=\\'Octagon\\' class=\\'shape-icon\\' />', value: 'octagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/parallelogram.svg\\' alt=\\'Parallelogram\\' class=\\'shape-icon\\' />', value: 'parallelogram' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/oval.svg\\' alt=\\'Oval\\' class=\\'shape-icon\\' />', value: 'oval' }\r\n          ]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateShape, 'shape', item.value)\" style=\"padding: 5px;\" [innerHTML]=\"item.label\">\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"selectMode\" (click)=\"changeMode('select')\">\r\n        <fa-icon [icon]=\"faMousePointer\"></fa-icon>\r\n      </button>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-danger dropdown-toggle\" id=\"eraseMode\" (click)=\"handleDropdownClick('eraseMode')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (30px)', value: 30 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateEraserThickness, 'erase', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-info\" id=\"panMode\" (click)=\"changeMode('pan')\">\r\n        <fa-icon [icon]=\"faHandPaper\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomIn\" (click)=\"zoomCanvas(1.2, $event)\">\r\n        <fa-icon [icon]=\"faSearchPlus\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomReset\" (click)=\"zoomCanvas(10, $event)\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomOut\" (click)=\"zoomCanvas(0.8, $event)\">\r\n        <fa-icon [icon]=\"faSearchMinus\"></fa-icon>\r\n      </button>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"addText\" (click)=\"handleDropdownClick('addText')\">\r\n          <fa-icon [icon]=\"faFont\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'addText'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'Arial', value: 'Arial' }, { label: 'Times New Roman', value: 'Times New Roman' }, { label: 'Courier New', value: 'Courier New' }, { label: 'Verdana', value: 'Verdana' }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateFont, 'text', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"fontSize\" (click)=\"handleDropdownClick('fontSize')\">\r\n          <fa-icon [icon]=\"faTextHeight\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'fontSize'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateFontSize, '', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"undo\" (click)=\"undo()\">\r\n        <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"redo\" (click)=\"redo()\">\r\n        <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"save\" (click)=\"saveCanvas()\">\r\n        <fa-icon [icon]=\"faSave\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-danger\" id=\"delete\" (click)=\"deleteShape()\">\r\n        <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"clearCanvas\" (click)=\"clearCanvas()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n      <button id=\"toggleBackgroundRef\" #toggleBackgroundRef class=\"btn btnBoard btn-secondary\" (click)=\"toggleBackground()\">\r\n        <img src=\"https://mediasfu.com/images/svg/graph.jpg\" alt=\"Background\" class=\"toggle-icon\" id=\"backgroundIcon\" />\r\n      </button>\r\n      <input type=\"file\" id=\"uploadBoardImage\" accept=\"image/*\" style=\"display: none;\" (change)=\"uploadImage($event)\" />\r\n      <label for=\"uploadBoardImage\" class=\"btn btnBoard btn-primary\">\r\n        <fa-icon [icon]=\"faUpload\"></fa-icon>\r\n      </label>\r\n      <input type=\"color\" id=\"colorPicker\" class=\"btn\" [(ngModel)]=\"color\" />\r\n      <select id=\"lineTypePicker\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" style=\"border: 2px solid red;\" #canvasRef></canvas>\r\n    <textarea id=\"textInputRef\" class=\"form-control\" #textInputRef style=\"display: none; position: absolute;\"></textarea>\r\n    <a href=\"#\" id=\"downloadLinkRef\" #downloadLinkRef style=\"display: none;\">Download</a>\r\n    <canvas id=\"tempCanvasRef\" #tempCanvasRef style=\"display: none;\"></canvas>\r\n  </div>\r\n</div>\r\n", styles: ["#whiteboardCanvas,#canvsRef{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput,#textInputRef{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px!important;height:20px!important;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group button,.toolbarScreen .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s;color:\"black\"}.toolbarScreen .btn-group button{background-color:#e3e7eb;border:none}.toolbarScreen .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbarScreen .btn-group button:hover,.toolbarScreen .dropdown-menu a:hover{background-color:#d6d1d166;color:#000}.toolbarScreen .btn-group button.active{background-color:#454d55}#toolbarToggleScreen{background-color:#d6d1d166;border:\"1px solid black\"}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.8rem;padding:2px auto;width:32px;height:32px;background-color:#d6d1d166;color:#000}.toggle-icon{width:34px;height:34px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$2.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$2.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$2.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$2.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$2.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }], encapsulation: i0.ViewEncapsulation.None });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: Whiteboard, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: Whiteboard, decorators: [{
             type: Component,
             args: [{ selector: 'app-whiteboard', encapsulation: ViewEncapsulation.None, imports: [CommonModule, FormsModule, FontAwesomeModule], template: "<div id=\"whiteboard-interface\" [style.width.px]=\"customWidth\" [style.height.px]=\"customHeight\" [style.display]=\"showAspect ? 'block' : 'none'\" style=\"position: relative; display: flex; justify-content: center; align-items: center; border: 2px solid #000; background-color: #f0f0f0;\">\r\n  <div id=\"whiteboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\">\r\n    <button id=\"toolbarToggle\" class=\"btn btnBoard btn-primary\" style=\"position: absolute; top: 5px; left: 55px; z-index: 10;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronLeft : faChevronRight\"></fa-icon>\r\n    </button>\r\n    <div *ngIf=\"toolbarVisible\" class=\"toolbar mb-3\" id=\"toolbar\" style=\"position: absolute; top: 5px; left: 100px; z-index: 10; background-color: transparent;\">\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"drawMode\" (click)=\"handleDropdownClick('drawMode')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'XX-Small (3px)', value: 3 }, { label: 'X-Small (6px)', value: 6 }, { label: 'Small (12px)', value: 12 }, { label: 'Medium (18px)', value: 18 }, { label: 'Large (24px)', value: 24 }, { label: 'X-Large (36px)', value: 36 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateLineThickness, 'draw', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"freehandMode\" (click)=\"handleDropdownClick('freehandMode')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateBrushThickness, 'freehand', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"shapeMode\" (click)=\"handleDropdownClick('shapeMode')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/square.svg\\' alt=\\'Square\\' class=\\'shape-icon\\' />', value: 'square' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/rectangle.svg\\' alt=\\'Rectangle\\' class=\\'shape-icon\\' />', value: 'rectangle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/circle.svg\\' alt=\\'Circle\\' class=\\'shape-icon\\' />', value: 'circle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/triangle.svg\\' alt=\\'Triangle\\' class=\\'shape-icon\\' />', value: 'triangle' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/hexagon.svg\\' alt=\\'Hexagon\\' class=\\'shape-icon\\' />', value: 'hexagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/pentagon.svg\\' alt=\\'Pentagon\\' class=\\'shape-icon\\' />', value: 'pentagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/rhombus.svg\\' alt=\\'Rhombus\\' class=\\'shape-icon\\' />', value: 'rhombus' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/octagon.svg\\' alt=\\'Octagon\\' class=\\'shape-icon\\' />', value: 'octagon' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/parallelogram.svg\\' alt=\\'Parallelogram\\' class=\\'shape-icon\\' />', value: 'parallelogram' },\r\n            { label: '<img src=\\'https://mediasfu.com/images/svg/oval.svg\\' alt=\\'Oval\\' class=\\'shape-icon\\' />', value: 'oval' }\r\n          ]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateShape, 'shape', item.value)\" style=\"padding: 5px;\" [innerHTML]=\"item.label\">\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"selectMode\" (click)=\"changeMode('select')\">\r\n        <fa-icon [icon]=\"faMousePointer\"></fa-icon>\r\n      </button>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-danger dropdown-toggle\" id=\"eraseMode\" (click)=\"handleDropdownClick('eraseMode')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseMode'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (30px)', value: 30 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateEraserThickness, 'erase', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-info\" id=\"panMode\" (click)=\"changeMode('pan')\">\r\n        <fa-icon [icon]=\"faHandPaper\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomIn\" (click)=\"zoomCanvas(1.2, $event)\">\r\n        <fa-icon [icon]=\"faSearchPlus\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomReset\" (click)=\"zoomCanvas(10, $event)\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomOut\" (click)=\"zoomCanvas(0.8, $event)\">\r\n        <fa-icon [icon]=\"faSearchMinus\"></fa-icon>\r\n      </button>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"addText\" (click)=\"handleDropdownClick('addText')\">\r\n          <fa-icon [icon]=\"faFont\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'addText'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'Arial', value: 'Arial' }, { label: 'Times New Roman', value: 'Times New Roman' }, { label: 'Courier New', value: 'Courier New' }, { label: 'Verdana', value: 'Verdana' }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateFont, 'text', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoard btn-secondary dropdown-toggle\" id=\"fontSize\" (click)=\"handleDropdownClick('fontSize')\">\r\n          <fa-icon [icon]=\"faTextHeight\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'fontSize'\" class=\"dropdown-menu show\">\r\n          <button *ngFor=\"let item of [{ label: 'X-Small (5px)', value: 5 }, { label: 'Small (10px)', value: 10 }, { label: 'Medium (20px)', value: 20 }, { label: 'Large (40px)', value: 40 }, { label: 'X-Large (60px)', value: 60 }]\" class=\"dropdown-item\" (click)=\"handleItemClick(updateFontSize, '', item.value)\" style=\"padding: 5px;\">\r\n            {{ item.label }}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"undo\" (click)=\"undo()\">\r\n        <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"redo\" (click)=\"redo()\">\r\n        <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"save\" (click)=\"saveCanvas()\">\r\n        <fa-icon [icon]=\"faSave\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-danger\" id=\"delete\" (click)=\"deleteShape()\">\r\n        <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n      </button>\r\n      <button class=\"btn btnBoard btn-secondary\" id=\"clearCanvas\" (click)=\"clearCanvas()\">\r\n        <fa-icon [icon]=\"faTimes\"></fa-icon>\r\n      </button>\r\n      <button id=\"toggleBackgroundRef\" #toggleBackgroundRef class=\"btn btnBoard btn-secondary\" (click)=\"toggleBackground()\">\r\n        <img src=\"https://mediasfu.com/images/svg/graph.jpg\" alt=\"Background\" class=\"toggle-icon\" id=\"backgroundIcon\" />\r\n      </button>\r\n      <input type=\"file\" id=\"uploadBoardImage\" accept=\"image/*\" style=\"display: none;\" (change)=\"uploadImage($event)\" />\r\n      <label for=\"uploadBoardImage\" class=\"btn btnBoard btn-primary\">\r\n        <fa-icon [icon]=\"faUpload\"></fa-icon>\r\n      </label>\r\n      <input type=\"color\" id=\"colorPicker\" class=\"btn\" [(ngModel)]=\"color\" />\r\n      <select id=\"lineTypePicker\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" style=\"border: 2px solid red;\" #canvasRef></canvas>\r\n    <textarea id=\"textInputRef\" class=\"form-control\" #textInputRef style=\"display: none; position: absolute;\"></textarea>\r\n    <a href=\"#\" id=\"downloadLinkRef\" #downloadLinkRef style=\"display: none;\">Download</a>\r\n    <canvas id=\"tempCanvasRef\" #tempCanvasRef style=\"display: none;\"></canvas>\r\n  </div>\r\n</div>\r\n", styles: ["#whiteboardCanvas,#canvsRef{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput,#textInputRef{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px!important;height:20px!important;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group button,.toolbarScreen .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s;color:\"black\"}.toolbarScreen .btn-group button{background-color:#e3e7eb;border:none}.toolbarScreen .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbarScreen .btn-group button:hover,.toolbarScreen .dropdown-menu a:hover{background-color:#d6d1d166;color:#000}.toolbarScreen .btn-group button.active{background-color:#454d55}#toolbarToggleScreen{background-color:#d6d1d166;border:\"1px solid black\"}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.8rem;padding:2px auto;width:32px;height:32px;background-color:#d6d1d166;color:#000}.toggle-icon{width:34px;height:34px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important}\n"] }]
         }], propDecorators: { customWidth: [{
@@ -33530,6 +33734,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 type: ViewChild,
                 args: ['tempCanvasRef', { static: false }]
             }] } });
+
+/**
+ * Custom component injection types for MediaSFU Angular
+ * This file defines interfaces and types for custom component injection patterns
+ * similar to React's component injection but adapted for Angular's architecture
+ */
 
 // //consumers/socket-receive-methods
 
@@ -33919,6 +34129,201 @@ const initialValuesState = {
 };
 
 /**
+ * Custom Component Injection Service
+ * Manages custom component injection and rendering for MediaSFU Angular components
+ */
+class CustomComponentInjectionService {
+    defaultConfig = {
+        enabled: true,
+        overrideDefaults: false,
+        fallbackToDefault: true
+    };
+    constructor() { }
+    /**
+     * Creates an injector with custom parameters for component injection
+     * @param parameters Custom parameters to inject
+     * @param parentInjector Parent injector to inherit from
+     * @returns New injector with custom parameters
+     */
+    createCustomInjector(parameters, parentInjector) {
+        const providers = Object.keys(parameters).map(key => ({
+            provide: key,
+            useValue: parameters[key]
+        }));
+        return Injector.create({
+            providers,
+            parent: parentInjector
+        });
+    }
+    /**
+     * Checks if a component is a custom Angular component
+     */
+    isCustomComponent(comp) {
+        return comp && typeof comp === 'object' && 'component' in comp && typeof comp.component === 'function';
+    }
+    /**
+     * Checks if a component is a function-based component
+     */
+    isFunctionComponent(comp) {
+        return typeof comp === 'function';
+    }
+    /**
+     * Checks if a component is an HTML element
+     */
+    isHTMLElement(comp) {
+        return comp instanceof HTMLElement;
+    }
+    /**
+     * Safely gets the outerHTML of an HTMLElement component
+     * @param comp Component that could be HTMLElement or CustomComponent
+     * @returns outerHTML string or empty string if not HTMLElement
+     */
+    getHtmlElementOuterHTML(comp) {
+        if (!comp || this.isCustomComponent(comp) || this.isFunctionComponent(comp)) {
+            return '';
+        }
+        return this.isHTMLElement(comp) ? comp.outerHTML || '' : '';
+    }
+    /**
+     * Renders a custom component in the specified container
+     * @param customComponent The custom component to render
+     * @param container ViewContainerRef where the component should be rendered
+     * @param context Component context with parameters and configuration
+     * @returns ComponentRef or HTMLElement reference
+     */
+    renderCustomComponent(customComponent, container, context) {
+        if (!customComponent || !container) {
+            return null;
+        }
+        const config = { ...this.defaultConfig, ...context.config };
+        try {
+            // Handle Angular Component
+            if (this.isCustomComponent(customComponent)) {
+                const injector = customComponent.injector ||
+                    this.createCustomInjector(context.parameters, context.injector);
+                const componentRef = container.createComponent(customComponent.component, { injector });
+                return componentRef;
+            }
+            // Handle Function Component
+            if (this.isFunctionComponent(customComponent)) {
+                const element = customComponent();
+                if (element) {
+                    const elementRef = container.element.nativeElement;
+                    elementRef.appendChild(element);
+                    return element;
+                }
+            }
+            // Handle HTML Element
+            if (this.isHTMLElement(customComponent)) {
+                const elementRef = container.element.nativeElement;
+                elementRef.appendChild(customComponent);
+                return customComponent;
+            }
+        }
+        catch (error) {
+            console.error('Error rendering custom component:', error);
+            if (config.fallbackToDefault) {
+                console.warn('Falling back to default component rendering');
+                return null; // Let the calling component handle fallback
+            }
+            throw error;
+        }
+        return null;
+    }
+    /**
+     * Creates a component object with injector for dynamic component rendering
+     * @param componentType Component type
+     * @param parameters Parameters to inject
+     * @param parentInjector Parent injector
+     * @returns Component object with injector
+     */
+    createComponentWithInjector(componentType, parameters = {}, parentInjector) {
+        const injector = this.createCustomInjector(parameters, parentInjector);
+        return {
+            component: componentType,
+            injector
+        };
+    }
+    /**
+     * Validates if a custom component can be rendered
+     * @param customComponent Component to validate
+     * @returns boolean indicating if component is valid
+     */
+    validateCustomComponent(customComponent) {
+        if (!customComponent) {
+            return false;
+        }
+        if (this.isCustomComponent(customComponent)) {
+            return !!customComponent.component;
+        }
+        if (this.isFunctionComponent(customComponent)) {
+            return true;
+        }
+        if (this.isHTMLElement(customComponent)) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Merges custom component options with defaults
+     * @param customOptions Custom component options
+     * @param defaultOptions Default component options
+     * @returns Merged options
+     */
+    mergeComponentOptions(customOptions, defaultOptions) {
+        return { ...defaultOptions, ...customOptions };
+    }
+    /**
+     * Destroys a custom component and cleans up resources
+     * @param componentRef Component reference to destroy
+     */
+    destroyCustomComponent(componentRef) {
+        if (!componentRef) {
+            return;
+        }
+        try {
+            if ('destroy' in componentRef && typeof componentRef.destroy === 'function') {
+                // Angular ComponentRef
+                componentRef.destroy();
+            }
+            else if (componentRef instanceof HTMLElement && componentRef.parentNode) {
+                // HTML Element
+                componentRef.parentNode.removeChild(componentRef);
+            }
+        }
+        catch (error) {
+            console.error('Error destroying custom component:', error);
+        }
+    }
+    /**
+     * Helper method to resolve component from custom or default
+     * This is useful for the pattern: customComponent || defaultComponent
+     * @param customComponent Custom component (can be undefined)
+     * @param defaultComponent Default fallback component
+     * @returns The resolved component
+     */
+    resolveComponent(customComponent, defaultComponent) {
+        return customComponent || defaultComponent;
+    }
+    /**
+     * Checks if we should use custom main component (for template restructuring)
+     * @param customMainComponent Custom main component
+     * @returns boolean indicating if custom main component should be used
+     */
+    shouldUseCustomMainComponent(customMainComponent) {
+        return !!customMainComponent;
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CustomComponentInjectionService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CustomComponentInjectionService, providedIn: 'root' });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: CustomComponentInjectionService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], ctorParameters: () => [] });
+
+/**
  * Asynchronously retrieves and updates messages for a specified room from the server.
  *
  * This method communicates with the server to request messages for a specific room and updates the messages array accordingly.
@@ -33975,10 +34380,10 @@ class ReceiveRoomMessages {
             console.log('Error tuning messages:', error.message);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveRoomMessages, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveRoomMessages, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveRoomMessages, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveRoomMessages, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ReceiveRoomMessages, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ReceiveRoomMessages, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -34019,8 +34424,8 @@ class MenuWidget {
         this.badgeValue = badgeValue;
         this.showBadge = showBadge;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'badgeValue' }, { token: 'showBadge' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MenuWidget, isStandalone: true, selector: "app-menu-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'badgeValue' }, { token: 'showBadge' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MenuWidget, isStandalone: true, selector: "app-menu-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
     <div style="position: relative; display: inline-block;">
       <fa-icon [icon]="icon" size="lg" [ngStyle]="{ color: iconColor }"></fa-icon>
       <div
@@ -34054,7 +34459,7 @@ class MenuWidget {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuWidget, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuWidget, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-menu-widget',
@@ -34149,8 +34554,8 @@ class MessageWidget {
         this.badgeValue = badgeValue;
         this.showBadge = showBadge;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessageWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'badgeValue' }, { token: 'showBadge' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MessageWidget, isStandalone: true, selector: "app-message-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessageWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'badgeValue' }, { token: 'showBadge' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MessageWidget, isStandalone: true, selector: "app-message-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
     <div style="position: relative; display: inline-block;">
       <fa-icon [icon]="icon" size="lg" [ngStyle]="{ color: iconColor }"></fa-icon>
       <div
@@ -34184,7 +34589,7 @@ class MessageWidget {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MessageWidget, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MessageWidget, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-message-widget',
@@ -34274,8 +34679,8 @@ class MenuRecordWidget {
         this.buttons = buttons;
         this.direction = direction;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuRecordWidget, deps: [{ token: 'buttons' }, { token: 'direction' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MenuRecordWidget, isStandalone: true, selector: "app-menu-record-widget", ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuRecordWidget, deps: [{ token: 'buttons' }, { token: 'direction' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MenuRecordWidget, isStandalone: true, selector: "app-menu-record-widget", ngImport: i0, template: `
     <app-control-buttons-alt-component
       [buttons]="buttons"
       [direction]="direction"
@@ -34283,7 +34688,7 @@ class MenuRecordWidget {
     ></app-control-buttons-alt-component>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: ControlButtonsAltComponent, selector: "app-control-buttons-alt-component", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuRecordWidget, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuRecordWidget, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-menu-record-widget',
@@ -34324,8 +34729,8 @@ class RecordTimerWidget {
     constructor(recordingProgressTime) {
         this.recordingProgressTime = recordingProgressTime;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordTimerWidget, deps: [{ token: 'recordingProgressTime' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: RecordTimerWidget, isStandalone: true, selector: "app-record-timer-widget", ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordTimerWidget, deps: [{ token: 'recordingProgressTime' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: RecordTimerWidget, isStandalone: true, selector: "app-record-timer-widget", ngImport: i0, template: `
     <div style="background-color: transparent; border-width: 0; padding: 0; margin: 2;">
       <span style="background-color: transparent; border-width: 0; padding: 0; margin: 0;">
         {{ recordingProgressTime }}
@@ -34333,7 +34738,7 @@ class RecordTimerWidget {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: RecordTimerWidget, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: RecordTimerWidget, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-record-timer-widget',
@@ -34381,8 +34786,8 @@ class MenuParticipantsWidget {
         this.iconColor = iconColor;
         this.participantsCounter = participantsCounter;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuParticipantsWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'participantsCounter' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MenuParticipantsWidget, isStandalone: true, selector: "app-menu-participants-widget", inputs: { icon: "icon", iconColor: "iconColor", participantsCounter: "participantsCounter" }, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuParticipantsWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'participantsCounter' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MenuParticipantsWidget, isStandalone: true, selector: "app-menu-participants-widget", inputs: { icon: "icon", iconColor: "iconColor", participantsCounter: "participantsCounter" }, ngImport: i0, template: `
     <div
       style="background-color: transparent; border-width: 0; padding: 0; margin: 5px; display: flex; flex-direction: row; align-items: center; justify-content: center;"
     >
@@ -34393,7 +34798,7 @@ class MenuParticipantsWidget {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MenuParticipantsWidget, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MenuParticipantsWidget, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-menu-participants-widget',
@@ -34470,8 +34875,8 @@ class ScreenShareWidget {
             this.computedDisabled = this.disabled;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenShareWidget, deps: [{ token: 'disabled', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: ScreenShareWidget, isStandalone: true, selector: "app-screen-share-button", inputs: { disabled: "disabled" }, usesOnChanges: true, ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenShareWidget, deps: [{ token: 'disabled', optional: true }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: ScreenShareWidget, isStandalone: true, selector: "app-screen-share-button", inputs: { disabled: "disabled" }, usesOnChanges: true, ngImport: i0, template: `
     <div style="position: relative; display: inline-block;">
       <!-- Desktop icon, change color based on disabled state -->
       <fa-icon [icon]="faDesktop" size="lg" [style.color]="computedDisabled ? 'black' : 'green'">
@@ -34488,7 +34893,7 @@ class ScreenShareWidget {
     </div>
   `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: ScreenShareWidget, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: ScreenShareWidget, decorators: [{
             type: Component,
             args: [{
                     selector: 'app-screen-share-button',
@@ -34596,6 +35001,10 @@ const createResponseJoinRoom = async ({ localRoom, }) => {
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Generic".
  *
@@ -34621,13 +35030,17 @@ const createResponseJoinRoom = async ({ localRoom, }) => {
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-generic>
  * ```
  */
@@ -34766,6 +35179,11 @@ class MediasfuGeneric {
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    // Custom component inputs
+    customVideoCard;
+    customAudioCard;
+    customMiniCard;
+    customMainComponent;
     title = 'MediaSFU-Generic';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -37376,6 +37794,10 @@ class MediasfuGeneric {
             updateSocket: this.updateSocket.bind(this),
             updateLocalSocket: this.updateLocalSocket.bind(this),
             updateValidated: this.updateValidated.bind(this),
+            // Custom components
+            customVideoCard: this.customVideoCard,
+            customAudioCard: this.customAudioCard,
+            customMiniCard: this.customMiniCard,
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
                 try {
@@ -39116,17 +39538,23 @@ class MediasfuGeneric {
             return null;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuGeneric, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuGeneric, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -39139,7 +39567,19 @@ class MediasfuGeneric {
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component *ngIf="returnUI">
+        <!-- Custom Main Component (if provided) -->
+        <ng-container *ngIf="customMainComponent">
+          <ng-container
+            *ngComponentOutlet="
+              customMainComponent.component || customMainComponent;
+              injector: customMainComponent.injector
+            "
+          >
+          </ng-container>
+        </ng-container>
+
+        <!-- Default Main Component -->
+        <app-main-container-component *ngIf="!customMainComponent && returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -39227,22 +39667,14 @@ class MediasfuGeneric {
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -39306,7 +39738,7 @@ class MediasfuGeneric {
         </app-main-container-component>
       </ng-template>
 
-      <ng-container *ngIf="returnUI">
+      <ng-container *ngIf="returnUI && !customMainComponent">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -39545,12 +39977,22 @@ class MediasfuGeneric {
       ></app-loading-modal>
     </ng-container>
     </div>
-  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuGeneric, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuGeneric, decorators: [{
             type: Component,
             args: [{ selector: 'app-mediasfu-generic', imports: [
-                        CommonModule,
                         BreakoutRoomsModal,
                         BackgroundModal,
                         CoHostModal,
@@ -39585,15 +40027,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                         ConfigureWhiteboardModal,
                         WaitingRoomModal,
                     ], template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -39606,7 +40054,19 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
-        <app-main-container-component *ngIf="returnUI">
+        <!-- Custom Main Component (if provided) -->
+        <ng-container *ngIf="customMainComponent">
+          <ng-container
+            *ngComponentOutlet="
+              customMainComponent.component || customMainComponent;
+              injector: customMainComponent.injector
+            "
+          >
+          </ng-container>
+        </ng-container>
+
+        <!-- Default Main Component -->
+        <app-main-container-component *ngIf="!customMainComponent && returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
@@ -39694,22 +40154,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -39773,7 +40225,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         </app-main-container-component>
       </ng-template>
 
-      <ng-container *ngIf="returnUI">
+      <ng-container *ngIf="returnUI && !customMainComponent">
       <app-menu-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
@@ -40012,7 +40464,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       ></app-loading-modal>
     </ng-container>
     </div>
-  `, providers: [CookieService] }]
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, providers: [CookieService], styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
                 type: Input
             }], localLink: [{
@@ -40040,6 +40503,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], customVideoCard: [{
+                type: Input
+            }], customAudioCard: [{
+                type: Input
+            }], customMiniCard: [{
+                type: Input
+            }], customMainComponent: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -40080,6 +40551,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Broadcast".
  *
@@ -40103,13 +40578,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-broadcast>
  * ```
  */
@@ -40225,6 +40704,11 @@ class MediasfuBroadcast {
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    // Custom component inputs
+    customVideoCard;
+    customAudioCard;
+    customMiniCard;
+    customMainComponent;
     title = 'MediaSFU-Broadcast';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -42762,6 +43246,9 @@ class MediasfuBroadcast {
             updateSocket: this.updateSocket.bind(this),
             updateLocalSocket: this.updateLocalSocket.bind(this),
             updateValidated: this.updateValidated.bind(this),
+            customVideoCard: this.customVideoCard,
+            customAudioCard: this.customAudioCard,
+            customMiniCard: this.customMiniCard,
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
                 try {
@@ -43939,17 +44426,23 @@ class MediasfuBroadcast {
             return null;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuBroadcast, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: PersonJoined }, { token: RoomRecordParams }, { token: BanParticipant }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuBroadcast, isStandalone: true, selector: "app-mediasfu-broadcast", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuBroadcast, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: PersonJoined }, { token: RoomRecordParams }, { token: BanParticipant }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MediasfuBroadcast, isStandalone: true, selector: "app-mediasfu-broadcast", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <!-- Conditional Rendering: PrejoinPage or Main Content -->
       <ng-container *ngIf="!validated.value; else mainContent">
@@ -43963,6 +44456,7 @@ class MediasfuBroadcast {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -44046,35 +44540,32 @@ class MediasfuBroadcast {
           </app-main-aspect-component>
         </app-main-container-component>
       </ng-template>
+    </div>
 
-      <!-- Modals to include -->
-      <ng-container *ngIf="returnUI">
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <app-alert-component
+        [visible]="alertVisible.value"
+        [message]="alertMessage.value"
+        [type]="alertType.value"
+        [duration]="alertDuration.value"
+        [onHide]="onAlertHide"
+        textColor="#ffffff"
+      ></app-alert-component>
+
+      <app-loading-modal
+        [isVisible]="isLoadingModalVisible.value"
+        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        displayColor="black"
+      ></app-loading-modal>
+
       <app-participants-modal
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
         [participantsCounter]="participantsCounter.value"
         [onParticipantsFilterChange]="onParticipantsFilterChange"
-        [parameters]="{
-          updateParticipants: updateParticipants,
-          updateIsParticipantsModalVisible: updateIsParticipantsModalVisible,
-          updateDirectMessageDetails: updateDirectMessageDetails,
-          updateStartDirectMessage: updateStartDirectMessage,
-          updateIsMessagesModalVisible: updateIsMessagesModalVisible,
-          showAlert: showAlert,
-          filteredParticipants: filteredParticipants.value,
-          participants: filteredParticipants.value,
-          roomName: roomName.value,
-          islevel: islevel.value,
-          member: member.value,
-          coHostResponsibility: coHostResponsibility.value,
-          coHost: coHost.value,
-          eventType: eventType.value,
-          startDirectMessage: startDirectMessage.value,
-          directMessageDetails: directMessageDetails.value,
-          socket: socket.value,
-          getUpdatedAllParams: getUpdatedAllParams,
-        }"
+        [parameters]="getAllParams()"
       ></app-participants-modal>
 
       <app-recording-modal
@@ -44083,32 +44574,8 @@ class MediasfuBroadcast {
         [onClose]="onRecordingClose"
         [startRecording]="startRecording.startRecording"
         [confirmRecording]="confirmRecording.confirmRecording"
-        [parameters]="mediaSFUParameters"
+        [parameters]="getAllParams()"
       ></app-recording-modal>
-
-      <app-messages-modal
-        [backgroundColor]="
-          eventType.value === 'webinar' || eventType.value === 'conference'
-            ? '#f5f5f5'
-            : 'rgba(255, 255, 255, 0.25)'
-        "
-        [isMessagesModalVisible]="isMessagesModalVisible.value"
-        [onMessagesClose]="onMessagesClose"
-        [messages]="messages.value"
-        [eventType]="eventType.value"
-        [member]="member.value"
-        [islevel]="islevel.value"
-        [coHostResponsibility]="coHostResponsibility.value"
-        [coHost]="coHost.value"
-        [startDirectMessage]="startDirectMessage.value"
-        [directMessageDetails]="directMessageDetails.value"
-        [updateStartDirectMessage]="updateStartDirectMessage"
-        [updateDirectMessageDetails]="updateDirectMessageDetails"
-        [showAlert]="showAlert"
-        [roomName]="roomName.value"
-        [socket]="socket.value"
-        [chatSetting]="chatSetting.value"
-      ></app-messages-modal>
 
       <app-confirm-exit-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
@@ -44140,28 +44607,46 @@ class MediasfuBroadcast {
         [localLink]="localLink"
       ></app-share-event-modal>
 
-      <app-alert-component
-        [visible]="alertVisible.value"
-        [message]="alertMessage.value"
-        [type]="alertType.value"
-        [duration]="alertDuration.value"
-        [onHide]="onAlertHide"
-        textColor="#ffffff"
-      ></app-alert-component>
-
-      <app-loading-modal
-        [isVisible]="isLoadingModalVisible.value"
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-        displayColor="black"
-      ></app-loading-modal>
+      <app-messages-modal
+        [backgroundColor]="
+          eventType.value === 'webinar' || eventType.value === 'conference'
+            ? '#f5f5f5'
+            : 'rgba(255, 255, 255, 0.25)'
+        "
+        [isMessagesModalVisible]="isMessagesModalVisible.value"
+        [onMessagesClose]="onMessagesClose"
+        [messages]="messages.value"
+        [eventType]="eventType.value"
+        [member]="member.value"
+        [islevel]="islevel.value"
+        [coHostResponsibility]="coHostResponsibility.value"
+        [coHost]="coHost.value"
+        [startDirectMessage]="startDirectMessage.value"
+        [directMessageDetails]="directMessageDetails.value"
+        [updateStartDirectMessage]="updateStartDirectMessage"
+        [updateDirectMessageDetails]="updateDirectMessageDetails"
+        [showAlert]="showAlert"
+        [roomName]="roomName.value"
+        [socket]="socket.value"
+        [chatSetting]="chatSetting.value"
+      ></app-messages-modal>
     </ng-container>
-    </div>
-  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }] });
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuBroadcast, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuBroadcast, decorators: [{
             type: Component,
             args: [{ selector: 'app-mediasfu-broadcast', imports: [
-                        CommonModule,
                         AlertComponent,
                         AudioGrid,
                         ControlButtonsComponentTouch,
@@ -44178,15 +44663,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                         MainGridComponent,
                         MainScreenComponent,
                     ], template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <!-- Conditional Rendering: PrejoinPage or Main Content -->
       <ng-container *ngIf="!validated.value; else mainContent">
@@ -44200,6 +44691,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -44283,35 +44775,32 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
           </app-main-aspect-component>
         </app-main-container-component>
       </ng-template>
+    </div>
 
-      <!-- Modals to include -->
-      <ng-container *ngIf="returnUI">
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <app-alert-component
+        [visible]="alertVisible.value"
+        [message]="alertMessage.value"
+        [type]="alertType.value"
+        [duration]="alertDuration.value"
+        [onHide]="onAlertHide"
+        textColor="#ffffff"
+      ></app-alert-component>
+
+      <app-loading-modal
+        [isVisible]="isLoadingModalVisible.value"
+        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        displayColor="black"
+      ></app-loading-modal>
+
       <app-participants-modal
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
         [participantsCounter]="participantsCounter.value"
         [onParticipantsFilterChange]="onParticipantsFilterChange"
-        [parameters]="{
-          updateParticipants: updateParticipants,
-          updateIsParticipantsModalVisible: updateIsParticipantsModalVisible,
-          updateDirectMessageDetails: updateDirectMessageDetails,
-          updateStartDirectMessage: updateStartDirectMessage,
-          updateIsMessagesModalVisible: updateIsMessagesModalVisible,
-          showAlert: showAlert,
-          filteredParticipants: filteredParticipants.value,
-          participants: filteredParticipants.value,
-          roomName: roomName.value,
-          islevel: islevel.value,
-          member: member.value,
-          coHostResponsibility: coHostResponsibility.value,
-          coHost: coHost.value,
-          eventType: eventType.value,
-          startDirectMessage: startDirectMessage.value,
-          directMessageDetails: directMessageDetails.value,
-          socket: socket.value,
-          getUpdatedAllParams: getUpdatedAllParams,
-        }"
+        [parameters]="getAllParams()"
       ></app-participants-modal>
 
       <app-recording-modal
@@ -44320,32 +44809,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [onClose]="onRecordingClose"
         [startRecording]="startRecording.startRecording"
         [confirmRecording]="confirmRecording.confirmRecording"
-        [parameters]="mediaSFUParameters"
+        [parameters]="getAllParams()"
       ></app-recording-modal>
-
-      <app-messages-modal
-        [backgroundColor]="
-          eventType.value === 'webinar' || eventType.value === 'conference'
-            ? '#f5f5f5'
-            : 'rgba(255, 255, 255, 0.25)'
-        "
-        [isMessagesModalVisible]="isMessagesModalVisible.value"
-        [onMessagesClose]="onMessagesClose"
-        [messages]="messages.value"
-        [eventType]="eventType.value"
-        [member]="member.value"
-        [islevel]="islevel.value"
-        [coHostResponsibility]="coHostResponsibility.value"
-        [coHost]="coHost.value"
-        [startDirectMessage]="startDirectMessage.value"
-        [directMessageDetails]="directMessageDetails.value"
-        [updateStartDirectMessage]="updateStartDirectMessage"
-        [updateDirectMessageDetails]="updateDirectMessageDetails"
-        [showAlert]="showAlert"
-        [roomName]="roomName.value"
-        [socket]="socket.value"
-        [chatSetting]="chatSetting.value"
-      ></app-messages-modal>
 
       <app-confirm-exit-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
@@ -44377,23 +44842,42 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         [localLink]="localLink"
       ></app-share-event-modal>
 
-      <app-alert-component
-        [visible]="alertVisible.value"
-        [message]="alertMessage.value"
-        [type]="alertType.value"
-        [duration]="alertDuration.value"
-        [onHide]="onAlertHide"
-        textColor="#ffffff"
-      ></app-alert-component>
-
-      <app-loading-modal
-        [isVisible]="isLoadingModalVisible.value"
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-        displayColor="black"
-      ></app-loading-modal>
+      <app-messages-modal
+        [backgroundColor]="
+          eventType.value === 'webinar' || eventType.value === 'conference'
+            ? '#f5f5f5'
+            : 'rgba(255, 255, 255, 0.25)'
+        "
+        [isMessagesModalVisible]="isMessagesModalVisible.value"
+        [onMessagesClose]="onMessagesClose"
+        [messages]="messages.value"
+        [eventType]="eventType.value"
+        [member]="member.value"
+        [islevel]="islevel.value"
+        [coHostResponsibility]="coHostResponsibility.value"
+        [coHost]="coHost.value"
+        [startDirectMessage]="startDirectMessage.value"
+        [directMessageDetails]="directMessageDetails.value"
+        [updateStartDirectMessage]="updateStartDirectMessage"
+        [updateDirectMessageDetails]="updateDirectMessageDetails"
+        [showAlert]="showAlert"
+        [roomName]="roomName.value"
+        [socket]="socket.value"
+        [chatSetting]="chatSetting.value"
+      ></app-messages-modal>
     </ng-container>
-    </div>
-  `, providers: [CookieService] }]
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, providers: [CookieService], styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: PersonJoined }, { type: RoomRecordParams }, { type: BanParticipant }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
                 type: Input
             }], localLink: [{
@@ -44421,6 +44905,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], customVideoCard: [{
+                type: Input
+            }], customAudioCard: [{
+                type: Input
+            }], customMiniCard: [{
+                type: Input
+            }], customMainComponent: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -44458,6 +44950,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Webinar".
  *
@@ -44482,13 +44978,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-webinar>
  * ```
  */
@@ -44626,6 +45126,11 @@ class MediasfuWebinar {
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    // Custom component inputs
+    customVideoCard;
+    customAudioCard;
+    customMiniCard;
+    customMainComponent;
     title = 'MediaSFU-Webinar';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -47231,6 +47736,9 @@ class MediasfuWebinar {
             updateSocket: this.updateSocket.bind(this),
             updateLocalSocket: this.updateLocalSocket.bind(this),
             updateValidated: this.updateValidated.bind(this),
+            customVideoCard: this.customVideoCard,
+            customAudioCard: this.customAudioCard,
+            customMiniCard: this.customMiniCard,
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
                 try {
@@ -48740,17 +49248,23 @@ class MediasfuWebinar {
             return null;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuWebinar, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuWebinar, isStandalone: true, selector: "app-mediasfu-webinar", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuWebinar, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MediasfuWebinar, isStandalone: true, selector: "app-mediasfu-webinar", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -48763,6 +49277,7 @@ class MediasfuWebinar {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -48822,22 +49337,14 @@ class MediasfuWebinar {
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -49134,12 +49641,27 @@ class MediasfuWebinar {
       ></app-loading-modal>
     </ng-container>
     </div>
-  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
+
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <!-- All the modals that were inside the div should be duplicated here -->
+    </ng-container>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuWebinar, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuWebinar, decorators: [{
             type: Component,
             args: [{ selector: 'app-mediasfu-webinar', imports: [
-                        CommonModule,
                         BreakoutRoomsModal,
                         BackgroundModal,
                         CoHostModal,
@@ -49173,15 +49695,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                         ConfigureWhiteboardModal,
                         WaitingRoomModal,
                     ], template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -49194,6 +49722,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -49253,22 +49782,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -49565,7 +50086,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       ></app-loading-modal>
     </ng-container>
     </div>
-  `, providers: [CookieService] }]
+
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <!-- All the modals that were inside the div should be duplicated here -->
+    </ng-container>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, providers: [CookieService], styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
                 type: Input
             }], localLink: [{
@@ -49593,6 +50130,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], customVideoCard: [{
+                type: Input
+            }], customAudioCard: [{
+                type: Input
+            }], customMiniCard: [{
+                type: Input
+            }], customMainComponent: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -49631,6 +50176,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Conference".
  *
@@ -49656,13 +50205,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-conference>
  * ```
  */
@@ -49800,6 +50353,11 @@ class MediasfuConference {
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    // Custom component inputs
+    customVideoCard;
+    customAudioCard;
+    customMiniCard;
+    customMainComponent;
     title = 'MediaSFU-Conference';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -52405,6 +52963,9 @@ class MediasfuConference {
             updateSocket: this.updateSocket.bind(this),
             updateLocalSocket: this.updateLocalSocket.bind(this),
             updateValidated: this.updateValidated.bind(this),
+            customVideoCard: this.customVideoCard,
+            customAudioCard: this.customAudioCard,
+            customMiniCard: this.customMiniCard,
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
                 try {
@@ -53915,17 +54476,23 @@ class MediasfuConference {
             return null;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuConference, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuConference, isStandalone: true, selector: "app-mediasfu-conference", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuConference, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MediasfuConference, isStandalone: true, selector: "app-mediasfu-conference", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -53938,6 +54505,7 @@ class MediasfuConference {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -53997,22 +54565,14 @@ class MediasfuConference {
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -54309,12 +54869,27 @@ class MediasfuConference {
       ></app-loading-modal>
     </ng-container>
     </div>
-  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
+
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <!-- All the modals that were inside the div should be duplicated here -->
+    </ng-container>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onBreakoutRoomsClose"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "onClose"] }, { kind: "component", type: CoHostModal, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: Pagination, selector: "app-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "parameters"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub"] }, { kind: "component", type: DisplaySettingsModal, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor"] }, { kind: "component", type: EventSettingsModal, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MediaSettingsModal, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor"] }, { kind: "component", type: MenuModal, selector: "app-menu-modal", inputs: ["backgroundColor", "isVisible", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "onClose"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: ParticipantsModal, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor"] }, { kind: "component", type: PollModal, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll"] }, { kind: "component", type: RecordingModal, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters"] }, { kind: "component", type: RequestsModal, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "onConfigureWhiteboardClose"] }, { kind: "component", type: WaitingRoomModal, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "waitingRoomCounter", "waitingRoomList", "roomName", "socket", "position", "backgroundColor", "parameters", "onWaitingRoomClose", "onWaitingRoomFilterChange", "updateWaitingList", "onWaitingRoomItemPress"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuConference, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuConference, decorators: [{
             type: Component,
             args: [{ selector: 'app-mediasfu-conference', imports: [
-                        CommonModule,
                         BreakoutRoomsModal,
                         BackgroundModal,
                         CoHostModal,
@@ -54348,15 +54923,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                         ConfigureWhiteboardModal,
                         WaitingRoomModal,
                     ], template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -54369,6 +54950,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -54428,22 +55010,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
               >
                 <div
                   *ngIf="doPaginate.value"
-                  [ngStyle]="{
-                    width:
-                      paginationDirection.value == 'horizontal'
-                        ? componentSizes.value.otherWidth
-                        : paginationHeightWidth.value,
-                    height:
-                      paginationDirection.value == 'horizontal'
-                        ? paginationHeightWidth.value
-                        : componentSizes.value.otherHeight,
-                    display: doPaginate.value ? 'flex' : 'none',
-                    'flex-direction': paginationDirection.value == 'horizontal' ? 'row' : 'column',
-                    'justify-content': 'center',
-                    'align-items': 'center',
-                    padding: '0',
-                    margin: '0'
-                  }"
+                  [style.width]="paginationDirection.value == 'horizontal' ? componentSizes.value.otherWidth + 'px' : paginationHeightWidth.value + 'px'"
+                  [style.height]="paginationDirection.value == 'horizontal' ? paginationHeightWidth.value + 'px' : componentSizes.value.otherHeight + 'px'"
+                  [style.display]="doPaginate.value ? 'flex' : 'none'"
+                  [style.flex-direction]="paginationDirection.value == 'horizontal' ? 'row' : 'column'"
+                  [style.justify-content]="'center'"
+                  [style.align-items]="'center'"
+                  [style.padding]="'0'"
+                  [style.margin]="'0'"
                 >
                   <app-pagination
                     [totalPages]="numberPages.value"
@@ -54740,7 +55314,23 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       ></app-loading-modal>
     </ng-container>
     </div>
-  `, providers: [CookieService] }]
+
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <!-- All the modals that were inside the div should be duplicated here -->
+    </ng-container>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, providers: [CookieService], styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
                 type: Input
             }], localLink: [{
@@ -54768,6 +55358,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], customVideoCard: [{
+                type: Input
+            }], customAudioCard: [{
+                type: Input
+            }], customMiniCard: [{
+                type: Input
+            }], customMainComponent: [{
                 type: Input
             }], handleResize: [{
                 type: HostListener,
@@ -54806,6 +55404,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Chat".
  *
@@ -54831,13 +55433,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-chat>
  * ```
  */
@@ -54939,6 +55545,11 @@ class MediasfuChat {
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    // Custom component inputs
+    customVideoCard;
+    customAudioCard;
+    customMiniCard;
+    customMainComponent;
     title = 'MediaSFU-Chat';
     mainHeightWidthSubscription;
     validatedSubscription;
@@ -57454,6 +58065,9 @@ class MediasfuChat {
             updateSocket: this.updateSocket.bind(this),
             updateLocalSocket: this.updateLocalSocket.bind(this),
             updateValidated: this.updateValidated.bind(this),
+            customVideoCard: this.customVideoCard,
+            customAudioCard: this.customAudioCard,
+            customMiniCard: this.customMiniCard,
             showAlert: this.showAlert.bind(this),
             getUpdatedAllParams: () => {
                 try {
@@ -58326,17 +58940,23 @@ class MediasfuChat {
             return null;
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuChat, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.0.1", type: MediasfuChat, isStandalone: true, selector: "app-mediasfu-chat", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuChat, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.15", type: MediasfuChat, isStandalone: true, selector: "app-mediasfu-chat", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -58349,6 +58969,7 @@ class MediasfuChat {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -58403,11 +59024,12 @@ class MediasfuChat {
           </app-main-aspect-component>
 
           <!-- SubAspectComponent removed -->
-        </app-main-container-component>
+          </app-main-container-component>
       </ng-template>
+    </div>
 
-      <!-- Modals to include -->
-      <ng-container *ngIf="returnUI">
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
       <app-messages-modal
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
@@ -58477,13 +59099,22 @@ class MediasfuChat {
         displayColor="black"
       ></app-loading-modal>
     </ng-container>
-    </div>
-  `, isInline: true, styles: [""], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }] });
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "component", type: AlertComponent, selector: "app-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "onHide"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor"] }, { kind: "component", type: LoadingModal, selector: "app-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor"] }, { kind: "component", type: ConfirmExitModal, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel"] }, { kind: "component", type: MessagesModal, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting"] }, { kind: "component", type: ConfirmHereModal, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "onConfirmHereClose", "countdownDuration", "socket", "localSocket", "roomName", "member"] }, { kind: "component", type: ShareEventModal, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "roomName", "adminPasscode", "islevel", "position", "shareButtons", "eventType", "localLink"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime"] }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImport: i0, type: MediasfuChat, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.15", ngImport: i0, type: MediasfuChat, decorators: [{
             type: Component,
             args: [{ selector: 'app-mediasfu-chat', imports: [
-                        CommonModule,
                         AlertComponent,
                         AudioGrid,
                         ControlButtonsComponentTouch,
@@ -58498,15 +59129,21 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                         MainScreenComponent,
                         OtherGridComponent,
                     ], template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -58519,6 +59156,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -58573,11 +59211,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
           </app-main-aspect-component>
 
           <!-- SubAspectComponent removed -->
-        </app-main-container-component>
+          </app-main-container-component>
       </ng-template>
+    </div>
 
-      <!-- Modals to include -->
-      <ng-container *ngIf="returnUI">
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
       <app-messages-modal
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
@@ -58647,8 +59286,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
         displayColor="black"
       ></app-loading-modal>
     </ng-container>
-    </div>
-  `, providers: [CookieService] }]
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+  `, providers: [CookieService], styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"] }]
         }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: StartMeetingProgressTimer }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }], propDecorators: { PrejoinPage: [{
                 type: Input
             }], localLink: [{
@@ -58677,6 +59326,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
                 type: Input
             }], createMediaSFURoom: [{
                 type: Input
+            }], customVideoCard: [{
+                type: Input
+            }], customAudioCard: [{
+                type: Input
+            }], customMiniCard: [{
+                type: Input
+            }], customMainComponent: [{
+                type: Input
             }], handleResize: [{
                 type: HostListener,
                 args: ['window:resize']
@@ -58689,5 +59346,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1", ngImpor
  * Generated bundle index. Do not edit.
  */
 
-export { AParams, AddVideosGrid, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, EventSettingsModal, FlexibleGrid, FlexibleVideo, FormatNumber, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LoadingModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OnScreenChanges, OtherGridComponent, Pagination, ParticipantRequested, ParticipantsModal, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemoveParticipants, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TimeLeftRecording, Trigger, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, getModalPosition, getOverlayPosition, initialValuesState, launchCoHost, sleep, updateMicLevel };
+export { AParams, AddVideosGrid, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, CustomComponentInjectionService, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, EventSettingsModal, FlexibleGrid, FlexibleVideo, FormatNumber, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LoadingModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OnScreenChanges, OtherGridComponent, Pagination, ParticipantRequested, ParticipantsModal, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemoveParticipants, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TimeLeftRecording, Trigger, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, getModalPosition, getOverlayPosition, initialValuesState, launchCoHost, sleep, updateMicLevel };
 //# sourceMappingURL=mediasfu-angular.mjs.map

@@ -268,6 +268,10 @@ export type MediasfuBroadcastOptions = {
  * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
  * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
  * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
+ * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
+ * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
+ * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
+ * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
  *
  * @property {string} title - The title of the component, defaults to "MediaSFU-Broadcast".
  *
@@ -291,13 +295,17 @@ export type MediasfuBroadcastOptions = {
  *   [useLocalUIMode]="true"
  *   [seedData]="seedDataObject"
  *   [useSeed]="true"
- *   [imgSrc]="https://example.com/logo.png">
+ *   [imgSrc]="'https://example.com/logo.png'"
  *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
  *   [updateSourceParameters]="updateSourceParameters"
  *   [returnUI]="true"
  *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
  *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom">
+ *   [createMediaSFURoom]="createMediaSFURoom"
+ *   [customVideoCard]="CustomVideoCardComponent"
+ *   [customAudioCard]="CustomAudioCardComponent"
+ *   [customMiniCard]="CustomMiniCardComponent"
+ *   [customMainComponent]="CustomMainComponent">
  * </app-mediasfu-broadcast>
  * ```
  */
@@ -306,7 +314,6 @@ export type MediasfuBroadcastOptions = {
 @Component({
   selector: 'app-mediasfu-broadcast',
   imports: [
-    CommonModule,
     AlertComponent,
     AudioGrid,
     ControlButtonsComponentTouch,
@@ -325,15 +332,21 @@ export type MediasfuBroadcastOptions = {
 
   ],
   template: `
+    <!-- Custom Main Component (if provided) - full control over styling -->
+    <ng-container *ngIf="customMainComponent && validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          customMainComponent.component || customMainComponent;
+          injector: customMainComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
+
+    <!-- Default MediaSFU wrapper with standard styling -->
     <div
+      *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="{
-        height: '100vh',
-        width: '100vw',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        overflow: 'hidden'
-      }"
     >
       <!-- Conditional Rendering: PrejoinPage or Main Content -->
       <ng-container *ngIf="!validated.value; else mainContent">
@@ -347,6 +360,7 @@ export type MediasfuBroadcastOptions = {
       </ng-container>
 
       <ng-template #mainContent>
+        <!-- Default Main Component -->
         <app-main-container-component *ngIf="returnUI">
           <app-main-aspect-component
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -430,35 +444,32 @@ export type MediasfuBroadcastOptions = {
           </app-main-aspect-component>
         </app-main-container-component>
       </ng-template>
+    </div>
 
-      <!-- Modals to include -->
-      <ng-container *ngIf="returnUI">
+    <!-- Modals and alerts (only available when using default UI, not custom components) -->
+    <ng-container *ngIf="returnUI && !customMainComponent">
+      <app-alert-component
+        [visible]="alertVisible.value"
+        [message]="alertMessage.value"
+        [type]="alertType.value"
+        [duration]="alertDuration.value"
+        [onHide]="onAlertHide"
+        textColor="#ffffff"
+      ></app-alert-component>
+
+      <app-loading-modal
+        [isVisible]="isLoadingModalVisible.value"
+        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        displayColor="black"
+      ></app-loading-modal>
+
       <app-participants-modal
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
         [participantsCounter]="participantsCounter.value"
         [onParticipantsFilterChange]="onParticipantsFilterChange"
-        [parameters]="{
-          updateParticipants: updateParticipants,
-          updateIsParticipantsModalVisible: updateIsParticipantsModalVisible,
-          updateDirectMessageDetails: updateDirectMessageDetails,
-          updateStartDirectMessage: updateStartDirectMessage,
-          updateIsMessagesModalVisible: updateIsMessagesModalVisible,
-          showAlert: showAlert,
-          filteredParticipants: filteredParticipants.value,
-          participants: filteredParticipants.value,
-          roomName: roomName.value,
-          islevel: islevel.value,
-          member: member.value,
-          coHostResponsibility: coHostResponsibility.value,
-          coHost: coHost.value,
-          eventType: eventType.value,
-          startDirectMessage: startDirectMessage.value,
-          directMessageDetails: directMessageDetails.value,
-          socket: socket.value,
-          getUpdatedAllParams: getUpdatedAllParams,
-        }"
+        [parameters]="getAllParams()"
       ></app-participants-modal>
 
       <app-recording-modal
@@ -467,32 +478,8 @@ export type MediasfuBroadcastOptions = {
         [onClose]="onRecordingClose"
         [startRecording]="startRecording.startRecording"
         [confirmRecording]="confirmRecording.confirmRecording"
-        [parameters]="mediaSFUParameters"
+        [parameters]="getAllParams()"
       ></app-recording-modal>
-
-      <app-messages-modal
-        [backgroundColor]="
-          eventType.value === 'webinar' || eventType.value === 'conference'
-            ? '#f5f5f5'
-            : 'rgba(255, 255, 255, 0.25)'
-        "
-        [isMessagesModalVisible]="isMessagesModalVisible.value"
-        [onMessagesClose]="onMessagesClose"
-        [messages]="messages.value"
-        [eventType]="eventType.value"
-        [member]="member.value"
-        [islevel]="islevel.value"
-        [coHostResponsibility]="coHostResponsibility.value"
-        [coHost]="coHost.value"
-        [startDirectMessage]="startDirectMessage.value"
-        [directMessageDetails]="directMessageDetails.value"
-        [updateStartDirectMessage]="updateStartDirectMessage"
-        [updateDirectMessageDetails]="updateDirectMessageDetails"
-        [showAlert]="showAlert"
-        [roomName]="roomName.value"
-        [socket]="socket.value"
-        [chatSetting]="chatSetting.value"
-      ></app-messages-modal>
 
       <app-confirm-exit-modal
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
@@ -524,27 +511,50 @@ export type MediasfuBroadcastOptions = {
         [localLink]="localLink"
       ></app-share-event-modal>
 
-      <app-alert-component
-        [visible]="alertVisible.value"
-        [message]="alertMessage.value"
-        [type]="alertType.value"
-        [duration]="alertDuration.value"
-        [onHide]="onAlertHide"
-        textColor="#ffffff"
-      ></app-alert-component>
-
-      <app-loading-modal
-        [isVisible]="isLoadingModalVisible.value"
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-        displayColor="black"
-      ></app-loading-modal>
+      <app-messages-modal
+        [backgroundColor]="
+          eventType.value === 'webinar' || eventType.value === 'conference'
+            ? '#f5f5f5'
+            : 'rgba(255, 255, 255, 0.25)'
+        "
+        [isMessagesModalVisible]="isMessagesModalVisible.value"
+        [onMessagesClose]="onMessagesClose"
+        [messages]="messages.value"
+        [eventType]="eventType.value"
+        [member]="member.value"
+        [islevel]="islevel.value"
+        [coHostResponsibility]="coHostResponsibility.value"
+        [coHost]="coHost.value"
+        [startDirectMessage]="startDirectMessage.value"
+        [directMessageDetails]="directMessageDetails.value"
+        [updateStartDirectMessage]="updateStartDirectMessage"
+        [updateDirectMessageDetails]="updateDirectMessageDetails"
+        [showAlert]="showAlert"
+        [roomName]="roomName.value"
+        [socket]="socket.value"
+        [chatSetting]="chatSetting.value"
+      ></app-messages-modal>
     </ng-container>
-    </div>
+
+    <!-- Prejoin page for custom component (when not validated) -->
+    <ng-container *ngIf="customMainComponent && !validated.value">
+      <ng-container
+        *ngComponentOutlet="
+          PrejoinPageComponent.component;
+          injector: PrejoinPageComponent.injector
+        "
+      >
+      </ng-container>
+    </ng-container>
   `,
   styles: [
     `
       .MediaSFU {
-        /* Add any component-specific styles here */
+        height: 100vh;
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 100vh;
+        overflow: hidden;
       }
     `,
   ],
@@ -566,6 +576,12 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
+
+  // Custom component inputs
+  @Input() customVideoCard: any;
+  @Input() customAudioCard: any;
+  @Input() customMiniCard: any;
+  @Input() customMainComponent: any;
 
   title = 'MediaSFU-Broadcast';
 
@@ -3620,6 +3636,10 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+
+      customVideoCard: this.customVideoCard,
+      customAudioCard: this.customAudioCard,
+      customMiniCard: this.customMiniCard,
 
       showAlert: this.showAlert.bind(this),
       getUpdatedAllParams: () => {
