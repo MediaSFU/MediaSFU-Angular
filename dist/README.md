@@ -4,19 +4,34 @@
 
 <p align="center">
   <a href="https://twitter.com/media_sfu">
-    <img src="https://img.icons8.com/color/48/000000/twitter--v1.png" alt="Twitter" style="margin-right: 10px;">
+    <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter" />
   </a>
   <a href="https://www.mediasfu.com/forums">
-    <img src="https://img.icons8.com/color/48/000000/communication--v1.png" alt="Community Forum" style="margin-right: 10px;">
+    <img src="https://img.shields.io/badge/Community-Forum-blue?style=for-the-badge&logo=discourse&logoColor=white" alt="Community Forum" />
   </a>
   <a href="https://github.com/MediaSFU">
-    <img src="https://img.icons8.com/fluent/48/000000/github.png" alt="Github" style="margin-right: 10px;">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Github" />
   </a>
   <a href="https://www.mediasfu.com/">
-    <img src="https://img.icons8.com/color/48/000000/domain--v1.png" alt="Website" style="margin-right: 10px;">
+    <img src="https://img.shields.io/badge/Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Website" />
   </a>
   <a href="https://www.youtube.com/channel/UCELghZRPKMgjih5qrmXLtqw">
-    <img src="https://img.icons8.com/color/48/000000/youtube--v1.png" alt="Youtube" style="margin-right: 10px;">
+    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Youtube" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square" alt="License: MIT" />
+  </a>
+  <a href="https://mediasfu.com">
+    <img src="https://img.shields.io/badge/Built%20with-MediaSFU-blue?style=flat-square" alt="Built with MediaSFU" />
+  </a>
+  <a href="https://angular.io">
+    <img src="https://img.shields.io/badge/Angular-DD0031?style=flat-square&logo=angular&logoColor=white" alt="Angular" />
+  </a>
+  <a href="https://www.typescriptlang.org">
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
   </a>
 </p>
 
@@ -59,16 +74,22 @@ MediaSFU offers a cutting-edge streaming experience that empowers users to custo
 
 **[Get started now on GitHub!](https://github.com/MediaSFU/MediaSFUOpen)** 
 
+### ✅ Angular SDK Setup Guide  
+Coming soon! Watch this space for our comprehensive video tutorial on setting up the Angular SDK.
+
 ---
 
 ## Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
-- [Basic Usage Guide](#basic-usage-guide)
-- [Intermediate Usage Guide](#intermediate-usage-guide)
-- [Advanced Usage Guide](#advanced-usage-guide)
-  - [Custom Component Injection Service](#custom-component-injection-service)
+- [📘 Angular SDK Guide](#angular-sdk-guide)
+  - [Quick Start](#quick-start-5-minutes)
+  - [Understanding the Architecture](#understanding-mediasfu-architecture)
+  - [Core Concepts & Components](#core-concepts--components)
+  - [Working with Methods](#working-with-methods)
+  - [Media Streams & Participants](#media-streams--participants)
+  - [Customization & Styling](#customization--styling)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -87,6 +108,74 @@ MediaSFU's Angular SDK comes with a host of powerful features out of the box:
 8. **Chat (Direct & Group)**: Facilitate communication with direct and group chat options.
 9. **Cloud Recording (track-based)**: Customize recordings with track-based options, including watermarks, name tags, background colors, and more.
 10. **Managed Events**: Manage events with features to handle abandoned and inactive participants, as well as enforce time and capacity limits.
+
+## 🆕 **New Advanced Media Access**
+
+The Angular SDK now includes powerful utility methods for fine-grained control over media devices and participant streams:
+
+### **`getMediaDevicesList`** - Device Enumeration
+
+Enumerate available cameras and microphones with automatic permission handling:
+
+```typescript
+// Get all available cameras
+const cameras = await sourceParameters.getMediaDevicesList('videoinput');
+cameras.forEach(camera => {
+  console.log(`Camera: ${camera.label} (${camera.deviceId})`);
+});
+
+// Get all available microphones
+const microphones = await sourceParameters.getMediaDevicesList('audioinput');
+microphones.forEach(mic => {
+  console.log(`Microphone: ${mic.label} (${mic.deviceId})`);
+});
+```
+
+**Use Cases:**
+- Build custom device selection interfaces
+- Detect available media hardware
+- Switch between multiple cameras/microphones
+- Pre-flight device checks before joining
+
+[See full documentation and examples →](#media-device-and-stream-utility-methods)
+
+---
+
+### **`getParticipantMedia`** - Stream Access
+
+Retrieve specific participant's video or audio streams by ID or name:
+
+```typescript
+// Get participant video stream by producer ID
+const videoStream = await sourceParameters.getParticipantMedia({
+  id: 'producer-123',
+  kind: 'video'
+});
+
+// Get participant audio stream by name
+const audioStream = await sourceParameters.getParticipantMedia({
+  name: 'John Doe',
+  kind: 'audio'
+});
+
+// Use the stream (e.g., attach to video element)
+if (videoStream) {
+  videoElement.srcObject = videoStream;
+}
+```
+
+**Use Cases:**
+- Monitor specific participant streams
+- Create custom video layouts with individual control
+- Build stream recording features
+- Implement advanced audio/video processing
+- Create picture-in-picture views for specific users
+
+[See full documentation and examples →](#media-device-and-stream-utility-methods)
+
+---
+
+These utilities enable advanced features like custom device selection interfaces, participant stream monitoring, and dynamic media routing. Both methods are fully integrated with Angular's reactive patterns using RxJS.
 
 # Getting Started <a name="getting-started"></a>
 
@@ -180,39 +269,23 @@ If you plan to self-host MediaSFU or use it without MediaSFU Cloud services, you
 This setup allows full flexibility and customization while bypassing the need for cloud-dependent credentials.  
 
 
-# Basic Usage Guide <a name="basic-usage-guide"></a>
+# 📘 Angular SDK Guide <a name="angular-sdk-guide"></a>
 
-A basic guide on how to use the module for common tasks.
+This comprehensive guide will walk you through everything you need to know about building real-time communication apps with MediaSFU's Angular SDK. Whether you're a beginner or an experienced developer, you'll find clear explanations, practical examples, and best practices.
 
-This section will guide users through the initial setup and installation of the npm module.
-## Introduction
+---
 
-MediaSFU is a 2-page application consisting of a prejoin/welcome page and the main events room page. This guide will walk you through the basic usage of the module for setting up these pages.
+## Quick Start (5 Minutes) <a name="quick-start-5-minutes"></a>
 
-### Documentation Reference
+Get your first MediaSFU app running in just a few minutes.
 
-For comprehensive documentation on the available methods, components, and functions, please visit [mediasfu.com](https://www.mediasfu.com/angular/). This resource provides detailed information for this guide and additional documentation.
+### Step 1: Install the Package
 
-## Prebuilt Event Rooms
+```bash
+npm install mediasfu-angular
+```
 
-MediaSFU provides prebuilt event rooms for various purposes. These rooms are rendered as full pages and can be easily imported and used in your application. Here are the available prebuilt event rooms:
-
-1. **MediasfuGeneric**: A generic event room suitable for various types of events.
-2. **MediasfuBroadcast**: A room optimized for broadcasting events.
-3. **MediasfuWebinar**: Specifically designed for hosting webinars.
-4. **MediasfuConference**: Ideal for hosting conferences.
-5. **MediasfuChat**: A room tailored for interactive chat sessions.
-
-Users can easily pick an interface and render it in their app.
-
-If no API credentials are provided, a default home page will be displayed where users can scan or manually enter the event details.
-
-To use these prebuilt event rooms, simply import them into your application:
-
-```javascript
-## Simplest Usage
-
-The simplest way to use MediaSFU in your Angular application is by directly rendering the prebuilt event room component, such as `MediasfuGeneric`.
+### Step 2: Import and Use
 
 ```typescript
 // app.component.ts
@@ -223,109 +296,1447 @@ import { MediasfuGeneric } from 'mediasfu-angular';
   selector: 'app-root',
   standalone: true,
   imports: [MediasfuGeneric],
-  template: `
-    <app-mediasfu-generic></app-mediasfu-generic>
-  `,
+  template: `<app-mediasfu-generic></app-mediasfu-generic>`,
 })
 export class AppComponent { }
 ```
 
-That's it! With just 3 lines of code, you have a fully functional video conferencing application with:
-
-- 🎥 **Video & Audio Streaming** - High-quality real-time communication
-- 🖥️ **Screen Sharing** - Share your screen with annotation support  
-- 💬 **Interactive Chat** - Direct and group messaging
-- 👥 **Participant Management** - Join/leave controls and permissions
-- 🎨 **Customizable UI** - Professional, responsive design out of the box
-- 📱 **Mobile Responsive** - Works seamlessly on all devices
-- 🔧 **Zero Configuration** - No complex setup required
-
-## Why Choose MediaSFU?
-
-### ⚡ **Lightning Fast Setup**
-From `npm install` to a working video conference in under 2 minutes. No WebRTC knowledge required.
-
-### 🎯 **Multiple Event Types Ready**
-Choose from pre-built, production-ready templates:
+**Alternative with Credentials:**
 
 ```typescript
-import { 
-  MediasfuGeneric,    // 🌐 All-purpose meetings
-  MediasfuBroadcast,  // 📺 Live streaming events  
-  MediasfuWebinar,    // 🎓 Educational sessions
-  MediasfuConference, // 💼 Professional meetings
-  MediasfuChat        // 💬 Interactive chat rooms
-} from 'mediasfu-angular';
-```
+import { Component } from '@angular/core';
+import { MediasfuGeneric, PreJoinPage } from 'mediasfu-angular';
 
-### 🛠️ **Infinitely Customizable**
-
-**Replace Any Component:** Don't like our video card? Swap it with yours:
-
-```typescript
-// Your custom video component
 @Component({
-  selector: 'my-video-card',
-  template: `<div class="my-custom-video">{{ participant.name }}</div>`
+  selector: 'app-root',
+  standalone: true,
+  imports: [MediasfuGeneric],
+  template: `
+    <app-mediasfu-generic
+      [PrejoinPage]="PreJoinPage"
+      [credentials]="credentials">
+    </app-mediasfu-generic>
+  `,
 })
-export class MyVideoCard { }
-
-// Use it in MediaSFU
-const customVideoCard = this.customComponentService.createComponentWithInjector(
-  MyVideoCard, { participant: participantData }
-);
-
-// MediaSFU will use your component instead
-this.mediasfuParameters = { customVideoCard };
+export class AppComponent {
+  PreJoinPage = PreJoinPage;
+  credentials = {
+    apiUserName: 'your_username',
+    apiKey: 'your_api_key',
+  };
+}
 ```
 
-**Custom Layouts:** Build your own UI while keeping MediaSFU's powerful backend:
+### Step 3: Run Your App
+
+```bash
+ng serve
+```
+
+**That's it!** You now have a fully functional video conferencing app with:
+- ✅ Video and audio streaming
+- ✅ Screen sharing
+- ✅ Chat messaging
+- ✅ Participant management
+- ✅ Recording capabilities
+- ✅ Breakout rooms
+- ✅ Polls and whiteboards
+
+---
+
+## Understanding MediaSFU Architecture <a name="understanding-mediasfu-architecture"></a>
+
+Before diving deeper, let's understand how MediaSFU is structured.
+
+### The Three-Layer Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│        Your Angular Application             │
+│  (components, services, business logic)     │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│       MediaSFU Components Layer             │
+│ (MediasfuGeneric, MediasfuBroadcast, etc.)  │
+│        - Pre-built UI components            │
+│        - Event handling                     │
+│        - State management (RxJS)            │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│       MediaSFU Core Methods Layer           │
+│  (Stream control, room management,          │
+│   WebRTC handling, socket communication)    │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│       MediaSFU Backend Services             │
+│ (MediaSFU Cloud or Community Edition)       │
+└─────────────────────────────────────────────┘
+```
+
+### Key Concepts
+
+#### 1. **Event Room Types**
+
+MediaSFU provides 5 specialized room types, each optimized for specific use cases:
+
+| Room Type | Best For | Key Features |
+|-----------|----------|--------------|
+| **MediasfuGeneric** | General purpose meetings | Flexible layout, all features enabled |
+| **MediasfuBroadcast** | Live streaming events | Optimized for one-to-many communication |
+| **MediasfuWebinar** | Educational sessions | Presenter focus, Q&A features |
+| **MediasfuConference** | Business meetings | Equal participant layout, collaboration tools |
+| **MediasfuChat** | Interactive discussions | Chat-first interface, quick connections |
 
 ```typescript
-// Your WhatsApp-style video call UI
+// Choose the right room type for your use case
+import { 
+  MediasfuWebinar, 
+  MediasfuBroadcast, 
+  MediasfuConference 
+} from 'mediasfu-angular';
+
+@Component({
+  // For a webinar
+  template: `<app-mediasfu-webinar [credentials]="credentials"></app-mediasfu-webinar>`,
+  // For a broadcast
+  // template: `<app-mediasfu-broadcast [credentials]="credentials"></app-mediasfu-broadcast>`,
+  // For a conference
+  // template: `<app-mediasfu-conference [credentials]="credentials"></app-mediasfu-conference>`,
+})
+```
+
+#### 2. **The Three Usage Modes**
+
+MediaSFU offers three progressive levels of customization:
+
+##### Mode 1: Default UI (Simplest)
+Use MediaSFU's complete pre-built interface - perfect for rapid development.
+
+```typescript
+import { Component } from '@angular/core';
+import { MediasfuGeneric } from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [MediasfuGeneric],
+  template: `<app-mediasfu-generic [credentials]="credentials"></app-mediasfu-generic>`,
+})
+export class AppComponent {
+  credentials = { apiUserName: 'username', apiKey: 'key' };
+}
+```
+
+**When to use:**
+- ✅ Prototyping or MVP development
+- ✅ Need a production-ready UI quickly
+- ✅ Standard video conferencing features are sufficient
+
+##### Mode 2: Custom UI with MediaSFU Backend (Most Flexible)
+Build your own UI while using MediaSFU's powerful backend infrastructure.
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { MediasfuGeneric } from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [MediasfuGeneric, CommonModule],
+  template: `
+    <app-mediasfu-generic
+      [returnUI]="false"
+      [sourceParameters]="sourceParameters"
+      [updateSourceParameters]="updateSourceParameters.bind(this)"
+      [credentials]="credentials"
+      [noUIPreJoinOptions]="preJoinOptions">
+    </app-mediasfu-generic>
+
+    <!-- Your custom UI -->
+    @if (sourceParameters) {
+      <div class="custom-controls">
+        <button (click)="toggleVideo()">
+          {{ sourceParameters.videoAlreadyOn ? 'Stop Video' : 'Start Video' }}
+        </button>
+        <button (click)="toggleAudio()">
+          {{ sourceParameters.audioAlreadyOn ? 'Mute' : 'Unmute' }}
+        </button>
+        <button (click)="toggleScreenShare()">
+          {{ sourceParameters.screenAlreadyOn ? 'Stop Sharing' : 'Share Screen' }}
+        </button>
+      </div>
+    }
+  `,
+})
+export class AppComponent implements OnInit {
+  sourceParameters: any = null;
+  credentials = { apiUserName: 'username', apiKey: 'key' };
+  preJoinOptions = {
+    action: 'create',
+    userName: 'Your Name',
+    capacity: 50,
+    duration: 30,
+    eventType: 'conference'
+  };
+
+  updateSourceParameters(params: any) {
+    this.sourceParameters = params;
+  }
+
+  toggleVideo() {
+    this.sourceParameters?.clickVideo({ parameters: this.sourceParameters });
+  }
+
+  toggleAudio() {
+    this.sourceParameters?.clickAudio({ parameters: this.sourceParameters });
+  }
+
+  toggleScreenShare() {
+    this.sourceParameters?.clickScreenShare({ parameters: this.sourceParameters });
+  }
+}
+```
+
+**When to use:**
+- ✅ Need complete control over UI/UX
+- ✅ Building a custom branded experience
+- ✅ Integrating into existing app design
+
+##### Mode 3: Component Replacement (Balanced)
+Replace specific MediaSFU components while keeping the rest of the infrastructure.
+
+```typescript
+import { Component } from '@angular/core';
+import { 
+  MediasfuGeneric, 
+  FlexibleVideo, 
+  FlexibleGrid 
+} from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-custom-main',
+  standalone: true,
+  imports: [FlexibleVideo, FlexibleGrid, CommonModule],
+  template: `
+    <div class="custom-layout">
+      <!-- Custom header -->
+      <div class="custom-header">
+        <h1>{{ parameters.roomName }}</h1>
+        <span>{{ parameters.participants.length }} participants</span>
+      </div>
+
+      <!-- Use MediaSFU's components in your layout -->
+      <app-flexible-video
+        [customWidth]="windowWidth"
+        [customHeight]="600"
+        [parameters]="parameters">
+      </app-flexible-video>
+
+      <app-flexible-grid
+        [customWidth]="windowWidth"
+        [customHeight]="400"
+        [parameters]="parameters">
+      </app-flexible-grid>
+
+      <!-- Custom footer -->
+      <div class="custom-footer">
+        <button (click)="toggleVideo()">
+          {{ parameters.videoAlreadyOn ? 'Stop Video' : 'Start Video' }}
+        </button>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .custom-layout { 
+      display: flex; 
+      flex-direction: column; 
+      height: 100vh; 
+    }
+    .custom-header { 
+      padding: 20px; 
+      background: #1976d2; 
+      color: white; 
+    }
+  `]
+})
+export class CustomMainComponent {
+  parameters: any;
+  windowWidth = window.innerWidth;
+
+  toggleVideo() {
+    this.parameters?.clickVideo({ parameters: this.parameters });
+  }
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [MediasfuGeneric],
+  template: `
+    <app-mediasfu-generic
+      [credentials]="credentials"
+      [PrejoinPage]="PreJoinPage"
+      [customComponent]="CustomMainComponent">
+    </app-mediasfu-generic>
+  `,
+})
+export class AppComponent {
+  PreJoinPage = PreJoinPage;
+  CustomMainComponent = CustomMainComponent;
+  credentials = { apiUserName: 'username', apiKey: 'key' };
+}
+```
+
+**When to use:**
+- ✅ Need custom main interface but want to keep MediaSFU's components
+- ✅ Partial customization with minimal effort
+- ✅ Want to maintain MediaSFU's functionality while customizing layout
+
+#### 3. **Parameters: Your Control Center**
+
+The `sourceParameters` object (or `parameters` in custom components) is your gateway to all MediaSFU functionality. It's powered by RxJS BehaviorSubjects for reactive state management:
+
+```typescript
+// Available in sourceParameters or parameters object
+{
+  // Media Controls (Methods)
+  clickVideo: (options) => {},
+  clickAudio: (options) => {},
+  clickScreenShare: (options) => {},
+  
+  // Room State (BehaviorSubject values)
+  roomName: 'meeting-123',
+  participants: [...],
+  allVideoStreams: [...],
+  allAudioStreams: [...],
+  
+  // UI State (BehaviorSubject values)
+  videoAlreadyOn: false,
+  audioAlreadyOn: false,
+  screenAlreadyOn: false,
+  
+  // Update Functions (BehaviorSubject next())
+  updateVideoAlreadyOn: (value) => {},
+  updateAudioAlreadyOn: (value) => {},
+  
+  // And 200+ more properties and methods...
+}
+```
+
+**Access patterns:**
+
+```typescript
+// In Mode 1 (Default UI): Parameters are managed internally
+// You don't need to access them directly
+
+// In Mode 2 (Custom UI): Access via sourceParameters
+sourceParameters?.clickVideo({ parameters: sourceParameters });
+
+// In Mode 3 (Component Replacement): Passed to your custom component
+@Component({
+  template: `<button (click)="toggleVideo()">Toggle</button>`
+})
+export class CustomComponent {
+  @Input() parameters: any;
+  
+  toggleVideo() {
+    this.parameters.clickVideo({ parameters: this.parameters });
+  }
+}
+
+// Subscribing to reactive state changes
+sourceParameters.participants.subscribe((participants) => {
+  console.log('Participants updated:', participants);
+});
+```
+
+---
+
+## Core Concepts & Components <a name="core-concepts--components"></a>
+
+Now that you understand the architecture, let's explore the building blocks.
+
+### 1. Display Components: Building Your Video Layout
+
+MediaSFU provides powerful components for organizing and displaying media streams.
+
+#### Primary Layout Components
+
+**FlexibleVideo** - Main video display area
+
+```typescript
+import { FlexibleVideo } from 'mediasfu-angular';
+
 @Component({
   template: `
-    <div class="whatsapp-style-layout">
-      <header>My Custom Header</header>
-      <main>Your video layout here</main>
+    <app-flexible-video
+      [customWidth]="windowWidth"
+      [customHeight]="600"
+      [parameters]="parameters">
+    </app-flexible-video>
+  `
+})
+```
+- Automatically handles main presenter or screen share
+- Smooth transitions between different video sources
+- Responsive sizing
+
+**FlexibleGrid** - Participant grid layout
+
+```typescript
+import { FlexibleGrid } from 'mediasfu-angular';
+
+@Component({
+  template: `
+    <app-flexible-grid
+      [customWidth]="windowWidth"
+      [customHeight]="800"
+      [parameters]="parameters">
+    </app-flexible-grid>
+  `
+})
+```
+- Intelligent grid sizing (2x2, 3x3, 4x4, etc.)
+- Pagination for large participant lists
+- Automatic reflow on window resize
+
+**AudioGrid** - Audio-only participants
+
+```typescript
+import { AudioGrid } from 'mediasfu-angular';
+
+@Component({
+  template: `<app-audio-grid [parameters]="parameters"></app-audio-grid>`
+})
+```
+- Displays participants without video
+- Audio level indicators
+- Compact layout for efficiency
+
+#### Container Components
+
+| Component | Purpose | Use Case |
+|-----------|---------|----------|
+| **MainContainerComponent** | Primary content wrapper | Wraps all main content areas |
+| **MainAspectComponent** | Aspect ratio container | Maintains proper video proportions |
+| **MainScreenComponent** | Screen layout manager | Organizes screen regions |
+| **SubAspectComponent** | Secondary content container | For picture-in-picture, sidebars |
+
+**Example: Building a custom layout**
+
+```typescript
+import { Component } from '@angular/core';
+import {
+  MainContainerComponent,
+  FlexibleVideo,
+  FlexibleGrid,
+  AudioGrid
+} from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-custom-layout',
+  standalone: true,
+  imports: [
+    MainContainerComponent,
+    FlexibleVideo,
+    FlexibleGrid,
+    AudioGrid,
+    CommonModule
+  ],
+  template: `
+    <app-main-container-component>
+      <div class="layout-container">
+        <!-- Main video area -->
+        <div class="main-video">
+          <app-flexible-video
+            [customWidth]="windowWidth"
+            [customHeight]="windowHeight * 0.6"
+            [parameters]="parameters">
+          </app-flexible-video>
+        </div>
+        
+        <!-- Participant grid -->
+        <div class="participant-grid">
+          <app-flexible-grid
+            [customWidth]="windowWidth"
+            [customHeight]="windowHeight * 0.3"
+            [parameters]="parameters">
+          </app-flexible-grid>
+        </div>
+        
+        <!-- Audio-only participants -->
+        <div class="audio-participants">
+          <app-audio-grid [parameters]="parameters"></app-audio-grid>
+        </div>
+      </div>
+    </app-main-container-component>
+  `,
+  styles: [`
+    .layout-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .main-video { flex: 3; }
+    .participant-grid { flex: 2; }
+    .audio-participants { height: 80px; }
+  `]
+})
+export class CustomLayoutComponent {
+  @Input() parameters: any;
+  windowWidth = window.innerWidth;
+  windowHeight = window.innerHeight;
+}
+```
+
+### 2. Control Components: User Interactions
+
+**ControlButtonsComponent** - Standard control bar
+
+```typescript
+import { ControlButtonsComponent } from 'mediasfu-angular';
+
+@Component({
+  template: `
+    <app-control-buttons-component
+      [parameters]="parameters"
+      [position]="'bottom'">
+    </app-control-buttons-component>
+  `
+})
+```
+Includes: mute, video, screenshare, participants, chat, settings, etc.
+
+**ControlButtonsAltComponent** - Alternative layout
+
+```typescript
+import { ControlButtonsAltComponent } from 'mediasfu-angular';
+
+@Component({
+  template: `
+    <app-control-buttons-alt-component
+      [parameters]="parameters"
+      [position]="'top'">
+    </app-control-buttons-alt-component>
+  `
+})
+```
+Different button arrangement optimized for specific layouts.
+
+**ControlButtonsComponentTouch** - Touch-optimized controls
+
+```typescript
+import { ControlButtonsComponentTouch } from 'mediasfu-angular';
+
+@Component({
+  template: `
+    <app-control-buttons-component-touch
+      [parameters]="parameters">
+    </app-control-buttons-component-touch>
+  `
+})
+```
+Floating action buttons optimized for mobile/tablet interfaces.
+
+### 3. Modal Components: Feature Interfaces
+
+MediaSFU includes modals for various features:
+
+```typescript
+import {
+  ParticipantsModal,
+  MessagesModal,
+  SettingsModal,
+  DisplaySettingsModal,
+  RecordingModal,
+  PollModal,
+  BreakoutRoomsModal
+} from 'mediasfu-angular';
+
+// These are automatically rendered when enabled
+// Control their visibility via parameters
+parameters.updateIsParticipantsModalVisible.next(true);
+parameters.updateIsMessagesModalVisible.next(true);
+parameters.updateIsSettingsModalVisible.next(true);
+```
+
+Available modals:
+- **ParticipantsModal** - Participant list management
+- **MessagesModal** - Chat interface
+- **SettingsModal** - Event and room settings
+- **DisplaySettingsModal** - Layout and display options
+- **RecordingModal** - Recording controls and settings
+- **PollModal** - Create and manage polls
+- **BreakoutRoomsModal** - Breakout room management
+- **MediaSettingsModal** - Camera/microphone selection
+- **BackgroundModal** - Virtual background settings
+- **ConfigureWhiteboardModal** - Whiteboard configuration
+
+**Example: Programmatically showing modals**
+
+```typescript
+@Component({
+  selector: 'app-custom-toolbar',
+  template: `
+    <div class="custom-toolbar">
+      <button (click)="showParticipants()">
+        Show Participants ({{ participantCount }})
+      </button>
+      
+      <button (click)="openChat()">
+        Open Chat
+      </button>
+      
+      <button (click)="createPoll()">
+        Create Poll
+      </button>
     </div>
   `
 })
-export class MyCustomLayout { }
+export class CustomToolbarComponent {
+  @Input() parameters: any;
 
-// MediaSFU handles all the complex WebRTC, you handle the UI
-this.mediasfuParameters = { 
-  customMainComponent: MyCustomLayout,
-  returnUI: false // Disable default MediaSFU UI
-};
+  get participantCount() {
+    return this.parameters?.participants?.length || 0;
+  }
+
+  showParticipants() {
+    this.parameters?.updateIsParticipantsModalVisible.next(true);
+  }
+
+  openChat() {
+    this.parameters?.updateIsMessagesModalVisible.next(true);
+  }
+
+  createPoll() {
+    this.parameters?.launchPoll?.launchPoll({ parameters: this.parameters });
+  }
+}
 ```
 
-### 🚀 **Production-Ready Features**
+### 4. Video Cards: Individual Participant Display
 
-- **Cloud Recording** with custom watermarks and layouts
-- **Breakout Rooms** for team collaboration
-- **Polls & Surveys** for audience engagement  
-- **Waiting Rooms** with host controls
-- **Advanced Permissions** and moderation tools
-- **Real-time Analytics** and monitoring
-- **Enterprise Security** with end-to-end encryption
-
-### 🌍 **Flexible Deployment Options**
+**VideoCard** - Individual participant video element
 
 ```typescript
-// Option 1: MediaSFU Cloud (Fastest setup)
-const credentials = { apiUserName: 'your-key', apiKey: 'your-secret' };
+import { VideoCard } from 'mediasfu-angular';
 
-// Option 2: Self-hosted Community Edition (Free)
-const localLink = 'http://your-server.com';
-
-// Option 3: Hybrid (Best of both worlds)
-const config = { 
-  localLink: 'http://your-server.com',
-  connectMediaSFU: true, // Use cloud for advanced features
-  credentials: credentials
-};
+@Component({
+  template: `
+    <app-video-card
+      [videoStream]="participantStream"
+      [remoteProducerId]="'producer-id'"
+      [eventType]="'conference'"
+      [forceFullDisplay]="false"
+      [participant]="participantObject"
+      [backgroundColor]="'#000000'"
+      [showControls]="true"
+      [showInfo]="true"
+      [name]="'Participant Name'"
+      [parameters]="parameters">
+    </app-video-card>
+  `
+})
 ```
+
+**AudioCard** - Individual audio-only participant
+
+```typescript
+import { AudioCard } from 'mediasfu-angular';
+
+@Component({
+  template: `
+    <app-audio-card
+      [name]="'Participant Name'"
+      [barColor]="'#4CAF50'"
+      [textColor]="'#FFFFFF'"
+      [customStyle]="{ borderRadius: '10px' }"
+      [controlsPosition]="'topLeft'"
+      [infoPosition]="'topRight'"
+      [participant]="participantObject"
+      [parameters]="parameters">
+    </app-audio-card>
+  `
+})
+```
+
+**MiniCard** - Compact participant display (for grids)
+
+```typescript
+import { MiniCard } from 'mediasfu-angular';
+
+@Component({
+  template: `
+    <app-mini-card
+      [participant]="participantObject"
+      [showControls]="false"
+      [parameters]="parameters">
+    </app-mini-card>
+  `
+})
+```
+
+**Example: Custom Video Card**
+
+```typescript
+@Component({
+  selector: 'app-my-custom-video-card',
+  standalone: true,
+  template: `
+    <div class="custom-video-card">
+      <video 
+        #videoElement
+        [srcObject]="stream"
+        autoplay
+        [muted]="true"
+        playsinline>
+      </video>
+      
+      <div class="participant-info">
+        {{ participant.name }} 
+        @if (participant.muted) {
+          <span>🔇</span>
+        }
+      </div>
+    </div>
+  `,
+  styles: [`
+    .custom-video-card {
+      border: 3px solid #00ff88;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .participant-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 255, 136, 0.8);
+      color: black;
+      padding: 8px;
+      font-weight: bold;
+    }
+  `]
+})
+export class MyCustomVideoCardComponent {
+  @Input() stream!: MediaStream;
+  @Input() participant!: any;
+  @Input() parameters!: any;
+}
+
+// Use it in MediasfuGeneric
+@Component({
+  template: `
+    <app-mediasfu-generic 
+      [credentials]="credentials"
+      [customVideoCard]="CustomVideoCard">
+    </app-mediasfu-generic>
+  `
+})
+export class AppComponent {
+  CustomVideoCard = MyCustomVideoCardComponent;
+  credentials = { apiUserName: 'username', apiKey: 'key' };
+}
+```
+
+---
+
+## Working with Methods <a name="working-with-methods"></a>
+
+MediaSFU provides 200+ methods for controlling every aspect of your real-time communication experience. Let's explore the most important categories.
+
+### Media Control Methods
+
+#### Video Control
+
+```typescript
+// Toggle video on/off
+parameters.clickVideo({ parameters });
+
+// Switch camera (front/back on mobile)
+parameters.switchVideoAlt({ parameters });
+
+// Switch to specific camera by ID
+const cameras = await parameters.getMediaDevicesList('videoinput');
+parameters.switchUserVideo({
+  videoPreference: cameras[1].deviceId,
+  parameters
+});
+
+// Get current video state
+const isVideoOn = parameters.videoAlreadyOn;
+
+// Subscribe to video state changes (RxJS)
+parameters.videoAlreadyOn.subscribe((isOn: boolean) => {
+  console.log('Video is now:', isOn ? 'ON' : 'OFF');
+});
+
+// Update video state programmatically
+parameters.updateVideoAlreadyOn.next(true);
+```
+
+#### Audio Control
+
+```typescript
+// Toggle audio on/off
+parameters.clickAudio({ parameters });
+
+// Switch microphone
+const microphones = await parameters.getMediaDevicesList('audioinput');
+parameters.switchUserAudio({
+  audioPreference: microphones[1].deviceId,
+  parameters
+});
+
+// Get current audio state
+const isAudioOn = parameters.audioAlreadyOn;
+const hasHostPermission = parameters.micAction; // Host approval status
+
+// Subscribe to audio state changes
+parameters.audioAlreadyOn.subscribe((isOn: boolean) => {
+  console.log('Audio is now:', isOn ? 'ON' : 'OFF');
+});
+
+// Mute/unmute specific participant (host only)
+parameters.controlMedia({
+  participantId: 'participant-id',
+  participantName: 'John Doe',
+  type: 'audio',
+  socket: parameters.socket,
+  roomName: parameters.roomName
+});
+```
+
+#### Screen Sharing
+
+```typescript
+// Start screen sharing
+parameters.clickScreenShare({ parameters });
+
+// Stop screen sharing
+parameters.stopShareScreen({ parameters });
+
+// Check if screen sharing is available
+const canShare = await parameters.checkScreenShare({ parameters });
+
+// Get screen share state
+const isSharing = parameters.screenAlreadyOn;
+const shareAudio = parameters.shareScreenStarted; // Sharing with audio
+
+// Subscribe to screen share state
+parameters.screenAlreadyOn.subscribe((isSharing: boolean) => {
+  console.log('Screen sharing:', isSharing ? 'ACTIVE' : 'INACTIVE');
+});
+```
+
+### Media Device and Stream Utility Methods
+
+#### Get Available Media Devices
+
+```typescript
+// Get available cameras
+const cameras = await parameters.getMediaDevicesList('videoinput');
+cameras.forEach(camera => {
+  console.log(`Camera: ${camera.label} (${camera.deviceId})`);
+});
+
+// Get available microphones
+const microphones = await parameters.getMediaDevicesList('audioinput');
+microphones.forEach(mic => {
+  console.log(`Microphone: ${mic.label} (${mic.deviceId})`);
+});
+
+// Building a device selector UI
+@Component({
+  selector: 'app-device-selector',
+  template: `
+    <div class="device-selector">
+      <select (change)="onCameraChange($event)">
+        <option value="">Select Camera</option>
+        @for (camera of cameras; track camera.deviceId) {
+          <option [value]="camera.deviceId">
+            {{ camera.label }}
+          </option>
+        }
+      </select>
+
+      <select (change)="onMicrophoneChange($event)">
+        <option value="">Select Microphone</option>
+        @for (mic of microphones; track mic.deviceId) {
+          <option [value]="mic.deviceId">
+            {{ mic.label }}
+          </option>
+        }
+      </select>
+    </div>
+  `
+})
+export class DeviceSelectorComponent implements OnInit {
+  @Input() parameters: any;
+  cameras: MediaDeviceInfo[] = [];
+  microphones: MediaDeviceInfo[] = [];
+
+  async ngOnInit() {
+    await this.loadDevices();
+  }
+
+  async loadDevices() {
+    this.cameras = await this.parameters.getMediaDevicesList('videoinput');
+    this.microphones = await this.parameters.getMediaDevicesList('audioinput');
+  }
+
+  onCameraChange(event: any) {
+    this.parameters.switchUserVideo({
+      videoPreference: event.target.value,
+      parameters: this.parameters
+    });
+  }
+
+  onMicrophoneChange(event: any) {
+    this.parameters.switchUserAudio({
+      audioPreference: event.target.value,
+      parameters: this.parameters
+    });
+  }
+}
+```
+
+#### Get Participant Media Streams
+
+```typescript
+// Get participant video stream by ID
+const videoStream = await parameters.getParticipantMedia({ 
+  id: 'producer-123', 
+  kind: 'video' 
+});
+
+// Get participant audio stream by name
+const audioStream = await parameters.getParticipantMedia({ 
+  name: 'John Doe', 
+  kind: 'audio' 
+});
+
+// Example: Custom participant stream monitor
+@Component({
+  selector: 'app-stream-monitor',
+  template: `
+    <div class="stream-monitor">
+      <h3>Participant Streams</h3>
+      @for (participant of participants; track participant.id) {
+        <div class="participant-item">
+          <span>{{ participant.name }}</span>
+          <button (click)="viewStream(participant)">View Stream</button>
+          <button (click)="monitorAudio(participant)">Monitor Audio</button>
+        </div>
+      }
+
+      @if (selectedStream) {
+        <div class="stream-viewer">
+          <video #streamVideo autoplay playsinline></video>
+        </div>
+      }
+    </div>
+  `,
+  styles: [`
+    .stream-monitor { padding: 20px; }
+    .participant-item { 
+      margin: 10px 0; 
+      display: flex; 
+      gap: 10px; 
+      align-items: center; 
+    }
+    .stream-viewer video { 
+      width: 100%; 
+      max-width: 640px; 
+      border: 2px solid #1976d2; 
+    }
+  `]
+})
+export class StreamMonitorComponent {
+  @Input() parameters: any;
+  @ViewChild('streamVideo') videoElement!: ElementRef<HTMLVideoElement>;
+  
+  selectedStream: MediaStream | null = null;
+
+  get participants() {
+    return this.parameters?.participants || [];
+  }
+
+  async viewStream(participant: any) {
+    const stream = await this.parameters.getParticipantMedia({
+      id: participant.videoID,
+      name: participant.name,
+      kind: 'video'
+    });
+
+    if (stream && this.videoElement) {
+      this.selectedStream = stream;
+      this.videoElement.nativeElement.srcObject = stream;
+    } else {
+      console.log('No video stream found for participant');
+    }
+  }
+
+  async monitorAudio(participant: any) {
+    const stream = await this.parameters.getParticipantMedia({
+      id: participant.audioID,
+      name: participant.name,
+      kind: 'audio'
+    });
+
+    if (stream) {
+      // Create audio context for analysis
+      const audioContext = new AudioContext();
+      const analyser = audioContext.createAnalyser();
+      const source = audioContext.createMediaStreamSource(stream);
+      source.connect(analyser);
+      
+      console.log('Monitoring audio for:', participant.name);
+      // Add your audio analysis logic here
+    } else {
+      console.log('No audio stream found for participant');
+    }
+  }
+}
+```
+
+### Participant Management Methods
+
+```typescript
+// Get all participants
+const participants = parameters.participants;
+const participantCount = parameters.participantsCounter;
+
+// Subscribe to participant changes
+parameters.participants.subscribe((participants: any[]) => {
+  console.log('Participants updated:', participants);
+});
+
+// Filter participants
+const videoParticipants = participants.filter((p: any) => p.videoOn);
+const audioOnlyParticipants = participants.filter((p: any) => !p.videoOn);
+const mutedParticipants = participants.filter((p: any) => p.muted);
+
+// Find specific participant
+const participant = participants.find((p: any) => p.name === 'John Doe');
+
+// Remove participant from room (host only)
+parameters.disconnectUserInitiate({
+  member: participantId,
+  roomName: parameters.roomName,
+  socket: parameters.socket
+});
+
+// Change participant role (host only)
+parameters.updateParticipant({
+  participantId: 'participant-id',
+  islevel: '2', // '2' = host, '1' = co-host, '0' = participant
+  parameters
+});
+
+// Request to unmute participant (sends request)
+parameters.requestScreenShare({ parameters });
+```
+
+### Chat & Messaging Methods
+
+```typescript
+// Send a group message
+parameters.sendMessage({
+  message: 'Hello everyone!',
+  type: 'group',
+  parameters
+});
+
+// Send direct message
+parameters.sendMessage({
+  message: 'Private message',
+  type: 'direct',
+  receivers: ['participant-id'],
+  parameters
+});
+
+// Access message history
+const messages = parameters.messages;
+
+// Subscribe to new messages (RxJS)
+parameters.messages.subscribe((messages: any[]) => {
+  console.log('Messages updated:', messages);
+});
+
+// Example: Custom chat component
+@Component({
+  selector: 'app-custom-chat',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  template: `
+    <div class="chat-container">
+      <div class="messages">
+        @for (msg of messages; track msg.timestamp) {
+          <div class="message">
+            <strong>{{ msg.sender }}:</strong> {{ msg.message }}
+          </div>
+        }
+      </div>
+      <div class="input-area">
+        <input
+          [(ngModel)]="message"
+          (keyup.enter)="sendMessage()"
+          placeholder="Type a message..."
+        />
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .chat-container { 
+      display: flex; 
+      flex-direction: column; 
+      height: 400px; 
+    }
+    .messages { 
+      flex: 1; 
+      overflow-y: auto; 
+      padding: 10px; 
+    }
+    .message { 
+      margin: 5px 0; 
+      padding: 8px; 
+      background: #f5f5f5; 
+      border-radius: 4px; 
+    }
+    .input-area { 
+      display: flex; 
+      gap: 10px; 
+      padding: 10px; 
+      border-top: 1px solid #ddd; 
+    }
+    input { 
+      flex: 1; 
+      padding: 8px; 
+      border: 1px solid #ddd; 
+      border-radius: 4px; 
+    }
+    button { 
+      padding: 8px 16px; 
+      background: #1976d2; 
+      color: white; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+    }
+  `]
+})
+export class CustomChatComponent implements OnInit {
+  @Input() parameters: any;
+  message = '';
+  messages: any[] = [];
+
+  ngOnInit() {
+    // Subscribe to messages
+    this.parameters?.messages?.subscribe((msgs: any[]) => {
+      this.messages = msgs;
+    });
+  }
+
+  sendMessage() {
+    if (this.message.trim()) {
+      this.parameters?.sendMessage({
+        message: this.message,
+        type: 'group',
+        parameters: this.parameters
+      });
+      this.message = '';
+    }
+  }
+}
+```
+
+### Recording Methods
+
+```typescript
+// Start recording
+parameters.startRecording({ parameters });
+
+// Stop recording
+parameters.stopRecording({ parameters });
+
+// Pause recording
+parameters.pauseRecording({ parameters });
+
+// Resume recording
+parameters.resumeRecording({ parameters });
+
+// Configure recording settings
+parameters.updateRecording({
+  recordingMediaOptions: 'video', // or 'audio'
+  recordingAudioOptions: 'all', // or 'host'
+  recordingVideoOptions: 'all', // or 'host'
+  recordingVideoType: 'fullDisplay', // or 'bestDisplay', 'all'
+  recordingDisplayType: 'video', // 'media', 'video', 'all'
+  recordingBackgroundColor: '#000000',
+  recordingNameTagsColor: '#ffffff',
+  recordingOrientationVideo: 'landscape', // or 'portrait'
+  recordingNameTags: true,
+  recordingAddHLS: false,
+  parameters
+});
+
+// Check recording state
+const isRecording = parameters.recordStarted;
+const isPaused = parameters.recordPaused;
+const recordingTime = parameters.recordElapsedTime;
+
+// Subscribe to recording state changes
+parameters.recordStarted.subscribe((isRecording: boolean) => {
+  console.log('Recording:', isRecording ? 'ACTIVE' : 'STOPPED');
+});
+```
+
+### Polls & Surveys Methods
+
+```typescript
+// Create a poll
+parameters.handleCreatePoll({
+  poll: {
+    question: 'What time works best?',
+    type: 'multiple', // or 'single'
+    options: ['10 AM', '2 PM', '5 PM']
+  },
+  parameters
+});
+
+// Vote on a poll
+parameters.handleVotePoll({
+  pollId: 'poll-id',
+  optionIndex: 1,
+  parameters
+});
+
+// End a poll
+parameters.handleEndPoll({
+  pollId: 'poll-id',
+  parameters
+});
+
+// Access poll data
+const polls = parameters.polls;
+
+// Subscribe to polls changes
+parameters.polls.subscribe((polls: any[]) => {
+  const activePoll = polls.find(p => p.status === 'active');
+  console.log('Active poll:', activePoll);
+});
+
+// Example: Custom poll component
+@Component({
+  selector: 'app-custom-poll',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    @if (activePoll) {
+      <div class="poll-container">
+        <h3>{{ activePoll.question }}</h3>
+        <div class="poll-options">
+          @for (option of activePoll.options; track $index) {
+            <button 
+              class="poll-option"
+              (click)="vote($index)">
+              {{ option }} 
+              <span class="votes">({{ activePoll.votes?.[$index] || 0 }} votes)</span>
+            </button>
+          }
+        </div>
+        @if (isHost) {
+          <button class="end-poll" (click)="endPoll()">
+            End Poll
+          </button>
+        }
+      </div>
+    }
+  `,
+  styles: [`
+    .poll-container {
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .poll-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .poll-option {
+      padding: 12px;
+      border: 2px solid #1976d2;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      justify-content: space-between;
+    }
+    .poll-option:hover {
+      background: #1976d2;
+      color: white;
+    }
+    .votes {
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
+    .end-poll {
+      padding: 10px 20px;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  `]
+})
+export class CustomPollComponent implements OnInit {
+  @Input() parameters: any;
+  activePoll: any = null;
+
+  ngOnInit() {
+    this.parameters?.polls?.subscribe((polls: any[]) => {
+      this.activePoll = polls.find((p: any) => p.status === 'active');
+    });
+  }
+
+  get isHost() {
+    return this.parameters?.islevel === '2';
+  }
+
+  vote(optionIndex: number) {
+    if (this.activePoll) {
+      this.parameters?.handleVotePoll({
+        pollId: this.activePoll.id,
+        optionIndex,
+        parameters: this.parameters
+      });
+    }
+  }
+
+  endPoll() {
+    if (this.activePoll) {
+      this.parameters?.handleEndPoll({
+        pollId: this.activePoll.id,
+        parameters: this.parameters
+      });
+    }
+  }
+}
+```
+
+### Breakout Rooms Methods
+
+```typescript
+// Create breakout rooms
+parameters.createBreakoutRooms({
+  numberOfRooms: 3,
+  participants: parameters.participants,
+  parameters
+});
+
+// Assign participant to room
+parameters.assignParticipantToRoom({
+  participantId: 'participant-id',
+  roomIndex: 0,
+  parameters
+});
+
+// Start breakout rooms
+parameters.startBreakoutRooms({ parameters });
+
+// Stop breakout rooms
+parameters.stopBreakoutRooms({ parameters });
+
+// Access breakout room data
+const breakoutRooms = parameters.breakoutRooms;
+const currentRoom = parameters.currentBreakoutRoom;
+
+// Subscribe to breakout room changes
+parameters.breakoutRooms.subscribe((rooms: any[]) => {
+  console.log('Breakout rooms:', rooms);
+});
+```
+
+### Whiteboard Methods
+
+```typescript
+// Show/hide whiteboard
+parameters.updateWhiteboardStarted.next(true);
+parameters.updateWhiteboardEnded.next(false);
+
+// Configure whiteboard
+parameters.launchConfigureWhiteboard?.launchConfigureWhiteboard({ parameters });
+
+// Access whiteboard state
+const isWhiteboardActive = parameters.whiteboardStarted;
+
+// Subscribe to whiteboard state
+parameters.whiteboardStarted.subscribe((isActive: boolean) => {
+  console.log('Whiteboard:', isActive ? 'ACTIVE' : 'INACTIVE');
+});
+
+// Access whiteboard users
+const whiteboardUsers = parameters.whiteboardUsers;
+```
+
+### Utility Methods
+
+```typescript
+// Check permissions
+const hasPermission = await parameters.checkPermission({
+  permissionType: 'video', // or 'audio'
+  parameters
+});
+
+// Format large numbers
+const formatted = parameters.formatNumber(1250000); // Returns "1.25M"
+
+// Sleep/delay
+await parameters.sleep({ ms: 1000 });
+
+// Update display settings
+parameters.updateMainWindow.next(true); // Show/hide main window
+
+// Trigger layout recalculation
+parameters.onScreenChanges({ changed: true, parameters });
+
+// Get room information
+const roomInfo = {
+  name: parameters.roomName,
+  host: parameters.host,
+  capacity: parameters.capacity,
+  eventType: parameters.eventType,
+  participants: parameters.participants,
+  isRecording: parameters.recordStarted
+};
+
+// Subscribe to room state changes
+parameters.roomName.subscribe((name: string) => {
+  console.log('Room name:', name);
+});
+
+parameters.participantsCounter.subscribe((count: number) => {
+  console.log('Participant count:', count);
+});
+```
+
+---
 
 ## Programmatically Fetching Tokens
 
@@ -2589,335 +4000,6 @@ To create a custom UI, you can refer to existing MediaSFU implementations like:
 Once your custom components are built, modify the imports of `prepopulateUserMedia` and `addVideosGrid` to point to your custom implementations instead of the default MediaSFU ones.
 
 This allows for full flexibility in how media is displayed in both the main and mini grids, giving you the ability to tailor the user experience to your specific needs.
-
-## Custom Component Injection Service
-
-MediaSFU provides a powerful `CustomComponentInjectionService` that enables advanced custom component integration across all MediaSFU components. This service offers a comprehensive set of utilities for managing custom component rendering, validation, and lifecycle management.
-
-### Features
-
-- **Type-safe component validation**: Check if components are Angular components, HTML elements, or function components
-- **Dynamic component injection**: Create components with custom parameters and injectors
-- **Safe rendering utilities**: Handle different component types with proper error handling and fallbacks
-- **Component lifecycle management**: Proper cleanup and destruction of custom components
-- **Template integration helpers**: Utilities for the custom component pattern used throughout MediaSFU
-
-### Basic Usage
-
-First, import the service and types:
-
-```typescript
-import { 
-  CustomComponentInjectionService,
-  CustomComponent,
-  CustomComponentType,
-  CustomComponentParameters,
-  CustomComponentContext
-} from 'mediasfu-angular';
-```
-
-#### Injecting the Service
-
-```typescript
-import { Component, inject } from '@angular/core';
-
-@Component({
-  selector: 'app-my-component',
-  template: `...`
-})
-export class MyComponent {
-  private customComponentService = inject(CustomComponentInjectionService);
-}
-```
-
-#### Creating Custom Components with Parameters
-
-```typescript
-// Create a custom component with injected parameters
-const customVideoCard = this.customComponentService.createComponentWithInjector(
-  MyCustomVideoCard,
-  {
-    participant: participantData,
-    options: videoOptions,
-    callbacks: eventHandlers
-  }
-);
-
-// Use in MediaSFU component
-const params = {
-  customVideoCard: customVideoCard,
-  // ... other parameters
-};
-```
-
-#### Component Type Validation
-
-```typescript
-// Check component types
-if (this.customComponentService.isCustomComponent(component)) {
-  // Handle Angular component with injector
-  console.log('Angular component detected');
-} else if (this.customComponentService.isHTMLElement(component)) {
-  // Handle HTML element
-  console.log('HTML element detected');
-} else if (this.customComponentService.isFunctionComponent(component)) {
-  // Handle function component
-  console.log('Function component detected');
-}
-```
-
-#### Safe HTML Element Access
-
-```typescript
-// Safely get outerHTML from components
-const htmlContent = this.customComponentService.getHtmlElementOuterHTML(component);
-if (htmlContent) {
-  // Use the HTML content
-  element.innerHTML = htmlContent;
-}
-```
-
-#### Component Resolution Pattern
-
-```typescript
-// Resolve between custom and default components
-const resolvedComponent = this.customComponentService.resolveComponent(
-  customComponent, // May be undefined
-  defaultComponent // Fallback component
-);
-
-// Check if custom main component should be used
-const useCustomLayout = this.customComponentService.shouldUseCustomMainComponent(
-  customMainComponent
-);
-```
-
-### Advanced Usage Examples
-
-#### 1. Dynamic Component Rendering
-
-```typescript
-@Component({
-  selector: 'app-dynamic-renderer',
-  template: `
-    <ng-container #dynamicContainer></ng-container>
-  `
-})
-export class DynamicRenderer {
-  @ViewChild('dynamicContainer', { read: ViewContainerRef }) 
-  container!: ViewContainerRef;
-  
-  private customComponentService = inject(CustomComponentInjectionService);
-  
-  renderCustomComponent(customComponent: CustomComponentType<any>) {
-    const context: CustomComponentContext = {
-      parameters: {
-        data: this.componentData,
-        events: this.eventHandlers
-      },
-      injector: this.injector,
-      config: {
-        enabled: true,
-        fallbackToDefault: true
-      }
-    };
-    
-    const componentRef = this.customComponentService.renderCustomComponent(
-      customComponent,
-      this.container,
-      context
-    );
-    
-    // Store reference for cleanup
-    this.activeComponents.push(componentRef);
-  }
-  
-  ngOnDestroy() {
-    // Clean up all custom components
-    this.activeComponents.forEach(component => {
-      this.customComponentService.destroyCustomComponent(component);
-    });
-  }
-}
-```
-
-#### 2. Custom Video Card Implementation
-
-```typescript
-// Define your custom video card component
-@Component({
-  selector: 'app-custom-video-card',
-  template: `
-    <div class="custom-video-wrapper">
-      <video [srcObject]="videoStream" autoplay playsinline></video>
-      <div class="custom-controls">
-        <button (click)="toggleAudio()">🎤</button>
-        <button (click)="toggleVideo()">📹</button>
-      </div>
-      <div class="custom-info">{{ participantName }}</div>
-    </div>
-  `,
-  imports: [CommonModule]
-})
-export class CustomVideoCard {
-  @Input() participant!: Participant;
-  @Input() videoStream!: MediaStream;
-  @Input() options!: any;
-  
-  get participantName() {
-    return this.participant?.name || 'Unknown';
-  }
-  
-  toggleAudio() {
-    // Custom audio toggle logic
-  }
-  
-  toggleVideo() {
-    // Custom video toggle logic
-  }
-}
-
-// In your main component
-export class MyMediaComponent {
-  private customComponentService = inject(CustomComponentInjectionService);
-  
-  ngOnInit() {
-    // Create custom video card with parameters
-    const customVideoCard = this.customComponentService.createComponentWithInjector(
-      CustomVideoCard,
-      {
-        participant: this.currentParticipant,
-        options: this.videoOptions
-      }
-    );
-    
-    // Use in MediaSFU parameters
-    this.mediasfuParameters = {
-      customVideoCard: customVideoCard,
-      // ... other parameters
-    };
-  }
-}
-```
-
-#### 3. Custom Main Component with Template Restructuring
-
-```typescript
-@Component({
-  selector: 'app-custom-main-layout',
-  template: `
-    <div class="custom-main-layout">
-      <header class="custom-header">
-        <h1>My Custom Stream</h1>
-        <div class="custom-controls">
-          <!-- Custom control buttons -->
-        </div>
-      </header>
-      
-      <main class="custom-content">
-        <div class="video-area">
-          <!-- Your custom video layout -->
-        </div>
-        <div class="participant-list">
-          <!-- Custom participant list -->
-        </div>
-      </main>
-      
-      <footer class="custom-footer">
-        <!-- Custom footer content -->
-      </footer>
-    </div>
-  `,
-  imports: [CommonModule]
-})
-export class CustomMainLayout {
-  @Input() parameters!: any;
-  @Input() credentials!: any;
-}
-
-// Usage
-const customMainComponent = this.customComponentService.createComponentWithInjector(
-  CustomMainLayout,
-  {
-    theme: 'dark',
-    layout: 'grid'
-  }
-);
-
-// MediaSFU will use this instead of default layout
-this.mediasfuParameters = {
-  customMainComponent: customMainComponent,
-  // ... other parameters
-};
-```
-
-### Component Validation and Error Handling
-
-```typescript
-// Validate before using
-if (this.customComponentService.validateCustomComponent(customComponent)) {
-  // Component is valid, proceed with rendering
-  this.renderComponent(customComponent);
-} else {
-  // Handle invalid component, use fallback
-  console.warn('Invalid custom component, using default');
-  this.renderComponent(this.defaultComponent);
-}
-
-// Merge options safely
-const mergedOptions = this.customComponentService.mergeComponentOptions(
-  customOptions,
-  defaultOptions
-);
-```
-
-### TypeScript Types
-
-The service works with these main types:
-
-```typescript
-// Union type for all supported component types
-type CustomComponentType<T = any> = CustomComponent<T> | HTMLElement | CustomComponentFunction;
-
-// Angular component with injector
-interface CustomComponent<T = any> {
-  component: Type<T>;
-  injector?: Injector;
-}
-
-// Function that returns HTMLElement
-type CustomComponentFunction = () => HTMLElement;
-
-// Parameters for component injection
-interface CustomComponentParameters {
-  [key: string]: any;
-}
-
-// Context for component rendering
-interface CustomComponentContext {
-  parameters: CustomComponentParameters;
-  injector?: Injector;
-  config?: ComponentInjectionConfig;
-}
-
-// Configuration options
-interface ComponentInjectionConfig {
-  enabled: boolean;
-  overrideDefaults: boolean;
-  fallbackToDefault: boolean;
-}
-```
-
-### Best Practices
-
-1. **Always validate components** before rendering
-2. **Use proper cleanup** to prevent memory leaks
-3. **Leverage type guards** for safe component handling
-4. **Provide fallbacks** for failed component rendering
-5. **Use meaningful parameter names** when creating injectors
-6. **Test custom components** in isolation before integration
-
-The `CustomComponentInjectionService` provides a robust foundation for building highly customizable MediaSFU applications while maintaining type safety and proper Angular practices.
 
 
 # API Reference <a name="api-reference"></a>

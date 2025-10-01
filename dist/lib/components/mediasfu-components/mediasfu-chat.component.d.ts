@@ -302,6 +302,22 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     private recordingSubscription;
     constructor(cdr: ChangeDetectorRef, injector: Injector, updateMiniCardsGrid: UpdateMiniCardsGrid, mixStreams: MixStreams, dispStreams: DispStreams, stopShareScreen: StopShareScreen, checkScreenShare: CheckScreenShare, startShareScreen: StartShareScreen, requestScreenShare: RequestScreenShare, reorderStreams: ReorderStreams, prepopulateUserMedia: PrepopulateUserMedia, getVideos: GetVideos, rePort: RePort, trigger: Trigger, consumerResume: ConsumerResume, connectSendTransport: ConnectSendTransport, connectSendTransportAudio: ConnectSendTransportAudio, connectSendTransportVideo: ConnectSendTransportVideo, connectSendTransportScreen: ConnectSendTransportScreen, processConsumerTransports: ProcessConsumerTransports, resumePauseStreams: ResumePauseStreams, readjust: Readjust, checkGrid: CheckGrid, getEstimate: GetEstimate, calculateRowsAndColumns: CalculateRowsAndColumns, addVideosGrid: AddVideosGrid, onScreenChanges: OnScreenChanges, changeVids: ChangeVids, compareActiveNames: CompareActiveNames, compareScreenStates: CompareScreenStates, createSendTransport: CreateSendTransport, resumeSendTransportAudio: ResumeSendTransportAudio, receiveAllPipedTransports: ReceiveAllPipedTransports, disconnectSendTransportVideo: DisconnectSendTransportVideo, disconnectSendTransportAudio: DisconnectSendTransportAudio, disconnectSendTransportScreen: DisconnectSendTransportScreen, getPipedProducersAlt: GetPipedProducersAlt, signalNewConsumerTransport: SignalNewConsumerTransport, connectRecvTransport: ConnectRecvTransport, reUpdateInter: ReUpdateInter, updateParticipantAudioDecibels: UpdateParticipantAudioDecibels, closeAndResize: CloseAndResize, autoAdjust: AutoAdjust, switchUserVideoAlt: SwitchUserVideoAlt, switchUserVideo: SwitchUserVideo, switchUserAudio: SwitchUserAudio, getDomains: GetDomains, formatNumber: FormatNumber, connectIps: ConnectIps, connectLocalIps: ConnectLocalIps, createDeviceClient: CreateDeviceClient, captureCanvasStream: CaptureCanvasStream, resumePauseAudioStreams: ResumePauseAudioStreams, processConsumerTransportsAudio: ProcessConsumerTransportsAudio, launchMessages: LaunchMessages, launchConfirmExit: LaunchConfirmExit, startMeetingProgressTimer: StartMeetingProgressTimer, producerMediaPaused: ProducerMediaPaused, producerMediaResumed: ProducerMediaResumed, producerMediaClosed: ProducerMediaClosed, meetingEnded: MeetingEnded, disconnectUserSelf: DisconnectUserSelf, receiveMessage: ReceiveMessage, meetingTimeRemaining: MeetingTimeRemaining, meetingStillThere: MeetingStillThere, allMembers: AllMembers, allMembersRest: AllMembersRest, disconnect: Disconnect, socketManager: SocketManager, joinRoomClient: JoinRoomClient, joinLocalRoom: JoinLocalRoom, updateRoomParametersClient: UpdateRoomParametersClient, clickVideo: ClickVideo, clickAudio: ClickAudio, clickScreenShare: ClickScreenShare, switchVideoAlt: SwitchVideoAlt, streamSuccessVideo: StreamSuccessVideo, streamSuccessAudio: StreamSuccessAudio, streamSuccessScreen: StreamSuccessScreen, streamSuccessAudioSwitch: StreamSuccessAudioSwitch, checkPermission: CheckPermission, updateConsumingDomains: UpdateConsumingDomains, receiveRoomMessages: ReceiveRoomMessages);
     createInjector(inputs: any): Injector;
+    /**
+     * Gets a list of media devices filtered by the specified kind.
+     * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+     * @returns A promise that resolves to an array of MediaDeviceInfo objects
+     */
+    getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+    /**
+     * Gets the media stream for a participant by their ID or name.
+     * @param options - Object containing id, name, and kind parameters
+     * @returns A promise that resolves to the participant's MediaStream or null if not found
+     */
+    getParticipantMedia: (options: {
+        id?: string;
+        name?: string;
+        kind: "video" | "audio";
+    }) => Promise<MediaStream | null>;
     mediaSFUFunctions: () => {
         updateMiniCardsGrid: ({ rows, cols, defal, actualRows, parameters, }: import("../../consumers/update-mini-cards-grid.service").UpdateMiniCardsGridOptions) => Promise<void>;
         mixStreams: ({ alVideoStreams, non_alVideoStreams, ref_participants, }: import("../../consumers/mix-streams.service").MixStreamsOptions) => Promise<(Stream | Participant)[]>;
@@ -374,6 +390,12 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         switchVideoAlt: ({ parameters }: import("../../@types/types").SwitchVideoAltOptions) => Promise<void>;
         requestPermissionCamera: () => Promise<string>;
         requestPermissionAudio: () => Promise<string>;
+        getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+        getParticipantMedia: (options: {
+            id?: string;
+            name?: string;
+            kind: "video" | "audio";
+        }) => Promise<MediaStream | null>;
     };
     validated: BehaviorSubject<boolean>;
     localUIMode: BehaviorSubject<boolean>;
@@ -1779,6 +1801,12 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             switchVideoAlt: ({ parameters }: import("../../@types/types").SwitchVideoAltOptions) => Promise<void>;
             requestPermissionCamera: () => Promise<string>;
             requestPermissionAudio: () => Promise<string>;
+            getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+            getParticipantMedia: (options: {
+                id?: string;
+                name?: string;
+                kind: "video" | "audio";
+            }) => Promise<MediaStream | null>;
             localUIMode: boolean;
             roomName: string;
             member: string;
@@ -2504,6 +2532,12 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         switchVideoAlt: ({ parameters }: import("../../@types/types").SwitchVideoAltOptions) => Promise<void>;
         requestPermissionCamera: () => Promise<string>;
         requestPermissionAudio: () => Promise<string>;
+        getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+        getParticipantMedia: (options: {
+            id?: string;
+            name?: string;
+            kind: "video" | "audio";
+        }) => Promise<MediaStream | null>;
         localUIMode: boolean;
         roomName: string;
         member: string;
@@ -3226,6 +3260,12 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             switchVideoAlt: ({ parameters }: import("../../@types/types").SwitchVideoAltOptions) => Promise<void>;
             requestPermissionCamera: () => Promise<string>;
             requestPermissionAudio: () => Promise<string>;
+            getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+            getParticipantMedia: (options: {
+                id?: string;
+                name?: string;
+                kind: "video" | "audio";
+            }) => Promise<MediaStream | null>;
             localUIMode: boolean;
             roomName: string;
             member: string;
@@ -3951,6 +3991,12 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         switchVideoAlt: ({ parameters }: import("../../@types/types").SwitchVideoAltOptions) => Promise<void>;
         requestPermissionCamera: () => Promise<string>;
         requestPermissionAudio: () => Promise<string>;
+        getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+        getParticipantMedia: (options: {
+            id?: string;
+            name?: string;
+            kind: "video" | "audio";
+        }) => Promise<MediaStream | null>;
         localUIMode: boolean;
         roomName: string;
         member: string;
@@ -4673,6 +4719,12 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             switchVideoAlt: ({ parameters }: import("../../@types/types").SwitchVideoAltOptions) => Promise<void>;
             requestPermissionCamera: () => Promise<string>;
             requestPermissionAudio: () => Promise<string>;
+            getMediaDevicesList: (kind: "videoinput" | "audioinput") => Promise<MediaDeviceInfo[]>;
+            getParticipantMedia: (options: {
+                id?: string;
+                name?: string;
+                kind: "video" | "audio";
+            }) => Promise<MediaStream | null>;
             localUIMode: boolean;
             roomName: string;
             member: string;

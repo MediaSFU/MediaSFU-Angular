@@ -13,7 +13,10 @@
     "url": "https://github.com/MediaSFU/MediaSFU-Angular/issues",
     "email": "info@mediasfu.com"
   },
-  "peerDependencies": {
+  "scripts": {
+    "build-docs": "typedoc"
+  },
+  "dependencies": {
     "@angular/animations": "^19.2.15",
     "@angular/common": "^19.2.15",
     "@angular/compiler": "^19.2.15",
@@ -22,21 +25,9 @@
     "@angular/platform-browser": "^19.2.15",
     "@angular/platform-browser-dynamic": "^19.2.15",
     "@angular/router": "^19.2.15",
-    "@fortawesome/angular-fontawesome": "^1.0.0",
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-brands-svg-icons": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@mediapipe/selfie_segmentation": "^0.1.1675465747",
-    "@zxing/ngx-scanner": "^19.0.0",
-    "bootstrap": "^5.3.8",
-    "ngx-cookie-service": "^19.1.2",
     "rxjs": "~7.8.0",
-    "zone.js": "~0.15.0",
-    "mediasoup-client": "3.7.17",
-    "socket.io-client": "^4.8.1"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
   },
   "module": "dist/fesm2022/mediasfu-angular.mjs",
   "es2022": "dist/fesm2022/mediasfu-angular.mjs",
@@ -91,5 +82,38 @@
     "mediasfu-angular",
     "mediasfu-angular-sdk",
     "mediasfu-angular-component"
-  ]
+     ],
+    "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.17",
+    "@angular/cdk": "^19.2.19",
+    "@angular/cli": "^19.2.17",
+    "@angular/compiler-cli": "^19.2.15",
+    "@fortawesome/angular-fontawesome": "^1.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/free-brands-svg-icons": "^6.7.1",
+    "@fortawesome/free-solid-svg-icons": "^6.7.1",
+    "@mediapipe/selfie_segmentation": "^0.1.1675465747",
+    "@types/jasmine": "~5.1.0",
+    "@zxing/ngx-scanner": "^19.0.0",
+    "angular-eslint": "19.0.0",
+    "bootstrap": "^5.3.3",
+    "eslint": "^9.15.0",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "mediasoup-client": "3.7.17",
+    "ng-packagr": "^19.0.1",
+    "ngx-cookie-service": "^19.0.0",
+    "rxjs": "~7.8.0",
+    "socket.io-client": "^4.3.2",
+    "tslib": "^2.3.0",
+    "typedoc": "^0.26.10",
+    "typedoc-plugin-extras": "^3.1.0",
+    "typedoc-plugin-markdown": "~4.2.10",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "8.16.0"
+  }
 }

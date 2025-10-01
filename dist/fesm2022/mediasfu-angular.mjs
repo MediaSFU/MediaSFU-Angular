@@ -35321,6 +35321,51 @@ class MediasfuGeneric {
         });
         return inj;
     }
+    /**
+     * Gets a list of media devices filtered by the specified kind.
+     * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+     * @returns A promise that resolves to an array of MediaDeviceInfo objects
+     */
+    getMediaDevicesList = async (kind) => {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            return devices.filter((device) => device.kind === kind);
+        }
+        catch (error) {
+            console.error('Error enumerating devices:', error);
+            return [];
+        }
+    };
+    /**
+     * Gets the media stream for a participant by their ID or name.
+     * @param options - Object containing id, name, and kind parameters
+     * @returns A promise that resolves to the participant's MediaStream or null if not found
+     */
+    getParticipantMedia = async (options) => {
+        const { id, name, kind } = options;
+        try {
+            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+            // Search by producerId if provided
+            if (id) {
+                const streamObj = streams.find((obj) => obj.producerId === id);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            // Search by name if provided
+            if (name) {
+                const streamObj = streams.find((obj) => obj.name === name);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            return null;
+        }
+        catch (error) {
+            console.error('Error getting participant media:', error);
+            return null;
+        }
+    };
     // Initial values
     mediaSFUFunctions = () => {
         return {
@@ -35592,6 +35637,8 @@ class MediasfuGeneric {
                 (() => {
                     console.log('none');
                 }),
+            getMediaDevicesList: this.getMediaDevicesList,
+            getParticipantMedia: this.getParticipantMedia,
         };
     };
     validated = new BehaviorSubject$1(false);
@@ -40823,6 +40870,51 @@ class MediasfuBroadcast {
         });
         return inj;
     }
+    /**
+     * Gets a list of media devices filtered by the specified kind.
+     * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+     * @returns A promise that resolves to an array of MediaDeviceInfo objects
+     */
+    getMediaDevicesList = async (kind) => {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            return devices.filter((device) => device.kind === kind);
+        }
+        catch (error) {
+            console.error('Error enumerating devices:', error);
+            return [];
+        }
+    };
+    /**
+     * Gets the media stream for a participant by their ID or name.
+     * @param options - Object containing id, name, and kind parameters
+     * @returns A promise that resolves to the participant's MediaStream or null if not found
+     */
+    getParticipantMedia = async (options) => {
+        const { id, name, kind } = options;
+        try {
+            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+            // Search by producerId if provided
+            if (id) {
+                const streamObj = streams.find((obj) => obj.producerId === id);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            // Search by name if provided
+            if (name) {
+                const streamObj = streams.find((obj) => obj.name === name);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            return null;
+        }
+        catch (error) {
+            console.error('Error getting participant media:', error);
+            return null;
+        }
+    };
     // Initial values
     mediaSFUFunctions = () => {
         return {
@@ -41082,6 +41174,8 @@ class MediasfuBroadcast {
                 (() => {
                     console.log('none');
                 }),
+            getMediaDevicesList: this.getMediaDevicesList,
+            getParticipantMedia: this.getParticipantMedia,
         };
     };
     validated = new BehaviorSubject$1(false);
@@ -45267,6 +45361,51 @@ class MediasfuWebinar {
         });
         return inj;
     }
+    /**
+     * Gets a list of media devices filtered by the specified kind.
+     * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+     * @returns A promise that resolves to an array of MediaDeviceInfo objects
+     */
+    getMediaDevicesList = async (kind) => {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            return devices.filter((device) => device.kind === kind);
+        }
+        catch (error) {
+            console.error('Error enumerating devices:', error);
+            return [];
+        }
+    };
+    /**
+     * Gets the media stream for a participant by their ID or name.
+     * @param options - Object containing id, name, and kind parameters
+     * @returns A promise that resolves to the participant's MediaStream or null if not found
+     */
+    getParticipantMedia = async (options) => {
+        const { id, name, kind } = options;
+        try {
+            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+            // Search by producerId if provided
+            if (id) {
+                const streamObj = streams.find((obj) => obj.producerId === id);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            // Search by name if provided
+            if (name) {
+                const streamObj = streams.find((obj) => obj.name === name);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            return null;
+        }
+        catch (error) {
+            console.error('Error getting participant media:', error);
+            return null;
+        }
+    };
     // Initial values
     mediaSFUFunctions = () => {
         return {
@@ -45534,6 +45673,8 @@ class MediasfuWebinar {
                 (() => {
                     console.log('none');
                 }),
+            getMediaDevicesList: this.getMediaDevicesList,
+            getParticipantMedia: this.getParticipantMedia,
         };
     };
     validated = new BehaviorSubject$1(false);
@@ -50494,6 +50635,51 @@ class MediasfuConference {
         });
         return inj;
     }
+    /**
+     * Gets a list of media devices filtered by the specified kind.
+     * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+     * @returns A promise that resolves to an array of MediaDeviceInfo objects
+     */
+    getMediaDevicesList = async (kind) => {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            return devices.filter((device) => device.kind === kind);
+        }
+        catch (error) {
+            console.error('Error enumerating devices:', error);
+            return [];
+        }
+    };
+    /**
+     * Gets the media stream for a participant by their ID or name.
+     * @param options - Object containing id, name, and kind parameters
+     * @returns A promise that resolves to the participant's MediaStream or null if not found
+     */
+    getParticipantMedia = async (options) => {
+        const { id, name, kind } = options;
+        try {
+            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+            // Search by producerId if provided
+            if (id) {
+                const streamObj = streams.find((obj) => obj.producerId === id);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            // Search by name if provided
+            if (name) {
+                const streamObj = streams.find((obj) => obj.name === name);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            return null;
+        }
+        catch (error) {
+            console.error('Error getting participant media:', error);
+            return null;
+        }
+    };
     // Initial values
     mediaSFUFunctions = () => {
         return {
@@ -50761,6 +50947,8 @@ class MediasfuConference {
                 (() => {
                     console.log('none');
                 }),
+            getMediaDevicesList: this.getMediaDevicesList,
+            getParticipantMedia: this.getParticipantMedia,
         };
     };
     validated = new BehaviorSubject$1(false);
@@ -55649,6 +55837,51 @@ class MediasfuChat {
         });
         return inj;
     }
+    /**
+     * Gets a list of media devices filtered by the specified kind.
+     * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+     * @returns A promise that resolves to an array of MediaDeviceInfo objects
+     */
+    getMediaDevicesList = async (kind) => {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            return devices.filter((device) => device.kind === kind);
+        }
+        catch (error) {
+            console.error('Error enumerating devices:', error);
+            return [];
+        }
+    };
+    /**
+     * Gets the media stream for a participant by their ID or name.
+     * @param options - Object containing id, name, and kind parameters
+     * @returns A promise that resolves to the participant's MediaStream or null if not found
+     */
+    getParticipantMedia = async (options) => {
+        const { id, name, kind } = options;
+        try {
+            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+            // Search by producerId if provided
+            if (id) {
+                const streamObj = streams.find((obj) => obj.producerId === id);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            // Search by name if provided
+            if (name) {
+                const streamObj = streams.find((obj) => obj.name === name);
+                if (streamObj && 'stream' in streamObj) {
+                    return streamObj.stream || null;
+                }
+            }
+            return null;
+        }
+        catch (error) {
+            console.error('Error getting participant media:', error);
+            return null;
+        }
+    };
     // Initial values
     mediaSFUFunctions = () => {
         return {
@@ -55908,6 +56141,8 @@ class MediasfuChat {
                 (() => {
                     console.log('none');
                 }),
+            getMediaDevicesList: this.getMediaDevicesList,
+            getParticipantMedia: this.getParticipantMedia,
         };
     };
     validated = new BehaviorSubject$1(false);
