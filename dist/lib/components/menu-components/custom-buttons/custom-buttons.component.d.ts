@@ -1,4 +1,4 @@
-import { Injector, Type } from '@angular/core';
+import { Injector, Type, TemplateRef } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import * as i0 from "@angular/core";
 export interface CustomComponent {
@@ -6,8 +6,8 @@ export interface CustomComponent {
     injector: Injector;
 }
 export interface CustomButton {
-    action: () => void;
-    show: boolean | (() => boolean);
+    action?: (() => void) | (() => Promise<void>);
+    show?: boolean | (() => boolean);
     backgroundColor?: string;
     disabled?: boolean;
     icon?: IconDefinition;
@@ -16,9 +16,23 @@ export interface CustomButton {
     textStyle?: Partial<CSSStyleDeclaration>;
     customComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
     injector?: Injector;
+    buttonAttributes?: {
+        [key: string]: any;
+    };
+    contentAttributes?: {
+        [key: string]: any;
+    };
+    iconAttributes?: {
+        [key: string]: any;
+    };
+    renderAsButton?: boolean;
 }
 export interface CustomButtonsOptions {
     buttons: CustomButton[];
+    containerAttributes?: {
+        [key: string]: any;
+    };
+    fallbackSpinner?: TemplateRef<any>;
 }
 export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
 /**
@@ -72,10 +86,15 @@ export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
  */
 export declare class CustomButtons {
     buttons: CustomButton[];
+    containerAttributes?: {
+        [key: string]: any;
+    };
+    fallbackSpinner?: TemplateRef<any>;
     faSpinner: IconDefinition;
     mergeStyles(defaultStyle: any, customStyle: any): any;
+    getButtonStyles(button: CustomButton): any;
     get customButtonIcon(): any;
     isCustomComponentConfig(obj: any): obj is CustomComponent;
     static ɵfac: i0.ɵɵFactoryDeclaration<CustomButtons, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<CustomButtons, "app-custom-buttons", never, { "buttons": { "alias": "buttons"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CustomButtons, "app-custom-buttons", never, { "buttons": { "alias": "buttons"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "fallbackSpinner": { "alias": "fallbackSpinner"; "required": false; }; }, {}, never, never, true, never>;
 }

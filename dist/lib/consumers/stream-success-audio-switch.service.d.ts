@@ -1,7 +1,10 @@
-import { Producer, ProducerCodecOptions, ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { Socket } from 'socket.io-client';
 import { PrepopulateUserMediaParameters, PrepopulateUserMediaType, CreateSendTransportParameters, CreateSendTransportType, ConnectSendTransportAudioParameters, ConnectSendTransportAudioType, SleepType } from '../@types/types';
 import * as i0 from "@angular/core";
+type Producer = types.Producer;
+type ProducerCodecOptions = types.ProducerCodecOptions;
+type ProducerOptions = types.ProducerOptions;
 /**
  * Handles the success of switching audio devices in a streaming context.
  * @async
@@ -225,3 +228,4 @@ export declare class StreamSuccessAudioSwitch {
     static ɵfac: i0.ɵɵFactoryDeclaration<StreamSuccessAudioSwitch, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<StreamSuccessAudioSwitch>;
 }
+export {};

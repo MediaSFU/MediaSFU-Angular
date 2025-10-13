@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MeetingProgressTimer } from '../meeting-progress-timer/meeting-progress-timer.component';
 
@@ -11,6 +11,8 @@ export interface MainGridComponentOptions {
   timeBackgroundColor?: string;
   showTimer?: boolean;
   meetingProgressTime?: string;
+  containerStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLElement;
@@ -65,14 +67,30 @@ export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLE
     selector: 'app-main-grid-component',
     imports: [CommonModule, MeetingProgressTimer],
     template: `
-    <div [ngStyle]="maingridContainerStyle">
-      <app-meeting-progress-timer
-        *ngIf="showTimer"
-        [meetingProgressTime]="meetingProgressTime"
-        [initialBackgroundColor]="timeBackgroundColor"
-      ></app-meeting-progress-timer>
-      <ng-content></ng-content>
+    <div *ngIf="customTemplate; else defaultTemplate" [ngStyle]="maingridContainerStyle">
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          backgroundColor,
+          mainSize,
+          height,
+          width,
+          showAspect,
+          timeBackgroundColor,
+          showTimer,
+          meetingProgressTime
+        }
+      }"></ng-container>
     </div>
+    <ng-template #defaultTemplate>
+      <div [ngStyle]="maingridContainerStyle">
+        <app-meeting-progress-timer
+          *ngIf="showTimer"
+          [meetingProgressTime]="meetingProgressTime"
+          [initialBackgroundColor]="timeBackgroundColor"
+        ></app-meeting-progress-timer>
+        <ng-content></ng-content>
+      </div>
+    </ng-template>
   `
 })
 export class MainGridComponent {
@@ -84,9 +102,11 @@ export class MainGridComponent {
   @Input() timeBackgroundColor = 'green';
   @Input() showTimer = true;
   @Input() meetingProgressTime = '0';
+  @Input() containerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   get maingridContainerStyle() {
-    return {
+    const baseStyles = {
       display: this.showAspect ? 'flex' : 'none',
       backgroundColor: this.backgroundColor,
       height: `${this.height}px`,
@@ -97,6 +117,10 @@ export class MainGridComponent {
       borderStyle: 'solid',
       borderColor: '#000',
       borderWidth: '4px',
+    };
+    return {
+      ...baseStyles,
+      ...(this.containerStyle as any),
     };
   }
 }

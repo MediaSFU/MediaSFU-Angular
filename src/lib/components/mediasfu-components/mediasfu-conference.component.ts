@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
+import { UIOverrideResolverService } from '../../services/ui-override-resolver.service';
+import { WithOverrideDirective } from '../../directives/with-override.directive';
 import { BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { Socket } from 'socket.io-client';
 import {
@@ -268,13 +271,12 @@ import { CaptureCanvasStream } from '../../methods/whiteboard-methods/capture-ca
 import { ResumePauseAudioStreams } from '../../consumers/resume-pause-audio-streams.service';
 import { ProcessConsumerTransportsAudio } from '../../consumers/process-consumer-transports-audio.service';
 
-import {
-  Device,
-  Producer,
-  ProducerOptions,
-  RtpCapabilities,
-  Transport,
-} from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
+type RtpCapabilities = types.RtpCapabilities;
+type Transport = types.Transport;;
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 export type MediasfuConferenceOptions = {
@@ -371,6 +373,8 @@ export type MediasfuConferenceOptions = {
 @Component({
   selector: 'app-mediasfu-conference',
   imports: [
+    CommonModule,
+    WithOverrideDirective,
     BreakoutRoomsModal,
     BackgroundModal,
     CoHostModal,
@@ -420,6 +424,7 @@ export type MediasfuConferenceOptions = {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
+      [ngStyle]="containerStyle"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -433,8 +438,20 @@ export type MediasfuConferenceOptions = {
 
       <ng-template #mainContent>
         <!-- Default Main Component -->
-        <app-main-container-component *ngIf="returnUI">
+        <ng-container *ngIf="returnUI">
+        <app-main-container-component
+          *appWithOverride="
+            'mainContainer';
+            default: MainContainerComponentRef;
+            props: mainContainerOverrideProps
+          "
+        >
           <app-main-aspect-component
+            *appWithOverride="
+              'mainAspect';
+              default: MainAspectComponentRef;
+              props: mainAspectOverrideProps
+            "
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [defaultFraction]="1 - controlHeight.value"
             [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -443,6 +460,11 @@ export type MediasfuConferenceOptions = {
             [updateIsSmallScreen]="updateIsSmallScreen"
           >
             <app-main-screen-component
+              *appWithOverride="
+                'mainScreen';
+                default: MainScreenComponentRef;
+                props: mainScreenOverrideProps
+              "
               [doStack]="true"
               [mainSize]="mainHeightWidth.value"
               [defaultFraction]="1 - controlHeight.value"
@@ -450,6 +472,11 @@ export type MediasfuConferenceOptions = {
               [updateComponentSizes]="updateComponentSizes"
             >
               <app-main-grid-component
+                *appWithOverride="
+                  'mainGrid';
+                  default: MainGridComponentRef;
+                  props: mainGridOverrideProps
+                "
                 [height]="componentSizes.value.mainHeight"
                 [width]="componentSizes.value.mainWidth"
                 [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -459,6 +486,11 @@ export type MediasfuConferenceOptions = {
                 [meetingProgressTime]="meetingProgressTime.value"
               >
                 <app-flexible-video
+                  *appWithOverride="
+                    'flexibleVideo';
+                    default: FlexibleVideoRef;
+                    props: flexibleVideoOverrideProps
+                  "
                   [customWidth]="componentSizes.value.mainWidth"
                   [customHeight]="componentSizes.value.mainHeight"
                   [rows]="1"
@@ -474,6 +506,11 @@ export type MediasfuConferenceOptions = {
                 >
                 </app-flexible-video>
                 <app-whiteboard
+                  *appWithOverride="
+                    'whiteboard';
+                    default: WhiteboardRef;
+                    props: whiteboardOverrideProps
+                  "
                   [customWidth]="componentSizes.value.mainWidth"
                   [customHeight]="componentSizes.value.mainHeight"
                   [parameters]="mediaSFUParameters"
@@ -482,6 +519,11 @@ export type MediasfuConferenceOptions = {
               </app-main-grid-component>
 
               <app-other-grid-component
+                *appWithOverride="
+                  'otherGrid';
+                  default: OtherGridComponentRef;
+                  props: otherGridOverrideProps
+                "
                 [height]="componentSizes.value.otherHeight"
                 [width]="componentSizes.value.otherWidth"
                 [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
@@ -511,9 +553,22 @@ export type MediasfuConferenceOptions = {
                   ></app-pagination>
                 </div>
 
-                <app-audio-grid [componentsToRender]="audioOnlyStreams.value"></app-audio-grid>
+                <ng-container
+                  *appWithOverride="
+                    'audioGrid';
+                    default: AudioGridRef;
+                    props: audioGridOverrideProps
+                  "
+                >
+                  <app-audio-grid [componentsToRender]="audioOnlyStreams.value"></app-audio-grid>
+                </ng-container>
 
                 <app-flexible-grid
+                  *appWithOverride="
+                    'flexibleGrid';
+                    default: FlexibleGridRef;
+                    props: flexibleGridOverrideProps
+                  "
                   [customWidth]="gridSizes.value.gridWidth!"
                   [customHeight]="gridSizes.value.gridHeight!"
                   [rows]="gridRows.value"
@@ -534,31 +589,50 @@ export type MediasfuConferenceOptions = {
           </app-main-aspect-component>
 
           <app-sub-aspect-component
+            *appWithOverride="
+              'subAspect';
+              default: SubAspectComponentRef;
+              props: subAspectOverrideProps
+            "
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
             [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
             [defaultFractionSub]="controlHeight.value"
           >
-            <app-control-buttons-component
-              [buttons]="controlButtons"
-              [buttonColor]="'black'"
-              [buttonBackgroundColor]="{
-                default: 'transparent',
-                pressed: 'transparent'
-              }"
-              [alignment]="'space-between'"
-              [vertical]="false"
-              [buttonsContainerStyle]="{
-                marginTop: '0',
-                marginBottom: '0',
-                backgroundColor: 'transparent'
-              }"
-            ></app-control-buttons-component>
+            <ng-container
+              *appWithOverride="
+                'controlButtons';
+                default: ControlButtonsComponentRef;
+                props: controlButtonsOverrideProps
+              "
+            >
+              <app-control-buttons-component
+                [buttons]="controlButtons"
+                [buttonColor]="'black'"
+                [buttonBackgroundColor]="{
+                  default: 'transparent',
+                  pressed: 'transparent'
+                }"
+                [alignment]="'space-between'"
+                [vertical]="false"
+                [buttonsContainerStyle]="{
+                  marginTop: '0',
+                  marginBottom: '0',
+                  backgroundColor: 'transparent'
+                }"
+              ></app-control-buttons-component>
+            </ng-container>
           </app-sub-aspect-component>
         </app-main-container-component>
+        </ng-container>
       </ng-template>
 
       <ng-container *ngIf="returnUI">
       <app-menu-modal
+        *appWithOverride="
+          'menuModal';
+          default: MenuModalRef;
+          props: menuModalOverrideProps
+        "
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
         [onClose]="onCloseMenuModal"
@@ -570,6 +644,11 @@ export type MediasfuConferenceOptions = {
       ></app-menu-modal>
 
       <app-event-settings-modal
+        *appWithOverride="
+          'eventSettingsModal';
+          default: EventSettingsModalRef;
+          props: eventSettingsModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isEventSettingsModalVisible]="isSettingsModalVisible.value"
         [onEventSettingsClose]="onEventSettingsClose"
@@ -588,6 +667,11 @@ export type MediasfuConferenceOptions = {
       ></app-event-settings-modal>
 
       <app-requests-modal
+        *appWithOverride="
+          'requestsModal';
+          default: RequestsModalRef;
+          props: requestsModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isRequestsModalVisible]="isRequestsModalVisible.value"
         [onRequestClose]="onRequestClose"
@@ -601,6 +685,11 @@ export type MediasfuConferenceOptions = {
       ></app-requests-modal>
 
       <app-waiting-room-modal
+        *appWithOverride="
+          'waitingRoomModal';
+          default: WaitingRoomModalRef;
+          props: waitingRoomModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isWaitingModalVisible]="isWaitingModalVisible.value"
         [onWaitingRoomClose]="onWaitingRoomClose"
@@ -617,6 +706,11 @@ export type MediasfuConferenceOptions = {
       ></app-waiting-room-modal>
 
       <app-co-host-modal
+        *appWithOverride="
+          'coHostModal';
+          default: CoHostModalRef;
+          props: coHostModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isCoHostModalVisible]="isCoHostModalVisible.value"
         [onCoHostClose]="onCoHostClose"
@@ -632,6 +726,11 @@ export type MediasfuConferenceOptions = {
       ></app-co-host-modal>
 
       <app-media-settings-modal
+        *appWithOverride="
+          'mediaSettingsModal';
+          default: MediaSettingsModalRef;
+          props: mediaSettingsModalOverrideProps
+        "
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isMediaSettingsModalVisible]="isMediaSettingsModalVisible.value"
         [onMediaSettingsClose]="onMediaSettingsClose"
@@ -639,6 +738,11 @@ export type MediasfuConferenceOptions = {
       ></app-media-settings-modal>
 
       <app-participants-modal
+        *appWithOverride="
+          'participantsModal';
+          default: ParticipantsModalRef;
+          props: participantsModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
@@ -667,6 +771,11 @@ export type MediasfuConferenceOptions = {
       ></app-participants-modal>
 
       <app-display-settings-modal
+        *appWithOverride="
+          'displaySettingsModal';
+          default: DisplaySettingsModalRef;
+          props: displaySettingsModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isDisplaySettingsModalVisible]="isDisplaySettingsModalVisible.value"
         [onDisplaySettingsClose]="onDisplaySettingsClose"
@@ -674,6 +783,11 @@ export type MediasfuConferenceOptions = {
       ></app-display-settings-modal>
 
       <app-recording-modal
+        *appWithOverride="
+          'recordingModal';
+          default: RecordingModalRef;
+          props: recordingModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isRecordingModalVisible]="isRecordingModalVisible.value"
         [onClose]="onRecordingClose"
@@ -683,6 +797,11 @@ export type MediasfuConferenceOptions = {
       ></app-recording-modal>
 
       <app-messages-modal
+        *appWithOverride="
+          'messagesModal';
+          default: MessagesModalRef;
+          props: messagesModalOverrideProps
+        "
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
             ? '#f5f5f5'
@@ -707,6 +826,11 @@ export type MediasfuConferenceOptions = {
       ></app-messages-modal>
 
       <app-confirm-exit-modal
+        *appWithOverride="
+          'confirmExitModal';
+          default: ConfirmExitModalRef;
+          props: confirmExitModalOverrideProps
+        "
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmExitModalVisible]="isConfirmExitModalVisible.value"
         [onConfirmExitClose]="onConfirmExitClose"
@@ -718,6 +842,11 @@ export type MediasfuConferenceOptions = {
       ></app-confirm-exit-modal>
 
       <app-confirm-here-modal
+        *appWithOverride="
+          'confirmHereModal';
+          default: ConfirmHereModalRef;
+          props: confirmHereModalOverrideProps
+        "
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmHereModalVisible]="isConfirmHereModalVisible.value"
         [onConfirmHereClose]="onConfirmHereClose"
@@ -727,6 +856,11 @@ export type MediasfuConferenceOptions = {
       ></app-confirm-here-modal>
 
       <app-share-event-modal
+        *appWithOverride="
+          'shareEventModal';
+          default: ShareEventModalRef;
+          props: shareEventModalOverrideProps
+        "
         [isShareEventModalVisible]="isShareEventModalVisible.value"
         [onShareEventClose]="onShareEventClose"
         [roomName]="roomName.value"
@@ -737,6 +871,11 @@ export type MediasfuConferenceOptions = {
       ></app-share-event-modal>
 
       <app-poll-modal
+        *appWithOverride="
+          'pollModal';
+          default: PollModalRef;
+          props: pollModalOverrideProps
+        "
         [isPollModalVisible]="isPollModalVisible.value"
         [onClose]="onPollClose"
         [member]="member.value"
@@ -753,6 +892,11 @@ export type MediasfuConferenceOptions = {
       ></app-poll-modal>
 
       <app-background-modal
+        *appWithOverride="
+          'backgroundModal';
+          default: BackgroundModalRef;
+          props: backgroundModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isBackgroundModalVisible.value"
         [onClose]="onBackgroundClose"
@@ -760,6 +904,11 @@ export type MediasfuConferenceOptions = {
       ></app-background-modal>
 
       <app-breakout-rooms-modal
+        *appWithOverride="
+          'breakoutRoomsModal';
+          default: BreakoutRoomsModalRef;
+          props: breakoutRoomsModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isBreakoutRoomsModalVisible.value"
         [onBreakoutRoomsClose]="onBreakoutRoomsClose"
@@ -767,6 +916,11 @@ export type MediasfuConferenceOptions = {
       ></app-breakout-rooms-modal>
 
       <app-configure-whiteboard-modal
+        *appWithOverride="
+          'configureWhiteboardModal';
+          default: ConfigureWhiteboardModalRef;
+          props: configureWhiteboardModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isConfigureWhiteboardModalVisible.value"
         [onConfigureWhiteboardClose]="onConfigureWhiteboardClose"
@@ -774,26 +928,39 @@ export type MediasfuConferenceOptions = {
       ></app-configure-whiteboard-modal>
 
       <app-screenboard-modal
+        *appWithOverride="
+          'screenboardModal';
+          default: ScreenboardModalRef;
+          props: screenboardModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isScreenboardModalVisible.value"
         [onClose]="onScreenboardClose"
         [parameters]="mediaSFUParameters"
       ></app-screenboard-modal>
 
-      <app-alert-component
-        [visible]="alertVisible.value"
-        [message]="alertMessage.value"
-        [type]="alertType.value"
-        [duration]="alertDuration.value"
-        [onHide]="onAlertHide"
-        textColor="#ffffff"
-      ></app-alert-component>
+      <ng-container
+        *appWithOverride="'alert'; default: AlertComponentRef; props: alertOverrideProps"
+      >
+        <app-alert-component
+          [visible]="alertVisible.value"
+          [message]="alertMessage.value"
+          [type]="alertType.value"
+          [duration]="alertDuration.value"
+          [onHide]="onAlertHide"
+          textColor="#ffffff"
+        ></app-alert-component>
+      </ng-container>
 
-      <app-loading-modal
-        [isVisible]="isLoadingModalVisible.value"
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-        displayColor="black"
-      ></app-loading-modal>
+      <ng-container
+        *appWithOverride="'loadingModal'; default: LoadingModalRef; props: loadingModalOverrideProps"
+      >
+        <app-loading-modal
+          [isVisible]="isLoadingModalVisible.value"
+          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+          displayColor="black"
+        ></app-loading-modal>
+      </ng-container>
     </ng-container>
     </div>
 
@@ -849,7 +1016,351 @@ export class MediasfuConference implements OnInit, OnDestroy {
   @Input() customMiniCard: any;
   @Input() customMainComponent: any;
 
+  // UI customization inputs
+  @Input() containerStyle?: Record<string, any>;
+  @Input() uiOverrides?: MediasfuUICustomOverrides;
+
   title = 'MediaSFU-Conference';
+
+  // Component references for override directive
+  protected readonly MainContainerComponentRef = MainContainerComponent;
+  protected readonly MainAspectComponentRef = MainAspectComponent;
+  protected readonly MainScreenComponentRef = MainScreenComponent;
+  protected readonly MainGridComponentRef = MainGridComponent;
+  protected readonly FlexibleVideoRef = FlexibleVideo;
+  protected readonly WhiteboardRef = Whiteboard;
+  protected readonly OtherGridComponentRef = OtherGridComponent;
+  protected readonly SubAspectComponentRef = SubAspectComponent;
+  protected readonly FlexibleGridRef = FlexibleGrid;
+  protected readonly ControlButtonsComponentRef = ControlButtonsComponent;
+  protected readonly AudioGridRef = AudioGrid;
+  protected readonly AlertComponentRef = AlertComponent;
+  protected readonly LoadingModalRef = LoadingModal;
+  protected readonly MenuModalRef = MenuModal;
+  protected readonly RecordingModalRef = RecordingModal;
+  protected readonly RequestsModalRef = RequestsModal;
+  protected readonly WaitingRoomModalRef = WaitingRoomModal;
+  protected readonly CoHostModalRef = CoHostModal;
+  protected readonly ParticipantsModalRef = ParticipantsModal;
+  protected readonly DisplaySettingsModalRef = DisplaySettingsModal;
+  protected readonly EventSettingsModalRef = EventSettingsModal;
+  protected readonly MediaSettingsModalRef = MediaSettingsModal;
+  protected readonly MessagesModalRef = MessagesModal;
+  protected readonly ConfirmExitModalRef = ConfirmExitModal;
+  protected readonly ConfirmHereModalRef = ConfirmHereModal;
+  protected readonly ShareEventModalRef = ShareEventModal;
+  protected readonly PollModalRef = PollModal;
+  protected readonly BreakoutRoomsModalRef = BreakoutRoomsModal;
+  protected readonly BackgroundModalRef = BackgroundModal;
+  protected readonly ConfigureWhiteboardModalRef = ConfigureWhiteboardModal;
+  protected readonly ScreenboardModalRef = ScreenboardModal;
+
+  // Override prop factory methods
+  protected mainContainerOverrideProps = () => ({
+    backgroundColor: this.validated.value ? 'rgba(217, 227, 234, 0.99)' : 'transparent',
+    children: [] as any[],
+  });
+
+  protected mainAspectOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    defaultFraction: 1 - this.controlHeight.value,
+    showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+    updateIsWideScreen: this.updateIsWideScreen,
+    updateIsMediumScreen: this.updateIsMediumScreen,
+    updateIsSmallScreen: this.updateIsSmallScreen,
+  });
+
+  protected mainScreenOverrideProps = () => ({
+    doStack: true,
+    mainSize: this.mainHeightWidth.value,
+    defaultFraction: 1 - this.controlHeight.value,
+    showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+    updateComponentSizes: this.updateComponentSizes,
+  });
+
+  protected mainGridOverrideProps = () => ({
+    height: this.componentSizes.value.mainHeight,
+    width: this.componentSizes.value.mainWidth,
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    mainSize: this.mainHeightWidth.value,
+    showAspect: this.mainHeightWidth.value > 0,
+    timeBackgroundColor: this.recordState.value,
+    meetingProgressTime: this.meetingProgressTime.value,
+  });
+
+  protected flexibleVideoOverrideProps = () => ({
+    customWidth: this.componentSizes.value.mainWidth,
+    customHeight: this.componentSizes.value.mainHeight,
+    rows: 1,
+    columns: 1,
+    componentsToRender: this.mainGridStream.value,
+    showAspect: this.mainGridStream.value.length > 0 && !(this.whiteboardStarted.value && !this.whiteboardEnded.value),
+    localStreamScreen: this.localStreamScreen.value!,
+    annotateScreenStream: this.annotateScreenStream.value,
+    Screenboard: this.shared.value ? this.ScreenboardWidget : undefined,
+  });
+
+  protected whiteboardOverrideProps = () => ({
+    customWidth: this.componentSizes.value.mainWidth,
+    customHeight: this.componentSizes.value.mainHeight,
+    parameters: this.mediaSFUParameters,
+    showAspect: this.whiteboardStarted.value && !this.whiteboardEnded.value,
+  });
+
+  protected otherGridOverrideProps = () => ({
+    height: this.componentSizes.value.otherHeight,
+    width: this.componentSizes.value.otherWidth,
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    showAspect: this.mainHeightWidth.value !== 100,
+    timeBackgroundColor: this.recordState.value,
+    showTimer: this.mainHeightWidth.value === 0,
+    meetingProgressTime: this.meetingProgressTime.value,
+  });
+
+  protected subAspectOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+    defaultFractionSub: this.mainHeightWidth.value > 0 ? 0 : 1 - this.controlHeight.value,
+  });
+
+  protected flexibleGridOverrideProps = () => ({
+    customWidth: this.componentSizes.value.otherWidth,
+    customHeight: this.componentSizes.value.otherHeight,
+    rows: this.gridRows.value,
+    columns: this.gridCols.value,
+    componentsToRender: this.otherGridStreams.value[0] || [],
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+  });
+
+  protected controlButtonsOverrideProps = () => ({
+    buttons: this.controlButtons,
+    position: 'right',
+    location: 'bottom',
+    direction: 'horizontal',
+    showAspect: this.eventType.value !== 'broadcast',
+  });
+
+  protected audioGridOverrideProps = () => ({
+    componentsToRender: this.audioOnlyStreams.value,
+  });
+
+  protected alertOverrideProps = () => ({
+    visible: this.alertVisible.value,
+    message: this.alertMessage.value,
+    type: this.alertType.value,
+    duration: this.alertDuration.value,
+    onHide: this.onAlertHide,
+    textColor: '#ffffff',
+  });
+
+  protected loadingModalOverrideProps = () => ({
+    isVisible: this.isLoadingModalVisible.value,
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    displayColor: '#000000',
+  });
+
+  protected menuModalOverrideProps = () => ({
+    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    isVisible: this.isMenuModalVisible.value,
+    onClose: this.onCloseMenuModal,
+    customButtons: this.customMenuButtons,
+    roomName: this.roomName.value,
+    adminPasscode: this.adminPasscode.value,
+    islevel: this.islevel.value,
+    localLink: this.localLink,
+  });
+
+  protected recordingModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isRecordingModalVisible: this.isRecordingModalVisible.value,
+    onClose: this.onRecordingClose,
+    startRecording: this.startRecording.startRecording,
+    confirmRecording: this.confirmRecording.confirmRecording,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected requestsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isRequestsModalVisible: this.isRequestsModalVisible.value,
+    onRequestClose: this.onRequestClose,
+    requestCounter: this.requestCounter.value,
+    onRequestFilterChange: this.onRequestFilterChange,
+    updateRequestList: this.updateRequestList,
+    requestList: this.filteredRequestList.value,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected waitingRoomModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isWaitingModalVisible: this.isWaitingModalVisible.value,
+    onWaitingRoomClose: this.onWaitingRoomClose,
+    waitingRoomCounter: this.waitingRoomCounter.value,
+    onWaitingRoomFilterChange: this.onWaitingRoomFilterChange,
+    waitingRoomList: this.filteredWaitingRoomList.value,
+    updateWaitingList: this.updateWaitingRoomList,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    parameters: {
+      filteredWaitingRoomList: this.waitingRoomList.value,
+      getUpdatedAllParams: this.getUpdatedAllParams.bind(this),
+    },
+  });
+
+  protected coHostModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isCoHostModalVisible: this.isCoHostModalVisible.value,
+    onCoHostClose: this.onCoHostClose,
+    coHostResponsibility: this.coHostResponsibility.value,
+    participants: this.participants.value,
+    currentCohost: this.coHost.value,
+    roomName: this.roomName.value,
+    showAlert: this.showAlert,
+    updateCoHostResponsibility: this.updateCoHostResponsibility,
+    updateCoHost: this.updateCoHost,
+    socket: this.socket.value,
+  });
+
+  protected participantsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isParticipantsModalVisible: this.isParticipantsModalVisible.value,
+    onParticipantsClose: this.onParticipantsClose,
+    participantsCounter: this.participantsCounter.value,
+    onParticipantsFilterChange: this.onParticipantsFilterChange,
+    parameters: {
+      updateParticipants: this.updateParticipants,
+      updateIsParticipantsModalVisible: this.updateIsParticipantsModalVisible,
+      getUpdatedAllParams: this.getUpdatedAllParams.bind(this),
+    },
+  });
+
+  protected displaySettingsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isDisplaySettingsModalVisible: this.isDisplaySettingsModalVisible.value,
+    onDisplaySettingsClose: this.onDisplaySettingsClose,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected eventSettingsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isEventSettingsModalVisible: this.isSettingsModalVisible.value,
+    onEventSettingsClose: this.onEventSettingsClose,
+    audioSetting: this.audioSetting.value,
+    videoSetting: this.videoSetting.value,
+    screenshareSetting: this.screenshareSetting.value,
+    chatSetting: this.chatSetting.value,
+    updateAudioSetting: this.updateAudioSetting,
+    updateVideoSetting: this.updateVideoSetting,
+    updateScreenshareSetting: this.updateScreenshareSetting,
+    updateChatSetting: this.updateChatSetting,
+    updateIsSettingsModalVisible: this.updateIsSettingsModalVisible,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    showAlert: this.showAlert,
+  });
+
+  protected mediaSettingsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isMediaSettingsModalVisible: this.isMediaSettingsModalVisible.value,
+    onMediaSettingsClose: this.onMediaSettingsClose,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected messagesModalOverrideProps = () => ({
+    backgroundColor: this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? '#f5f5f5' : 'rgba(255, 255, 255, 0.25)',
+    isMessagesModalVisible: this.isMessagesModalVisible.value,
+    onMessagesClose: this.onMessagesClose,
+    messages: this.messages.value,
+    eventType: this.eventType.value,
+    member: this.member.value,
+    islevel: this.islevel.value,
+    coHostResponsibility: this.coHostResponsibility.value,
+    coHost: this.coHost.value,
+    startDirectMessage: this.startDirectMessage.value,
+    directMessageDetails: this.directMessageDetails.value,
+    updateStartDirectMessage: this.updateStartDirectMessage,
+    updateDirectMessageDetails: this.updateDirectMessageDetails,
+    showAlert: this.showAlert,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    chatSetting: this.chatSetting.value,
+  });
+
+  protected confirmExitModalOverrideProps = () => ({
+    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    isConfirmExitModalVisible: this.isConfirmExitModalVisible.value,
+    onConfirmExitClose: this.onConfirmExitClose,
+    position: 'topRight',
+    member: this.member.value,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    islevel: this.islevel.value,
+  });
+
+  protected confirmHereModalOverrideProps = () => ({
+    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    isConfirmHereModalVisible: this.isConfirmHereModalVisible.value,
+    onConfirmHereClose: this.onConfirmHereClose,
+    member: this.member.value,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+  });
+
+  protected shareEventModalOverrideProps = () => ({
+    isShareEventModalVisible: this.isShareEventModalVisible.value,
+    onShareEventClose: this.onShareEventClose,
+    roomName: this.roomName.value,
+    islevel: this.islevel.value,
+    adminPasscode: this.adminPasscode.value,
+    eventType: this.eventType.value,
+    localLink: this.localLink,
+  });
+
+  protected pollModalOverrideProps = () => ({
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    isPollModalVisible: this.isPollModalVisible.value,
+    onClose: this.onPollClose,
+    member: this.member.value,
+    islevel: this.islevel.value,
+    polls: this.polls.value,
+    poll: this.poll.value,
+    socket: this.socket.value,
+    roomName: this.roomName.value,
+    showAlert: this.showAlert,
+    updateIsPollModalVisible: this.updateIsPollModalVisible,
+    handleCreatePoll: this.handleCreatePoll.handleCreatePoll,
+    handleEndPoll: this.handleEndPoll.handleEndPoll,
+    handleVotePoll: this.handleVotePoll.handleVotePoll,
+  });
+
+  protected breakoutRoomsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isVisible: this.isBreakoutRoomsModalVisible.value,
+    onBreakoutRoomsClose: this.onBreakoutRoomsClose,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected backgroundModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isVisible: this.isBackgroundModalVisible.value,
+    onClose: this.onBackgroundClose,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected configureWhiteboardModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isVisible: this.isConfigureWhiteboardModalVisible.value,
+    onConfigureWhiteboardClose: this.onConfigureWhiteboardClose,
+    parameters: this.mediaSFUParameters,
+  });
+
+  protected screenboardModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isVisible: this.isScreenboardModalVisible.value,
+    onClose: this.onScreenboardClose,
+    parameters: this.mediaSFUParameters,
+  });
 
   private mainHeightWidthSubscription: Subscription | undefined;
   private validatedSubscription: Subscription | undefined;
@@ -980,6 +1491,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
     public checkPermission: CheckPermission,
     public updateConsumingDomains: UpdateConsumingDomains,
     public receiveRoomMessages: ReceiveRoomMessages,
+    private uiOverrideResolver: UIOverrideResolverService,
   ) { }
 
   createInjector(inputs: any) {
@@ -990,6 +1502,60 @@ export class MediasfuConference implements OnInit, OnDestroy {
 
     return inj;
   }
+
+  /**
+   * Gets a list of media devices filtered by the specified kind.
+   * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+   * @returns A promise that resolves to an array of MediaDeviceInfo objects
+   */
+  getMediaDevicesList = async (kind: 'videoinput' | 'audioinput'): Promise<MediaDeviceInfo[]> => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      return devices.filter((device) => device.kind === kind);
+    } catch (error) {
+      console.error('Error enumerating devices:', error);
+      return [];
+    }
+  };
+
+  /**
+   * Gets the media stream for a participant by their ID or name.
+   * @param options - Object containing id, name, and kind parameters
+   * @returns A promise that resolves to the participant's MediaStream or null if not found
+   */
+  getParticipantMedia = async (options: {
+    id?: string;
+    name?: string;
+    kind: 'video' | 'audio';
+  }): Promise<MediaStream | null> => {
+    const { id, name, kind } = options;
+
+    try {
+      const streams =
+        kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+
+      // Search by producerId if provided
+      if (id) {
+        const streamObj = streams.find((obj: any) => obj.producerId === id);
+        if (streamObj && 'stream' in streamObj) {
+          return streamObj.stream || null;
+        }
+      }
+
+      // Search by name if provided
+      if (name) {
+        const streamObj = streams.find((obj: any) => obj.name === name);
+        if (streamObj && 'stream' in streamObj) {
+          return streamObj.stream || null;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error('Error getting participant media:', error);
+      return null;
+    }
+  };
 
   // Initial values
   mediaSFUFunctions = () => {
@@ -1324,6 +1890,8 @@ export class MediasfuConference implements OnInit, OnDestroy {
         (() => {
           console.log('none');
         }),
+      getMediaDevicesList: this.getMediaDevicesList,
+      getParticipantMedia: this.getParticipantMedia,
     };
   };
 
@@ -4120,7 +4688,54 @@ export class MediasfuConference implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   };
 
+  /**
+   * Initializes function overrides by wrapping original implementations
+   * with custom logic if provided in uiOverrides
+   */
+  initializeFunctionOverrides(): void {
+    // Apply consumerResume override
+    if (this.uiOverrideResolver.hasOverride('consumerResume')) {
+      const originalConsumerResume = this.consumerResume.consumerResume.bind(
+        this.consumerResume,
+      );
+      this.consumerResume.consumerResume = this.uiOverrideResolver.applyFunctionOverride(
+        'consumerResume',
+        originalConsumerResume,
+      );
+    }
+
+    // Apply addVideosGrid override
+    if (this.uiOverrideResolver.hasOverride('addVideosGrid')) {
+      const originalAddVideosGrid = this.addVideosGrid.addVideosGrid.bind(
+        this.addVideosGrid,
+      );
+      this.addVideosGrid.addVideosGrid = this.uiOverrideResolver.applyFunctionOverride(
+        'addVideosGrid',
+        originalAddVideosGrid,
+      );
+    }
+
+    // Apply prepopulateUserMedia override
+    if (this.uiOverrideResolver.hasOverride('prepopulateUserMedia')) {
+      const originalPrepopulateUserMedia = this.prepopulateUserMedia.prepopulateUserMedia.bind(
+        this.prepopulateUserMedia,
+      );
+      this.prepopulateUserMedia.prepopulateUserMedia = this.uiOverrideResolver.applyFunctionOverride(
+        'prepopulateUserMedia',
+        originalPrepopulateUserMedia,
+      );
+    }
+  }
+
   ngOnInit() {
+    // Initialize UI overrides if provided
+    if (this.uiOverrides) {
+      this.uiOverrideResolver.setOverrides(this.uiOverrides);
+    }
+
+    // Apply function overrides
+    this.initializeFunctionOverrides();
+
     if (this.PrejoinPage) {
       this.updatePrejoinPageComponent();
     }

@@ -1,7 +1,8 @@
 import { Socket } from 'socket.io-client';
 import { ReorderStreamsParameters, ReorderStreamsType, ConnectRecvTransportType, ConnectRecvTransportParameters } from '../@types/types';
-import { Device } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Device = types.Device;
 export interface SignalNewConsumerTransportParameters extends ReorderStreamsParameters, ConnectRecvTransportParameters {
     device: Device | null;
     consumingTransports: string[];
@@ -61,3 +62,4 @@ export declare class SignalNewConsumerTransport {
     static ɵfac: i0.ɵɵFactoryDeclaration<SignalNewConsumerTransport, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<SignalNewConsumerTransport>;
 }
+export {};

@@ -25,7 +25,9 @@ import {
   SleepType,
   VidCons,
 } from '../../../@types/types';
-import { Producer, ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
 
 export interface BackgroundModalParameters
   extends CreateSendTransportParameters,
@@ -93,6 +95,9 @@ export interface BackgroundModalOptions {
   position: string;
   backgroundColor: string;
   onClose: () => void;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 // export the type definition for the component
@@ -150,6 +155,9 @@ export class BackgroundModal implements OnChanges, OnInit {
   @Input() onClose: () => void = () => {
     console.log('onClose');
   };
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   @ViewChild('defaultImagesContainer') defaultImagesContainerRef!: ElementRef;
   @ViewChild('uploadImageInput') uploadImageInputRef!: ElementRef;
@@ -965,5 +973,38 @@ export class BackgroundModal implements OnChanges, OnInit {
 
   hideLoading() {
     this.loadingOverlayRef.nativeElement.classList.add('d-none');
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: this.isVisible ? 'block' : 'none',
+      zIndex: 999,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      position: 'fixed',
+      backgroundColor: this.backgroundColor,
+      borderRadius: '10px',
+      padding: '10px',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '75%',
+      overflowY: 'auto',
+      overflowX: 'hidden',
+      top: this.position.includes('top') ? '10px' : 'auto',
+      bottom: this.position.includes('bottom') ? '10px' : 'auto',
+      left: this.position.includes('Left') ? '10px' : 'auto',
+      right: this.position.includes('Right') ? '10px' : 'auto',
+      ...(this.contentStyle || {})
+    };
   }
 }

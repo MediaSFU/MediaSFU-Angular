@@ -28,72 +28,68 @@ export interface CoHostModalOptions {
   socket: Socket;
   onCoHostClose: () => void;
   onModifyEventSettings?: (settings: ModifyCoHostSettingsOptions) => void;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type CoHostModalType = (options: CoHostModalOptions) => HTMLElement;
 
 /**
- * CoHostModal component allows managing co-host settings for an event.
- *
+ * CoHostModal - Modal for designating and configuring co-host permissions
+ * 
+ * @component
+ * @description
+ * Allows host to select a co-host and configure their specific permissions/responsibilities.
+ * Co-hosts can assist with managing the session with delegated authority.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with co-host selector and responsibility toggles
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Select co-host from participant list
+ * - Configure co-host responsibilities (manage participants, media, chat, etc.)
+ * - Save co-host settings to room
+ * - Remove co-host designation
+ * - Socket-based permission sync
+ * 
  * @selector app-co-host-modal
- * @inputs
- * - `isCoHostModalVisible` (boolean): A boolean value that determines whether the modal is visible. Default is false.
- * - `currentCohost` (string): The current co-host for the event. Default is 'No coHost'.
- * - `participants` (Participant[]): An array of participants in the event.
- * - `coHostResponsibility` (CoHostResponsibility[]): An array of co-host responsibilities.
- * - `position` (string): The position of the modal. Default is 'topRight'.
- * - `backgroundColor` (string): The background color of the modal. Default is '#83c0e9'.
- * - `roomName` (string): The name of the room.
- * - `showAlert` (ShowAlert): A function to show alerts.
- *
- * @outputs
- * - `updateCoHostResponsibility` (coHostResponsibility: CoHostResponsibility[]): A function to update co-host responsibilities.
- * - `updateCoHost` (coHost: string): A function to update the co-host.
- * - `updateIsCoHostModalVisible` (isCoHostModalVisible: boolean): A function to update the visibility of the modal.
- * - `socket` (Socket): The socket object.
- *
- * @methods
- * - `ngOnInit()`: Lifecycle hook that is called after the component is initialized. It sets the default value for `onModifyCoHost` if not provided.
- * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook that is called when any data-bound property of the component changes. It initializes the responsibilities and calculates the modal width.
- * - `initializeResponsibilities()`: Initializes the responsibilities.
- * - `get filteredParticipants()`: Returns the filtered participants.
- * - `handleToggleSwitch(key: string)`: Handles the toggle switch for the given key.
- * - `handleSave()`: Handles the save action.
- * - `handleClose()`: Handles the close action.
- * - `calculateModalWidth()`: Calculates the modal width.
- * - `modalContainerStyle()`: Returns the modal container style.
- * - `modalContentStyle()`: Returns the modal content style.
- *
- * @dependencies
- * - `CommonModule`: Angular's common module is imported for common directives.
- * - `FontAwesomeModule`: Angular's font awesome module is imported for icons.
- * - `FormsModule`: Angular's forms module is imported for form-related directives.
- * - `ModifyCoHostSettings`: The ModifyCoHostSettings service is used to modify co-host settings.
- *
- * @styles
- * - `.container`: The container style.
- *
- * @example
- * ```html
- * <app-co-host-modal
- *  [isCoHostModalVisible]="isCoHostModalVisible"
- * [currentCohost]="currentCohost"
- * [participants]="participants"
- * [coHostResponsibility]="coHostResponsibility"
- * [position]="position"
- * [backgroundColor]="backgroundColor"
- * [roomName]="roomName"
- * [showAlert]="showAlert"
- * [updateCoHostResponsibility]="updateCoHostResponsibility"
- * [updateCoHost]="updateCoHost"
- * [updateIsCoHostModalVisible]="updateIsCoHostModalVisible"
- * [socket]="socket"
- * [onCoHostClose]="onCoHostClose"
- * [onModifyCoHost]="onModifyCoHost">
- * </app-co-host-modal>
- * ```
- *
- **/
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, FormsModule
+ * 
+ * @input isCoHostModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input currentCohost - Name/ID of current co-host. Default: `'No coHost'`
+ * @input participants - Array of participant objects. Default: `[]`
+ * @input coHostResponsibility - Array of co-host responsibility objects with toggles. Default: `[]`
+ * @input position - Modal position on screen ('topRight', 'center', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input roomName - Name of the room/session. Default: `''`
+ * @input showAlert - Optional alert function for displaying messages. Default: `undefined`
+ * @input updateCoHostResponsibility - Function to update co-host responsibilities. Default: `() => {}`
+ * @input updateCoHost - Function to update co-host selection. Default: `() => {}`
+ * @input updateIsCoHostModalVisible - Function to update modal visibility. Default: `() => {}`
+ * @input socket - Socket.io client instance for real-time communication. Default: `undefined`
+ * @input onCoHostClose - Callback function to close the modal. Default: `() => {}`
+ * @input onModifyCoHost - Callback to save co-host settings. Default: `modifyCoHostSettingsService.modifyCoHostSettings`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes component and sets default co-host modification handler
+ * @method ngOnChanges - Updates responsibilities and modal width when inputs change
+ * @method initializeResponsibilities - Sets up initial responsibility toggles
+ * @method handleToggleSwitch - Toggles specific co-host responsibility
+ * @method handleSave - Saves co-host selection and responsibilities
+ * @method handleClose - Closes modal via onCoHostClose callback
+ * @method calculateModalWidth - Dynamically sets modal width based on screen size
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @method modalContainerStyle - Returns computed overlay styles
+ * @method modalContentStyle - Returns computed content styles
+ * @getter filteredParticipants - Returns participants excluding current co-host
+ */
 
 @Component({
     selector: 'app-co-host-modal',
@@ -121,6 +117,9 @@ export class CoHostModal implements OnChanges, OnInit {
   onCoHostClose!: () => void;
   @Input()
   onModifyCoHost!: (settings: ModifyCoHostSettingsOptions) => void;
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   faTimes = faTimes;
 
@@ -272,6 +271,20 @@ export class CoHostModal implements OnChanges, OnInit {
       bottom: this.position.includes('bottom') ? '10px' : 'auto',
       left: this.position.includes('Left') ? '10px' : 'auto',
       right: this.position.includes('Right') ? '10px' : 'auto',
+    };
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle(),
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle(),
+      ...(this.contentStyle || {})
     };
   }
 }

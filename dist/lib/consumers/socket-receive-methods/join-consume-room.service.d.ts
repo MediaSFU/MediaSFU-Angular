@@ -1,8 +1,10 @@
 import { JoinConRoom } from '../../producers/producer-emits/join-con-room.service';
 import { Socket } from 'socket.io-client';
 import { ReceiveAllPipedTransportsType, ReceiveAllPipedTransportsParameters, CreateDeviceClientType } from '../../@types/types';
-import { Device, RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Device = types.Device;
+type RtpCapabilities = types.RtpCapabilities;
 export interface JoinConsumeRoomParameters extends ReceiveAllPipedTransportsParameters {
     roomName: string;
     islevel: string;

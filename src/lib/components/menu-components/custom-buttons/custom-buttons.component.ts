@@ -1,4 +1,4 @@
-import { Component, Input, Injector, Type } from '@angular/core';
+import { Component, Input, Injector, Type, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,8 +11,8 @@ export interface CustomComponent {
 }
 
 export interface CustomButton {
-  action: () => void;
-  show: boolean | (() => boolean);
+  action?: (() => void) | (() => Promise<void>);
+  show?: boolean | (() => boolean);
   backgroundColor?: string;
   disabled?: boolean;
   icon?: IconDefinition;
@@ -21,10 +21,16 @@ export interface CustomButton {
   textStyle?: Partial<CSSStyleDeclaration>;
   customComponent?: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent);
   injector?: Injector;
+  buttonAttributes?: { [key: string]: any };
+  contentAttributes?: { [key: string]: any };
+  iconAttributes?: { [key: string]: any };
+  renderAsButton?: boolean;
 }
 
 export interface CustomButtonsOptions {
   buttons: CustomButton[];
+  containerAttributes?: { [key: string]: any };
+  fallbackSpinner?: TemplateRef<any>;
 }
 
 export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
@@ -88,11 +94,26 @@ export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
 export class CustomButtons {
 
   @Input() buttons!: CustomButton[];
+  @Input() containerAttributes?: { [key: string]: any };
+  @Input() fallbackSpinner?: TemplateRef<any>;
 
   faSpinner = faSpinner;
 
   mergeStyles(defaultStyle: any, customStyle: any): any {
     return { ...defaultStyle, ...customStyle };
+  }
+
+  getButtonStyles(button: CustomButton): any {
+    const baseStyle = {
+      'background-color': (button.show !== false) ? button.backgroundColor : 'transparent',
+      'display': (button.show !== false) ? 'flex' : 'none'
+    };
+
+    if (button.buttonAttributes?.['style']) {
+      return { ...baseStyle, ...button.buttonAttributes['style'] };
+    }
+
+    return baseStyle;
   }
 
   get customButtonIcon(): any {

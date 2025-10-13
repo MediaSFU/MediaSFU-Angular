@@ -1,8 +1,14 @@
+import { TemplateRef } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface LoadingModalOptions {
     isVisible: boolean;
     backgroundColor?: string;
     displayColor?: string;
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    spinnerStyle?: Partial<CSSStyleDeclaration>;
+    textStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
 }
 export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
 /**
@@ -42,31 +48,15 @@ export declare class LoadingModal {
     isVisible: boolean;
     backgroundColor?: string;
     displayColor?: string;
-    get modalContainerStyle(): {
-        position: string;
-        top: string;
-        left: string;
-        width: string;
-        height: string;
-        backgroundColor: string | undefined;
-        display: string;
-        alignItems: string;
-        justifyContent: string;
-        zIndex: string;
-    };
-    get modalContentStyle(): {
-        backgroundColor: string | undefined;
-        borderRadius: string;
-        padding: string;
-        maxWidth: string;
-        textAlign: string;
-    };
-    get spinnerContainerStyle(): {
-        marginBottom: string;
-    };
-    get loadingTextStyle(): {
-        color: string | undefined;
-    };
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    spinnerStyle?: Partial<CSSStyleDeclaration>;
+    textStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
+    get modalContainerStyle(): any;
+    get modalContentStyle(): any;
+    get spinnerContainerStyle(): any;
+    get loadingTextStyle(): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<LoadingModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<LoadingModal, "app-loading-modal", never, { "isVisible": { "alias": "isVisible"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "displayColor": { "alias": "displayColor"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<LoadingModal, "app-loading-modal", never, { "isVisible": { "alias": "isVisible"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "displayColor": { "alias": "displayColor"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "spinnerStyle": { "alias": "spinnerStyle"; "required": false; }; "textStyle": { "alias": "textStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, never, true, never>;
 }

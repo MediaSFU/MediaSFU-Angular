@@ -1,13 +1,44 @@
-<div class="share-buttons-container">
+<ng-container *ngIf="renderContainer; else defaultContainer">
+  <ng-container *ngTemplateOutlet="renderContainer; context: shareButtonsRenderContext"></ng-container>
+</ng-container>
+
+<ng-template #defaultContainer>
   <div
-    *ngFor="let button of filteredShareButtons; let i = index"
-    (click)="button.action()"
-    [ngStyle]="{
-      'background-color': button.color || 'black',
-      'margin-right': i !== filteredShareButtons.length - 1 ? '10px' : '0'
-    }"
-    class="share-button"
+    class="share-buttons-container"
+    [ngClass]="containerAttributes?.['class']"
+    [ngStyle]="containerAttributes?.['style']"
   >
-    <fa-icon [icon]="button.icon" [ngStyle]="{ color: button.iconColor || '#ffffff', 'font-size': '24px' }"></fa-icon>
+    <ng-container *ngIf="renderButtons; else defaultButtons">
+      <ng-container *ngTemplateOutlet="renderButtons; context: shareButtonsRenderContext"></ng-container>
+    </ng-container>
+
+    <ng-template #defaultButtons>
+      <ng-container *ngFor="let button of filteredShareButtons; let i = index">
+        <ng-container *ngIf="renderButton; else defaultButton">
+          <ng-container *ngTemplateOutlet="renderButton; context: getButtonRenderContext(button, i)"></ng-container>
+        </ng-container>
+
+        <ng-template #defaultButton>
+          <div
+            (click)="button.action()"
+            class="share-button"
+            [ngClass]="button.wrapperAttributes?.['class']"
+            [ngStyle]="getButtonStyle(button, i)"
+          >
+            <ng-container *ngIf="renderIcon; else defaultIcon">
+              <ng-container *ngTemplateOutlet="renderIcon; context: getButtonRenderContext(button, i)"></ng-container>
+            </ng-container>
+
+            <ng-template #defaultIcon>
+              <fa-icon
+                [icon]="button.icon"
+                [ngClass]="button.iconAttributes?.['class']"
+                [ngStyle]="getIconStyle(button)"
+              ></fa-icon>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ng-container>
+    </ng-template>
   </div>
-</div>
+</ng-template>

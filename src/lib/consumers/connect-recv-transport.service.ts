@@ -5,7 +5,10 @@ import {
   ConsumerResumeParameters,
   Transport as TransportType,
 } from '../@types/types';
-import { Consumer, Device, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Consumer = types.Consumer;
+type Device = types.Device;
+type Transport = types.Transport;
 interface Params {
   id: string;
   producerId: string;

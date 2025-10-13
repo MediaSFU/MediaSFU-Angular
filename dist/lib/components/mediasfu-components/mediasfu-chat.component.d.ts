@@ -1,7 +1,22 @@
 import { Injector, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
+import { UIOverrideResolverService } from '../../services/ui-override-resolver.service';
 import { BehaviorSubject } from 'rxjs';
 import { Socket } from 'socket.io-client';
+import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
+import { LoadingModal } from '../display-components/loading-modal/loading-modal.component';
+import { ControlButtonsComponentTouch } from '../display-components/control-buttons-component-touch/control-buttons-component-touch.component';
+import { OtherGridComponent } from '../display-components/other-grid-component/other-grid-component.component';
+import { MainScreenComponent } from '../display-components/main-screen-component/main-screen-component.component';
+import { MainContainerComponent } from '../display-components/main-container-component/main-container-component.component';
+import { AlertComponent } from '../display-components/alert-component/alert.component.component';
+import { MessagesModal } from '../message-components/messages-modal/messages-modal.component';
+import { ConfirmExitModal } from '../exit-components/confirm-exit-modal/confirm-exit-modal.component';
+import { ConfirmHereModal } from '../misc-components/confirm-here-modal/confirm-here-modal.component';
+import { ShareEventModal } from '../misc-components/share-event-modal/share-event-modal.component';
 import { WelcomePageOptions } from '../misc-components/welcome-page/welcome-page.component';
+import { FlexibleGrid } from '../display-components/flexible-grid/flexible-grid.component';
+import { AudioGrid } from '../display-components/audio-grid/audio-grid.component';
 import { MessageWidget } from '../display-components/control-widgets/message-widget.component';
 import { ButtonTouch, ResponseJoinRoom, CoHostResponsibility, EventType, Participant, ConsumeSocket, MeetingRoomParams, VidCons, HParamsType, VParamsType, ScreenParamsType, AParamsType, UserRecordingParams, Stream, AudioDecibels, ScreenState, GridSizes, CustomMediaComponent, Message, WaitingRoomParticipant, ComponentSizes, Transport as TransportType, Shape, Poll, BreakoutParticipant, WhiteboardUser, Request, SeedData, PreJoinPageOptions, CreateMediaSFURoomOptions, JoinMediaSFURoomOptions, JoinRoomOnMediaSFUType, CreateRoomOnMediaSFUType } from '../../@types/types';
 import { LaunchMessages } from '../../methods/message-methods/launch-messages.service';
@@ -86,9 +101,14 @@ import { Disconnect } from '../../producers/socket-receive-methods/disconnect.se
 import { CaptureCanvasStream } from '../../methods/whiteboard-methods/capture-canvas-stream.service';
 import { ResumePauseAudioStreams } from '../../consumers/resume-pause-audio-streams.service';
 import { ProcessConsumerTransportsAudio } from '../../consumers/process-consumer-transports-audio.service';
-import { Device, Producer, ProducerOptions, RtpCapabilities, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import * as i0 from "@angular/core";
+type Device = types.Device;
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
+type RtpCapabilities = types.RtpCapabilities;
+type Transport = types.Transport;
 export type MediasfuChatOptions = {
     PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
     localLink?: string;
@@ -268,6 +288,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     checkPermission: CheckPermission;
     updateConsumingDomains: UpdateConsumingDomains;
     receiveRoomMessages: ReceiveRoomMessages;
+    private uiOverrideResolver;
     PrejoinPage: any;
     localLink: string;
     connectMediaSFU: boolean;
@@ -293,14 +314,138 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     customAudioCard?: any;
     customMiniCard?: any;
     customMainComponent?: any;
+    containerStyle?: Record<string, any>;
+    uiOverrides?: MediasfuUICustomOverrides;
     title: string;
+    protected readonly MainContainerComponentRef: typeof MainContainerComponent;
+    protected readonly MainAspectComponentRef: typeof MainAspectComponent;
+    protected readonly MainScreenComponentRef: typeof MainScreenComponent;
+    protected readonly OtherGridComponentRef: typeof OtherGridComponent;
+    protected readonly FlexibleGridRef: typeof FlexibleGrid;
+    protected readonly ControlButtonsComponentTouchRef: typeof ControlButtonsComponentTouch;
+    protected readonly AudioGridRef: typeof AudioGrid;
+    protected readonly AlertComponentRef: typeof AlertComponent;
+    protected readonly LoadingModalRef: typeof LoadingModal;
+    protected readonly MessagesModalRef: typeof MessagesModal;
+    protected readonly ConfirmExitModalRef: typeof ConfirmExitModal;
+    protected readonly ConfirmHereModalRef: typeof ConfirmHereModal;
+    protected readonly ShareEventModalRef: typeof ShareEventModal;
+    protected mainContainerOverrideProps: () => {
+        backgroundColor: string;
+        children: any[];
+    };
+    protected mainAspectOverrideProps: () => {
+        backgroundColor: string;
+        defaultFraction: number;
+        showControls: boolean;
+        updateIsWideScreen: (value: boolean) => void;
+        updateIsMediumScreen: (value: boolean) => void;
+        updateIsSmallScreen: (value: boolean) => void;
+    };
+    protected mainScreenOverrideProps: () => {
+        doStack: boolean;
+        mainSize: number;
+        defaultFraction: number;
+        showControls: boolean;
+        updateComponentSizes: (sizes: ComponentSizes) => void;
+    };
+    protected otherGridOverrideProps: () => {
+        height: number;
+        width: number;
+        backgroundColor: string;
+        showAspect: boolean;
+        timeBackgroundColor: string;
+        showTimer: boolean;
+        meetingProgressTime: string;
+    };
+    protected flexibleGridOverrideProps: () => {
+        customWidth: number;
+        customHeight: number;
+        rows: number;
+        columns: number;
+        componentsToRender: CustomMediaComponent[];
+        backgroundColor: string;
+    };
+    protected controlButtonsTouchOverrideProps: () => {
+        buttons: ButtonTouch[];
+        position: string;
+        location: string;
+        direction: string;
+        showAspect: boolean;
+    };
+    protected audioGridOverrideProps: () => {
+        componentsToRender: CustomMediaComponent[];
+    };
+    protected alertOverrideProps: () => {
+        visible: boolean;
+        message: string;
+        type: "success" | "danger";
+        duration: number;
+        onHide: () => void;
+        textColor: string;
+    };
+    protected loadingModalOverrideProps: () => {
+        isVisible: boolean;
+        backgroundColor: string;
+        displayColor: string;
+    };
+    protected messagesModalOverrideProps: () => {
+        backgroundColor: string;
+        isMessagesModalVisible: boolean;
+        onMessagesClose: () => void;
+        messages: Message[];
+        eventType: EventType;
+        member: string;
+        islevel: string;
+        coHostResponsibility: CoHostResponsibility[];
+        coHost: string;
+        startDirectMessage: boolean;
+        directMessageDetails: Participant | null;
+        updateStartDirectMessage: (value: boolean) => void;
+        updateDirectMessageDetails: (value: Participant | null) => void;
+        showAlert: ({ message, type, duration, }: {
+            message: string;
+            type: "success" | "danger";
+            duration?: number;
+        }) => void;
+        roomName: string;
+        socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+        chatSetting: string;
+    };
+    protected confirmExitModalOverrideProps: () => {
+        backgroundColor: string;
+        isConfirmExitModalVisible: boolean;
+        onConfirmExitClose: () => void;
+        position: string;
+        member: string;
+        roomName: string;
+        socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+        islevel: string;
+    };
+    protected confirmHereModalOverrideProps: () => {
+        backgroundColor: string;
+        isConfirmHereModalVisible: boolean;
+        onConfirmHereClose: () => void;
+        member: string;
+        roomName: string;
+        socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
+    };
+    protected shareEventModalOverrideProps: () => {
+        isShareEventModalVisible: boolean;
+        onShareEventClose: () => void;
+        roomName: string;
+        islevel: string;
+        adminPasscode: string;
+        eventType: EventType;
+        localLink: string;
+    };
     private mainHeightWidthSubscription;
     private validatedSubscription;
     private islevelSubscription;
     private coHostSubscription;
     private ScreenboardSubscription;
     private recordingSubscription;
-    constructor(cdr: ChangeDetectorRef, injector: Injector, updateMiniCardsGrid: UpdateMiniCardsGrid, mixStreams: MixStreams, dispStreams: DispStreams, stopShareScreen: StopShareScreen, checkScreenShare: CheckScreenShare, startShareScreen: StartShareScreen, requestScreenShare: RequestScreenShare, reorderStreams: ReorderStreams, prepopulateUserMedia: PrepopulateUserMedia, getVideos: GetVideos, rePort: RePort, trigger: Trigger, consumerResume: ConsumerResume, connectSendTransport: ConnectSendTransport, connectSendTransportAudio: ConnectSendTransportAudio, connectSendTransportVideo: ConnectSendTransportVideo, connectSendTransportScreen: ConnectSendTransportScreen, processConsumerTransports: ProcessConsumerTransports, resumePauseStreams: ResumePauseStreams, readjust: Readjust, checkGrid: CheckGrid, getEstimate: GetEstimate, calculateRowsAndColumns: CalculateRowsAndColumns, addVideosGrid: AddVideosGrid, onScreenChanges: OnScreenChanges, changeVids: ChangeVids, compareActiveNames: CompareActiveNames, compareScreenStates: CompareScreenStates, createSendTransport: CreateSendTransport, resumeSendTransportAudio: ResumeSendTransportAudio, receiveAllPipedTransports: ReceiveAllPipedTransports, disconnectSendTransportVideo: DisconnectSendTransportVideo, disconnectSendTransportAudio: DisconnectSendTransportAudio, disconnectSendTransportScreen: DisconnectSendTransportScreen, getPipedProducersAlt: GetPipedProducersAlt, signalNewConsumerTransport: SignalNewConsumerTransport, connectRecvTransport: ConnectRecvTransport, reUpdateInter: ReUpdateInter, updateParticipantAudioDecibels: UpdateParticipantAudioDecibels, closeAndResize: CloseAndResize, autoAdjust: AutoAdjust, switchUserVideoAlt: SwitchUserVideoAlt, switchUserVideo: SwitchUserVideo, switchUserAudio: SwitchUserAudio, getDomains: GetDomains, formatNumber: FormatNumber, connectIps: ConnectIps, connectLocalIps: ConnectLocalIps, createDeviceClient: CreateDeviceClient, captureCanvasStream: CaptureCanvasStream, resumePauseAudioStreams: ResumePauseAudioStreams, processConsumerTransportsAudio: ProcessConsumerTransportsAudio, launchMessages: LaunchMessages, launchConfirmExit: LaunchConfirmExit, startMeetingProgressTimer: StartMeetingProgressTimer, producerMediaPaused: ProducerMediaPaused, producerMediaResumed: ProducerMediaResumed, producerMediaClosed: ProducerMediaClosed, meetingEnded: MeetingEnded, disconnectUserSelf: DisconnectUserSelf, receiveMessage: ReceiveMessage, meetingTimeRemaining: MeetingTimeRemaining, meetingStillThere: MeetingStillThere, allMembers: AllMembers, allMembersRest: AllMembersRest, disconnect: Disconnect, socketManager: SocketManager, joinRoomClient: JoinRoomClient, joinLocalRoom: JoinLocalRoom, updateRoomParametersClient: UpdateRoomParametersClient, clickVideo: ClickVideo, clickAudio: ClickAudio, clickScreenShare: ClickScreenShare, switchVideoAlt: SwitchVideoAlt, streamSuccessVideo: StreamSuccessVideo, streamSuccessAudio: StreamSuccessAudio, streamSuccessScreen: StreamSuccessScreen, streamSuccessAudioSwitch: StreamSuccessAudioSwitch, checkPermission: CheckPermission, updateConsumingDomains: UpdateConsumingDomains, receiveRoomMessages: ReceiveRoomMessages);
+    constructor(cdr: ChangeDetectorRef, injector: Injector, updateMiniCardsGrid: UpdateMiniCardsGrid, mixStreams: MixStreams, dispStreams: DispStreams, stopShareScreen: StopShareScreen, checkScreenShare: CheckScreenShare, startShareScreen: StartShareScreen, requestScreenShare: RequestScreenShare, reorderStreams: ReorderStreams, prepopulateUserMedia: PrepopulateUserMedia, getVideos: GetVideos, rePort: RePort, trigger: Trigger, consumerResume: ConsumerResume, connectSendTransport: ConnectSendTransport, connectSendTransportAudio: ConnectSendTransportAudio, connectSendTransportVideo: ConnectSendTransportVideo, connectSendTransportScreen: ConnectSendTransportScreen, processConsumerTransports: ProcessConsumerTransports, resumePauseStreams: ResumePauseStreams, readjust: Readjust, checkGrid: CheckGrid, getEstimate: GetEstimate, calculateRowsAndColumns: CalculateRowsAndColumns, addVideosGrid: AddVideosGrid, onScreenChanges: OnScreenChanges, changeVids: ChangeVids, compareActiveNames: CompareActiveNames, compareScreenStates: CompareScreenStates, createSendTransport: CreateSendTransport, resumeSendTransportAudio: ResumeSendTransportAudio, receiveAllPipedTransports: ReceiveAllPipedTransports, disconnectSendTransportVideo: DisconnectSendTransportVideo, disconnectSendTransportAudio: DisconnectSendTransportAudio, disconnectSendTransportScreen: DisconnectSendTransportScreen, getPipedProducersAlt: GetPipedProducersAlt, signalNewConsumerTransport: SignalNewConsumerTransport, connectRecvTransport: ConnectRecvTransport, reUpdateInter: ReUpdateInter, updateParticipantAudioDecibels: UpdateParticipantAudioDecibels, closeAndResize: CloseAndResize, autoAdjust: AutoAdjust, switchUserVideoAlt: SwitchUserVideoAlt, switchUserVideo: SwitchUserVideo, switchUserAudio: SwitchUserAudio, getDomains: GetDomains, formatNumber: FormatNumber, connectIps: ConnectIps, connectLocalIps: ConnectLocalIps, createDeviceClient: CreateDeviceClient, captureCanvasStream: CaptureCanvasStream, resumePauseAudioStreams: ResumePauseAudioStreams, processConsumerTransportsAudio: ProcessConsumerTransportsAudio, launchMessages: LaunchMessages, launchConfirmExit: LaunchConfirmExit, startMeetingProgressTimer: StartMeetingProgressTimer, producerMediaPaused: ProducerMediaPaused, producerMediaResumed: ProducerMediaResumed, producerMediaClosed: ProducerMediaClosed, meetingEnded: MeetingEnded, disconnectUserSelf: DisconnectUserSelf, receiveMessage: ReceiveMessage, meetingTimeRemaining: MeetingTimeRemaining, meetingStillThere: MeetingStillThere, allMembers: AllMembers, allMembersRest: AllMembersRest, disconnect: Disconnect, socketManager: SocketManager, joinRoomClient: JoinRoomClient, joinLocalRoom: JoinLocalRoom, updateRoomParametersClient: UpdateRoomParametersClient, clickVideo: ClickVideo, clickAudio: ClickAudio, clickScreenShare: ClickScreenShare, switchVideoAlt: SwitchVideoAlt, streamSuccessVideo: StreamSuccessVideo, streamSuccessAudio: StreamSuccessAudio, streamSuccessScreen: StreamSuccessScreen, streamSuccessAudioSwitch: StreamSuccessAudioSwitch, checkPermission: CheckPermission, updateConsumingDomains: UpdateConsumingDomains, receiveRoomMessages: ReceiveRoomMessages, uiOverrideResolver: UIOverrideResolverService);
     createInjector(inputs: any): Injector;
     /**
      * Gets a list of media devices filtered by the specified kind.
@@ -375,7 +520,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
         connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
         connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
-        createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
+        createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<types.Device | null>;
         captureCanvasStream: ({ parameters, start, }: import("../../@types/types").CaptureCanvasStreamOptions) => Promise<void>;
         resumePauseAudioStreams: ({ breakRoom, inBreakRoom, parameters, }: import("../../consumers/resume-pause-audio-streams.service").ResumePauseAudioStreamsOptions) => Promise<void>;
         processConsumerTransportsAudio: ({ consumerTransports, lStreams, parameters, }: import("../../consumers/process-consumer-transports-audio.service").ProcessConsumerTransportsAudioOptions) => Promise<void>;
@@ -402,7 +547,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     socket: BehaviorSubject<Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>>;
     localSocket?: BehaviorSubject<Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined> | undefined;
     roomData: BehaviorSubject<ResponseJoinRoom | null>;
-    device: BehaviorSubject<Device | null>;
+    device: BehaviorSubject<types.Device | null>;
     apiKey: BehaviorSubject<string>;
     apiUserName: BehaviorSubject<string>;
     apiToken: BehaviorSubject<string>;
@@ -424,7 +569,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     participantsCounter: BehaviorSubject<number>;
     participantsFilter: BehaviorSubject<string>;
     consume_sockets: BehaviorSubject<ConsumeSocket[]>;
-    rtpCapabilities: BehaviorSubject<RtpCapabilities | null>;
+    rtpCapabilities: BehaviorSubject<types.RtpCapabilities | null>;
     roomRecvIPs: BehaviorSubject<string[]>;
     meetingRoomParams: BehaviorSubject<MeetingRoomParams | null>;
     itemPageLimit: BehaviorSubject<number>;
@@ -585,8 +730,8 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     defer_receive: BehaviorSubject<boolean>;
     allAudioStreams: BehaviorSubject<(Stream | Participant)[]>;
     remoteScreenStream: BehaviorSubject<Stream[]>;
-    screenProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
-    localScreenProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    screenProducer: BehaviorSubject<Producer | null>;
+    localScreenProducer: BehaviorSubject<Producer | null>;
     gotAllVids: BehaviorSubject<boolean>;
     paginationHeightWidth: BehaviorSubject<number>;
     paginationDirection: BehaviorSubject<"horizontal" | "vertical">;
@@ -873,16 +1018,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     transportCreatedVideo: BehaviorSubject<boolean>;
     transportCreatedAudio: BehaviorSubject<boolean>;
     transportCreatedScreen: BehaviorSubject<boolean>;
-    producerTransport: BehaviorSubject<Transport<import("mediasoup-client/lib/types").AppData> | null>;
-    localProducerTransport: BehaviorSubject<Transport<import("mediasoup-client/lib/types").AppData> | null>;
-    videoProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
-    localVideoProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    producerTransport: BehaviorSubject<Transport | null>;
+    localProducerTransport: BehaviorSubject<Transport | null>;
+    videoProducer: BehaviorSubject<Producer | null>;
+    localVideoProducer: BehaviorSubject<Producer | null>;
     params: BehaviorSubject<ProducerOptions>;
     videoParams: BehaviorSubject<ProducerOptions>;
     audioParams: BehaviorSubject<ProducerOptions>;
-    audioProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    audioProducer: BehaviorSubject<Producer | null>;
     audioLevel: BehaviorSubject<number>;
-    localAudioProducer: BehaviorSubject<Producer<import("mediasoup-client/lib/types").AppData> | null>;
+    localAudioProducer: BehaviorSubject<Producer | null>;
     consumerTransports: BehaviorSubject<TransportType[]>;
     consumingTransports: BehaviorSubject<string[]>;
     polls: BehaviorSubject<Poll[]>;
@@ -1095,7 +1240,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         participantsCounter: number;
         participantsFilter: string;
         consume_sockets: ConsumeSocket[];
-        rtpCapabilities: RtpCapabilities | null;
+        rtpCapabilities: types.RtpCapabilities | null;
         roomRecvIPs: string[];
         meetingRoomParams: MeetingRoomParams | null;
         itemPageLimit: number;
@@ -1254,7 +1399,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         nStream: MediaStream | null;
         defer_receive: boolean;
         allAudioStreams: (Stream | Participant)[];
-        screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        screenProducer: Producer | null;
         remoteScreenStream: Stream[];
         gotAllVids: boolean;
         paginationHeightWidth: number;
@@ -1342,16 +1487,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         transportCreatedVideo: boolean;
         transportCreatedAudio: boolean;
         transportCreatedScreen: boolean;
-        producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-        localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-        videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
-        localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        producerTransport: Transport | null;
+        localProducerTransport: Transport | null;
+        videoProducer: Producer | null;
+        localVideoProducer: Producer | null;
         params: ProducerOptions;
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
-        audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        audioProducer: Producer | null;
         audioLevel: number;
-        localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localAudioProducer: Producer | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
         polls: Poll[];
@@ -1401,7 +1546,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         mainScreenCanvas: HTMLCanvasElement | null;
         isScreenboardModalVisible: boolean;
         validated: boolean;
-        device: Device | null;
+        device: types.Device | null;
         socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
         localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
         checkMediaPermission: boolean;
@@ -1786,7 +1931,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
             connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
             connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
-            createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
+            createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<types.Device | null>;
             captureCanvasStream: ({ parameters, start, }: import("../../@types/types").CaptureCanvasStreamOptions) => Promise<void>;
             resumePauseAudioStreams: ({ breakRoom, inBreakRoom, parameters, }: import("../../consumers/resume-pause-audio-streams.service").ResumePauseAudioStreamsOptions) => Promise<void>;
             processConsumerTransportsAudio: ({ consumerTransports, lStreams, parameters, }: import("../../consumers/process-consumer-transports-audio.service").ProcessConsumerTransportsAudioOptions) => Promise<void>;
@@ -1823,7 +1968,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             participantsCounter: number;
             participantsFilter: string;
             consume_sockets: ConsumeSocket[];
-            rtpCapabilities: RtpCapabilities | null;
+            rtpCapabilities: types.RtpCapabilities | null;
             roomRecvIPs: string[];
             meetingRoomParams: MeetingRoomParams | null;
             itemPageLimit: number;
@@ -1982,7 +2127,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             nStream: MediaStream | null;
             defer_receive: boolean;
             allAudioStreams: (Stream | Participant)[];
-            screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            screenProducer: Producer | null;
             remoteScreenStream: Stream[];
             gotAllVids: boolean;
             paginationHeightWidth: number;
@@ -2070,16 +2215,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             transportCreatedVideo: boolean;
             transportCreatedAudio: boolean;
             transportCreatedScreen: boolean;
-            producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-            localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-            videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
-            localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            producerTransport: Transport | null;
+            localProducerTransport: Transport | null;
+            videoProducer: Producer | null;
+            localVideoProducer: Producer | null;
             params: ProducerOptions;
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
-            audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            audioProducer: Producer | null;
             audioLevel: number;
-            localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localAudioProducer: Producer | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
             polls: Poll[];
@@ -2129,7 +2274,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             mainScreenCanvas: HTMLCanvasElement | null;
             isScreenboardModalVisible: boolean;
             validated: boolean;
-            device: Device | null;
+            device: types.Device | null;
             socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
             localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
             checkMediaPermission: boolean;
@@ -2517,7 +2662,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
         connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
         connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
-        createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
+        createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<types.Device | null>;
         captureCanvasStream: ({ parameters, start, }: import("../../@types/types").CaptureCanvasStreamOptions) => Promise<void>;
         resumePauseAudioStreams: ({ breakRoom, inBreakRoom, parameters, }: import("../../consumers/resume-pause-audio-streams.service").ResumePauseAudioStreamsOptions) => Promise<void>;
         processConsumerTransportsAudio: ({ consumerTransports, lStreams, parameters, }: import("../../consumers/process-consumer-transports-audio.service").ProcessConsumerTransportsAudioOptions) => Promise<void>;
@@ -2554,7 +2699,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         participantsCounter: number;
         participantsFilter: string;
         consume_sockets: ConsumeSocket[];
-        rtpCapabilities: RtpCapabilities | null;
+        rtpCapabilities: types.RtpCapabilities | null;
         roomRecvIPs: string[];
         meetingRoomParams: MeetingRoomParams | null;
         itemPageLimit: number;
@@ -2713,7 +2858,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         nStream: MediaStream | null;
         defer_receive: boolean;
         allAudioStreams: (Stream | Participant)[];
-        screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        screenProducer: Producer | null;
         remoteScreenStream: Stream[];
         gotAllVids: boolean;
         paginationHeightWidth: number;
@@ -2801,16 +2946,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         transportCreatedVideo: boolean;
         transportCreatedAudio: boolean;
         transportCreatedScreen: boolean;
-        producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-        localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-        videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
-        localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        producerTransport: Transport | null;
+        localProducerTransport: Transport | null;
+        videoProducer: Producer | null;
+        localVideoProducer: Producer | null;
         params: ProducerOptions;
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
-        audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        audioProducer: Producer | null;
         audioLevel: number;
-        localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localAudioProducer: Producer | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
         polls: Poll[];
@@ -2860,7 +3005,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         mainScreenCanvas: HTMLCanvasElement | null;
         isScreenboardModalVisible: boolean;
         validated: boolean;
-        device: Device | null;
+        device: types.Device | null;
         socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
         localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
         checkMediaPermission: boolean;
@@ -3245,7 +3390,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
             connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
             connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
-            createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
+            createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<types.Device | null>;
             captureCanvasStream: ({ parameters, start, }: import("../../@types/types").CaptureCanvasStreamOptions) => Promise<void>;
             resumePauseAudioStreams: ({ breakRoom, inBreakRoom, parameters, }: import("../../consumers/resume-pause-audio-streams.service").ResumePauseAudioStreamsOptions) => Promise<void>;
             processConsumerTransportsAudio: ({ consumerTransports, lStreams, parameters, }: import("../../consumers/process-consumer-transports-audio.service").ProcessConsumerTransportsAudioOptions) => Promise<void>;
@@ -3282,7 +3427,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             participantsCounter: number;
             participantsFilter: string;
             consume_sockets: ConsumeSocket[];
-            rtpCapabilities: RtpCapabilities | null;
+            rtpCapabilities: types.RtpCapabilities | null;
             roomRecvIPs: string[];
             meetingRoomParams: MeetingRoomParams | null;
             itemPageLimit: number;
@@ -3441,7 +3586,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             nStream: MediaStream | null;
             defer_receive: boolean;
             allAudioStreams: (Stream | Participant)[];
-            screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            screenProducer: Producer | null;
             remoteScreenStream: Stream[];
             gotAllVids: boolean;
             paginationHeightWidth: number;
@@ -3529,16 +3674,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             transportCreatedVideo: boolean;
             transportCreatedAudio: boolean;
             transportCreatedScreen: boolean;
-            producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-            localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-            videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
-            localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            producerTransport: Transport | null;
+            localProducerTransport: Transport | null;
+            videoProducer: Producer | null;
+            localVideoProducer: Producer | null;
             params: ProducerOptions;
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
-            audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            audioProducer: Producer | null;
             audioLevel: number;
-            localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localAudioProducer: Producer | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
             polls: Poll[];
@@ -3588,7 +3733,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             mainScreenCanvas: HTMLCanvasElement | null;
             isScreenboardModalVisible: boolean;
             validated: boolean;
-            device: Device | null;
+            device: types.Device | null;
             socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
             localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
             checkMediaPermission: boolean;
@@ -3976,7 +4121,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
         connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
         connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
-        createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
+        createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<types.Device | null>;
         captureCanvasStream: ({ parameters, start, }: import("../../@types/types").CaptureCanvasStreamOptions) => Promise<void>;
         resumePauseAudioStreams: ({ breakRoom, inBreakRoom, parameters, }: import("../../consumers/resume-pause-audio-streams.service").ResumePauseAudioStreamsOptions) => Promise<void>;
         processConsumerTransportsAudio: ({ consumerTransports, lStreams, parameters, }: import("../../consumers/process-consumer-transports-audio.service").ProcessConsumerTransportsAudioOptions) => Promise<void>;
@@ -4013,7 +4158,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         participantsCounter: number;
         participantsFilter: string;
         consume_sockets: ConsumeSocket[];
-        rtpCapabilities: RtpCapabilities | null;
+        rtpCapabilities: types.RtpCapabilities | null;
         roomRecvIPs: string[];
         meetingRoomParams: MeetingRoomParams | null;
         itemPageLimit: number;
@@ -4172,7 +4317,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         nStream: MediaStream | null;
         defer_receive: boolean;
         allAudioStreams: (Stream | Participant)[];
-        screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        screenProducer: Producer | null;
         remoteScreenStream: Stream[];
         gotAllVids: boolean;
         paginationHeightWidth: number;
@@ -4260,16 +4405,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         transportCreatedVideo: boolean;
         transportCreatedAudio: boolean;
         transportCreatedScreen: boolean;
-        producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-        localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-        videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
-        localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        producerTransport: Transport | null;
+        localProducerTransport: Transport | null;
+        videoProducer: Producer | null;
+        localVideoProducer: Producer | null;
         params: ProducerOptions;
         videoParams: ProducerOptions;
         audioParams: ProducerOptions;
-        audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        audioProducer: Producer | null;
         audioLevel: number;
-        localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+        localAudioProducer: Producer | null;
         consumerTransports: TransportType[];
         consumingTransports: string[];
         polls: Poll[];
@@ -4319,7 +4464,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
         mainScreenCanvas: HTMLCanvasElement | null;
         isScreenboardModalVisible: boolean;
         validated: boolean;
-        device: Device | null;
+        device: types.Device | null;
         socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
         localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
         checkMediaPermission: boolean;
@@ -4704,7 +4849,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             formatNumber: ({ number }: import("../../@types/types").FormatNumberOptions) => Promise<string | undefined>;
             connectIps: ({ consume_sockets, remIP, apiUserName, apiKey, apiToken, newProducerMethod, closedProducerMethod, joinConsumeRoomMethod, parameters, }: import("../../consumers/connect-ips.service").ConnectIpsOptions) => Promise<any>;
             connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: import("../../consumers/connect-local-ips.service").ConnectLocalIpsOptions) => Promise<void>;
-            createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<Device | null>;
+            createDeviceClient: ({ rtpCapabilities }: import("../../@types/types").CreateDeviceClientOptions) => Promise<types.Device | null>;
             captureCanvasStream: ({ parameters, start, }: import("../../@types/types").CaptureCanvasStreamOptions) => Promise<void>;
             resumePauseAudioStreams: ({ breakRoom, inBreakRoom, parameters, }: import("../../consumers/resume-pause-audio-streams.service").ResumePauseAudioStreamsOptions) => Promise<void>;
             processConsumerTransportsAudio: ({ consumerTransports, lStreams, parameters, }: import("../../consumers/process-consumer-transports-audio.service").ProcessConsumerTransportsAudioOptions) => Promise<void>;
@@ -4741,7 +4886,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             participantsCounter: number;
             participantsFilter: string;
             consume_sockets: ConsumeSocket[];
-            rtpCapabilities: RtpCapabilities | null;
+            rtpCapabilities: types.RtpCapabilities | null;
             roomRecvIPs: string[];
             meetingRoomParams: MeetingRoomParams | null;
             itemPageLimit: number;
@@ -4900,7 +5045,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             nStream: MediaStream | null;
             defer_receive: boolean;
             allAudioStreams: (Stream | Participant)[];
-            screenProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            screenProducer: Producer | null;
             remoteScreenStream: Stream[];
             gotAllVids: boolean;
             paginationHeightWidth: number;
@@ -4988,16 +5133,16 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             transportCreatedVideo: boolean;
             transportCreatedAudio: boolean;
             transportCreatedScreen: boolean;
-            producerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-            localProducerTransport: Transport<import("mediasoup-client/lib/types").AppData> | null;
-            videoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
-            localVideoProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            producerTransport: Transport | null;
+            localProducerTransport: Transport | null;
+            videoProducer: Producer | null;
+            localVideoProducer: Producer | null;
             params: ProducerOptions;
             videoParams: ProducerOptions;
             audioParams: ProducerOptions;
-            audioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            audioProducer: Producer | null;
             audioLevel: number;
-            localAudioProducer: Producer<import("mediasoup-client/lib/types").AppData> | null;
+            localAudioProducer: Producer | null;
             consumerTransports: TransportType[];
             consumingTransports: string[];
             polls: Poll[];
@@ -5047,7 +5192,7 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
             mainScreenCanvas: HTMLCanvasElement | null;
             isScreenboardModalVisible: boolean;
             validated: boolean;
-            device: Device | null;
+            device: types.Device | null;
             socket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
             localSocket: Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap> | undefined;
             checkMediaPermission: boolean;
@@ -5380,6 +5525,11 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     };
     PrejoinPageComponent: any;
     updatePrejoinPageComponent: () => void;
+    /**
+     * Initializes function overrides by wrapping original implementations
+     * with custom logic if provided in uiOverrides
+     */
+    initializeFunctionOverrides(): void;
     ngOnInit(): void;
     ngOnDestroy(): void;
     updateMainVideoSize: () => Promise<void>;
@@ -5457,5 +5607,6 @@ export declare class MediasfuChat implements OnInit, OnDestroy {
     updateControlChatButtons(): void;
     connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuChat, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuChat, "app-mediasfu-chat", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuChat, "app-mediasfu-chat", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, {}, never, never, true, never>;
 }
+export {};

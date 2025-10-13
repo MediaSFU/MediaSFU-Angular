@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ProducerCodecOptions, RtpEncodingParameters } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type ProducerCodecOptions = types.ProducerCodecOptions;
+type RtpEncodingParameters = types.RtpEncodingParameters;
 export type ScreenParamsType = {
   encodings: RtpEncodingParameters[];
   codecOptions?: ProducerCodecOptions;

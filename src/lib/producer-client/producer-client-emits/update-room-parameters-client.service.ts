@@ -6,7 +6,8 @@ import { HParams, HParamsType } from '../../methods/utils/producer/h-params.serv
 import { VParams, VParamsType } from '../../methods/utils/producer/v-params.service';
 import { ScreenParams } from '../../methods/utils/producer/screen-params.service';
 import { AParams } from '../../methods/utils/producer/a-params.service';
-import { RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type RtpCapabilities = types.RtpCapabilities;
 import {
   EventType,
   ShowAlert,

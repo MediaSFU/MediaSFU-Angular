@@ -1,5 +1,23 @@
-<div *ngIf="isConfirmHereModalVisible" [ngStyle]="modalContainerStyle" class="modal-container">
-  <div [ngStyle]="modalContentStyle" class="modal-content">
+<!-- Custom template override -->
+<ng-container *ngIf="isConfirmHereModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      isConfirmHereModalVisible,
+      position,
+      backgroundColor,
+      displayColor,
+      counter,
+      handleConfirmHere: handleConfirmHere.bind(this),
+      onConfirmHereClose
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isConfirmHereModalVisible && !customTemplate"
+     [ngStyle]="getCombinedOverlayStyle()"
+     class="modal-container">
+  <div [ngStyle]="getCombinedContentStyle()" class="modal-content">
     <div class="spinner" [ngStyle]="spinnerContainerStyle"></div>
     <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: black;">Are you still there?</h2>
     <p style="font-size: 1rem; color: black; margin-bottom: 1.5rem;">Please confirm if you are still present.</p>

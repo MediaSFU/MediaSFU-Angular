@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface MainContainerComponentOptions {
@@ -10,6 +10,8 @@ export interface MainContainerComponentOptions {
   marginTop?: number;
   marginBottom?: number;
   padding?: number;
+  containerStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type MainContainerComponentType = (options: MainContainerComponentOptions) => HTMLElement;
@@ -62,9 +64,25 @@ export type MainContainerComponentType = (options: MainContainerComponentOptions
     selector: 'app-main-container-component',
     imports: [CommonModule],
     template: `
-    <div [ngStyle]="containerStyles">
-      <ng-content></ng-content>
+    <div *ngIf="customTemplate; else defaultTemplate" [ngStyle]="containerStyles">
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          backgroundColor,
+          containerWidthFraction,
+          containerHeightFraction,
+          marginLeft,
+          marginRight,
+          marginTop,
+          marginBottom,
+          padding
+        }
+      }"></ng-container>
     </div>
+    <ng-template #defaultTemplate>
+      <div [ngStyle]="containerStyles">
+        <ng-content></ng-content>
+      </div>
+    </ng-template>
   `
 })
 export class MainContainerComponent implements OnInit, OnDestroy, OnChanges {
@@ -76,6 +94,8 @@ export class MainContainerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() marginTop = 0;
   @Input() marginBottom = 0;
   @Input() padding = 0;
+  @Input() containerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   containerStyles: { [key: string]: any } = {};
 
@@ -109,7 +129,7 @@ export class MainContainerComponent implements OnInit, OnDestroy, OnChanges {
     const windowHeight = window.innerHeight;
     const windowWidth = window.innerWidth;
 
-    this.containerStyles = {
+    const baseStyles = {
       backgroundColor: this.backgroundColor,
       marginLeft: `${this.marginLeft}px`,
       marginRight: `${this.marginRight}px`,
@@ -121,6 +141,11 @@ export class MainContainerComponent implements OnInit, OnDestroy, OnChanges {
       maxWidth: Math.floor(this.containerWidthFraction * windowWidth) + 'px',
       padding: `${this.padding}px`,
       overflow: 'hidden',
+    };
+
+    this.containerStyles = {
+      ...baseStyles,
+      ...(this.containerStyle as any),
     };
   };
 }

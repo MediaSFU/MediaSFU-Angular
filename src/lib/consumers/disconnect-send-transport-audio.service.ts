@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
 import { PrepopulateUserMediaType, PrepopulateUserMediaParameters } from '../@types/types';
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
 export interface DisconnectSendTransportAudioParameters extends PrepopulateUserMediaParameters {
   audioProducer: Producer | null;
   localAudioProducer?: Producer | null;

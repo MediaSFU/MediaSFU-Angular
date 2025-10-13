@@ -1,7 +1,8 @@
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { Socket } from 'socket.io-client';
 import { ReorderStreamsType, ReorderStreamsParameters } from '../@types/types';
 import * as i0 from "@angular/core";
+type Producer = types.Producer;
 export interface DisconnectSendTransportVideoParameters extends ReorderStreamsParameters {
     videoProducer: Producer | null;
     localVideoProducer?: Producer | null;
@@ -123,3 +124,4 @@ export declare class DisconnectSendTransportVideo {
     static ɵfac: i0.ɵɵFactoryDeclaration<DisconnectSendTransportVideo, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<DisconnectSendTransportVideo>;
 }
+export {};

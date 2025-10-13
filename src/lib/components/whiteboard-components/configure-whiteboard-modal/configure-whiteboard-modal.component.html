@@ -1,5 +1,21 @@
-<div [ngStyle]="modalContainerStyle()">
-  <div [ngStyle]="modalContentStyle()">
+<ng-container *ngIf="isVisible && customTemplate">
+  <ng-container
+    *ngTemplateOutlet="
+      customTemplate;
+      context: {
+        isVisible: isVisible,
+        parameters: parameters,
+        backgroundColor: backgroundColor,
+        position: position,
+        onConfigureWhiteboardClose: onConfigureWhiteboardClose
+      }
+    "
+  >
+  </ng-container>
+</ng-container>
+
+<div *ngIf="isVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div style="display: flex; flex-direction: column;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h2 style="font-size: x-large; font-weight: bold; color: black;">

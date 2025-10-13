@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Producer, ProducerCodecOptions, ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
+type ProducerCodecOptions = types.ProducerCodecOptions;
+type ProducerOptions = types.ProducerOptions;
 import { Socket } from 'socket.io-client';
 import {
   PrepopulateUserMediaParameters,

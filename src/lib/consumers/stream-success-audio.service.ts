@@ -12,7 +12,8 @@ import {
   ConnectSendTransportAudioType,
   ResumeSendTransportAudioType,
 } from '../@types/types';
-import { ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type ProducerOptions = types.ProducerOptions;
 export interface StreamSuccessAudioParameters
   extends CreateSendTransportParameters,
     ConnectSendTransportAudioParameters,

@@ -1,5 +1,11 @@
-<div [ngStyle]="modalContainerStyle">
-  <div [ngStyle]="modalContentStyle">
+<!-- Custom template override -->
+<ng-container *ngIf="isMessagesModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: { $implicit: { isMessagesModalVisible, eventType, activeTab, messages, member, closeMessagesModal: closeMessagesModal.bind(this) } }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isMessagesModalVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div
       [ngStyle]="{
         flexDirection: 'row',

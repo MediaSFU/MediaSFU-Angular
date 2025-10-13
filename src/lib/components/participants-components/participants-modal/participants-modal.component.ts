@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -55,13 +55,15 @@ export interface ParticipantsModalOptions {
   parameters: ParticipantsModalParameters;
   backgroundColor?: string;
   position?: string;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type ParticipantsModalType = (options: ParticipantsModalOptions) => HTMLElement;
 
 /**
- * Component for displaying a modal containing a list of participants with options to mute, message, or remove participants.
- * Supports both regular participants and a subset of "other" participants.
+ * ParticipantsModal - Customizable participants list modal with interaction controls
  *
  * @component
  * @selector app-participants-modal
@@ -70,7 +72,22 @@ export type ParticipantsModalType = (options: ParticipantsModalOptions) => HTMLE
  * @styleUrls ['./participants-modal.component.css']
  * @imports [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers]
  *
+ * @description
+ * A modal for displaying and managing meeting participants with customizable UI.
+ * Supports three levels of customization:
+ * 1. **Style Overrides**: Customize modal appearance with `overlayStyle` and `contentStyle`
+ * 2. **Component Replacement**: Replace participant list rendering components
+ * 3. **Complete Replacement**: Use `customTemplate` for full UI control
+ *
+ * Features:
+ * - Filter participants by name
+ * - Mute/unmute participants
+ * - Send direct messages
+ * - Remove participants (host/co-host only)
+ * - Separate lists for active and waiting participants
+ *
  * @example
+ * **Basic Usage**
  * ```html
  * <app-participants-modal
  *   [isParticipantsModalVisible]="true"
@@ -79,9 +96,53 @@ export type ParticipantsModalType = (options: ParticipantsModalOptions) => HTMLE
  *   [participantsCounter]="5"
  *   [parameters]="participantsModalParameters"
  *   [position]="'topRight'"
- *   [backgroundColor]="'#83c0e9'"
- * ></app-participants-modal>
+ *   [backgroundColor]="'#83c0e9'">
+ * </app-participants-modal>
  * ```
+ *
+ * @example
+ * **With Style Customization**
+ * ```html
+ * <app-participants-modal
+ *   [isParticipantsModalVisible]="true"
+ *   [overlayStyle]="{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }"
+ *   [contentStyle]="{ borderRadius: '16px', maxHeight: '80vh' }"
+ *   [onParticipantsClose]="closeModalFunction"
+ *   [parameters]="participantsModalParameters">
+ * </app-participants-modal>
+ * ```
+ *
+ * @example
+ * **Custom Template Override**
+ * ```html
+ * <app-participants-modal
+ *   [isParticipantsModalVisible]="true"
+ *   [customTemplate]="customParticipantsTemplate"
+ *   [parameters]="participantsModalParameters"
+ *   [onParticipantsClose]="closeModalFunction">
+ * </app-participants-modal>
+ * 
+ * <ng-template #customParticipantsTemplate let-context>
+ *   <div class="my-participants-modal">
+ *     <h2>{{ context.participantsCounter }} Participants</h2>
+ *     <div *ngFor="let participant of context.parameters.participants">
+ *       {{ participant.name }}
+ *     </div>
+ *     <button (click)="context.onParticipantsClose()">Close</button>
+ *   </div>
+ * </ng-template>
+ * ```
+ *
+ * @input {boolean} isParticipantsModalVisible - Controls modal visibility
+ * @input {() => void} onParticipantsClose - Callback when modal is closed
+ * @input {(filter: string) => void} onParticipantsFilterChange - Callback when filter changes
+ * @input {number} participantsCounter - Total number of participants
+ * @input {ParticipantsModalParameters} parameters - Modal parameters including participants list
+ * @input {string} position - Modal position (default: 'topRight')
+ * @input {string} backgroundColor - Modal background color (default: '#83c0e9')
+ * @input {Partial<CSSStyleDeclaration>} overlayStyle - Custom overlay styles
+ * @input {Partial<CSSStyleDeclaration>} contentStyle - Custom content styles
+ * @input {TemplateRef<any>} customTemplate - Complete template override
  */
 
 
@@ -102,6 +163,9 @@ export class ParticipantsModal implements OnInit, OnChanges {
   @Input() parameters: ParticipantsModalParameters = {} as ParticipantsModalParameters;
   @Input() position = 'topRight';
   @Input() backgroundColor = '#83c0e9';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   participant_s: Participant[] = [];
   participantsCounter_s = 0;
@@ -166,5 +230,23 @@ export class ParticipantsModal implements OnInit, OnChanges {
       this.parameters.islevel === '2' ||
       (this.parameters.coHost === this.parameters.member && participantsValue === true)
     );
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      'background-color': 'rgba(0, 0, 0, 0.5)',
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      'background-color': this.backgroundColor,
+      'top': this.position.includes('top') ? '10px' : 'auto',
+      'bottom': this.position.includes('bottom') ? '10px' : 'auto',
+      'left': this.position.includes('Left') ? '10px' : 'auto',
+      'right': this.position.includes('Right') ? '10px' : 'auto',
+      ...(this.contentStyle || {})
+    };
   }
 }

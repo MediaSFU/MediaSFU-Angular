@@ -1,5 +1,11 @@
-<div [ngStyle]="modalContainerStyle">
-  <div [ngStyle]="modalContentStyle">
+<!-- Custom template override -->
+<ng-container *ngIf="isRecordingModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: { $implicit: { isRecordingModalVisible, backgroundColor, parameters, onClose, confirm: confirm.bind(this), start: start.bind(this) } }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isRecordingModalVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div style="display: flex; flex-direction: column;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h2 style="font-size: x-large; font-weight: bold; color: black;">

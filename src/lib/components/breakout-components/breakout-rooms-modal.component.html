@@ -1,5 +1,21 @@
-<div *ngIf="isVisible" class="modal-container" [ngStyle]="modalContainerStyle()">
-  <div class="modal-content" [ngStyle]="modalContentStyle()">
+<ng-container *ngIf="isVisible && customTemplate">
+  <ng-container
+    *ngTemplateOutlet="
+      customTemplate;
+      context: {
+        isVisible: isVisible,
+        parameters: parameters,
+        position: position,
+        backgroundColor: backgroundColor,
+        onBreakoutRoomsClose: onBreakoutRoomsClose
+      }
+    "
+  >
+  </ng-container>
+</ng-container>
+
+<div *ngIf="isVisible && !customTemplate" class="modal-container" [ngStyle]="getCombinedOverlayStyle()">
+  <div class="modal-content" [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <h2>Breakout Rooms <fa-icon [icon]="faDoorOpen"></fa-icon></h2>
       <button class="close-btn" (click)="onBreakoutRoomsClose()">

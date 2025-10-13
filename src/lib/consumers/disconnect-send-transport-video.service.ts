@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
 import { Socket } from 'socket.io-client';
 import { ReorderStreamsType, ReorderStreamsParameters } from '../@types/types';
 export interface DisconnectSendTransportVideoParameters extends ReorderStreamsParameters {

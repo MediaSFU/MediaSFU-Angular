@@ -6,7 +6,9 @@ import {
   ReceiveAllPipedTransportsParameters,
   CreateDeviceClientType,
 } from '../../@types/types';
-import { Device, RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
+type RtpCapabilities = types.RtpCapabilities;
 
 export interface JoinConsumeRoomParameters extends ReceiveAllPipedTransportsParameters {
   roomName: string;

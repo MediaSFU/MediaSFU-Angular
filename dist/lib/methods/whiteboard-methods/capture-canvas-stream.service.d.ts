@@ -1,7 +1,8 @@
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { ConnectSendTransportScreenType, CreateSendTransportType, DisconnectSendTransportScreenType, SleepType, CreateSendTransportParameters, DisconnectSendTransportScreenParameters, ConnectSendTransportScreenParameters } from '../../@types/types';
 import { Socket } from 'socket.io-client';
 import * as i0 from "@angular/core";
+type Producer = types.Producer;
 export interface CaptureCanvasStreamParameters extends CreateSendTransportParameters, DisconnectSendTransportScreenParameters, ConnectSendTransportScreenParameters {
     canvasWhiteboard: HTMLCanvasElement | null;
     canvasStream: MediaStream | null;
@@ -77,3 +78,4 @@ export declare class CaptureCanvasStream {
     static ɵfac: i0.ɵɵFactoryDeclaration<CaptureCanvasStream, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CaptureCanvasStream>;
 }
+export {};

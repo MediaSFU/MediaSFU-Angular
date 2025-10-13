@@ -1,7 +1,8 @@
 import { Socket } from 'socket.io-client';
 import { ValidateAlphanumeric } from '../../methods/utils/validate-alphanumeric.service';
-import { RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type RtpCapabilities = types.RtpCapabilities;
 export interface JoinConRoomOptions {
     socket: Socket;
     roomName: string;
@@ -80,3 +81,4 @@ export declare class JoinConRoom {
     static ɵfac: i0.ɵɵFactoryDeclaration<JoinConRoom, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<JoinConRoom>;
 }
+export {};

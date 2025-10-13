@@ -64,58 +64,67 @@ export interface BreakoutRoomsModalOptions {
   position?: 'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft';
   backgroundColor?: string;
   onBreakoutRoomsClose: () => void;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 /**
- * BreakoutRoomsModal component manages the creation, modification, and assignment of breakout rooms.
- *
+ * BreakoutRoomsModal - Modal for creating and managing breakout rooms
+ * 
+ * @component
+ * @description
+ * Allows hosts to create, configure, and manage breakout rooms for splitting participants into smaller groups.
+ * Supports random assignment, manual assignment, and room editing.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with room list, assignment controls, and edit room modal
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Create multiple breakout rooms
+ * - Random participant assignment
+ * - Manual participant assignment with drag-and-drop
+ * - Edit room participants
+ * - Delete rooms
+ * - Start/stop breakout sessions
+ * - Room validation and error handling
+ * 
  * @selector app-breakout-rooms-modal
- * @inputs
- * - `isVisible` (boolean): Controls the visibility of the breakout rooms modal. Default is false.
- * - `parameters` (BreakoutRoomsModalParameters): Parameters for managing breakout room settings and behavior.
- * - `position` (string): Position of the modal on the screen. Default is 'topRight'.
- * - `backgroundColor` (string): Background color of the modal. Default is '#83c0e9'.
- * - `onBreakoutRoomsClose` (function): Callback function triggered when the modal is closed.
- *
- * @methods
- * - `ngOnInit()`: Lifecycle hook to initialize modal width and breakout rooms.
- * - `ngOnChanges(changes: SimpleChanges)`: Lifecycle hook called when any data-bound input properties change.
- * - `calculateModalWidth()`: Dynamically calculates and sets modal width based on screen width.
- * - `modalContainerStyle()`: Returns style object for modal container.
- * - `modalContentStyle()`: Returns style object for modal content.
- * - `initializeBreakoutRooms()`: Initializes the breakout rooms based on the current participants and parameters.
- * - `handleRandomAssign()`: Randomly assigns participants to breakout rooms.
- * - `handleManualAssign()`: Initializes manual room assignment by setting empty breakout rooms.
- * - `handleAddRoom()`: Adds a new breakout room.
- * - `handleSaveRooms()`: Validates and saves breakout room configurations.
- * - `validateRooms()`: Validates room configurations and participants' uniqueness and quantity.
- * - `checkCanStartBreakout()`: Checks conditions to enable the start of breakout rooms.
- * - `handleStartBreakout()`: Starts the breakout session if conditions are met.
- * - `handleStopBreakout()`: Stops the breakout session and reverts to the initial meeting display type.
- * - `handleEditRoom(roomIndex: number)`: Opens the modal to edit the specified breakout room.
- * - `handleDeleteRoom(roomIndex: number)`: Deletes a breakout room and updates participants' room assignments.
- * - `handleAddParticipant(event)`: Adds a participant to a specified breakout room.
- * - `handleRemoveParticipant(event)`: Removes a participant from a specified breakout room.
- *
- * @dependencies
- * - `CommonModule`: Angular's common directives.
- * - `FormsModule`: Angular's forms module for form handling.
- * - `FontAwesomeModule`: Font Awesome icons for UI elements.
- * - `RoomListComponent`: Component for listing rooms.
- * - `EditRoomModalComponent`: Component for editing room participants.
- *
- * @example
- * ```html
- * <app-breakout-rooms-modal
- *  [isVisible]="isBreakoutRoomsModalVisible"
- * [parameters]="breakoutRoomsParams"
- * [position]="modalPosition"
- * [backgroundColor]="modalBgColor"
- * [onBreakoutRoomsClose]="onCloseBreakoutRooms">
- * </app-breakout-rooms-modal>
- * ```
- *
- **/
+ * @standalone true
+ * @imports CommonModule, FormsModule, FontAwesomeModule, RoomListComponent, EditRoomModalComponent
+ * 
+ * @input isVisible - Whether the modal is currently visible. Default: `false`
+ * @input parameters - Object containing participants, breakout rooms, and update functions. Default: `{}`
+ * @input position - Modal position on screen ('topRight', 'topLeft', 'bottomRight', 'bottomLeft'). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input onBreakoutRoomsClose - Callback function to close the modal. Default: `() => {}`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes modal width and breakout rooms
+ * @method ngOnChanges - Updates breakout rooms when inputs change
+ * @method calculateModalWidth - Dynamically sets modal width based on screen size
+ * @method initializeBreakoutRooms - Sets up initial breakout rooms from parameters
+ * @method handleRandomAssign - Randomly distributes participants to rooms
+ * @method handleManualAssign - Initializes empty rooms for manual assignment
+ * @method handleAddRoom - Adds new breakout room
+ * @method handleSaveRooms - Validates and saves room configurations
+ * @method validateRooms - Validates room setup and participant assignments
+ * @method checkCanStartBreakout - Checks if breakout session can start
+ * @method handleStartBreakout - Starts breakout session
+ * @method handleStopBreakout - Stops breakout session
+ * @method handleEditRoom - Opens edit modal for specific room
+ * @method handleDeleteRoom - Removes room and reassigns participants
+ * @method handleAddParticipant - Adds participant to room
+ * @method handleRemoveParticipant - Removes participant from room
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @method modalContainerStyle - Returns computed overlay styles
+ * @method modalContentStyle - Returns computed content styles
+ */
 @Component({
   selector: 'app-breakout-rooms-modal',
   imports: [
@@ -138,6 +147,10 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   @Input() onBreakoutRoomsClose: () => void = () => {
     console.log('Breakout rooms closed');
   };
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
+
   @ViewChild('roomsContainer') roomsContainerRef!: ElementRef;
 
   faDoorOpen = faDoorOpen;
@@ -487,5 +500,19 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
     if (this.parameters.currentRoomIndex != null) {
       this.handleEditRoom(this.parameters.currentRoomIndex);
     }
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle(),
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle(),
+      ...(this.contentStyle || {})
+    };
   }
 }

@@ -1,6 +1,7 @@
 import { ConnectIpsType, ConnectIpsParameters, AltDomains, ConsumeSocket } from '../../@types/types';
-import { RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type RtpCapabilities = types.RtpCapabilities;
 export interface GetDomainsParameters extends ConnectIpsParameters {
     roomRecvIPs: string[];
     rtpCapabilities: RtpCapabilities | null;
@@ -61,3 +62,4 @@ export declare class GetDomains {
     static ɵfac: i0.ɵɵFactoryDeclaration<GetDomains, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<GetDomains>;
 }
+export {};

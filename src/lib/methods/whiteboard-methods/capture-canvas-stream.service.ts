@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // canvas.service.ts
 import { Injectable } from '@angular/core';
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
 import {
   ConnectSendTransportScreenType,
   CreateSendTransportType,

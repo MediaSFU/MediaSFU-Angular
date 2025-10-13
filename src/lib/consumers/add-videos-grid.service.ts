@@ -32,6 +32,11 @@ export interface AddVideosGridParameters
   customAudioCard?: any;
   customMiniCard?: any;
 
+  // Override-provided components
+  videoCardComponent?: any;
+  audioCardComponent?: any;
+  miniCardComponent?: any;
+
   // mediasfu functions
   updateMiniCardsGrid: UpdateMiniCardsGridType;
   getUpdatedAllParams: () => AddVideosGridParameters;
@@ -135,7 +140,17 @@ export class AddVideosGrid {
       otherGridStreams,
       updateOtherGridStreams,
       updateMiniCardsGrid,
+      customVideoCard,
+      customAudioCard,
+      customMiniCard,
+      videoCardComponent,
+      audioCardComponent,
+      miniCardComponent,
     } = parameters;
+
+    const VideoCardComponentOverride = videoCardComponent ?? VideoCard;
+    const AudioCardComponentOverride = audioCardComponent ?? AudioCard;
+    const MiniCardComponentOverride = miniCardComponent ?? MiniCard;
 
     let newComponents: { component: any; inputs: any }[][] = [[], []];
     let participant: any;
@@ -165,7 +180,7 @@ export class AddVideosGrid {
           participant.audioID !== ''
         ) {
           newComponents[0].push({
-            component: parameters.customAudioCard || AudioCard,
+            component: customAudioCard || AudioCardComponentOverride,
             inputs: {
               name: participant.name,
               barColor: 'red',
@@ -186,7 +201,7 @@ export class AddVideosGrid {
           });
         } else {
           newComponents[0].push({
-            component: parameters.customMiniCard || MiniCard,
+            component: customMiniCard || MiniCardComponentOverride,
             inputs: {
               initials: participant.name,
               fontSize: 20,
@@ -211,7 +226,7 @@ export class AddVideosGrid {
             }
 
             newComponents[0].push({
-              component: parameters.customMiniCard || MiniCard,
+              component: customMiniCard || MiniCardComponentOverride,
               inputs: {
                 initials: name,
                 fontSize: 20,
@@ -237,7 +252,7 @@ export class AddVideosGrid {
             remoteProducerId = 'youyouyou';
 
             newComponents[0].push({
-              component: parameters.customVideoCard || VideoCard,
+              component: customVideoCard || VideoCardComponentOverride,
               inputs: {
                 videoStream: participant.stream ? participant.stream : null,
                 remoteProducerId: participant.stream ? participant.stream.id : null,
@@ -260,7 +275,7 @@ export class AddVideosGrid {
           participant_ = ref_participants.find((obj: any) => obj.videoID === remoteProducerId);
           if (participant_) {
             newComponents[0].push({
-              component: parameters.customVideoCard || VideoCard,
+              component: customVideoCard || VideoCardComponentOverride,
               inputs: {
                 videoStream: participant.stream ? participant.stream : null,
                 remoteProducerId,
@@ -335,7 +350,7 @@ export class AddVideosGrid {
             participant.audioID !== ''
           ) {
             newComponents[1].push({
-              component: parameters.customAudioCard || AudioCard,
+              component: customAudioCard || AudioCardComponentOverride,
               inputs: {
                 name: participant.name,
                 barColor: 'red',
@@ -356,7 +371,7 @@ export class AddVideosGrid {
             });
           } else {
             newComponents[1].push({
-              component: parameters.customMiniCard || MiniCard,
+              component: customMiniCard || MiniCardComponentOverride,
               inputs: {
                 initials: participant.name,
                 fontSize: 20,
@@ -370,7 +385,7 @@ export class AddVideosGrid {
         } else {
           participant_ = ref_participants.find((obj: any) => obj.videoID === remoteProducerId);
           newComponents[1].push({
-            component: parameters.customVideoCard || VideoCard,
+            component: customVideoCard || VideoCardComponentOverride,
             inputs: {
               videoStream: participant_ && participant_['stream'] ? participant_['stream'] : null,
               remoteProducerId,

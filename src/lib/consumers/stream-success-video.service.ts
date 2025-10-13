@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Device, ProducerOptions, Producer, RtpCodecCapability } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
+type ProducerOptions = types.ProducerOptions;
+type Producer = types.Producer;
+type RtpCodecCapability = types.RtpCodecCapability;
 import { Socket } from 'socket.io-client';
 import {
   ConnectSendTransportVideoParameters,

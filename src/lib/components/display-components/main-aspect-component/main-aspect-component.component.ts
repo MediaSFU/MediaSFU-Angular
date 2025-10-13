@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface MainAspectComponentOptions {
@@ -10,6 +10,8 @@ export interface MainAspectComponentOptions {
   updateIsWideScreen: (isWideScreen: boolean) => void;
   updateIsMediumScreen: (isMediumScreen: boolean) => void;
   updateIsSmallScreen: (isSmallScreen: boolean) => void;
+  containerStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type MainAspectComponentType = (options: MainAspectComponentOptions) => HTMLElement;
@@ -67,13 +69,30 @@ export type MainAspectComponentType = (options: MainAspectComponentOptions) => H
     selector: 'app-main-aspect-component',
     imports: [CommonModule],
     template: `
-    <div
+    <div *ngIf="customTemplate; else defaultTemplate"
       [ngStyle]="aspectStyles"
       [style.backgroundColor]="backgroundColor"
       class="aspect-container"
     >
-      <ng-content></ng-content>
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          backgroundColor,
+          showControls,
+          containerWidthFraction,
+          containerHeightFraction,
+          defaultFraction
+        }
+      }"></ng-container>
     </div>
+    <ng-template #defaultTemplate>
+      <div
+        [ngStyle]="aspectStyles"
+        [style.backgroundColor]="backgroundColor"
+        class="aspect-container"
+      >
+        <ng-content></ng-content>
+      </div>
+    </ng-template>
   `,
     styles: [
         `
@@ -92,6 +111,8 @@ export class MainAspectComponent implements OnInit, OnDestroy, OnChanges {
   @Input() updateIsWideScreen!: (isWideScreen: boolean) => void;
   @Input() updateIsMediumScreen!: (isMediumScreen: boolean) => void;
   @Input() updateIsSmallScreen!: (isSmallScreen: boolean) => void;
+  @Input() containerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   aspectStyles: { [key: string]: any } = {};
 
@@ -139,9 +160,14 @@ export class MainAspectComponent implements OnInit, OnDestroy, OnChanges {
     this.updateIsMediumScreen(isMediumScreen);
     this.updateIsSmallScreen(isSmallScreen);
 
-    this.aspectStyles = {
+    const baseStyles = {
       height: parentHeight + 'px',
       width: parentWidth + 'px',
+    };
+
+    this.aspectStyles = {
+      ...baseStyles,
+      ...(this.containerStyle as any),
     };
   };
 }

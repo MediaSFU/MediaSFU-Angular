@@ -15,6 +15,9 @@ export interface AddVideosGridParameters extends UpdateMiniCardsGridParameters, 
     customVideoCard?: any;
     customAudioCard?: any;
     customMiniCard?: any;
+    videoCardComponent?: any;
+    audioCardComponent?: any;
+    miniCardComponent?: any;
     updateMiniCardsGrid: UpdateMiniCardsGridType;
     getUpdatedAllParams: () => AddVideosGridParameters;
     [key: string]: any;

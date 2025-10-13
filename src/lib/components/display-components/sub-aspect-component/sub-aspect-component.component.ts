@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface SubAspectComponentOptions {
@@ -7,6 +7,8 @@ export interface SubAspectComponentOptions {
   containerWidthFraction?: number;
   containerHeightFraction?: number;
   defaultFractionSub?: number;
+  containerStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type SubAspectComponentType = (options: SubAspectComponentOptions) => HTMLElement;
@@ -44,16 +46,20 @@ export type SubAspectComponentType = (options: SubAspectComponentOptions) => HTM
     selector: 'app-sub-aspect-component',
     imports: [CommonModule],
     template: `
+    <div *ngIf="showControls && customTemplate" [ngStyle]="computedContainerStyle">
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          backgroundColor,
+          showControls,
+          containerWidthFraction,
+          containerHeightFraction,
+          defaultFractionSub
+        }
+      }"></ng-container>
+    </div>
     <div
-      *ngIf="showControls"
-      [ngStyle]="{
-        position: 'absolute',
-        bottom: '0',
-        margin: '0',
-        backgroundColor: backgroundColor,
-        height: aspectStyles.height + 'px',
-        width: aspectStyles.width + 'px'
-      }"
+      *ngIf="showControls && !customTemplate"
+      [ngStyle]="computedContainerStyle"
     >
       <ng-content></ng-content>
     </div>
@@ -66,11 +72,28 @@ export class SubAspectComponent implements OnInit, OnDestroy, OnChanges {
   @Input() containerWidthFraction = 1;
   @Input() containerHeightFraction = 1;
   @Input() defaultFractionSub = 0.0;
+  @Input() containerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   aspectStyles = {
     height: 0,
     width: 0,
   };
+
+  get computedContainerStyle() {
+    const baseStyles = {
+      position: 'absolute',
+      bottom: '0',
+      margin: '0',
+      backgroundColor: this.backgroundColor,
+      height: this.aspectStyles.height + 'px',
+      width: this.aspectStyles.width + 'px'
+    };
+    return {
+      ...baseStyles,
+      ...(this.containerStyle as any),
+    };
+  }
 
   ngOnInit() {
     this.updateAspectStyles();

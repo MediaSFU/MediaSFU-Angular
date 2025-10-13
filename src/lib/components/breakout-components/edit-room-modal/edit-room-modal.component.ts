@@ -5,53 +5,50 @@ import { faTimes, faPlus, faUsers, faPen } from '@fortawesome/free-solid-svg-ico
 import { BreakoutParticipant, Participant } from '../../../@types/types';
 
 /**
- * EditRoomModalComponent allows managing participants within a breakout room for an event.
- *
+ * EditRoomModal - Sub-modal for editing individual breakout room participants
+ * 
+ * @component
+ * @description
+ * Allows host to add/remove participants for a specific breakout room.
+ * Used within the BreakoutRoomsModal workflow for detailed room management.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with assigned/unassigned participant lists
+ * 2. **Style Customization**: Override modal appearance with inline styles
+ * 3. **Full Override**: Replace entire modal with custom implementation
+ * 
+ * Key Features:
+ * - View current room participants
+ * - Add participants from unassigned pool
+ * - Remove participants from room
+ * - Responsive modal sizing
+ * - Room index tracking
+ * 
  * @selector app-edit-room-modal
- * @inputs
- * - `editRoomModalVisible` (boolean): Controls the visibility of the edit room modal. Default is false.
- * - `currentRoom` (BreakoutParticipant[]): List of participants currently assigned to the room.
- * - `participantsRef` (Participant[]): Reference list of all participants.
- * - `currentRoomIndex` (number): Index of the room being edited.
- * - `position` (string): Position of the modal on the screen. Default is 'center'.
- * - `backgroundColor` (string): Background color of the modal. Default is '#fff'.
- *
- * @outputs
- * - `setEditRoomModalVisible` (EventEmitter<boolean>): Emits a boolean to toggle the visibility of the modal.
- * - `addParticipant` (EventEmitter<{ roomIndex: number; participant: Participant | BreakoutParticipant; }>): Emits data for adding a participant to the room.
- * - `removeParticipant` (EventEmitter<{ roomIndex: number; participant: Participant | BreakoutParticipant; }>): Emits data for removing a participant from the room.
- *
- * @methods
- * - `ngOnInit()`: Lifecycle hook to initialize modal width and attach resize event listener.
- * - `ngOnDestroy()`: Lifecycle hook to remove the resize event listener.
- * - `calculateModalWidth()`: Dynamically calculates and sets modal width based on screen width.
- * - `modalContainerStyle()`: Returns style object for modal container.
- * - `modalContentStyle()`: Returns style object for modal content.
- * - `handleAddParticipant(roomIndex: number, participant: BreakoutParticipant)`: Emits event to add participant to specified room.
- * - `handleRemoveParticipant(roomIndex: number, participant: BreakoutParticipant)`: Emits event to remove participant from specified room.
- * - `closeModal()`: Closes the modal by emitting a visibility change.
- * - `unassignedParticipants()`: Filters and returns a list of unassigned participants.
- *
- * @dependencies
- * - `CommonModule`: Provides Angular's common directives.
- * - `FontAwesomeModule`: Allows usage of Font Awesome icons.
- *
- * @example
- * ```html
- * <app-edit-room-modal
- *  [editRoomModalVisible]="editRoomModalVisible"
- * [currentRoom]="currentRoom"
- * [participantsRef]="participantsRef"
- * [currentRoomIndex]="currentRoomIndex"
- * [position]="position"
- * [backgroundColor]="backgroundColor"
- * (setEditRoomModalVisible)="setEditRoomModalVisible($event)"
- * (addParticipant)="addParticipant($event)"
- * (removeParticipant)="removeParticipant($event)">
- * </app-edit-room-modal>
- * ```
- *
- **/
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule
+ * 
+ * @input editRoomModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input currentRoom - Array of participants currently in the room being edited. Default: `[]`
+ * @input participantsRef - Array of all available participants. Default: `[]`
+ * @input currentRoomIndex - Index of the room being edited. Default: `0`
+ * @input position - Modal position on screen ('center', etc.). Default: `'center'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#fff'`
+ * 
+ * @output setEditRoomModalVisible - EventEmitter to toggle modal visibility. Emits: `boolean`
+ * @output addParticipant - EventEmitter to add participant to room. Emits: `{ roomIndex: number; participant: Participant | BreakoutParticipant }`
+ * @output removeParticipant - EventEmitter to remove participant from room. Emits: `{ roomIndex: number; participant: Participant | BreakoutParticipant }`
+ * 
+ * @method ngOnInit - Initializes modal width and resize listener
+ * @method ngOnDestroy - Removes resize event listener
+ * @method calculateModalWidth - Dynamically sets modal width based on screen size
+ * @method handleAddParticipant - Emits event to add participant to current room
+ * @method handleRemoveParticipant - Emits event to remove participant from current room
+ * @method closeModal - Closes modal by emitting visibility change
+ * @method unassignedParticipants - Returns filtered list of participants not assigned to any room
+ * @method modalContainerStyle - Returns computed overlay styles
+ * @method modalContentStyle - Returns computed content styles
+ */
 
 @Component({
     selector: 'app-edit-room-modal',
@@ -67,6 +64,9 @@ export class EditRoomModalComponent implements OnInit {
   @Input() currentRoomIndex = -1;
   @Input() position = 'center';
   @Input() backgroundColor = '#fff';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   @Output() setEditRoomModalVisible = new EventEmitter<boolean>();
   @Output() addParticipant = new EventEmitter<{
@@ -139,5 +139,19 @@ export class EditRoomModalComponent implements OnInit {
 
   unassignedParticipants(): Participant[] {
     return this.participantsRef.filter((participant) => participant['breakRoom'] == null);
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle(),
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle(),
+      ...(this.contentStyle || {})
+    };
   }
 }

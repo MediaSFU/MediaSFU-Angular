@@ -1,3 +1,4 @@
+import { TemplateRef } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface MainGridComponentOptions {
     backgroundColor?: string;
@@ -8,6 +9,8 @@ export interface MainGridComponentOptions {
     timeBackgroundColor?: string;
     showTimer?: boolean;
     meetingProgressTime?: string;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
 }
 export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLElement;
 /**
@@ -64,18 +67,9 @@ export declare class MainGridComponent {
     timeBackgroundColor: string;
     showTimer: boolean;
     meetingProgressTime: string;
-    get maingridContainerStyle(): {
-        display: string;
-        backgroundColor: string;
-        height: string;
-        width: string;
-        flexDirection: string;
-        justifyContent: string;
-        alignItems: string;
-        borderStyle: string;
-        borderColor: string;
-        borderWidth: string;
-    };
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
+    get maingridContainerStyle(): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<MainGridComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MainGridComponent, "app-main-grid-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "mainSize": { "alias": "mainSize"; "required": false; }; "height": { "alias": "height"; "required": false; }; "width": { "alias": "width"; "required": false; }; "showAspect": { "alias": "showAspect"; "required": false; }; "timeBackgroundColor": { "alias": "timeBackgroundColor"; "required": false; }; "showTimer": { "alias": "showTimer"; "required": false; }; "meetingProgressTime": { "alias": "meetingProgressTime"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MainGridComponent, "app-main-grid-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "mainSize": { "alias": "mainSize"; "required": false; }; "height": { "alias": "height"; "required": false; }; "width": { "alias": "width"; "required": false; }; "showAspect": { "alias": "showAspect"; "required": false; }; "timeBackgroundColor": { "alias": "timeBackgroundColor"; "required": false; }; "showTimer": { "alias": "showTimer"; "required": false; }; "meetingProgressTime": { "alias": "meetingProgressTime"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, ["*"], true, never>;
 }

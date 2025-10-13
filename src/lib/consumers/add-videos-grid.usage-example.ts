@@ -1,6 +1,6 @@
 /**
  * Example usage of custom components in MediaSFU Angular
- * 
+ *
  * This demonstrates how to use custom VideoCard, AudioCard, and MiniCard components
  * in the AddVideosGrid service. The custom components will replace the default ones
  * when provided in the parameters.
@@ -26,7 +26,7 @@ export class CustomVideoCard {
   // ... other inputs would match VideoCard interface
 }
 
-// Example custom AudioCard component  
+// Example custom AudioCard component
 @Component({
   selector: 'app-custom-audio-card',
   template: `
@@ -44,7 +44,7 @@ export class CustomAudioCard {
 
 // Example custom MiniCard component
 @Component({
-  selector: 'app-custom-mini-card', 
+  selector: 'app-custom-mini-card',
   template: `
     <div class="custom-mini-card" [style.backgroundColor]="'lightgreen'">
       <span>{{ initials }}</span>
@@ -62,12 +62,12 @@ export class CustomMiniCard {
 
 const parameters = {
   // ... all required AddVideosGridParameters
-  
+
   // To use custom components:
   customVideoCard: CustomVideoCard,
-  customAudioCard: CustomAudioCard, 
+  customAudioCard: CustomAudioCard,
   customMiniCard: CustomMiniCard,
-  
+
   // To use default components, simply omit the custom component properties
 };
 

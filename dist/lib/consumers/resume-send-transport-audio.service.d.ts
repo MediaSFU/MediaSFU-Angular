@@ -1,6 +1,7 @@
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { PrepopulateUserMediaParameters, PrepopulateUserMediaType } from '../@types/types';
 import * as i0 from "@angular/core";
+type Producer = types.Producer;
 export interface ResumeSendTransportAudioParameters extends PrepopulateUserMediaParameters {
     audioProducer: Producer | null;
     localAudioProducer?: Producer | null;
@@ -110,3 +111,4 @@ export declare class ResumeSendTransportAudio {
     static ɵfac: i0.ɵɵFactoryDeclaration<ResumeSendTransportAudio, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ResumeSendTransportAudio>;
 }
+export {};

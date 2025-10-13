@@ -53,6 +53,11 @@ export interface PrepopulateUserMediaParameters extends AudioCardParameters {
   customAudioCard?: any;
   customMiniCard?: any;
 
+  // Override-provided components
+  videoCardComponent?: any;
+  audioCardComponent?: any;
+  miniCardComponent?: any;
+
   // mediasfu functions
   getUpdatedAllParams: () => PrepopulateUserMediaParameters;
   [key: string]: any;
@@ -269,7 +274,17 @@ export class PrepopulateUserMedia {
         updateScreenForceFullDisplay,
         updateUpdateMainWindow,
         updateMainGridStream,
+        customVideoCard,
+        customAudioCard,
+        customMiniCard,
+        videoCardComponent,
+        audioCardComponent,
+        miniCardComponent,
       } = parameters;
+
+      const VideoCardComponentOverride = videoCardComponent ?? VideoCard;
+      const AudioCardComponentOverride = audioCardComponent ?? AudioCard;
+      const MiniCardComponentOverride = miniCardComponent ?? MiniCard;
 
       // If the event type is 'chat', return early
       if (eventType == 'chat') {
@@ -386,7 +401,7 @@ export class PrepopulateUserMedia {
             // Whiteboard is active
           } else {
             newComponents.push({
-              component: parameters.customVideoCard || VideoCard,
+              component: customVideoCard || VideoCardComponentOverride,
               inputs: {
                 videoStream: shared ? hostStream : hostStream.stream,
                 remoteProducerId: host.ScreenID,
@@ -428,7 +443,7 @@ export class PrepopulateUserMedia {
           if (islevel == '2' && videoAlreadyOn) {
             // Admin's video is on
             newComponents.push({
-              component: parameters.customVideoCard || VideoCard,
+              component: customVideoCard || VideoCardComponentOverride,
               inputs: {
                 videoStream: keepBackground && virtualStream ? virtualStream : localStreamVideo,
                 remoteProducerId: host.videoID,
@@ -470,7 +485,7 @@ export class PrepopulateUserMedia {
               // Audio is on
               try {
                 newComponents.push({
-                  component: parameters.customAudioCard || AudioCard,
+                  component: customAudioCard || AudioCardComponentOverride,
                   inputs: {
                     name: host.name,
                     barColor: 'red',
@@ -504,7 +519,7 @@ export class PrepopulateUserMedia {
               // Audio is off
               try {
                 newComponents.push({
-                  component: parameters.customMiniCard || MiniCard,
+                  component: customMiniCard || MiniCardComponentOverride,
                   inputs: {
                     initials: name,
                     fontSize: 20,
@@ -536,7 +551,7 @@ export class PrepopulateUserMedia {
             } else {
               try {
                 newComponents.push({
-                  component: parameters.customVideoCard || VideoCard,
+                  component: customVideoCard || VideoCardComponentOverride,
                   inputs: {
                     videoStream: shared ? hostStream : hostStream.stream,
                     remoteProducerId: host.ScreenID,
@@ -582,7 +597,7 @@ export class PrepopulateUserMedia {
             try {
               if (host['stream']) {
                 newComponents.push({
-                  component: parameters.customVideoCard || VideoCard,
+                  component: customVideoCard || VideoCardComponentOverride,
                   inputs: {
                     videoStream: host['stream'],
                     remoteProducerId: host.videoID,
@@ -608,7 +623,7 @@ export class PrepopulateUserMedia {
                 mainScreenPerson = host.name ?? '';
               } else {
                 newComponents.push({
-                  component: parameters.customMiniCard || MiniCard,
+                  component: customMiniCard || MiniCardComponentOverride,
                   inputs: {
                     initials: name,
                     fontSize: 20,
@@ -639,7 +654,7 @@ export class PrepopulateUserMedia {
         // Host is null, add a mini card
         try {
           newComponents.push({
-            component: parameters.customMiniCard || MiniCard,
+            component: customMiniCard || MiniCardComponentOverride,
             inputs: {
               initials: name,
               fontSize: 20,

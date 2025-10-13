@@ -66,6 +66,9 @@ export interface ConfigureWhiteboardModalOptions {
   position?: string;
   backgroundColor?: string;
   parameters: ConfigureWhiteboardModalParameters;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type ConfigureWhiteboardModalType = (
@@ -73,25 +76,40 @@ export type ConfigureWhiteboardModalType = (
 ) => HTMLElement;
 
 /**
- * @component ConfigureWhiteboardModal
- * @description A modal component to configure and manage whiteboard settings and participants.
- *
+ * ConfigureWhiteboardModal - Modal for configuring collaborative whiteboard settings
+ * 
+ * @component
+ * @description
+ * Allows host to configure whiteboard participants and settings before launching the whiteboard feature.
+ * Manages who can annotate and presenter selection.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with participant list and whiteboard controls
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Select whiteboard participants
+ * - Set whiteboard presenter
+ * - Configure annotation permissions
+ * - Start/launch whiteboard
+ * - Canvas stream management
+ * 
  * @selector app-configure-whiteboard-modal
  * @standalone true
- * @imports [CommonModule, FontAwesomeModule]
- * @templateUrl ./configure-whiteboard-modal.component.html
- * @styleUrls ./configure-whiteboard-modal.component.css
- *
- * @example
- * ```html
- * <app-configure-whiteboard-modal
- *   [isVisible]="isWhiteboardModalVisible"
- *   [parameters]="whiteboardParameters"
- *   [backgroundColor]="'#83c0e9'"
- *   [position]="'topRight'"
- *   (onConfigureWhiteboardClose)="handleCloseModal()">
- * </app-configure-whiteboard-modal>
- * ```
+ * @imports CommonModule, FontAwesomeModule
+ * 
+ * @input isConfigureWhiteboardModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onClose - Callback function to close the modal. Default: `() => {}`
+ * @input position - Modal position on screen ('topRight', 'center', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input parameters - Object containing whiteboard settings, participants, and update functions. Default: `{}`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
  */
 
 
@@ -108,6 +126,9 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
   @Input() backgroundColor = '#83c0e9';
   @Input() position = 'topRight';
   @Input() onConfigureWhiteboardClose!: () => void;
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   faTimes = faTimes;
   faCheck = faCheck;
@@ -406,4 +427,18 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
     this.assignedParticipants = this.participantsCopy.filter((p) => p.useBoard);
     this.unassignedParticipants = this.participantsCopy.filter((p) => !p.useBoard);
   };
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle(),
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle(),
+      ...(this.contentStyle || {})
+    };
+  }
 }

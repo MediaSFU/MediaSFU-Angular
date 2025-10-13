@@ -38,21 +38,40 @@ export interface MessagesModalOptions {
   roomName: string;
   socket: Socket;
   chatSetting: string;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type MessagesModalType = (options: MessagesModalOptions) => void;
 
 /**
- * @component MessagesModal
- * @description A modal component for managing chat messages in MediaSFU applications, supporting both group and direct messaging, and providing a customizable user interface.
+ * MessagesModal - Full-featured chat modal with group and direct messaging
  *
+ * @component
  * @selector app-messages-modal
  * @templateUrl ./messages-modal.component.html
  * @styleUrls ./messages-modal.component.css
  * @standalone true
  * @imports [CommonModule, FontAwesomeModule, MessagePanel]
  *
+ * @description
+ * A comprehensive chat modal supporting group and direct messaging with full UI customization.
+ * Supports three levels of customization:
+ * 1. **Style Overrides**: Customize appearance with `overlayStyle` and `contentStyle`
+ * 2. **Component Integration**: Integrates with MediaSFU messaging system
+ * 3. **Complete Replacement**: Use `customTemplate` for full UI control
+ *
+ * Features:
+ * - Group chat for all participants
+ * - Direct messaging between participants
+ * - Message history and real-time updates
+ * - Read receipts and sender identification
+ * - Host/co-host message controls
+ * - Socket-based real-time messaging
+ *
  * @example
+ * **Basic Usage**
  * ```html
  * <app-messages-modal
  *   [isMessagesModalVisible]="true"
@@ -63,18 +82,57 @@ export type MessagesModalType = (options: MessagesModalOptions) => void;
  *   [eventType]="'webinar'"
  *   [member]="'JohnDoe'"
  *   [islevel]="'2'"
- *   [coHostResponsibility]="coHostRoles"
- *   [coHost]="'coHost123'"
- *   [startDirectMessage]="false"
- *   [directMessageDetails]="selectedParticipant"
- *   [updateStartDirectMessage]="updateDirectMessageStart"
- *   [updateDirectMessageDetails]="updateParticipantDetails"
- *   [showAlert]="displayAlert"
  *   [roomName]="'RoomName'"
- *   [socket]="chatSocket"
- *   [chatSetting]="'enabled'"
- * ></app-messages-modal>
+ *   [socket]="chatSocket">
+ * </app-messages-modal>
  * ```
+ *
+ * @example
+ * **With Style Customization**
+ * ```html
+ * <app-messages-modal
+ *   [isMessagesModalVisible]="true"
+ *   [overlayStyle]="{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }"
+ *   [contentStyle]="{ borderRadius: '12px', maxHeight: '600px' }"
+ *   [onMessagesClose]="closeMessages"
+ *   [messages]="chatMessages"
+ *   [socket]="chatSocket">
+ * </app-messages-modal>
+ * ```
+ *
+ * @example
+ * **Custom Template Override**
+ * ```html
+ * <app-messages-modal
+ *   [isMessagesModalVisible]="true"
+ *   [customTemplate]="customChatTemplate"
+ *   [messages]="chatMessages"
+ *   [onMessagesClose]="closeMessages">
+ * </app-messages-modal>
+ * 
+ * <ng-template #customChatTemplate let-context>
+ *   <div class="my-chat-modal">
+ *     <h2>Chat ({{ context.messages.length }} messages)</h2>
+ *     <div *ngFor="let message of context.messages">
+ *       <strong>{{ message.sender }}:</strong> {{ message.message }}
+ *     </div>
+ *   </div>
+ * </ng-template>
+ * ```
+ *
+ * @input {boolean} isMessagesModalVisible - Controls modal visibility
+ * @input {() => void} onMessagesClose - Callback when modal is closed
+ * @input {Message[]} messages - Array of chat messages
+ * @input {string} position - Modal position (default: 'bottomRight')
+ * @input {string} backgroundColor - Modal background color (default: '#f5f5f5')
+ * @input {EventType} eventType - Type of event (meeting, webinar, etc.)
+ * @input {string} member - Current user's name/ID
+ * @input {string} islevel - User's privilege level
+ * @input {Socket} socket - Socket.io connection for real-time messaging
+ * @input {string} roomName - Room identifier
+ * @input {Partial<CSSStyleDeclaration>} overlayStyle - Custom overlay styles
+ * @input {Partial<CSSStyleDeclaration>} contentStyle - Custom content styles
+ * @input {TemplateRef<any>} customTemplate - Complete template override
  */
 
 @Component({
@@ -110,6 +168,9 @@ export class MessagesModal implements OnInit, OnChanges {
   @Input() roomName = '';
   @Input() socket: Socket = {} as Socket;
   @Input() chatSetting = '';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   faTimes = faTimes;
 
@@ -287,6 +348,20 @@ export class MessagesModal implements OnInit, OnChanges {
         fontSize: '24px',
         color: 'black',
       },
+    };
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle,
+      ...(this.contentStyle || {})
     };
   }
 }

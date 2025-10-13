@@ -40,6 +40,9 @@ export interface PrepopulateUserMediaParameters extends AudioCardParameters {
     customVideoCard?: any;
     customAudioCard?: any;
     customMiniCard?: any;
+    videoCardComponent?: any;
+    audioCardComponent?: any;
+    miniCardComponent?: any;
     getUpdatedAllParams: () => PrepopulateUserMediaParameters;
     [key: string]: any;
 }

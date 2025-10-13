@@ -1,5 +1,28 @@
-<div *ngIf="isMediaSettingsModalVisible" class="modal-container">
-  <div class="modal-content" [ngStyle]="modalContentStyle()">
+<!-- Custom template override -->
+<ng-container *ngIf="isMediaSettingsModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      isMediaSettingsModalVisible,
+      position,
+      backgroundColor,
+      parameters,
+      selectedVideoInput,
+      selectedAudioInput,
+      handleModalClose: handleModalClose.bind(this),
+      handleSwitchCamera: handleSwitchCamera.bind(this),
+      handleVideoSwitch: handleVideoSwitch.bind(this),
+      handleAudioSwitch: handleAudioSwitch.bind(this),
+      showVirtual: showVirtual.bind(this),
+      onMediaSettingsClose
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isMediaSettingsModalVisible && !customTemplate"
+     class="modal-container"
+     [ngStyle]="getCombinedOverlayStyle()">
+  <div class="modal-content" [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <div class="modal-title">Media Settings</div>
       <div (click)="handleModalClose()">

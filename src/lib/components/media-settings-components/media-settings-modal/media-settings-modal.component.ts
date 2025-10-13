@@ -49,70 +49,130 @@ export interface MediaSettingsModalOptions {
   parameters: MediaSettingsModalParameters;
   position: string;
   backgroundColor: string;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type MediaSettingsModalType = (options: MediaSettingsModalOptions) => HTMLElement;
 
 /**
- * MediaSettingsModal component renders a modal interface for managing media settings.
- * Users can switch between different audio and video input devices and adjust other settings.
- *
+ * MediaSettingsModal - Modal for selecting audio/video devices and virtual backgrounds
+ * 
  * @component
- * @selector app-media-settings-modal
- * @standalone true
- * @imports [CommonModule, FontAwesomeModule, FormsModule]
- *
+ * @description
+ * Provides device selection controls for camera, microphone, and audio output.
+ * Includes camera switching (front/back), device dropdown selectors, and virtual background access.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with device dropdowns and switch buttons
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Camera device selection dropdown
+ * - Microphone device selection dropdown
+ * - Front/back camera toggle (mobile)
+ * - Virtual background button
+ * - Real-time device switching
+ * - Default device persistence
+ * 
  * @example
+ * Basic Usage:
  * ```html
  * <app-media-settings-modal
- *   [isMediaSettingsModalVisible]="true"
- *   [onMediaSettingsClose]="closeModal"
- *   [switchCameraOnPress]="handleCameraSwitch"
- *   [switchVideoOnPress]="handleVideoSwitch"
- *   [switchAudioOnPress]="handleAudioSwitch"
- *   [parameters]="mediaSettingsParams"
- *   position="topRight"
- *   backgroundColor="#83c0e9">
+ *   [isMediaSettingsModalVisible]="showMediaSettings"
+ *   [parameters]="mediaParams"
+ *   [switchCameraOnPress]="switchCamera"
+ *   [switchVideoOnPress]="switchVideo"
+ *   [switchAudioOnPress]="switchAudio"
+ *   [onMediaSettingsClose]="closeMediaSettings">
  * </app-media-settings-modal>
  * ```
- *
- * @input {boolean} isMediaSettingsModalVisible - Indicates whether the modal is visible.
- * @input {() => void} onMediaSettingsClose - Function to close the modal.
- * @input {(params: SwitchVideoAltOptions) => Promise<void>} switchCameraOnPress - Function to handle camera switching.
- * @input {(params: SwitchVideoOptions) => Promise<void>} switchVideoOnPress - Function to handle video switching.
- * @input {(params: SwitchAudioOptions) => Promise<void>} switchAudioOnPress - Function to handle audio switching.
- * @input {MediaSettingsModalParameters} parameters - Parameters for the modal.
- * @input {string} position - Position of the modal on the screen (default: 'topRight').
- * @input {string} backgroundColor - Background color of the modal (default: '#83c0e9').
- *
- * @property {IconDefinition} faTimes - FontAwesome icon for closing the modal.
- * @property {IconDefinition} faSyncAlt - FontAwesome icon for sync.
- * @property {IconDefinition} faCamera - FontAwesome icon for camera.
- * @property {IconDefinition} faMicrophone - FontAwesome icon for microphone.
- * @property {IconDefinition} faPhotoFilm - FontAwesome icon for photo film.
- *
- * @property {string} selectedVideoInput - Currently selected video input device ID.
- * @property {string} selectedAudioInput - Currently selected audio input device ID.
- * @property {string} prevSelectedVideoInput - Previously selected video input device ID.
- * @property {string} prevSelectedAudioInput - Previously selected audio input device ID.
- *
- * @constructor
- * @param {SwitchAudio} switchAudioService - Service for switching audio.
- * @param {SwitchVideo} switchVideoService - Service for switching video.
- * @param {SwitchVideoAlt} switchVideoAltService - Alternative service for switching video.
- *
- * @method ngOnInit - Initializes the component and sets up default selections and services.
- * @method ngOnChanges - Updates component state based on input changes.
- * @method setupDefaultServices - Configures default services for switching camera, video, and audio.
- * @method updateParameters - Updates the modal parameters.
- * @method ensureDefaultSelections - Ensures default selections for video and audio inputs.
- * @method initializeModalSettings - Initializes the modal settings.
- * @method modalContentStyle - Returns the style object for the modal content.
- * @method handleSwitchCamera - Initiates camera switching.
- * @method handleVideoSwitch - Initiates video input switching.
- * @method handleAudioSwitch - Initiates audio input switching.
- * @method handleModalClose - Closes the modal.
- * @method showVirtual - Toggles the virtual background modal.
+ * 
+ * @example
+ * Style Customization:
+ * ```html
+ * <app-media-settings-modal
+ *   [isMediaSettingsModalVisible]="showMediaSettings"
+ *   [parameters]="mediaParams"
+ *   [overlayStyle]="{
+ *     backgroundColor: 'rgba(0, 0, 0, 0.75)'
+ *   }"
+ *   [contentStyle]="{
+ *     backgroundColor: '#ffffff',
+ *     borderRadius: '16px',
+ *     padding: '30px',
+ *     minWidth: '400px'
+ *   }"
+ *   [position]="'center'"
+ *   [backgroundColor]="'#f5f5f5'"
+ *   [onMediaSettingsClose]="closeMediaSettings">
+ * </app-media-settings-modal>
+ * ```
+ * 
+ * @example
+ * Custom Template Override:
+ * ```html
+ * <app-media-settings-modal
+ *   [isMediaSettingsModalVisible]="showMediaSettings"
+ *   [customTemplate]="customMediaTemplate"
+ *   [onMediaSettingsClose]="closeMediaSettings">
+ * </app-media-settings-modal>
+ * 
+ * <ng-template #customMediaTemplate let-videoInputs="videoInputs" let-audioInputs="audioInputs" let-onVideoSwitch="onVideoSwitch">
+ *   <div class="custom-media-settings">
+ *     <h3>Device Settings</h3>
+ *     <label>
+ *       Camera:
+ *       <select (change)="onVideoSwitch($event)">
+ *         <option *ngFor="let device of videoInputs" [value]="device.deviceId">
+ *           {{ device.label }}
+ *         </option>
+ *       </select>
+ *     </label>
+ *     <label>
+ *       Microphone:
+ *       <select (change)="onAudioSwitch($event)">
+ *         <option *ngFor="let device of audioInputs" [value]="device.deviceId">
+ *           {{ device.label }}
+ *         </option>
+ *       </select>
+ *     </label>
+ *   </div>
+ * </ng-template>
+ * ```
+ * 
+ * @selector app-media-settings-modal
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, FormsModule
+ * 
+ * @input isMediaSettingsModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onMediaSettingsClose - Callback function to close the modal. Default: `() => {}`
+ * @input switchCameraOnPress - Function to switch front/back camera. Default: `switchVideoAltService.switchVideoAlt`
+ * @input switchVideoOnPress - Function to switch video input device. Default: `switchVideoService.switchVideo`
+ * @input switchAudioOnPress - Function to switch audio input device. Default: `switchAudioService.switchAudio`
+ * @input parameters - Object containing videoInputs, audioInputs, default devices, and update functions. Default: `{}`
+ * @input position - Modal position on screen ('topRight', 'center', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes component, sets up default services, and ensures default device selections
+ * @method ngOnChanges - Updates modal settings when visibility or parameters change
+ * @method setupDefaultServices - Configures default device switching services if not provided
+ * @method updateParameters - Refreshes parameters from getUpdatedAllParams
+ * @method ensureDefaultSelections - Sets default selected devices if none selected
+ * @method initializeModalSettings - Initializes selected device states
+ * @method handleSwitchCamera - Handles front/back camera toggle
+ * @method handleVideoSwitch - Handles video device selection change
+ * @method handleAudioSwitch - Handles audio device selection change
+ * @method handleModalClose - Closes modal via onMediaSettingsClose callback
+ * @method showVirtual - Opens virtual background modal
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @method modalContentStyle - Returns computed content styles with positioning
  */
 
 @Component({
@@ -130,6 +190,9 @@ export class MediaSettingsModal implements OnInit, OnChanges {
   @Input() parameters!: MediaSettingsModalParameters;
   @Input() position = 'topRight';
   @Input() backgroundColor = '#83c0e9';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   faTimes = faTimes;
   faSyncAlt = faSyncAlt;
@@ -261,5 +324,18 @@ export class MediaSettingsModal implements OnInit, OnChanges {
 
   showVirtual() {
     this.parameters.updateIsBackgroundModalVisible(!this.parameters.isBackgroundModalVisible);
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle(),
+      ...(this.contentStyle || {})
+    };
   }
 }

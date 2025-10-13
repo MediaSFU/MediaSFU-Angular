@@ -1,5 +1,7 @@
-import { RtpCapabilities, Device } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type RtpCapabilities = types.RtpCapabilities;
+type Device = types.Device;
 export interface CreateDeviceClientOptions {
     rtpCapabilities: RtpCapabilities | null;
 }
@@ -41,3 +43,4 @@ export declare class CreateDeviceClient {
     static ɵfac: i0.ɵɵFactoryDeclaration<CreateDeviceClient, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CreateDeviceClient>;
 }
+export {};

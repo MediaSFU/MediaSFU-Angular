@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
-import { Device, Transport, DtlsParameters } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
+type Transport = types.Transport;
+type DtlsParameters = types.DtlsParameters;
 import { ConnectSendTransportParameters, ConnectSendTransportType } from '../@types/types';
 
 export interface CreateSendTransportParameters extends ConnectSendTransportParameters {

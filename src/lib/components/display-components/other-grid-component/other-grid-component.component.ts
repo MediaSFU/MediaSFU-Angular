@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MeetingProgressTimer } from '../meeting-progress-timer/meeting-progress-timer.component';
 
@@ -10,6 +10,8 @@ export interface OtherGridComponentOptions {
   timeBackgroundColor?: string;
   showTimer?: boolean;
   meetingProgressTime?: string;
+  containerStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTMLElement;
@@ -57,29 +59,30 @@ export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTM
     selector: 'app-other-grid-component',
     imports: [CommonModule, MeetingProgressTimer],
     template: `
-    <div
-      [ngStyle]="{
-        'background-color': backgroundColor,
-        width: width + 'px',
-        height: height + 'px',
-        display: showAspect ? 'block' : 'none',
-        overflow: 'hidden',
-        'border-style': 'solid',
-        'border-color': 'black',
-        'border-width': '2px',
-        'border-radius': '0',
-        margin: '0',
-        padding: '0'
-      }"
-    >
-      <app-meeting-progress-timer
-        *ngIf="showTimer"
-        [meetingProgressTime]="meetingProgressTime"
-        [initialBackgroundColor]="timeBackgroundColor"
-        [showTimer]="showTimer"
-      ></app-meeting-progress-timer>
-      <ng-content></ng-content>
+    <div *ngIf="customTemplate; else defaultTemplate" [ngStyle]="otherGridContainerStyle">
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          backgroundColor,
+          width,
+          height,
+          showAspect,
+          timeBackgroundColor,
+          showTimer,
+          meetingProgressTime
+        }
+      }"></ng-container>
     </div>
+    <ng-template #defaultTemplate>
+      <div [ngStyle]="otherGridContainerStyle">
+        <app-meeting-progress-timer
+          *ngIf="showTimer"
+          [meetingProgressTime]="meetingProgressTime"
+          [initialBackgroundColor]="timeBackgroundColor"
+          [showTimer]="showTimer"
+        ></app-meeting-progress-timer>
+        <ng-content></ng-content>
+      </div>
+    </ng-template>
   `
 })
 export class OtherGridComponent {
@@ -90,4 +93,26 @@ export class OtherGridComponent {
   @Input() timeBackgroundColor = 'green';
   @Input() showTimer = false;
   @Input() meetingProgressTime = '00:00:00';
+  @Input() containerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
+
+  get otherGridContainerStyle() {
+    const baseStyles = {
+      'background-color': this.backgroundColor,
+      width: this.width + 'px',
+      height: this.height + 'px',
+      display: this.showAspect ? 'block' : 'none',
+      overflow: 'hidden',
+      'border-style': 'solid',
+      'border-color': 'black',
+      'border-width': '2px',
+      'border-radius': '0',
+      margin: '0',
+      padding: '0'
+    };
+    return {
+      ...baseStyles,
+      ...(this.containerStyle as any),
+    };
+  }
 }

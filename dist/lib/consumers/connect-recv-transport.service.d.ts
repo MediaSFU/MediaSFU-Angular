@@ -1,7 +1,9 @@
 import { Socket } from 'socket.io-client';
 import { ConsumerResumeType, ConsumerResumeParameters, Transport as TransportType } from '../@types/types';
-import { Device, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Device = types.Device;
+type Transport = types.Transport;
 export interface ConnectRecvTransportParameters extends ConsumerResumeParameters {
     device: Device | null;
     consumerTransports: TransportType[];
@@ -89,3 +91,4 @@ export declare class ConnectRecvTransport {
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectRecvTransport, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectRecvTransport>;
 }
+export {};

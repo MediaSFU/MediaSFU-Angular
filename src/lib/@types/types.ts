@@ -1,12 +1,11 @@
 // types.ts
 import { Socket } from 'socket.io-client';
-import {
-  Consumer,
-  DtlsParameters,
-  IceCandidate,
-  IceParameters,
-  RtpCapabilities,
-} from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Consumer = types.Consumer;
+type DtlsParameters = types.DtlsParameters;
+type IceCandidate = types.IceCandidate;
+type IceParameters = types.IceParameters;
+type RtpCapabilities = types.RtpCapabilities;;
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { CustomComponent } from '../components/display-components/control-buttons-component/control-buttons-component.component';
 import { CustomButton } from '../components/menu-components/custom-buttons/custom-buttons.component';

@@ -1,3 +1,4 @@
+import { TemplateRef } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface OtherGridComponentOptions {
     backgroundColor?: string;
@@ -7,6 +8,8 @@ export interface OtherGridComponentOptions {
     timeBackgroundColor?: string;
     showTimer?: boolean;
     meetingProgressTime?: string;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
 }
 export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTMLElement;
 /**
@@ -55,6 +58,9 @@ export declare class OtherGridComponent {
     timeBackgroundColor: string;
     showTimer: boolean;
     meetingProgressTime: string;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
+    get otherGridContainerStyle(): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<OtherGridComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<OtherGridComponent, "app-other-grid-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "width": { "alias": "width"; "required": false; }; "height": { "alias": "height"; "required": false; }; "showAspect": { "alias": "showAspect"; "required": false; }; "timeBackgroundColor": { "alias": "timeBackgroundColor"; "required": false; }; "showTimer": { "alias": "showTimer"; "required": false; }; "meetingProgressTime": { "alias": "meetingProgressTime"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<OtherGridComponent, "app-other-grid-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "width": { "alias": "width"; "required": false; }; "height": { "alias": "height"; "required": false; }; "showAspect": { "alias": "showAspect"; "required": false; }; "timeBackgroundColor": { "alias": "timeBackgroundColor"; "required": false; }; "showTimer": { "alias": "showTimer"; "required": false; }; "meetingProgressTime": { "alias": "meetingProgressTime"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, ["*"], true, never>;
 }

@@ -1,7 +1,8 @@
 import { Socket } from 'socket.io-client';
 import { ReorderStreamsType, ReorderStreamsParameters, Participant, PrepopulateUserMediaType, PrepopulateUserMediaParameters, Stream, EventType } from '../@types/types';
-import { Consumer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Consumer = types.Consumer;
 export interface ConsumerResumeParameters extends ReorderStreamsParameters, PrepopulateUserMediaParameters {
     nStream: MediaStream | null;
     allAudioStreams: (Stream | Participant)[];

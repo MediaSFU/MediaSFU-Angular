@@ -1,5 +1,8 @@
-import { Transport, Producer, ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Transport = types.Transport;
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
 export interface ConnectSendTransportAudioParameters {
     audioProducer: Producer | null;
     producerTransport: Transport | null;
@@ -113,3 +116,4 @@ export declare class ConnectSendTransportAudio {
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectSendTransportAudio, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectSendTransportAudio>;
 }
+export {};

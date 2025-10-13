@@ -1,4 +1,9 @@
-import { Producer, ProducerOptions, RtpCapabilities, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
+type RtpCapabilities = types.RtpCapabilities;
+type Transport = types.Transport;
+type Device = types.Device;
 import {
   AParamsType,
   CoHostResponsibility,
@@ -27,7 +32,6 @@ import {
   ComponentSizes,
   Transport as TransportType,
 } from '../../@types/types';
-import { Device } from 'mediasoup-client/lib/types';
 import { Socket } from 'socket.io-client';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 

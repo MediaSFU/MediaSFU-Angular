@@ -1,5 +1,26 @@
-<div [ngStyle]="modalContainerStyle">
-  <div [ngStyle]="modalContentStyle">
+<!-- Custom template override -->
+<ng-container *ngIf="isShareEventModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      isShareEventModalVisible,
+      backgroundColor,
+      position,
+      roomName,
+      adminPasscode,
+      islevel,
+      shareButtons,
+      eventType,
+      localLink,
+      handleClose: handleClose.bind(this),
+      onShareEventClose
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isShareEventModalVisible && !customTemplate"
+     [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div style="display: flex; flex-direction: row-reverse; margin-bottom: 15px;">
       <div (click)="handleClose()" style="padding: 5px;">
         <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>

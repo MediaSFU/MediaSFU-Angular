@@ -9,7 +9,8 @@ import {
   ConnectRecvTransportType,
   ShowAlert,
 } from '../../@types/types';
-import { Device } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
 
 export interface NewPipeProducerParameters
   extends ReorderStreamsParameters,

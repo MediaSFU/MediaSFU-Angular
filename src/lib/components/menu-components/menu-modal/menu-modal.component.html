@@ -1,30 +1,153 @@
-<div [ngStyle]="modalContainerStyle()">
-  <div class="modal-content" [ngStyle]="modalContentStyle()">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <div style="font-size: 18px; font-weight: bold; color: black;">
-        <fa-icon [icon]="faBars" style="font-size: 20px; color: black;"></fa-icon> Menu
-      </div>
-      <div (click)="handleClose()" style="padding: 5px;">
-        <fa-icon [icon]="faTimes" style="font-size: 20px; color: black;"></fa-icon>
-      </div>
-    </div>
-    <hr style="height: 1px; background-color: black; margin: 5px 0;" />
-    <div style="flex: 1;">
-      <div style="max-height: calc(70% - 70px); overflow-y: auto;">
-        <app-custom-buttons [buttons]="customButtons"></app-custom-buttons>
-        <div style="height: 1px; background-color: #ffffff; margin: 10px 0;"></div>
-        <ng-container *ngIf="islevel === '2'">
-          <app-meeting-passcode-component
-            [meetingPasscode]="adminPasscode"
-          ></app-meeting-passcode-component>
-        </ng-container>
-        <div style="margin-bottom: 10px;">
-          <app-meeting-id-component [meetingID]="roomName"></app-meeting-id-component>
+<!-- Custom template override - if provided, use it instead of default -->
+<ng-container *ngIf="customTemplate; else defaultTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: renderContext"></ng-container>
+</ng-container>
+
+<!-- Default template with customization hooks -->
+<ng-template #defaultTemplate>
+  <!-- Overlay wrapper with custom attributes -->
+  <div
+    [ngStyle]="modalContainerStyle()"
+    [attr.data-testid]="overlayAttributes?.['data-testid']"
+    [ngClass]="overlayAttributes?.['class']">
+
+    <!-- Content wrapper with custom attributes and styles -->
+    <div
+      class="modal-content"
+      [ngStyle]="getCombinedContentStyle()"
+      [attr.data-testid]="contentAttributes?.['data-testid']"
+      [ngClass]="contentAttributes?.['class']">
+
+      <!-- Header section - customizable via renderHeader template -->
+      <ng-container *ngIf="renderHeader; else defaultHeader">
+        <ng-container *ngTemplateOutlet="renderHeader; context: renderContext"></ng-container>
+      </ng-container>
+
+      <!-- Default header -->
+      <ng-template #defaultHeader>
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"
+          [attr.data-testid]="headerAttributes?.['data-testid']"
+          [ngClass]="headerAttributes?.['class']">
+
+          <!-- Title section - customizable via renderTitle template -->
+          <ng-container *ngIf="renderTitle; else defaultTitle">
+            <ng-container *ngTemplateOutlet="renderTitle"></ng-container>
+          </ng-container>
+
+          <!-- Default title -->
+          <ng-template #defaultTitle>
+            <div
+              style="font-size: 18px; font-weight: bold; color: black;"
+              [attr.data-testid]="titleWrapperAttributes?.['data-testid']"
+              [ngClass]="titleWrapperAttributes?.['class']">
+              <fa-icon
+                [icon]="faBars"
+                style="font-size: 20px; color: black;"
+                [attr.data-testid]="menuIconAttributes?.['data-testid']"
+                [ngClass]="menuIconAttributes?.['class']"></fa-icon>
+              {{ getTitle() }}
+            </div>
+          </ng-template>
+
+          <!-- Close button with custom attributes -->
+          <div
+            (click)="handleClose()"
+            style="padding: 5px; cursor: pointer;"
+            [attr.data-testid]="closeButtonAttributes?.['data-testid']"
+            [ngClass]="closeButtonAttributes?.['class']">
+            <fa-icon
+              [icon]="faTimes"
+              style="font-size: 20px; color: black;"
+              [attr.data-testid]="closeIconAttributes?.['data-testid']"
+              [ngClass]="closeIconAttributes?.['class']"></fa-icon>
+          </div>
         </div>
-        <ng-container *ngIf="true">
-          <app-share-buttons-component [meetingID]="roomName" [eventType]="eventType" [localLink]="localLink"></app-share-buttons-component>
-        </ng-container>
-      </div>
+      </ng-template>
+
+      <!-- Divider with custom attributes -->
+      <hr
+        style="height: 1px; background-color: black; margin: 5px 0;"
+        [attr.data-testid]="dividerAttributes?.['data-testid']"
+        [ngClass]="dividerAttributes?.['class']" />
+
+      <!-- Body section - customizable via renderBody template -->
+      <ng-container *ngIf="renderBody; else defaultBody">
+        <ng-container *ngTemplateOutlet="renderBody"></ng-container>
+      </ng-container>
+
+      <!-- Default body -->
+      <ng-template #defaultBody>
+        <div
+          style="flex: 1;"
+          [attr.data-testid]="bodyAttributes?.['data-testid']"
+          [ngClass]="bodyAttributes?.['class']">
+
+          <div
+            style="max-height: calc(70% - 70px); overflow-y: auto;"
+            [attr.data-testid]="scrollWrapperAttributes?.['data-testid']"
+            [ngClass]="scrollWrapperAttributes?.['class']">
+
+            <!-- Custom buttons - customizable via renderCustomButtons template -->
+            <ng-container *ngIf="renderCustomButtons; else defaultCustomButtons">
+              <ng-container *ngTemplateOutlet="renderCustomButtons"></ng-container>
+            </ng-container>
+
+            <!-- Default custom buttons -->
+            <ng-template #defaultCustomButtons>
+              <div
+                [attr.data-testid]="customButtonsWrapperAttributes?.['data-testid']"
+                [ngClass]="customButtonsWrapperAttributes?.['class']">
+                <app-custom-buttons [buttons]="customButtons"></app-custom-buttons>
+              </div>
+            </ng-template>
+
+            <div style="height: 1px; background-color: #ffffff; margin: 10px 0;"></div>
+
+            <!-- Meeting passcode - customizable via renderMeetingPasscode template -->
+            <ng-container *ngIf="islevel === '2'">
+              <ng-container *ngIf="renderMeetingPasscode; else defaultMeetingPasscode">
+                <ng-container *ngTemplateOutlet="renderMeetingPasscode"></ng-container>
+              </ng-container>
+
+              <!-- Default meeting passcode -->
+              <ng-template #defaultMeetingPasscode>
+                <app-meeting-passcode-component
+                  [meetingPasscode]="adminPasscode">
+                </app-meeting-passcode-component>
+              </ng-template>
+            </ng-container>
+
+            <!-- Meeting ID - customizable via renderMeetingId template -->
+            <ng-container *ngIf="renderMeetingId; else defaultMeetingId">
+              <ng-container *ngTemplateOutlet="renderMeetingId"></ng-container>
+            </ng-container>
+
+            <!-- Default meeting ID -->
+            <ng-template #defaultMeetingId>
+              <div style="margin-bottom: 10px;">
+                <app-meeting-id-component [meetingID]="roomName"></app-meeting-id-component>
+              </div>
+            </ng-template>
+
+            <!-- Share buttons - customizable via renderShareButtons template -->
+            <ng-container *ngIf="shareButtons">
+              <ng-container *ngIf="renderShareButtons; else defaultShareButtons">
+                <ng-container *ngTemplateOutlet="renderShareButtons"></ng-container>
+              </ng-container>
+
+              <!-- Default share buttons -->
+              <ng-template #defaultShareButtons>
+                <app-share-buttons-component
+                  [meetingID]="roomName"
+                  [eventType]="eventType"
+                  [localLink]="localLink">
+                </app-share-buttons-component>
+              </ng-template>
+            </ng-container>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
-</div>
+</ng-template>

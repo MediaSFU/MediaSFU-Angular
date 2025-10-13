@@ -1,8 +1,45 @@
-<div class="form-group">
-  <label class="label">Event Passcode (Host):</label>
-  <input
-    class="disabled-input"
-    [value]="meetingPasscode"
-    readonly
-  />
-</div>
+<ng-container *ngIf="renderContainer; else defaultContainer">
+  <ng-container *ngTemplateOutlet="renderContainer; context: renderContext"></ng-container>
+</ng-container>
+
+<ng-template #defaultContainer>
+  <div
+    class="form-group"
+    [ngClass]="containerAttributes?.['class']"
+    [ngStyle]="containerAttributes?.['style']"
+  >
+    <ng-container *ngIf="renderContent; else defaultContent">
+      <ng-container *ngTemplateOutlet="renderContent; context: renderContext"></ng-container>
+    </ng-container>
+
+    <ng-template #defaultContent>
+      <!-- Label -->
+      <ng-container *ngIf="renderLabel; else defaultLabel">
+        <ng-container *ngTemplateOutlet="renderLabel; context: renderContext"></ng-container>
+      </ng-container>
+      <ng-template #defaultLabel>
+        <label
+          class="label"
+          [ngClass]="labelAttributes?.['class']"
+          [ngStyle]="labelAttributes?.['style']"
+        >
+          {{ getLabelText() }}
+        </label>
+      </ng-template>
+
+      <!-- Input -->
+      <ng-container *ngIf="renderInput; else defaultInput">
+        <ng-container *ngTemplateOutlet="renderInput; context: renderContext"></ng-container>
+      </ng-container>
+      <ng-template #defaultInput>
+        <input
+          class="disabled-input"
+          [ngClass]="inputAttributes?.['class']"
+          [ngStyle]="inputAttributes?.['style']"
+          [value]="getInputValue()"
+          [readonly]="getInputReadOnly()"
+        />
+      </ng-template>
+    </ng-template>
+  </div>
+</ng-template>

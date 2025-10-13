@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Transport, Producer, Device, ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Transport = types.Transport;
+type Producer = types.Producer;
+type Device = types.Device;
+type ProducerOptions = types.ProducerOptions;
 export interface ConnectSendTransportScreenParameters {
   screenProducer: Producer | null;
   localScreenProducer?: Producer | null;

@@ -1,4 +1,48 @@
-<button class="list-item" (click)="handlePress()">
-  <fa-icon *ngIf="icon" [icon]="icon" class="list-icon"></fa-icon>
-  <span *ngIf="name" class="list-text">{{ name }}</span>
-</button>
+<ng-container *ngIf="renderButton; else defaultButton">
+  <ng-container *ngTemplateOutlet="renderButton; context: renderContext"></ng-container>
+</ng-container>
+
+<ng-template #defaultButton>
+  <button
+    class="list-item"
+    [ngClass]="buttonAttributes?.['class']"
+    [ngStyle]="buttonAttributes?.['style']"
+    [attr.type]="buttonAttributes?.['type'] || 'button'"
+    (click)="handlePress($event)"
+  >
+    <ng-container *ngIf="renderContent; else defaultContent">
+      <ng-container *ngTemplateOutlet="renderContent; context: renderContext"></ng-container>
+    </ng-container>
+
+    <ng-template #defaultContent>
+      <!-- Icon -->
+      <ng-container *ngIf="renderIcon; else defaultIcon">
+        <ng-container *ngTemplateOutlet="renderIcon"></ng-container>
+      </ng-container>
+      <ng-template #defaultIcon>
+        <fa-icon
+          *ngIf="getResolvedIcon()"
+          [icon]="getResolvedIcon()!"
+          class="list-icon"
+          [ngClass]="iconAttributes?.['class']"
+          [ngStyle]="iconAttributes?.['style']"
+        ></fa-icon>
+      </ng-template>
+
+      <!-- Text -->
+      <ng-container *ngIf="renderText; else defaultText">
+        <ng-container *ngTemplateOutlet="renderText"></ng-container>
+      </ng-container>
+      <ng-template #defaultText>
+        <span
+          *ngIf="name || textAttributes?.['children']"
+          class="list-text"
+          [ngClass]="textAttributes?.['class']"
+          [ngStyle]="textAttributes?.['style']"
+        >
+          {{ textAttributes?.['children'] || name }}
+        </span>
+      </ng-template>
+    </ng-template>
+  </button>
+</ng-template>

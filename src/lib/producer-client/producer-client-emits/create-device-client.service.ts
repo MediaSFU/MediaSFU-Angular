@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { RtpCapabilities, Device } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type RtpCapabilities = types.RtpCapabilities;
+type Device = types.Device;
 import * as mediasoupClient from 'mediasoup-client';
 export interface CreateDeviceClientOptions {
   rtpCapabilities: RtpCapabilities | null;

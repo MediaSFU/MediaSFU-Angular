@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -18,50 +18,119 @@ export interface ShareEventModalOptions {
   islevel?: string;
   eventType: EventType;
   localLink?: string;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type ShareEventModalType = (options: ShareEventModalOptions) => void;
 
 /**
- * Component for displaying a modal to share event details.
- *
+ * ShareEventModal - Modal for sharing room/event access details
+ * 
  * @component
- * @selector app-share-event-modal
- * @templateUrl ./share-event-modal.component.html
- * @styleUrls ./share-event-modal.component.css
- *
- * @imports CommonModule, FontAwesomeModule, MeetingIdComponent, MeetingPasscodeComponent, ShareButtonsComponent
- *
- * @property {string} backgroundColor - Background color of the modal content.
- * @property {boolean} isShareEventModalVisible - Visibility state of the share event modal.
- * @property {Function} onShareEventClose - Callback function to handle modal close event.
- * @property {string} roomName - Name of the room to be shared.
- * @property {string} adminPasscode - Admin passcode for the room.
- * @property {string} islevel - Level of the event (e.g., admin, user).
- * @property {string} position - Position of the modal on the screen (e.g., topRight, bottomLeft).
- * @property {boolean} shareButtons - Flag to display share buttons in the modal.
- * @property {EventType} eventType - Type of event (e.g., chat, broadcast, webinar).
- * @property {string} localLink - Local link for the event (Community Edition server).
- *
- * @method handleClose - Closes the share event modal by invoking the onShareEventClose callback.
- *
- * @getter modalContainerStyle - Returns the style object for the modal container.
- * @getter modalContentStyle - Returns the style object for the modal content.
+ * @description
+ * Displays a modal with meeting ID, passcode, and share options for inviting participants.
+ * Includes social sharing buttons and copy-to-clipboard functionality.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with room details and share buttons
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Meeting ID display with copy functionality
+ * - Admin passcode display (for hosts)
+ * - Social media share buttons (optional)
+ * - Support for custom/local server links
+ * - Event type-specific sharing
+ * 
  * @example
+ * Basic Usage:
  * ```html
  * <app-share-event-modal
- *   [backgroundColor]="'rgba(255, 255, 255, 0.25)'"
- *   [isShareEventModalVisible]="isModalVisible"
- *   [onShareEventClose]="handleModalClose"
- *   [roomName]="roomName"
- *   [adminPasscode]="adminPasscode"
- *   [islevel]="userLevel"
- *   [position]="'topRight'"
+ *   [isShareEventModalVisible]="showShareModal"
+ *   [roomName]="currentRoom"
+ *   [adminPasscode]="hostPasscode"
+ *   [islevel]="'0'"
+ *   [eventType]="'webinar'"
  *   [shareButtons]="true"
- *   [eventType]="eventType"
- *   [localLink]="localLink"
- * ></app-share-event-modal>
+ *   [onShareEventClose]="closeShareModal">
+ * </app-share-event-modal>
  * ```
+ * 
+ * @example
+ * Style Customization:
+ * ```html
+ * <app-share-event-modal
+ *   [isShareEventModalVisible]="showShareModal"
+ *   [roomName]="currentRoom"
+ *   [adminPasscode]="hostPasscode"
+ *   [eventType]="'conference'"
+ *   [overlayStyle]="{
+ *     backgroundColor: 'rgba(0, 0, 0, 0.75)'
+ *   }"
+ *   [contentStyle]="{
+ *     backgroundColor: '#ffffff',
+ *     borderRadius: '16px',
+ *     padding: '30px',
+ *     maxWidth: '500px'
+ *   }"
+ *   [position]="'center'"
+ *   [shareButtons]="true"
+ *   [onShareEventClose]="closeShareModal">
+ * </app-share-event-modal>
+ * ```
+ * 
+ * @example
+ * Custom Template Override:
+ * ```html
+ * <app-share-event-modal
+ *   [isShareEventModalVisible]="showShareModal"
+ *   [customTemplate]="customShareTemplate"
+ *   [onShareEventClose]="closeShareModal">
+ * </app-share-event-modal>
+ * 
+ * <ng-template #customShareTemplate let-roomName="roomName" let-adminPasscode="adminPasscode">
+ *   <div class="custom-share-dialog">
+ *     <h3>Invite Participants</h3>
+ *     <div class="share-item">
+ *       <label>Meeting ID:</label>
+ *       <code>{{ roomName }}</code>
+ *       <button (click)="copyToClipboard(roomName)">Copy</button>
+ *     </div>
+ *     <div class="share-item" *ngIf="adminPasscode">
+ *       <label>Host Code:</label>
+ *       <code>{{ adminPasscode }}</code>
+ *       <button (click)="copyToClipboard(adminPasscode)">Copy</button>
+ *     </div>
+ *   </div>
+ * </ng-template>
+ * ```
+ * 
+ * @selector app-share-event-modal
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, MeetingIdComponent, MeetingPasscodeComponent, ShareButtonsComponent
+ * 
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input isShareEventModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onShareEventClose - Callback function to close the modal. Default: `() => {}`
+ * @input shareButtons - Whether to display social media share buttons. Default: `true`
+ * @input position - Modal position on screen (e.g., 'topRight', 'center'). Default: `'topRight'`
+ * @input roomName - Room/meeting ID to be shared. Default: `''`
+ * @input adminPasscode - Admin/host passcode (shown only to hosts). Default: `undefined`
+ * @input islevel - User level/role ('0' for host, '2' for participant). Default: `'2'`
+ * @input eventType - Type of event ('chat', 'broadcast', 'webinar', 'conference'). Default: `'webinar'`
+ * @input localLink - Custom server link for community edition deployments. Default: `undefined`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method handleClose - Closes the modal by invoking onShareEventClose callback
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @getter modalContainerStyle - Returns computed overlay styles
+ * @getter modalContentStyle - Returns computed content styles
  */
 @Component({
     selector: 'app-share-event-modal',
@@ -86,11 +155,28 @@ export class ShareEventModal {
   @Input() shareButtons = true;
   @Input() eventType!: EventType;
   @Input() localLink: string = '';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   faTimes = faTimes;
 
   handleClose() {
     this.onShareEventClose();
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle,
+      ...(this.contentStyle || {})
+    };
   }
 
   get modalContainerStyle() {

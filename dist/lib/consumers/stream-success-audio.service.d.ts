@@ -1,7 +1,8 @@
 import { Socket } from 'socket.io-client';
 import { Participant, PrepopulateUserMediaParameters, ShowAlert, CreateSendTransportParameters, ConnectSendTransportAudioParameters, ResumeSendTransportAudioParameters, PrepopulateUserMediaType, CreateSendTransportType, ConnectSendTransportAudioType, ResumeSendTransportAudioType } from '../@types/types';
-import { ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type ProducerOptions = types.ProducerOptions;
 export interface StreamSuccessAudioParameters extends CreateSendTransportParameters, ConnectSendTransportAudioParameters, ResumeSendTransportAudioParameters, PrepopulateUserMediaParameters {
     socket: Socket;
     participants: Participant[];
@@ -159,3 +160,4 @@ export declare class StreamSuccessAudio {
     static ɵfac: i0.ɵɵFactoryDeclaration<StreamSuccessAudio, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<StreamSuccessAudio>;
 }
+export {};

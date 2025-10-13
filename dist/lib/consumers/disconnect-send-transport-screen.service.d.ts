@@ -1,6 +1,7 @@
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { Socket } from 'socket.io-client';
 import * as i0 from "@angular/core";
+type Producer = types.Producer;
 export interface DisconnectSendTransportScreenParameters {
     screenProducer: Producer | null;
     socket: Socket;
@@ -107,3 +108,4 @@ export declare class DisconnectSendTransportScreen {
     static ɵfac: i0.ɵɵFactoryDeclaration<DisconnectSendTransportScreen, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<DisconnectSendTransportScreen>;
 }
+export {};

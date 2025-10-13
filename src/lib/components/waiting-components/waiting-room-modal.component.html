@@ -1,5 +1,27 @@
-<div *ngIf="isWaitingModalVisible" [ngStyle]="modalContainerStyle">
-  <div [ngStyle]="modalContentStyle">
+<!-- Custom template override -->
+<ng-container *ngIf="isWaitingModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      isWaitingModalVisible,
+      waitingRoomCounter: waitingRoomCounter_s,
+      waitingRoomList: waitingRoomList_s,
+      position,
+      backgroundColor,
+      roomName,
+      socket,
+      onWaitingRoomClose,
+      onWaitingRoomFilterChange,
+      handleFilterChange: handleFilterChange.bind(this),
+      handleItemPress: handleItemPress.bind(this),
+      handleModalClose: handleModalClose.bind(this)
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isWaitingModalVisible && !customTemplate"
+     [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <div class="modal-title">
         Waiting <span class="badge">{{ waitingRoomCounter_s }}</span>

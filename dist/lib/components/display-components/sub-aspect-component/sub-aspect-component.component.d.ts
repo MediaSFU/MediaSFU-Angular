@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface SubAspectComponentOptions {
     backgroundColor?: string;
@@ -6,6 +6,8 @@ export interface SubAspectComponentOptions {
     containerWidthFraction?: number;
     containerHeightFraction?: number;
     defaultFractionSub?: number;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
 }
 export type SubAspectComponentType = (options: SubAspectComponentOptions) => HTMLElement;
 /**
@@ -42,14 +44,17 @@ export declare class SubAspectComponent implements OnInit, OnDestroy, OnChanges 
     containerWidthFraction: number;
     containerHeightFraction: number;
     defaultFractionSub: number;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
     aspectStyles: {
         height: number;
         width: number;
     };
+    get computedContainerStyle(): any;
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
     private updateAspectStyles;
     static ɵfac: i0.ɵɵFactoryDeclaration<SubAspectComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<SubAspectComponent, "app-sub-aspect-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "showControls": { "alias": "showControls"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "defaultFractionSub": { "alias": "defaultFractionSub"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SubAspectComponent, "app-sub-aspect-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "showControls": { "alias": "showControls"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "defaultFractionSub": { "alias": "defaultFractionSub"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, ["*"], true, never>;
 }

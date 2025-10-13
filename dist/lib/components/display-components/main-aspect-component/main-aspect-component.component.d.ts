@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface MainAspectComponentOptions {
     backgroundColor?: string;
@@ -9,6 +9,8 @@ export interface MainAspectComponentOptions {
     updateIsWideScreen: (isWideScreen: boolean) => void;
     updateIsMediumScreen: (isMediumScreen: boolean) => void;
     updateIsSmallScreen: (isSmallScreen: boolean) => void;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
 }
 export type MainAspectComponentType = (options: MainAspectComponentOptions) => HTMLElement;
 /**
@@ -68,6 +70,8 @@ export declare class MainAspectComponent implements OnInit, OnDestroy, OnChanges
     updateIsWideScreen: (isWideScreen: boolean) => void;
     updateIsMediumScreen: (isMediumScreen: boolean) => void;
     updateIsSmallScreen: (isSmallScreen: boolean) => void;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
     aspectStyles: {
         [key: string]: any;
     };
@@ -76,5 +80,5 @@ export declare class MainAspectComponent implements OnInit, OnDestroy, OnChanges
     ngOnDestroy(): void;
     private updateAspectStyles;
     static ɵfac: i0.ɵɵFactoryDeclaration<MainAspectComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MainAspectComponent, "app-main-aspect-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "showControls": { "alias": "showControls"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "defaultFraction": { "alias": "defaultFraction"; "required": false; }; "updateIsWideScreen": { "alias": "updateIsWideScreen"; "required": false; }; "updateIsMediumScreen": { "alias": "updateIsMediumScreen"; "required": false; }; "updateIsSmallScreen": { "alias": "updateIsSmallScreen"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MainAspectComponent, "app-main-aspect-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "showControls": { "alias": "showControls"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "defaultFraction": { "alias": "defaultFraction"; "required": false; }; "updateIsWideScreen": { "alias": "updateIsWideScreen"; "required": false; }; "updateIsMediumScreen": { "alias": "updateIsMediumScreen"; "required": false; }; "updateIsSmallScreen": { "alias": "updateIsSmallScreen"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, ["*"], true, never>;
 }

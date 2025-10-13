@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
+import { UIOverrideResolverService } from '../../services/ui-override-resolver.service';
+import { WithOverrideDirective } from '../../directives/with-override.directive';
 import { BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { Socket } from 'socket.io-client';
 import {
@@ -211,13 +214,12 @@ import { CaptureCanvasStream } from '../../methods/whiteboard-methods/capture-ca
 import { ResumePauseAudioStreams } from '../../consumers/resume-pause-audio-streams.service';
 import { ProcessConsumerTransportsAudio } from '../../consumers/process-consumer-transports-audio.service';
 
-import {
-  Device,
-  Producer,
-  ProducerOptions,
-  RtpCapabilities,
-  Transport,
-} from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
+type RtpCapabilities = types.RtpCapabilities;
+type Transport = types.Transport;;
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 export type MediasfuBroadcastOptions = {
@@ -314,6 +316,7 @@ export type MediasfuBroadcastOptions = {
 @Component({
   selector: 'app-mediasfu-broadcast',
   imports: [
+    CommonModule,
     AlertComponent,
     AudioGrid,
     ControlButtonsComponentTouch,
@@ -329,7 +332,7 @@ export type MediasfuBroadcastOptions = {
     MainContainerComponent,
     MainGridComponent,
     MainScreenComponent,
-
+    WithOverrideDirective,
   ],
   template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
@@ -347,6 +350,7 @@ export type MediasfuBroadcastOptions = {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
+      [ngStyle]="containerStyle"
     >
       <!-- Conditional Rendering: PrejoinPage or Main Content -->
       <ng-container *ngIf="!validated.value; else mainContent">
@@ -361,109 +365,196 @@ export type MediasfuBroadcastOptions = {
 
       <ng-template #mainContent>
         <!-- Default Main Component -->
-        <app-main-container-component *ngIf="returnUI">
-          <app-main-aspect-component
-            [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-            [defaultFraction]="1 - controlHeight.value"
-            [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
-            [updateIsWideScreen]="updateIsWideScreen"
-            [updateIsMediumScreen]="updateIsMediumScreen"
-            [updateIsSmallScreen]="updateIsSmallScreen"
+        <ng-container *ngIf="returnUI">
+          <ng-container
+            *appWithOverride="
+              'mainContainer';
+              default: MainContainerComponentRef;
+              props: mainContainerOverrideProps
+            "
           >
-            <!-- Main Screen Component -->
-            <app-main-screen-component
-              [doStack]="true"
-              [mainSize]="mainHeightWidth.value"
-              [defaultFraction]="1 - controlHeight.value"
-              [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
-              [updateComponentSizes]="updateComponentSizes"
-            >
-              <!-- Main Grid Component -->
-              <app-main-grid-component
-                [height]="componentSizes.value.mainHeight"
-                [width]="componentSizes.value.mainWidth"
-                [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-                [mainSize]="mainHeightWidth.value"
-                [showAspect]="mainHeightWidth.value > 0"
-                [timeBackgroundColor]="recordState.value"
-                [meetingProgressTime]="meetingProgressTime.value"
+            <app-main-container-component>
+              <ng-container
+                *appWithOverride="
+                  'mainAspect';
+                  default: MainAspectComponentRef;
+                  props: mainAspectOverrideProps
+                "
               >
-                <app-flexible-video
-                  [customWidth]="componentSizes.value.mainWidth"
-                  [customHeight]="componentSizes.value.mainHeight"
-                  [rows]="1"
-                  [columns]="1"
-                  [componentsToRender]="mainGridStream.value"
-                  [showAspect]="
-                    mainGridStream.value.length > 0 &&
-                    !(whiteboardStarted.value && !whiteboardEnded.value)
-                  "
+                <app-main-aspect-component
+                  [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                  [defaultFraction]="1 - controlHeight.value"
+                  [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
+                  [updateIsWideScreen]="updateIsWideScreen"
+                  [updateIsMediumScreen]="updateIsMediumScreen"
+                  [updateIsSmallScreen]="updateIsSmallScreen"
                 >
-                </app-flexible-video>
+                  <!-- Main Screen Component -->
+                  <ng-container
+                    *appWithOverride="
+                      'mainScreen';
+                      default: MainScreenComponentRef;
+                      props: mainScreenOverrideProps
+                    "
+                  >
+                    <app-main-screen-component
+                      [doStack]="true"
+                      [mainSize]="mainHeightWidth.value"
+                      [defaultFraction]="1 - controlHeight.value"
+                      [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
+                      [updateComponentSizes]="updateComponentSizes"
+                    >
+                      <!-- Main Grid Component -->
+                      <ng-container
+                        *appWithOverride="
+                          'mainGrid';
+                          default: MainGridComponentRef;
+                          props: mainGridOverrideProps
+                        "
+                      >
+                        <app-main-grid-component
+                          [height]="componentSizes.value.mainHeight"
+                          [width]="componentSizes.value.mainWidth"
+                          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                          [mainSize]="mainHeightWidth.value"
+                          [showAspect]="mainHeightWidth.value > 0"
+                          [timeBackgroundColor]="recordState.value"
+                          [meetingProgressTime]="meetingProgressTime.value"
+                        >
+                          <ng-container
+                            *appWithOverride="
+                              'flexibleVideo';
+                              default: FlexibleVideoComponentRef;
+                              props: flexibleVideoOverrideProps
+                            "
+                          >
+                            <app-flexible-video
+                              [customWidth]="componentSizes.value.mainWidth"
+                              [customHeight]="componentSizes.value.mainHeight"
+                              [rows]="1"
+                              [columns]="1"
+                              [componentsToRender]="mainGridStream.value"
+                              [showAspect]="
+                                mainGridStream.value.length > 0 &&
+                                !(whiteboardStarted.value && !whiteboardEnded.value)
+                              "
+                            >
+                            </app-flexible-video>
+                          </ng-container>
 
-                <!-- Control Buttons for Broadcast -->
-                <app-control-buttons-component-touch
-                  [buttons]="controlBroadcastButtons"
-                  [position]="'right'"
-                  [location]="'bottom'"
-                  [direction]="'vertical'"
-                  [showAspect]="eventType.value === 'broadcast'"
-                ></app-control-buttons-component-touch>
+                          <!-- Control Buttons for Broadcast -->
+                          <ng-container
+                            *appWithOverride="
+                              'controlButtonsTouch';
+                              default: ControlButtonsTouchComponentRef;
+                              props: controlButtonsTouchBroadcastOverrideProps
+                            "
+                          >
+                            <app-control-buttons-component-touch
+                              [buttons]="controlBroadcastButtons"
+                              [position]="'right'"
+                              [location]="'bottom'"
+                              [direction]="'vertical'"
+                              [showAspect]="eventType.value === 'broadcast'"
+                            ></app-control-buttons-component-touch>
+                          </ng-container>
 
-                <!-- Recording Buttons -->
-                <app-control-buttons-component-touch
-                  [buttons]="recordButton"
-                  [direction]="'horizontal'"
-                  [showAspect]="
-                    eventType.value === 'broadcast' &&
-                    !showRecordButtons.value &&
-                    islevel.value === '2'
-                  "
-                  [location]="'bottom'"
-                  [position]="'middle'"
-                ></app-control-buttons-component-touch>
+                          <!-- Recording Buttons -->
+                          <ng-container
+                            *appWithOverride="
+                              'controlButtonsTouch';
+                              default: ControlButtonsTouchComponentRef;
+                              props: controlButtonsTouchRecordOverrideProps
+                            "
+                          >
+                            <app-control-buttons-component-touch
+                              [buttons]="recordButton"
+                              [direction]="'horizontal'"
+                              [showAspect]="
+                                eventType.value === 'broadcast' &&
+                                !showRecordButtons.value &&
+                                islevel.value === '2'
+                              "
+                              [location]="'bottom'"
+                              [position]="'middle'"
+                            ></app-control-buttons-component-touch>
+                          </ng-container>
 
-                <app-control-buttons-component-touch
-                  [buttons]="recordButtons"
-                  [direction]="'horizontal'"
-                  [showAspect]="
-                    eventType.value === 'broadcast' &&
-                    showRecordButtons.value &&
-                    islevel.value === '2'
-                  "
-                  [location]="'bottom'"
-                  [position]="'middle'"
-                ></app-control-buttons-component-touch>
+                          <ng-container
+                            *appWithOverride="
+                              'controlButtonsTouch';
+                              default: ControlButtonsTouchComponentRef;
+                              props: controlButtonsTouchRecordAltOverrideProps
+                            "
+                          >
+                            <app-control-buttons-component-touch
+                              [buttons]="recordButtons"
+                              [direction]="'horizontal'"
+                              [showAspect]="
+                                eventType.value === 'broadcast' &&
+                                showRecordButtons.value &&
+                                islevel.value === '2'
+                              "
+                              [location]="'bottom'"
+                              [position]="'middle'"
+                            ></app-control-buttons-component-touch>
+                          </ng-container>
 
-                <!-- AudioGrid -->
-                <app-audio-grid [componentsToRender]="audioOnlyStreams.value"></app-audio-grid>
-              </app-main-grid-component>
+                          <!-- AudioGrid -->
+                          <ng-container
+                            *appWithOverride="
+                              'audioGrid';
+                              default: AudioGridComponentRef;
+                              props: audioGridOverrideProps
+                            "
+                          >
+                            <app-audio-grid [componentsToRender]="audioOnlyStreams.value"></app-audio-grid>
+                          </ng-container>
+                        </app-main-grid-component>
+                      </ng-container>
 
-              <!-- Other Grid Component is not included in MediasfuBroadcast -->
-            </app-main-screen-component>
-          </app-main-aspect-component>
-        </app-main-container-component>
+                      <!-- Other Grid Component is not included in MediasfuBroadcast -->
+                    </app-main-screen-component>
+                  </ng-container>
+                </app-main-aspect-component>
+              </ng-container>
+            </app-main-container-component>
+          </ng-container>
+        </ng-container>
       </ng-template>
     </div>
 
     <!-- Modals and alerts (only available when using default UI, not custom components) -->
     <ng-container *ngIf="returnUI && !customMainComponent">
-      <app-alert-component
-        [visible]="alertVisible.value"
-        [message]="alertMessage.value"
-        [type]="alertType.value"
-        [duration]="alertDuration.value"
-        [onHide]="onAlertHide"
-        textColor="#ffffff"
-      ></app-alert-component>
+      <ng-container
+        *appWithOverride="'alert'; default: AlertComponentRef; props: alertOverrideProps"
+      >
+        <app-alert-component
+          [visible]="alertVisible.value"
+          [message]="alertMessage.value"
+          [type]="alertType.value"
+          [duration]="alertDuration.value"
+          [onHide]="onAlertHide"
+          textColor="#ffffff"
+        ></app-alert-component>
+      </ng-container>
 
-      <app-loading-modal
-        [isVisible]="isLoadingModalVisible.value"
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-        displayColor="black"
-      ></app-loading-modal>
+      <ng-container
+        *appWithOverride="'loadingModal'; default: LoadingModalComponentRef; props: loadingModalOverrideProps"
+      >
+        <app-loading-modal
+          [isVisible]="isLoadingModalVisible.value"
+          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+          displayColor="black"
+        ></app-loading-modal>
+      </ng-container>
 
       <app-participants-modal
+        *appWithOverride="
+          'participantsModal';
+          default: ParticipantsModalComponentRef;
+          props: participantsModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
@@ -473,6 +564,11 @@ export type MediasfuBroadcastOptions = {
       ></app-participants-modal>
 
       <app-recording-modal
+        *appWithOverride="
+          'recordingModal';
+          default: RecordingModalComponentRef;
+          props: recordingModalOverrideProps
+        "
         [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isRecordingModalVisible]="isRecordingModalVisible.value"
         [onClose]="onRecordingClose"
@@ -482,6 +578,11 @@ export type MediasfuBroadcastOptions = {
       ></app-recording-modal>
 
       <app-confirm-exit-modal
+        *appWithOverride="
+          'confirmExitModal';
+          default: ConfirmExitModalComponentRef;
+          props: confirmExitModalOverrideProps
+        "
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmExitModalVisible]="isConfirmExitModalVisible.value"
         [onConfirmExitClose]="onConfirmExitClose"
@@ -493,6 +594,11 @@ export type MediasfuBroadcastOptions = {
       ></app-confirm-exit-modal>
 
       <app-confirm-here-modal
+        *appWithOverride="
+          'confirmHereModal';
+          default: ConfirmHereModalComponentRef;
+          props: confirmHereModalOverrideProps
+        "
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmHereModalVisible]="isConfirmHereModalVisible.value"
         [onConfirmHereClose]="onConfirmHereClose"
@@ -502,6 +608,11 @@ export type MediasfuBroadcastOptions = {
       ></app-confirm-here-modal>
 
       <app-share-event-modal
+        *appWithOverride="
+          'shareEventModal';
+          default: ShareEventModalComponentRef;
+          props: shareEventModalOverrideProps
+        "
         [isShareEventModalVisible]="isShareEventModalVisible.value"
         [onShareEventClose]="onShareEventClose"
         [roomName]="roomName.value"
@@ -512,6 +623,11 @@ export type MediasfuBroadcastOptions = {
       ></app-share-event-modal>
 
       <app-messages-modal
+        *appWithOverride="
+          'messagesModal';
+          default: MessagesModalComponentRef;
+          props: messagesModalOverrideProps
+        "
         [backgroundColor]="
           eventType.value === 'webinar' || eventType.value === 'conference'
             ? '#f5f5f5'
@@ -583,7 +699,207 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   @Input() customMiniCard: any;
   @Input() customMainComponent: any;
 
+  // UI customization inputs
+  @Input() containerStyle?: Record<string, any>;
+  @Input() uiOverrides?: MediasfuUICustomOverrides;
+
   title = 'MediaSFU-Broadcast';
+
+  protected readonly MainContainerComponentRef = MainContainerComponent;
+  protected readonly MainAspectComponentRef = MainAspectComponent;
+  protected readonly MainScreenComponentRef = MainScreenComponent;
+  protected readonly MainGridComponentRef = MainGridComponent;
+  protected readonly FlexibleVideoComponentRef = FlexibleVideo;
+  protected readonly AudioGridComponentRef = AudioGrid;
+  protected readonly ControlButtonsTouchComponentRef = ControlButtonsComponentTouch;
+  protected readonly AlertComponentRef = AlertComponent;
+  protected readonly LoadingModalComponentRef = LoadingModal;
+  protected readonly ParticipantsModalComponentRef = ParticipantsModal;
+  protected readonly RecordingModalComponentRef = RecordingModal;
+  protected readonly ConfirmExitModalComponentRef = ConfirmExitModal;
+  protected readonly ConfirmHereModalComponentRef = ConfirmHereModal;
+  protected readonly ShareEventModalComponentRef = ShareEventModal;
+  protected readonly MessagesModalComponentRef = MessagesModal;
+
+  mainContainerOverrideProps = () => ({
+    containerStyle: this.containerStyle,
+    parameters: this.mediaSFUParameters,
+  });
+
+  mainAspectOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    defaultFraction: 1 - this.controlHeight.value,
+    showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+    updateIsWideScreen: this.updateIsWideScreen,
+    updateIsMediumScreen: this.updateIsMediumScreen,
+    updateIsSmallScreen: this.updateIsSmallScreen,
+    parameters: this.mediaSFUParameters,
+  });
+
+  mainScreenOverrideProps = () => ({
+    doStack: true,
+    mainSize: this.mainHeightWidth.value,
+    defaultFraction: 1 - this.controlHeight.value,
+    showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+    updateComponentSizes: this.updateComponentSizes,
+    parameters: this.mediaSFUParameters,
+  });
+
+  mainGridOverrideProps = () => ({
+    height: this.componentSizes.value.mainHeight,
+    width: this.componentSizes.value.mainWidth,
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    mainSize: this.mainHeightWidth.value,
+    showAspect: this.mainHeightWidth.value > 0,
+    timeBackgroundColor: this.recordState.value,
+    meetingProgressTime: this.meetingProgressTime.value,
+    parameters: this.mediaSFUParameters,
+  });
+
+  flexibleVideoOverrideProps = () => ({
+    customWidth: this.componentSizes.value.mainWidth,
+    customHeight: this.componentSizes.value.mainHeight,
+    rows: 1,
+    columns: 1,
+    componentsToRender: this.mainGridStream.value,
+    showAspect:
+      this.mainGridStream.value.length > 0 &&
+      !(this.whiteboardStarted.value && !this.whiteboardEnded.value),
+    parameters: this.mediaSFUParameters,
+    customVideoCard: this.customVideoCard,
+    customAudioCard: this.customAudioCard,
+    customMiniCard: this.customMiniCard,
+  });
+
+  controlButtonsTouchBroadcastOverrideProps = () => ({
+    buttons: this.controlBroadcastButtons,
+    position: 'right',
+    location: 'bottom',
+    direction: 'vertical',
+    showAspect: this.eventType.value === 'broadcast',
+    parameters: this.mediaSFUParameters,
+  });
+
+  controlButtonsTouchRecordOverrideProps = () => ({
+    buttons: this.recordButton,
+    direction: 'horizontal',
+    showAspect:
+      this.eventType.value === 'broadcast' &&
+      !this.showRecordButtons.value &&
+      this.islevel.value === '2',
+    location: 'bottom',
+    position: 'middle',
+    parameters: this.mediaSFUParameters,
+  });
+
+  controlButtonsTouchRecordAltOverrideProps = () => ({
+    buttons: this.recordButtons,
+    direction: 'horizontal',
+    showAspect:
+      this.eventType.value === 'broadcast' &&
+      this.showRecordButtons.value &&
+      this.islevel.value === '2',
+    location: 'bottom',
+    position: 'middle',
+    parameters: this.mediaSFUParameters,
+  });
+
+  audioGridOverrideProps = () => ({
+    componentsToRender: this.audioOnlyStreams.value,
+    parameters: this.mediaSFUParameters,
+  });
+
+  alertOverrideProps = () => ({
+    visible: this.alertVisible.value,
+    message: this.alertMessage.value,
+    type: this.alertType.value,
+    duration: this.alertDuration.value,
+    onHide: this.onAlertHide,
+    textColor: '#ffffff',
+    parameters: this.mediaSFUParameters,
+  });
+
+  loadingModalOverrideProps = () => ({
+    isVisible: this.isLoadingModalVisible.value,
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    displayColor: 'black',
+    parameters: this.mediaSFUParameters,
+  });
+
+  participantsModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isParticipantsModalVisible: this.isParticipantsModalVisible.value,
+    onParticipantsClose: this.onParticipantsClose,
+    participantsCounter: this.participantsCounter.value,
+    onParticipantsFilterChange: this.onParticipantsFilterChange,
+    parameters: this.getAllParams(),
+  });
+
+  recordingModalOverrideProps = () => ({
+    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    isRecordingModalVisible: this.isRecordingModalVisible.value,
+    onClose: this.onRecordingClose,
+    startRecording: this.startRecording.startRecording,
+    confirmRecording: this.confirmRecording.confirmRecording,
+    parameters: this.getAllParams(),
+  });
+
+  confirmExitModalOverrideProps = () => ({
+    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    isConfirmExitModalVisible: this.isConfirmExitModalVisible.value,
+    onConfirmExitClose: this.onConfirmExitClose,
+    position: 'topRight',
+    member: this.member.value,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    islevel: this.islevel.value,
+    parameters: this.mediaSFUParameters,
+  });
+
+  confirmHereModalOverrideProps = () => ({
+    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    isConfirmHereModalVisible: this.isConfirmHereModalVisible.value,
+    onConfirmHereClose: this.onConfirmHereClose,
+    member: this.member.value,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    parameters: this.mediaSFUParameters,
+  });
+
+  shareEventModalOverrideProps = () => ({
+    isShareEventModalVisible: this.isShareEventModalVisible.value,
+    onShareEventClose: this.onShareEventClose,
+    roomName: this.roomName.value,
+    islevel: this.islevel.value,
+    adminPasscode: this.adminPasscode.value,
+    eventType: this.eventType.value,
+    localLink: this.localLink,
+    parameters: this.mediaSFUParameters,
+  });
+
+  messagesModalOverrideProps = () => ({
+    backgroundColor:
+      this.eventType.value === 'webinar' || this.eventType.value === 'conference'
+        ? '#f5f5f5'
+        : 'rgba(255, 255, 255, 0.25)',
+    isMessagesModalVisible: this.isMessagesModalVisible.value,
+    onMessagesClose: this.onMessagesClose,
+    messages: this.messages.value,
+    eventType: this.eventType.value,
+    member: this.member.value,
+    islevel: this.islevel.value,
+    coHostResponsibility: this.coHostResponsibility.value,
+    coHost: this.coHost.value,
+    startDirectMessage: this.startDirectMessage.value,
+    directMessageDetails: this.directMessageDetails.value,
+    updateStartDirectMessage: this.updateStartDirectMessage,
+    updateDirectMessageDetails: this.updateDirectMessageDetails,
+    showAlert: this.showAlert,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    chatSetting: this.chatSetting.value,
+    parameters: this.mediaSFUParameters,
+  });
 
   private mainHeightWidthSubscription: Subscription | undefined;
   private validatedSubscription: Subscription | undefined;
@@ -700,6 +1016,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
 
     public updateConsumingDomains: UpdateConsumingDomains,
     public receiveRoomMessages: ReceiveRoomMessages,
+    private uiOverrideResolver: UIOverrideResolverService,
   ) { }
 
   createInjector(inputs: any) {
@@ -710,6 +1027,60 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
 
     return inj;
   }
+
+  /**
+   * Gets a list of media devices filtered by the specified kind.
+   * @param kind - The kind of media device to filter by ('videoinput' or 'audioinput')
+   * @returns A promise that resolves to an array of MediaDeviceInfo objects
+   */
+  getMediaDevicesList = async (kind: 'videoinput' | 'audioinput'): Promise<MediaDeviceInfo[]> => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      return devices.filter((device) => device.kind === kind);
+    } catch (error) {
+      console.error('Error enumerating devices:', error);
+      return [];
+    }
+  };
+
+  /**
+   * Gets the media stream for a participant by their ID or name.
+   * @param options - Object containing id, name, and kind parameters
+   * @returns A promise that resolves to the participant's MediaStream or null if not found
+   */
+  getParticipantMedia = async (options: {
+    id?: string;
+    name?: string;
+    kind: 'video' | 'audio';
+  }): Promise<MediaStream | null> => {
+    const { id, name, kind } = options;
+
+    try {
+      const streams =
+        kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+
+      // Search by producerId if provided
+      if (id) {
+        const streamObj = streams.find((obj: any) => obj.producerId === id);
+        if (streamObj && 'stream' in streamObj) {
+          return streamObj.stream || null;
+        }
+      }
+
+      // Search by name if provided
+      if (name) {
+        const streamObj = streams.find((obj: any) => obj.name === name);
+        if (streamObj && 'stream' in streamObj) {
+          return streamObj.stream || null;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error('Error getting participant media:', error);
+      return null;
+    }
+  };
 
   // Initial values
   mediaSFUFunctions = () => {
@@ -1034,6 +1405,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
         (() => {
           console.log('none');
         }),
+      getMediaDevicesList: this.getMediaDevicesList,
+      getParticipantMedia: this.getParticipantMedia,
     };
   };
 
@@ -3720,7 +4093,54 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   };
 
+  /**
+   * Initializes function overrides by wrapping original implementations
+   * with custom logic if provided in uiOverrides
+   */
+  initializeFunctionOverrides(): void {
+    // Apply consumerResume override
+    if (this.uiOverrideResolver.hasOverride('consumerResume')) {
+      const originalConsumerResume = this.consumerResume.consumerResume.bind(
+        this.consumerResume,
+      );
+      this.consumerResume.consumerResume = this.uiOverrideResolver.applyFunctionOverride(
+        'consumerResume',
+        originalConsumerResume,
+      );
+    }
+
+    // Apply addVideosGrid override
+    if (this.uiOverrideResolver.hasOverride('addVideosGrid')) {
+      const originalAddVideosGrid = this.addVideosGrid.addVideosGrid.bind(
+        this.addVideosGrid,
+      );
+      this.addVideosGrid.addVideosGrid = this.uiOverrideResolver.applyFunctionOverride(
+        'addVideosGrid',
+        originalAddVideosGrid,
+      );
+    }
+
+    // Apply prepopulateUserMedia override
+    if (this.uiOverrideResolver.hasOverride('prepopulateUserMedia')) {
+      const originalPrepopulateUserMedia = this.prepopulateUserMedia.prepopulateUserMedia.bind(
+        this.prepopulateUserMedia,
+      );
+      this.prepopulateUserMedia.prepopulateUserMedia = this.uiOverrideResolver.applyFunctionOverride(
+        'prepopulateUserMedia',
+        originalPrepopulateUserMedia,
+      );
+    }
+  }
+
   ngOnInit() {
+    // Initialize UI overrides if provided
+    if (this.uiOverrides) {
+      this.uiOverrideResolver.setOverrides(this.uiOverrides);
+    }
+
+    // Apply function overrides
+    this.initializeFunctionOverrides();
+
     if (this.PrejoinPage) {
       this.updatePrejoinPageComponent();
     }

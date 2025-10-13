@@ -6,7 +6,8 @@ import {
   AltDomains,
   ConsumeSocket,
 } from '../../@types/types';
-import { RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type RtpCapabilities = types.RtpCapabilities;
 
 export interface GetDomainsParameters extends ConnectIpsParameters {
   roomRecvIPs: string[];

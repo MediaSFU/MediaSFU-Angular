@@ -1,5 +1,28 @@
-<div *ngIf="isRequestsModalVisible" class="modal-container" [ngStyle]="{'background-color': 'rgba(0, 0, 0, 0.5)'}">
-  <div class="modal-content" [ngStyle]="{'background-color': backgroundColor, 'top': position.includes('top') ? '10px' : 'auto', 'bottom': position.includes('bottom') ? '10px' : 'auto', 'left': position.includes('Left') ? '10px' : 'auto', 'right': position.includes('Right') ? '10px' : 'auto'}">
+<!-- Custom template override -->
+<ng-container *ngIf="isRequestsModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      isRequestsModalVisible,
+      requestCounter: requestCounter_s,
+      requestList: requestList_s,
+      position,
+      backgroundColor,
+      roomName,
+      socket,
+      onRequestClose,
+      onRequestFilterChange,
+      handleFilterChange: handleFilterChange.bind(this),
+      handleModalClose: handleModalClose.bind(this)
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isRequestsModalVisible && !customTemplate"
+     class="modal-container"
+     [ngStyle]="getCombinedOverlayStyle()">
+  <div class="modal-content"
+       [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <div>
         Requests <span class="badge text-dark">{{ requestCounter_s }}</span>

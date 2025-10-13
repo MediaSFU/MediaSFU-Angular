@@ -1,5 +1,31 @@
-<div [ngStyle]="modalContainerStyle">
-  <div [ngStyle]="modalContentStyle">
+<ng-container *ngIf="isPollModalVisible && customTemplate">
+  <ng-container
+    *ngTemplateOutlet="
+      customTemplate;
+      context: {
+        isPollModalVisible: isPollModalVisible,
+        onClose: onClose,
+        position: position,
+        backgroundColor: backgroundColor,
+        member: member,
+        islevel: islevel,
+        polls: polls,
+        poll: poll,
+        socket: socket,
+        roomName: roomName,
+        showAlert: showAlert,
+        updateIsPollModalVisible: updateIsPollModalVisible,
+        handleCreatePoll: handleCreatePoll,
+        handleEndPoll: handleEndPoll,
+        handleVotePoll: handleVotePoll
+      }
+    "
+  >
+  </ng-container>
+</ng-container>
+
+<div *ngIf="isPollModalVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <h2>Polls</h2>
       <button (click)="onClose()" class="close-button">

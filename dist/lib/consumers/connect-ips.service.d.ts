@@ -2,9 +2,10 @@ import { SocketManager } from '../sockets/socket-manager.service';
 import { NewPipeProducer } from './socket-receive-methods/new-pipe-producer.service';
 import { ProducerClosed } from './socket-receive-methods/producer-closed.service';
 import { JoinConsumeRoom } from './socket-receive-methods/join-consume-room.service';
-import { Device } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { ReorderStreamsParameters, ReorderStreamsType, NewPipeProducerParameters, NewPipeProducerType, ProducerClosedType, ProducerClosedParameters, JoinConsumeRoomType, JoinConsumeRoomParameters, ConsumeSocket } from '../@types/types';
 import * as i0 from "@angular/core";
+type Device = types.Device;
 export interface ConnectIpsParameters extends ReorderStreamsParameters, JoinConsumeRoomParameters, ProducerClosedParameters, NewPipeProducerParameters {
     device: Device | null;
     roomRecvIPs: string[];
@@ -99,3 +100,4 @@ export declare class ConnectIps {
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectIps, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectIps>;
 }
+export {};

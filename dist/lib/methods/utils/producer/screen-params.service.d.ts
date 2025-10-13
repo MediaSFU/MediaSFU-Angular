@@ -1,5 +1,7 @@
-import { ProducerCodecOptions, RtpEncodingParameters } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type ProducerCodecOptions = types.ProducerCodecOptions;
+type RtpEncodingParameters = types.RtpEncodingParameters;
 export type ScreenParamsType = {
     encodings: RtpEncodingParameters[];
     codecOptions?: ProducerCodecOptions;
@@ -46,3 +48,4 @@ export declare class ScreenParams {
     static ɵfac: i0.ɵɵFactoryDeclaration<ScreenParams, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ScreenParams>;
 }
+export {};

@@ -4,10 +4,10 @@
  */
 
 import { Injectable, Injector, ComponentRef, ViewContainerRef, Type, ElementRef } from '@angular/core';
-import { 
-  CustomComponent, 
-  CustomComponentType, 
-  CustomComponentFunction, 
+import {
+  CustomComponent,
+  CustomComponentType,
+  CustomComponentFunction,
   CustomComponentParameters,
   CustomComponentContext,
   ComponentInjectionConfig
@@ -101,9 +101,9 @@ export class CustomComponentInjectionService {
     try {
       // Handle Angular Component
       if (this.isCustomComponent(customComponent)) {
-        const injector = customComponent.injector || 
+        const injector = customComponent.injector ||
           this.createCustomInjector(context.parameters, context.injector);
-        
+
         const componentRef = container.createComponent(
           customComponent.component,
           { injector }
@@ -131,12 +131,12 @@ export class CustomComponentInjectionService {
 
     } catch (error) {
       console.error('Error rendering custom component:', error);
-      
+
       if (config.fallbackToDefault) {
         console.warn('Falling back to default component rendering');
         return null; // Let the calling component handle fallback
       }
-      
+
       throw error;
     }
 
@@ -156,7 +156,7 @@ export class CustomComponentInjectionService {
     parentInjector?: Injector
   ): CustomComponent<T> {
     const injector = this.createCustomInjector(parameters, parentInjector);
-    
+
     return {
       component: componentType,
       injector

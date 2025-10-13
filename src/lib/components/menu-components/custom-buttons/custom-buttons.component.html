@@ -1,30 +1,86 @@
-<div class="customButtonsContainer">
-  <button
-    *ngFor="let button of buttons; let i = index"
-    (click)="button.action()"
-    class="customButton"
-    [ngStyle]="{
-      'background-color': button.show ? button.backgroundColor : 'transparent',
-      'display': button.show ? 'flex' : 'none'
-    }"
-    [disabled]="button.disabled"
-  >
-    <div class="buttonContent">
-      <ng-container *ngIf="button.icon; else customOrSpinner">
-        <fa-icon [icon]="button.icon" [ngStyle]="mergeStyles(customButtonIcon, button.iconStyle)"></fa-icon>
-        <span *ngIf="button.text" class="customButtonText" [ngStyle]="button.textStyle">{{ button.text }}</span>
-      </ng-container>
-      <ng-template #customOrSpinner>
-        <ng-container *ngIf="isCustomComponentConfig(button.customComponent)">
-          <ng-container *ngComponentOutlet="button.customComponent.component; injector: button.customComponent.injector"></ng-container>
+<div class="customButtonsContainer" [ngStyle]="containerAttributes?.['style']">
+  <ng-container *ngFor="let button of buttons; let i = index">
+    <!-- Render as button or div based on renderAsButton -->
+    <button
+      *ngIf="button.renderAsButton !== false"
+      (click)="button.action && button.action()"
+      (keydown.enter)="button.action && button.action()"
+      (keydown.space)="button.action && button.action()"
+      class="customButton"
+      [ngClass]="button.buttonAttributes?.['class']"
+      [ngStyle]="getButtonStyles(button)"
+      [disabled]="button.disabled"
+      [attr.type]="button.buttonAttributes?.['type'] || 'button'"
+      [attr.tabindex]="button.buttonAttributes?.['tabindex']"
+      [attr.role]="button.buttonAttributes?.['role']"
+    >
+      <div class="buttonContent" [ngStyle]="button.contentAttributes?.['style']">
+        <ng-container *ngIf="button.icon; else customOrSpinner">
+          <fa-icon
+            [icon]="button.icon"
+            [ngStyle]="mergeStyles(customButtonIcon, button.iconStyle)"
+            [ngClass]="button.iconAttributes?.['class']"
+          ></fa-icon>
+          <span *ngIf="button.text" class="customButtonText" [ngStyle]="button.textStyle">{{ button.text }}</span>
         </ng-container>
-        <ng-container *ngIf="button.customComponent && !isCustomComponentConfig(button.customComponent)">
-          <div #customElementContainer></div>
+        <ng-template #customOrSpinner>
+          <ng-container *ngIf="isCustomComponentConfig(button.customComponent)">
+            <ng-container *ngComponentOutlet="button.customComponent.component; injector: button.customComponent.injector"></ng-container>
+          </ng-container>
+          <ng-container *ngIf="button.customComponent && !isCustomComponentConfig(button.customComponent)">
+            <div #customElementContainer></div>
+          </ng-container>
+          <ng-container *ngIf="!button.customComponent">
+            <ng-container *ngIf="fallbackSpinner; else defaultSpinner">
+              <ng-container *ngTemplateOutlet="fallbackSpinner"></ng-container>
+            </ng-container>
+            <ng-template #defaultSpinner>
+              <fa-icon [icon]="faSpinner"></fa-icon>
+            </ng-template>
+          </ng-container>
+        </ng-template>
+      </div>
+    </button>
+
+    <!-- Render as div when renderAsButton is false -->
+    <div
+      *ngIf="button.renderAsButton === false"
+      (click)="button.action && button.action()"
+      (keydown.enter)="button.action && button.action()"
+      (keydown.space)="button.action && button.action()"
+      class="customButton"
+      [ngClass]="button.buttonAttributes?.['class']"
+      [ngStyle]="getButtonStyles(button)"
+      [attr.aria-disabled]="button.disabled || null"
+      [attr.role]="button.buttonAttributes?.['role'] || (button.action ? 'button' : null)"
+      [attr.tabindex]="button.buttonAttributes?.['tabindex'] !== undefined ? button.buttonAttributes['tabindex'] : (button.action ? 0 : null)"
+    >
+      <div class="buttonContent" [ngStyle]="button.contentAttributes?.['style']">
+        <ng-container *ngIf="button.icon; else customOrSpinnerDiv">
+          <fa-icon
+            [icon]="button.icon"
+            [ngStyle]="mergeStyles(customButtonIcon, button.iconStyle)"
+            [ngClass]="button.iconAttributes?.['class']"
+          ></fa-icon>
+          <span *ngIf="button.text" class="customButtonText" [ngStyle]="button.textStyle">{{ button.text }}</span>
         </ng-container>
-        <ng-container *ngIf="!button.customComponent">
-          <fa-icon [icon]="faSpinner"></fa-icon>
-        </ng-container>
-      </ng-template>
+        <ng-template #customOrSpinnerDiv>
+          <ng-container *ngIf="isCustomComponentConfig(button.customComponent)">
+            <ng-container *ngComponentOutlet="button.customComponent.component; injector: button.customComponent.injector"></ng-container>
+          </ng-container>
+          <ng-container *ngIf="button.customComponent && !isCustomComponentConfig(button.customComponent)">
+            <div #customElementContainer></div>
+          </ng-container>
+          <ng-container *ngIf="!button.customComponent">
+            <ng-container *ngIf="fallbackSpinner; else defaultSpinnerDiv">
+              <ng-container *ngTemplateOutlet="fallbackSpinner"></ng-container>
+            </ng-container>
+            <ng-template #defaultSpinnerDiv>
+              <fa-icon [icon]="faSpinner"></fa-icon>
+            </ng-template>
+          </ng-container>
+        </ng-template>
+      </div>
     </div>
-  </button>
+  </ng-container>
 </div>

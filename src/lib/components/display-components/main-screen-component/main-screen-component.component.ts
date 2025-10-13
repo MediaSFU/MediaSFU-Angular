@@ -10,6 +10,7 @@ import {
   Renderer2,
   AfterViewInit,
   OnDestroy,
+  TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentSizes } from '../../../@types/types';
@@ -21,6 +22,8 @@ export interface MainScreenComponentOptions {
   defaultFraction?: number;
   showControls?: boolean;
   updateComponentSizes: (sizes: ComponentSizes) => void;
+  containerStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type MainScreenComponentType = (options: MainScreenComponentOptions) => HTMLElement;
@@ -82,9 +85,22 @@ export type MainScreenComponentType = (options: MainScreenComponentOptions) => H
     selector: 'app-main-screen-component',
     imports: [CommonModule],
     template: `
-    <div [ngStyle]="containerStyle">
-      <ng-content></ng-content>
-    </div>
+    <ng-container *ngIf="customTemplate; else defaultTemplate">
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          mainSize: mainSize,
+          doStack: doStack,
+          isWideScreen: isWideScreen,
+          parentWidth: parentWidth,
+          parentHeight: parentHeight
+        }
+      }"></ng-container>
+    </ng-container>
+    <ng-template #defaultTemplate>
+      <div [ngStyle]="computedContainerStyle">
+        <ng-content></ng-content>
+      </div>
+    </ng-template>
   `
 })
 export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
@@ -97,6 +113,8 @@ export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() updateComponentSizes = (sizes: ComponentSizes) => {
     console.log(sizes);
   };
+  @Input() containerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   @ContentChildren('child')
   children!: QueryList<ElementRef>;
@@ -178,8 +196,8 @@ export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, On
     this.applyChildStyles();
   };
 
-  get containerStyle() {
-    return {
+  get computedContainerStyle() {
+    const baseStyle = {
       display: 'flex',
       flex: 1,
       flexDirection: this.isWideScreen ? 'row' : 'column',
@@ -188,6 +206,7 @@ export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, On
       padding: 0,
       margin: 0,
     };
+    return { ...baseStyle, ...this.containerStyle };
   }
 
   applyChildStyles() {

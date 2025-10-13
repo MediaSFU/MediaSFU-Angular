@@ -30,72 +30,141 @@ export interface EventSettingsModalOptions {
   roomName: string;
   socket: Socket;
   showAlert?: ShowAlert;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type EventSettingsModalType = (options: EventSettingsModalOptions) => HTMLElement;
 
 /**
- * EventSettingsModal component provides a modal interface to manage and update event settings like audio, video, screenshare, and chat settings.
- *
+ * EventSettingsModal - Modal for configuring room-wide event permissions (host only)
+ * 
  * @component
- * @selector app-event-settings-modal
- * @standalone true
- * @imports [CommonModule, FontAwesomeModule, FormsModule]
- *
+ * @description
+ * Provides host/admin controls for managing participant permissions: audio, video, screenshare, and chat.
+ * Settings are saved to the room and enforced for all participants.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with permission toggles and save functionality
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Audio permission control (allow/disallow, allow but muted)
+ * - Video permission control (allow/disallow, allow but off)
+ * - Screenshare permission control (allow/disallow, allow certain roles)
+ * - Chat permission control (allow/disallow, allow only host)
+ * - Socket-based setting persistence
+ * 
  * @example
+ * Basic Usage:
  * ```html
  * <app-event-settings-modal
- *   [isEventSettingsModalVisible]="true"
- *   [onEventSettingsClose]="closeModal"
- *   [onModifyEventSettings]="saveSettings"
- *   [audioSetting]="audio"
- *   [videoSetting]="video"
- *   [screenshareSetting]="screenshare"
- *   [chatSetting]="chat"
- *   [position]="'topRight'"
- *   [backgroundColor]="'#83c0e9'"
- * ></app-event-settings-modal>
+ *   [isEventSettingsModalVisible]="showEventSettings"
+ *   [audioSetting]="currentAudioSetting"
+ *   [videoSetting]="currentVideoSetting"
+ *   [screenshareSetting]="currentScreenshareSetting"
+ *   [chatSetting]="currentChatSetting"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [updateAudioSetting]="setAudioSetting"
+ *   [updateVideoSetting]="setVideoSetting"
+ *   [updateScreenshareSetting]="setScreenshareSetting"
+ *   [updateChatSetting]="setChatSetting"
+ *   [onEventSettingsClose]="closeEventSettings">
+ * </app-event-settings-modal>
  * ```
- *
- * @input {boolean} isEventSettingsModalVisible - Indicates if the event settings modal is visible.
- * @input {() => void} onEventSettingsClose - Callback to close the modal.
- * @input {(options: ModifySettingsOptions) => Promise<void>} onModifyEventSettings - Callback to handle event settings modifications.
- * @input {string} position - Position of the modal on the screen, default is 'topRight'.
- * @input {string} backgroundColor - Background color of the modal, default is '#83c0e9'.
- * @input {string} audioSetting - Current audio setting.
- * @input {string} videoSetting - Current video setting.
- * @input {string} screenshareSetting - Current screenshare setting.
- * @input {string} chatSetting - Current chat setting.
- * @input {(setting: string) => void} updateAudioSetting - Function to update audio setting.
- * @input {(setting: string) => void} updateVideoSetting - Function to update video setting.
- * @input {(setting: string) => void} updateScreenshareSetting - Function to update screenshare setting.
- * @input {(setting: string) => void} updateChatSetting - Function to update chat setting.
- * @input {(isVisible: boolean) => void} updateIsSettingsModalVisible - Function to update modal visibility.
- * @input {string} roomName - Room name associated with the settings.
- * @input {Socket} socket - Socket for real-time communication.
- * @input {ShowAlert} [showAlert] - Optional alert function.
- *
- * @property {string} audioState - Internal state for audio setting.
- * @property {string} videoState - Internal state for video setting.
- * @property {string} screenshareState - Internal state for screenshare setting.
- * @property {string} chatState - Internal state for chat setting.
- * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
- *
- * @constructor
- * @param {ModifySettings} modifySettingsService - Service for modifying settings.
- *
- * @method ngOnInit - Initializes the component and binds the settings modification service.
- * @method ngOnChanges - Updates internal states when `isEventSettingsModalVisible` changes.
- * @param {SimpleChanges} changes - Object containing previous and current values of bound properties.
- *
- * @method updateStatesFromParameters - Sets internal state variables based on input parameters.
- * @method getModalContentStyle - Returns style object for modal content with dynamic positioning and size.
- * @returns {Object} Style object for modal content.
- *
- * @method handleSaveSettings - Invokes the settings modification function with updated values.
- * @returns {Promise<void>} Promise that resolves after saving settings.
- *
- * @method closeModal - Closes the modal.
+ * 
+ * @example
+ * Style Customization:
+ * ```html
+ * <app-event-settings-modal
+ *   [isEventSettingsModalVisible]="showEventSettings"
+ *   [audioSetting]="currentAudioSetting"
+ *   [videoSetting]="currentVideoSetting"
+ *   [screenshareSetting]="currentScreenshareSetting"
+ *   [chatSetting]="currentChatSetting"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [overlayStyle]="{
+ *     backgroundColor: 'rgba(0, 0, 0, 0.8)'
+ *   }"
+ *   [contentStyle]="{
+ *     backgroundColor: '#1e1e1e',
+ *     borderRadius: '12px',
+ *     padding: '25px'
+ *   }"
+ *   [backgroundColor]="'#2c3e50'"
+ *   [position]="'center'"
+ *   [onEventSettingsClose]="closeEventSettings">
+ * </app-event-settings-modal>
+ * ```
+ * 
+ * @example
+ * Custom Template Override:
+ * ```html
+ * <app-event-settings-modal
+ *   [isEventSettingsModalVisible]="showEventSettings"
+ *   [customTemplate]="customSettingsTemplate"
+ *   [onEventSettingsClose]="closeEventSettings">
+ * </app-event-settings-modal>
+ * 
+ * <ng-template #customSettingsTemplate let-audioSetting="audioSetting" let-videoSetting="videoSetting" let-onSave="onSave">
+ *   <div class="custom-settings">
+ *     <h3>Room Permissions</h3>
+ *     <label>
+ *       Audio:
+ *       <select [(ngModel)]="audioSetting">
+ *         <option value="allow">Allow</option>
+ *         <option value="disallow">Disallow</option>
+ *       </select>
+ *     </label>
+ *     <label>
+ *       Video:
+ *       <select [(ngModel)]="videoSetting">
+ *         <option value="allow">Allow</option>
+ *         <option value="disallow">Disallow</option>
+ *       </select>
+ *     </label>
+ *     <button (click)="onSave()">Save Settings</button>
+ *   </div>
+ * </ng-template>
+ * ```
+ * 
+ * @selector app-event-settings-modal
+ * @standalone true
+ * @imports CommonModule, FontAwesomeModule, FormsModule
+ * 
+ * @input isEventSettingsModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onEventSettingsClose - Callback function to close the modal. Default: `() => {}`
+ * @input onModifyEventSettings - Callback to save modified settings. Default: `modifySettingsService.modifySettings`
+ * @input position - Modal position on screen ('topLeft', 'topRight', 'bottomLeft', 'bottomRight'). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input audioSetting - Current audio permission setting. Default: `''`
+ * @input videoSetting - Current video permission setting. Default: `''`
+ * @input screenshareSetting - Current screenshare permission setting. Default: `''`
+ * @input chatSetting - Current chat permission setting. Default: `''`
+ * @input updateAudioSetting - Function to update audio setting state. Default: `() => {}`
+ * @input updateVideoSetting - Function to update video setting state. Default: `() => {}`
+ * @input updateScreenshareSetting - Function to update screenshare setting state. Default: `() => {}`
+ * @input updateChatSetting - Function to update chat setting state. Default: `() => {}`
+ * @input updateIsSettingsModalVisible - Function to update modal visibility. Default: `() => {}`
+ * @input roomName - Name of the room/session. Default: `''`
+ * @input socket - Socket.io client instance for real-time communication. Default: `undefined`
+ * @input showAlert - Optional alert function for displaying success/error messages. Default: `undefined`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes component and sets up default modify settings handler
+ * @method ngOnChanges - Updates internal setting states when modal visibility changes
+ * @method updateStatesFromParameters - Synchronizes internal states with input props
+ * @method handleSaveSettings - Saves modified settings via socket and closes modal
+ * @method closeModal - Closes the modal via onEventSettingsClose callback
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @method getModalContentStyle - Returns computed content styles with positioning
  */
 
 @Component({
@@ -123,6 +192,9 @@ export class EventSettingsModal implements OnInit, OnChanges {
   @Input() roomName = '';
   @Input() socket: Socket = {} as Socket;
   @Input() showAlert?: ShowAlert;
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   audioState!: string;
   videoState!: string;
@@ -196,5 +268,18 @@ export class EventSettingsModal implements OnInit, OnChanges {
 
   closeModal() {
     this.onEventSettingsClose();
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.getModalContentStyle(),
+      ...(this.contentStyle || {})
+    };
   }
 }

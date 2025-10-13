@@ -1,7 +1,10 @@
-import { Device, ProducerOptions, Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { Socket } from 'socket.io-client';
 import { ConnectSendTransportVideoParameters, Participant, ShowAlert, CreateSendTransportParameters, ReorderStreamsParameters, SleepType, CreateSendTransportType, ConnectSendTransportVideoType, ReorderStreamsType, VParamsType, HParamsType } from '../@types/types';
 import * as i0 from "@angular/core";
+type Device = types.Device;
+type ProducerOptions = types.ProducerOptions;
+type Producer = types.Producer;
 export interface StreamSuccessVideoParameters extends CreateSendTransportParameters, ConnectSendTransportVideoParameters, ReorderStreamsParameters {
     socket: Socket;
     participants: Participant[];
@@ -134,3 +137,4 @@ export declare class StreamSuccessVideo {
     static ɵfac: i0.ɵɵFactoryDeclaration<StreamSuccessVideo, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<StreamSuccessVideo>;
 }
+export {};

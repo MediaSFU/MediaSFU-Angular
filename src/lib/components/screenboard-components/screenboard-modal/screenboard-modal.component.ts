@@ -14,7 +14,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
 import {
   ConnectSendTransportScreenType,
   CreateSendTransportType,
@@ -67,64 +68,59 @@ export interface ScreenboardModalOptions {
   onClose: () => void;
   position: string;
   backgroundColor: string;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type ScreenboardModalType = (options: ScreenboardModalOptions) => HTMLElement;
 
 /**
- * @fileoverview ScreenboardModal component for handling screen annotation and modal visibility.
- *
+ * ScreenboardModal - Modal for annotating on shared screen in real-time
+ * 
  * @component
+ * @description
+ * Provides drawing/annotation tools for marking up a shared screen during screen sharing.
+ * Displays canvas overlay for annotations that are visible to all participants.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with canvas annotation tools
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Canvas-based screen annotation
+ * - Real-time annotation preview
+ * - Drawing tools (pen, highlighter, shapes)
+ * - Clear/undo annotations
+ * - Screen transport management
+ * - Annotation interval updates
+ * 
  * @selector app-screenboard-modal
  * @standalone true
- * @templateUrl ./screenboard-modal.component.html
- * @styleUrls ./screenboard-modal.component.css
  * @imports CommonModule, FormsModule, FontAwesomeModule
- *
- * @class ScreenboardModal
- * @implements OnInit, OnDestroy, OnChanges, AfterViewInit
- *
- * @description
- * This component is responsible for managing the screen annotation modal, including showing and hiding the modal,
- * handling screen annotations, and managing media streams.
- *
- * @property {ScreenboardModalParameters} parameters - Input parameter for screen annotation modal.
- * @property {boolean} isVisible - Input flag to control the visibility of the modal.
- * @property {() => void} onClose - Input callback function to be called when the modal is closed.
- * @property {string} position - Input string to set the position of the modal.
- * @property {string} backgroundColor - Input string to set the background color of the modal.
- *
- * @property {ElementRef<HTMLVideoElement>} screenVideoRef - ViewChild reference to the screen video element.
- * @property {ElementRef<HTMLCanvasElement>} screenCanvasRef - ViewChild reference to the screen canvas element.
- *
- * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
- *
- * @property {any} annotationInterval - Interval for annotation updates.
- * @property {any} annotationCheckInterval - Interval for checking annotation updates.
- * @property {MediaStream | null} clonedStreamScreen - Cloned media stream for screen sharing.
- * @property {CanvasRenderingContext2D | null} ctx - Canvas rendering context.
- *
- * @method ngOnInit - Initialization logic that does not depend on the view.
- * @method ngOnDestroy - Cleanup logic when the component is destroyed.
- * @method ngOnChanges - Logic to handle changes in input properties.
- * @method ngAfterViewInit - Logic that requires view access.
- * @method showModal - Method to show the modal and handle screen annotation setup.
- * @method hideModal - Method to hide the modal and cleanup screen annotation.
- * @method annotatationPreview - Method to handle the preview of screen annotations.
- * @method handleScreenTransport - Method to handle screen transport logic.
- * @method stopAnnotation - Method to stop the screen annotation.
- * @method stopAllTracks - Method to stop all media tracks.
- * @returns {HTMLElement} The screenboard modal component.
- * @example
- * ```html
- * <app-screenboard-modal
- *  [parameters]="screenboardModalParams"
- * [isVisible]="isModalVisible"
- * [onClose]="closeModal"
- * [position]="'topRight'"
- * [backgroundColor]="'#83c0e9'">
- * </app-screenboard-modal>
- * ```
+ * 
+ * @input parameters - Object containing screen stream, annotation settings, and MediaSoup transport methods. Default: `{}`
+ * @input isVisible - Whether the modal is currently visible. Default: `false`
+ * @input onClose - Callback function to close the modal. Default: `() => {}`
+ * @input position - Modal position on screen ('topRight', 'fullscreen', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes component (non-view dependent logic)
+ * @method ngOnDestroy - Cleanup: stops annotations and removes intervals
+ * @method ngOnChanges - Updates modal state when visibility changes
+ * @method ngAfterViewInit - Sets up canvas and video elements after view init
+ * @method showModal - Shows modal and initializes screen annotation
+ * @method hideModal - Hides modal and cleans up annotation resources
+ * @method annotationPreview - Handles real-time annotation preview rendering
+ * @method handleScreenTransport - Manages screen share transport logic
+ * @method stopAnnotation - Stops annotation intervals and resets canvas
+ * @method stopAllTracks - Stops all media tracks in cloned screen stream
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
  */
 @Component({
     selector: 'app-screenboard-modal',
@@ -138,6 +134,9 @@ export class ScreenboardModal implements OnInit, OnDestroy, OnChanges, AfterView
   @Input() onClose!: () => void;
   @Input() position = 'topRight';
   @Input() backgroundColor = '#83c0e9';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   @ViewChild('screenVideo') screenVideoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('screenCanvas') screenCanvasRef!: ElementRef<HTMLCanvasElement>;
@@ -491,4 +490,37 @@ export class ScreenboardModal implements OnInit, OnDestroy, OnChanges, AfterView
 
     this.clonedStreamScreen = null;
   };
+
+  getCombinedOverlayStyle() {
+    return {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: this.isVisible ? 'flex' : 'none',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 999,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      backgroundColor: this.backgroundColor,
+      borderRadius: '10px',
+      padding: '10px',
+      maxWidth: '90%',
+      maxHeight: '85%',
+      overflowY: 'auto',
+      position: 'fixed',
+      top: this.position.includes('top') ? '10px' : 'auto',
+      bottom: this.position.includes('bottom') ? '10px' : 'auto',
+      left: this.position.includes('Left') ? '10px' : 'auto',
+      right: this.position.includes('Right') ? '10px' : 'auto',
+      ...(this.contentStyle || {})
+    };
+  }
 }

@@ -1,5 +1,9 @@
-import { Device, Producer, ProducerOptions, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Device = types.Device;
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
+type Transport = types.Transport;
 export interface ConnectSendTransportVideoParameters {
     videoProducer: Producer | null;
     localVideoProducer?: Producer | null;
@@ -129,3 +133,4 @@ export declare class ConnectSendTransportVideo {
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectSendTransportVideo, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectSendTransportVideo>;
 }
+export {};

@@ -1,6 +1,31 @@
 <!-- co-host-modal.component.html -->
-<div [ngStyle]="modalContainerStyle()">
-  <div [ngStyle]="modalContentStyle()">
+<ng-container *ngIf="isCoHostModalVisible && customTemplate">
+  <ng-container
+    *ngTemplateOutlet="
+      customTemplate;
+      context: {
+        isCoHostModalVisible: isCoHostModalVisible,
+        currentCohost: currentCohost,
+        participants: participants,
+        coHostResponsibility: coHostResponsibility,
+        position: position,
+        backgroundColor: backgroundColor,
+        roomName: roomName,
+        showAlert: showAlert,
+        updateCoHostResponsibility: updateCoHostResponsibility,
+        updateCoHost: updateCoHost,
+        updateIsCoHostModalVisible: updateIsCoHostModalVisible,
+        socket: socket,
+        onCoHostClose: onCoHostClose,
+        onModifyCoHost: onModifyCoHost
+      }
+    "
+  >
+  </ng-container>
+</ng-container>
+
+<div *ngIf="isCoHostModalVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
+  <div [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <div class="modal-title">Manage Co-Host</div>
       <div class="btn-close-settings" (click)="handleClose()">

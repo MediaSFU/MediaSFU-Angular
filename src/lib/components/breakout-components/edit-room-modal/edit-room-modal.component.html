@@ -1,5 +1,22 @@
-<div *ngIf="editRoomModalVisible" class="modal-container" [ngStyle]="modalContainerStyle()">
-  <div class="modal-content text-dark" [ngStyle]="modalContentStyle()">
+<ng-container *ngIf="editRoomModalVisible && customTemplate">
+  <ng-container
+    *ngTemplateOutlet="
+      customTemplate;
+      context: {
+        editRoomModalVisible: editRoomModalVisible,
+        currentRoom: currentRoom,
+        participantsRef: participantsRef,
+        currentRoomIndex: currentRoomIndex,
+        position: position,
+        backgroundColor: backgroundColor
+      }
+    "
+  >
+  </ng-container>
+</ng-container>
+
+<div *ngIf="editRoomModalVisible && !customTemplate" class="modal-container" [ngStyle]="getCombinedOverlayStyle()">
+  <div class="modal-content text-dark" [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <h5 class="modal-title">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]="faPen"></fa-icon></h5>
       <button type="button" class="close" (click)="closeModal()">

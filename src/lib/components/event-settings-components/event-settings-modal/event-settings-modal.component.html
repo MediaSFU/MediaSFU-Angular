@@ -1,7 +1,28 @@
 <!-- event-settings-modal.component.html -->
 
-<div *ngIf="isEventSettingsModalVisible" class="modal-container">
-  <div class="modal-content" [ngStyle]="getModalContentStyle()">
+<!-- Custom template override -->
+<ng-container *ngIf="isEventSettingsModalVisible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      isEventSettingsModalVisible,
+      position,
+      backgroundColor,
+      audioState,
+      videoState,
+      screenshareState,
+      chatState,
+      closeModal: closeModal.bind(this),
+      handleSaveSettings: handleSaveSettings.bind(this),
+      onEventSettingsClose
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="isEventSettingsModalVisible && !customTemplate"
+     class="modal-container"
+     [ngStyle]="getCombinedOverlayStyle()">
+  <div class="modal-content" [ngStyle]="getCombinedContentStyle()">
     <div class="modal-header">
       <div class="modal-title">Event Settings</div>
       <div (click)="closeModal()" class="icon-close">

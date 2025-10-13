@@ -7,7 +7,9 @@ import {
   ConnectRecvTransportParameters,
   CreateWebRTCTransportResponse,
 } from '../@types/types';
-import { Device, DtlsParameters } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Device = types.Device;
+type DtlsParameters = types.DtlsParameters;
 
 export interface SignalNewConsumerTransportParameters
   extends ReorderStreamsParameters,

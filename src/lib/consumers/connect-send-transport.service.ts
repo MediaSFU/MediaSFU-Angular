@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type ProducerOptions = types.ProducerOptions;
 import {
   ConnectSendTransportAudioType,
   ConnectSendTransportVideoType,

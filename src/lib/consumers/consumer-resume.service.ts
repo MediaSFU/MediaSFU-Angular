@@ -11,7 +11,8 @@ import {
   Stream,
   EventType,
 } from '../@types/types';
-import { Consumer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Consumer = types.Consumer;
 
 export interface ConsumerResumeParameters
   extends ReorderStreamsParameters,

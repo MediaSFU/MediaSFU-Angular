@@ -1,5 +1,9 @@
-import { Transport, Producer, Device, ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Transport = types.Transport;
+type Producer = types.Producer;
+type Device = types.Device;
+type ProducerOptions = types.ProducerOptions;
 export interface ConnectSendTransportScreenParameters {
     screenProducer: Producer | null;
     localScreenProducer?: Producer | null;
@@ -121,3 +125,4 @@ export declare class ConnectSendTransportScreen {
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectSendTransportScreen, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectSendTransportScreen>;
 }
+export {};

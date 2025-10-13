@@ -1,8 +1,9 @@
 import { SignalNewConsumerTransport } from '../signal-new-consumer-transport.service';
 import { Socket } from 'socket.io-client';
 import { ReorderStreamsParameters, ReorderStreamsType, SignalNewConsumerTransportParameters, ConnectRecvTransportParameters, ConnectRecvTransportType, ShowAlert } from '../../@types/types';
-import { Device } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Device = types.Device;
 export interface NewPipeProducerParameters extends ReorderStreamsParameters, SignalNewConsumerTransportParameters, ConnectRecvTransportParameters {
     first_round: boolean;
     shareScreenStarted: boolean;
@@ -83,3 +84,4 @@ export declare class NewPipeProducer {
     static ɵfac: i0.ɵɵFactoryDeclaration<NewPipeProducer, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<NewPipeProducer>;
 }
+export {};

@@ -1,7 +1,8 @@
 import { OnInit, OnDestroy, Injector, ElementRef } from '@angular/core';
 import { ReUpdateInterType, UpdateParticipantAudioDecibelsType, ReUpdateInterParameters, Participant } from '../../../@types/types';
-import { Consumer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import * as i0 from "@angular/core";
+type Consumer = types.Consumer;
 export interface MiniAudioPlayerParameters extends ReUpdateInterParameters {
     breakOutRoomStarted: boolean;
     breakOutRoomEnded: boolean;
@@ -103,3 +104,4 @@ export declare class MiniAudioPlayer implements OnInit, OnDestroy {
     static ɵfac: i0.ɵɵFactoryDeclaration<MiniAudioPlayer, [null, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }]>;
     static ɵcmp: i0.ɵɵComponentDeclaration<MiniAudioPlayer, "app-mini-audio-player", never, { "stream": { "alias": "stream"; "required": false; }; "consumer": { "alias": "consumer"; "required": false; }; "remoteProducerId": { "alias": "remoteProducerId"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "MiniAudioComponent": { "alias": "MiniAudioComponent"; "required": false; }; "miniAudioProps": { "alias": "miniAudioProps"; "required": false; }; }, {}, never, never, true, never>;
 }
+export {};

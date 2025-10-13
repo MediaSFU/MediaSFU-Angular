@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface MainContainerComponentOptions {
     backgroundColor?: string;
@@ -9,6 +9,8 @@ export interface MainContainerComponentOptions {
     marginTop?: number;
     marginBottom?: number;
     padding?: number;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
 }
 export type MainContainerComponentType = (options: MainContainerComponentOptions) => HTMLElement;
 /**
@@ -63,6 +65,8 @@ export declare class MainContainerComponent implements OnInit, OnDestroy, OnChan
     marginTop: number;
     marginBottom: number;
     padding: number;
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<any>;
     containerStyles: {
         [key: string]: any;
     };
@@ -71,5 +75,5 @@ export declare class MainContainerComponent implements OnInit, OnDestroy, OnChan
     ngOnDestroy(): void;
     updateContainerStyles: () => void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MainContainerComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MainContainerComponent, "app-main-container-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "marginLeft": { "alias": "marginLeft"; "required": false; }; "marginRight": { "alias": "marginRight"; "required": false; }; "marginTop": { "alias": "marginTop"; "required": false; }; "marginBottom": { "alias": "marginBottom"; "required": false; }; "padding": { "alias": "padding"; "required": false; }; }, {}, never, ["*"], true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MainContainerComponent, "app-main-container-component", never, { "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "marginLeft": { "alias": "marginLeft"; "required": false; }; "marginRight": { "alias": "marginRight"; "required": false; }; "marginTop": { "alias": "marginTop"; "required": false; }; "marginBottom": { "alias": "marginBottom"; "required": false; }; "padding": { "alias": "padding"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, ["*"], true, never>;
 }

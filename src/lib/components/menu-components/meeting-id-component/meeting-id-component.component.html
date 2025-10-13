@@ -1,8 +1,85 @@
-<div class="form-group">
-  <label class="label">Event ID:</label>
-  <input
-    class="disabled-input"
-    [value]="meetingID"
-    readonly
-  />
-</div>
+<ng-container *ngIf="renderContainer; else defaultContainer">
+  <ng-container *ngTemplateOutlet="renderContainer; context: renderContext"></ng-container>
+</ng-container>
+
+<ng-template #defaultContainer>
+  <div
+    class="form-group"
+    [ngClass]="containerAttributes?.['class']"
+    [ngStyle]="containerAttributes?.['style']"
+  >
+    <ng-container *ngIf="renderContent; else defaultContent">
+      <ng-container *ngTemplateOutlet="renderContent; context: renderContext"></ng-container>
+    </ng-container>
+
+    <ng-template #defaultContent>
+      <!-- Label -->
+      <ng-container *ngIf="renderLabel; else defaultLabel">
+        <ng-container *ngTemplateOutlet="renderLabel; context: renderContext"></ng-container>
+      </ng-container>
+      <ng-template #defaultLabel>
+        <label
+          class="label"
+          [ngClass]="labelAttributes?.['class']"
+          [ngStyle]="labelAttributes?.['style']"
+        >
+          {{ getLabelText() }}
+        </label>
+      </ng-template>
+
+      <!-- Input Group -->
+      <ng-container *ngIf="renderInputGroup; else defaultInputGroup">
+        <ng-container *ngTemplateOutlet="renderInputGroup; context: renderContext"></ng-container>
+      </ng-container>
+      <ng-template #defaultInputGroup>
+        <div
+          class="input-container"
+          [ngClass]="inputContainerAttributes?.['class']"
+          [ngStyle]="inputContainerAttributes?.['style']"
+        >
+          <!-- Input -->
+          <ng-container *ngIf="renderInput; else defaultInput">
+            <ng-container *ngTemplateOutlet="renderInput; context: renderContext"></ng-container>
+          </ng-container>
+          <ng-template #defaultInput>
+            <input
+              class="disabled-input"
+              [ngClass]="inputAttributes?.['class']"
+              [ngStyle]="inputAttributes?.['style']"
+              [value]="getInputValue()"
+              [readonly]="getInputReadOnly()"
+              aria-label="Event ID"
+            />
+          </ng-template>
+
+          <!-- Copy Button -->
+          <ng-container *ngIf="renderCopyButton; else defaultButton">
+            <ng-container *ngTemplateOutlet="renderCopyButton; context: renderContext"></ng-container>
+          </ng-container>
+          <ng-template #defaultButton>
+            <button
+              type="button"
+              (click)="handleCopy()"
+              class="copy-button"
+              [ngClass]="buttonAttributes?.['class']"
+              [ngStyle]="buttonAttributes?.['style']"
+              aria-label="Copy Event ID"
+            >
+              <!-- Icon -->
+              <ng-container *ngIf="renderIcon; else defaultIcon">
+                <ng-container *ngTemplateOutlet="renderIcon; context: renderContext"></ng-container>
+              </ng-container>
+              <ng-template #defaultIcon>
+                <fa-icon
+                  [icon]="customIcon || copyIcon"
+                  [ngClass]="iconAttributes?.['class']"
+                  [ngStyle]="getIconStyle()"
+                ></fa-icon>
+              </ng-template>
+            </button>
+          </ng-template>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</ng-template>

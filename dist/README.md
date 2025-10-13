@@ -80,7 +80,7 @@ Coming soon! Watch this space for our comprehensive video tutorial on setting up
 ---
 
 ## Table of Contents
-
+- [Quick Reference: Component Props & UI Overrides](#quick-reference-component-props--ui-overrides)
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [📘 Angular SDK Guide](#angular-sdk-guide)
@@ -93,6 +93,339 @@ Coming soon! Watch this space for our comprehensive video tutorial on setting up
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
+
+
+---
+
+## Quick Reference: Component Props & UI Overrides
+
+> **New:** UI override parity now extends across Webinar and Chat layouts, unifying customization for every MediaSFU interface.
+
+Every primary MediaSFU UI export—`MediasfuGeneric`, `MediasfuBroadcast`, `MediasfuConference`, `MediasfuWebinar`, and `MediasfuChat`—now ships with a consistent prop surface and a powerful `uiOverrides` input, so you can bend the bundled experience to match your product without losing MediaSFU's hardened real-time logic.
+
+### Shared component inputs (applies to every MediaSFU UI component)
+
+| Input | Type | Default | What it does |
+| --- | --- | --- | --- |
+| `PrejoinPage` | `ComponentType` | `WelcomePage` | Swap in a custom pre-join experience. Receives unified pre-join options so you can add branding, legal copy, or warm-up flows. |
+| `localLink` | `string` | `""` | Point the SDK at your self-hosted MediaSFU server. Leave empty when using MediaSFU Cloud. |
+| `connectMediaSFU` | `boolean` | `true` | Toggle automatic socket/WebRTC connections. Set to `false` when you only need the UI shell. |
+| `credentials` | `{ apiUserName: string; apiKey: string }` | `{ apiUserName: "", apiKey: "" }` | Supply cloud credentials without hard-coding them elsewhere. |
+| `useLocalUIMode` | `boolean` | `false` | Run the interface in local/demo mode with no remote signaling. |
+| `seedData`, `useSeed` | `SeedData`, `boolean` | `{}`, `false` | Pre-populate the UI for demos, snapshot tests, or onboarding tours. |
+| `imgSrc` | `string` | `https://mediasfu.com/images/logo192.png` | Default artwork used across pre-join and modal flows. |
+| `sourceParameters` | `Record<string, unknown>` | `undefined` | Shared helper bag (media devices, participant helpers, layout handlers). Pair with `updateSourceParameters` to mirror the SDK's internal utilities. |
+| `updateSourceParameters` | `EventEmitter` | `undefined` | Receive the latest helper bundle so you can bridge MediaSFU logic into your own components. |
+| `returnUI` | `boolean` | `true` | When `false`, mount the logic only—a perfect stepping stone to a fully bespoke interface. |
+| `noUIPreJoinOptions` | `CreateJoinRoomParameters \| JoinLocalEventRoomParameters` | `undefined` | Feed pre-join data when `returnUI` is `false` and you want to bypass the on-screen wizard. |
+| `joinRoom`, `createRoom` | `Function` | `undefined` | Inject your own networking layers for joining or creating rooms. |
+| `customComponent` | `ComponentType` | `undefined` | Replace the entire UI while retaining transports, sockets, and helpers. |
+| `customVideoCard`, `customAudioCard`, `customMiniCard` | `ComponentType` | `undefined` | Override participant card renders to add metadata, CTAs, or badges. |
+| `[customStyles]` | `Record<string, any>` | `undefined` | Apply inline styles to the root wrapper (dashboards, split views, etc.). |
+| `[uiOverrides]` | `MediasfuUICustomOverrides` | `undefined` | Targeted component/function overrides described below. |
+
+> **Power combo:** Set `returnUI="false"` to run MediaSFU logic headless, capture helpers via `updateSourceParameters` output, and selectively bring UI pieces back with `uiOverrides`. That gives you progressive migration with minimal code churn.
+
+```typescript
+import type { MediasfuUICustomOverrides } from 'mediasfu-angular';
+
+const overrides: MediasfuUICustomOverrides = { /* ... */ };
+```
+
+Bring the types into your project to unlock full IntelliSense for every override slot.
+
+### Custom UI Playbook
+
+Use a toggle-driven "playbook" component to experiment with MediaSFU's customization layers. Flip a couple of booleans and you can watch the SDK jump between prebuilt layouts, headless logic, or a fully bespoke workspace driven by `customComponent`.
+
+#### What the playbook demonstrates
+
+- **Connection presets**: toggle `connectionScenario` between `cloud`, `hybrid`, or `ce` to swap credentials, local links, and connection modes in one place.
+- **Experience selector**: the `selectedExperience` switch renders `MediasfuGeneric`, `MediasfuBroadcast`, `MediasfuWebinar`, `MediasfuConference`, or `MediasfuChat` without touching the rest of your stack.
+- **UI strategy flags**: booleans like `showPrebuiltUI`, `enableFullCustomUI`, and `enableNoUIPreJoin` demonstrate how to run the MediaSFU logic with or without the bundled UI.
+- **Layered overrides**: toggles enable the custom video/audio/mini cards, drop-in `uiOverrides` for layout and modal surfaces, container styling, and backend proxy helpers.
+- **Custom workspace demo**: a `customComponent` receives live MediaSFU helpers so you can build dashboards, CRM surfaces, or any bespoke host interface.
+- **Debug panel & helpers**: optional JSON panel exposes the `updateSourceParameters` payload so you can see exactly what to wire into your own components.
+
+#### Try it quickly
+
+```typescript
+@Component({
+  selector: 'app-custom-ui-playbook',
+  template: `
+    <ng-container [ngSwitch]="selectedExperience">
+      <app-mediasfu-generic *ngSwitchCase="'generic'"
+        [credentials]="currentPreset.credentials"
+        [localLink]="currentPreset.localLink"
+        [connectMediaSFU]="currentPreset.connectMediaSFU"
+        [returnUI]="showPrebuiltUI"
+        [uiOverrides]="overrides"
+        [customStyles]="containerStyles">
+      </app-mediasfu-generic>
+      
+      <app-mediasfu-broadcast *ngSwitchCase="'broadcast'"
+        [credentials]="currentPreset.credentials"
+        [localLink]="currentPreset.localLink"
+        [connectMediaSFU]="currentPreset.connectMediaSFU"
+        [returnUI]="showPrebuiltUI"
+        [uiOverrides]="overrides">
+      </app-mediasfu-broadcast>
+      
+      <!-- Similar for webinar, conference, chat -->
+    </ng-container>
+  `
+})
+export class CustomUIPlaybookComponent {
+  connectionScenario: 'cloud' | 'hybrid' | 'ce' = 'cloud';
+  selectedExperience: 'generic' | 'broadcast' | 'webinar' | 'conference' | 'chat' = 'generic';
+  showPrebuiltUI = true;
+  enableFullCustomUI = false;
+
+  connectionPresets = {
+    cloud: { 
+      credentials: { apiUserName: 'demo', apiKey: 'demo' }, 
+      localLink: '', 
+      connectMediaSFU: true 
+    },
+    hybrid: { 
+      credentials: { apiUserName: 'demo', apiKey: 'demo' }, 
+      localLink: 'http://localhost:3000', 
+      connectMediaSFU: true 
+    },
+    ce: { 
+      credentials: undefined, 
+      localLink: 'http://localhost:3000', 
+      connectMediaSFU: false 
+    },
+  };
+
+  get currentPreset() {
+    return this.connectionPresets[this.connectionScenario];
+  }
+
+  overrides: MediasfuUICustomOverrides = {
+    mainContainer: this.enableFullCustomUI ? {
+      component: CustomMainContainerComponent
+    } : undefined,
+  };
+
+  containerStyles = {
+    background: 'linear-gradient(135deg, #0f172a, #1e3a8a)',
+    minHeight: '100vh'
+  };
+}
+```
+
+Toggle the configuration values at the top of the playbook and watch the UI reconfigure instantly. It's the fastest path to understand MediaSFU's override surface before you fold the patterns into your production entrypoint.
+
+#### Passing custom props and UI overrides
+
+Use the same playbook to validate bespoke cards, override bundles, and fully custom workspaces before you move them into production code:
+
+```typescript
+@Component({
+  selector: 'app-advanced-playbook',
+  template: `
+    <app-mediasfu-generic
+      [credentials]="credentials"
+      [customVideoCard]="videoCard"
+      [customAudioCard]="audioCard"
+      [customMiniCard]="miniCard"
+      [customComponent]="enableFullCustomUI ? customWorkspace : undefined"
+      [customStyles]="containerStyles"
+      [uiOverrides]="uiOverrides">
+    </app-mediasfu-generic>
+  `
+})
+export class AdvancedPlaybookComponent {
+  credentials = { apiUserName: 'demo', apiKey: 'demo' };
+  enableFullCustomUI = false;
+
+  // Custom card components with themed styling
+  videoCard = VideoCardComponent; // Pass component class
+  audioCard = AudioCardComponent;
+  miniCard = MiniCardComponent;
+  customWorkspace = CustomWorkspaceComponent;
+
+  containerStyles = {
+    background: '#0f172a',
+    borderRadius: '32px',
+    overflow: 'hidden'
+  };
+
+  uiOverrides: MediasfuUICustomOverrides = {
+    mainContainer: {
+      component: CustomMainContainerComponent
+    },
+    menuModal: {
+      component: CustomMenuModalComponent
+    },
+    consumerResume: {
+      wrap: (original) => async (params) => {
+        const startedAt = performance.now();
+        const result = await original(params);
+        console.log('consumer_resume', {
+          durationMs: performance.now() - startedAt,
+          consumerId: params?.consumer?.id,
+        });
+        return result;
+      },
+    },
+  };
+}
+```
+
+Because the playbook surfaces `updateSourceParameters`, you can also log or snapshot the helper bundle (`getParticipantMedia`, `toggleMenuModal`, `showAlert`, and more) to ensure your custom UI always receives the hooks it expects.
+
+### `uiOverrides` input — override keys at a glance
+
+Each key accepts a `CustomComponentOverride<Props>` or `CustomFunctionOverride<Fn>` object with optional `component` and `wrap` fields. You can fully replace the default implementation or wrap it while forwarding props.
+
+#### Layout & control surfaces
+
+| Key | Default component | Typical use |
+| --- | --- | --- |
+| `mainContainer` | `MainContainerComponent` | Inject theming providers or dashboard layouts. |
+| `mainAspect` | `MainAspectComponent` | Tune how the main region splits space. |
+| `mainScreen` | `MainScreenComponent` | Orchestrate hero video + gallery interplay. |
+| `mainGrid` | `MainGridComponent` | Modify layout or layering of primary participants. |
+| `subAspect` | `SubAspectComponent` | Restyle fixed control strips in webinar/conference modes. |
+| `otherGrid` | `OtherGridComponent` | Change presentation of off-stage attendees. |
+| `flexibleGrid`, `flexibleGridAlt` | `FlexibleGrid` | Implement AI-driven or branded array layouts. |
+| `flexibleVideo` | `FlexibleVideo` | Add captions, watermarks, or overlays to highlighted speakers. |
+| `audioGrid` | `AudioGrid` | Customise audio-only attendee presentation. |
+| `pagination` | `Pagination` | Introduce infinite scroll or auto-cycling carousels. |
+| `controlButtons` | `ControlButtonsComponent` | Rebrand the primary action bar. |
+| `controlButtonsAlt` | `ControlButtonsAltComponent` | Control secondary button clusters. |
+| `controlButtonsTouch` | `ControlButtonsComponentTouch` | Deliver mobile-first controls (used heavily by `MediasfuChat`). |
+
+#### Participant cards & widgets
+
+| Key | Default component | Typical use |
+| --- | --- | --- |
+| `videoCard` | `VideoCard` | Add host badges, reactions, or CRM overlays. |
+| `audioCard` | `AudioCard` | Swap avatars or expose spoken-language info. |
+| `miniCard` | `MiniCard` | Customize thumbnails in picture-in-picture modes. |
+| `miniAudio` | `MiniAudio` | Re-style the audio-only mini indicators. |
+| `meetingProgressTimer` | `MeetingProgressTimer` | Replace the elapsed-time widget with countdowns or milestones. |
+| `miniAudioPlayer` | `MiniAudioPlayer` | Provide alternative UI for recorded clip playback. |
+
+#### Modals, dialogs, and collaboration surfaces
+
+| Key | Default component | Typical use |
+| --- | --- | --- |
+| `loadingModal` | `LoadingModal` | Show branded skeletons while connecting. |
+| `alert` | `AlertComponent` | Route alerts through your notification system. |
+| `menuModal` | `MenuModal` | Redesign quick-action trays. |
+| `eventSettingsModal` | `EventSettingsModal` | Extend host tools with your own settings. |
+| `requestsModal` | `RequestsModal` | Build moderation queues tailored to your workflows. |
+| `waitingRoomModal` | `WaitingRoomModal` | Deliver custom waiting-room experiences. |
+| `coHostModal` | `CoHostModal` | Manage co-hosts with bespoke UX. |
+| `mediaSettingsModal` | `MediaSettingsModal` | Embed device tests or instructions. |
+| `participantsModal` | `ParticipantsModal` | Introduce advanced filters, search, or notes. |
+| `messagesModal` | `MessagesModal` | Drop in your full-featured chat module. |
+| `displaySettingsModal` | `DisplaySettingsModal` | Let users pick layouts, themes, or captions. |
+| `confirmExitModal` | `ConfirmExitModal` | Meet compliance wording requirements. |
+| `confirmHereModal` | `ConfirmHereModal` | Customize attendance confirmations for webinars. |
+| `shareEventModal` | `ShareEventModal` | Add referral codes or QR sharing. |
+| `recordingModal` | `RecordingModal` | Tailor recording confirmation flows. |
+| `pollModal` | `PollModal` | Integrate your polling/quiz engine. |
+| `backgroundModal` | `BackgroundModal` | Hook AI background replacement or brand presets. |
+| `breakoutRoomsModal` | `BreakoutRoomsModal` | Implement drag-and-drop or AI room suggestions. |
+| `configureWhiteboardModal` | `ConfigureWhiteboardModal` | Adjust collaboration permissions before launch. |
+| `whiteboard` | `Whiteboard` | Replace with your whiteboard provider. |
+| `screenboard` | `Screenboard` | Modify shared-screen annotation layers. |
+| `screenboardModal` | `ScreenboardModal` | Reimagine how users enable shared annotations. |
+
+#### Entry flows & custom renderers
+
+| Key | Default component | Typical use |
+| --- | --- | --- |
+| `welcomePage` | `WelcomePage` | Provide a fully branded welcome/marketing splash. |
+| `preJoinPage` | `PrejoinPage` | Override the wizard used before joining live sessions. |
+| `customMenuButtonsRenderer` | `ControlButtonsAltComponent` | Supply a bespoke renderer for menu button groups without overriding each button. |
+
+#### Function overrides
+
+| Key | Default function | Typical use |
+| --- | --- | --- |
+| `consumerResume` | `consumerResume` | Wrap errors, capture analytics, or rate-limit consumer resume behavior. |
+| `addVideosGrid` | `addVideosGrid` | Replace participant ordering or layout heuristics on the fly. |
+| `prepopulateUserMedia` | `prepopulateUserMedia` | Customize initial media setup with custom video/audio/mini cards. |
+
+> Function overrides support `{ implementation, wrap }`. Provide `implementation` for a full replacement, or `wrap` to intercept the default behavior before/after it runs.
+
+### Example: swap the chat modal and theme the controls
+
+```typescript
+import { Component } from '@angular/core';
+import { MediasfuGeneric } from 'mediasfu-angular';
+import { MyChatModalComponent } from './ui/my-chat-modal.component';
+import { MyControlsComponent } from './ui/my-controls.component';
+
+@Component({
+  selector: 'app-my-meeting',
+  template: `
+    <app-mediasfu-generic
+      [credentials]="credentials"
+      [uiOverrides]="uiOverrides">
+    </app-mediasfu-generic>
+  `
+})
+export class MyMeetingComponent {
+  credentials = { apiUserName: 'your-api-user', apiKey: 'your-api-key' };
+
+  uiOverrides = {
+    messagesModal: {
+      component: MyChatModalComponent,
+    },
+    controlButtons: {
+      component: MyControlsComponent,
+    },
+  };
+}
+```
+
+### Example: wrap a MediaSFU helper instead of replacing it
+
+```typescript
+import { Component } from '@angular/core';
+import { MediasfuConference } from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-analytics-meeting',
+  template: `
+    <app-mediasfu-conference
+      [credentials]="credentials"
+      [uiOverrides]="uiOverrides">
+    </app-mediasfu-conference>
+  `
+})
+export class AnalyticsMeetingComponent {
+  credentials = { apiUserName: 'your-api-user', apiKey: 'your-api-key' };
+
+  uiOverrides = {
+    consumerResume: {
+      wrap: (original) => async (params) => {
+        const startedAt = performance.now();
+        const result = await original(params);
+        
+        // Send analytics
+        this.analytics.track('consumer_resume', {
+          durationMs: performance.now() - startedAt,
+          consumerId: params?.consumer?.id,
+        });
+        
+        return result;
+      },
+    },
+  };
+
+  constructor(private analytics: AnalyticsService) {}
+}
+```
+
+---
 
 # Features <a name="features"></a>
 
@@ -4001,6 +4334,504 @@ Once your custom components are built, modify the imports of `prepopulateUserMed
 
 This allows for full flexibility in how media is displayed in both the main and mini grids, giving you the ability to tailor the user experience to your specific needs.
 
+
+
+---
+
+## UI Component Customization & Override System
+
+MediaSFU provides comprehensive customization capabilities for all UI components through a powerful override system. You can customize styling, inject custom templates, or completely replace components with your own implementations.
+
+### Overview
+
+The customization system operates at three levels:
+
+1. **Style Overrides**: Apply custom CSS styles to containers, overlays, and content areas
+2. **Template Injection**: Replace default component templates with custom Angular templates
+3. **Component Replacement**: Completely replace MediaSFU components with your own using the `WithOverrideDirective`
+
+### 1. Style Customization
+
+All display and modal components support style customization through Input properties:
+
+#### Display Components (MainContainer, MainAspect, MainScreen, MainGrid, OtherGrid, SubAspect, FlexibleGrid, AudioGrid)
+
+```typescript
+@Component({
+  selector: 'app-my-meeting',
+  template: `
+    <app-main-container
+      [containerStyle]="{
+        backgroundColor: '#1a1a1a',
+        border: '2px solid #333',
+        borderRadius: '12px',
+        padding: '20px'
+      }"
+      [backgroundColor]="'transparent'">
+    </app-main-container>
+    
+    <app-flexible-grid
+      [containerStyle]="{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '16px'
+      }">
+    </app-flexible-grid>
+  `
+})
+export class MyMeetingComponent {
+  // Custom styles can also be dynamic
+  mainGridStyle: Partial<CSSStyleDeclaration> = {
+    backgroundColor: '#2a2a2a',
+    maxWidth: '1400px',
+    margin: '0 auto'
+  };
+}
+```
+
+#### Modal Components (All modals support overlayStyle, contentStyle)
+
+```typescript
+@Component({
+  selector: 'app-custom-modal-example',
+  template: `
+    <!-- Participants Modal with custom styling -->
+    <app-participants-modal
+      [isParticipantsModalVisible]="true"
+      [overlayStyle]="{
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: 'blur(8px)'
+      }"
+      [contentStyle]="{
+        backgroundColor: '#ffffff',
+        borderRadius: '16px',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+        maxWidth: '600px',
+        padding: '24px'
+      }">
+    </app-participants-modal>
+    
+    <!-- Recording Modal with custom theme -->
+    <app-recording-modal
+      [isRecordingModalVisible]="true"
+      [contentStyle]="{
+        backgroundColor: '#f5f5f5',
+        border: '3px solid #007bff',
+        fontFamily: 'Inter, sans-serif'
+      }">
+    </app-recording-modal>
+  `
+})
+export class CustomModalExample {
+  // Styles can be computed or conditional
+  get modalOverlay(): Partial<CSSStyleDeclaration> {
+    return {
+      backgroundColor: this.isDarkMode ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.5)'
+    };
+  }
+}
+```
+
+### 2. Template Injection
+
+Replace default component templates with custom Angular templates using `TemplateRef`:
+
+```typescript
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+
+@Component({
+  selector: 'app-custom-template-demo',
+  template: `
+    <!-- Define custom template -->
+    <ng-template #customMainGridTemplate let-components="components">
+      <div class="my-custom-grid">
+        <div class="grid-header">
+          <h3>Active Participants</h3>
+          <span class="count">{{ components?.length || 0 }}</span>
+        </div>
+        <div class="grid-content">
+          <!-- Custom rendering logic -->
+          <div *ngFor="let component of components" class="participant-tile">
+            <ng-container *ngComponentOutlet="component"></ng-container>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    
+    <!-- Use custom template -->
+    <app-main-grid
+      [customTemplate]="customMainGridTemplate"
+      [mainGridStream]="streams">
+    </app-main-grid>
+    
+    <!-- Custom modal template -->
+    <ng-template #customAlertTemplate let-message="message" let-type="type">
+      <div class="custom-alert" [class.error]="type === 'error'">
+        <i class="alert-icon"></i>
+        <p>{{ message }}</p>
+        <button (click)="closeAlert()">Dismiss</button>
+      </div>
+    </ng-template>
+    
+    <app-alert-component
+      [customTemplate]="customAlertTemplate"
+      [visible]="showAlert"
+      [message]="alertMessage">
+    </app-alert-component>
+  `,
+  styles: [`
+    .my-custom-grid {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      margin-bottom: 16px;
+    }
+    
+    .participant-tile {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+    }
+  `]
+})
+export class CustomTemplateDemo {
+  @ViewChild('customMainGridTemplate') customMainGridTemplate!: TemplateRef<any>;
+  @ViewChild('customAlertTemplate') customAlertTemplate!: TemplateRef<any>;
+  
+  streams: any[] = [];
+  showAlert = false;
+  alertMessage = '';
+  
+  closeAlert() {
+    this.showAlert = false;
+  }
+}
+```
+
+### 3. Component Replacement with UI Overrides
+
+Use the `uiOverrides` system to completely replace MediaSFU components with your own:
+
+```typescript
+import { Component, Type } from '@angular/core';
+import { MediasfuUICustomOverrides } from 'mediasfu-angular';
+
+// Your custom replacement components
+@Component({
+  selector: 'app-my-custom-video-card',
+  template: `
+    <div class="premium-video-card">
+      <video [srcObject]="videoStream" autoplay></video>
+      <div class="overlay">
+        <span class="name">{{ participant.name }}</span>
+        <button class="pin-btn" (click)="togglePin()">📌</button>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .premium-video-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  `]
+})
+export class MyCustomVideoCard {
+  // Your custom implementation
+}
+
+@Component({
+  selector: 'app-my-custom-control-buttons',
+  template: `
+    <div class="modern-controls">
+      <button class="control-btn mic" [class.active]="!isMuted" (click)="toggleMic()">
+        <i class="icon-mic"></i>
+      </button>
+      <button class="control-btn camera" [class.active]="!isVideoOff" (click)="toggleVideo()">
+        <i class="icon-camera"></i>
+      </button>
+      <button class="control-btn screen" (click)="toggleScreen()">
+        <i class="icon-screen"></i>
+      </button>
+      <button class="control-btn leave danger" (click)="leaveMeeting()">
+        <i class="icon-leave"></i>
+      </button>
+    </div>
+  `,
+  styles: [`
+    .modern-controls {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 24px;
+    }
+    .control-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .control-btn.active {
+      background: #4CAF50;
+      color: white;
+    }
+    .control-btn.danger {
+      background: #f44336;
+      color: white;
+    }
+  `]
+})
+export class MyCustomControlButtons {
+  // Your custom implementation
+}
+
+@Component({
+  selector: 'app-meeting-room',
+  template: `
+    <app-mediasfu-generic
+      [credentials]="credentials"
+      [uiOverrides]="customUIOverrides"
+      [returnUI]="false">
+    </app-mediasfu-generic>
+  `
+})
+export class MeetingRoomComponent {
+  credentials = { apiUserName: 'user', apiKey: 'key' };
+  
+  // Define your UI overrides
+  customUIOverrides: Partial<MediasfuUICustomOverrides> = {
+    // Replace video cards
+    VideoCard: MyCustomVideoCard as Type<any>,
+    
+    // Replace control buttons
+    ControlButtonsComponent: MyCustomControlButtons as Type<any>,
+    
+    // Replace modals
+    ParticipantsModal: MyCustomParticipantsModal as Type<any>,
+    
+    // Replace other display components
+    MainGrid: MyCustomMainGrid as Type<any>,
+    FlexibleGrid: MyCustomFlexibleGrid as Type<any>,
+    
+    // ... any other components you want to replace
+  };
+}
+```
+
+### 4. Using WithOverrideDirective
+
+The `*appWithOverride` directive enables conditional component replacement:
+
+```typescript
+import { Component } from '@angular/core';
+import { WithOverrideDirective } from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-conditional-override',
+  imports: [WithOverrideDirective, /* other imports */],
+  template: `
+    <!-- Use default or custom component based on condition -->
+    <app-video-card
+      *appWithOverride="useCustomCard ? MyCustomVideoCard : null"
+      [participant]="currentParticipant">
+    </app-video-card>
+    
+    <!-- Override with custom component when premium feature enabled -->
+    <app-control-buttons
+      *appWithOverride="isPremiumUser ? PremiumControlButtons : null">
+    </app-control-buttons>
+  `
+})
+export class ConditionalOverrideComponent {
+  useCustomCard = false;
+  isPremiumUser = false;
+  
+  MyCustomVideoCard = MyCustomVideoCard;
+  PremiumControlButtons = PremiumControlButtons;
+}
+```
+
+### 5. Complete Example: Themed Meeting Room
+
+Here's a comprehensive example combining all customization approaches:
+
+```typescript
+import { Component, TemplateRef, ViewChild, Type } from '@angular/core';
+import { MediasfuUICustomOverrides } from 'mediasfu-angular';
+
+@Component({
+  selector: 'app-themed-meeting-room',
+  template: `
+    <!-- Custom alert template -->
+    <ng-template #brandedAlertTemplate let-message="message">
+      <div class="branded-alert">
+        <img src="/assets/logo.png" alt="Logo" class="alert-logo">
+        <p>{{ message }}</p>
+      </div>
+    </ng-template>
+    
+    <app-mediasfu-conference
+      [credentials]="credentials"
+      [returnUI]="true"
+      [uiOverrides]="themeOverrides"
+      [containerStyle]="meetingContainerStyle">
+      
+      <!-- Customize individual components -->
+      <app-main-grid
+        [containerStyle]="gridStyle"
+        [customTemplate]="customGridTemplate">
+      </app-main-grid>
+      
+      <app-control-buttons-component
+        [containerStyle]="controlsStyle">
+      </app-control-buttons-component>
+      
+      <app-participants-modal
+        [overlayStyle]="modalOverlayStyle"
+        [contentStyle]="modalContentStyle">
+      </app-participants-modal>
+      
+      <app-alert-component
+        [customTemplate]="brandedAlertTemplate">
+      </app-alert-component>
+    </app-mediasfu-conference>
+  `,
+  styles: [`
+    .branded-alert {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: white;
+      border-left: 4px solid #007bff;
+    }
+  `]
+})
+export class ThemedMeetingRoomComponent {
+  @ViewChild('brandedAlertTemplate') brandedAlertTemplate!: TemplateRef<any>;
+  
+  credentials = {
+    apiUserName: 'your-api-username',
+    apiKey: 'your-api-key'
+  };
+  
+  // Container styling
+  meetingContainerStyle: Partial<CSSStyleDeclaration> = {
+    backgroundColor: '#0f0f0f',
+    fontFamily: 'Inter, system-ui, sans-serif'
+  };
+  
+  // Grid styling
+  gridStyle: Partial<CSSStyleDeclaration> = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '16px',
+    padding: '20px'
+  };
+  
+  // Controls styling
+  controlsStyle: Partial<CSSStyleDeclaration> = {
+    position: 'fixed',
+    bottom: '24px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: '32px',
+    padding: '12px 24px'
+  };
+  
+  // Modal styling
+  modalOverlayStyle: Partial<CSSStyleDeclaration> = {
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backdropFilter: 'blur(10px)'
+  };
+  
+  modalContentStyle: Partial<CSSStyleDeclaration> = {
+    backgroundColor: '#1a1a1a',
+    color: '#ffffff',
+    borderRadius: '16px',
+    border: '1px solid #333'
+  };
+  
+  // Component overrides
+  themeOverrides: Partial<MediasfuUICustomOverrides> = {
+    VideoCard: BrandedVideoCard as Type<any>,
+    ControlButtonsComponent: ModernControls as Type<any>
+  };
+}
+```
+
+### Customizable Components Reference
+
+#### Display Components
+- `MainContainer` - Main viewport container
+- `MainAspect` - Aspect ratio container
+- `MainScreen` - Screen share display
+- `MainGrid` - Primary participant grid
+- `OtherGrid` - Secondary participant grid
+- `SubAspect` - Sub-aspect ratio container
+- `FlexibleGrid` - Flexible layout grid
+- `AudioGrid` - Audio-only participants grid
+
+Each accepts: `containerStyle?: Partial<CSSStyleDeclaration>`, `customTemplate?: TemplateRef<any>`
+
+#### Modal Components
+- `LoadingModal` - Loading indicator
+- `ConfirmExitModal` - Exit confirmation
+- `ConfirmHereModal` - Presence confirmation
+- `ShareEventModal` - Event sharing
+- `AlertComponent` - Alert notifications
+- `MenuModal` - Main menu
+- `ParticipantsModal` - Participants list
+- `RecordingModal` - Recording controls
+- `RequestsModal` - Media requests
+- `WaitingRoomModal` - Waiting room management
+- `CoHostModal` - Co-host management
+- `DisplaySettingsModal` - Display settings
+- `EventSettingsModal` - Event settings
+- `MediaSettingsModal` - Media device settings
+- `MessagesModal` - Chat messages
+- `PollModal` - Polls interface
+- `BackgroundModal` - Background effects
+- `BreakoutRoomsModal` - Breakout rooms
+- `ConfigureWhiteboardModal` - Whiteboard settings
+- `ScreenboardModal` - Screen annotation
+
+Each accepts: `overlayStyle?: Partial<CSSStyleDeclaration>`, `contentStyle?: Partial<CSSStyleDeclaration>`, `customTemplate?: TemplateRef<any>`
+
+### Best Practices
+
+1. **Type Safety**: Always use `Partial<CSSStyleDeclaration>` for style properties
+2. **Template Context**: Ensure your custom templates accept the correct context variables
+3. **Component Lifecycle**: Custom replacement components should implement the same interface as the original
+4. **Performance**: Avoid inline style objects in templates; define them in the component class
+5. **Responsive Design**: Use CSS Grid and Flexbox for responsive layouts
+6. **Accessibility**: Maintain ARIA attributes and keyboard navigation in custom components
+7. **Testing**: Test custom components in isolation before integration
+
+---
 
 # API Reference <a name="api-reference"></a>
 

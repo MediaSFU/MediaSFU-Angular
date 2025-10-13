@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Producer } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
 import { PrepopulateUserMediaParameters, PrepopulateUserMediaType } from '../@types/types';
 export interface ResumeSendTransportAudioParameters extends PrepopulateUserMediaParameters {
   audioProducer: Producer | null;

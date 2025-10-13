@@ -1,6 +1,10 @@
-import { Producer, ProducerOptions, RtpCapabilities, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
+type Producer = types.Producer;
+type ProducerOptions = types.ProducerOptions;
+type RtpCapabilities = types.RtpCapabilities;
+type Transport = types.Transport;
+type Device = types.Device;
 import { AParamsType, CoHostResponsibility, EventType, HParamsType, Participant, Poll, ScreenParamsType, Stream, VidCons, VParamsType, ConsumeSocket, MeetingRoomParams, UserRecordingParams, ScreenState, AudioDecibels, CustomMediaComponent, GridSizes, Message, WaitingRoomParticipant, Request, BreakoutParticipant, WhiteboardUser, Shape, ResponseJoinRoom, ComponentSizes, Transport as TransportType } from '../../@types/types';
-import { Device } from 'mediasoup-client/lib/types';
 import { Socket } from 'socket.io-client';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 export interface InitialValuesStateType {
@@ -347,3 +351,4 @@ export interface InitialValuesStateType {
     commentsActive: boolean;
 }
 export declare const initialValuesState: InitialValuesStateType;
+export {};

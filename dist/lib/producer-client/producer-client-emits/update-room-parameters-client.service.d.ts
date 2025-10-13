@@ -3,9 +3,10 @@ import { HParams, HParamsType } from '../../methods/utils/producer/h-params.serv
 import { VParams, VParamsType } from '../../methods/utils/producer/v-params.service';
 import { ScreenParams } from '../../methods/utils/producer/screen-params.service';
 import { AParams } from '../../methods/utils/producer/a-params.service';
-import { RtpCapabilities } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { EventType, ShowAlert, ResponseJoinRoom, ScreenParamsType, AParamsType, MeetingRoomParams } from '../../@types/types';
 import * as i0 from "@angular/core";
+type RtpCapabilities = types.RtpCapabilities;
 export interface UpdateRoomParametersClientParameters {
     rtpCapabilities: RtpCapabilities | null;
     roomRecvIPs: string[];
@@ -146,3 +147,4 @@ export declare class UpdateRoomParametersClient {
     static ɵfac: i0.ɵɵFactoryDeclaration<UpdateRoomParametersClient, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<UpdateRoomParametersClient>;
 }
+export {};

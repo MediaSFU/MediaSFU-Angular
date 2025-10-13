@@ -1,7 +1,9 @@
 import { Socket } from 'socket.io-client';
-import { Device, Transport } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { ConnectSendTransportParameters, ConnectSendTransportType } from '../@types/types';
 import * as i0 from "@angular/core";
+type Device = types.Device;
+type Transport = types.Transport;
 export interface CreateSendTransportParameters extends ConnectSendTransportParameters {
     islevel: string;
     member: string;
@@ -180,3 +182,4 @@ export declare class CreateSendTransport {
     static ɵfac: i0.ɵɵFactoryDeclaration<CreateSendTransport, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CreateSendTransport>;
 }
+export {};

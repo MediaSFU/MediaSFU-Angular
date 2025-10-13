@@ -1,4 +1,12 @@
 export * from './lib/@types/types';
+export * from './lib/@types/ui-overrides.types';
+export * from './lib/@types/custom-component.types';
+
+// Services
+export * from './lib/services/ui-override-resolver.service';
+
+// Directives
+export * from './lib/directives/with-override.directive';
 
 // Initial values
 export * from './lib/methods/utils/initial-values.util';

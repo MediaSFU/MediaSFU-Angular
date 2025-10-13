@@ -1,6 +1,7 @@
-import { ProducerOptions } from 'mediasoup-client/lib/types';
+import { types } from 'mediasoup-client';
 import { ConnectSendTransportAudioType, ConnectSendTransportVideoType, ConnectSendTransportScreenType, ConnectSendTransportAudioParameters, ConnectSendTransportVideoParameters, ConnectSendTransportScreenParameters } from '../@types/types';
 import * as i0 from "@angular/core";
+type ProducerOptions = types.ProducerOptions;
 export interface ConnectSendTransportParameters extends ConnectSendTransportAudioParameters, ConnectSendTransportVideoParameters, ConnectSendTransportScreenParameters {
     audioParams: ProducerOptions;
     videoParams: ProducerOptions;
@@ -106,3 +107,4 @@ export declare class ConnectSendTransport {
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectSendTransport, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectSendTransport>;
 }
+export {};

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCopy, faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -8,10 +8,23 @@ import { EventType } from '../../../@types/types';
 
 export interface ShareButton {
   icon: IconDefinition;
-  action: () => void;
+  action: () => void | Promise<void>;
   show: boolean;
   color?: string;
   iconColor?: string;
+  wrapperAttributes?: { [key: string]: any };
+  iconAttributes?: { [key: string]: any };
+}
+
+export interface ShareButtonRenderContext {
+  button: ShareButton;
+  index: number;
+  shareUrl: string;
+}
+
+export interface ShareButtonsRenderContext {
+  buttons: ShareButton[];
+  shareUrl: string;
 }
 
 export interface ShareButtonsComponentOptions {
@@ -19,6 +32,12 @@ export interface ShareButtonsComponentOptions {
   shareButtons?: ShareButton[];
   eventType: EventType;
   localLink?: string;
+  containerAttributes?: { [key: string]: any };
+  renderContainer?: TemplateRef<ShareButtonsRenderContext>;
+  renderButtons?: TemplateRef<ShareButtonsRenderContext>;
+  renderButton?: TemplateRef<ShareButtonRenderContext>;
+  renderIcon?: TemplateRef<ShareButtonRenderContext>;
+  getShareUrl?: (options: { meetingID: string; eventType: EventType; localLink?: string }) => string;
 }
 
 export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) => HTMLElement;
@@ -57,6 +76,12 @@ export class ShareButtonsComponent {
   @Input() shareButtons: ShareButton[] = [];
   @Input() eventType!: EventType;
   @Input() localLink?: string;
+  @Input() containerAttributes?: { [key: string]: any };
+  @Input() renderContainer?: TemplateRef<ShareButtonsRenderContext>;
+  @Input() renderButtons?: TemplateRef<ShareButtonsRenderContext>;
+  @Input() renderButton?: TemplateRef<ShareButtonRenderContext>;
+  @Input() renderIcon?: TemplateRef<ShareButtonRenderContext>;
+  @Input() getShareUrlFn?: (options: { meetingID: string; eventType: EventType; localLink?: string }) => string;
 
   defaultShareButtons: ShareButton[] = [
     {
@@ -119,6 +144,14 @@ export class ShareButtonsComponent {
   }
 
   getShareUrl(): string {
+    if (this.getShareUrlFn) {
+      return this.getShareUrlFn({
+        meetingID: this.meetingID,
+        eventType: this.eventType,
+        localLink: this.localLink,
+      });
+    }
+
     if (this.localLink && !this.localLink.includes('mediasfu.com')) {
       return `${this.localLink}/meeting/${this.meetingID}`;
     }
@@ -129,5 +162,52 @@ export class ShareButtonsComponent {
     return this.shareButtons.length > 0
       ? this.shareButtons.filter((button) => button.show)
       : this.defaultShareButtons.filter((button) => button.show);
+  }
+
+  get shareButtonsRenderContext(): ShareButtonsRenderContext {
+    return {
+      buttons: this.filteredShareButtons,
+      shareUrl: this.getShareUrl(),
+    };
+  }
+
+  getButtonRenderContext(button: ShareButton, index: number): ShareButtonRenderContext {
+    return {
+      button,
+      index,
+      shareUrl: this.getShareUrl(),
+    };
+  }
+
+  getButtonStyle(button: ShareButton, index: number): any {
+    const baseStyle = {
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '10px',
+      borderRadius: '5px',
+      margin: '0 5px',
+      backgroundColor: button.color || 'black',
+      marginRight: index !== this.filteredShareButtons.length - 1 ? '10px' : '0',
+      cursor: 'pointer',
+    };
+
+    if (button.wrapperAttributes?.['style']) {
+      return { ...baseStyle, ...button.wrapperAttributes['style'] };
+    }
+
+    return baseStyle;
+  }
+
+  getIconStyle(button: ShareButton): any {
+    const baseStyle = {
+      fontSize: '24px',
+      color: button.iconColor || 'white',
+    };
+
+    if (button.iconAttributes?.['style']) {
+      return { ...baseStyle, ...button.iconAttributes['style'] };
+    }
+
+    return baseStyle;
   }
 }

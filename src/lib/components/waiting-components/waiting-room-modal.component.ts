@@ -32,6 +32,9 @@ export interface WaitingRoomModalOptions {
   position?: string;
   backgroundColor?: string;
   parameters: WaitingRoomModalParameters;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 
   // mediasfu functions
   onWaitingRoomItemPress?: RespondToWaitingType;
@@ -40,63 +43,118 @@ export interface WaitingRoomModalOptions {
 export type WaitingRoomModalType = (options: WaitingRoomModalOptions) => HTMLElement;
 
 /**
- * Component representing a modal for managing participants in a waiting room.
- *
+ * WaitingRoomModal - Modal for managing participants waiting to join the session
+ * 
  * @component
+ * @description
+ * Displays participants in the waiting room and allows host to admit or reject them.
+ * Provides filtering and batch admission capabilities.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with waiting participant list and admit/reject actions
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Waiting participant list with names
+ * - Admit/reject individual participants
+ * - Participant filtering by name
+ * - Real-time counter badge
+ * - Socket-based admission handling
+ * 
+ * @example
+ * Basic Usage:
+ * ```html
+ * <app-waiting-room-modal
+ *   [isWaitingModalVisible]="showWaitingRoom"
+ *   [waitingRoomCounter]="waitingCount"
+ *   [waitingRoomList]="waitingParticipants"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [parameters]="waitingRoomParams"
+ *   [onWaitingRoomClose]="closeWaitingRoom"
+ *   [onWaitingRoomFilterChange]="filterWaiting"
+ *   [updateWaitingList]="updateWaiting">
+ * </app-waiting-room-modal>
+ * ```
+ * 
+ * @example
+ * Style Customization:
+ * ```html
+ * <app-waiting-room-modal
+ *   [isWaitingModalVisible]="showWaitingRoom"
+ *   [waitingRoomCounter]="waitingCount"
+ *   [waitingRoomList]="waitingParticipants"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [overlayStyle]="{
+ *     backgroundColor: 'rgba(0, 0, 0, 0.9)'
+ *   }"
+ *   [contentStyle]="{
+ *     backgroundColor: '#1e1e1e',
+ *     borderRadius: '10px',
+ *     border: '1px solid #4a90e2'
+ *   }"
+ *   [backgroundColor]="'#2c3e50'"
+ *   [position]="'center'"
+ *   [onWaitingRoomClose]="closeWaitingRoom"
+ *   [updateWaitingList]="updateWaiting">
+ * </app-waiting-room-modal>
+ * ```
+ * 
+ * @example
+ * Custom Template Override:
+ * ```html
+ * <app-waiting-room-modal
+ *   [isWaitingModalVisible]="showWaitingRoom"
+ *   [customTemplate]="customWaitingTemplate"
+ *   [onWaitingRoomClose]="closeWaitingRoom">
+ * </app-waiting-room-modal>
+ * 
+ * <ng-template #customWaitingTemplate let-waitingList="waitingRoomList" let-onAdmit="onAdmit" let-onReject="onReject">
+ *   <div class="custom-waiting-room">
+ *     <h3>Waiting to Join ({{ waitingList.length }})</h3>
+ *     <div *ngFor="let participant of waitingList" class="waiting-participant">
+ *       <img [src]="participant.avatar" alt="avatar">
+ *       <span>{{ participant.name }}</span>
+ *       <button (click)="onAdmit(participant)" class="admit">Admit</button>
+ *       <button (click)="onReject(participant)" class="reject">Reject</button>
+ *     </div>
+ *   </div>
+ * </ng-template>
+ * ```
+ * 
  * @selector app-waiting-room-modal
  * @standalone true
  * @imports CommonModule, FontAwesomeModule, FormsModule
- * @templateUrl ./waiting-room-modal.component.html
- * @styleUrls ['./waiting-room-modal.component.css']
- *
- * @property {boolean} isWaitingModalVisible - Visibility state of the modal.
- * @property {number} waitingRoomCounter - Counter for the number of participants in the waiting room.
- * @property {WaitingRoomParticipant[]} waitingRoomList - List of participants in the waiting room.
- * @property {string} roomName - Name of the room.
- * @property {Socket} socket - Socket instance for communication.
- * @property {string} position - Position of the modal on the screen.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {WaitingRoomModalParameters} parameters - Parameters for the waiting room modal.
- * @property {function} onWaitingRoomClose - Function to call when the modal is closed.
- * @property {function} onWaitingRoomFilterChange - Function to call when the filter value changes.
- * @property {function} updateWaitingList - Function to update the waiting list.
- * @property {function} onWaitingRoomItemPress - Function to call when an item in the waiting room is pressed.
- *
- * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
- * @property {IconDefinition} faCheck - FontAwesome icon for the check button.
- * @property {WaitingRoomParticipant[]} waitingRoomList_s - Filtered list of participants in the waiting room.
- * @property {number} waitingRoomCounter_s - Counter for the filtered list of participants in the waiting room.
- * @property {boolean} reRender - Flag to trigger re-rendering of the component.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @method updateParameters - Updates the parameters for the waiting room modal.
- * @method handleModalClose - Handles the closing of the modal.
- * @method handleFilterChange - Handles the change in the filter input.
- * @method handleItemPress - Handles the pressing of an item in the waiting room.
- *
- * @getter modalContainerStyle - Returns the style object for the modal container.
- * @getter modalContentStyle - Returns the style object for the modal content.
- * @getter inputStyle - Returns the style object for the input field.
- *
- * @example
- * ```html
- * <app-waiting-room-modal
- *  [isWaitingModalVisible]="true"
- * [waitingRoomCounter]="waitingRoomCounter"
- * [waitingRoomList]="waitingRoomList"
- * [roomName]="roomName"
- * [socket]="socket"
- * [position]="'topRight'"
- * [backgroundColor]="'#83c0e9'"
- * [parameters]="waitingRoomModalParams"
- * [onWaitingRoomClose]="closeWaitingRoomModal"
- * [onWaitingRoomFilterChange]="filterWaitingRoom"
- * [updateWaitingList]="updateWaitingList"
- * [onWaitingRoomItemPress]="handleWaitingRoomItemPress"
- * ></app-waiting-room-modal>
- * ```
- *
+ * 
+ * @input isWaitingModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onWaitingRoomClose - Callback function to close the modal. Default: `() => {}`
+ * @input waitingRoomCounter - Number of participants in waiting room (for badge). Default: `0`
+ * @input onWaitingRoomFilterChange - Callback when filter input changes. Default: `() => {}`
+ * @input waitingRoomList - Array of waiting participant objects. Default: `[]`
+ * @input updateWaitingList - Function to update the waiting list state. Default: `() => {}`
+ * @input roomName - Name of the room/session. Default: `''`
+ * @input socket - Socket.io client instance for real-time communication. Default: `undefined`
+ * @input position - Modal position on screen ('topRight', 'center', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input parameters - Additional parameters including filtered waiting list. Default: `{}`
+ * @input onWaitingRoomItemPress - Callback when admit/reject action is pressed. Default: `respondToWaitingService.respondToWaiting`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes component and default styles
+ * @method ngOnChanges - Updates waiting list when inputs change
+ * @method updateParameters - Refreshes filtered waiting list from parameters
+ * @method handleModalClose - Closes modal via onWaitingRoomClose callback
+ * @method handleFilterChange - Filters waiting list based on search input
+ * @method handleItemPress - Handles admit/reject actions for waiting participants
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @getter modalContainerStyle - Returns computed overlay styles
+ * @getter modalContentStyle - Returns computed content styles
+ * @getter inputStyle - Returns filter input field styles
  */
 @Component({
     selector: 'app-waiting-room-modal',
@@ -118,6 +176,9 @@ export class WaitingRoomModal implements OnChanges, OnInit {
   @Input() onWaitingRoomClose: () => void = () => {};
   @Input() onWaitingRoomFilterChange: (value: string) => void = () => {};
   @Input() updateWaitingList: (data: WaitingRoomParticipant[]) => void = () => {};
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
   @Input() onWaitingRoomItemPress!: (data: RespondToWaitingOptions) => void;
 
   faTimes = faTimes;
@@ -212,6 +273,20 @@ export class WaitingRoomModal implements OnChanges, OnInit {
       border: '1px solid #000',
       fontSize: '16px',
       marginBottom: '10px',
+    };
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle,
+      ...(this.contentStyle || {})
     };
   }
 }

@@ -1,5 +1,23 @@
-<div *ngIf="visible" (click)="handlePress()" class="centeredView">
-  <div [ngStyle]="{ 'background-color': alertType === 'success' ? 'green' : 'red' }" class="modalView">
+<!-- Custom template override -->
+<ng-container *ngIf="visible && customTemplate">
+  <ng-container *ngTemplateOutlet="customTemplate; context: {
+    $implicit: {
+      visible,
+      message,
+      type: alertType,
+      textColor,
+      handlePress: handlePress.bind(this)
+    }
+  }"></ng-container>
+</ng-container>
+
+<!-- Default template -->
+<div *ngIf="visible && !customTemplate"
+     (click)="handlePress()"
+     class="centeredView"
+     [ngStyle]="alertStyle">
+  <div [ngStyle]="{ 'background-color': alertType === 'success' ? 'green' : 'red' }"
+       class="modalView">
     <p [ngStyle]="{ color: textColor }" class="modalText">{{ message }}</p>
   </div>
 </div>

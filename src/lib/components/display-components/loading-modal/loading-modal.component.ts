@@ -1,9 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 export interface LoadingModalOptions {
   isVisible: boolean;
   backgroundColor?: string;
   displayColor?: string;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  spinnerStyle?: Partial<CSSStyleDeclaration>;
+  textStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: TemplateRef<any>;
 }
 
 export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
@@ -46,7 +51,16 @@ export type LoadingModalType = (options: LoadingModalOptions) => HTMLElement;
     selector: 'app-loading-modal',
     imports: [CommonModule],
     template: `
-    <div *ngIf="isVisible" [ngStyle]="modalContainerStyle">
+    <div *ngIf="isVisible && customTemplate" [ngStyle]="modalContainerStyle">
+      <ng-container *ngTemplateOutlet="customTemplate; context: {
+        $implicit: {
+          isVisible,
+          backgroundColor,
+          displayColor
+        }
+      }"></ng-container>
+    </div>
+    <div *ngIf="isVisible && !customTemplate" [ngStyle]="modalContainerStyle">
       <div [ngStyle]="modalContentStyle" class="modal-content">
         <div class="spinner" [ngStyle]="spinnerContainerStyle"></div>
         <div [ngStyle]="loadingTextStyle" class="loading-text">Loading...</div>
@@ -86,9 +100,14 @@ export class LoadingModal {
   @Input() isVisible = false;
   @Input() backgroundColor?: string = 'rgba(0, 0, 0, 0.5)';
   @Input() displayColor?: string = 'white';
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() spinnerStyle?: Partial<CSSStyleDeclaration>;
+  @Input() textStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: TemplateRef<any>;
 
   get modalContainerStyle() {
-    return {
+    const baseStyles = {
       position: 'fixed',
       top: '0',
       left: '0',
@@ -100,27 +119,43 @@ export class LoadingModal {
       justifyContent: 'center',
       zIndex: '999',
     };
+    return {
+      ...baseStyles,
+      ...(this.overlayStyle as any),
+    };
   }
 
   get modalContentStyle() {
-    return {
+    const baseStyles = {
       backgroundColor: this.backgroundColor,
       borderRadius: '10px',
       padding: '10px',
       maxWidth: '200px',
       textAlign: 'center',
     };
+    return {
+      ...baseStyles,
+      ...(this.contentStyle as any),
+    };
   }
 
   get spinnerContainerStyle() {
-    return {
+    const baseStyles = {
       marginBottom: '20px',
+    };
+    return {
+      ...baseStyles,
+      ...(this.spinnerStyle as any),
     };
   }
 
   get loadingTextStyle() {
-    return {
+    const baseStyles = {
       color: this.displayColor,
+    };
+    return {
+      ...baseStyles,
+      ...(this.textStyle as any),
     };
   }
 }

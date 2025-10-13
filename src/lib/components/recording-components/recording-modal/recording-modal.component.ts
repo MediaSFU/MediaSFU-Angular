@@ -60,51 +60,55 @@ export interface RecordingModalOptions {
   confirmRecording: (options: ConfirmRecordingOptions) => void;
   startRecording: (options: StartRecordingOptions) => void;
   parameters: RecordingModalParameters;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type RecordingModalType = (options: RecordingModalOptions) => HTMLElement;
 
 /**
- * Component representing a recording modal.
- *
+ * RecordingModal - Modal for configuring and controlling session recording
+ * 
+ * @component
+ * @description
+ * Provides recording configuration controls including record type (video/audio/both), format, text overlay, and HLS streaming.
+ * Includes Standard (quick start) and Advanced (detailed settings) panels.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with Standard/Advanced panels
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Recording type selection (video, audio, all)
+ * - Custom text overlay with positioning and color
+ * - HLS streaming toggle
+ * - Pause/resume recording
+ * - Standard vs Advanced configuration modes
+ * 
  * @selector app-recording-modal
  * @standalone true
  * @imports CommonModule, FontAwesomeModule, StandardPanelComponent, AdvancedPanelComponent
- * @templateUrl ./recording-modal.component.html
- * @styleUrls ./recording-modal.component.css
- *
- * @class RecordingModal
- * @implements OnChanges
- *
- * @property {boolean} isRecordingModalVisible - Determines if the recording modal is visible.
- * @property {() => void} onClose - Callback function to close the modal.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {string} position - Position of the modal on the screen.
- * @property {(options: ConfirmRecordingOptions) => void} confirmRecording - Callback function to confirm recording.
- * @property {(options: StartRecordingOptions) => void} startRecording - Callback function to start recording.
- * @property {RecordingModalParameters} parameters - Parameters for the recording modal.
- *
- * @property {IconDefinition} faTimes - FontAwesome icon for times (close).
- * @property {IconDefinition} faCheck - FontAwesome icon for check (confirm).
- * @property {IconDefinition} faPlay - FontAwesome icon for play (start).
- *
- * @method modalContainerStyle - Returns the style object for the modal container.
- * @method modalContentStyle - Returns the style object for the modal content.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @method confirm - Calls the confirmRecording callback with the current parameters.
- * @method start - Calls the startRecording callback with the current parameters.
- * @example
- * ```html
- * <app-recording-modal
- *   [isRecordingModalVisible]="true"
- *   [onClose]="closeRecordingModal"
- *   [backgroundColor]="'#83c0e9'"
- *   [position]="'bottomRight'"
- *   [confirmRecording]="confirmRecording"
- *   [startRecording]="startRecording"
- *   [parameters]="recordingModalParams"
- * ></app-recording-modal>
- * ```
+ * 
+ * @input isRecordingModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onClose - Callback function to close the modal. Default: `() => {}`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input position - Modal position on screen ('topRight', 'bottomRight', etc.). Default: `'bottomRight'`
+ * @input confirmRecording - Callback to confirm and start recording. Default: `() => {}`
+ * @input startRecording - Callback to initiate recording with current settings. Default: `() => {}`
+ * @input parameters - Object containing recording settings and update functions. Default: `{}`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnChanges - Updates recording parameters when modal visibility changes
+ * @method confirm - Validates and confirms recording settings
+ * @method start - Initiates recording with configured settings
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @method modalContainerStyle - Returns computed overlay styles
+ * @method modalContentStyle - Returns computed content styles
  */
 @Component({
     selector: 'app-recording-modal',
@@ -120,6 +124,9 @@ export class RecordingModal implements OnChanges {
   @Input() confirmRecording!: (options: ConfirmRecordingOptions) => void;
   @Input() startRecording!: (options: StartRecordingOptions) => void;
   @Input() parameters: RecordingModalParameters = {} as RecordingModalParameters;
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   faTimes = faTimes;
   faCheck = faCheck;
@@ -177,5 +184,19 @@ export class RecordingModal implements OnChanges {
     this.startRecording({
       parameters: { ...this.parameters },
     });
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle,
+      ...(this.contentStyle || {})
+    };
   }
 }

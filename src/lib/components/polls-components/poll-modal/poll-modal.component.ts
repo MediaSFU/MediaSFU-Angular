@@ -30,36 +30,60 @@ export interface PollModalOptions {
   handleCreatePoll: HandleCreatePollType;
   handleEndPoll: HandleEndPollType;
   handleVotePoll: HandleVotePollType;
+  overlayStyle?: Partial<CSSStyleDeclaration>;
+  contentStyle?: Partial<CSSStyleDeclaration>;
+  customTemplate?: any;
 }
 
 export type PollModalType = (options: PollModalOptions) => HTMLElement;
 
 /**
- * Component for displaying a poll modal, allowing users to create, vote, and end polls within a session.
- *
+ * PollModal - Modal for creating, voting, and managing live polls
+ * 
  * @component
+ * @description
+ * Allows hosts to create/end polls and participants to vote on active polls.
+ * Supports multiple-choice questions with real-time result updates.
+ * 
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with poll creation/voting forms
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ * 
+ * Key Features:
+ * - Create polls with question and options (host only)
+ * - Vote on active polls (all participants)
+ * - View poll results in real-time
+ * - End active polls (host only)
+ * - Socket-based live updates
+ * 
  * @selector app-poll-modal
  * @standalone true
- * @templateUrl ./poll-modal.component.html
- * @styleUrls ['./poll-modal.component.css']
- * @imports [CommonModule, FontAwesomeModule, FormsModule]
- *
- * @example
- * ```html
- * <app-poll-modal
- *   [isPollModalVisible]="true"
- *   [onClose]="closeModalFunction"
- *   [member]="currentMember"
- *   [islevel]="'2'"
- *   [polls]="pollList"
- *   [poll]="selectedPoll"
- *   [socket]="socketInstance"
- *   [roomName]="'exampleRoom'"
- *   [handleCreatePoll]="createPollFunction"
- *   [handleEndPoll]="endPollFunction"
- *   [handleVotePoll]="votePollFunction"
- * ></app-poll-modal>
- * ```
+ * @imports CommonModule, FontAwesomeModule, FormsModule
+ * 
+ * @input isPollModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onClose - Callback function to close the modal. Default: `() => {}`
+ * @input position - Modal position on screen ('topRight', 'center', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input member - Name/ID of current participant. Default: `''`
+ * @input islevel - User level/role ('0' for host, '2' for participant). Default: `'2'`
+ * @input polls - Array of all poll objects. Default: `[]`
+ * @input poll - Currently active poll object. Default: `null`
+ * @input socket - Socket.io client instance for real-time communication. Default: `undefined`
+ * @input roomName - Name of the room/session. Default: `''`
+ * @input showAlert - Optional alert function for displaying messages. Default: `undefined`
+ * @input updateIsPollModalVisible - Function to update modal visibility. Default: `() => {}`
+ * @input handleCreatePoll - Function to create new poll. Default: `() => {}`
+ * @input handleEndPoll - Function to end active poll. Default: `() => {}`
+ * @input handleVotePoll - Function to submit vote. Default: `() => {}`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
+ * 
+ * @method ngOnInit - Initializes component state
+ * @method ngOnChanges - Updates poll state when inputs change
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
  */
 
 
@@ -85,6 +109,9 @@ export class PollModal implements OnInit, OnChanges {
   @Input() handleCreatePoll!: HandleCreatePollType;
   @Input() handleEndPoll!: HandleEndPollType;
   @Input() handleVotePoll!: HandleVotePollType;
+  @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
+  @Input() contentStyle?: Partial<CSSStyleDeclaration>;
+  @Input() customTemplate?: any;
 
   faTimes = faTimes;
   newPoll: any = { question: '', type: '', options: [] };
@@ -210,6 +237,20 @@ export class PollModal implements OnInit, OnChanges {
       bottom: this.position.includes('bottom') ? '10px' : 'auto',
       left: this.position.includes('Left') ? '10px' : 'auto',
       right: this.position.includes('Right') ? '10px' : 'auto',
+    };
+  }
+
+  getCombinedOverlayStyle() {
+    return {
+      ...this.modalContainerStyle,
+      ...(this.overlayStyle || {})
+    };
+  }
+
+  getCombinedContentStyle() {
+    return {
+      ...this.modalContentStyle,
+      ...(this.contentStyle || {})
     };
   }
 }

@@ -20,67 +20,125 @@ export interface WaitingRoomModalOptions {
     position?: string;
     backgroundColor?: string;
     parameters: WaitingRoomModalParameters;
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: any;
     onWaitingRoomItemPress?: RespondToWaitingType;
 }
 export type WaitingRoomModalType = (options: WaitingRoomModalOptions) => HTMLElement;
 /**
- * Component representing a modal for managing participants in a waiting room.
+ * WaitingRoomModal - Modal for managing participants waiting to join the session
  *
  * @component
+ * @description
+ * Displays participants in the waiting room and allows host to admit or reject them.
+ * Provides filtering and batch admission capabilities.
+ *
+ * Supports three levels of customization:
+ * 1. **Basic Usage**: Use default modal UI with waiting participant list and admit/reject actions
+ * 2. **Style Customization**: Override modal appearance with overlayStyle and contentStyle
+ * 3. **Full Override**: Provide a custom template via customTemplate for complete control
+ *
+ * Key Features:
+ * - Waiting participant list with names
+ * - Admit/reject individual participants
+ * - Participant filtering by name
+ * - Real-time counter badge
+ * - Socket-based admission handling
+ *
+ * @example
+ * Basic Usage:
+ * ```html
+ * <app-waiting-room-modal
+ *   [isWaitingModalVisible]="showWaitingRoom"
+ *   [waitingRoomCounter]="waitingCount"
+ *   [waitingRoomList]="waitingParticipants"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [parameters]="waitingRoomParams"
+ *   [onWaitingRoomClose]="closeWaitingRoom"
+ *   [onWaitingRoomFilterChange]="filterWaiting"
+ *   [updateWaitingList]="updateWaiting">
+ * </app-waiting-room-modal>
+ * ```
+ *
+ * @example
+ * Style Customization:
+ * ```html
+ * <app-waiting-room-modal
+ *   [isWaitingModalVisible]="showWaitingRoom"
+ *   [waitingRoomCounter]="waitingCount"
+ *   [waitingRoomList]="waitingParticipants"
+ *   [roomName]="currentRoom"
+ *   [socket]="socketInstance"
+ *   [overlayStyle]="{
+ *     backgroundColor: 'rgba(0, 0, 0, 0.9)'
+ *   }"
+ *   [contentStyle]="{
+ *     backgroundColor: '#1e1e1e',
+ *     borderRadius: '10px',
+ *     border: '1px solid #4a90e2'
+ *   }"
+ *   [backgroundColor]="'#2c3e50'"
+ *   [position]="'center'"
+ *   [onWaitingRoomClose]="closeWaitingRoom"
+ *   [updateWaitingList]="updateWaiting">
+ * </app-waiting-room-modal>
+ * ```
+ *
+ * @example
+ * Custom Template Override:
+ * ```html
+ * <app-waiting-room-modal
+ *   [isWaitingModalVisible]="showWaitingRoom"
+ *   [customTemplate]="customWaitingTemplate"
+ *   [onWaitingRoomClose]="closeWaitingRoom">
+ * </app-waiting-room-modal>
+ *
+ * <ng-template #customWaitingTemplate let-waitingList="waitingRoomList" let-onAdmit="onAdmit" let-onReject="onReject">
+ *   <div class="custom-waiting-room">
+ *     <h3>Waiting to Join ({{ waitingList.length }})</h3>
+ *     <div *ngFor="let participant of waitingList" class="waiting-participant">
+ *       <img [src]="participant.avatar" alt="avatar">
+ *       <span>{{ participant.name }}</span>
+ *       <button (click)="onAdmit(participant)" class="admit">Admit</button>
+ *       <button (click)="onReject(participant)" class="reject">Reject</button>
+ *     </div>
+ *   </div>
+ * </ng-template>
+ * ```
+ *
  * @selector app-waiting-room-modal
  * @standalone true
  * @imports CommonModule, FontAwesomeModule, FormsModule
- * @templateUrl ./waiting-room-modal.component.html
- * @styleUrls ['./waiting-room-modal.component.css']
  *
- * @property {boolean} isWaitingModalVisible - Visibility state of the modal.
- * @property {number} waitingRoomCounter - Counter for the number of participants in the waiting room.
- * @property {WaitingRoomParticipant[]} waitingRoomList - List of participants in the waiting room.
- * @property {string} roomName - Name of the room.
- * @property {Socket} socket - Socket instance for communication.
- * @property {string} position - Position of the modal on the screen.
- * @property {string} backgroundColor - Background color of the modal.
- * @property {WaitingRoomModalParameters} parameters - Parameters for the waiting room modal.
- * @property {function} onWaitingRoomClose - Function to call when the modal is closed.
- * @property {function} onWaitingRoomFilterChange - Function to call when the filter value changes.
- * @property {function} updateWaitingList - Function to update the waiting list.
- * @property {function} onWaitingRoomItemPress - Function to call when an item in the waiting room is pressed.
+ * @input isWaitingModalVisible - Whether the modal is currently visible. Default: `false`
+ * @input onWaitingRoomClose - Callback function to close the modal. Default: `() => {}`
+ * @input waitingRoomCounter - Number of participants in waiting room (for badge). Default: `0`
+ * @input onWaitingRoomFilterChange - Callback when filter input changes. Default: `() => {}`
+ * @input waitingRoomList - Array of waiting participant objects. Default: `[]`
+ * @input updateWaitingList - Function to update the waiting list state. Default: `() => {}`
+ * @input roomName - Name of the room/session. Default: `''`
+ * @input socket - Socket.io client instance for real-time communication. Default: `undefined`
+ * @input position - Modal position on screen ('topRight', 'center', etc.). Default: `'topRight'`
+ * @input backgroundColor - Background color of the modal content. Default: `'#83c0e9'`
+ * @input parameters - Additional parameters including filtered waiting list. Default: `{}`
+ * @input onWaitingRoomItemPress - Callback when admit/reject action is pressed. Default: `respondToWaitingService.respondToWaiting`
+ * @input overlayStyle - Custom CSS styles for the modal overlay backdrop. Default: `undefined`
+ * @input contentStyle - Custom CSS styles for the modal content container. Default: `undefined`
+ * @input customTemplate - Custom TemplateRef to completely replace default modal template. Default: `undefined`
  *
- * @property {IconDefinition} faTimes - FontAwesome icon for the close button.
- * @property {IconDefinition} faCheck - FontAwesome icon for the check button.
- * @property {WaitingRoomParticipant[]} waitingRoomList_s - Filtered list of participants in the waiting room.
- * @property {number} waitingRoomCounter_s - Counter for the filtered list of participants in the waiting room.
- * @property {boolean} reRender - Flag to trigger re-rendering of the component.
- *
- * @method ngOnInit - Lifecycle hook that is called after data-bound properties are initialized.
- * @method ngOnChanges - Lifecycle hook that is called when any data-bound property of a directive changes.
- * @method updateParameters - Updates the parameters for the waiting room modal.
- * @method handleModalClose - Handles the closing of the modal.
- * @method handleFilterChange - Handles the change in the filter input.
- * @method handleItemPress - Handles the pressing of an item in the waiting room.
- *
- * @getter modalContainerStyle - Returns the style object for the modal container.
- * @getter modalContentStyle - Returns the style object for the modal content.
- * @getter inputStyle - Returns the style object for the input field.
- *
- * @example
- * ```html
- * <app-waiting-room-modal
- *  [isWaitingModalVisible]="true"
- * [waitingRoomCounter]="waitingRoomCounter"
- * [waitingRoomList]="waitingRoomList"
- * [roomName]="roomName"
- * [socket]="socket"
- * [position]="'topRight'"
- * [backgroundColor]="'#83c0e9'"
- * [parameters]="waitingRoomModalParams"
- * [onWaitingRoomClose]="closeWaitingRoomModal"
- * [onWaitingRoomFilterChange]="filterWaitingRoom"
- * [updateWaitingList]="updateWaitingList"
- * [onWaitingRoomItemPress]="handleWaitingRoomItemPress"
- * ></app-waiting-room-modal>
- * ```
- *
+ * @method ngOnInit - Initializes component and default styles
+ * @method ngOnChanges - Updates waiting list when inputs change
+ * @method updateParameters - Refreshes filtered waiting list from parameters
+ * @method handleModalClose - Closes modal via onWaitingRoomClose callback
+ * @method handleFilterChange - Filters waiting list based on search input
+ * @method handleItemPress - Handles admit/reject actions for waiting participants
+ * @method getCombinedOverlayStyle - Merges default and custom overlay styles
+ * @method getCombinedContentStyle - Merges default and custom content styles
+ * @getter modalContainerStyle - Returns computed overlay styles
+ * @getter modalContentStyle - Returns computed content styles
+ * @getter inputStyle - Returns filter input field styles
  */
 export declare class WaitingRoomModal implements OnChanges, OnInit {
     private respondToWaitingService;
@@ -96,6 +154,9 @@ export declare class WaitingRoomModal implements OnChanges, OnInit {
     onWaitingRoomClose: () => void;
     onWaitingRoomFilterChange: (value: string) => void;
     updateWaitingList: (data: WaitingRoomParticipant[]) => void;
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: any;
     onWaitingRoomItemPress: (data: RespondToWaitingOptions) => void;
     faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
     faCheck: import("@fortawesome/fontawesome-common-types").IconDefinition;
@@ -139,6 +200,1018 @@ export declare class WaitingRoomModal implements OnChanges, OnInit {
         fontSize: string;
         marginBottom: string;
     };
+    getCombinedOverlayStyle(): {
+        accentColor?: string | undefined;
+        alignContent?: string | undefined;
+        alignItems?: string | undefined;
+        alignSelf?: string | undefined;
+        alignmentBaseline?: string | undefined;
+        all?: string | undefined;
+        animation?: string | undefined;
+        animationComposition?: string | undefined;
+        animationDelay?: string | undefined;
+        animationDirection?: string | undefined;
+        animationDuration?: string | undefined;
+        animationFillMode?: string | undefined;
+        animationIterationCount?: string | undefined;
+        animationName?: string | undefined;
+        animationPlayState?: string | undefined;
+        animationTimingFunction?: string | undefined;
+        appearance?: string | undefined;
+        aspectRatio?: string | undefined;
+        backdropFilter?: string | undefined;
+        backfaceVisibility?: string | undefined;
+        background?: string | undefined;
+        backgroundAttachment?: string | undefined;
+        backgroundBlendMode?: string | undefined;
+        backgroundClip?: string | undefined;
+        backgroundColor: string;
+        backgroundImage?: string | undefined;
+        backgroundOrigin?: string | undefined;
+        backgroundPosition?: string | undefined;
+        backgroundPositionX?: string | undefined;
+        backgroundPositionY?: string | undefined;
+        backgroundRepeat?: string | undefined;
+        backgroundSize?: string | undefined;
+        baselineShift?: string | undefined;
+        baselineSource?: string | undefined;
+        blockSize?: string | undefined;
+        border?: string | undefined;
+        borderBlock?: string | undefined;
+        borderBlockColor?: string | undefined;
+        borderBlockEnd?: string | undefined;
+        borderBlockEndColor?: string | undefined;
+        borderBlockEndStyle?: string | undefined;
+        borderBlockEndWidth?: string | undefined;
+        borderBlockStart?: string | undefined;
+        borderBlockStartColor?: string | undefined;
+        borderBlockStartStyle?: string | undefined;
+        borderBlockStartWidth?: string | undefined;
+        borderBlockStyle?: string | undefined;
+        borderBlockWidth?: string | undefined;
+        borderBottom?: string | undefined;
+        borderBottomColor?: string | undefined;
+        borderBottomLeftRadius?: string | undefined;
+        borderBottomRightRadius?: string | undefined;
+        borderBottomStyle?: string | undefined;
+        borderBottomWidth?: string | undefined;
+        borderCollapse?: string | undefined;
+        borderColor?: string | undefined;
+        borderEndEndRadius?: string | undefined;
+        borderEndStartRadius?: string | undefined;
+        borderImage?: string | undefined;
+        borderImageOutset?: string | undefined;
+        borderImageRepeat?: string | undefined;
+        borderImageSlice?: string | undefined;
+        borderImageSource?: string | undefined;
+        borderImageWidth?: string | undefined;
+        borderInline?: string | undefined;
+        borderInlineColor?: string | undefined;
+        borderInlineEnd?: string | undefined;
+        borderInlineEndColor?: string | undefined;
+        borderInlineEndStyle?: string | undefined;
+        borderInlineEndWidth?: string | undefined;
+        borderInlineStart?: string | undefined;
+        borderInlineStartColor?: string | undefined;
+        borderInlineStartStyle?: string | undefined;
+        borderInlineStartWidth?: string | undefined;
+        borderInlineStyle?: string | undefined;
+        borderInlineWidth?: string | undefined;
+        borderLeft?: string | undefined;
+        borderLeftColor?: string | undefined;
+        borderLeftStyle?: string | undefined;
+        borderLeftWidth?: string | undefined;
+        borderRadius?: string | undefined;
+        borderRight?: string | undefined;
+        borderRightColor?: string | undefined;
+        borderRightStyle?: string | undefined;
+        borderRightWidth?: string | undefined;
+        borderSpacing?: string | undefined;
+        borderStartEndRadius?: string | undefined;
+        borderStartStartRadius?: string | undefined;
+        borderStyle?: string | undefined;
+        borderTop?: string | undefined;
+        borderTopColor?: string | undefined;
+        borderTopLeftRadius?: string | undefined;
+        borderTopRightRadius?: string | undefined;
+        borderTopStyle?: string | undefined;
+        borderTopWidth?: string | undefined;
+        borderWidth?: string | undefined;
+        bottom?: string | undefined;
+        boxShadow?: string | undefined;
+        boxSizing?: string | undefined;
+        breakAfter?: string | undefined;
+        breakBefore?: string | undefined;
+        breakInside?: string | undefined;
+        captionSide?: string | undefined;
+        caretColor?: string | undefined;
+        clear?: string | undefined;
+        clip?: string | undefined;
+        clipPath?: string | undefined;
+        clipRule?: string | undefined;
+        color?: string | undefined;
+        colorInterpolation?: string | undefined;
+        colorInterpolationFilters?: string | undefined;
+        colorScheme?: string | undefined;
+        columnCount?: string | undefined;
+        columnFill?: string | undefined;
+        columnGap?: string | undefined;
+        columnRule?: string | undefined;
+        columnRuleColor?: string | undefined;
+        columnRuleStyle?: string | undefined;
+        columnRuleWidth?: string | undefined;
+        columnSpan?: string | undefined;
+        columnWidth?: string | undefined;
+        columns?: string | undefined;
+        contain?: string | undefined;
+        containIntrinsicBlockSize?: string | undefined;
+        containIntrinsicHeight?: string | undefined;
+        containIntrinsicInlineSize?: string | undefined;
+        containIntrinsicSize?: string | undefined;
+        containIntrinsicWidth?: string | undefined;
+        container?: string | undefined;
+        containerName?: string | undefined;
+        containerType?: string | undefined;
+        content?: string | undefined;
+        contentVisibility?: string | undefined;
+        counterIncrement?: string | undefined;
+        counterReset?: string | undefined;
+        counterSet?: string | undefined;
+        cssFloat?: string | undefined;
+        cssText?: string | undefined;
+        cursor?: string | undefined;
+        cx?: string | undefined;
+        cy?: string | undefined;
+        d?: string | undefined;
+        direction?: string | undefined;
+        display: string;
+        dominantBaseline?: string | undefined;
+        emptyCells?: string | undefined;
+        fill?: string | undefined;
+        fillOpacity?: string | undefined;
+        fillRule?: string | undefined;
+        filter?: string | undefined;
+        flex?: string | undefined;
+        flexBasis?: string | undefined;
+        flexDirection?: string | undefined;
+        flexFlow?: string | undefined;
+        flexGrow?: string | undefined;
+        flexShrink?: string | undefined;
+        flexWrap?: string | undefined;
+        float?: string | undefined;
+        floodColor?: string | undefined;
+        floodOpacity?: string | undefined;
+        font?: string | undefined;
+        fontFamily?: string | undefined;
+        fontFeatureSettings?: string | undefined;
+        fontKerning?: string | undefined;
+        fontOpticalSizing?: string | undefined;
+        fontPalette?: string | undefined;
+        fontSize?: string | undefined;
+        fontSizeAdjust?: string | undefined;
+        fontStretch?: string | undefined;
+        fontStyle?: string | undefined;
+        fontSynthesis?: string | undefined;
+        fontSynthesisSmallCaps?: string | undefined;
+        fontSynthesisStyle?: string | undefined;
+        fontSynthesisWeight?: string | undefined;
+        fontVariant?: string | undefined;
+        fontVariantAlternates?: string | undefined;
+        fontVariantCaps?: string | undefined;
+        fontVariantEastAsian?: string | undefined;
+        fontVariantLigatures?: string | undefined;
+        fontVariantNumeric?: string | undefined;
+        fontVariantPosition?: string | undefined;
+        fontVariationSettings?: string | undefined;
+        fontWeight?: string | undefined;
+        forcedColorAdjust?: string | undefined;
+        gap?: string | undefined;
+        grid?: string | undefined;
+        gridArea?: string | undefined;
+        gridAutoColumns?: string | undefined;
+        gridAutoFlow?: string | undefined;
+        gridAutoRows?: string | undefined;
+        gridColumn?: string | undefined;
+        gridColumnEnd?: string | undefined;
+        gridColumnGap?: string | undefined;
+        gridColumnStart?: string | undefined;
+        gridGap?: string | undefined;
+        gridRow?: string | undefined;
+        gridRowEnd?: string | undefined;
+        gridRowGap?: string | undefined;
+        gridRowStart?: string | undefined;
+        gridTemplate?: string | undefined;
+        gridTemplateAreas?: string | undefined;
+        gridTemplateColumns?: string | undefined;
+        gridTemplateRows?: string | undefined;
+        height: string;
+        hyphenateCharacter?: string | undefined;
+        hyphens?: string | undefined;
+        imageOrientation?: string | undefined;
+        imageRendering?: string | undefined;
+        inlineSize?: string | undefined;
+        inset?: string | undefined;
+        insetBlock?: string | undefined;
+        insetBlockEnd?: string | undefined;
+        insetBlockStart?: string | undefined;
+        insetInline?: string | undefined;
+        insetInlineEnd?: string | undefined;
+        insetInlineStart?: string | undefined;
+        isolation?: string | undefined;
+        justifyContent?: string | undefined;
+        justifyItems?: string | undefined;
+        justifySelf?: string | undefined;
+        left: string;
+        length?: number | undefined;
+        letterSpacing?: string | undefined;
+        lightingColor?: string | undefined;
+        lineBreak?: string | undefined;
+        lineHeight?: string | undefined;
+        listStyle?: string | undefined;
+        listStyleImage?: string | undefined;
+        listStylePosition?: string | undefined;
+        listStyleType?: string | undefined;
+        margin?: string | undefined;
+        marginBlock?: string | undefined;
+        marginBlockEnd?: string | undefined;
+        marginBlockStart?: string | undefined;
+        marginBottom?: string | undefined;
+        marginInline?: string | undefined;
+        marginInlineEnd?: string | undefined;
+        marginInlineStart?: string | undefined;
+        marginLeft?: string | undefined;
+        marginRight?: string | undefined;
+        marginTop?: string | undefined;
+        marker?: string | undefined;
+        markerEnd?: string | undefined;
+        markerMid?: string | undefined;
+        markerStart?: string | undefined;
+        mask?: string | undefined;
+        maskClip?: string | undefined;
+        maskComposite?: string | undefined;
+        maskImage?: string | undefined;
+        maskMode?: string | undefined;
+        maskOrigin?: string | undefined;
+        maskPosition?: string | undefined;
+        maskRepeat?: string | undefined;
+        maskSize?: string | undefined;
+        maskType?: string | undefined;
+        mathDepth?: string | undefined;
+        mathStyle?: string | undefined;
+        maxBlockSize?: string | undefined;
+        maxHeight?: string | undefined;
+        maxInlineSize?: string | undefined;
+        maxWidth?: string | undefined;
+        minBlockSize?: string | undefined;
+        minHeight?: string | undefined;
+        minInlineSize?: string | undefined;
+        minWidth?: string | undefined;
+        mixBlendMode?: string | undefined;
+        objectFit?: string | undefined;
+        objectPosition?: string | undefined;
+        offset?: string | undefined;
+        offsetAnchor?: string | undefined;
+        offsetDistance?: string | undefined;
+        offsetPath?: string | undefined;
+        offsetPosition?: string | undefined;
+        offsetRotate?: string | undefined;
+        opacity?: string | undefined;
+        order?: string | undefined;
+        orphans?: string | undefined;
+        outline?: string | undefined;
+        outlineColor?: string | undefined;
+        outlineOffset?: string | undefined;
+        outlineStyle?: string | undefined;
+        outlineWidth?: string | undefined;
+        overflow?: string | undefined;
+        overflowAnchor?: string | undefined;
+        overflowClipMargin?: string | undefined;
+        overflowWrap?: string | undefined;
+        overflowX?: string | undefined;
+        overflowY?: string | undefined;
+        overscrollBehavior?: string | undefined;
+        overscrollBehaviorBlock?: string | undefined;
+        overscrollBehaviorInline?: string | undefined;
+        overscrollBehaviorX?: string | undefined;
+        overscrollBehaviorY?: string | undefined;
+        padding?: string | undefined;
+        paddingBlock?: string | undefined;
+        paddingBlockEnd?: string | undefined;
+        paddingBlockStart?: string | undefined;
+        paddingBottom?: string | undefined;
+        paddingInline?: string | undefined;
+        paddingInlineEnd?: string | undefined;
+        paddingInlineStart?: string | undefined;
+        paddingLeft?: string | undefined;
+        paddingRight?: string | undefined;
+        paddingTop?: string | undefined;
+        page?: string | undefined;
+        pageBreakAfter?: string | undefined;
+        pageBreakBefore?: string | undefined;
+        pageBreakInside?: string | undefined;
+        paintOrder?: string | undefined;
+        parentRule?: CSSRule | null | undefined;
+        perspective?: string | undefined;
+        perspectiveOrigin?: string | undefined;
+        placeContent?: string | undefined;
+        placeItems?: string | undefined;
+        placeSelf?: string | undefined;
+        pointerEvents?: string | undefined;
+        position: string;
+        printColorAdjust?: string | undefined;
+        quotes?: string | undefined;
+        r?: string | undefined;
+        resize?: string | undefined;
+        right?: string | undefined;
+        rotate?: string | undefined;
+        rowGap?: string | undefined;
+        rubyPosition?: string | undefined;
+        rx?: string | undefined;
+        ry?: string | undefined;
+        scale?: string | undefined;
+        scrollBehavior?: string | undefined;
+        scrollMargin?: string | undefined;
+        scrollMarginBlock?: string | undefined;
+        scrollMarginBlockEnd?: string | undefined;
+        scrollMarginBlockStart?: string | undefined;
+        scrollMarginBottom?: string | undefined;
+        scrollMarginInline?: string | undefined;
+        scrollMarginInlineEnd?: string | undefined;
+        scrollMarginInlineStart?: string | undefined;
+        scrollMarginLeft?: string | undefined;
+        scrollMarginRight?: string | undefined;
+        scrollMarginTop?: string | undefined;
+        scrollPadding?: string | undefined;
+        scrollPaddingBlock?: string | undefined;
+        scrollPaddingBlockEnd?: string | undefined;
+        scrollPaddingBlockStart?: string | undefined;
+        scrollPaddingBottom?: string | undefined;
+        scrollPaddingInline?: string | undefined;
+        scrollPaddingInlineEnd?: string | undefined;
+        scrollPaddingInlineStart?: string | undefined;
+        scrollPaddingLeft?: string | undefined;
+        scrollPaddingRight?: string | undefined;
+        scrollPaddingTop?: string | undefined;
+        scrollSnapAlign?: string | undefined;
+        scrollSnapStop?: string | undefined;
+        scrollSnapType?: string | undefined;
+        scrollbarColor?: string | undefined;
+        scrollbarGutter?: string | undefined;
+        scrollbarWidth?: string | undefined;
+        shapeImageThreshold?: string | undefined;
+        shapeMargin?: string | undefined;
+        shapeOutside?: string | undefined;
+        shapeRendering?: string | undefined;
+        stopColor?: string | undefined;
+        stopOpacity?: string | undefined;
+        stroke?: string | undefined;
+        strokeDasharray?: string | undefined;
+        strokeDashoffset?: string | undefined;
+        strokeLinecap?: string | undefined;
+        strokeLinejoin?: string | undefined;
+        strokeMiterlimit?: string | undefined;
+        strokeOpacity?: string | undefined;
+        strokeWidth?: string | undefined;
+        tabSize?: string | undefined;
+        tableLayout?: string | undefined;
+        textAlign?: string | undefined;
+        textAlignLast?: string | undefined;
+        textAnchor?: string | undefined;
+        textCombineUpright?: string | undefined;
+        textDecoration?: string | undefined;
+        textDecorationColor?: string | undefined;
+        textDecorationLine?: string | undefined;
+        textDecorationSkipInk?: string | undefined;
+        textDecorationStyle?: string | undefined;
+        textDecorationThickness?: string | undefined;
+        textEmphasis?: string | undefined;
+        textEmphasisColor?: string | undefined;
+        textEmphasisPosition?: string | undefined;
+        textEmphasisStyle?: string | undefined;
+        textIndent?: string | undefined;
+        textOrientation?: string | undefined;
+        textOverflow?: string | undefined;
+        textRendering?: string | undefined;
+        textShadow?: string | undefined;
+        textTransform?: string | undefined;
+        textUnderlineOffset?: string | undefined;
+        textUnderlinePosition?: string | undefined;
+        textWrap?: string | undefined;
+        textWrapMode?: string | undefined;
+        textWrapStyle?: string | undefined;
+        top: string;
+        touchAction?: string | undefined;
+        transform?: string | undefined;
+        transformBox?: string | undefined;
+        transformOrigin?: string | undefined;
+        transformStyle?: string | undefined;
+        transition?: string | undefined;
+        transitionBehavior?: string | undefined;
+        transitionDelay?: string | undefined;
+        transitionDuration?: string | undefined;
+        transitionProperty?: string | undefined;
+        transitionTimingFunction?: string | undefined;
+        translate?: string | undefined;
+        unicodeBidi?: string | undefined;
+        userSelect?: string | undefined;
+        vectorEffect?: string | undefined;
+        verticalAlign?: string | undefined;
+        visibility?: string | undefined;
+        webkitAlignContent?: string | undefined;
+        webkitAlignItems?: string | undefined;
+        webkitAlignSelf?: string | undefined;
+        webkitAnimation?: string | undefined;
+        webkitAnimationDelay?: string | undefined;
+        webkitAnimationDirection?: string | undefined;
+        webkitAnimationDuration?: string | undefined;
+        webkitAnimationFillMode?: string | undefined;
+        webkitAnimationIterationCount?: string | undefined;
+        webkitAnimationName?: string | undefined;
+        webkitAnimationPlayState?: string | undefined;
+        webkitAnimationTimingFunction?: string | undefined;
+        webkitAppearance?: string | undefined;
+        webkitBackfaceVisibility?: string | undefined;
+        webkitBackgroundClip?: string | undefined;
+        webkitBackgroundOrigin?: string | undefined;
+        webkitBackgroundSize?: string | undefined;
+        webkitBorderBottomLeftRadius?: string | undefined;
+        webkitBorderBottomRightRadius?: string | undefined;
+        webkitBorderRadius?: string | undefined;
+        webkitBorderTopLeftRadius?: string | undefined;
+        webkitBorderTopRightRadius?: string | undefined;
+        webkitBoxAlign?: string | undefined;
+        webkitBoxFlex?: string | undefined;
+        webkitBoxOrdinalGroup?: string | undefined;
+        webkitBoxOrient?: string | undefined;
+        webkitBoxPack?: string | undefined;
+        webkitBoxShadow?: string | undefined;
+        webkitBoxSizing?: string | undefined;
+        webkitFilter?: string | undefined;
+        webkitFlex?: string | undefined;
+        webkitFlexBasis?: string | undefined;
+        webkitFlexDirection?: string | undefined;
+        webkitFlexFlow?: string | undefined;
+        webkitFlexGrow?: string | undefined;
+        webkitFlexShrink?: string | undefined;
+        webkitFlexWrap?: string | undefined;
+        webkitJustifyContent?: string | undefined;
+        webkitLineClamp?: string | undefined;
+        webkitMask?: string | undefined;
+        webkitMaskBoxImage?: string | undefined;
+        webkitMaskBoxImageOutset?: string | undefined;
+        webkitMaskBoxImageRepeat?: string | undefined;
+        webkitMaskBoxImageSlice?: string | undefined;
+        webkitMaskBoxImageSource?: string | undefined;
+        webkitMaskBoxImageWidth?: string | undefined;
+        webkitMaskClip?: string | undefined;
+        webkitMaskComposite?: string | undefined;
+        webkitMaskImage?: string | undefined;
+        webkitMaskOrigin?: string | undefined;
+        webkitMaskPosition?: string | undefined;
+        webkitMaskRepeat?: string | undefined;
+        webkitMaskSize?: string | undefined;
+        webkitOrder?: string | undefined;
+        webkitPerspective?: string | undefined;
+        webkitPerspectiveOrigin?: string | undefined;
+        webkitTextFillColor?: string | undefined;
+        webkitTextSizeAdjust?: string | undefined;
+        webkitTextStroke?: string | undefined;
+        webkitTextStrokeColor?: string | undefined;
+        webkitTextStrokeWidth?: string | undefined;
+        webkitTransform?: string | undefined;
+        webkitTransformOrigin?: string | undefined;
+        webkitTransformStyle?: string | undefined;
+        webkitTransition?: string | undefined;
+        webkitTransitionDelay?: string | undefined;
+        webkitTransitionDuration?: string | undefined;
+        webkitTransitionProperty?: string | undefined;
+        webkitTransitionTimingFunction?: string | undefined;
+        webkitUserSelect?: string | undefined;
+        whiteSpace?: string | undefined;
+        whiteSpaceCollapse?: string | undefined;
+        widows?: string | undefined;
+        width: string;
+        willChange?: string | undefined;
+        wordBreak?: string | undefined;
+        wordSpacing?: string | undefined;
+        wordWrap?: string | undefined;
+        writingMode?: string | undefined;
+        x?: string | undefined;
+        y?: string | undefined;
+        zIndex: string;
+        zoom?: string | undefined;
+        getPropertyPriority?: ((property: string) => string) | undefined;
+        getPropertyValue?: ((property: string) => string) | undefined;
+        item?: ((index: number) => string) | undefined;
+        removeProperty?: ((property: string) => string) | undefined;
+        setProperty?: ((property: string, value: string | null, priority?: string) => void) | undefined;
+    };
+    getCombinedContentStyle(): {
+        accentColor?: string | undefined;
+        alignContent?: string | undefined;
+        alignItems?: string | undefined;
+        alignSelf?: string | undefined;
+        alignmentBaseline?: string | undefined;
+        all?: string | undefined;
+        animation?: string | undefined;
+        animationComposition?: string | undefined;
+        animationDelay?: string | undefined;
+        animationDirection?: string | undefined;
+        animationDuration?: string | undefined;
+        animationFillMode?: string | undefined;
+        animationIterationCount?: string | undefined;
+        animationName?: string | undefined;
+        animationPlayState?: string | undefined;
+        animationTimingFunction?: string | undefined;
+        appearance?: string | undefined;
+        aspectRatio?: string | undefined;
+        backdropFilter?: string | undefined;
+        backfaceVisibility?: string | undefined;
+        background?: string | undefined;
+        backgroundAttachment?: string | undefined;
+        backgroundBlendMode?: string | undefined;
+        backgroundClip?: string | undefined;
+        backgroundColor: string;
+        backgroundImage?: string | undefined;
+        backgroundOrigin?: string | undefined;
+        backgroundPosition?: string | undefined;
+        backgroundPositionX?: string | undefined;
+        backgroundPositionY?: string | undefined;
+        backgroundRepeat?: string | undefined;
+        backgroundSize?: string | undefined;
+        baselineShift?: string | undefined;
+        baselineSource?: string | undefined;
+        blockSize?: string | undefined;
+        border?: string | undefined;
+        borderBlock?: string | undefined;
+        borderBlockColor?: string | undefined;
+        borderBlockEnd?: string | undefined;
+        borderBlockEndColor?: string | undefined;
+        borderBlockEndStyle?: string | undefined;
+        borderBlockEndWidth?: string | undefined;
+        borderBlockStart?: string | undefined;
+        borderBlockStartColor?: string | undefined;
+        borderBlockStartStyle?: string | undefined;
+        borderBlockStartWidth?: string | undefined;
+        borderBlockStyle?: string | undefined;
+        borderBlockWidth?: string | undefined;
+        borderBottom?: string | undefined;
+        borderBottomColor?: string | undefined;
+        borderBottomLeftRadius?: string | undefined;
+        borderBottomRightRadius?: string | undefined;
+        borderBottomStyle?: string | undefined;
+        borderBottomWidth?: string | undefined;
+        borderCollapse?: string | undefined;
+        borderColor?: string | undefined;
+        borderEndEndRadius?: string | undefined;
+        borderEndStartRadius?: string | undefined;
+        borderImage?: string | undefined;
+        borderImageOutset?: string | undefined;
+        borderImageRepeat?: string | undefined;
+        borderImageSlice?: string | undefined;
+        borderImageSource?: string | undefined;
+        borderImageWidth?: string | undefined;
+        borderInline?: string | undefined;
+        borderInlineColor?: string | undefined;
+        borderInlineEnd?: string | undefined;
+        borderInlineEndColor?: string | undefined;
+        borderInlineEndStyle?: string | undefined;
+        borderInlineEndWidth?: string | undefined;
+        borderInlineStart?: string | undefined;
+        borderInlineStartColor?: string | undefined;
+        borderInlineStartStyle?: string | undefined;
+        borderInlineStartWidth?: string | undefined;
+        borderInlineStyle?: string | undefined;
+        borderInlineWidth?: string | undefined;
+        borderLeft?: string | undefined;
+        borderLeftColor?: string | undefined;
+        borderLeftStyle?: string | undefined;
+        borderLeftWidth?: string | undefined;
+        borderRadius: string;
+        borderRight?: string | undefined;
+        borderRightColor?: string | undefined;
+        borderRightStyle?: string | undefined;
+        borderRightWidth?: string | undefined;
+        borderSpacing?: string | undefined;
+        borderStartEndRadius?: string | undefined;
+        borderStartStartRadius?: string | undefined;
+        borderStyle?: string | undefined;
+        borderTop?: string | undefined;
+        borderTopColor?: string | undefined;
+        borderTopLeftRadius?: string | undefined;
+        borderTopRightRadius?: string | undefined;
+        borderTopStyle?: string | undefined;
+        borderTopWidth?: string | undefined;
+        borderWidth?: string | undefined;
+        bottom: string;
+        boxShadow?: string | undefined;
+        boxSizing?: string | undefined;
+        breakAfter?: string | undefined;
+        breakBefore?: string | undefined;
+        breakInside?: string | undefined;
+        captionSide?: string | undefined;
+        caretColor?: string | undefined;
+        clear?: string | undefined;
+        clip?: string | undefined;
+        clipPath?: string | undefined;
+        clipRule?: string | undefined;
+        color?: string | undefined;
+        colorInterpolation?: string | undefined;
+        colorInterpolationFilters?: string | undefined;
+        colorScheme?: string | undefined;
+        columnCount?: string | undefined;
+        columnFill?: string | undefined;
+        columnGap?: string | undefined;
+        columnRule?: string | undefined;
+        columnRuleColor?: string | undefined;
+        columnRuleStyle?: string | undefined;
+        columnRuleWidth?: string | undefined;
+        columnSpan?: string | undefined;
+        columnWidth?: string | undefined;
+        columns?: string | undefined;
+        contain?: string | undefined;
+        containIntrinsicBlockSize?: string | undefined;
+        containIntrinsicHeight?: string | undefined;
+        containIntrinsicInlineSize?: string | undefined;
+        containIntrinsicSize?: string | undefined;
+        containIntrinsicWidth?: string | undefined;
+        container?: string | undefined;
+        containerName?: string | undefined;
+        containerType?: string | undefined;
+        content?: string | undefined;
+        contentVisibility?: string | undefined;
+        counterIncrement?: string | undefined;
+        counterReset?: string | undefined;
+        counterSet?: string | undefined;
+        cssFloat?: string | undefined;
+        cssText?: string | undefined;
+        cursor?: string | undefined;
+        cx?: string | undefined;
+        cy?: string | undefined;
+        d?: string | undefined;
+        direction?: string | undefined;
+        display?: string | undefined;
+        dominantBaseline?: string | undefined;
+        emptyCells?: string | undefined;
+        fill?: string | undefined;
+        fillOpacity?: string | undefined;
+        fillRule?: string | undefined;
+        filter?: string | undefined;
+        flex?: string | undefined;
+        flexBasis?: string | undefined;
+        flexDirection?: string | undefined;
+        flexFlow?: string | undefined;
+        flexGrow?: string | undefined;
+        flexShrink?: string | undefined;
+        flexWrap?: string | undefined;
+        float?: string | undefined;
+        floodColor?: string | undefined;
+        floodOpacity?: string | undefined;
+        font?: string | undefined;
+        fontFamily?: string | undefined;
+        fontFeatureSettings?: string | undefined;
+        fontKerning?: string | undefined;
+        fontOpticalSizing?: string | undefined;
+        fontPalette?: string | undefined;
+        fontSize?: string | undefined;
+        fontSizeAdjust?: string | undefined;
+        fontStretch?: string | undefined;
+        fontStyle?: string | undefined;
+        fontSynthesis?: string | undefined;
+        fontSynthesisSmallCaps?: string | undefined;
+        fontSynthesisStyle?: string | undefined;
+        fontSynthesisWeight?: string | undefined;
+        fontVariant?: string | undefined;
+        fontVariantAlternates?: string | undefined;
+        fontVariantCaps?: string | undefined;
+        fontVariantEastAsian?: string | undefined;
+        fontVariantLigatures?: string | undefined;
+        fontVariantNumeric?: string | undefined;
+        fontVariantPosition?: string | undefined;
+        fontVariationSettings?: string | undefined;
+        fontWeight?: string | undefined;
+        forcedColorAdjust?: string | undefined;
+        gap?: string | undefined;
+        grid?: string | undefined;
+        gridArea?: string | undefined;
+        gridAutoColumns?: string | undefined;
+        gridAutoFlow?: string | undefined;
+        gridAutoRows?: string | undefined;
+        gridColumn?: string | undefined;
+        gridColumnEnd?: string | undefined;
+        gridColumnGap?: string | undefined;
+        gridColumnStart?: string | undefined;
+        gridGap?: string | undefined;
+        gridRow?: string | undefined;
+        gridRowEnd?: string | undefined;
+        gridRowGap?: string | undefined;
+        gridRowStart?: string | undefined;
+        gridTemplate?: string | undefined;
+        gridTemplateAreas?: string | undefined;
+        gridTemplateColumns?: string | undefined;
+        gridTemplateRows?: string | undefined;
+        height?: string | undefined;
+        hyphenateCharacter?: string | undefined;
+        hyphens?: string | undefined;
+        imageOrientation?: string | undefined;
+        imageRendering?: string | undefined;
+        inlineSize?: string | undefined;
+        inset?: string | undefined;
+        insetBlock?: string | undefined;
+        insetBlockEnd?: string | undefined;
+        insetBlockStart?: string | undefined;
+        insetInline?: string | undefined;
+        insetInlineEnd?: string | undefined;
+        insetInlineStart?: string | undefined;
+        isolation?: string | undefined;
+        justifyContent?: string | undefined;
+        justifyItems?: string | undefined;
+        justifySelf?: string | undefined;
+        left: string;
+        length?: number | undefined;
+        letterSpacing?: string | undefined;
+        lightingColor?: string | undefined;
+        lineBreak?: string | undefined;
+        lineHeight?: string | undefined;
+        listStyle?: string | undefined;
+        listStyleImage?: string | undefined;
+        listStylePosition?: string | undefined;
+        listStyleType?: string | undefined;
+        margin?: string | undefined;
+        marginBlock?: string | undefined;
+        marginBlockEnd?: string | undefined;
+        marginBlockStart?: string | undefined;
+        marginBottom?: string | undefined;
+        marginInline?: string | undefined;
+        marginInlineEnd?: string | undefined;
+        marginInlineStart?: string | undefined;
+        marginLeft?: string | undefined;
+        marginRight?: string | undefined;
+        marginTop?: string | undefined;
+        marker?: string | undefined;
+        markerEnd?: string | undefined;
+        markerMid?: string | undefined;
+        markerStart?: string | undefined;
+        mask?: string | undefined;
+        maskClip?: string | undefined;
+        maskComposite?: string | undefined;
+        maskImage?: string | undefined;
+        maskMode?: string | undefined;
+        maskOrigin?: string | undefined;
+        maskPosition?: string | undefined;
+        maskRepeat?: string | undefined;
+        maskSize?: string | undefined;
+        maskType?: string | undefined;
+        mathDepth?: string | undefined;
+        mathStyle?: string | undefined;
+        maxBlockSize?: string | undefined;
+        maxHeight: string;
+        maxInlineSize?: string | undefined;
+        maxWidth?: string | undefined;
+        minBlockSize?: string | undefined;
+        minHeight?: string | undefined;
+        minInlineSize?: string | undefined;
+        minWidth?: string | undefined;
+        mixBlendMode?: string | undefined;
+        objectFit?: string | undefined;
+        objectPosition?: string | undefined;
+        offset?: string | undefined;
+        offsetAnchor?: string | undefined;
+        offsetDistance?: string | undefined;
+        offsetPath?: string | undefined;
+        offsetPosition?: string | undefined;
+        offsetRotate?: string | undefined;
+        opacity?: string | undefined;
+        order?: string | undefined;
+        orphans?: string | undefined;
+        outline?: string | undefined;
+        outlineColor?: string | undefined;
+        outlineOffset?: string | undefined;
+        outlineStyle?: string | undefined;
+        outlineWidth?: string | undefined;
+        overflow?: string | undefined;
+        overflowAnchor?: string | undefined;
+        overflowClipMargin?: string | undefined;
+        overflowWrap?: string | undefined;
+        overflowX?: string | undefined;
+        overflowY: string;
+        overscrollBehavior?: string | undefined;
+        overscrollBehaviorBlock?: string | undefined;
+        overscrollBehaviorInline?: string | undefined;
+        overscrollBehaviorX?: string | undefined;
+        overscrollBehaviorY?: string | undefined;
+        padding: string;
+        paddingBlock?: string | undefined;
+        paddingBlockEnd?: string | undefined;
+        paddingBlockStart?: string | undefined;
+        paddingBottom?: string | undefined;
+        paddingInline?: string | undefined;
+        paddingInlineEnd?: string | undefined;
+        paddingInlineStart?: string | undefined;
+        paddingLeft?: string | undefined;
+        paddingRight?: string | undefined;
+        paddingTop?: string | undefined;
+        page?: string | undefined;
+        pageBreakAfter?: string | undefined;
+        pageBreakBefore?: string | undefined;
+        pageBreakInside?: string | undefined;
+        paintOrder?: string | undefined;
+        parentRule?: CSSRule | null | undefined;
+        perspective?: string | undefined;
+        perspectiveOrigin?: string | undefined;
+        placeContent?: string | undefined;
+        placeItems?: string | undefined;
+        placeSelf?: string | undefined;
+        pointerEvents?: string | undefined;
+        position: string;
+        printColorAdjust?: string | undefined;
+        quotes?: string | undefined;
+        r?: string | undefined;
+        resize?: string | undefined;
+        right: string;
+        rotate?: string | undefined;
+        rowGap?: string | undefined;
+        rubyPosition?: string | undefined;
+        rx?: string | undefined;
+        ry?: string | undefined;
+        scale?: string | undefined;
+        scrollBehavior?: string | undefined;
+        scrollMargin?: string | undefined;
+        scrollMarginBlock?: string | undefined;
+        scrollMarginBlockEnd?: string | undefined;
+        scrollMarginBlockStart?: string | undefined;
+        scrollMarginBottom?: string | undefined;
+        scrollMarginInline?: string | undefined;
+        scrollMarginInlineEnd?: string | undefined;
+        scrollMarginInlineStart?: string | undefined;
+        scrollMarginLeft?: string | undefined;
+        scrollMarginRight?: string | undefined;
+        scrollMarginTop?: string | undefined;
+        scrollPadding?: string | undefined;
+        scrollPaddingBlock?: string | undefined;
+        scrollPaddingBlockEnd?: string | undefined;
+        scrollPaddingBlockStart?: string | undefined;
+        scrollPaddingBottom?: string | undefined;
+        scrollPaddingInline?: string | undefined;
+        scrollPaddingInlineEnd?: string | undefined;
+        scrollPaddingInlineStart?: string | undefined;
+        scrollPaddingLeft?: string | undefined;
+        scrollPaddingRight?: string | undefined;
+        scrollPaddingTop?: string | undefined;
+        scrollSnapAlign?: string | undefined;
+        scrollSnapStop?: string | undefined;
+        scrollSnapType?: string | undefined;
+        scrollbarColor?: string | undefined;
+        scrollbarGutter?: string | undefined;
+        scrollbarWidth?: string | undefined;
+        shapeImageThreshold?: string | undefined;
+        shapeMargin?: string | undefined;
+        shapeOutside?: string | undefined;
+        shapeRendering?: string | undefined;
+        stopColor?: string | undefined;
+        stopOpacity?: string | undefined;
+        stroke?: string | undefined;
+        strokeDasharray?: string | undefined;
+        strokeDashoffset?: string | undefined;
+        strokeLinecap?: string | undefined;
+        strokeLinejoin?: string | undefined;
+        strokeMiterlimit?: string | undefined;
+        strokeOpacity?: string | undefined;
+        strokeWidth?: string | undefined;
+        tabSize?: string | undefined;
+        tableLayout?: string | undefined;
+        textAlign?: string | undefined;
+        textAlignLast?: string | undefined;
+        textAnchor?: string | undefined;
+        textCombineUpright?: string | undefined;
+        textDecoration?: string | undefined;
+        textDecorationColor?: string | undefined;
+        textDecorationLine?: string | undefined;
+        textDecorationSkipInk?: string | undefined;
+        textDecorationStyle?: string | undefined;
+        textDecorationThickness?: string | undefined;
+        textEmphasis?: string | undefined;
+        textEmphasisColor?: string | undefined;
+        textEmphasisPosition?: string | undefined;
+        textEmphasisStyle?: string | undefined;
+        textIndent?: string | undefined;
+        textOrientation?: string | undefined;
+        textOverflow?: string | undefined;
+        textRendering?: string | undefined;
+        textShadow?: string | undefined;
+        textTransform?: string | undefined;
+        textUnderlineOffset?: string | undefined;
+        textUnderlinePosition?: string | undefined;
+        textWrap?: string | undefined;
+        textWrapMode?: string | undefined;
+        textWrapStyle?: string | undefined;
+        top: string;
+        touchAction?: string | undefined;
+        transform?: string | undefined;
+        transformBox?: string | undefined;
+        transformOrigin?: string | undefined;
+        transformStyle?: string | undefined;
+        transition?: string | undefined;
+        transitionBehavior?: string | undefined;
+        transitionDelay?: string | undefined;
+        transitionDuration?: string | undefined;
+        transitionProperty?: string | undefined;
+        transitionTimingFunction?: string | undefined;
+        translate?: string | undefined;
+        unicodeBidi?: string | undefined;
+        userSelect?: string | undefined;
+        vectorEffect?: string | undefined;
+        verticalAlign?: string | undefined;
+        visibility?: string | undefined;
+        webkitAlignContent?: string | undefined;
+        webkitAlignItems?: string | undefined;
+        webkitAlignSelf?: string | undefined;
+        webkitAnimation?: string | undefined;
+        webkitAnimationDelay?: string | undefined;
+        webkitAnimationDirection?: string | undefined;
+        webkitAnimationDuration?: string | undefined;
+        webkitAnimationFillMode?: string | undefined;
+        webkitAnimationIterationCount?: string | undefined;
+        webkitAnimationName?: string | undefined;
+        webkitAnimationPlayState?: string | undefined;
+        webkitAnimationTimingFunction?: string | undefined;
+        webkitAppearance?: string | undefined;
+        webkitBackfaceVisibility?: string | undefined;
+        webkitBackgroundClip?: string | undefined;
+        webkitBackgroundOrigin?: string | undefined;
+        webkitBackgroundSize?: string | undefined;
+        webkitBorderBottomLeftRadius?: string | undefined;
+        webkitBorderBottomRightRadius?: string | undefined;
+        webkitBorderRadius?: string | undefined;
+        webkitBorderTopLeftRadius?: string | undefined;
+        webkitBorderTopRightRadius?: string | undefined;
+        webkitBoxAlign?: string | undefined;
+        webkitBoxFlex?: string | undefined;
+        webkitBoxOrdinalGroup?: string | undefined;
+        webkitBoxOrient?: string | undefined;
+        webkitBoxPack?: string | undefined;
+        webkitBoxShadow?: string | undefined;
+        webkitBoxSizing?: string | undefined;
+        webkitFilter?: string | undefined;
+        webkitFlex?: string | undefined;
+        webkitFlexBasis?: string | undefined;
+        webkitFlexDirection?: string | undefined;
+        webkitFlexFlow?: string | undefined;
+        webkitFlexGrow?: string | undefined;
+        webkitFlexShrink?: string | undefined;
+        webkitFlexWrap?: string | undefined;
+        webkitJustifyContent?: string | undefined;
+        webkitLineClamp?: string | undefined;
+        webkitMask?: string | undefined;
+        webkitMaskBoxImage?: string | undefined;
+        webkitMaskBoxImageOutset?: string | undefined;
+        webkitMaskBoxImageRepeat?: string | undefined;
+        webkitMaskBoxImageSlice?: string | undefined;
+        webkitMaskBoxImageSource?: string | undefined;
+        webkitMaskBoxImageWidth?: string | undefined;
+        webkitMaskClip?: string | undefined;
+        webkitMaskComposite?: string | undefined;
+        webkitMaskImage?: string | undefined;
+        webkitMaskOrigin?: string | undefined;
+        webkitMaskPosition?: string | undefined;
+        webkitMaskRepeat?: string | undefined;
+        webkitMaskSize?: string | undefined;
+        webkitOrder?: string | undefined;
+        webkitPerspective?: string | undefined;
+        webkitPerspectiveOrigin?: string | undefined;
+        webkitTextFillColor?: string | undefined;
+        webkitTextSizeAdjust?: string | undefined;
+        webkitTextStroke?: string | undefined;
+        webkitTextStrokeColor?: string | undefined;
+        webkitTextStrokeWidth?: string | undefined;
+        webkitTransform?: string | undefined;
+        webkitTransformOrigin?: string | undefined;
+        webkitTransformStyle?: string | undefined;
+        webkitTransition?: string | undefined;
+        webkitTransitionDelay?: string | undefined;
+        webkitTransitionDuration?: string | undefined;
+        webkitTransitionProperty?: string | undefined;
+        webkitTransitionTimingFunction?: string | undefined;
+        webkitUserSelect?: string | undefined;
+        whiteSpace?: string | undefined;
+        whiteSpaceCollapse?: string | undefined;
+        widows?: string | undefined;
+        width: string;
+        willChange?: string | undefined;
+        wordBreak?: string | undefined;
+        wordSpacing?: string | undefined;
+        wordWrap?: string | undefined;
+        writingMode?: string | undefined;
+        x?: string | undefined;
+        y?: string | undefined;
+        zIndex?: string | undefined;
+        zoom?: string | undefined;
+        getPropertyPriority?: ((property: string) => string) | undefined;
+        getPropertyValue?: ((property: string) => string) | undefined;
+        item?: ((index: number) => string) | undefined;
+        removeProperty?: ((property: string) => string) | undefined;
+        setProperty?: ((property: string, value: string | null, priority?: string) => void) | undefined;
+    };
     static ɵfac: i0.ɵɵFactoryDeclaration<WaitingRoomModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<WaitingRoomModal, "app-waiting-room-modal", never, { "isWaitingModalVisible": { "alias": "isWaitingModalVisible"; "required": false; }; "waitingRoomCounter": { "alias": "waitingRoomCounter"; "required": false; }; "waitingRoomList": { "alias": "waitingRoomList"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "onWaitingRoomClose": { "alias": "onWaitingRoomClose"; "required": false; }; "onWaitingRoomFilterChange": { "alias": "onWaitingRoomFilterChange"; "required": false; }; "updateWaitingList": { "alias": "updateWaitingList"; "required": false; }; "onWaitingRoomItemPress": { "alias": "onWaitingRoomItemPress"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<WaitingRoomModal, "app-waiting-room-modal", never, { "isWaitingModalVisible": { "alias": "isWaitingModalVisible"; "required": false; }; "waitingRoomCounter": { "alias": "waitingRoomCounter"; "required": false; }; "waitingRoomList": { "alias": "waitingRoomList"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "onWaitingRoomClose": { "alias": "onWaitingRoomClose"; "required": false; }; "onWaitingRoomFilterChange": { "alias": "onWaitingRoomFilterChange"; "required": false; }; "updateWaitingList": { "alias": "updateWaitingList"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; "onWaitingRoomItemPress": { "alias": "onWaitingRoomItemPress"; "required": false; }; }, {}, never, never, true, never>;
 }
