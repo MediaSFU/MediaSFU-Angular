@@ -10,6 +10,9 @@ export interface FlexibleGridOptions {
   backgroundColor?: string;
   containerStyle?: Partial<CSSStyleDeclaration>;
   customTemplate?: TemplateRef<any>;
+  isDarkMode?: boolean;
+  enableGlassmorphism?: boolean;
+  cellBorderRadius?: number;
 }
 
 export type FlexibleGridType = (options: FlexibleGridOptions) => HTMLElement;
@@ -121,7 +124,7 @@ export type FlexibleGridType = (options: FlexibleGridOptions) => HTMLElement;
     selector: 'app-flexible-grid',
     imports: [CommonModule],
     template: `
-    <div *ngIf="customTemplate; else defaultTemplate" style="padding: 0;">
+    <div *ngIf="customTemplate; else defaultTemplate" class="flexible-grid flexible-grid--custom">
       <ng-container *ngTemplateOutlet="customTemplate; context: {
         $implicit: {
           customWidth,
@@ -135,23 +138,65 @@ export type FlexibleGridType = (options: FlexibleGridOptions) => HTMLElement;
       }"></ng-container>
     </div>
     <ng-template #defaultTemplate>
-      <div style="padding: 0;">
+      <div class="flexible-grid" [ngStyle]="getGridWrapperStyle()">
         <div
           *ngFor="let rowComponents of grid; let rowIndex = index"
-          style="display: flex; flex-direction: row;"
+          class="flexible-grid__row"
         >
           <div
             *ngFor="let component of rowComponents; let colIndex = index"
-            [ngStyle]="getGridItemStyle()"
+            class="flexible-grid__cell"
+            [ngStyle]="getGridItemStyle(component)"
           >
-            <ng-container
-              *ngComponentOutlet="component.component; injector: createInjector(component.inputs)"
-            ></ng-container>
+            <ng-container *ngIf="component?.component; else emptyCell">
+              <ng-container
+                *ngComponentOutlet="component.component; injector: createInjector(component.inputs)"
+              ></ng-container>
+            </ng-container>
+            <ng-template #emptyCell>
+              <div class="flexible-grid__placeholder">
+                <span class="flexible-grid__placeholder-core"></span>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
     </ng-template>
-  `
+  `,
+    styles: [
+        `
+      .flexible-grid {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .flexible-grid__row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .flexible-grid__cell {
+        position: relative;
+      }
+
+      .flexible-grid__placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .flexible-grid__placeholder-core {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(148, 163, 184, 0.16) 0%, rgba(20, 184, 166, 0.16) 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      }
+    `,
+    ]
 })
 export class FlexibleGrid implements OnInit, OnChanges {
   @Input() customWidth = 0;
@@ -162,6 +207,9 @@ export class FlexibleGrid implements OnInit, OnChanges {
   @Input() backgroundColor = 'transparent';
   @Input() containerStyle?: Partial<CSSStyleDeclaration>;
   @Input() customTemplate?: TemplateRef<any>;
+  @Input() isDarkMode = true;
+  @Input() enableGlassmorphism = true;
+  @Input() cellBorderRadius = 8;
 
   grid: any[][] = [];
 
@@ -192,23 +240,47 @@ export class FlexibleGrid implements OnInit, OnChanges {
     }
   }
 
-  getGridItemStyle() {
+  getGridWrapperStyle() {
+    return {
+      ...(this.containerStyle ?? {}),
+    };
+  }
+
+  getGridItemStyle(component?: { component: any; inputs?: any }) {
+    const hasContent = !!component?.component;
+    const emptyBackground = this.enableGlassmorphism
+      ? this.isDarkMode
+        ? 'rgba(255, 255, 255, 0.03)'
+        : 'rgba(0, 0, 0, 0.02)'
+      : this.backgroundColor;
+    const borderColor = this.enableGlassmorphism
+      ? this.isDarkMode
+        ? 'rgba(255, 255, 255, 0.06)'
+        : 'rgba(0, 0, 0, 0.04)'
+      : 'transparent';
+
     const baseStyles = {
       flex: 1,
       width: this.customWidth + 'px',
       height: this.customHeight + 'px',
-      backgroundColor: this.backgroundColor,
+      background: hasContent ? this.backgroundColor : emptyBackground,
       margin: '1px',
       padding: 0,
-      borderRadius: '8px',
+      borderRadius: `${Math.max(this.cellBorderRadius, 0)}px`,
+      border: !hasContent && this.enableGlassmorphism ? `1px solid ${borderColor}` : 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     };
-    return {
-      ...baseStyles,
-      ...(this.containerStyle as any),
-    };
+
+    return baseStyles;
   }
 
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     if (!this.injectorCache.has(inputs)) {
       const injector = Injector.create({
         providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),

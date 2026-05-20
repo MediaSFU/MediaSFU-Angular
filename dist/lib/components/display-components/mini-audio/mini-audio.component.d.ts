@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface MiniAudioOptions {
     visible?: boolean;
@@ -79,7 +79,7 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
  * <app-mini-audio [visible]="true" [name]="'Audio Player'" [barColor]="'blue'" [imageSource]="'/path/to/image.png'"></app-mini-audio>
  * ```
  */
-export declare class MiniAudio implements OnInit, OnDestroy {
+export declare class MiniAudio implements OnInit, OnDestroy, OnChanges {
     visible: boolean;
     customStyle: any;
     name: string;
@@ -92,7 +92,8 @@ export declare class MiniAudio implements OnInit, OnDestroy {
     roundedImage: boolean;
     imageStyle: any;
     waveformAnimations: number[];
-    intervals: NodeJS.Timeout[];
+    intervals: ReturnType<typeof setInterval>[];
+    timeouts: ReturnType<typeof setTimeout>[];
     position: {
         x: number;
         y: number;
@@ -102,15 +103,22 @@ export declare class MiniAudio implements OnInit, OnDestroy {
         x: number;
         y: number;
     };
+    imageLoadFailed: boolean;
     constructor(injectedVisible: boolean, injectedCustomStyle: any, injectedName: string, injectedShowWaveform: boolean, injectedOverlayPosition: string, injectedBarColor: string, injectedTextColor: string, injectedNameTextStyling: any, injectedImageSource: string, injectedRoundedImage: boolean, injectedImageStyle: any);
     ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
+    syncWaveformState(): void;
     animateWaveform(): void;
     animateBar(index: number): void;
     resetWaveform(): void;
     clearIntervals(): void;
+    clearTimeouts(): void;
     getAnimationDuration(index: number): number;
     getImageStyle(): any;
+    get hasRenderableImage(): boolean;
+    get fallbackInitials(): string;
+    handleImageError(): void;
     combineStyles(baseStyle: any, additionalStyles: any): any;
     handleMouseDown(event: MouseEvent): void;
     handleMouseMove(event: MouseEvent): void;

@@ -26,6 +26,7 @@ import { RoomListComponent } from './room-list/room-list.component';
 import { EditRoomModalComponent } from './edit-room-modal/edit-room-modal.component';
 import { Socket } from 'socket.io-client';
 import { Participant, ShowAlert, BreakoutParticipant } from '../../@types/types';
+import { ModernRenderMode, isEmbeddedRenderMode } from '../../modern/utils/render-mode.utils';
 
 export interface BreakoutRoomsModalParameters {
   participants: Participant[];
@@ -63,6 +64,7 @@ export interface BreakoutRoomsModalOptions {
   parameters: BreakoutRoomsModalParameters;
   position?: 'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft';
   backgroundColor?: string;
+  isDarkMode?: boolean;
   onBreakoutRoomsClose: () => void;
   overlayStyle?: Partial<CSSStyleDeclaration>;
   contentStyle?: Partial<CSSStyleDeclaration>;
@@ -144,12 +146,15 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   @Input() parameters!: BreakoutRoomsModalParameters;
   @Input() position = 'topRight';
   @Input() backgroundColor = '#83c0e9';
+  @Input() isDarkMode?: boolean;
   @Input() onBreakoutRoomsClose: () => void = () => {
     console.log('Breakout rooms closed');
   };
   @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
   @Input() contentStyle?: Partial<CSSStyleDeclaration>;
   @Input() customTemplate?: any;
+  @Input() renderMode: ModernRenderMode = 'modal';
+  @Input() showHeader = true;
 
   @ViewChild('roomsContainer') roomsContainerRef!: ElementRef;
 
@@ -177,6 +182,32 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
 
   modalWidth = 400;
 
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
+
+  private resolveParameters(): BreakoutRoomsModalParameters {
+    if (this.parameters?.getUpdatedAllParams) {
+      return this.parameters.getUpdatedAllParams();
+    }
+
+    return this.parameters;
+  }
+
+  isVisibleState(): boolean {
+    return this.isEmbedded() || this.isVisible;
+  }
+
+  isEmbedded(): boolean {
+    return isEmbeddedRenderMode(this.renderMode);
+  }
+
   calculateModalWidth() {
     const screenWidth = window.innerWidth;
     let modalWidth = 0.85 * screenWidth;
@@ -187,33 +218,71 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   }
 
   modalContainerStyle() {
-    return {
-      display: this.isVisible ? 'block' : 'none',
-      position: 'fixed',
-      top: '0',
-      left: '0',
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: '999',
-    };
+    return this.isEmbedded()
+      ? {
+          display: 'block',
+          position: 'static',
+          top: 'auto',
+          left: 'auto',
+          width: '100%',
+          height: '100%',
+          minHeight: 0,
+          backgroundColor: 'transparent',
+          backdropFilter: 'none',
+          padding: '0',
+          zIndex: 'auto',
+        }
+      : {
+          display: this.isVisible ? 'flex' : 'none',
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          backgroundColor: this.resolvedIsDarkMode ? 'rgba(2, 6, 23, 0.62)' : 'rgba(15, 23, 42, 0.18)',
+          backdropFilter: 'blur(10px)',
+          alignItems: this.position.includes('top') ? 'flex-start' : this.position.includes('bottom') ? 'flex-end' : 'center',
+          justifyContent: this.position.includes('Left') ? 'flex-start' : this.position.includes('Right') ? 'flex-end' : 'center',
+          padding: '18px',
+          zIndex: '999',
+        };
   }
 
   modalContentStyle() {
-    return {
-      backgroundColor: this.backgroundColor,
-      borderRadius: '10px',
-      padding: '10px',
-      width: `${this.modalWidth}px`,
-      maxHeight: '75%',
-      overflowX: 'hidden',
-      overflowY: 'auto',
-      position: 'fixed',
-      top: this.position.includes('top') ? '10px' : 'auto',
-      bottom: this.position.includes('bottom') ? '10px' : 'auto',
-      left: this.position.includes('Left') ? '10px' : 'auto',
-      right: this.position.includes('Right') ? '10px' : 'auto',
-    };
+    const isDarkMode = this.resolvedIsDarkMode;
+    return this.isEmbedded()
+      ? {
+          background: 'transparent',
+          borderRadius: '0',
+          border: 'none',
+          boxShadow: 'none',
+          padding: '0',
+          width: '100%',
+          maxWidth: 'none',
+          height: '100%',
+          maxHeight: 'none',
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          color: isDarkMode ? '#e2e8f0' : '#0f172a',
+        }
+      : {
+          background: typeof this.isDarkMode === 'boolean'
+            ? isDarkMode
+              ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%)'
+              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.96) 100%)'
+            : this.backgroundColor,
+          borderRadius: '24px',
+          border: isDarkMode
+            ? '1px solid rgba(148, 163, 184, 0.18)'
+            : '1px solid rgba(148, 163, 184, 0.22)',
+          boxShadow: '0 24px 48px rgba(15, 23, 42, 0.18)',
+          padding: '20px',
+          width: `${this.modalWidth}px`,
+          maxHeight: '84vh',
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          color: isDarkMode ? '#e2e8f0' : '#0f172a',
+        };
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -227,14 +296,14 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   }
 
   initializeBreakoutRooms = () => {
-    this.parameters = this.parameters.getUpdatedAllParams();
-    const filteredParticipants = this.parameters.participants.filter(
+    const params = this.resolveParameters();
+    const filteredParticipants = params.participants.filter(
       (participant: any) => participant.islevel != '2',
     );
     this.participantsRef = filteredParticipants;
     this.breakoutRoomsRef =
-      this.parameters.breakoutRooms && this.parameters.breakoutRooms.length > 0
-        ? [...this.parameters.breakoutRooms]
+      params.breakoutRooms && params.breakoutRooms.length > 0
+        ? [...params.breakoutRooms]
         : [];
     this.checkCanStartBreakout();
   };
@@ -340,11 +409,11 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   }
 
   checkCanStartBreakout = () => {
-    this.parameters = this.parameters.getUpdatedAllParams();
-    if (this.parameters.canStartBreakout) {
+    const params = this.resolveParameters();
+    if (params.canStartBreakout) {
       this.startBreakoutButtonVisible = true;
       this.stopBreakoutButtonVisible =
-        this.parameters.breakOutRoomStarted && !this.parameters.breakOutRoomEnded;
+        params.breakOutRoomStarted && !params.breakOutRoomEnded;
     } else {
       this.startBreakoutButtonVisible = false;
       this.stopBreakoutButtonVisible = false;
@@ -352,54 +421,54 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   };
 
   handleStartBreakout = () => {
-    this.parameters = this.parameters.getUpdatedAllParams();
-    if (this.parameters.shareScreenStarted || this.parameters.shared) {
-      this.parameters.showAlert?.({
+    const params = this.resolveParameters();
+    if (params.shareScreenStarted || params.shared) {
+      params.showAlert?.({
         message: 'You cannot start breakout rooms while screen sharing is active',
         type: 'danger',
       });
       return;
     }
 
-    if (this.parameters.canStartBreakout) {
+    if (params.canStartBreakout) {
       const emitName =
-        this.parameters.breakOutRoomStarted && !this.parameters.breakOutRoomEnded
+        params.breakOutRoomStarted && !params.breakOutRoomEnded
           ? 'updateBreakout'
           : 'startBreakout';
       const filteredBreakoutRooms = this.breakoutRoomsRef.map((room) =>
         room.map(({ name, breakRoom }) => ({ name, breakRoom })),
       );
-      this.parameters.socket.emit(
+      params.socket.emit(
         emitName,
         {
           breakoutRooms: filteredBreakoutRooms,
           newParticipantAction: this.newParticipantAction,
-          roomName: this.parameters.roomName,
+          roomName: params.roomName,
         },
         (response: { success: any; reason: any }) => {
           if (response.success) {
-            this.parameters.showAlert?.({ message: 'Breakout rooms active', type: 'success' });
-            this.parameters.updateBreakOutRoomStarted(true);
-            this.parameters.updateBreakOutRoomEnded(false);
+            params.showAlert?.({ message: 'Breakout rooms active', type: 'success' });
+            params.updateBreakOutRoomStarted(true);
+            params.updateBreakOutRoomEnded(false);
 
             this.onBreakoutRoomsClose();
-            if (this.parameters.meetingDisplayType != 'all') {
-              this.parameters.updateMeetingDisplayType('all');
+            if (params.meetingDisplayType != 'all') {
+              params.updateMeetingDisplayType('all');
             }
           } else {
-            this.parameters.showAlert?.({ message: response.reason, type: 'danger' });
+            params.showAlert?.({ message: response.reason, type: 'danger' });
           }
         },
       );
 
-      if (this.parameters.localSocket && this.parameters.localSocket.id) {
+      if (params.localSocket && params.localSocket.id) {
         try {
-          this.parameters.localSocket.emit(
+          params.localSocket.emit(
             emitName,
             {
               breakoutRooms: filteredBreakoutRooms,
               newParticipantAction: this.newParticipantAction,
-              roomName: this.parameters.roomName,
+              roomName: params.roomName,
             },
             (response: { success: any; reason: any }) => {
               if (response.success) {
@@ -453,6 +522,12 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
   }
 
   handleEditRoom(roomIndex: number) {
+    if (this.editRoomModalVisible && this.parameters.currentRoomIndex === roomIndex) {
+      this.editRoomModalVisible = false;
+      this.currentRoom = null;
+      return;
+    }
+
     this.parameters.updateCurrentRoomIndex(roomIndex);
     this.currentRoom = this.breakoutRoomsRef[roomIndex];
     this.editRoomModalVisible = true;
@@ -462,6 +537,7 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
 
   handleDeleteRoom(roomIndex: number) {
     if (this.breakoutRoomsRef.length > 0) {
+      const activeRoomIndex = this.parameters.currentRoomIndex;
       const room = this.breakoutRoomsRef[roomIndex];
       room.forEach((participant) => (participant.breakRoom = null));
       const newBreakoutRooms = [...this.breakoutRoomsRef];
@@ -472,22 +548,37 @@ export class BreakoutRoomsModal implements OnChanges, OnInit {
       });
 
       this.breakoutRoomsRef = newBreakoutRooms;
+
+      if (this.editRoomModalVisible && activeRoomIndex != null) {
+        if (activeRoomIndex === roomIndex) {
+          this.editRoomModalVisible = false;
+          this.currentRoom = null;
+        } else if (activeRoomIndex > roomIndex) {
+          const nextRoomIndex = activeRoomIndex - 1;
+          this.parameters.updateCurrentRoomIndex(nextRoomIndex);
+          this.currentRoom = this.breakoutRoomsRef[nextRoomIndex] ?? null;
+        } else {
+          this.currentRoom = this.breakoutRoomsRef[activeRoomIndex] ?? null;
+        }
+      }
+
       this.checkCanStartBreakout();
     }
   }
 
   handleAddParticipant(event: { roomIndex: number; participant: BreakoutParticipant }) {
     const { roomIndex, participant } = event;
-    if (this.breakoutRoomsRef[roomIndex].length < this.parameters.itemPageLimit) {
+    const params = this.resolveParameters();
+    if (this.breakoutRoomsRef[roomIndex].length < params.itemPageLimit) {
       const newBreakoutRooms = [...this.breakoutRoomsRef];
       newBreakoutRooms[roomIndex].push(participant);
       this.breakoutRoomsRef = newBreakoutRooms;
       participant['breakRoom'] = roomIndex;
-      if (this.parameters.currentRoomIndex != null) {
-        this.handleEditRoom(this.parameters.currentRoomIndex);
+      if (params.currentRoomIndex != null) {
+        this.handleEditRoom(params.currentRoomIndex);
       }
     } else {
-      this.parameters.showAlert?.({ message: 'Room is full', type: 'danger' });
+      params.showAlert?.({ message: 'Room is full', type: 'danger' });
     }
   }
 

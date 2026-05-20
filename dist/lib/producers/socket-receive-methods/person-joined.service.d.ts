@@ -39,7 +39,7 @@ export declare class PersonJoined {
      * @param {Function} options.showAlert - A function to display an alert/notification.
      * @returns {Promise<void>} A promise that resolves when the alert has been shown.
      */
-    personJoined: ({ name, showAlert }: PersonJoinedOptions) => void;
+    personJoined: ({ name, showAlert }: PersonJoinedOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<PersonJoined, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<PersonJoined>;
 }

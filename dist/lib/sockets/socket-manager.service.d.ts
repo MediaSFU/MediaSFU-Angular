@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io-client';
-import { MeetingRoomParams, RecordingParams } from "../@types/types";
+import { MeetingRoomParams, RecordingParams } from '../@types/types';
 import * as i0 from "@angular/core";
 /**
  * Validates the provided API key or token.
@@ -75,7 +75,6 @@ export type ConnectLocalSocketType = (options: ConnectLocalSocketOptions) => Pro
  * @returns {Promise<Socket | boolean>} The active socket instance on connection, or a boolean indicating disconnection success.
  */
 export declare class SocketManager {
-    private socket;
     validateApiKeyToken(value: string): Promise<boolean>;
     /**
      * Connects to a media socket using the provided connection options.

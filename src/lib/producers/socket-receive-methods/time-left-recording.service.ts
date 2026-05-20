@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShowAlert } from '../../@types/types';
+import { timeLeftRecording as sharedTimeLeftRecording } from 'mediasfu-shared';
 
 export interface TimeLeftRecordingOptions {
   timeLeft: number;
@@ -47,17 +48,6 @@ export class TimeLeftRecording {
    * @throws {Error} If there is an issue displaying the alert message.
    */
   timeLeftRecording = ({ timeLeft, showAlert }: TimeLeftRecordingOptions): void => {
-    try {
-      // Display alert message
-
-      showAlert?.({
-        message: `The recording will stop in less than ${timeLeft} seconds.`,
-        duration: 3000,
-        type: 'danger',
-      });
-    } catch (error) {
-      console.log('Error in timeLeftRecording: ', error);
-      // throw new Error("Failed to display the time left alert message.");
-    }
+    return sharedTimeLeftRecording({ timeLeft, showAlert });
   };
 }

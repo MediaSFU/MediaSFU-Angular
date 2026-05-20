@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { controlMedia as sharedControlMedia } from 'mediasfu-shared';
 
 import { Socket } from 'socket.io-client';
 import { CoHostResponsibility, Participant, ShowAlert } from '../@types/types';
@@ -102,6 +103,20 @@ export class ControlMedia {
     coHost,
     roomName,
   }: ControlMediaOptions): Promise<void> {
+    return sharedControlMedia({
+      participantId,
+      participantName,
+      type,
+      socket,
+      coHostResponsibility,
+      participants,
+      member,
+      islevel,
+      showAlert,
+      coHost,
+      roomName,
+    } as unknown as Parameters<typeof sharedControlMedia>[0]) as Promise<void>;
+
     try {
       // Destructure parameters
       let mediaValue = false;

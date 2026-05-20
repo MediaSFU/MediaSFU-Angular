@@ -57,6 +57,7 @@ export type MeetingIdComponentType = (options: MeetingIdComponentOptions) => HTM
 })
 export class MeetingIdComponent {
   @Input() meetingID = '';
+  @Input() isDarkMode?: boolean;
   @Input() labelText?: string;
   @Input() containerAttributes?: { [key: string]: any };
   @Input() labelAttributes?: { [key: string]: any };
@@ -82,6 +83,16 @@ export class MeetingIdComponent {
       isCopied: this.isCopied,
       meetingID: this.meetingID,
     };
+  }
+
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
   }
 
   async handleCopy(): Promise<void> {

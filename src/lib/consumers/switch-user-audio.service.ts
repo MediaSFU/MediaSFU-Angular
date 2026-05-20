@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { switchUserAudio as sharedSwitchUserAudio } from 'mediasfu-shared';
 import {
   ShowAlert,
   StreamSuccessAudioSwitchType,
@@ -88,6 +89,11 @@ export class SwitchUserAudio {
    * @throws Will throw an error if the audio input device cannot be accessed or if there is an unexpected error.
    */
   async switchUserAudio({ audioPreference, parameters }: SwitchUserAudioOptions): Promise<void> {
+    return sharedSwitchUserAudio({
+      audioPreference,
+      parameters: parameters as unknown as Parameters<typeof sharedSwitchUserAudio>[0]['parameters'],
+    }) as Promise<void>;
+
     let {
       userDefaultAudioInputDevice,
       prevAudioInputDevice,

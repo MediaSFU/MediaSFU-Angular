@@ -75,6 +75,25 @@ export declare class ControlButtonsComponentTouch {
     direction: string;
     buttonsContainerStyle: any;
     showAspect: boolean;
+    getContainerStyle(): Record<string, string | number>;
+    getButtonStyle(button: ButtonTouch): {
+        width: string;
+        height: string;
+        padding: string;
+        margin: string;
+        display: string;
+        'align-items': string;
+        'justify-content': string;
+        border: string;
+        'border-radius': string;
+        cursor: string;
+        'background-color': string;
+    };
+    isButtonVisible(button: ButtonTouch): boolean;
+    isButtonActive(button: ButtonTouch): boolean;
+    isButtonDisabled(button: ButtonTouch): boolean;
+    resolveColor(value: string | (() => string) | undefined, fallback: string): string;
+    private resolveBoolean;
     getAlignmentStyle(): any;
     mergeStyles(...styles: any[]): any;
     isCustomComponent(comp: HTMLElement | CustomComponent | (() => HTMLElement | CustomComponent)): comp is CustomComponent;

@@ -29,8 +29,8 @@ export declare class WithOverrideDirective implements OnChanges, OnDestroy, DoCh
     props?: Record<string, any> | (() => Record<string, any>);
     customInjector?: Injector;
     get appWithOverrideDefault(): Type<any>;
-    get appWithOverrideProps(): Record<string, any> | (() => Record<string, any>) | undefined;
-    get appWithOverrideInjector(): Injector | undefined;
+    get appWithOverrideProps(): Record<string, any> | (() => Record<string, any>);
+    get appWithOverrideInjector(): Injector;
     private componentRef?;
     private embeddedDefaultView?;
     private renderedDefaultView?;

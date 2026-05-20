@@ -60,6 +60,32 @@ import { CustomMainContainerTestComponent } from '../test-overrides/custom-main-
             </label>
           </div>
 
+          <div class="credentials-group" *ngIf="connectionScenario !== 'ce'">
+            <p class="credentials-help">
+              Enter MediaSFU Cloud credentials for cloud or hybrid scenarios.
+            </p>
+            <label class="credentials-field">
+              <span>API Username</span>
+              <input
+                class="credentials-input"
+                type="text"
+                [(ngModel)]="demoCredentials.apiUserName"
+                placeholder="your-api-user"
+                autocomplete="off"
+              >
+            </label>
+            <label class="credentials-field">
+              <span>API Key</span>
+              <input
+                class="credentials-input"
+                type="password"
+                [(ngModel)]="demoCredentials.apiKey"
+                placeholder="your-api-key"
+                autocomplete="off"
+              >
+            </label>
+          </div>
+
           <h3>Experience Type</h3>
           <div class="radio-group">
             <label>
@@ -262,6 +288,63 @@ import { CustomMainContainerTestComponent } from '../test-overrides/custom-main-
       gap: 8px;
     }
 
+    .credentials-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(71, 85, 105, 0.55);
+    }
+
+    .credentials-help {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #94a3b8;
+    }
+
+    .credentials-field {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      padding: 0;
+      cursor: default;
+    }
+
+    .credentials-field:hover {
+      background: transparent;
+    }
+
+    .credentials-field span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .credentials-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: #f8fafc;
+      font-size: 13px;
+    }
+
+    .credentials-input::placeholder {
+      color: #64748b;
+    }
+
+    .credentials-input:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+    }
+
     label {
       display: flex;
       align-items: center;
@@ -319,6 +402,10 @@ import { CustomMainContainerTestComponent } from '../test-overrides/custom-main-
 export class AppUniqueComponent implements OnInit {
   // Connection scenario
   connectionScenario: 'cloud' | 'hybrid' | 'ce' = 'cloud';
+  demoCredentials = {
+    apiUserName: '',
+    apiKey: '',
+  };
 
   // Experience selector
   selectedExperience: 'generic' | 'broadcast' | 'conference' | 'webinar' | 'chat' = 'generic';
@@ -354,12 +441,12 @@ export class AppUniqueComponent implements OnInit {
   // Connection presets
   connectionPresets = {
     cloud: {
-      credentials: { apiUserName: 'demo', apiKey: 'demo1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab' },
+      credentials: this.demoCredentials,
       localLink: '',
       connectMediaSFU: true,
     },
     hybrid: {
-      credentials: { apiUserName: 'demo', apiKey: 'demo1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab' },
+      credentials: this.demoCredentials,
       localLink: 'http://localhost:3000',
       connectMediaSFU: true,
     },

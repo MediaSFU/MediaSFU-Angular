@@ -160,9 +160,9 @@ export declare class MessagesModal implements OnInit, OnChanges {
     closeMessagesModal(): void;
     updateModalStyles(): void;
     getTabStyle(tab: string): {
-        backgroundColor?: string | undefined;
-        color?: string | undefined;
-        borderRadius?: string | undefined;
+        backgroundColor?: string;
+        color?: string;
+        borderRadius?: string;
         paddingRight: string;
         paddingLeft: string;
         paddingTop: string;

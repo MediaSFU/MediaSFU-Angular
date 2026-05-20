@@ -2,6 +2,7 @@
 import { Socket } from 'socket.io-client';
 import { Injectable } from '@angular/core';
 import { ShowAlert } from '../../@types/types';
+import { modifySettings as sharedModifySettings } from 'mediasfu-shared';
 
 export interface ModifySettingsOptions {
   showAlert?: ShowAlert;
@@ -92,7 +93,7 @@ export class ModifySettings {
    */
 
   modifySettings = async ({
-    showAlert,
+    // showAlert,
     roomName,
     audioSet,
     videoSet,
@@ -105,42 +106,20 @@ export class ModifySettings {
     updateChatSetting,
     updateIsSettingsModalVisible,
   }: ModifySettingsOptions): Promise<void> => {
-    if (roomName.toLowerCase().startsWith('d')) {
-      // none should be approval
-      if (
-        audioSet === 'approval' ||
-        videoSet === 'approval' ||
-        screenshareSet === 'approval' ||
-        chatSet === 'approval'
-      ) {
-        showAlert?.({
-          message: 'You cannot set approval for demo mode.',
-          type: 'danger',
-          duration: 3000,
-        });
-
-        return;
-      }
-    }
-
-    // Check and update state variables based on the provided logic
-    if (audioSet) {
-      updateAudioSetting(audioSet);
-    }
-    if (videoSet) {
-      updateVideoSetting(videoSet);
-    }
-    if (screenshareSet) {
-      updateScreenshareSetting(screenshareSet);
-    }
-    if (chatSet) {
-      updateChatSetting(chatSet);
-    }
-
-    const settings = [audioSet, videoSet, screenshareSet, chatSet];
-    socket.emit('updateSettingsForRequests', { settings, roomName });
-
-    // Close modal
-    updateIsSettingsModalVisible(false);
+    return sharedModifySettings(
+      {
+        roomName,
+        audioSet,
+        videoSet,
+        screenshareSet,
+        chatSet,
+        socket,
+        updateAudioSetting,
+        updateVideoSetting,
+        updateScreenshareSetting,
+        updateChatSetting,
+        updateIsSettingsModalVisible,
+      } as unknown as Parameters<typeof sharedModifySettings>[0],
+    );
   };
 }

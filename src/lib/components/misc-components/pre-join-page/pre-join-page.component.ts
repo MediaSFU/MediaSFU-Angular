@@ -13,6 +13,13 @@ import { CreateRoomOnMediaSFU } from '../../../methods/utils/create-room-on-medi
 import { CreateRoomOnMediaSFUType, JoinRoomOnMediaSFUType, JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
+import { ModernButtonComponent } from '../../../modern/primitives/modern-button.component';
+import {
+  ModernFieldComponent,
+  type ModernFieldOption,
+} from '../../../modern/primitives/modern-field.component';
+import { ModernEntryShellComponent } from '../../../modern/primitives/modern-entry-shell.component';
+
 export interface JoinLocalEventRoomParameters {
   eventID: string;
   userName: string;
@@ -75,6 +82,11 @@ export interface Credentials {
   apiUserName: string;
   apiKey: string;
 }
+
+const EMPTY_CREDENTIALS: Credentials = {
+  apiUserName: '',
+  apiKey: '',
+};
 
 export interface PreJoinPageOptions {
   localLink?: string;
@@ -162,11 +174,17 @@ export type PreJoinPageType = (options: PreJoinPageOptions) => HTMLElement;
   selector: 'app-pre-join-page',
   templateUrl: './pre-join-page.component.html',
   styleUrls: ['./pre-join-page.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ModernButtonComponent,
+    ModernEntryShellComponent,
+    ModernFieldComponent,
+  ]
 })
 export class PreJoinPage implements OnInit {
   @Input() parameters: PreJoinPageParameters = {} as PreJoinPageParameters;
-  @Input() credentials: Credentials = { apiUserName: 'yourAPIUSERNAME', apiKey: 'yourAPIKEY' };
+  @Input() credentials: Credentials = { ...EMPTY_CREDENTIALS };
   @Input() localLink: string | undefined = "";
   @Input() connectMediaSFU: boolean | undefined = true;
   @Input() returnUI?: boolean;
@@ -186,6 +204,30 @@ export class PreJoinPage implements OnInit {
   initSocket: Socket | undefined = undefined;
 
   pending = new BehaviorSubject<boolean>(false);
+
+  readonly eventTypeOptions: ReadonlyArray<ModernFieldOption> = [
+    { label: 'Select Event Type', value: '' },
+    { label: 'Chat', value: 'chat' },
+    { label: 'Broadcast', value: 'broadcast' },
+    { label: 'Webinar', value: 'webinar' },
+    { label: 'Conference', value: 'conference' },
+  ];
+
+  private hasCloudCredentials(credentials: Credentials = this.credentials): boolean {
+    return Boolean(credentials.apiUserName?.trim() && credentials.apiKey?.trim());
+  }
+
+  private failMissingCloudCredentials(): void {
+    const message = 'MediaSFU Cloud credentials are required when using cloud create or join flows.';
+    this.error = message;
+    this.pending.next(false);
+    this.parameters.updateIsLoadingModalVisible(false);
+    this.parameters.showAlert?.({
+      message,
+      type: 'danger',
+      duration: 3000,
+    });
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -218,6 +260,7 @@ export class PreJoinPage implements OnInit {
     this.noUIPreJoinOptions = injectedNoUIPreJoinOptions || this.noUIPreJoinOptions;
     this.createMediaSFURoom = injectedCreateMediaSFURoom || this.createMediaSFURoom;
     this.joinMediaSFURoom = injectedJoinMediaSFURoom || this.joinMediaSFURoom;
+    this.imgSrc = this.parameters.imgSrc || '';
 
   }
 
@@ -353,6 +396,7 @@ export class PreJoinPage implements OnInit {
       return;
     }
     this.pending.next(true);
+    this.error = '';
     let payload = {} as CreateMediaSFURoomOptions;
 
     if (this.returnUI) {
@@ -360,6 +404,7 @@ export class PreJoinPage implements OnInit {
 
         if (!name || !duration || !eventType || !capacity) {
           this.error = 'Please fill all the fields.';
+          this.pending.next(false);
           return;
         }
 
@@ -380,6 +425,11 @@ export class PreJoinPage implements OnInit {
           return;
         }
       }
+
+    if (!this.localLink && !this.hasCloudCredentials()) {
+      this.failMissingCloudCredentials();
+      return;
+    }
 
     this.parameters.updateIsLoadingModalVisible(true);
 
@@ -628,6 +678,7 @@ export class PreJoinPage implements OnInit {
       return;
     }
     this.pending.next(true);
+    this.error = '';
     let payload = {} as JoinMediaSFURoomOptions;
 
     if (this.returnUI) {
@@ -635,6 +686,7 @@ export class PreJoinPage implements OnInit {
 
       if (!name || !eventID) {
         this.error = 'Please fill all the fields.';
+        this.pending.next(false);
         return;
       }
 
@@ -665,6 +717,11 @@ export class PreJoinPage implements OnInit {
 
       await this.joinLocalRoom({ joinData: joinData });
       this.pending.next(false);
+      return;
+    }
+
+    if (!this.hasCloudCredentials()) {
+      this.failMissingCloudCredentials();
       return;
     }
 
@@ -700,7 +757,8 @@ export class PreJoinPage implements OnInit {
     }
     } catch (error) {
       this.parameters.updateIsLoadingModalVisible(false);
-      this.error = `Unable to connect. ${(error as any).message}`;
+      this.pending.next(false);
+      this.error = `Unable to connect. ${(error as Error).message}`;
   }
 }
 }

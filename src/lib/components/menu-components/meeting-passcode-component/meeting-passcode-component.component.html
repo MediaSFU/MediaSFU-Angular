@@ -4,7 +4,9 @@
 
 <ng-template #defaultContainer>
   <div
-    class="form-group"
+    class="meeting-passcode"
+    [class.meeting-passcode--dark]="resolvedIsDarkMode"
+    [class.meeting-passcode--light]="!resolvedIsDarkMode"
     [ngClass]="containerAttributes?.['class']"
     [ngStyle]="containerAttributes?.['style']"
   >
@@ -19,7 +21,7 @@
       </ng-container>
       <ng-template #defaultLabel>
         <label
-          class="label"
+          class="meeting-passcode__label"
           [ngClass]="labelAttributes?.['class']"
           [ngStyle]="labelAttributes?.['style']"
         >
@@ -32,13 +34,21 @@
         <ng-container *ngTemplateOutlet="renderInput; context: renderContext"></ng-container>
       </ng-container>
       <ng-template #defaultInput>
-        <input
-          class="disabled-input"
-          [ngClass]="inputAttributes?.['class']"
-          [ngStyle]="inputAttributes?.['style']"
-          [value]="getInputValue()"
-          [readonly]="getInputReadOnly()"
-        />
+        <div class="meeting-passcode__group">
+          <input
+            class="meeting-passcode__input"
+            [ngClass]="inputAttributes?.['class']"
+            [ngStyle]="inputAttributes?.['style']"
+            [value]="getInputValue()"
+            [readonly]="getInputReadOnly()"
+          />
+          <button type="button" class="meeting-passcode__button" (click)="toggleVisibility()" aria-label="Toggle event passcode visibility">
+            <fa-icon [icon]="isRevealed ? hideIcon : revealIcon"></fa-icon>
+          </button>
+          <button type="button" class="meeting-passcode__button" (click)="handleCopy()" aria-label="Copy event passcode">
+            <fa-icon [icon]="copyIcon" [style.color]="isCopied ? '#22c55e' : null"></fa-icon>
+          </button>
+        </div>
       </ng-template>
     </ng-template>
   </div>

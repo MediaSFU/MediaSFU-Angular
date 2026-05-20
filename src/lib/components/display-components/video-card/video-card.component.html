@@ -1,9 +1,12 @@
 <div
-  [ngStyle]="customStyle"
-  [style.backgroundColor]="backgroundColor"
   class="video-card"
+  [ngStyle]="customStyle"
+  [style.background]="backgroundColor || null"
+  [class.video-card--dark]="isDarkModeEnabled"
+  [class.video-card--light]="!isDarkModeEnabled"
 >
   <app-card-video-display
+    class="video-card__media"
     [remoteProducerId]="remoteProducerId"
     [eventType]="eventType"
     [forceFullDisplay]="forceFullDisplay"
@@ -14,40 +17,41 @@
 
   <div
     *ngIf="showInfo"
-    [ngClass]="showControls ? 'overlayWeb' : 'overlayWebAlt'"
+    class="video-card__overlay video-card__overlay--info"
     [ngStyle]="getOverlayPosition(infoPosition)"
+    [ngClass]="showControls ? 'video-card__overlay--with-controls' : 'video-card__overlay--compact'"
   >
-    <div class="nameColumn">
-      <span class="nameText" [style.color]="textColor">{{
-        participant.name
-      }}</span>
+    <div class="video-card__identity">
+      <span
+        class="video-card__status-dot"
+        [class.video-card__status-dot--muted]="participant?.muted"
+      ></span>
+      <span class="video-card__name" [style.color]="textColor">{{ participant?.name || name }}</span>
     </div>
-    <div *ngIf="showWaveform" class="waveformWeb">
+    <div *ngIf="showWaveform" class="video-card__waveform">
       <div
-        *ngFor="let animation of waveformAnimations; let i = index"
-        class="bar"
-        [ngStyle]="{
-          height: animation === 0 ? '1px' : '16px',
-          backgroundColor: barColor
-        }"
+        *ngFor="let animation of waveformAnimations"
+        class="video-card__bar"
+        [style.height.px]="animation"
+        [style.backgroundColor]="barColor"
       ></div>
     </div>
   </div>
 
   <div
     *ngIf="showControls"
-    class="overlayControls"
+    class="video-card__overlay video-card__overlay--controls"
     [ngStyle]="getOverlayPosition(controlsPosition)"
   >
     <ng-container *ngIf="!videoControlsComponent">
-      <div class="overlayControls">
-        <button class="controlButton" (click)="toggleAudio()">
+      <div class="video-card__controls-row">
+        <button type="button" class="video-card__control-button" (click)="toggleAudio()">
           <fa-icon
             [icon]="participant.muted ? faMicrophoneSlash : faMicrophone"
             [style.color]="participant.muted ? 'red' : 'green'"
           ></fa-icon>
         </button>
-        <button class="controlButton" (click)="toggleVideo()">
+        <button type="button" class="video-card__control-button" (click)="toggleVideo()">
           <fa-icon
             [icon]="participant['videoOn'] ? faVideo : faVideoSlash"
             [style.color]="participant['videoOn'] ? 'green' : 'red'"
@@ -69,4 +73,6 @@
       </ng-container>
     </ng-container>
   </div>
+
+  <app-subtitle-overlay [subtitle]="liveSubtitleText"></app-subtitle-overlay>
 </div>

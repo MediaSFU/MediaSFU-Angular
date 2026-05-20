@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchMessagesOptions {
-  updateIsMessagesModalVisible: (visible: boolean) => void;
-  isMessagesModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchMessagesType = (options: LaunchMessagesOptions) => void;
+import { launchMessages as sharedLaunchMessages } from 'mediasfu-shared';
+import type { LaunchMessagesOptions } from 'mediasfu-shared';
+export type { LaunchMessagesOptions, LaunchMessagesType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility state of the messages modal.
@@ -46,6 +42,6 @@ export class LaunchMessages {
     updateIsMessagesModalVisible,
     isMessagesModalVisible,
   }: LaunchMessagesOptions): void {
-    updateIsMessagesModalVisible(!isMessagesModalVisible);
+    sharedLaunchMessages({ updateIsMessagesModalVisible, isMessagesModalVisible });
   }
 }

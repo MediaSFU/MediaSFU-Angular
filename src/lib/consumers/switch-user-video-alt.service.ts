@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { switchUserVideoAlt as sharedSwitchUserVideoAlt } from 'mediasfu-shared';
 import { ClickVideo, ClickVideoParameters } from '../methods/stream-methods/click-video.service';
 import {
   ShowAlert,
@@ -97,6 +98,12 @@ export class SwitchUserVideoAlt {
     checkoff,
     parameters,
   }: SwitchUserVideoAltOptions): Promise<void> {
+    return sharedSwitchUserVideoAlt({
+      videoPreference,
+      checkoff,
+      parameters: parameters as unknown as Parameters<typeof sharedSwitchUserVideoAlt>[0]['parameters'],
+    }) as Promise<void>;
+
     let { getUpdatedAllParams } = parameters;
     let parameters_ = getUpdatedAllParams();
 

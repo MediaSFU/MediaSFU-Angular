@@ -300,8 +300,6 @@ export class StreamSuccessVideo {
           updateAutoClickBackground(true);
           updateIsBackgroundModalVisible(true);
           await sleep({ ms: 500 });
-          updateIsBackgroundModalVisible(false);
-          updateAutoClickBackground(false);
         } else {
           if (!transportCreated) {
             try {
@@ -362,8 +360,6 @@ export class StreamSuccessVideo {
 
       // Update the transport created state
       transportCreatedVideo = true;
-      transportCreated = true;
-      updateTransportCreated(transportCreated);
       updateTransportCreatedVideo(transportCreatedVideo);
 
       // Reupdate the screen display

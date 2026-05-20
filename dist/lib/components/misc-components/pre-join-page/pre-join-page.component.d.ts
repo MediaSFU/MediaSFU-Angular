@@ -6,6 +6,7 @@ import { CheckLimitsAndMakeRequest } from '../../../methods/utils/check-limits-a
 import { CreateRoomOnMediaSFU } from '../../../methods/utils/create-room-on-media-sfu.service';
 import { CreateRoomOnMediaSFUType, JoinRoomOnMediaSFUType, JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { type ModernFieldOption } from '../../../modern/primitives/modern-field.component';
 import * as i0 from "@angular/core";
 export interface JoinLocalEventRoomParameters {
     eventID: string;
@@ -163,6 +164,9 @@ export declare class PreJoinPage implements OnInit {
     localData: ResponseLocalConnectionData | undefined;
     initSocket: Socket | undefined;
     pending: BehaviorSubject<boolean>;
+    readonly eventTypeOptions: ReadonlyArray<ModernFieldOption>;
+    private hasCloudCredentials;
+    private failMissingCloudCredentials;
     constructor(fb: FormBuilder, injectedParameters: PreJoinPageParameters, injectedCredentials: Credentials, injectedLocalLink: string, injectedConnectMediaSFU: boolean, injectedReturnUI: boolean, injectedNoUIPreJoinOptions: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions, injectedCreateMediaSFURoom: CreateRoomOnMediaSFUType, injectedJoinMediaSFURoom: JoinRoomOnMediaSFUType, checkLimitsService: CheckLimitsAndMakeRequest, createRoomService: CreateRoomOnMediaSFU, joinRoomService: JoinRoomOnMediaSFU);
     ngOnInit(): void;
     private connectLocalSocket;

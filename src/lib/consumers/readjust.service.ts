@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { readjust as sharedReadjust } from 'mediasfu-shared';
 import {
   PrepopulateUserMediaType,
   PrepopulateUserMediaParameters,
@@ -108,6 +109,12 @@ export class Readjust {
    * @throws {Error} Throws an error if there is an issue updating the grid sizes.
    */
   readjust = async ({ n, state, parameters }: ReadjustOptions): Promise<void> => {
+    return sharedReadjust({
+      n,
+      state,
+      parameters: parameters as unknown as Parameters<typeof sharedReadjust>[0]['parameters'],
+    }) as Promise<void>;
+
     let { getUpdatedAllParams, prepopulateUserMedia } = parameters;
     parameters = getUpdatedAllParams();
 

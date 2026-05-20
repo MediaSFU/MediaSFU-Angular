@@ -80,25 +80,34 @@ export class SubAspectComponent implements OnInit, OnDestroy, OnChanges {
     width: 0,
   };
 
+  private readonly updateAspectStylesHandler = () => {
+    this.updateAspectStyles();
+  };
+
   get computedContainerStyle() {
     const baseStyles = {
-      position: 'absolute',
-      bottom: '0',
+      position: 'relative',
       margin: '0',
       backgroundColor: this.backgroundColor,
+      display: this.showControls ? 'flex' : 'none',
+      flex: '0 0 auto',
+      alignSelf: 'stretch',
       height: this.aspectStyles.height + 'px',
-      width: this.aspectStyles.width + 'px'
+      minHeight: this.aspectStyles.height + 'px',
+      width: this.aspectStyles.width + 'px',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
     };
     return {
       ...baseStyles,
-      ...(this.containerStyle as any),
+      ...(this.containerStyle ?? {}),
     };
   }
 
   ngOnInit() {
     this.updateAspectStyles();
-    window.addEventListener('resize', this.updateAspectStyles.bind(this));
-    window.addEventListener('orientationchange', this.updateAspectStyles.bind(this));
+    window.addEventListener('resize', this.updateAspectStylesHandler);
+    window.addEventListener('orientationchange', this.updateAspectStylesHandler);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -113,16 +122,32 @@ export class SubAspectComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    window.removeEventListener('resize', this.updateAspectStyles.bind(this));
-    window.removeEventListener('orientationchange', this.updateAspectStyles.bind(this));
+    window.removeEventListener('resize', this.updateAspectStylesHandler);
+    window.removeEventListener('orientationchange', this.updateAspectStylesHandler);
   }
 
   private updateAspectStyles() {
     const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    let height = 0;
+
+    if (this.showControls) {
+      if (
+        typeof this.containerHeightFraction === 'number' &&
+        this.containerHeightFraction > 0 &&
+        this.containerHeightFraction !== 1
+      ) {
+        height = this.containerHeightFraction * windowHeight;
+      } else if (this.defaultFractionSub > 0) {
+        height = this.defaultFractionSub * windowHeight;
+      } else {
+        height = 40;
+      }
+    }
 
     this.aspectStyles = {
-      height: this.showControls ? 40 : 0,
-      width: this.containerWidthFraction ? this.containerWidthFraction * windowWidth : windowWidth,
+      height,
+      width: Math.max(0, this.containerWidthFraction ? this.containerWidthFraction * windowWidth : windowWidth),
     };
   }
 }

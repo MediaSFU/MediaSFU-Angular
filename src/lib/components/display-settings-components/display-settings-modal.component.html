@@ -45,6 +45,13 @@
           </button>
         </div>
         <hr class="modal-divider" />
+        <div class="setting-toggle">
+          <label>Show Subtitles on Cards</label>
+          <button (click)="showSubtitlesOnCardsState = !showSubtitlesOnCardsState" [ngClass]="{ 'active': showSubtitlesOnCardsState }">
+            <span class="toggle-icon">{{ showSubtitlesOnCardsState ? '&#10003;' : '&#10007;' }}</span>
+          </button>
+        </div>
+        <hr class="modal-divider" />
       </div>
     </div>
     <div class="modal-footer">

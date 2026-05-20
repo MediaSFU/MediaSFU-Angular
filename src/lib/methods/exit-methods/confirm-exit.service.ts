@@ -1,6 +1,7 @@
 // confirm-exit.service.ts
 
 import { Injectable } from '@angular/core';
+import { confirmExit as sharedConfirmExit } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 
 export interface ConfirmExitOptions {
@@ -11,7 +12,6 @@ export interface ConfirmExitOptions {
   ban?: boolean;
 }
 
-// Export the type definition for the function
 export type ConfirmExitType = (options: ConfirmExitOptions) => Promise<void>;
 
 /**
@@ -57,16 +57,14 @@ export class ConfirmExit {
    * @returns {Promise<void>} A promise that resolves when the exit is confirmed.
    */
   async confirmExit({ socket, localSocket, member, roomName, ban = false }: ConfirmExitOptions): Promise<void> {
-    // Emit a socket event to disconnect the user from the room
-    socket.emit('disconnectUser', { member: member, roomName: roomName, ban: ban });
-
-    if (localSocket && localSocket.id) {
-      // Emit a local socket event to disconnect the user from the room
-      localSocket.emit("disconnectUser", {
-        member: member,
-        roomName: roomName,
-        ban: ban,
-      });
-    }
+    return sharedConfirmExit(
+      {
+        socket,
+        localSocket,
+        member,
+        roomName,
+        ban,
+      } as unknown as Parameters<typeof sharedConfirmExit>[0],
+    );
   }
 }

@@ -131,7 +131,7 @@ export declare class RoomRecordParams {
      * @param {Function} params.parameters.updateRecordingMultiFormatsSupport - Function to update the multi-formats support.
      * @returns {Promise<void>} A promise that resolves when all parameters have been updated.
      */
-    roomRecordParams: ({ recordParams, parameters }: RoomRecordParamsOptions) => void;
+    roomRecordParams: ({ recordParams, parameters, }: RoomRecordParamsOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<RoomRecordParams, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<RoomRecordParams>;
 }

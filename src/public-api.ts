@@ -33,11 +33,17 @@ export * from './lib/components/co-host-components/co-host-modal/co-host-modal.c
 export * from './lib/components/participants-components/participants-modal/participants-modal.component';
 export * from './lib/components/message-components/messages-modal/messages-modal.component';
 export * from './lib/components/media-settings-components/media-settings-modal/media-settings-modal.component';
+export * from './lib/components/translation-components/translation-settings-modal/translation-settings-modal.component';
 export * from './lib/components/exit-components/confirm-exit-modal/confirm-exit-modal.component';
 export * from './lib/components/misc-components/confirm-here-modal/confirm-here-modal.component';
 export * from './lib/components/misc-components/share-event-modal/share-event-modal.component';
 export * from './lib/components/misc-components/welcome-page/welcome-page.component';
 export * from './lib/components/misc-components/pre-join-page/pre-join-page.component';
+
+// Modern modal components
+export * from './lib/modern/modal-components/modern-messages-modal.component';
+export * from './lib/modern/modal-components/modern-poll-modal.component';
+export * from './lib/modern/modal-components/modern-recording-modal.component';
 
 export * from './lib/components/polls-components/poll-modal/poll-modal.component';
 export * from './lib/components/background-components/background-modal/background-modal.component';
@@ -440,6 +446,54 @@ import { CheckLimitsAndMakeRequest } from './lib/methods/utils/check-limits-and-
 import { createResponseJoinRoom } from './lib/methods/utils/create-response-join-room.util';
 
 
+
+// Panelists and Permissions Components
+export * from './lib/components/panelists-components/panelists-modal/panelists-modal.component';
+export * from './lib/components/permissions-components/permissions-modal/permissions-modal.component';
+
+// Panelists and Permissions Methods
+export * from './lib/methods/panelists-methods/add-panelist.service';
+export * from './lib/methods/panelists-methods/remove-panelist.service';
+export * from './lib/methods/panelists-methods/focus-panelists.service';
+export * from './lib/methods/permissions-methods/update-participant-permission.service';
+export * from './lib/methods/permissions-methods/bulk-update-participant-permissions.service';
+export * from './lib/methods/permissions-methods/update-permission-config.service';
+
+// Translation Consumer & Utils
+export * from './lib/consumers/translation-consumer-switch.service';
+export * from './lib/methods/utils/translation-languages.util';
+export * from './lib/services/live-subtitle.service';
+
+// Socket Receive Methods
+export * from './lib/producers/socket-receive-methods/panelists-updated.service';
+export * from './lib/producers/socket-receive-methods/panelist-focus-changed.service';
+export * from './lib/producers/socket-receive-methods/receive-control-media.service';
+export * from './lib/producers/socket-receive-methods/added-as-panelist.service';
+export * from './lib/producers/socket-receive-methods/removed-from-panelists.service';
+export * from './lib/producers/socket-receive-methods/permission-updated.service';
+export * from './lib/producers/socket-receive-methods/permission-config-updated.service';
+export * from './lib/producers/socket-receive-methods/translation-receive-methods.service';
+
+// NEW IMPORTS FOR EXPORT BLOCK
+import { PanelistsModalComponent } from './lib/components/panelists-components/panelists-modal/panelists-modal.component';
+import { PermissionsModalComponent } from './lib/components/permissions-components/permissions-modal/permissions-modal.component';
+import { AddPanelist } from './lib/methods/panelists-methods/add-panelist.service';
+import { RemovePanelist } from './lib/methods/panelists-methods/remove-panelist.service';
+import { FocusPanelists } from './lib/methods/panelists-methods/focus-panelists.service';
+import { UpdateParticipantPermission } from './lib/methods/permissions-methods/update-participant-permission.service';
+import { BulkUpdateParticipantPermissions } from './lib/methods/permissions-methods/bulk-update-participant-permissions.service';
+import { UpdatePermissionConfig } from './lib/methods/permissions-methods/update-permission-config.service';
+import { TranslationConsumerSwitch } from './lib/consumers/translation-consumer-switch.service';
+import { LiveSubtitleService } from './lib/services/live-subtitle.service';
+import { PanelistsUpdated } from './lib/producers/socket-receive-methods/panelists-updated.service';
+import { PanelistFocusChanged } from './lib/producers/socket-receive-methods/panelist-focus-changed.service';
+import { ReceiveControlMedia } from './lib/producers/socket-receive-methods/receive-control-media.service';
+import { AddedAsPanelist } from './lib/producers/socket-receive-methods/added-as-panelist.service';
+import { RemovedFromPanelists } from './lib/producers/socket-receive-methods/removed-from-panelists.service';
+import { PermissionUpdated } from './lib/producers/socket-receive-methods/permission-updated.service';
+import { PermissionConfigUpdated } from './lib/producers/socket-receive-methods/permission-config-updated.service';
+import { TranslationReceiveMethods } from './lib/producers/socket-receive-methods/translation-receive-methods.service';
+
 export {
   initialValuesState,
   LoadingModal,
@@ -629,4 +683,24 @@ export {
   JoinRoomOnMediaSFU,
   CheckLimitsAndMakeRequest,
   createResponseJoinRoom,
+
+  PanelistsModalComponent,
+  PermissionsModalComponent,
+  AddPanelist,
+  RemovePanelist,
+  FocusPanelists,
+  UpdateParticipantPermission,
+  BulkUpdateParticipantPermissions,
+  UpdatePermissionConfig,
+  TranslationConsumerSwitch,
+  LiveSubtitleService,
+  PanelistsUpdated,
+  PanelistFocusChanged,
+  ReceiveControlMedia,
+  AddedAsPanelist,
+  RemovedFromPanelists,
+  PermissionUpdated,
+  PermissionConfigUpdated,
+  TranslationReceiveMethods,
+
 };

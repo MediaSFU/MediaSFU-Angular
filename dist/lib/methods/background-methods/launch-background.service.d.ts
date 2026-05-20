@@ -1,9 +1,6 @@
+import type { LaunchBackgroundOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchBackgroundOptions {
-    updateIsBackgroundModalVisible: (isVisible: boolean) => void;
-    isBackgroundModalVisible: boolean;
-}
-export type LaunchBackgroundType = (options: LaunchBackgroundOptions) => void;
+export type { LaunchBackgroundOptions, LaunchBackgroundType } from 'mediasfu-shared';
 /**
  * Toggles the visibility of the background modal.
  *

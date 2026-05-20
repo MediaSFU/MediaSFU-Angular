@@ -6,6 +6,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Optional,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
@@ -36,12 +37,14 @@ import {
   faBars,
   faComments,
   faChartBar,
+  faLanguage,
+  faSun,
+  faMoon,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
 
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
-import { LoadingModal } from '../display-components/loading-modal/loading-modal.component';
 import { ControlButtonsComponent } from '../display-components/control-buttons-component/control-buttons-component.component';
 import { ControlButtonsAltComponent } from '../display-components/control-buttons-alt-component/control-buttons-alt-component.component';
 import { ControlButtonsComponentTouch } from '../display-components/control-buttons-component-touch/control-buttons-component-touch.component';
@@ -50,37 +53,44 @@ import { MainScreenComponent } from '../display-components/main-screen-component
 import { MainGridComponent } from '../display-components/main-grid-component/main-grid-component.component';
 import { SubAspectComponent } from '../display-components/sub-aspect-component/sub-aspect-component.component';
 import { MainContainerComponent } from '../display-components/main-container-component/main-container-component.component';
-import { AlertComponent } from '../display-components/alert-component/alert.component.component';
-import { MenuModal } from '../menu-components/menu-modal/menu-modal.component';
-import { RecordingModal } from '../recording-components/recording-modal/recording-modal.component';
-import { RequestsModal } from '../requests-components/requests-modal/requests-modal.component';
-import { WaitingRoomModal } from '../waiting-components/waiting-room-modal.component';
-import { DisplaySettingsModal } from '../display-settings-components/display-settings-modal.component';
-import { EventSettingsModal } from '../event-settings-components/event-settings-modal/event-settings-modal.component';
-import { CoHostModal } from '../co-host-components/co-host-modal/co-host-modal.component';
-import { ParticipantsModal } from '../participants-components/participants-modal/participants-modal.component';
-import { MessagesModal } from '../message-components/messages-modal/messages-modal.component';
-import { MediaSettingsModal } from '../media-settings-components/media-settings-modal/media-settings-modal.component';
-import { ConfirmExitModal } from '../exit-components/confirm-exit-modal/confirm-exit-modal.component';
-import { ConfirmHereModal } from '../misc-components/confirm-here-modal/confirm-here-modal.component';
-import { ShareEventModal } from '../misc-components/share-event-modal/share-event-modal.component';
+import {
+  TranslationSettingsModal,
+  type TranslationChannelAvailability,
+} from '../translation-components/translation-settings-modal/translation-settings-modal.component';
 import {
   WelcomePage,
   WelcomePageOptions,
 } from '../misc-components/welcome-page/welcome-page.component';
 
-import { PollModal } from '../polls-components/poll-modal/poll-modal.component';
 import { BackgroundModal } from '../background-components/background-modal/background-modal.component';
 import { BreakoutRoomsModal } from '../breakout-components/breakout-rooms-modal.component';
 import { ConfigureWhiteboardModal } from '../whiteboard-components/configure-whiteboard-modal/configure-whiteboard-modal.component';
 import { Whiteboard } from '../whiteboard-components/whiteboard/whiteboard.component';
 import { Screenboard } from '../screenboard-components/screenboard/screenboard.component';
+import { ModernCoHostModalComponent } from '../../modern/modal-components/modern-co-host-modal.component';
+import { ModernConfirmExitModalComponent } from '../../modern/modal-components/modern-confirm-exit-modal.component';
+import { ModernConfirmHereModalComponent } from '../../modern/modal-components/modern-confirm-here-modal.component';
+import { ModernDisplaySettingsModalComponent } from '../../modern/modal-components/modern-display-settings-modal.component';
+import { ModernEventSettingsModalComponent } from '../../modern/modal-components/modern-event-settings-modal.component';
+import { ModernMediaSettingsModalComponent } from '../../modern/modal-components/modern-media-settings-modal.component';
+import { ModernMenuModalComponent } from '../../modern/modal-components/modern-menu-modal.component';
+import { ModernMessagesModalComponent } from '../../modern/modal-components/modern-messages-modal.component';
+import { ModernPollModalComponent } from '../../modern/modal-components/modern-poll-modal.component';
+import { ModernParticipantsModalComponent } from '../../modern/modal-components/modern-participants-modal.component';
+import { ModernRecordingModalComponent } from '../../modern/modal-components/modern-recording-modal.component';
+import { ModernRequestsModalComponent } from '../../modern/modal-components/modern-requests-modal.component';
+import { ModernShareEventModalComponent } from '../../modern/modal-components/modern-share-event-modal.component';
+import { ModernWaitingRoomModalComponent } from '../../modern/modal-components/modern-waiting-room-modal.component';
+import { ModernAlertComponent } from '../../modern/display-components/modern-alert.component';
+import { ModernLoadingModalComponent } from '../../modern/display-components/modern-loading-modal.component';
+import { ModernSidebarPanelComponent } from '../../modern/primitives/modern-sidebar-panel.component';
 import { ScreenboardModal } from '../screenboard-components/screenboard-modal/screenboard-modal.component';
 // pagination and display of media (samples)
-import { Pagination } from '../display-components/pagination/pagination.component';
 import { FlexibleGrid } from '../display-components/flexible-grid/flexible-grid.component';
 import { FlexibleVideo } from '../display-components/flexible-video/flexible-video.component';
 import { AudioGrid } from '../display-components/audio-grid/audio-grid.component';
+import { ModernParticipantsCounterBadgeComponent } from '../../modern/display-components/modern-participants-counter-badge.component';
+import { ModernPaginationComponent } from '../../modern/display-components/modern-pagination.component';
 
 import { MenuWidget } from '../display-components/control-widgets/menu-widget.component';
 import { MessageWidget } from '../display-components/control-widgets/message-widget.component';
@@ -155,6 +165,10 @@ import { LaunchRequests } from '../../methods/requests-methods/launch-requests.s
 import { LaunchParticipants } from '../../methods/participants-methods/launch-participants.service';
 import { LaunchMessages } from '../../methods/message-methods/launch-messages.service';
 import { LaunchConfirmExit } from '../../methods/exit-methods/launch-confirm-exit.service';
+import { SendMessage } from '../../methods/message-methods/send-message.service';
+import { MuteParticipants } from '../../methods/participants-methods/mute-participants.service';
+import { MessageParticipants } from '../../methods/participants-methods/message-participants.service';
+import { RemoveParticipants } from '../../methods/participants-methods/remove-participants.service';
 
 import { LaunchPoll } from '../../methods/polls-methods/launch-poll.service';
 import { LaunchBreakoutRooms } from '../../methods/breakout-room-methods/launch-breakout-rooms.service';
@@ -268,6 +282,24 @@ import { HostRequestResponse } from '../../producers/socket-receive-methods/host
 import { AllMembers } from '../../producers/socket-receive-methods/all-members.service';
 import { AllMembersRest } from '../../producers/socket-receive-methods/all-members-rest.service';
 import { Disconnect } from '../../producers/socket-receive-methods/disconnect.service';
+import { PanelistsUpdated } from '../../producers/socket-receive-methods/panelists-updated.service';
+import { PanelistFocusChanged } from '../../producers/socket-receive-methods/panelist-focus-changed.service';
+import { ReceiveControlMedia } from '../../producers/socket-receive-methods/receive-control-media.service';
+import { AddedAsPanelist } from '../../producers/socket-receive-methods/added-as-panelist.service';
+import { RemovedFromPanelists } from '../../producers/socket-receive-methods/removed-from-panelists.service';
+import { PermissionUpdated } from '../../producers/socket-receive-methods/permission-updated.service';
+import { PermissionConfigUpdated } from '../../producers/socket-receive-methods/permission-config-updated.service';
+import {
+  createLiveSubtitle,
+  isSubtitleExpired,
+  TranslationReceiveMethods,
+  type TranslationProducerMap,
+  type TranslationRoomConfig,
+  type TranslationTranscriptData,
+} from '../../producers/socket-receive-methods/translation-receive-methods.service';
+import { TranslationConsumerSwitch } from '../../consumers/translation-consumer-switch.service';
+import { PermissionConfig } from '../../methods/permissions-methods/update-permission-config.service';
+import { LiveSubtitleService } from '../../services/live-subtitle.service';
 
 import { CaptureCanvasStream } from '../../methods/whiteboard-methods/capture-canvas-stream.service';
 import { ResumePauseAudioStreams } from '../../consumers/resume-pause-audio-streams.service';
@@ -284,6 +316,28 @@ import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
 import { UIOverrideResolverService } from '../../services/ui-override-resolver.service';
 import { WithOverrideDirective } from '../../directives/with-override.directive';
 
+interface TranslationAwareParticipant extends Participant {
+  translationEnabled?: boolean;
+  translationDefaultOutputLanguage?: string | null;
+  translationOriginalProducerId?: string | null;
+  translationInputLanguage?: string | null;
+}
+
+interface SpeakerTranslationState {
+  speakerId: string;
+  speakerName: string;
+  inputLanguage: string;
+  outputLanguage: string;
+  originalProducerId: string;
+  enabled: boolean;
+}
+
+interface SpeakerTranslationStateUpdateOptions {
+  speakerName?: string;
+  inputLanguage?: string;
+  enabled?: boolean;
+}
+
 export type MediasfuGenericOptions = {
   PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
   localLink?: string;
@@ -299,7 +353,29 @@ export type MediasfuGenericOptions = {
   noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   createMediaSFURoom?: CreateRoomOnMediaSFUType;
+  canUsePersonalTranslation?: boolean;
+  personalTranslationUsername?: string;
 };
+
+type SidebarPanelContent =
+  | 'menu'
+  | 'messages'
+  | 'participants'
+  | 'shareEvent'
+  | 'recording'
+  | 'eventSettings'
+  | 'translation'
+  | 'requests'
+  | 'waiting'
+  | 'coHost'
+  | 'mediaSettings'
+  | 'background'
+  | 'displaySettings'
+  | 'poll'
+  | 'breakoutRooms'
+  | 'configureWhiteboard';
+
+type SidebarContent = 'none' | SidebarPanelContent;
 
 /**
  * MediasfuGeneric component provides a customizable interface with a full suite of modal windows and flexible layout options for interactive media applications.
@@ -381,37 +457,40 @@ export type MediasfuGenericOptions = {
     CommonModule,
     BreakoutRoomsModal,
     BackgroundModal,
-    CoHostModal,
-    AlertComponent,
+    ModernCoHostModalComponent,
+    ModernAlertComponent,
     AudioGrid,
     ControlButtonsComponentTouch,
     ControlButtonsComponent,
     FlexibleGrid,
     FlexibleVideo,
-    LoadingModal,
-    Pagination,
+    ModernLoadingModalComponent,
+    ModernPaginationComponent,
+    ModernParticipantsCounterBadgeComponent,
     SubAspectComponent,
-    DisplaySettingsModal,
-    EventSettingsModal,
-    ConfirmExitModal,
-    MediaSettingsModal,
-    MenuModal,
-    MessagesModal,
-    ConfirmHereModal,
-    ShareEventModal,
-    ParticipantsModal,
-    PollModal,
-    RecordingModal,
-    RequestsModal,
+    ModernDisplaySettingsModalComponent,
+    ModernEventSettingsModalComponent,
+    ModernConfirmExitModalComponent,
+    TranslationSettingsModal,
+    ModernMenuModalComponent,
+    ModernMessagesModalComponent,
+    ModernConfirmHereModalComponent,
+    ModernShareEventModalComponent,
+    ModernParticipantsModalComponent,
+    ModernPollModalComponent,
+    ModernRecordingModalComponent,
+    ModernRequestsModalComponent,
+    ModernMediaSettingsModalComponent,
     MainAspectComponent,
     MainContainerComponent,
     MainGridComponent,
     MainScreenComponent,
+    ModernSidebarPanelComponent,
     OtherGridComponent,
     ScreenboardModal,
     Whiteboard,
     ConfigureWhiteboardModal,
-    WaitingRoomModal,
+    ModernWaitingRoomModalComponent,
     WithOverrideDirective,
   ],
   template: `
@@ -472,12 +551,13 @@ export type MediasfuGenericOptions = {
                 "
               >
                 <app-main-aspect-component
-                  [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                  [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
                   [updateIsSmallScreen]="updateIsSmallScreen"
+                  [containerStyle]="mainAspectContainerStyle()"
                 >
                   <ng-container
                     *appWithOverride="
@@ -489,8 +569,10 @@ export type MediasfuGenericOptions = {
                     <app-main-screen-component
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
+                      [containerWidthFraction]="mainScreenWidthFraction()"
                       [defaultFraction]="1 - controlHeight.value"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
+                      [containerStyle]="mainScreenContainerStyle()"
                       [updateComponentSizes]="updateComponentSizes"
                     >
                       <ng-container
@@ -503,7 +585,7 @@ export type MediasfuGenericOptions = {
                         <app-main-grid-component
                           [height]="componentSizes.value.mainHeight"
                           [width]="componentSizes.value.mainWidth"
-                          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                          [backgroundColor]="roomSurfaceColor()"
                           [mainSize]="mainHeightWidth.value"
                           [showAspect]="mainHeightWidth.value > 0"
                           [timeBackgroundColor]="recordState.value"
@@ -599,6 +681,12 @@ export type MediasfuGenericOptions = {
                               [position]="'middle'"
                             ></app-control-buttons-component-touch>
                           </ng-container>
+                          <app-modern-participants-counter-badge
+                            [participantsCount]="participantsCounter.value"
+                            [position]="'bottomLeft'"
+                            [showBadge]="mainHeightWidth.value > 0"
+                            [isDarkMode]="modernMenuDarkMode.value"
+                          ></app-modern-participants-counter-badge>
                         </app-main-grid-component>
                       </ng-container>
 
@@ -612,7 +700,7 @@ export type MediasfuGenericOptions = {
                         <app-other-grid-component
                           [height]="componentSizes.value.otherHeight"
                           [width]="componentSizes.value.otherWidth"
-                          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                          [backgroundColor]="roomSurfaceColor()"
                           [showAspect]="mainHeightWidth.value !== 100"
                           [timeBackgroundColor]="recordState.value"
                           [showTimer]="mainHeightWidth.value === 0"
@@ -636,14 +724,14 @@ export type MediasfuGenericOptions = {
                                 props: paginationOverrideProps
                               "
                             >
-                              <app-pagination
+                              <app-modern-pagination
                                 [totalPages]="numberPages.value"
                                 [currentUserPage]="currentUserPage.value"
                                 [showAspect]="doPaginate.value"
                                 [paginationHeight]="paginationHeightWidth.value"
                                 [direction]="paginationDirection.value"
                                 [parameters]="mediaSFUParameters"
-                              ></app-pagination>
+                              ></app-modern-pagination>
                             </ng-container>
                           </div>
 
@@ -686,7 +774,7 @@ export type MediasfuGenericOptions = {
                               [rows]="gridRows.value"
                               [columns]="gridCols.value"
                               [componentsToRender]="otherGridStreams.value[0]"
-                              [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                              [backgroundColor]="roomSurfaceColor()"
                             ></app-flexible-grid>
                           </ng-container>
                           <ng-container
@@ -702,13 +790,465 @@ export type MediasfuGenericOptions = {
                               [rows]="altGridRows.value"
                               [columns]="altGridCols.value"
                               [componentsToRender]="otherGridStreams.value[1]"
-                              [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                              [backgroundColor]="roomSurfaceColor()"
                             ></app-flexible-grid>
                           </ng-container>
+                          <app-modern-participants-counter-badge
+                            [participantsCount]="participantsCounter.value"
+                            [position]="'topRight'"
+                            [showBadge]="mainHeightWidth.value === 0"
+                            [isDarkMode]="modernMenuDarkMode.value"
+                          ></app-modern-participants-counter-badge>
                         </app-other-grid-component>
                       </ng-container>
                     </app-main-screen-component>
                   </ng-container>
+
+                  <app-modern-sidebar-panel
+                    *ngIf="shouldUseSidebar()"
+                    [ngStyle]="sidebarThemeVars()"
+                    [style.position]="'absolute'"
+                    [style.top.px]="0"
+                    [style.right.px]="0"
+                    [style.zIndex]="12"
+                    [style.width.px]="isSidebarVisible() ? sidebarWidth() : 0"
+                    [style.height.px]="componentSizes.value.mainHeight || 0"
+                    [style.pointer-events]="isSidebarVisible() ? 'auto' : 'none'"
+                    [visible]="isSidebarVisible()"
+                    [width]="sidebarWidth()"
+                    [height]="componentSizes.value.mainHeight || 0"
+                    [title]="sidebarTitle()"
+                    [badgeText]="sidebarBadgeText()"
+                    [contentKey]="activeSidebarContent.value"
+                    [backLabel]="sidebarBackLabel()"
+                    [canNavigateBack]="sidebarNavigationStack.value.length > 0"
+                    (navigateBack)="sidebarNavigateBack()"
+                    (close)="closeSidebar()"
+                  >
+                        <ng-container [ngSwitch]="activeSidebarContent.value">
+                              <ng-container *ngSwitchCase="'menu'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'menuModal';
+                                    default: SidebarMenuModalComponentRef;
+                                    props: sidebarMenuModalOverrideProps
+                                  "
+                                >
+                                  <app-modern-menu-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isVisible]="true"
+                                    [isDarkMode]="modernMenuDarkMode.value"
+                                    [onToggleTheme]="updateModernThemeDarkMode"
+                                    [onClose]="closeSidebar"
+                                    [customButtons]="customMenuButtons"
+                                    [roomName]="roomName.value"
+                                    [adminPasscode]="adminPasscode.value"
+                                    [islevel]="islevel.value"
+                                    [eventType]="eventType.value"
+                                    [localLink]="localLink"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-modern-menu-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'messages'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'messagesModal';
+                                    default: MessagesModalComponentRef;
+                                    props: sidebarMessagesModalOverrideProps
+                                  "
+                                >
+                                  <app-messages-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isMessagesModalVisible]="true"
+                                    [onMessagesClose]="closeSidebar"
+                                    [messages]="messages.value"
+                                    [eventType]="eventType.value"
+                                    [member]="member.value"
+                                    [islevel]="islevel.value"
+                                    [coHostResponsibility]="coHostResponsibility.value"
+                                    [coHost]="coHost.value"
+                                    [startDirectMessage]="startDirectMessage.value"
+                                    [directMessageDetails]="directMessageDetails.value"
+                                    [updateStartDirectMessage]="updateStartDirectMessage"
+                                    [updateDirectMessageDetails]="updateDirectMessageDetails"
+                                    [showAlert]="showAlert"
+                                    [roomName]="roomName.value"
+                                    [socket]="socket.value"
+                                    [chatSetting]="chatSetting.value"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-messages-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'shareEvent'">
+                                <app-share-event-modal
+                                  [isShareEventModalVisible]="true"
+                                  [isDarkMode]="modernMenuDarkMode.value"
+                                  [onShareEventClose]="onShareEventClose"
+                                  [roomName]="roomName.value"
+                                  [islevel]="islevel.value"
+                                  [adminPasscode]="adminPasscode.value"
+                                  [eventType]="eventType.value"
+                                  [localLink]="localLink"
+                                  [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                  [renderMode]="'inline'"
+                                  [showHeader]="false"
+                                ></app-share-event-modal>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'participants'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'participantsModal';
+                                    default: ParticipantsModalComponentRef;
+                                    props: sidebarParticipantsModalOverrideProps
+                                  "
+                                >
+                                  <app-participants-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isParticipantsModalVisible]="true"
+                                    [onParticipantsClose]="closeSidebar"
+                                    [participantsCounter]="filteredParticipants.value.length"
+                                    [onParticipantsFilterChange]="onParticipantsFilterChange"
+                                    [parameters]="participantsModalOverrideProps().parameters"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-participants-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'recording'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'recordingModal';
+                                    default: RecordingModalComponentRef;
+                                    props: sidebarRecordingModalOverrideProps
+                                  "
+                                >
+                                  <app-recording-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isRecordingModalVisible]="true"
+                                    [onClose]="onRecordingClose"
+                                    [startRecording]="startRecording.startRecording"
+                                    [confirmRecording]="confirmRecording.confirmRecording"
+                                    [parameters]="mediaSFUParameters"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-recording-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'eventSettings'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'eventSettingsModal';
+                                    default: EventSettingsModalComponentRef;
+                                    props: sidebarEventSettingsModalOverrideProps
+                                  "
+                                >
+                                  <app-event-settings-modal
+                                    [isEventSettingsModalVisible]="true"
+                                    [isDarkMode]="modernMenuDarkMode.value"
+                                    [onEventSettingsClose]="onEventSettingsClose"
+                                    [audioSetting]="audioSetting.value"
+                                    [videoSetting]="videoSetting.value"
+                                    [screenshareSetting]="screenshareSetting.value"
+                                    [chatSetting]="chatSetting.value"
+                                    [updateAudioSetting]="updateAudioSetting"
+                                    [updateVideoSetting]="updateVideoSetting"
+                                    [updateScreenshareSetting]="updateScreenshareSetting"
+                                    [updateChatSetting]="updateChatSetting"
+                                    [updateIsSettingsModalVisible]="updateIsSettingsModalVisible"
+                                    [roomName]="roomName.value"
+                                    [socket]="socket.value"
+                                    [showAlert]="showAlert"
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-event-settings-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'translation'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'translationSettingsModal';
+                                    default: TranslationSettingsModalComponentRef;
+                                    props: sidebarTranslationSettingsModalOverrideProps
+                                  "
+                                >
+                                  <app-translation-settings-modal
+                                    [isVisible]="true"
+                                    [onClose]="onTranslationSettingsClose"
+                                    [isDarkMode]="modernMenuDarkMode.value"
+                                    [translationSupported]="translationSupported.value"
+                                    [translationConfig]="translationConfig.value"
+                                    [member]="member.value"
+                                    [islevel]="islevel.value"
+                                    [audioProducerId]="audioProducer.value?.id ?? null"
+                                    [participants]="participants.value"
+                                    [mySpokenLanguage]="mySpokenLanguage.value"
+                                    [mySpokenLanguageEnabled]="mySpokenLanguageEnabled.value"
+                                    [myDefaultOutputLanguage]="myDefaultOutputLanguage.value"
+                                    [myDefaultListenLanguage]="myDefaultListenLanguage.value"
+                                    [listenPreferences]="listenPreferences.value"
+                                    [availableTranslationChannels]="availableTranslationChannels.value"
+                                    [updateMySpokenLanguage]="updateMySpokenLanguage"
+                                    [updateMySpokenLanguageEnabled]="updateMySpokenLanguageEnabled"
+                                    [updateMyDefaultOutputLanguage]="updateMyDefaultOutputLanguage"
+                                    [updateMyDefaultListenLanguage]="updateMyDefaultListenLanguage"
+                                    [updateListenPreferences]="updateListenPreferences"
+                                    [socket]="socket.value"
+                                    [roomName]="roomName.value"
+                                    [showAlert]="showAlert"
+                                    [showSubtitlesOnCards]="liveSubtitleService.getShowSubtitlesOnCards()"
+                                    [updateShowSubtitlesOnCards]="updateShowSubtitlesOnCards"
+                                    [canUsePersonalTranslation]="canUsePersonalTranslation"
+                                    [personalTranslationUsername]="personalTranslationUsername"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-translation-settings-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'requests'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'requestsModal';
+                                    default: RequestsModalComponentRef;
+                                    props: sidebarRequestsModalOverrideProps
+                                  "
+                                >
+                                  <app-requests-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isRequestsModalVisible]="true"
+                                    [onRequestClose]="onRequestClose"
+                                    [requestCounter]="requestCounter.value"
+                                    [onRequestFilterChange]="onRequestFilterChange"
+                                    [updateRequestList]="updateRequestList"
+                                    [requestList]="filteredRequestList.value"
+                                    [roomName]="roomName.value"
+                                    [socket]="socket.value"
+                                    [parameters]="mediaSFUParameters"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-requests-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'waiting'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'waitingRoomModal';
+                                    default: WaitingRoomModalComponentRef;
+                                    props: sidebarWaitingRoomModalOverrideProps
+                                  "
+                                >
+                                  <app-waiting-room-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isWaitingModalVisible]="true"
+                                    [onWaitingRoomClose]="onWaitingRoomClose"
+                                    [waitingRoomCounter]="waitingRoomCounter.value"
+                                    [onWaitingRoomFilterChange]="onWaitingRoomFilterChange"
+                                    [waitingRoomList]="filteredWaitingRoomList.value"
+                                    [updateWaitingList]="updateWaitingRoomList"
+                                    [roomName]="roomName.value"
+                                    [socket]="socket.value"
+                                    [parameters]="waitingRoomModalOverrideProps().parameters"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-waiting-room-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'coHost'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'coHostModal';
+                                    default: CoHostModalComponentRef;
+                                    props: sidebarCoHostModalOverrideProps
+                                  "
+                                >
+                                  <app-co-host-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isCoHostModalVisible]="true"
+                                    [onCoHostClose]="onCoHostClose"
+                                    [coHostResponsibility]="coHostResponsibility.value"
+                                    [participants]="participants.value"
+                                    [currentCohost]="coHost.value"
+                                    [roomName]="roomName.value"
+                                    [showAlert]="showAlert"
+                                    [updateCoHostResponsibility]="updateCoHostResponsibility"
+                                    [updateCoHost]="updateCoHost"
+                                    [updateIsCoHostModalVisible]="updateIsCoHostModalVisible"
+                                    [socket]="socket.value"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-co-host-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'mediaSettings'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'mediaSettingsModal';
+                                    default: MediaSettingsModalComponentRef;
+                                    props: sidebarMediaSettingsModalOverrideProps
+                                  "
+                                >
+                                  <app-media-settings-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isMediaSettingsModalVisible]="true"
+                                    [onMediaSettingsClose]="onMediaSettingsClose"
+                                    [parameters]="mediaSFUParameters"
+                                    [onOpenBackgroundSidebar]="openSidebarBackground"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-media-settings-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'background'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'backgroundModal';
+                                    default: BackgroundModalComponentRef;
+                                    props: sidebarBackgroundModalOverrideProps
+                                  "
+                                >
+                                  <app-background-modal
+                                    [isVisible]="true"
+                                    [backgroundColor]="'transparent'"
+                                    [isDarkMode]="modernMenuDarkMode.value"
+                                    [onClose]="onBackgroundClose"
+                                    [parameters]="mediaSFUParameters"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-background-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'displaySettings'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'displaySettingsModal';
+                                    default: DisplaySettingsModalComponentRef;
+                                    props: sidebarDisplaySettingsModalOverrideProps
+                                  "
+                                >
+                                  <app-display-settings-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isDisplaySettingsModalVisible]="true"
+                                    [onDisplaySettingsClose]="onDisplaySettingsClose"
+                                    [parameters]="mediaSFUParameters"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-display-settings-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'poll'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'pollModal';
+                                    default: PollModalComponentRef;
+                                    props: sidebarPollModalOverrideProps
+                                  "
+                                >
+                                  <app-poll-modal
+                                    [backgroundColor]="'transparent'"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [isPollModalVisible]="true"
+                                    [onClose]="onPollClose"
+                                    [member]="member.value"
+                                    [islevel]="islevel.value"
+                                    [polls]="polls.value"
+                                    [poll]="poll.value"
+                                    [socket]="socket.value"
+                                    [roomName]="roomName.value"
+                                    [showAlert]="showAlert"
+                                    [updateIsPollModalVisible]="updateIsPollModalVisible"
+                                    [handleCreatePoll]="handleCreatePoll.handleCreatePoll"
+                                    [handleEndPoll]="handleEndPoll.handleEndPoll"
+                                    [handleVotePoll]="handleVotePoll.handleVotePoll"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-poll-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'breakoutRooms'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'breakoutRoomsModal';
+                                    default: BreakoutRoomsModalComponentRef;
+                                    props: sidebarBreakoutRoomsModalOverrideProps
+                                  "
+                                >
+                                  <app-breakout-rooms-modal
+                                    [isVisible]="true"
+                                    [backgroundColor]="'transparent'"
+                                    [isDarkMode]="modernMenuDarkMode.value"
+                                    [onBreakoutRoomsClose]="onBreakoutRoomsClose"
+                                    [parameters]="mediaSFUParameters"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-breakout-rooms-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchCase="'configureWhiteboard'">
+                                <ng-container
+                                  *appWithOverride="
+                                    'configureWhiteboardModal';
+                                    default: ConfigureWhiteboardModalComponentRef;
+                                    props: sidebarConfigureWhiteboardModalOverrideProps
+                                  "
+                                >
+                                  <app-configure-whiteboard-modal
+                                    [isVisible]="true"
+                                    [backgroundColor]="'transparent'"
+                                    [isDarkMode]="modernMenuDarkMode.value"
+                                    [onConfigureWhiteboardClose]="onConfigureWhiteboardClose"
+                                    [parameters]="mediaSFUParameters"
+                                    [contentStyle]="sidebarEmbeddedModalContentStyle"
+                                    [renderMode]="'inline'"
+                                    [showHeader]="false"
+                                  ></app-configure-whiteboard-modal>
+                                </ng-container>
+                              </ng-container>
+
+                              <ng-container *ngSwitchDefault>
+                                <div
+                                  [style.padding]="'16px 18px'"
+                                  [style.border-radius]="'20px'"
+                                  [style.background]="'color-mix(in srgb, var(--ms-modern-panel-surface) 84%, transparent)'"
+                                  [style.border]="'1px solid var(--ms-modern-border-subtle)'"
+                                  [style.color]="'var(--ms-modern-text-primary)'"
+                                  [style.line-height]="'1.65'"
+                                >
+                                  {{ sidebarPlaceholderCopy() }}
+                                </div>
+                              </ng-container>
+                        </ng-container>
+                  </app-modern-sidebar-panel>
                 </app-main-aspect-component>
               </ng-container>
 
@@ -720,8 +1260,9 @@ export type MediasfuGenericOptions = {
                 "
               >
                 <app-sub-aspect-component
-                  [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                  [backgroundColor]="roomSurfaceColor()"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
+                  [containerWidthFraction]="subAspectWidthFraction()"
                   [defaultFractionSub]="controlHeight.value"
                 >
                   <ng-container
@@ -733,7 +1274,8 @@ export type MediasfuGenericOptions = {
                   >
                     <app-control-buttons-component
                       [buttons]="controlButtons"
-                      [buttonColor]="'black'"
+                      [isDarkMode]="modernMenuDarkMode.value"
+                      [buttonColor]="controlStripTextColor()"
                       [buttonBackgroundColor]="{
                         default: 'transparent',
                         pressed: 'transparent'
@@ -741,6 +1283,7 @@ export type MediasfuGenericOptions = {
                       [alignment]="'space-between'"
                       [vertical]="false"
                       [buttonsContainerStyle]="{
+                        width: '100%',
                         marginTop: '0',
                         marginBottom: '0',
                         backgroundColor: 'transparent'
@@ -755,21 +1298,258 @@ export type MediasfuGenericOptions = {
       </ng-template>
 
       <ng-container *ngIf="returnUI && !customMainComponent">
-      <app-menu-modal
+      <app-modern-menu-modal
         *appWithOverride="
           'menuModal';
           default: MenuModalComponentRef;
           props: menuModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isVisible]="isMenuModalVisible.value"
+        [isDarkMode]="modernMenuDarkMode.value"
+        [onToggleTheme]="updateModernThemeDarkMode"
         [onClose]="onCloseMenuModal"
+        [onBack]="sidebarNavigateBack"
         [customButtons]="customMenuButtons"
         [roomName]="roomName.value"
         [adminPasscode]="adminPasscode.value"
         [islevel]="islevel.value"
+        [eventType]="eventType.value"
         [localLink]="localLink"
-      ></app-menu-modal>
+        [title]="sidebarTitle()"
+        [showHeader]="mobileMenuUsesSharedHeader()"
+        [showBackButton]="mobileMenuShowsBackButton()"
+        [backLabel]="sidebarBackLabel()"
+        [showDefaultSections]="mobileMenuShellContent() === 'menu'"
+      >
+        <ng-container [ngSwitch]="mobileMenuShellContent()">
+          <ng-container *ngSwitchCase="'eventSettings'">
+            <app-event-settings-modal
+              [isEventSettingsModalVisible]="true"
+              [isDarkMode]="modernMenuDarkMode.value"
+              [onEventSettingsClose]="onEventSettingsClose"
+              [audioSetting]="audioSetting.value"
+              [videoSetting]="videoSetting.value"
+              [screenshareSetting]="screenshareSetting.value"
+              [chatSetting]="chatSetting.value"
+              [updateAudioSetting]="updateAudioSetting"
+              [updateVideoSetting]="updateVideoSetting"
+              [updateScreenshareSetting]="updateScreenshareSetting"
+              [updateChatSetting]="updateChatSetting"
+              [updateIsSettingsModalVisible]="updateIsSettingsModalVisible"
+              [roomName]="roomName.value"
+              [socket]="socket.value"
+              [showAlert]="showAlert"
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-event-settings-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'shareEvent'">
+            <app-share-event-modal
+              [isShareEventModalVisible]="true"
+              [isDarkMode]="modernMenuDarkMode.value"
+              [onShareEventClose]="onShareEventClose"
+              [roomName]="roomName.value"
+              [islevel]="islevel.value"
+              [adminPasscode]="adminPasscode.value"
+              [eventType]="eventType.value"
+              [localLink]="localLink"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-share-event-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'translation'">
+            <app-translation-settings-modal
+              [isVisible]="true"
+              [onClose]="onTranslationSettingsClose"
+              [isDarkMode]="modernMenuDarkMode.value"
+              [translationSupported]="translationSupported.value"
+              [translationConfig]="translationConfig.value"
+              [member]="member.value"
+              [islevel]="islevel.value"
+              [audioProducerId]="audioProducer.value?.id ?? null"
+              [participants]="participants.value"
+              [mySpokenLanguage]="mySpokenLanguage.value"
+              [mySpokenLanguageEnabled]="mySpokenLanguageEnabled.value"
+              [myDefaultOutputLanguage]="myDefaultOutputLanguage.value"
+              [myDefaultListenLanguage]="myDefaultListenLanguage.value"
+              [listenPreferences]="listenPreferences.value"
+              [availableTranslationChannels]="availableTranslationChannels.value"
+              [updateMySpokenLanguage]="updateMySpokenLanguage"
+              [updateMySpokenLanguageEnabled]="updateMySpokenLanguageEnabled"
+              [updateMyDefaultOutputLanguage]="updateMyDefaultOutputLanguage"
+              [updateMyDefaultListenLanguage]="updateMyDefaultListenLanguage"
+              [updateListenPreferences]="updateListenPreferences"
+              [socket]="socket.value"
+              [roomName]="roomName.value"
+              [showAlert]="showAlert"
+              [showSubtitlesOnCards]="liveSubtitleService.getShowSubtitlesOnCards()"
+              [updateShowSubtitlesOnCards]="updateShowSubtitlesOnCards"
+              [canUsePersonalTranslation]="canUsePersonalTranslation"
+              [personalTranslationUsername]="personalTranslationUsername"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [renderMode]="'inline'"
+            ></app-translation-settings-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'requests'">
+            <app-requests-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isRequestsModalVisible]="true"
+              [onRequestClose]="onRequestClose"
+              [requestCounter]="requestCounter.value"
+              [onRequestFilterChange]="onRequestFilterChange"
+              [updateRequestList]="updateRequestList"
+              [requestList]="filteredRequestList.value"
+              [roomName]="roomName.value"
+              [socket]="socket.value"
+              [parameters]="mediaSFUParameters"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-requests-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'waiting'">
+            <app-waiting-room-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isWaitingModalVisible]="true"
+              [onWaitingRoomClose]="onWaitingRoomClose"
+              [waitingRoomCounter]="waitingRoomCounter.value"
+              [onWaitingRoomFilterChange]="onWaitingRoomFilterChange"
+              [waitingRoomList]="filteredWaitingRoomList.value"
+              [updateWaitingList]="updateWaitingRoomList"
+              [roomName]="roomName.value"
+              [socket]="socket.value"
+              [parameters]="waitingRoomModalOverrideProps().parameters"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-waiting-room-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'coHost'">
+            <app-co-host-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isCoHostModalVisible]="true"
+              [onCoHostClose]="onCoHostClose"
+              [coHostResponsibility]="coHostResponsibility.value"
+              [participants]="participants.value"
+              [currentCohost]="coHost.value"
+              [roomName]="roomName.value"
+              [showAlert]="showAlert"
+              [updateCoHostResponsibility]="updateCoHostResponsibility"
+              [updateCoHost]="updateCoHost"
+              [updateIsCoHostModalVisible]="updateIsCoHostModalVisible"
+              [socket]="socket.value"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-co-host-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'mediaSettings'">
+            <app-media-settings-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isMediaSettingsModalVisible]="true"
+              [onMediaSettingsClose]="onMediaSettingsClose"
+              [parameters]="mediaSFUParameters"
+              [onOpenBackgroundSidebar]="openSidebarBackground"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-media-settings-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'background'">
+            <app-background-modal
+              [isVisible]="true"
+              [backgroundColor]="'transparent'"
+              [isDarkMode]="modernMenuDarkMode.value"
+              [onClose]="onBackgroundClose"
+              [parameters]="mediaSFUParameters"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [renderMode]="'inline'"
+            ></app-background-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'displaySettings'">
+            <app-display-settings-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isDisplaySettingsModalVisible]="true"
+              [onDisplaySettingsClose]="onDisplaySettingsClose"
+              [parameters]="mediaSFUParameters"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-display-settings-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'recording'">
+            <app-recording-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isRecordingModalVisible]="true"
+              [onClose]="onRecordingClose"
+              [startRecording]="startRecording.startRecording"
+              [confirmRecording]="confirmRecording.confirmRecording"
+              [parameters]="mediaSFUParameters"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-recording-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'poll'">
+            <app-poll-modal
+              [backgroundColor]="'transparent'"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [isPollModalVisible]="true"
+              [onClose]="onPollClose"
+              [member]="member.value"
+              [islevel]="islevel.value"
+              [polls]="polls.value"
+              [poll]="poll.value"
+              [socket]="socket.value"
+              [roomName]="roomName.value"
+              [showAlert]="showAlert"
+              [updateIsPollModalVisible]="updateIsPollModalVisible"
+              [handleCreatePoll]="handleCreatePoll.handleCreatePoll"
+              [handleEndPoll]="handleEndPoll.handleEndPoll"
+              [handleVotePoll]="handleVotePoll.handleVotePoll"
+              [showHeader]="false"
+              [renderMode]="'inline'"
+            ></app-poll-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'breakoutRooms'">
+            <app-breakout-rooms-modal
+              [isVisible]="true"
+              [backgroundColor]="'transparent'"
+              [isDarkMode]="modernMenuDarkMode.value"
+              [onBreakoutRoomsClose]="onBreakoutRoomsClose"
+              [parameters]="mediaSFUParameters"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [renderMode]="'inline'"
+            ></app-breakout-rooms-modal>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'configureWhiteboard'">
+            <app-configure-whiteboard-modal
+              [isVisible]="true"
+              [backgroundColor]="'transparent'"
+              [isDarkMode]="modernMenuDarkMode.value"
+              [onConfigureWhiteboardClose]="onConfigureWhiteboardClose"
+              [parameters]="mediaSFUParameters"
+              [contentStyle]="sidebarEmbeddedModalContentStyle"
+              [renderMode]="'inline'"
+            ></app-configure-whiteboard-modal>
+          </ng-container>
+        </ng-container>
+      </app-modern-menu-modal>
 
       <app-event-settings-modal
         *appWithOverride="
@@ -777,8 +1557,8 @@ export type MediasfuGenericOptions = {
           default: EventSettingsModalComponentRef;
           props: eventSettingsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isEventSettingsModalVisible]="isSettingsModalVisible.value"
+        [isDarkMode]="modernMenuDarkMode.value"
         [onEventSettingsClose]="onEventSettingsClose"
         [audioSetting]="audioSetting.value"
         [videoSetting]="videoSetting.value"
@@ -794,13 +1574,48 @@ export type MediasfuGenericOptions = {
         [showAlert]="showAlert"
       ></app-event-settings-modal>
 
+      <app-translation-settings-modal
+        *appWithOverride="
+          'translationSettingsModal';
+          default: TranslationSettingsModalComponentRef;
+          props: translationSettingsModalOverrideProps
+        "
+        [isVisible]="isTranslationSettingsModalVisible.value"
+        [onClose]="onTranslationSettingsClose"
+        [isDarkMode]="modernMenuDarkMode.value"
+        [translationSupported]="translationSupported.value"
+        [translationConfig]="translationConfig.value"
+        [member]="member.value"
+        [islevel]="islevel.value"
+        [audioProducerId]="audioProducer.value?.id ?? null"
+        [participants]="participants.value"
+        [mySpokenLanguage]="mySpokenLanguage.value"
+        [mySpokenLanguageEnabled]="mySpokenLanguageEnabled.value"
+        [myDefaultOutputLanguage]="myDefaultOutputLanguage.value"
+        [myDefaultListenLanguage]="myDefaultListenLanguage.value"
+        [listenPreferences]="listenPreferences.value"
+        [availableTranslationChannels]="availableTranslationChannels.value"
+        [updateMySpokenLanguage]="updateMySpokenLanguage"
+        [updateMySpokenLanguageEnabled]="updateMySpokenLanguageEnabled"
+        [updateMyDefaultOutputLanguage]="updateMyDefaultOutputLanguage"
+        [updateMyDefaultListenLanguage]="updateMyDefaultListenLanguage"
+        [updateListenPreferences]="updateListenPreferences"
+        [socket]="socket.value"
+        [roomName]="roomName.value"
+        [showAlert]="showAlert"
+        [showSubtitlesOnCards]="liveSubtitleService.getShowSubtitlesOnCards()"
+        [updateShowSubtitlesOnCards]="updateShowSubtitlesOnCards"
+        [canUsePersonalTranslation]="canUsePersonalTranslation"
+        [personalTranslationUsername]="personalTranslationUsername"
+      ></app-translation-settings-modal>
+
       <app-requests-modal
         *appWithOverride="
           'requestsModal';
           default: RequestsModalComponentRef;
           props: requestsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isRequestsModalVisible]="isRequestsModalVisible.value"
         [onRequestClose]="onRequestClose"
         [requestCounter]="requestCounter.value"
@@ -818,7 +1633,7 @@ export type MediasfuGenericOptions = {
           default: WaitingRoomModalComponentRef;
           props: waitingRoomModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isWaitingModalVisible]="isWaitingModalVisible.value"
         [onWaitingRoomClose]="onWaitingRoomClose"
         [waitingRoomCounter]="waitingRoomCounter.value"
@@ -839,7 +1654,7 @@ export type MediasfuGenericOptions = {
           default: CoHostModalComponentRef;
           props: coHostModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isCoHostModalVisible]="isCoHostModalVisible.value"
         [onCoHostClose]="onCoHostClose"
         [coHostResponsibility]="coHostResponsibility.value"
@@ -859,7 +1674,7 @@ export type MediasfuGenericOptions = {
           default: MediaSettingsModalComponentRef;
           props: mediaSettingsModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
+        [backgroundColor]="roomAccentSurfaceColor()"
         [isMediaSettingsModalVisible]="isMediaSettingsModalVisible.value"
         [onMediaSettingsClose]="onMediaSettingsClose"
         [parameters]="mediaSFUParameters"
@@ -871,7 +1686,7 @@ export type MediasfuGenericOptions = {
           default: ParticipantsModalComponentRef;
           props: participantsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
         [participantsCounter]="participantsCounter.value"
@@ -904,7 +1719,7 @@ export type MediasfuGenericOptions = {
           default: DisplaySettingsModalComponentRef;
           props: displaySettingsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isDisplaySettingsModalVisible]="isDisplaySettingsModalVisible.value"
         [onDisplaySettingsClose]="onDisplaySettingsClose"
         [parameters]="mediaSFUParameters"
@@ -916,7 +1731,7 @@ export type MediasfuGenericOptions = {
           default: RecordingModalComponentRef;
           props: recordingModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isRecordingModalVisible]="isRecordingModalVisible.value"
         [onClose]="onRecordingClose"
         [startRecording]="startRecording.startRecording"
@@ -930,11 +1745,7 @@ export type MediasfuGenericOptions = {
           default: MessagesModalComponentRef;
           props: messagesModalOverrideProps
         "
-        [backgroundColor]="
-          eventType.value === 'webinar' || eventType.value === 'conference'
-            ? '#f5f5f5'
-            : 'rgba(255, 255, 255, 0.25)'
-        "
+        [backgroundColor]="modernMenuDarkMode.value ? 'rgba(15, 27, 49, 0.96)' : eventType.value === 'webinar' || eventType.value === 'conference' ? '#f5f5f5' : 'rgba(255, 255, 255, 0.25)'"
         [isMessagesModalVisible]="isMessagesModalVisible.value"
         [onMessagesClose]="onMessagesClose"
         [messages]="messages.value"
@@ -959,10 +1770,10 @@ export type MediasfuGenericOptions = {
           default: ConfirmExitModalComponentRef;
           props: confirmExitModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
+        [backgroundColor]="roomAccentSurfaceColor()"
         [isConfirmExitModalVisible]="isConfirmExitModalVisible.value"
         [onConfirmExitClose]="onConfirmExitClose"
-        [position]="'topRight'"
+        [position]="'center'"
         [member]="member.value"
         [roomName]="roomName.value"
         [socket]="socket.value"
@@ -975,9 +1786,11 @@ export type MediasfuGenericOptions = {
           default: ConfirmHereModalComponentRef;
           props: confirmHereModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
+        [backgroundColor]="roomModalSurfaceColor()"
+        [isDarkMode]="modernMenuDarkMode.value"
         [isConfirmHereModalVisible]="isConfirmHereModalVisible.value"
         [onConfirmHereClose]="onConfirmHereClose"
+        [onSuppressConfirmHere]="onSuppressConfirmHere"
         [member]="member.value"
         [roomName]="roomName.value"
         [socket]="socket.value"
@@ -990,6 +1803,7 @@ export type MediasfuGenericOptions = {
           props: shareEventModalOverrideProps
         "
         [isShareEventModalVisible]="isShareEventModalVisible.value"
+        [isDarkMode]="modernMenuDarkMode.value"
         [onShareEventClose]="onShareEventClose"
         [roomName]="roomName.value"
         [islevel]="islevel.value"
@@ -1025,8 +1839,8 @@ export type MediasfuGenericOptions = {
           default: BackgroundModalComponentRef;
           props: backgroundModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isBackgroundModalVisible.value"
+        [isDarkMode]="modernMenuDarkMode.value"
         [onClose]="onBackgroundClose"
         [parameters]="mediaSFUParameters"
       ></app-background-modal>
@@ -1037,8 +1851,8 @@ export type MediasfuGenericOptions = {
           default: BreakoutRoomsModalComponentRef;
           props: breakoutRoomsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isBreakoutRoomsModalVisible.value"
+        [isDarkMode]="modernMenuDarkMode.value"
         [onBreakoutRoomsClose]="onBreakoutRoomsClose"
         [parameters]="mediaSFUParameters"
       ></app-breakout-rooms-modal>
@@ -1049,8 +1863,8 @@ export type MediasfuGenericOptions = {
           default: ConfigureWhiteboardModalComponentRef;
           props: configureWhiteboardModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isVisible]="isConfigureWhiteboardModalVisible.value"
+        [isDarkMode]="modernMenuDarkMode.value"
         [onConfigureWhiteboardClose]="onConfigureWhiteboardClose"
         [parameters]="mediaSFUParameters"
       ></app-configure-whiteboard-modal>
@@ -1061,7 +1875,7 @@ export type MediasfuGenericOptions = {
           default: ScreenboardModalComponentRef;
           props: screenboardModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isVisible]="isScreenboardModalVisible.value"
         [onClose]="onScreenboardClose"
         [parameters]="mediaSFUParameters"
@@ -1070,24 +1884,24 @@ export type MediasfuGenericOptions = {
       <ng-container
         *appWithOverride="'alert'; default: AlertComponentRef; props: alertOverrideProps"
       >
-        <app-alert-component
+        <app-modern-alert-component
           [visible]="alertVisible.value"
           [message]="alertMessage.value"
           [type]="alertType.value"
+          [position]="alertPosition.value"
           [duration]="alertDuration.value"
           [onHide]="onAlertHide"
-          textColor="#ffffff"
-        ></app-alert-component>
+          [isDarkMode]="modernMenuDarkMode.value"
+        ></app-modern-alert-component>
       </ng-container>
 
       <ng-container
         *appWithOverride="'loadingModal'; default: LoadingModalComponentRef; props: loadingModalOverrideProps"
       >
-        <app-loading-modal
+        <app-modern-loading-modal
           [isVisible]="isLoadingModalVisible.value"
-          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-          displayColor="black"
-        ></app-loading-modal>
+          [isDarkMode]="modernMenuDarkMode.value"
+        ></app-modern-loading-modal>
       </ng-container>
     </ng-container>
     </div>
@@ -1126,12 +1940,14 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   @Input() seedData?: SeedData;
   @Input() useSeed = false;
   @Input() imgSrc = 'https://mediasfu.com/images/logo192.png';
-  @Input() sourceParameters?: { [key: string]: any } = {};
+  @Input() sourceParameters: { [key: string]: any } = {};
   @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
   @Input() returnUI? = true;
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
+  @Input() canUsePersonalTranslation = false;
+  @Input() personalTranslationUsername?: string;
 
   // Custom component inputs
   @Input() customVideoCard?: any;
@@ -1152,34 +1968,36 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   protected readonly OtherGridComponentRef = OtherGridComponent;
   protected readonly FlexibleVideoComponentRef = FlexibleVideo;
   protected readonly WhiteboardComponentRef = Whiteboard;
-  protected readonly PaginationComponentRef = Pagination;
+  protected readonly PaginationComponentRef = ModernPaginationComponent;
   protected readonly AudioGridComponentRef = AudioGrid;
   protected readonly FlexibleGridComponentRef = FlexibleGrid;
   protected readonly SubAspectComponentRef = SubAspectComponent;
   protected readonly ControlButtonsComponentRef = ControlButtonsComponent;
   protected readonly ControlButtonsTouchComponentRef = ControlButtonsComponentTouch;
   protected readonly ControlButtonsAltComponentRef = ControlButtonsAltComponent;
-  protected readonly AlertComponentRef = AlertComponent;
-  protected readonly MenuModalComponentRef = MenuModal;
-  protected readonly EventSettingsModalComponentRef = EventSettingsModal;
-  protected readonly RequestsModalComponentRef = RequestsModal;
-  protected readonly WaitingRoomModalComponentRef = WaitingRoomModal;
-  protected readonly CoHostModalComponentRef = CoHostModal;
-  protected readonly MediaSettingsModalComponentRef = MediaSettingsModal;
-  protected readonly ParticipantsModalComponentRef = ParticipantsModal;
-  protected readonly MessagesModalComponentRef = MessagesModal;
-  protected readonly DisplaySettingsModalComponentRef = DisplaySettingsModal;
-  protected readonly ConfirmExitModalComponentRef = ConfirmExitModal;
-  protected readonly ConfirmHereModalComponentRef = ConfirmHereModal;
-  protected readonly ShareEventModalComponentRef = ShareEventModal;
-  protected readonly RecordingModalComponentRef = RecordingModal;
-  protected readonly PollModalComponentRef = PollModal;
+  protected readonly AlertComponentRef = ModernAlertComponent;
+  protected readonly MenuModalComponentRef = ModernMenuModalComponent;
+  protected readonly SidebarMenuModalComponentRef = ModernMenuModalComponent;
+  protected readonly EventSettingsModalComponentRef = ModernEventSettingsModalComponent;
+  protected readonly TranslationSettingsModalComponentRef = TranslationSettingsModal;
+  protected readonly RequestsModalComponentRef = ModernRequestsModalComponent;
+  protected readonly WaitingRoomModalComponentRef = ModernWaitingRoomModalComponent;
+  protected readonly CoHostModalComponentRef = ModernCoHostModalComponent;
+  protected readonly MediaSettingsModalComponentRef = ModernMediaSettingsModalComponent;
+  protected readonly ParticipantsModalComponentRef = ModernParticipantsModalComponent;
+  protected readonly MessagesModalComponentRef = ModernMessagesModalComponent;
+  protected readonly DisplaySettingsModalComponentRef = ModernDisplaySettingsModalComponent;
+  protected readonly ConfirmExitModalComponentRef = ModernConfirmExitModalComponent;
+  protected readonly ConfirmHereModalComponentRef = ModernConfirmHereModalComponent;
+  protected readonly ShareEventModalComponentRef = ModernShareEventModalComponent;
+  protected readonly RecordingModalComponentRef = ModernRecordingModalComponent;
+  protected readonly PollModalComponentRef = ModernPollModalComponent;
   protected readonly BackgroundModalComponentRef = BackgroundModal;
   protected readonly BreakoutRoomsModalComponentRef = BreakoutRoomsModal;
   protected readonly ConfigureWhiteboardModalComponentRef = ConfigureWhiteboardModal;
   protected readonly ScreenboardModalComponentRef = ScreenboardModal;
   protected readonly ScreenboardComponentRef = Screenboard;
-  protected readonly LoadingModalComponentRef = LoadingModal;
+  protected readonly LoadingModalComponentRef = ModernLoadingModalComponent;
 
   mainContainerOverrideProps = () => ({
     containerStyle: this.containerStyle,
@@ -1188,8 +2006,41 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     parameters: this.mediaSFUParameters,
   });
 
+  roomSurfaceColor = (): string =>
+    this.modernMenuDarkMode.value
+      ? 'rgba(9, 18, 32, 0.98)'
+      : 'rgba(217, 227, 234, 0.99)';
+
+  roomModalSurfaceColor = (): string =>
+    this.modernMenuDarkMode.value
+      ? 'rgba(15, 27, 49, 0.96)'
+      : 'rgba(217, 227, 234, 0.99)';
+
+  roomAccentSurfaceColor = (): string =>
+    this.modernMenuDarkMode.value
+      ? 'rgba(14, 33, 45, 0.96)'
+      : 'rgba(181, 233, 229, 0.97)';
+
+  controlStripTextColor = (): string =>
+    this.modernMenuDarkMode.value ? '#f8fafc' : '#10233f';
+
+  mainAspectContainerStyle = (): Partial<CSSStyleDeclaration> => ({
+    display: 'flex',
+    flexDirection: 'row',
+    flex: '1 1 auto',
+    minWidth: '0',
+    width: 'auto',
+    position: 'relative',
+    boxSizing: 'border-box',
+  });
+
+  mainScreenContainerStyle = (): Partial<CSSStyleDeclaration> => ({
+    flex: '1 1 auto',
+    minWidth: '0',
+  });
+
   mainAspectOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     defaultFraction: 1 - this.controlHeight.value,
     showControls:
       this.eventType.value === 'webinar' ||
@@ -1197,6 +2048,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     updateIsWideScreen: this.updateIsWideScreen,
     updateIsMediumScreen: this.updateIsMediumScreen,
     updateIsSmallScreen: this.updateIsSmallScreen,
+    containerStyle: this.mainAspectContainerStyle(),
     parameters: this.mediaSFUParameters,
   });
 
@@ -1207,6 +2059,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     showControls:
       this.eventType.value === 'webinar' ||
       this.eventType.value === 'conference',
+    containerWidthFraction: this.mainScreenWidthFraction(),
+    containerStyle: this.mainScreenContainerStyle(),
     updateComponentSizes: this.updateComponentSizes,
     parameters: this.mediaSFUParameters,
   });
@@ -1214,7 +2068,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   mainGridOverrideProps = () => ({
     height: this.componentSizes.value.mainHeight,
     width: this.componentSizes.value.mainWidth,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     mainSize: this.mainHeightWidth.value,
     showAspect: this.mainHeightWidth.value > 0,
     timeBackgroundColor: this.recordState.value,
@@ -1250,7 +2104,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   otherGridOverrideProps = () => ({
     height: this.componentSizes.value.otherHeight,
     width: this.componentSizes.value.otherWidth,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     showAspect: this.mainHeightWidth.value !== 100,
     timeBackgroundColor: this.recordState.value,
     showTimer: this.mainHeightWidth.value === 0,
@@ -1278,7 +2132,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     rows: this.gridRows.value,
     columns: this.gridCols.value,
     componentsToRender: this.otherGridStreams.value[0] ?? [],
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     parameters: this.mediaSFUParameters,
     customVideoCard: this.customVideoCard,
     customAudioCard: this.customAudioCard,
@@ -1291,7 +2145,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     rows: this.altGridRows.value,
     columns: this.altGridCols.value,
     componentsToRender: this.otherGridStreams.value[1] ?? [],
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     parameters: this.mediaSFUParameters,
     customVideoCard: this.customVideoCard,
     customAudioCard: this.customAudioCard,
@@ -1299,17 +2153,19 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   subAspectOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     showControls:
       this.eventType.value === 'webinar' ||
       this.eventType.value === 'conference',
+    containerWidthFraction: this.subAspectWidthFraction(),
     defaultFractionSub: this.controlHeight.value,
     parameters: this.mediaSFUParameters,
   });
 
   controlButtonsOverrideProps = () => ({
     buttons: this.controlButtons,
-    buttonColor: 'black',
+    isDarkMode: this.modernMenuDarkMode.value,
+    buttonColor: this.controlStripTextColor(),
     buttonBackgroundColor: {
       default: 'transparent',
       pressed: 'transparent',
@@ -1317,6 +2173,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     alignment: 'space-between',
     vertical: false,
     buttonsContainerStyle: {
+      width: '100%',
       marginTop: '0',
       marginBottom: '0',
       backgroundColor: 'transparent',
@@ -1371,20 +2228,33 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   menuModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: '',
     isVisible: this.isMenuModalVisible.value,
+    isDarkMode: this.modernMenuDarkMode.value,
+    onToggleTheme: this.updateModernThemeDarkMode,
     onClose: this.onCloseMenuModal,
     customButtons: this.customMenuButtons,
     roomName: this.roomName.value,
     adminPasscode: this.adminPasscode.value,
     islevel: this.islevel.value,
+    eventType: this.eventType.value,
     localLink: this.localLink,
     parameters: this.mediaSFUParameters,
   });
 
+  sidebarMenuModalOverrideProps = () => ({
+    ...this.menuModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isVisible: true,
+    onClose: this.closeSidebar,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
   eventSettingsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
     isEventSettingsModalVisible: this.isSettingsModalVisible.value,
+    isDarkMode: this.modernMenuDarkMode.value,
     onEventSettingsClose: this.onEventSettingsClose,
     audioSetting: this.audioSetting.value,
     videoSetting: this.videoSetting.value,
@@ -1401,8 +2271,39 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     parameters: this.mediaSFUParameters,
   });
 
+  translationSettingsModalOverrideProps = () => ({
+    isVisible: this.isTranslationSettingsModalVisible.value,
+    onClose: this.onTranslationSettingsClose,
+    isDarkMode: this.modernMenuDarkMode.value,
+    translationSupported: this.translationSupported.value,
+    translationConfig: this.translationConfig.value,
+    member: this.member.value,
+    islevel: this.islevel.value,
+    audioProducerId: this.audioProducer.value?.id ?? null,
+    participants: this.participants.value,
+    mySpokenLanguage: this.mySpokenLanguage.value,
+    mySpokenLanguageEnabled: this.mySpokenLanguageEnabled.value,
+    myDefaultOutputLanguage: this.myDefaultOutputLanguage.value,
+    myDefaultListenLanguage: this.myDefaultListenLanguage.value,
+    listenPreferences: this.listenPreferences.value,
+    availableTranslationChannels: this.availableTranslationChannels.value,
+    updateMySpokenLanguage: this.updateMySpokenLanguage,
+    updateMySpokenLanguageEnabled: this.updateMySpokenLanguageEnabled,
+    updateMyDefaultOutputLanguage: this.updateMyDefaultOutputLanguage,
+    updateMyDefaultListenLanguage: this.updateMyDefaultListenLanguage,
+    updateListenPreferences: this.updateListenPreferences,
+    socket: this.socket.value,
+    roomName: this.roomName.value,
+    showAlert: this.showAlert,
+    showSubtitlesOnCards: this.getShowSubtitlesOnCardsState(),
+    updateShowSubtitlesOnCards: this.updateShowSubtitlesOnCards,
+    canUsePersonalTranslation: this.canUsePersonalTranslation,
+    personalTranslationUsername: this.personalTranslationUsername,
+    parameters: this.mediaSFUParameters,
+  });
+
   requestsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isRequestsModalVisible: this.isRequestsModalVisible.value,
     onRequestClose: this.onRequestClose,
     requestCounter: this.requestCounter.value,
@@ -1415,7 +2316,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   waitingRoomModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isWaitingModalVisible: this.isWaitingModalVisible.value,
     onWaitingRoomClose: this.onWaitingRoomClose,
     waitingRoomCounter: this.waitingRoomCounter.value,
@@ -1431,7 +2332,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   coHostModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isCoHostModalVisible: this.isCoHostModalVisible.value,
     onCoHostClose: this.onCoHostClose,
     coHostResponsibility: this.coHostResponsibility.value,
@@ -1447,14 +2348,15 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   mediaSettingsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: this.roomAccentSurfaceColor(),
     isMediaSettingsModalVisible: this.isMediaSettingsModalVisible.value,
     onMediaSettingsClose: this.onMediaSettingsClose,
+    onOpenBackgroundSidebar: this.openSidebarBackground,
     parameters: this.mediaSFUParameters,
   });
 
   participantsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isParticipantsModalVisible: this.isParticipantsModalVisible.value,
     onParticipantsClose: this.onParticipantsClose,
     participantsCounter: this.participantsCounter.value,
@@ -1482,14 +2384,14 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   displaySettingsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isDisplaySettingsModalVisible: this.isDisplaySettingsModalVisible.value,
     onDisplaySettingsClose: this.onDisplaySettingsClose,
     parameters: this.mediaSFUParameters,
   });
 
   recordingModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isRecordingModalVisible: this.isRecordingModalVisible.value,
     onClose: this.onRecordingClose,
     startRecording: this.startRecording.startRecording,
@@ -1499,10 +2401,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   messagesModalOverrideProps = () => ({
     backgroundColor:
-      this.eventType.value === 'webinar' ||
-      this.eventType.value === 'conference'
-        ? '#f5f5f5'
-        : 'rgba(255, 255, 255, 0.25)',
+      this.modernMenuDarkMode.value
+        ? 'rgba(15, 27, 49, 0.96)'
+        : this.eventType.value === 'webinar' || this.eventType.value === 'conference'
+          ? '#f5f5f5'
+          : 'rgba(255, 255, 255, 0.25)',
     isMessagesModalVisible: this.isMessagesModalVisible.value,
     onMessagesClose: this.onMessagesClose,
     messages: this.messages.value,
@@ -1522,11 +2425,155 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     parameters: this.mediaSFUParameters,
   });
 
+  sidebarMessagesModalOverrideProps = () => ({
+    ...this.messagesModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isMessagesModalVisible: true,
+    onMessagesClose: this.closeSidebar,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarParticipantsModalOverrideProps = () => ({
+    ...this.participantsModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isParticipantsModalVisible: true,
+    onParticipantsClose: this.closeSidebar,
+    participantsCounter: this.filteredParticipants.value.length,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarRecordingModalOverrideProps = () => ({
+    ...this.recordingModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isRecordingModalVisible: true,
+    onClose: this.onRecordingClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarEventSettingsModalOverrideProps = () => ({
+    ...this.eventSettingsModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isEventSettingsModalVisible: true,
+    onEventSettingsClose: this.onEventSettingsClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarTranslationSettingsModalOverrideProps = () => ({
+    ...this.translationSettingsModalOverrideProps(),
+    isVisible: true,
+    onClose: this.onTranslationSettingsClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarRequestsModalOverrideProps = () => ({
+    ...this.requestsModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isRequestsModalVisible: true,
+    onRequestClose: this.onRequestClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarWaitingRoomModalOverrideProps = () => ({
+    ...this.waitingRoomModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isWaitingModalVisible: true,
+    onWaitingRoomClose: this.onWaitingRoomClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarCoHostModalOverrideProps = () => ({
+    ...this.coHostModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isCoHostModalVisible: true,
+    onCoHostClose: this.onCoHostClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarMediaSettingsModalOverrideProps = () => ({
+    ...this.mediaSettingsModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isMediaSettingsModalVisible: true,
+    onMediaSettingsClose: this.onMediaSettingsClose,
+    onOpenBackgroundSidebar: this.openSidebarBackground,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarBackgroundModalOverrideProps = () => ({
+    ...this.backgroundModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isVisible: true,
+    isDarkMode: this.modernMenuDarkMode.value,
+    onClose: this.onBackgroundClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarDisplaySettingsModalOverrideProps = () => ({
+    ...this.displaySettingsModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isDisplaySettingsModalVisible: true,
+    onDisplaySettingsClose: this.onDisplaySettingsClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarPollModalOverrideProps = () => ({
+    ...this.pollModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isPollModalVisible: true,
+    onClose: this.onPollClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarBreakoutRoomsModalOverrideProps = () => ({
+    ...this.breakoutRoomsModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isVisible: true,
+    isDarkMode: this.modernMenuDarkMode.value,
+    onBreakoutRoomsClose: this.onBreakoutRoomsClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
+  sidebarConfigureWhiteboardModalOverrideProps = () => ({
+    ...this.configureWhiteboardModalOverrideProps(),
+    backgroundColor: 'transparent',
+    isVisible: true,
+    isDarkMode: this.modernMenuDarkMode.value,
+    onConfigureWhiteboardClose: this.onConfigureWhiteboardClose,
+    renderMode: 'inline' as const,
+    showHeader: false,
+    contentStyle: this.sidebarEmbeddedModalContentStyle,
+  });
+
   confirmExitModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: this.roomAccentSurfaceColor(),
     isConfirmExitModalVisible: this.isConfirmExitModalVisible.value,
     onConfirmExitClose: this.onConfirmExitClose,
-    position: 'topRight',
+    position: 'center',
     member: this.member.value,
     roomName: this.roomName.value,
     socket: this.socket.value,
@@ -1535,9 +2582,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   confirmHereModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: this.roomModalSurfaceColor(),
+    isDarkMode: this.modernMenuDarkMode.value,
     isConfirmHereModalVisible: this.isConfirmHereModalVisible.value,
     onConfirmHereClose: this.onConfirmHereClose,
+    onSuppressConfirmHere: this.onSuppressConfirmHere,
     member: this.member.value,
     roomName: this.roomName.value,
     socket: this.socket.value,
@@ -1546,6 +2595,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   shareEventModalOverrideProps = () => ({
     isShareEventModalVisible: this.isShareEventModalVisible.value,
+    isDarkMode: this.modernMenuDarkMode.value,
     onShareEventClose: this.onShareEventClose,
     roomName: this.roomName.value,
     islevel: this.islevel.value,
@@ -1573,28 +2623,31 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   backgroundModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isVisible: this.isBackgroundModalVisible.value,
+    isDarkMode: this.modernMenuDarkMode.value,
     onClose: this.onBackgroundClose,
     parameters: this.mediaSFUParameters,
   });
 
   breakoutRoomsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isVisible: this.isBreakoutRoomsModalVisible.value,
+    isDarkMode: this.modernMenuDarkMode.value,
     onBreakoutRoomsClose: this.onBreakoutRoomsClose,
     parameters: this.mediaSFUParameters,
   });
 
   configureWhiteboardModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isVisible: this.isConfigureWhiteboardModalVisible.value,
+    isDarkMode: this.modernMenuDarkMode.value,
     onConfigureWhiteboardClose: this.onConfigureWhiteboardClose,
     parameters: this.mediaSFUParameters,
   });
 
   screenboardModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isVisible: this.isScreenboardModalVisible.value,
     onClose: this.onScreenboardClose,
     parameters: this.mediaSFUParameters,
@@ -1604,16 +2657,16 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     visible: this.alertVisible.value,
     message: this.alertMessage.value,
     type: this.alertType.value,
+    position: this.alertPosition.value,
     duration: this.alertDuration.value,
     onHide: this.onAlertHide,
-    textColor: '#ffffff',
+    isDarkMode: this.modernMenuDarkMode.value,
     parameters: this.mediaSFUParameters,
   });
 
   loadingModalOverrideProps = () => ({
     isVisible: this.isLoadingModalVisible.value,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
-    displayColor: 'black',
+    isDarkMode: this.modernMenuDarkMode.value,
     parameters: this.mediaSFUParameters,
   });
 
@@ -1697,6 +2750,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     public launchParticipants: LaunchParticipants,
     public launchMessages: LaunchMessages,
     public launchConfirmExit: LaunchConfirmExit,
+    public sendMessage: SendMessage,
+    public muteParticipants: MuteParticipants,
+    public messageParticipants: MessageParticipants,
+    public removeParticipants: RemoveParticipants,
     public launchPoll: LaunchPoll,
     public launchBreakoutRooms: LaunchBreakoutRooms,
     public launchConfigureWhiteboard: LaunchConfigureWhiteboard,
@@ -1748,9 +2805,25 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     public updateConsumingDomains: UpdateConsumingDomains,
     public receiveRoomMessages: ReceiveRoomMessages,
     private uiOverrideResolver: UIOverrideResolverService,
-  ) { }
+    public liveSubtitleService: LiveSubtitleService,
+    public translationConsumerSwitch: TranslationConsumerSwitch,
+    public panelistsUpdated?: PanelistsUpdated,
+    public panelistFocusChanged?: PanelistFocusChanged,
+    public receiveControlMedia?: ReceiveControlMedia,
+    public addedAsPanelist?: AddedAsPanelist,
+    public removedFromPanelists?: RemovedFromPanelists,
+    public permissionUpdated?: PermissionUpdated,
+    public permissionConfigUpdated?: PermissionConfigUpdated,
+    public translationReceiveMethods?: TranslationReceiveMethods,
+  ) {
+    this.liveSubtitleService.setShowSubtitlesOnCards(true);
+  }
 
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     const inj = Injector.create({
       providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),
       parent: this.injector,
@@ -1814,7 +2887,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   // Initial values
-  mediaSFUFunctions = () => {
+  mediaSFUFunctions = (): any => {
     return {
       updateMiniCardsGrid:
         this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -1996,6 +3069,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         (() => {
           console.log('none');
         }),
+      startConsumingTranslation: this.startConsumingTranslation,
       signalNewConsumerTransport:
         this.signalNewConsumerTransport?.signalNewConsumerTransport ||
         (() => {
@@ -2248,7 +3322,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   canRecord = new BehaviorSubject<boolean>(false);
   startReport = new BehaviorSubject<boolean>(false);
   endReport = new BehaviorSubject<boolean>(false);
-  recordTimerInterval = new BehaviorSubject<NodeJS.Timeout | null>(null);
+  recordTimerInterval = new BehaviorSubject<number | null>(null);
   recordStartTime = new BehaviorSubject<number>(0);
   recordElapsedTime = new BehaviorSubject<number>(0);
   isTimerRunning = new BehaviorSubject<boolean>(false);
@@ -2372,7 +3446,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   lStreams = new BehaviorSubject<(Participant | Stream)[]>([]);
   chatRefStreams = new BehaviorSubject<(Participant | Stream)[]>([]);
   controlHeight = new BehaviorSubject<number>(
-    this.eventType.value === 'webinar' || this.eventType.value === 'conference' ? 0 : 0.06,
+    this.eventType.value === 'webinar' || this.eventType.value === 'conference'
+      ? this.initialControlHeight()
+      : 0.06,
   );
   isWideScreen = new BehaviorSubject<boolean>(false);
   isMediumScreen = new BehaviorSubject<boolean>(false);
@@ -2692,7 +3768,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.endReport.next(value);
   };
 
-  updateRecordTimerInterval = (value: NodeJS.Timeout | null) => {
+  updateRecordTimerInterval = (value: number | null) => {
     this.recordTimerInterval.next(value);
   };
 
@@ -3240,6 +4316,24 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   screenshareSetting = new BehaviorSubject<string>('allow');
   chatSetting = new BehaviorSubject<string>('allow');
 
+  // Translation Settings
+  translationSupported = new BehaviorSubject<boolean>(false);
+  translationConfig = new BehaviorSubject<TranslationRoomConfig | null>(null);
+  mySpokenLanguage = new BehaviorSubject<string>('en');
+  mySpokenLanguageEnabled = new BehaviorSubject<boolean>(false);
+  myDefaultOutputLanguage = new BehaviorSubject<string | null>(null);
+  myDefaultListenLanguage = new BehaviorSubject<string | null>(null);
+  listenPreferences = new BehaviorSubject<Map<string, string>>(new Map());
+  translationProducerMap = new BehaviorSubject<TranslationProducerMap>({});
+  activeTranslationProducerIds = new Set<string>();
+  availableTranslationChannels = new BehaviorSubject<
+    Map<string, TranslationChannelAvailability>
+  >(new Map());
+  participantTranslationStates = new BehaviorSubject<Map<string, any>>(new Map());
+  speakerTranslationStates = new BehaviorSubject<
+    Map<string, SpeakerTranslationState>
+  >(new Map());
+
   // Display Settings
   displayOption = new BehaviorSubject<string>('media');
   autoWave = new BehaviorSubject<boolean>(true);
@@ -3273,7 +4367,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   // Alerts
   alertVisible = new BehaviorSubject<boolean>(false);
   alertMessage = new BehaviorSubject<string>('');
-  alertType = new BehaviorSubject<'success' | 'danger'>('success');
+  alertType = new BehaviorSubject<'success' | 'danger' | 'info' | 'warning'>('success');
+  alertPosition = new BehaviorSubject<
+    'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center'
+  >('top');
   alertDuration = new BehaviorSubject<number>(3000);
 
   // Progress Timer
@@ -3284,19 +4381,67 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   isMenuModalVisible = new BehaviorSubject<boolean>(false);
   isRecordingModalVisible = new BehaviorSubject<boolean>(false);
   isSettingsModalVisible = new BehaviorSubject<boolean>(false);
+  isTranslationSettingsModalVisible = new BehaviorSubject<boolean>(false);
   isRequestsModalVisible = new BehaviorSubject<boolean>(false);
   isWaitingModalVisible = new BehaviorSubject<boolean>(false);
+  sidebarMessagesTab = new BehaviorSubject<'group' | 'direct'>('group');
   isCoHostModalVisible = new BehaviorSubject<boolean>(false);
   isMediaSettingsModalVisible = new BehaviorSubject<boolean>(false);
   isDisplaySettingsModalVisible = new BehaviorSubject<boolean>(false);
-
   // Other Modals
   isParticipantsModalVisible = new BehaviorSubject<boolean>(false);
   isMessagesModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmExitModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmHereModalVisible = new BehaviorSubject<boolean>(false);
+  private suppressConfirmHereForSession = false;
   isShareEventModalVisible = new BehaviorSubject<boolean>(false);
   isLoadingModalVisible = new BehaviorSubject<boolean>(false);
+  activeSidebarContent = new BehaviorSubject<SidebarContent>('none');
+  sidebarNavigationStack = new BehaviorSubject<SidebarPanelContent[]>([]);
+  modernMenuDarkMode = new BehaviorSubject<boolean>(false);
+  private readonly themeStorageKey = 'mediasfu-angular-theme';
+  readonly sidebarEmbeddedModalContentStyle: Partial<CSSStyleDeclaration> = {
+    border: 'none',
+    boxShadow: 'none',
+    background: 'transparent',
+    borderRadius: '0',
+    backdropFilter: 'none',
+  };
+
+  resolvePreferredTheme = (): boolean => {
+    if (typeof window !== 'undefined') {
+      try {
+        const storedTheme = window.localStorage.getItem(this.themeStorageKey);
+        if (storedTheme === 'dark') {
+          return true;
+        }
+        if (storedTheme === 'light') {
+          return false;
+        }
+      } catch {
+        // Ignore storage access failures and fall back to the default room theme.
+      }
+    }
+
+    return true;
+  };
+
+  updateModernThemeDarkMode = (value: boolean) => {
+    this.modernMenuDarkMode.next(value);
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem(this.themeStorageKey, value ? 'dark' : 'light');
+      } catch {
+        // Ignore storage access failures and keep the in-memory theme state.
+      }
+    }
+    this.messageWidget = this.buildMessageWidget();
+    this.updateButtonState('modernThemeDarkMode', value);
+    void this.updateRecordButtons();
+    this.updateControlBroadcastButtons();
+    this.updateControlChatButtons();
+    this.cdr.detectChanges();
+  };
 
   // Recording Options
   recordingMediaOptions = new BehaviorSubject<string>('video');
@@ -3336,6 +4481,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   // Permissions
   hasCameraPermission = new BehaviorSubject<boolean>(false);
   hasAudioPermission = new BehaviorSubject<boolean>(false);
+  panelists = new BehaviorSubject<Participant[]>([]);
+  panelistsFocused = new BehaviorSubject<boolean>(false);
+  muteOthersMic = new BehaviorSubject<boolean>(false);
+  muteOthersCamera = new BehaviorSubject<boolean>(false);
+  permissionConfig = new BehaviorSubject<PermissionConfig | null>(null);
 
   // Transports
   transportCreated = new BehaviorSubject<boolean>(false);
@@ -3476,6 +4626,14 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.forceFullDisplay.next(value);
   };
 
+  updateShowSubtitlesOnCards = (value: boolean) => {
+    this.liveSubtitleService.setShowSubtitlesOnCards(value);
+  };
+
+  private getShowSubtitlesOnCardsState(): boolean {
+    return this.liveSubtitleService?.getShowSubtitlesOnCards?.() ?? true;
+  }
+
   updatePrevForceFullDisplay = (value: boolean) => {
     this.prevForceFullDisplay.next(value);
   };
@@ -3560,8 +4718,14 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.alertMessage.next(value);
   };
 
-  updateAlertType = (value: 'success' | 'danger') => {
+  updateAlertType = (value: 'success' | 'danger' | 'info' | 'warning') => {
     this.alertType.next(value);
+  };
+
+  updateAlertPosition = (
+    value: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center',
+  ) => {
+    this.alertPosition.next(value);
   };
 
   updateAlertDuration = (value: number) => {
@@ -3577,10 +4741,566 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateIsMenuModalVisible = (value: boolean) => {
-    this.isMenuModalVisible.next(value);
+    if (this.shouldUseSidebar()) {
+      if (value) {
+        this.updateActiveSidebarContent(
+          'menu',
+          this.activeSidebarContent.value !== 'none' && this.activeSidebarContent.value !== 'menu',
+        );
+        return;
+      }
+
+      if (this.activeSidebarContent.value === 'menu') {
+        this.closeSidebar();
+        return;
+      }
+    }
+
+    if (value) {
+      this.resetSidebarManagedModals();
+      this.activeSidebarContent.next('menu');
+      this.sidebarNavigationStack.next([]);
+      this.isMenuModalVisible.next(true);
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (this.isMenuModalVisible.value) {
+      this.resetSidebarManagedModals();
+      this.activeSidebarContent.next('none');
+      this.sidebarNavigationStack.next([]);
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.isMenuModalVisible.next(false);
+  };
+
+  private initialControlHeight(): number {
+    const currentHeight = typeof window !== 'undefined' && window.innerHeight > 0
+      ? window.innerHeight
+      : 667;
+
+    return Number((40 / currentHeight).toFixed(3));
+  }
+
+  shouldUseSidebar = (): boolean => {
+    return (
+      window.innerWidth >= 1200 &&
+      this.checkOrientation() === 'landscape'
+    );
+  };
+
+  private isMobileMenuShellActive = (): boolean => {
+    return !this.shouldUseSidebar() && this.isMenuModalVisible.value;
+  };
+
+  private isMobileMenuPanelContent = (content: SidebarPanelContent): boolean => {
+    switch (content) {
+      case 'shareEvent':
+      case 'recording':
+      case 'eventSettings':
+      case 'translation':
+      case 'requests':
+      case 'waiting':
+      case 'coHost':
+      case 'mediaSettings':
+      case 'background':
+      case 'displaySettings':
+      case 'poll':
+      case 'breakoutRooms':
+      case 'configureWhiteboard':
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  mobileMenuShellContent = (): SidebarContent => {
+    if (!this.isMobileMenuShellActive()) {
+      return 'none';
+    }
+
+    if (
+      this.activeSidebarContent.value === 'none' ||
+      this.activeSidebarContent.value === 'menu'
+    ) {
+      return 'menu';
+    }
+
+    return this.isMobileMenuPanelContent(this.activeSidebarContent.value)
+      ? this.activeSidebarContent.value
+      : 'menu';
+  };
+
+  private updateActiveMobileMenuContent = async (
+    content: SidebarPanelContent,
+    pushCurrent = false,
+  ) => {
+    if (!this.isMobileMenuShellActive() || !this.isMobileMenuPanelContent(content)) {
+      return;
+    }
+
+    const current = this.mobileMenuShellContent();
+    if (current === content) {
+      return;
+    }
+
+    if (!(await this.prepareSidebarContent(content))) {
+      return;
+    }
+
+    if (pushCurrent && current !== 'none') {
+      this.sidebarNavigationStack.next([...this.sidebarNavigationStack.value, current]);
+    } else if (!pushCurrent) {
+      this.sidebarNavigationStack.next([]);
+    }
+
+    this.activeSidebarContent.next(content);
+    this.resetSidebarManagedModals({ preserveMenuModal: true });
+    this.isMenuModalVisible.next(true);
+    this.cdr.detectChanges();
+  };
+
+  isSidebarVisible = (): boolean => {
+    return this.shouldUseSidebar() && this.activeSidebarContent.value !== 'none';
+  };
+
+  sidebarWidth = (): number => {
+    const preferredWidth = Math.round(window.innerWidth * 0.22);
+    return Math.max(304, Math.min(420, preferredWidth));
+  };
+
+  mainScreenWidthFraction = (): number => {
+    if (!this.isSidebarVisible()) {
+      return 1;
+    }
+
+    const availableWidth = window.innerWidth - this.sidebarWidth();
+    return Math.max(0, availableWidth / window.innerWidth);
+  };
+
+  subAspectWidthFraction = (): number => 1;
+
+  private sidebarTitleForContent = (content: SidebarContent): string => {
+    switch (content) {
+      case 'participants':
+        return 'Participants';
+      case 'messages':
+        return 'Messages';
+      case 'menu':
+        return 'Menu';
+      case 'shareEvent':
+        return 'Share Event';
+      case 'recording':
+        return 'Recording';
+      case 'eventSettings':
+        return 'Event Settings';
+      case 'translation':
+        return 'Translation';
+      case 'requests':
+        return 'Requests';
+      case 'waiting':
+        return 'Waiting Room';
+      case 'coHost':
+        return 'Co-host';
+      case 'mediaSettings':
+        return 'Media Settings';
+      case 'background':
+        return 'Virtual Background';
+      case 'displaySettings':
+        return 'Display Settings';
+      case 'poll':
+        return 'Polls';
+      case 'breakoutRooms':
+        return 'Breakout Rooms';
+      case 'configureWhiteboard':
+        return 'Whiteboard';
+      default:
+        return 'Panel';
+    }
+  };
+
+  sidebarTitle = (): string => this.sidebarTitleForContent(this.activeSidebarContent.value);
+
+  mobileMenuUsesSharedHeader = (): boolean => {
+    switch (this.mobileMenuShellContent()) {
+      case 'menu':
+      case 'shareEvent':
+      case 'recording':
+      case 'eventSettings':
+      case 'requests':
+      case 'waiting':
+      case 'coHost':
+      case 'mediaSettings':
+      case 'displaySettings':
+      case 'poll':
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  mobileMenuShowsBackButton = (): boolean => {
+    return (
+      this.mobileMenuUsesSharedHeader() &&
+      this.mobileMenuShellContent() !== 'menu' &&
+      this.sidebarNavigationStack.value.length > 0
+    );
+  };
+
+  sidebarBackLabel = (): string => {
+    const previous = this.sidebarNavigationStack.value[this.sidebarNavigationStack.value.length - 1];
+    return previous ? `Back to ${this.sidebarTitleForContent(previous)}` : 'Back';
+  };
+
+  sidebarBadgeText = (): number | null => {
+    switch (this.activeSidebarContent.value) {
+      case 'participants':
+        return this.filteredParticipants.value.length;
+      case 'requests':
+        return this.requestCounter.value;
+      case 'waiting':
+        return this.waitingRoomCounter.value;
+      default:
+        return null;
+    }
+  };
+
+  sidebarPlaceholderCopy = (): string => {
+    switch (this.activeSidebarContent.value) {
+      case 'participants':
+        return 'Desktop sidebar plumbing is active. The modern participants panel will render here in the next slice while mobile keeps the classic modal path.';
+      case 'messages':
+        return 'Desktop sidebar plumbing is active. The modern messages panel will render here in the next slice while mobile keeps the classic modal path.';
+      case 'menu':
+        return 'Desktop sidebar plumbing is active. Menu-launched panels will route through this shell on wide landscape layouts while smaller screens continue using the classic modal flow.';
+      case 'translation':
+      case 'background':
+      case 'breakoutRooms':
+      case 'configureWhiteboard':
+        return 'Desktop sidebar plumbing is active. This panel now renders inside the shared sidebar shell on wide landscape layouts.';
+      default:
+        return 'Desktop sidebar plumbing is active.';
+    }
+  };
+
+  sidebarThemeVars = (): Record<string, string> => {
+    if (this.modernMenuDarkMode.value) {
+      return {
+        '--ms-modern-panel-surface-elevated': 'rgba(15, 27, 49, 0.9)',
+        '--ms-modern-panel-surface': 'rgba(10, 18, 33, 0.82)',
+        '--ms-modern-text-primary': '#f8fafc',
+        '--ms-modern-text-secondary': 'rgba(226, 232, 240, 0.78)',
+        '--ms-modern-text-muted': 'rgba(203, 213, 225, 0.7)',
+        '--ms-modern-border-subtle': 'rgba(148, 163, 184, 0.18)',
+        '--ms-modern-border-strong': 'rgba(96, 165, 250, 0.32)',
+        '--ms-modern-accent-strong': '#8bdbff',
+        '--ms-modern-shadow-panel': '0 24px 64px rgba(2, 8, 23, 0.3)',
+      };
+    }
+
+    return {
+      '--ms-modern-panel-surface-elevated': 'rgba(255, 255, 255, 0.94)',
+      '--ms-modern-panel-surface': 'rgba(255, 255, 255, 0.82)',
+      '--ms-modern-text-primary': '#10233f',
+      '--ms-modern-text-secondary': 'rgba(16, 35, 63, 0.78)',
+      '--ms-modern-text-muted': 'rgba(59, 78, 104, 0.72)',
+      '--ms-modern-border-subtle': 'rgba(120, 143, 173, 0.28)',
+      '--ms-modern-border-strong': 'rgba(46, 108, 188, 0.34)',
+      '--ms-modern-accent-strong': '#0d5ca8',
+      '--ms-modern-shadow-panel': '0 24px 64px rgba(14, 30, 53, 0.16)',
+    };
+  };
+
+  private resetSidebarManagedModals = (
+    options: { preserveMenuModal?: boolean } = {},
+  ) => {
+    if (!options.preserveMenuModal) {
+      this.isMenuModalVisible.next(false);
+    }
+    this.isMessagesModalVisible.next(false);
+    this.isParticipantsModalVisible.next(false);
+    this.isShareEventModalVisible.next(false);
+    this.isRecordingModalVisible.next(false);
+    this.isSettingsModalVisible.next(false);
+    this.isTranslationSettingsModalVisible.next(false);
+    this.isRequestsModalVisible.next(false);
+    this.isWaitingModalVisible.next(false);
+    this.isCoHostModalVisible.next(false);
+    this.isMediaSettingsModalVisible.next(false);
+    this.isBackgroundModalVisible.next(false);
+    this.isDisplaySettingsModalVisible.next(false);
+    this.isPollModalVisible.next(false);
+    this.isBreakoutRoomsModalVisible.next(false);
+    this.isConfigureWhiteboardModalVisible.next(false);
+  };
+
+  private prepareSidebarMediaSettings = async (): Promise<boolean> => {
+    const mediaDevicesApi = typeof navigator !== 'undefined' ? navigator.mediaDevices : undefined;
+
+    if (typeof mediaDevicesApi?.enumerateDevices !== 'function') {
+      return true;
+    }
+
+    void this.launchMediaSettings.launchMediaSettings({
+      updateIsMediaSettingsModalVisible: () => undefined,
+      isMediaSettingsModalVisible: false,
+      audioInputs: this.audioInputs.value,
+      videoInputs: this.videoInputs.value,
+      updateAudioInputs: this.updateAudioInputs.bind(this),
+      updateVideoInputs: this.updateVideoInputs.bind(this),
+    }).catch((error) => {
+      console.log('Error preparing media settings sidebar', error);
+    });
+
+    return true;
+  };
+
+  private prepareSidebarContent = async (content: SidebarPanelContent): Promise<boolean> => {
+    if (content === 'mediaSettings') {
+      return this.prepareSidebarMediaSettings();
+    }
+
+    if (content === 'recording') {
+      let shouldOpen = false;
+
+      this.launchRecording.launchRecording({
+        updateIsRecordingModalVisible: (visible: boolean) => {
+          shouldOpen = visible;
+        },
+        isRecordingModalVisible: false,
+        showAlert: this.showAlert.bind(this),
+        stopLaunchRecord: this.stopLaunchRecord.value,
+        canLaunchRecord: this.canLaunchRecord.value,
+        recordingAudioSupport: this.recordingAudioSupport.value,
+        recordingVideoSupport: this.recordingVideoSupport.value,
+        updateCanRecord: this.updateCanRecord.bind(this),
+        updateClearedToRecord: this.updateClearedToRecord.bind(this),
+        recordStarted: this.recordStarted.value,
+        recordPaused: this.recordPaused.value,
+        localUIMode: this.localUIMode.value,
+      });
+
+      return shouldOpen;
+    }
+
+    return true;
+  };
+
+  openSidebarBackground = () => {
+    if (this.isMobileMenuShellActive()) {
+      void this.updateActiveMobileMenuContent('background', true);
+      return;
+    }
+
+    void this.updateActiveSidebarContent('background', true);
+  };
+
+  private openMenuPanelContent = (content: SidebarPanelContent): boolean => {
+    if (this.shouldUseSidebar()) {
+      void this.updateActiveSidebarContent(
+        content,
+        this.activeSidebarContent.value !== 'none' && this.activeSidebarContent.value !== content,
+      );
+      return true;
+    }
+
+    if (this.isMobileMenuShellActive()) {
+      void this.updateActiveMobileMenuContent(
+        content,
+        this.mobileMenuShellContent() !== 'none' && this.mobileMenuShellContent() !== content,
+      );
+      return true;
+    }
+
+    return false;
+  };
+
+  private handleSidebarModalVisibility = (
+    content: SidebarPanelContent,
+    value: boolean,
+    options: {
+      onOpen?: () => void;
+      onClose?: () => void;
+    } = {},
+  ): boolean => {
+    const shouldUseSidebar = this.shouldUseSidebar();
+    const shouldUseMobileMenuShell =
+      !shouldUseSidebar && this.isMobileMenuShellActive() && this.isMobileMenuPanelContent(content);
+
+    if (!shouldUseSidebar && !shouldUseMobileMenuShell) {
+      return false;
+    }
+
+    if (value) {
+      options.onOpen?.();
+
+      if (shouldUseSidebar) {
+        void this.updateActiveSidebarContent(
+          content,
+          this.activeSidebarContent.value !== 'none' && this.activeSidebarContent.value !== content,
+        );
+      } else {
+        void this.updateActiveMobileMenuContent(
+          content,
+          this.mobileMenuShellContent() !== 'none' && this.mobileMenuShellContent() !== content,
+        );
+      }
+
+      return true;
+    }
+
+    if (this.activeSidebarContent.value === content) {
+      if (this.sidebarNavigationStack.value.length > 0) {
+        this.sidebarNavigateBack();
+      } else if (shouldUseSidebar) {
+        this.closeSidebar();
+      } else {
+        this.activeSidebarContent.next('menu');
+        this.cdr.detectChanges();
+      }
+      options.onClose?.();
+      return true;
+    }
+
+    return false;
+  };
+
+  closeSidebar = () => {
+    this.resetSidebarManagedModals();
+    this.activeSidebarContent.next('none');
+    this.sidebarNavigationStack.next([]);
+    this.cdr.detectChanges();
+  };
+
+  updateActiveSidebarContent = async (
+    content: SidebarPanelContent,
+    pushCurrent = false,
+  ) => {
+    if (!this.shouldUseSidebar()) {
+      return;
+    }
+
+    const current = this.activeSidebarContent.value;
+    if (current === content) {
+      this.closeSidebar();
+      return;
+    }
+
+    if (!(await this.prepareSidebarContent(content))) {
+      return;
+    }
+
+    if (pushCurrent && current !== 'none') {
+      this.sidebarNavigationStack.next([...this.sidebarNavigationStack.value, current]);
+    } else if (!pushCurrent) {
+      this.sidebarNavigationStack.next([]);
+    }
+
+    this.activeSidebarContent.next(content);
+    this.resetSidebarManagedModals();
+    this.cdr.detectChanges();
+  };
+
+  preferredSidebarMessagesTab = (): 'group' | 'direct' => {
+    if (this.startDirectMessage.value || this.directMessageDetails.value) {
+      return 'direct';
+    }
+
+    return this.eventType.value === 'webinar' || this.eventType.value === 'conference'
+      ? 'direct'
+      : 'group';
+  };
+
+  updateSidebarMessagesTab = (value: 'group' | 'direct') => {
+    this.sidebarMessagesTab.next(value);
+    if (value === 'group') {
+      this.updateStartDirectMessage(false);
+    }
+  };
+
+  sidebarDirectMessages = (): Message[] => {
+    let chatValue = false;
+    try {
+      chatValue =
+        this.coHostResponsibility.value.find((item: any) => item.name == 'chat')?.value || false;
+    } catch {
+      chatValue = false;
+    }
+
+    return this.messages.value.filter(
+      (message) =>
+        !message.group &&
+        (
+          message.sender == this.member.value ||
+          message.receivers.includes(this.member.value) ||
+          this.islevel.value == '2' ||
+          (this.coHost.value == this.member.value && chatValue == true)
+        ),
+    );
+  };
+
+  sidebarGroupMessages = (): Message[] => {
+    return this.messages.value.filter((message) => message.group);
+  };
+
+  canShowSidebarParticipantList = (): boolean => {
+    let participantsValue = false;
+    try {
+      participantsValue =
+        this.coHostResponsibility.value.find((item: any) => item.name === 'participants')?.value ||
+        false;
+    } catch {
+      participantsValue = false;
+    }
+
+    return (
+      this.islevel.value === '2' ||
+      (this.coHost.value === this.member.value && participantsValue === true)
+    );
+  };
+
+  handleSidebarParticipantFilter = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
+    this.onParticipantsFilterChange(value);
+    this.cdr.detectChanges();
+  };
+
+  sidebarNavigateBack = () => {
+    const nextStack = [...this.sidebarNavigationStack.value];
+    const previous = nextStack.pop();
+
+    if (!previous) {
+      this.closeSidebar();
+      return;
+    }
+
+    this.sidebarNavigationStack.next(nextStack);
+    this.activeSidebarContent.next(previous);
+    this.cdr.detectChanges();
   };
 
   updateIsRecordingModalVisible = (value: boolean) => {
+    if (
+      this.handleSidebarModalVisibility('recording', value, {
+        onOpen: () => {
+          this.updateConfirmedToRecord(false);
+        },
+        onClose: () => {
+          if (
+            this.clearedToRecord.getValue() &&
+            this.clearedToResume.getValue() &&
+            this.recordStarted.getValue()
+          ) {
+            this.updateShowRecordButtons(true);
+          }
+        },
+      })
+    ) {
+      return;
+    }
+
     this.isRecordingModalVisible.next(value);
     if (value) {
       this.updateConfirmedToRecord(false);
@@ -3596,34 +5316,421 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateIsSettingsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('eventSettings', value)) {
+      return;
+    }
+
     this.isSettingsModalVisible.next(value);
   };
 
+  updateTranslationSupported = (value: boolean) => {
+    this.translationSupported.next(value);
+    if (!value) {
+      this.translationConfig.next(null);
+    }
+  };
+
+  updateTranslationConfig = (value: TranslationRoomConfig | null) => {
+    this.translationConfig.next(value);
+  };
+
+  updateMySpokenLanguage = (value: string) => {
+    this.mySpokenLanguage.next(value);
+  };
+
+  updateMySpokenLanguageEnabled = (value: boolean) => {
+    this.mySpokenLanguageEnabled.next(value);
+  };
+
+  updateMyDefaultOutputLanguage = (value: string | null) => {
+    this.myDefaultOutputLanguage.next(value);
+  };
+
+  updateMyDefaultListenLanguage = (value: string | null) => {
+    this.myDefaultListenLanguage.next(value);
+  };
+
+  updateListenPreferences = (
+    value: Map<string, string> | ((prev: Map<string, string>) => Map<string, string>)
+  ) => {
+    this.listenPreferences.next(
+      typeof value === 'function' ? value(this.listenPreferences.value) : value,
+    );
+  };
+
+  updateTranslationProducerMap = (
+    value:
+      | TranslationProducerMap
+      | ((prev: TranslationProducerMap) => TranslationProducerMap)
+  ) => {
+    this.translationProducerMap.next(
+      typeof value === 'function' ? value(this.translationProducerMap.value) : value,
+    );
+  };
+
+  updateAvailableTranslationChannels = (
+    speakerId: string,
+    languages: string[],
+    originalProducerId: string,
+  ) => {
+    const next = new Map(this.availableTranslationChannels.value);
+    next.set(speakerId, { languages, originalProducerId });
+    this.availableTranslationChannels.next(next);
+  };
+
+  updateParticipantTranslationState = (memberId: string, state: any) => {
+    const next = new Map(this.participantTranslationStates.value);
+    next.set(memberId, state);
+    this.participantTranslationStates.next(next);
+  };
+
+  updateSpeakerTranslationState = (
+    speakerId: string,
+    outputLanguage: string | null,
+    originalProducerId: string,
+    options: SpeakerTranslationStateUpdateOptions = {},
+  ) => {
+    const next = new Map(this.speakerTranslationStates.value);
+
+    if (outputLanguage) {
+      next.set(speakerId, {
+        speakerId,
+        speakerName: options.speakerName ?? speakerId,
+        inputLanguage: options.inputLanguage ?? 'en',
+        outputLanguage,
+        originalProducerId,
+        enabled: options.enabled ?? true,
+      });
+    } else {
+      next.delete(speakerId);
+    }
+
+    this.speakerTranslationStates.next(next);
+  };
+
+  private syncSpeakerTranslationStatesFromMembers = (members: Participant[]) => {
+    members.forEach((participant) => {
+      const translationParticipant = participant as TranslationAwareParticipant;
+      const speakerId = translationParticipant.name;
+
+      if (!speakerId || speakerId === this.member.value) {
+        return;
+      }
+
+      if (
+        translationParticipant.translationEnabled &&
+        translationParticipant.translationDefaultOutputLanguage &&
+        translationParticipant.translationOriginalProducerId
+      ) {
+        this.updateSpeakerTranslationState(
+          speakerId,
+          translationParticipant.translationDefaultOutputLanguage,
+          translationParticipant.translationOriginalProducerId,
+          {
+            speakerName: speakerId,
+            inputLanguage: translationParticipant.translationInputLanguage ?? 'en',
+            enabled: true,
+          },
+        );
+      }
+    });
+  };
+
+  private getTranslationConsumerSwitchParameters = () => ({
+    consumerTransports: this.consumerTransports.value,
+    roomName: this.roomName.value,
+    member: this.member.value,
+    updateConsumerTransports: this.updateConsumerTransports.bind(this),
+    breakOutRoomStarted: this.breakOutRoomStarted.value,
+    breakOutRoomEnded: this.breakOutRoomEnded.value,
+    breakoutRooms: this.breakoutRooms.value,
+    limitedBreakRoom: this.limitedBreakRoom.value,
+    participants: this.participants.value,
+    ref_participants: this.ref_participants.value,
+    islevel: this.islevel.value,
+    eventType: this.eventType.value,
+    hostNewRoom: this.hostNewRoom.value,
+    speakerTranslationStates: this.speakerTranslationStates.value,
+  });
+
+  private resolveOriginalProducerIdForSpeaker = (speakerId: string): string | null => {
+    const activeSpeakerState = this.speakerTranslationStates.value.get(speakerId);
+    if (activeSpeakerState?.originalProducerId) {
+      return activeSpeakerState.originalProducerId;
+    }
+
+    const availableChannel = this.availableTranslationChannels.value.get(speakerId);
+    if (availableChannel?.originalProducerId) {
+      return availableChannel.originalProducerId;
+    }
+
+    return this.translationConsumerSwitch.findOriginalProducerForSpeaker(
+      speakerId,
+      this.allAudioStreams.value as Array<{ producerId: string; name?: string }>,
+    );
+  };
+
+  private startConsumingTranslation = async (
+    producerId: string,
+    speakerId: string,
+    language: string,
+    originalProducerId?: string,
+    nsock?: Socket,
+  ) => {
+    const activeSocket = nsock ?? this.socket.value;
+    if (!activeSocket) {
+      return;
+    }
+
+    if (originalProducerId) {
+      const existingTranslations = this.translationProducerMap.value?.[originalProducerId];
+      if (existingTranslations) {
+        const languagesToClose: string[] = [];
+
+        for (const [existingLanguage, existingProducerId] of Object.entries(existingTranslations)) {
+          if (
+            existingProducerId === producerId ||
+            existingLanguage.toLowerCase() === language.toLowerCase()
+          ) {
+            continue;
+          }
+
+          await this.stopConsumingTranslationProducer(existingProducerId);
+          languagesToClose.push(existingLanguage);
+        }
+
+        if (languagesToClose.length > 0) {
+          this.updateTranslationProducerMap((prev) => {
+            const next = { ...prev };
+            const currentMap = { ...(next[originalProducerId] || {}) };
+
+            languagesToClose.forEach((existingLanguage) => {
+              delete currentMap[existingLanguage];
+            });
+
+            if (Object.keys(currentMap).length === 0) {
+              delete next[originalProducerId];
+            } else {
+              next[originalProducerId] = currentMap;
+            }
+
+            return next;
+          });
+        }
+      }
+    }
+
+    if (originalProducerId) {
+      await this.pauseOriginalTranslationProducer(originalProducerId, speakerId);
+    }
+
+    this.activeTranslationProducerIds.add(producerId);
+
+    const parameters = {
+      ...this.getAllParams(),
+      ...this.mediaSFUFunctions(),
+      activeTranslationProducerIds: this.activeTranslationProducerIds,
+      speakerTranslationStates: this.speakerTranslationStates.value,
+    };
+
+    await this.signalNewConsumerTransport.signalNewConsumerTransport({
+      remoteProducerId: producerId,
+      islevel: this.islevel.value,
+      nsock: activeSocket,
+      parameters,
+    });
+
+    if (originalProducerId) {
+      this.updateTranslationProducerMap((prev) => ({
+        ...prev,
+        [originalProducerId]: {
+          ...(prev[originalProducerId] || {}),
+          [language]: producerId,
+        },
+      }));
+    }
+  };
+
+  private pauseTranslatedOriginalsForMembers = async (members: Participant[]) => {
+    for (const participant of members) {
+      const translationParticipant = participant as TranslationAwareParticipant;
+      const speakerId = translationParticipant.name;
+
+      if (
+        !speakerId ||
+        speakerId === this.member.value ||
+        !translationParticipant.translationEnabled ||
+        !translationParticipant.translationDefaultOutputLanguage ||
+        !translationParticipant.translationOriginalProducerId
+      ) {
+        continue;
+      }
+
+      await this.pauseOriginalTranslationProducer(
+        translationParticipant.translationOriginalProducerId,
+        speakerId,
+      );
+    }
+  };
+
+  private pauseOriginalTranslationProducer = async (
+    originalProducerId: string,
+    speakerId: string,
+  ) => {
+    await this.translationConsumerSwitch.pauseOriginalProducer({
+      originalProducerId,
+      speakerId,
+      parameters: this.getTranslationConsumerSwitchParameters(),
+    });
+  };
+
+  private resumeOriginalTranslationProducer = async (
+    originalProducerId: string,
+    speakerId: string,
+  ) => {
+    await this.translationConsumerSwitch.resumeOriginalProducer({
+      originalProducerId,
+      speakerId,
+      parameters: this.getTranslationConsumerSwitchParameters(),
+    });
+  };
+
+  private stopConsumingTranslationProducer = async (producerId: string) => {
+    const transportIndex = this.consumerTransports.value.findIndex(
+      (transport) => transport.producerId === producerId,
+    );
+
+    if (transportIndex === -1) {
+      return;
+    }
+
+    const transport = this.consumerTransports.value[transportIndex];
+
+    if (transport.socket_ && transport.serverConsumerTransportId) {
+      transport.socket_.emit(
+        'consumer-close',
+        { serverConsumerId: transport.serverConsumerTransportId },
+        () => {},
+      );
+    }
+
+    transport.consumer?.close();
+
+    const updatedConsumerTransports = this.consumerTransports.value.filter(
+      (_, index) => index !== transportIndex,
+    );
+    this.updateConsumerTransports(updatedConsumerTransports);
+    this.updateConsumingTransports(
+      this.consumingTransports.value.filter((activeProducerId) => activeProducerId !== producerId),
+    );
+    this.activeTranslationProducerIds.delete(producerId);
+  };
+
+  private stopConsumingTranslationSelection = async (
+    speakerId: string,
+    language: string,
+  ) => {
+    const originalProducerId = this.resolveOriginalProducerIdForSpeaker(speakerId);
+    if (!originalProducerId) {
+      return;
+    }
+
+    const producerId = this.translationProducerMap.value?.[originalProducerId]?.[language];
+    if (!producerId) {
+      return;
+    }
+
+    await this.stopConsumingTranslationProducer(producerId);
+  };
+
+  private stopConsumingTranslationForSpeaker = async (speakerId: string) => {
+    const originalProducerId = this.resolveOriginalProducerIdForSpeaker(speakerId);
+    if (!originalProducerId) {
+      return;
+    }
+
+    const languageMap = this.translationProducerMap.value?.[originalProducerId] || {};
+    for (const producerId of Object.values(languageMap)) {
+      await this.stopConsumingTranslationProducer(producerId);
+    }
+
+    this.updateTranslationProducerMap((prev) => {
+      const next = { ...prev };
+      delete next[originalProducerId];
+      return next;
+    });
+  };
+
+  updateIsTranslationSettingsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('translation', value)) {
+      return;
+    }
+
+    this.isTranslationSettingsModalVisible.next(value);
+  };
+
   updateIsRequestsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('requests', value)) {
+      return;
+    }
+
     this.isRequestsModalVisible.next(value);
   };
 
   updateIsWaitingModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('waiting', value)) {
+      return;
+    }
+
     this.isWaitingModalVisible.next(value);
   };
 
   updateIsCoHostModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('coHost', value)) {
+      return;
+    }
+
     this.isCoHostModalVisible.next(value);
   };
 
   updateIsMediaSettingsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('mediaSettings', value)) {
+      return;
+    }
+
     this.isMediaSettingsModalVisible.next(value);
   };
 
   updateIsDisplaySettingsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('displaySettings', value)) {
+      return;
+    }
+
     this.isDisplaySettingsModalVisible.next(value);
   };
 
   updateIsParticipantsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('participants', value)) {
+      return;
+    }
+
     this.isParticipantsModalVisible.next(value);
   };
 
   updateIsMessagesModalVisible = (value: boolean) => {
+    if (
+      this.handleSidebarModalVisibility('messages', value, {
+        onOpen: () => {
+          this.updateSidebarMessagesTab(this.preferredSidebarMessagesTab());
+        },
+        onClose: () => {
+          this.updateShowMessagesBadge(false);
+        },
+      })
+    ) {
+      return;
+    }
+
     this.isMessagesModalVisible.next(value);
     if (!value) {
       this.updateShowMessagesBadge(false);
@@ -3643,6 +5750,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateIsShareEventModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('shareEvent', value)) {
+      return;
+    }
+
     this.isShareEventModalVisible.next(value);
   };
 
@@ -3781,6 +5892,26 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.hasAudioPermission.next(value);
   };
 
+  updatePanelists = (value: Participant[]) => {
+    this.panelists.next(value);
+  };
+
+  updatePanelistsFocused = (value: boolean) => {
+    this.panelistsFocused.next(value);
+  };
+
+  updateMuteOthersMic = (value: boolean) => {
+    this.muteOthersMic.next(value);
+  };
+
+  updateMuteOthersCamera = (value: boolean) => {
+    this.muteOthersCamera.next(value);
+  };
+
+  updatePermissionConfig = (value: PermissionConfig) => {
+    this.permissionConfig.next(value);
+  };
+
   requestPermissionCamera(): Promise<string> {
     // Implement the request permission logic here
     return Promise.resolve('granted');
@@ -3868,6 +5999,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateIsPollModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('poll', value)) {
+      return;
+    }
+
     this.isPollModalVisible.next(value);
   };
 
@@ -3964,6 +6099,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateIsBreakoutRoomsModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('breakoutRooms', value)) {
+      return;
+    }
+
     this.isBreakoutRoomsModalVisible.next(value);
   };
 
@@ -3996,6 +6135,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   };
 
   updateIsConfigureWhiteboardModalVisible = (value: boolean) => {
+    if (this.handleSidebarModalVisibility('configureWhiteboard', value)) {
+      return;
+    }
+
     this.isConfigureWhiteboardModalVisible.next(value);
   };
 
@@ -4052,13 +6195,18 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     message,
     type,
     duration = 3000,
+    position,
   }: {
     message: string;
-    type: 'success' | 'danger';
+    type: 'success' | 'danger' | 'info' | 'warning';
     duration?: number;
+    position?: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
   }) => {
+    const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
+
     this.updateAlertMessage(message);
     this.updateAlertType(type);
+    this.updateAlertPosition(effectivePosition);
     this.updateAlertDuration(duration);
     this.updateAlertVisible(true);
   };
@@ -4279,9 +6427,44 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       screenshareSetting: this.screenshareSetting.value,
       chatSetting: this.chatSetting.value,
 
+      // Translation settings
+      translationSupported: this.translationSupported.value,
+      translationConfig: this.translationConfig.value,
+      mySpokenLanguage: this.mySpokenLanguage.value,
+      mySpokenLanguageEnabled: this.mySpokenLanguageEnabled.value,
+      myDefaultOutputLanguage: this.myDefaultOutputLanguage.value,
+      myDefaultListenLanguage: this.myDefaultListenLanguage.value,
+      listenPreferences: this.listenPreferences.value,
+      translationSubscriptions: new Map(
+        Array.from(this.listenPreferences.value.entries())
+          .filter(([, language]) => typeof language === 'string' && language.length > 0)
+          .map(([speakerId, language]) => [
+            `${speakerId}_${language.toLowerCase()}`,
+            { speakerId, language: language.toLowerCase() },
+          ]),
+      ),
+      listenerTranslationPreferences: {
+        perSpeaker: new Map(
+          Array.from(this.listenPreferences.value.entries())
+            .filter(([, language]) => typeof language === 'string' && language.length > 0)
+            .map(([speakerId, language]) => [
+              speakerId,
+              { speakerId, language, wantOriginal: false },
+            ]),
+        ),
+        globalLanguage: this.myDefaultListenLanguage.value,
+      },
+      translationProducerMap: this.translationProducerMap.value,
+      activeTranslationProducerIds: this.activeTranslationProducerIds,
+      availableTranslationChannels: this.availableTranslationChannels.value,
+      speakerTranslationStates: this.speakerTranslationStates.value,
+      canUsePersonalTranslation: this.canUsePersonalTranslation,
+      personalTranslationUsername: this.personalTranslationUsername,
+
       // Display settings
       autoWave: this.autoWave.value,
       forceFullDisplay: this.forceFullDisplay.value,
+      showSubtitlesOnCards: this.getShowSubtitlesOnCardsState(),
       prevForceFullDisplay: this.prevForceFullDisplay.value,
       prevMeetingDisplayType: this.prevMeetingDisplayType.value,
 
@@ -4304,6 +6487,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       alertVisible: this.alertVisible.value,
       alertMessage: this.alertMessage.value,
       alertType: this.alertType.value,
+      alertPosition: this.alertPosition.value,
       alertDuration: this.alertDuration.value,
 
       // Progress Timer
@@ -4314,6 +6498,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       isMenuModalVisible: this.isMenuModalVisible.value,
       isRecordingModalVisible: this.isRecordingModalVisible.value,
       isSettingsModalVisible: this.isSettingsModalVisible.value,
+      isTranslationSettingsModalVisible: this.isTranslationSettingsModalVisible.value,
       isRequestsModalVisible: this.isRequestsModalVisible.value,
       isWaitingModalVisible: this.isWaitingModalVisible.value,
       isCoHostModalVisible: this.isCoHostModalVisible.value,
@@ -4359,6 +6544,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       // Permissions
       hasCameraPermission: this.hasCameraPermission.value,
       hasAudioPermission: this.hasAudioPermission.value,
+      panelists: this.panelists.value,
+      panelistsFocused: this.panelistsFocused.value,
+      muteOthersMic: this.muteOthersMic.value,
+      muteOthersCamera: this.muteOthersCamera.value,
+      permissionConfig: this.permissionConfig.value,
 
       // Transports
       transportCreated: this.transportCreated.value,
@@ -4656,9 +6846,21 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       updateScreenshareSetting: this.updateScreenshareSetting.bind(this),
       updateChatSetting: this.updateChatSetting.bind(this),
 
+      // Translation settings
+      updateTranslationSupported: this.updateTranslationSupported.bind(this),
+      updateTranslationConfig: this.updateTranslationConfig.bind(this),
+      updateMySpokenLanguage: this.updateMySpokenLanguage.bind(this),
+      updateMySpokenLanguageEnabled: this.updateMySpokenLanguageEnabled.bind(this),
+      updateMyDefaultOutputLanguage: this.updateMyDefaultOutputLanguage.bind(this),
+      updateMyDefaultListenLanguage: this.updateMyDefaultListenLanguage.bind(this),
+      updateListenPreferences: this.updateListenPreferences.bind(this),
+      updateTranslationProducerMap: this.updateTranslationProducerMap.bind(this),
+      updateAvailableTranslationChannels: this.updateAvailableTranslationChannels.bind(this),
+
       // Display settings
       updateAutoWave: this.updateAutoWave.bind(this),
       updateForceFullDisplay: this.updateForceFullDisplay.bind(this),
+      updateShowSubtitlesOnCards: this.updateShowSubtitlesOnCards.bind(this),
       updatePrevForceFullDisplay: this.updatePrevForceFullDisplay.bind(this),
       updatePrevMeetingDisplayType: this.updatePrevMeetingDisplayType.bind(this),
 
@@ -4679,6 +6881,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       updateIsMenuModalVisible: this.updateIsMenuModalVisible.bind(this),
       updateIsRecordingModalVisible: this.updateIsRecordingModalVisible.bind(this),
       updateIsSettingsModalVisible: this.updateIsSettingsModalVisible.bind(this),
+      updateIsTranslationSettingsModalVisible:
+        this.updateIsTranslationSettingsModalVisible.bind(this),
       updateIsRequestsModalVisible: this.updateIsRequestsModalVisible.bind(this),
       updateIsWaitingModalVisible: this.updateIsWaitingModalVisible.bind(this),
       updateIsCoHostModalVisible: this.updateIsCoHostModalVisible.bind(this),
@@ -4724,6 +6928,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       // Permissions
       updateHasCameraPermission: this.updateHasCameraPermission.bind(this),
       updateHasAudioPermission: this.updateHasAudioPermission.bind(this),
+      updatePanelists: this.updatePanelists.bind(this),
+      updatePanelistsFocused: this.updatePanelistsFocused.bind(this),
+      updateMuteOthersMic: this.updateMuteOthersMic.bind(this),
+      updateMuteOthersCamera: this.updateMuteOthersCamera.bind(this),
+      updatePermissionConfig: this.updatePermissionConfig.bind(this),
 
       // Transports
       updateTransportCreated: this.updateTransportCreated.bind(this),
@@ -4808,6 +7017,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+      isDarkModeValue: this.modernMenuDarkMode.value,
+      updateIsDarkMode: this.updateModernThemeDarkMode.bind(this),
 
       // Custom components
       customVideoCard: this.customVideoCard,
@@ -4819,12 +7030,13 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
         try {
           if (this.sourceParameters !== null) {
-            this.sourceParameters = {
+            const nextSourceParameters = {
               ...this.getAllParams(),
               ...this.mediaSFUFunctions(),
             };
+            this.sourceParameters = nextSourceParameters;
             if (this.updateSourceParameters) {
-              this.updateSourceParameters(this.sourceParameters);
+              this.updateSourceParameters(nextSourceParameters);
             }
           }
         } catch {
@@ -4839,12 +7051,12 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     };
   }
 
-  mediaSFUParameters = {
+  mediaSFUParameters: any = {
     ...this.getAllParams(),
     ...this.mediaSFUFunctions(),
   };
 
-  getUpdatedAllParams = () => {
+  getUpdatedAllParams = (): any => {
     return {
       ...this.getAllParams(),
       ...this.mediaSFUFunctions(),
@@ -4863,6 +7075,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         if (button.alternateIconComponent) {
           const updatedInjector = this.createInjector({
             disabled: !value,
+            iconColor: 'currentColor',
           });
           return {
             ...button,
@@ -4879,6 +7092,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       if (buttonType === 'participantsActive' && button.icon === this.faUsers) {
         return { ...button, active: value };
       }
+      if (buttonType === 'modernThemeDarkMode' && button.icon === faMoon) {
+        return { ...button, active: value };
+      }
       if (
         buttonType === 'showMessagesBadge' &&
         button.customName &&
@@ -4887,7 +7103,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         const updatedInjector = this.createInjector({
           icon: this.faComments,
           badgeValue: value ? '*' : '',
-          iconColor: 'black',
+          iconColor: 'currentColor',
           showBadge: value,
         });
         return { ...button, customComponent: { ...this.messageWidget, injector: updatedInjector } };
@@ -4896,7 +7112,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         const updatedInjector = this.createInjector({
           icon: this.faBars,
           badgeValue: this.totalReqWait.value,
-          iconColor: 'black',
+          iconColor: 'currentColor',
           showBadge: true,
         });
         return { ...button, customComponent: { ...this.menuWidget, injector: updatedInjector } };
@@ -4990,6 +7206,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.updateModernThemeDarkMode(this.resolvePreferredTheme());
+
     // Initialize UI overrides if provided
     if (this.uiOverrides) {
       this.uiOverrideResolver.setOverrides(this.uiOverrides);
@@ -5204,12 +7422,13 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
       try {
         if (this.sourceParameters !== null) {
-          this.sourceParameters = {
+          const nextSourceParameters = {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),
           };
+          this.sourceParameters = nextSourceParameters;
           if (this.updateSourceParameters) {
-            this.updateSourceParameters(this.sourceParameters);
+            this.updateSourceParameters(nextSourceParameters);
           }
         }
       } catch {
@@ -5244,7 +7463,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     }
 
     const dimensions = this.computeDimensionsMethod({
-      containerWidthFraction: 1,
+      containerWidthFraction: this.mainScreenWidthFraction(),
       containerHeightFraction: 1,
       mainSize: this.mainHeightWidth.value,
       doStack: true,
@@ -5257,6 +7476,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.updateComponentSizes(dimensions);
 
     const orientation = this.checkOrientation();
+    if (!this.shouldUseSidebar() && this.activeSidebarContent.value !== 'none') {
+      this.closeSidebar();
+    }
     if (orientation == 'portrait') {
       if (!this.isWideScreen.value) {
         if (this.shareScreenStarted.value || this.shared.value) {
@@ -5300,6 +7522,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.updateIsDisplaySettingsModalVisible(false);
     this.updateIsMediaSettingsModalVisible(false);
     this.updateIsMenuModalVisible(false);
+    this.closeSidebar();
     this.updateIsShareEventModalVisible(false);
     this.updateIsConfirmExitModalVisible(false);
     await this.disconnectAllSockets(this.consume_sockets.value);
@@ -5319,6 +7542,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.updateIsBackgroundModalVisible(false);
     this.updateIsLoadingModalVisible(false);
     this.updateIsConfirmHereModalVisible(false);
+    this.liveSubtitleService.setLiveSubtitles(new Map());
+    this.activeTranslationProducerIds.clear();
+    this.speakerTranslationStates.next(new Map());
+    this.translationProducerMap.next({});
 
     await sleep({ ms: 500 });
     this.updateValidated(false);
@@ -5357,6 +7584,20 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       doStack,
     });
     return dimensions;
+  };
+
+  private cleanupExpiredLiveSubtitles = () => {
+    const now = Date.now();
+    const current = this.liveSubtitleService.getLiveSubtitles();
+    const next = new Map(current);
+
+    for (const [key, subtitle] of next.entries()) {
+      if (now >= subtitle.expiresAt || isSubtitleExpired(subtitle)) {
+        next.delete(key);
+      }
+    }
+
+    this.liveSubtitleService.setLiveSubtitles(next);
   };
 
   calculateDimensions({
@@ -5671,10 +7912,17 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   onCloseMenuModal = () => {
     this.updateIsMenuModalVisible(false);
+    if (this.activeSidebarContent.value === 'menu') {
+      this.closeSidebar();
+    }
   };
 
   onEventSettingsClose = () => {
     this.updateIsSettingsModalVisible(false);
+  };
+
+  onTranslationSettingsClose = () => {
+    this.updateIsTranslationSettingsModalVisible(false);
   };
 
   onCoHostClose = () => {
@@ -5723,6 +7971,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   onConfirmHereClose = () => {
     this.updateIsConfirmHereModalVisible(false);
+  };
+
+  onSuppressConfirmHere = () => {
+    this.suppressConfirmHereForSession = true;
   };
 
   onScreenboardClose = () => {
@@ -5787,8 +8039,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           localUIMode: this.localUIMode.value,
         });
       },
-      activeColor: 'black',
-      inActiveColor: 'black',
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
       show: true,
     },
   ];
@@ -5803,8 +8055,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         this.updateRecording.updateRecording({
           parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
         }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
       alternateIcon: this.faPauseCircle,
       show: () => true,
     },
@@ -5816,7 +8068,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
         }),
       activeColor: 'green',
-      inActiveColor: 'black',
+      inActiveColor: () => this.controlStripTextColor(),
       show: () => true,
     },
     {
@@ -5828,7 +8080,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       icon: this.faDotCircle,
       active: () => false,
       onPress: () => console.log('Status pressed'),
-      activeColor: 'black',
+      activeColor: () => this.controlStripTextColor(),
       inActiveColor: () => (this.recordPaused.value ? 'yellow' : 'red'),
       show: () => true,
     },
@@ -5851,7 +8103,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           localUIMode: this.localUIMode.value,
         }),
       activeColor: 'green',
-      inActiveColor: 'black',
+      inActiveColor: () => this.controlStripTextColor(),
       show: () => true,
     },
   ];
@@ -5868,9 +8120,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
             : button.customComponent
           : undefined,
         activeColor:
-          typeof button.inActiveColor === 'function'
-            ? button.inActiveColor()
-            : button.inActiveColor,
+          typeof button.activeColor === 'function' ? button.activeColor() : button.activeColor,
         inActiveColor:
           typeof button.inActiveColor === 'function'
             ? button.inActiveColor()
@@ -5891,20 +8141,24 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     injector: this.createInjector({
       icon: this.faBars,
       badgeValue: this.totalReqWait.value,
-      iconColor: 'black',
+      iconColor: 'currentColor',
       showBadge: true,
     }),
   };
 
-  messageWidget = {
-    component: MessageWidget,
-    injector: this.createInjector({
-      icon: this.faComments,
-      showBadge: this.showMessagesBadge.value,
-      badgeValue: 1,
-      iconColor: 'black',
-    }),
-  };
+  private buildMessageWidget() {
+    return {
+      component: MessageWidget,
+      injector: this.createInjector({
+        icon: this.faComments,
+        showBadge: this.showMessagesBadge.value,
+        badgeValue: '*',
+        iconColor: this.controlStripTextColor(),
+      }),
+    };
+  }
+
+  messageWidget = this.buildMessageWidget();
 
   menuRecordWidget = {
     component: MenuRecordWidget,
@@ -5935,9 +8189,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   menuParticipantsWidget = {
     component: MenuParticipantsWidget,
     injector: this.createInjector({
-      icon: this.faChartBar,
+      icon: this.faUsers,
       participantsCounter: this.participantsCounter.value,
-      iconColor: 'black',
+      iconColor: 'currentColor',
     }),
   };
 
@@ -5945,9 +8199,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     const menuParticipantsWidget = {
       component: MenuParticipantsWidget,
       injector: this.createInjector({
-        icon: this.faChartBar,
+        icon: this.faUsers,
         participantsCounter: count,
-        iconColor: 'black',
+        iconColor: 'currentColor',
       }),
     };
 
@@ -5962,7 +8216,11 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     {
       icon: this.faRecordVinyl,
       text: 'Record',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('recording')) {
+          return;
+        }
+
         this.launchRecording.launchRecording({
           updateIsRecordingModalVisible: this.updateIsRecordingModalVisible.bind(this),
           isRecordingModalVisible: this.isRecordingModalVisible.value,
@@ -5976,7 +8234,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           recordStarted: this.recordStarted.value,
           recordPaused: this.recordPaused.value,
           localUIMode: this.localUIMode.value,
-        }),
+        });
+      },
       show: () => !this.showRecordButtons.value && this.islevel.value == '2',
     },
     {
@@ -5987,21 +8246,43 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     {
       icon: this.faCog,
       text: 'Event Settings',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('eventSettings')) {
+          return;
+        }
+
         this.launchSettings.launchSettings({
           updateIsSettingsModalVisible: this.updateIsSettingsModalVisible.bind(this),
           isSettingsModalVisible: this.isSettingsModalVisible.value,
-        }),
+        });
+      },
       show: () => this.islevel.value == '2',
+    },
+    {
+      icon: faLanguage,
+      text: 'Translation',
+      action: () => {
+        if (this.openMenuPanelContent('translation')) {
+          return;
+        }
+
+        this.updateIsTranslationSettingsModalVisible(true);
+      },
+      show: () => this.translationSupported.value || this.canUsePersonalTranslation,
     },
     {
       icon: this.faUsers,
       text: 'Requests',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('requests')) {
+          return;
+        }
+
         this.launchRequests.launchRequests({
           updateIsRequestsModalVisible: this.updateIsRequestsModalVisible.bind(this),
           isRequestsModalVisible: this.isRequestsModalVisible.value,
-        }),
+        });
+      },
       show: () =>
         this.islevel.value == '2' ||
         ((this.coHostResponsibility.value &&
@@ -6014,11 +8295,16 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     {
       icon: this.faClock,
       text: 'Waiting',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('waiting')) {
+          return;
+        }
+
         this.launchWaiting.launchWaiting({
           updateIsWaitingModalVisible: this.updateIsWaitingModalVisible.bind(this),
           isWaitingModalVisible: this.isWaitingModalVisible.value,
-        }),
+        });
+      },
       show: () =>
         this.islevel.value == '2' ||
         (this.coHostResponsibility.value &&
@@ -6031,66 +8317,110 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     {
       icon: this.faUserPlus,
       text: 'Co-host',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('coHost')) {
+          return;
+        }
+
         this.launchCoHost.launchCoHost({
           updateIsCoHostModalVisible: this.updateIsCoHostModalVisible.bind(this),
           isCoHostModalVisible: this.isCoHostModalVisible.value,
-        }),
+        });
+      },
       show: () => this.islevel.value == '2',
     },
     {
       icon: this.faTools,
       text: 'Set Media',
-      action: () =>
-        this.launchMediaSettings.launchMediaSettings({
+      action: () => {
+        if (this.shouldUseSidebar()) {
+          void this.updateActiveSidebarContent(
+            'mediaSettings',
+            this.activeSidebarContent.value !== 'none' &&
+              this.activeSidebarContent.value !== 'mediaSettings',
+          );
+          return;
+        }
+
+        if (this.isMobileMenuShellActive()) {
+          void this.updateActiveMobileMenuContent(
+            'mediaSettings',
+            this.mobileMenuShellContent() !== 'none' &&
+              this.mobileMenuShellContent() !== 'mediaSettings',
+          );
+          return;
+        }
+
+        void this.launchMediaSettings.launchMediaSettings({
           updateIsMediaSettingsModalVisible: this.updateIsMediaSettingsModalVisible.bind(this),
           isMediaSettingsModalVisible: this.isMediaSettingsModalVisible.value,
           audioInputs: this.audioInputs.value,
           videoInputs: this.videoInputs.value,
           updateAudioInputs: this.updateAudioInputs.bind(this),
           updateVideoInputs: this.updateVideoInputs.bind(this),
-        }),
+        });
+      },
       show: () => true,
     },
     {
       icon: this.faDesktop,
       text: 'Display',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('displaySettings')) {
+          return;
+        }
+
         this.launchDisplaySettings.launchDisplaySettings({
           updateIsDisplaySettingsModalVisible: this.updateIsDisplaySettingsModalVisible.bind(this),
           isDisplaySettingsModalVisible: this.isDisplaySettingsModalVisible.value,
-        }),
+        });
+      },
       show: () => true,
     },
     {
       icon: this.faPoll,
       text: 'Poll',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('poll')) {
+          return;
+        }
+
         this.launchPoll.launchPoll({
           updateIsPollModalVisible: this.updateIsPollModalVisible.bind(this),
           isPollModalVisible: this.isPollModalVisible.value,
-        }),
+        });
+      },
       show: () => true,
     },
     {
       icon: this.faUserFriends,
       text: 'Breakout Rooms',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('breakoutRooms')) {
+          return;
+        }
+
         this.launchBreakoutRooms.launchBreakoutRooms({
           updateIsBreakoutRoomsModalVisible: this.updateIsBreakoutRoomsModalVisible.bind(this),
           isBreakoutRoomsModalVisible: this.isBreakoutRoomsModalVisible.value,
-        }),
+        });
+      },
       show: () => this.islevel.value == '2',
     },
     {
       icon: this.faChalkboardTeacher,
       text: 'Whiteboard',
-      action: () =>
+      action: () => {
+        if (this.openMenuPanelContent('configureWhiteboard')) {
+          return;
+        }
+
         this.launchConfigureWhiteboard.launchConfigureWhiteboard({
           updateIsConfigureWhiteboardModalVisible:
             this.updateIsConfigureWhiteboardModalVisible.bind(this),
           isConfigureWhiteboardModalVisible: this.isConfigureWhiteboardModalVisible.value,
-        }),
+        });
+      },
       show: () => this.islevel.value == '2',
     },
   ];
@@ -6130,6 +8460,15 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   controlBroadcastButtonsArray: ButtonTouch[] = [
     {
+      icon: faMoon,
+      alternateIcon: faSun,
+      active: () => this.modernMenuDarkMode.value,
+      onPress: () => this.updateModernThemeDarkMode(!this.modernMenuDarkMode.value),
+      activeColor: 'rgba(255,255,255,0.9)',
+      inActiveColor: 'rgba(0,0,0,0.9)',
+      show: () => true,
+    },
+    {
       icon: this.faUsers,
       active: true,
       alternateIcon: this.faUsers,
@@ -6138,8 +8477,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           updateIsParticipantsModalVisible: this.updateIsParticipantsModalVisible.bind(this),
           isParticipantsModalVisible: this.isParticipantsModalVisible.value,
         }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      backgroundColor: { default: 'transparent' },
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
       show: () => this.islevel.value == '2',
     },
     {
@@ -6147,12 +8487,13 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       active: true,
       alternateIcon: this.faShareAlt,
       onPress: () => this.updateIsShareEventModalVisible(!this.isShareEventModalVisible.value),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      backgroundColor: { default: 'transparent' },
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
       show: () => true,
     },
     {
-      customComponent: this.messageWidget,
+      customComponent: () => this.messageWidget,
       onPress: () =>
         this.launchMessages.launchMessages({
           updateIsMessagesModalVisible: this.updateIsMessagesModalVisible.bind(this),
@@ -6171,8 +8512,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
             ...this.mediaSFUFunctions(),
           },
         }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      backgroundColor: { default: 'transparent' },
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
       show: () => this.islevel.value == '2',
     },
     {
@@ -6206,10 +8548,6 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       show: () => this.islevel.value == '2',
     },
     {
-      customComponent: () => this.menuParticipantsWidget,
-      show: () => this.islevel.value == '2',
-    },
-    {
       icon: this.faPhone,
       active: this.endCallActive.value,
       onPress: () =>
@@ -6236,6 +8574,15 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   controlChatButtonsArray: ButtonTouch[] = [
     {
+      icon: faMoon,
+      alternateIcon: faSun,
+      active: () => this.modernMenuDarkMode.value,
+      onPress: () => this.updateModernThemeDarkMode(!this.modernMenuDarkMode.value),
+      activeColor: 'rgba(255,255,255,0.9)',
+      inActiveColor: 'rgba(0,0,0,0.9)',
+      show: true,
+    },
+    {
       icon: this.faShareAlt,
       active: true,
       alternateIcon: this.faShareAlt,
@@ -6245,7 +8592,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       show: true,
     },
     {
-      customComponent: this.messageWidget,
+      customComponent: () => this.messageWidget,
       onPress: () =>
         this.launchMessages.launchMessages({
           updateIsMessagesModalVisible: this.updateIsMessagesModalVisible.bind(this),
@@ -6324,11 +8671,15 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   screenShareWidget = {
     component: ScreenShareWidget,
-    injector: this.createInjector({ disabled: !this.screenShareActive.value }),
+    injector: this.createInjector({
+      disabled: !this.screenShareActive.value,
+      iconColor: 'currentColor',
+    }),
   };
 
-  controlButtons = [
+  controlButtons: any[] = [
     {
+      name: () => (this.micActive.value ? 'Mute' : 'Unmute'),
       icon: this.faMicrophoneSlash,
       alternateIcon: this.faMicrophone,
       active: this.micActive.value,
@@ -6345,6 +8696,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       show: true,
     },
     {
+      name: () => (this.videoActive.value ? 'Video Off' : 'Video On'),
       icon: this.faVideoSlash,
       alternateIcon: this.faVideo,
       active: this.videoActive.value,
@@ -6355,7 +8707,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
             ...this.mediaSFUFunctions(),
             MediaStream,
             MediaStreamTrack,
-            mediaDevices: MediaDevices,
+            mediaDevices: navigator.mediaDevices,
             device: this.device.value,
             socket: this.socket.value,
             showAlert: this.showAlert.bind(this),
@@ -6372,6 +8724,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       show: true,
     },
     {
+      name: 'Share Screen',
       //inverted active for inactive state
       icon: faDesktop,
       alternateIconComponent: this.screenShareWidget,
@@ -6389,6 +8742,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       show: true,
     },
     {
+      name: 'End',
       icon: this.faPhone,
       active: this.endCallActive.value,
       onPress: () =>
@@ -6402,37 +8756,146 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       show: true,
     },
     {
+      name: 'People',
       icon: this.faUsers,
       active: this.participantsActive.value,
       onPress: () =>
-        this.launchParticipants.launchParticipants({
-          updateIsParticipantsModalVisible: this.updateIsParticipantsModalVisible.bind(this),
-          isParticipantsModalVisible: this.isParticipantsModalVisible.value,
-        }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+        this.shouldUseSidebar()
+          ? this.updateActiveSidebarContent('participants')
+          : this.launchParticipants.launchParticipants({
+              updateIsParticipantsModalVisible: this.updateIsParticipantsModalVisible.bind(this),
+              isParticipantsModalVisible: this.isParticipantsModalVisible.value,
+            }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
       disabled: false,
       show: true,
     },
     {
+      name: 'Menu',
       customComponent: this.menuWidget,
       customName: 'Menu',
       onPress: () =>
-        this.launchMenuModal.launchMenuModal({
-          updateIsMenuModalVisible: this.updateIsMenuModalVisible.bind(this),
-          isMenuModalVisible: this.isMenuModalVisible.value,
-        }),
+        this.shouldUseSidebar()
+          ? this.updateActiveSidebarContent('menu')
+          : this.launchMenuModal.launchMenuModal({
+              updateIsMenuModalVisible: this.updateIsMenuModalVisible.bind(this),
+              isMenuModalVisible: this.isMenuModalVisible.value,
+            }),
       show: true,
     },
     {
-      customComponent: this.messageWidget,
+      name: 'Chat',
+      customComponent: () => this.messageWidget,
       customName: 'Messages',
       onPress: () =>
-        this.launchMessages.launchMessages({
-          updateIsMessagesModalVisible: this.updateIsMessagesModalVisible.bind(this),
-          isMessagesModalVisible: this.isMessagesModalVisible.value,
-        }),
+        this.shouldUseSidebar()
+          ? this.updateActiveSidebarContent('messages')
+          : this.launchMessages.launchMessages({
+              updateIsMessagesModalVisible: this.updateIsMessagesModalVisible.bind(this),
+              isMessagesModalVisible: this.isMessagesModalVisible.value,
+            }),
       show: true,
+    },
+    {
+      name: 'Record',
+      icon: this.faRecordVinyl,
+      onPress: () =>
+        this.launchRecording.launchRecording({
+          updateIsRecordingModalVisible: this.updateIsRecordingModalVisible.bind(this),
+          isRecordingModalVisible: this.isRecordingModalVisible.value,
+          showAlert: this.showAlert.bind(this),
+          stopLaunchRecord: this.stopLaunchRecord.value,
+          canLaunchRecord: this.canLaunchRecord.value,
+          recordingAudioSupport: this.recordingAudioSupport.value,
+          recordingVideoSupport: this.recordingVideoSupport.value,
+          updateCanRecord: this.updateCanRecord.bind(this),
+          updateClearedToRecord: this.updateClearedToRecord.bind(this),
+          recordStarted: this.recordStarted.value,
+          recordPaused: this.recordPaused.value,
+          localUIMode: this.localUIMode.value,
+        }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
+      disabled: false,
+      show: () => this.shouldUseSidebar() && !this.showRecordButtons.value && this.islevel.value == '2',
+    },
+    {
+      name: 'Media',
+      icon: this.faTools,
+      onPress: () =>
+        this.launchMediaSettings.launchMediaSettings({
+          updateIsMediaSettingsModalVisible: this.updateIsMediaSettingsModalVisible.bind(this),
+          isMediaSettingsModalVisible: this.isMediaSettingsModalVisible.value,
+          audioInputs: this.audioInputs.value,
+          videoInputs: this.videoInputs.value,
+          updateAudioInputs: this.updateAudioInputs.bind(this),
+          updateVideoInputs: this.updateVideoInputs.bind(this),
+        }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
+      disabled: false,
+      show: () => this.shouldUseSidebar(),
+    },
+    {
+      name: 'Display',
+      icon: this.faDesktop,
+      onPress: () =>
+        this.launchDisplaySettings.launchDisplaySettings({
+          updateIsDisplaySettingsModalVisible: this.updateIsDisplaySettingsModalVisible.bind(this),
+          isDisplaySettingsModalVisible: this.isDisplaySettingsModalVisible.value,
+        }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
+      disabled: false,
+      show: () => this.shouldUseSidebar(),
+    },
+    {
+      name: 'Requests',
+      icon: this.faUserPlus,
+      onPress: () =>
+        this.launchRequests.launchRequests({
+          updateIsRequestsModalVisible: this.updateIsRequestsModalVisible.bind(this),
+          isRequestsModalVisible: this.isRequestsModalVisible.value,
+        }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
+      disabled: false,
+      show: () =>
+        this.shouldUseSidebar() && (
+          this.islevel.value == '2' ||
+          ((this.coHostResponsibility.value &&
+          this.coHost.value &&
+          this.coHost.value === this.member.value &&
+          !!this.coHostResponsibility?.value?.find((item) => item.name === 'media')?.value) ??
+          false)
+        ),
+    },
+    {
+      name: 'Polls',
+      icon: this.faPoll,
+      onPress: () =>
+        this.launchPoll.launchPoll({
+          updateIsPollModalVisible: this.updateIsPollModalVisible.bind(this),
+          isPollModalVisible: this.isPollModalVisible.value,
+        }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
+      disabled: false,
+      show: () => this.shouldUseSidebar() && (this.islevel.value == '2' || this.polls.value.length > 0),
+    },
+    {
+      name: 'Rooms',
+      icon: this.faUserFriends,
+      onPress: () =>
+        this.launchBreakoutRooms.launchBreakoutRooms({
+          updateIsBreakoutRoomsModalVisible: this.updateIsBreakoutRoomsModalVisible.bind(this),
+          isBreakoutRoomsModalVisible: this.isBreakoutRoomsModalVisible.value,
+        }),
+      activeColor: () => this.controlStripTextColor(),
+      inActiveColor: () => this.controlStripTextColor(),
+      disabled: false,
+      show: () => this.shouldUseSidebar() && this.islevel.value == '2',
     },
   ];
 
@@ -6473,6 +8936,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
         socketDefault.on('allMembers', async (membersData: AllMembersData) => {
           if (membersData) {
+            this.syncSpeakerTranslationStatesFromMembers(membersData.members);
+
             await this.allMembers.allMembers({
               apiUserName: apiUserName,
               apiKey: '', //not recommended - use apiToken instead. Use for testing/development only
@@ -6486,11 +8951,17 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
               parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
               consume_sockets: this.consume_sockets.value,
             });
+
+            setTimeout(() => {
+              void this.pauseTranslatedOriginalsForMembers(membersData.members);
+            }, 2000);
           }
         });
 
         socketDefault.on('allMembersRest', async (membersData: AllMembersRestData) => {
           if (membersData) {
+            this.syncSpeakerTranslationStatesFromMembers(membersData.members);
+
             await this.allMembersRest.allMembersRest({
               apiUserName: apiUserName,
               apiKey: '', // not recommended - use apiToken instead. Use for testing/development only
@@ -6504,6 +8975,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
               parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
               consume_sockets: this.consume_sockets.value,
             });
+
+            setTimeout(() => {
+              void this.pauseTranslatedOriginalsForMembers(membersData.members);
+            }, 2000);
           }
         });
 
@@ -6722,6 +9197,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         );
 
         socketDefault.on('meetingStillThere', async () => {
+          if (this.suppressConfirmHereForSession) {
+            return;
+          }
+
           this.meetingStillThere.meetingStillThere({
             updateIsConfirmHereModalVisible: this.updateIsConfirmHereModalVisible.bind(this),
           });
@@ -6797,6 +9276,312 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
             /* handle error */
           }
         });
+
+        // ── Panelists events ──────────────────────────────────────────────────
+        socketDefault.on('panelistsUpdated', async (data: any) => {
+          try {
+            if (this.panelistsUpdated) {
+              await this.panelistsUpdated.panelistsUpdated({
+                data,
+                updatePanelists: this.updatePanelists.bind(this),
+              });
+            }
+          } catch { /* handle error */ }
+        });
+
+        socketDefault.on('panelistFocusChanged', async (data: any) => {
+          try {
+            if (this.panelistFocusChanged) {
+              await this.panelistFocusChanged.panelistFocusChanged({
+                data,
+                updatePanelistsFocused: this.updatePanelistsFocused.bind(this),
+                updateMuteOthersMic: this.updateMuteOthersMic.bind(this),
+                updateMuteOthersCamera: this.updateMuteOthersCamera.bind(this),
+                updatePanelists: this.updatePanelists.bind(this),
+                currentPanelistsFocused: this.panelistsFocused.value,
+                currentPanelists: this.panelists.value,
+                onScreenChanges: async () => {
+                  await this.onScreenChanges.onScreenChanges({
+                    changed: true,
+                    parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+                  });
+                },
+              });
+            }
+          } catch { /* handle error */ }
+        });
+
+        const handleControlMedia = async (data: any) => {
+          try {
+            if (this.receiveControlMedia) {
+              await this.receiveControlMedia.receiveControlMedia({
+                data,
+                showAlert: this.showAlert.bind(this),
+                clickAudio: () => {
+                  this.clickAudio.clickAudio({
+                    parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+                  });
+                },
+                clickVideo: () => {
+                  this.clickVideo.clickVideo({
+                    parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
+                  });
+                },
+                audioAlreadyOn: this.audioAlreadyOn.value,
+                videoAlreadyOn: this.videoAlreadyOn.value,
+              });
+            }
+          } catch { /* handle error */ }
+        };
+
+        socketDefault.on('controlMedia', handleControlMedia);
+        socketDefault.on('receiveControlMedia', handleControlMedia);
+
+        socketDefault.on('addedAsPanelist', async (data: any) => {
+          try {
+            if (this.addedAsPanelist) {
+              await this.addedAsPanelist.addedAsPanelist({
+                data,
+                showAlert: this.showAlert.bind(this),
+              });
+            }
+          } catch { /* handle error */ }
+        });
+
+        socketDefault.on('removedFromPanelists', async (data: any) => {
+          try {
+            if (this.removedFromPanelists) {
+              await this.removedFromPanelists.removedFromPanelists({
+                data,
+                showAlert: this.showAlert.bind(this),
+              });
+            }
+          } catch { /* handle error */ }
+        });
+
+        // ── Permissions events ────────────────────────────────────────────────
+        socketDefault.on('permissionUpdated', async (data: any) => {
+          try {
+            if (this.permissionUpdated) {
+              await this.permissionUpdated.permissionUpdated({
+                data,
+                showAlert: this.showAlert.bind(this),
+                updateIslevel: this.updateIslevel.bind(this),
+              });
+            }
+          } catch { /* handle error */ }
+        });
+
+        socketDefault.on('permissionConfigUpdated', async (data: any) => {
+          try {
+            if (this.permissionConfigUpdated) {
+              await this.permissionConfigUpdated.permissionConfigUpdated({
+                data,
+                updatePermissionConfig: this.updatePermissionConfig.bind(this),
+              });
+            }
+          } catch { /* handle error */ }
+        });
+
+        // ── Translation events ────────────────────────────────────────────────
+        if (this.translationReceiveMethods) {
+          socketDefault.on('translation:roomConfig', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationRoomConfig({
+                data,
+                updateTranslationConfig: this.updateTranslationConfig.bind(this),
+                updateTranslationSupported: this.updateTranslationSupported.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:configUpdated', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationConfigUpdated({
+                data,
+                updateTranslationConfig: this.updateTranslationConfig.bind(this),
+                showAlert: this.showAlert.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:languageSet', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationLanguageSet({
+                data,
+                updateMySpokenLanguage: this.updateMySpokenLanguage.bind(this),
+                updateMySpokenLanguageEnabled: this.updateMySpokenLanguageEnabled.bind(this),
+                showAlert: this.showAlert.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:subscribed', async (data: any) => {
+            try {
+              const payload = data as {
+                speakerId: string;
+                language: string;
+                producerId?: string;
+                originalProducerId?: string;
+                channelCreated?: boolean;
+              };
+
+              await this.translationReceiveMethods!.translationSubscribed({
+                data: {
+                  ...payload,
+                  channelCreated: payload.channelCreated ?? false,
+                },
+                updateListenPreferences: this.updateListenPreferences.bind(this),
+                updateTranslationProducerMap: this.updateTranslationProducerMap.bind(this),
+                startConsumingTranslation: payload.producerId
+                  ? async (producerId: string, speakerId: string, language: string) => {
+                    await this.startConsumingTranslation(
+                      producerId,
+                      speakerId,
+                      language,
+                      payload.originalProducerId,
+                      socketDefault,
+                    );
+                  }
+                  : undefined,
+                showAlert: this.showAlert.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:unsubscribed', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationUnsubscribed({
+                data,
+                updateListenPreferences: this.updateListenPreferences.bind(this),
+                stopConsumingTranslation: this.stopConsumingTranslationSelection,
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:producerReady', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationProducerReady({
+                data,
+                updateTranslationProducerMap: this.updateTranslationProducerMap.bind(this),
+                startConsumingTranslation: this.startConsumingTranslation,
+                pauseOriginalProducer: async (originalProducerId: string) => {
+                  await this.pauseOriginalTranslationProducer(originalProducerId, data?.speakerId);
+                },
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:producerClosed', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationProducerClosed({
+                data,
+                updateTranslationProducerMap: this.updateTranslationProducerMap.bind(this),
+                stopConsumingTranslation: this.stopConsumingTranslationProducer,
+                resumeOriginalProducer: async (speakerId: string) => {
+                  const originalProducerId = this.resolveOriginalProducerIdForSpeaker(speakerId);
+                  if (!originalProducerId) {
+                    return;
+                  }
+
+                  await this.resumeOriginalTranslationProducer(originalProducerId, speakerId);
+                },
+                showAlert: this.showAlert.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:channelsAvailable', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationChannelsAvailable({
+                data,
+                updateAvailableTranslationChannels:
+                  this.updateAvailableTranslationChannels.bind(this),
+                myDefaultListenLanguage: this.myDefaultListenLanguage.value,
+                socket: socketDefault,
+                roomName: this.roomName.value,
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:memberState', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationMemberState({
+                data,
+                updateParticipantTranslationState:
+                  this.updateParticipantTranslationState.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:error', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationError({ data, showAlert: this.showAlert.bind(this) });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:transcript', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationTranscript({
+                data,
+                onTranscriptReceived: (transcript: TranslationTranscriptData) => {
+                  const subtitle = createLiveSubtitle({
+                    text: transcript.translatedText || transcript.originalText || '',
+                    language: transcript.language,
+                    speakerId: transcript.speakerId,
+                    speakerName: transcript.speakerName,
+                  });
+
+                  const next = new Map(this.liveSubtitleService.getLiveSubtitles());
+                  if (transcript.speakerId) {
+                    next.set(transcript.speakerId, subtitle);
+                  }
+                  if (transcript.speakerName) {
+                    next.set(transcript.speakerName, subtitle);
+                  }
+                  this.liveSubtitleService.setLiveSubtitles(next);
+
+                  const delay = Math.max(100, subtitle.expiresAt - Date.now() + 100);
+                  setTimeout(() => {
+                    this.cleanupExpiredLiveSubtitles();
+                  }, delay);
+                },
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:speakerOutputChanged', async (data: any) => {
+            try {
+              await this.translationReceiveMethods!.translationSpeakerOutputChanged({
+                data,
+                pauseOriginalProducer: this.pauseOriginalTranslationProducer,
+                resumeOriginalProducer: this.resumeOriginalTranslationProducer,
+                stopConsumingTranslationForSpeaker:
+                  this.stopConsumingTranslationForSpeaker,
+                updateSpeakerTranslationState:
+                  this.updateSpeakerTranslationState.bind(this),
+                showAlert: this.showAlert.bind(this),
+              });
+            } catch { /* handle error */ }
+          });
+
+          socketDefault.on('translation:speakerDisabled', async (data: any) => {
+            try {
+              if (data?.speakerId && data?.originalProducerId) {
+                await this.translationReceiveMethods!.translationSpeakerOutputChanged({
+                  data: {
+                    speakerId: data.speakerId,
+                    speakerName: data?.speakerName || '',
+                    inputLanguage: data?.inputLanguage || '',
+                    outputLanguage: null,
+                    originalProducerId: data.originalProducerId,
+                    enabled: false,
+                  },
+                });
+              }
+            } catch { /* handle error */ }
+          });
+        }
 
       }
 

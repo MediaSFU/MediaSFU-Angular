@@ -167,7 +167,7 @@ export class MainAspectComponent implements OnInit, OnDestroy, OnChanges {
 
     this.aspectStyles = {
       ...baseStyles,
-      ...(this.containerStyle as any),
+      ...(this.containerStyle ?? {}),
     };
   };
 }

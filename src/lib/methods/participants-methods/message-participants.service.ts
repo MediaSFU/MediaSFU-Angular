@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { messageParticipants as sharedMessageParticipants } from 'mediasfu-shared';
 import { Participant, CoHostResponsibility, ShowAlert } from '../../@types/types';
 export interface MessageParticipantsOptions {
   coHostResponsibility: CoHostResponsibility[];
@@ -93,28 +94,18 @@ export class MessageParticipants {
     updateDirectMessageDetails,
     updateStartDirectMessage,
   }: MessageParticipantsOptions): void {
-    let chatValue = false;
-
-    try {
-      chatValue = coHostResponsibility.find((item) => item.name === 'chat')?.value ?? false;
-    } catch (error) {
-      console.error(error);
-    }
-
-    if (islevel === '2' || (coHost === member && chatValue === true)) {
-      if (participant.islevel !== '2') {
-        updateDirectMessageDetails(participant);
-        updateStartDirectMessage(true);
-        updateIsMessagesModalVisible(true);
-      }
-    } else {
-      showAlert?.({
-        message: 'You are not allowed to send this message',
-        type: 'danger',
-        duration: 3000,
-      });
-
-      return;
-    }
+    sharedMessageParticipants(
+      {
+        coHostResponsibility,
+        participant,
+        member,
+        islevel,
+        showAlert,
+        coHost,
+        updateIsMessagesModalVisible,
+        updateDirectMessageDetails,
+        updateStartDirectMessage,
+      } as unknown as Parameters<typeof sharedMessageParticipants>[0],
+    );
   }
 }

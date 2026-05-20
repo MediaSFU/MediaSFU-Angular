@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SwitchUserAudioType, SwitchUserAudioParameters } from '../../@types/types';
+import { switchAudio as sharedSwitchAudio } from 'mediasfu-shared';
 
 export interface SwitchAudioParameters extends SwitchUserAudioParameters {
   defAudioID: string;
@@ -83,26 +84,8 @@ export class SwitchAudio {
    */
 
   async switchAudio({ audioPreference, parameters }: SwitchAudioOptions): Promise<void> {
-    let {
-      defAudioID,
-      userDefaultAudioInputDevice,
-      prevAudioInputDevice,
-      updateUserDefaultAudioInputDevice,
-      updatePrevAudioInputDevice,
-
-      //mediasfu functions
-      switchUserAudio,
-    } = parameters;
-
-    if (audioPreference !== defAudioID) {
-      prevAudioInputDevice = userDefaultAudioInputDevice;
-      updatePrevAudioInputDevice(prevAudioInputDevice);
-      userDefaultAudioInputDevice = audioPreference;
-      updateUserDefaultAudioInputDevice(userDefaultAudioInputDevice);
-
-      if (defAudioID) {
-        await switchUserAudio({ audioPreference, parameters });
-      }
-    }
+    await sharedSwitchAudio(
+      { audioPreference, parameters } as unknown as Parameters<typeof sharedSwitchAudio>[0],
+    );
   }
 }

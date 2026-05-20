@@ -1,0 +1,125 @@
+.room-list__empty-state {
+	padding: 24px 18px;
+	border-radius: 18px;
+	border: 1px dashed rgba(148, 163, 184, 0.32);
+	text-align: center;
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+.room-list__empty-state--dark {
+	color: rgba(226, 232, 240, 0.72);
+	background: rgba(15, 23, 42, 0.28);
+}
+
+.room-list__empty-state--light {
+	color: rgba(15, 23, 42, 0.62);
+	background: rgba(255, 255, 255, 0.68);
+}
+
+.room-card {
+	border-radius: 20px;
+	border: 1px solid rgba(148, 163, 184, 0.2);
+	box-shadow: 0 18px 30px rgba(15, 23, 42, 0.12);
+	overflow: hidden;
+}
+
+.room-card + .room-card {
+	margin-top: 14px;
+}
+
+.room-card--dark {
+	background: rgba(15, 23, 42, 0.5);
+}
+
+.room-card--light {
+	background: rgba(255, 255, 255, 0.86);
+}
+
+.room-card__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 16px;
+}
+
+.room-card__title {
+	font-weight: 800;
+}
+
+.room-card__meta {
+	opacity: 0.65;
+	font-size: 0.75rem;
+	font-weight: 600;
+	margin-left: 6px;
+}
+
+.room-card--dark .room-card__title,
+.room-card--dark .room-card__item,
+.room-card--dark .room-card__empty {
+	color: #e2e8f0;
+}
+
+.room-card--light .room-card__title,
+.room-card--light .room-card__item,
+.room-card--light .room-card__empty {
+	color: #0f172a;
+}
+
+.room-card__controls {
+	display: flex;
+	gap: 8px;
+}
+
+.room-card__body {
+	padding: 0 16px 16px;
+}
+
+.room-card__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.room-card__item,
+.room-card__empty {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 14px;
+	border-radius: 16px;
+	background: rgba(148, 163, 184, 0.1);
+}
+
+.room-card__empty {
+	justify-content: flex-start;
+	font-style: italic;
+}
+
+.room-card__icon-button {
+	width: 34px;
+	height: 34px;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+}
+
+.room-card__icon-button--neutral {
+	background: rgba(59, 130, 246, 0.14);
+	color: #2563eb;
+}
+
+.room-card__icon-button--active {
+	background: rgba(71, 85, 105, 0.16);
+	color: inherit;
+}
+
+.room-card__icon-button--danger {
+	background: rgba(239, 68, 68, 0.14);
+	color: #dc2626;
+}

@@ -81,60 +81,31 @@ export type ControlButtonsComponentTouchType = (
     imports: [CommonModule, FontAwesomeModule],
     template: `
     <div
-      [ngStyle]="
-        mergeStyles(getAlignmentStyle(), buttonsContainerStyle, {
-          position: 'absolute',
-          bottom: '0',
-          left: '0',
-          right: '0',
-          'margin-top': '5px',
-          'margin-bottom': '5px',
-          elevation: '9',
-          'z-index': '9',
-          'background-color': 'transparent',
-          display: showAspect ? 'flex' : 'none'
-        })
-      "
+      class="control-buttons-touch"
+      [ngClass]="{ 'control-buttons-touch--vertical': direction === 'vertical' }"
+      [ngStyle]="mergeStyles(getContainerStyle(), buttonsContainerStyle)"
     >
+      <ng-container *ngFor="let button of buttons">
       <button
-        *ngFor="let button of buttons"
-        [ngStyle]="
-          mergeStyles(
-            {
-              'align-items': 'center',
-              padding: '10px',
-              'border-radius': '5px',
-              'margin-right': '5px',
-              'margin-left': '5px',
-              'margin-bottom': '5px',
-              'margin-top': '5px',
-              cursor: 'pointer',
-              'background-color': button.show
-                ? button.backgroundColor?.default || 'rgba(255, 255, 255, 0.25)'
-                : 'transparent',
-              border: 'none',
-              display: button.show
-                ? 'flex'
-                : button.inActiveColor === 'transparent' && button.activeColor === 'transparent'
-                ? 'flex'
-                : 'none'
-            },
-            direction === 'vertical' ? { 'flex-direction': 'column' } : {}
-          )
-        "
+        *ngIf="isButtonVisible(button)"
+        class="control-buttons-touch__button"
+        [class.control-buttons-touch__button--active]="isButtonActive(button)"
+        [ngStyle]="getButtonStyle(button)"
         (click)="button.onPress ? button.onPress() : null"
-        [disabled]="button.disabled"
+        [disabled]="isButtonDisabled(button)"
+        [attr.aria-label]="button.name || 'Control button'"
+        [attr.aria-pressed]="isButtonActive(button)"
       >
         <ng-container *ngIf="button.icon">
           <fa-icon
-            *ngIf="button.active"
+            *ngIf="isButtonActive(button)"
             [icon]="button.alternateIcon || button.icon"
-            [style.color]="button.activeColor || 'transparent'"
+            [style.color]="resolveColor(button.activeColor, '#ffffff')"
           ></fa-icon>
           <fa-icon
-            *ngIf="!button.active"
+            *ngIf="!isButtonActive(button)"
             [icon]="button.icon"
-            [style.color]="button.inActiveColor || 'transparent'"
+            [style.color]="resolveColor(button.inActiveColor, 'rgba(255, 255, 255, 0.82)')"
           ></fa-icon>
         </ng-container>
         <ng-container *ngIf="!button.icon">
@@ -160,15 +131,13 @@ export type ControlButtonsComponentTouchType = (
         </ng-container>
         <span
           *ngIf="button.name"
-          [ngStyle]="{
-            color: button.color || 'transparent',
-            'font-size': '12px',
-            'margin-top': '5px'
-          }"
+          class="control-buttons-touch__label"
+          [style.color]="button.color || '#ffffff'"
         >
           {{ button.name }}
         </span>
       </button>
+      </ng-container>
     </div>
   `,
     styles: [
@@ -177,6 +146,35 @@ export type ControlButtonsComponentTouchType = (
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+
+      .control-buttons-touch {
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.24);
+        backdrop-filter: blur(16px);
+      }
+
+      .control-buttons-touch__button {
+        position: relative;
+        font-size: 18px;
+        transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+      }
+
+      .control-buttons-touch__button:hover:not(:disabled) {
+        transform: translateY(-1px) scale(1.05);
+        background: rgba(255, 255, 255, 0.14) !important;
+      }
+
+      .control-buttons-touch__button:disabled {
+        cursor: not-allowed !important;
+        opacity: 0.45;
+      }
+
+      .control-buttons-touch__button--active {
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.24);
+      }
+
+      .control-buttons-touch__label {
+        display: none;
       }
     `,
     ]
@@ -188,6 +186,95 @@ export class ControlButtonsComponentTouch {
   @Input() direction = 'horizontal';
   @Input() buttonsContainerStyle: any = {};
   @Input() showAspect = false;
+
+  getContainerStyle() {
+    const style: Record<string, string | number> = {
+      position: 'absolute',
+      width: 'fit-content',
+      padding: '8px',
+      margin: '10px',
+      elevation: 9,
+      'z-index': 9,
+      'background-color': 'rgba(0, 0, 0, 0.25)',
+      'border-radius': '12px',
+      display: this.showAspect ? 'flex' : 'none',
+      'flex-direction': this.direction === 'vertical' ? 'column' : 'row',
+      'align-items': 'center',
+      'justify-content': 'center',
+      gap: '4px',
+    };
+
+    if (this.location === 'bottom') {
+      style.bottom = '0';
+      style.top = 'auto';
+    } else if (this.location === 'center') {
+      style.top = '50%';
+      style.bottom = 'auto';
+      style.transform = 'translateY(-50%)';
+    } else {
+      style.top = '0';
+      style.bottom = 'auto';
+    }
+
+    if (this.position === 'right') {
+      style.right = '0';
+      style.left = 'auto';
+    } else if (this.position === 'middle') {
+      style.left = '50%';
+      style.right = 'auto';
+      style.transform = this.location === 'center' ? 'translate(-50%, -50%)' : 'translateX(-50%)';
+    } else {
+      style.left = '0';
+      style.right = 'auto';
+    }
+
+    return style;
+  }
+
+  getButtonStyle(button: ButtonTouch) {
+    const isActive = this.isButtonActive(button);
+
+    return {
+      width: '48px',
+      height: '48px',
+      padding: '0',
+      margin: '0',
+      display: 'flex',
+      'align-items': 'center',
+      'justify-content': 'center',
+      border: 'none',
+      'border-radius': '999px',
+      cursor: 'pointer',
+      'background-color': isActive
+        ? button.backgroundColor?.default || 'rgba(255, 255, 255, 0.14)'
+        : button.backgroundColor?.default || 'rgba(255, 255, 255, 0.08)',
+    };
+  }
+
+  isButtonVisible(button: ButtonTouch): boolean {
+    const visible = this.resolveBoolean(button.show, true);
+    if (!visible) {
+      return button.inActiveColor === 'transparent' && button.activeColor === 'transparent';
+    }
+
+    return true;
+  }
+
+  isButtonActive(button: ButtonTouch): boolean {
+    return this.resolveBoolean(button.active, false);
+  }
+
+  isButtonDisabled(button: ButtonTouch): boolean {
+    return this.resolveBoolean(button.disabled, false);
+  }
+
+  resolveColor(value: string | (() => string) | undefined, fallback: string): string {
+    return typeof value === 'function' ? value() : value || fallback;
+  }
+
+  private resolveBoolean(value: boolean | (() => boolean) | undefined, fallback: boolean): boolean {
+    return typeof value === 'function' ? value() : value ?? fallback;
+  }
 
   getAlignmentStyle() {
     let alignmentStyle: any = {};

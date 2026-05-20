@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Participant } from '../../@types/types';
+import { screenProducerId as sharedScreenProducerId } from 'mediasfu-shared';
 
 export interface ScreenProducerIdOptions {
   producerId: string;
@@ -87,27 +88,16 @@ export class ScreenProducerId {
     updateShareScreenStarted,
     updateDeferScreenReceived,
   }: ScreenProducerIdOptions): void => {
-    // Check if members data has been received with the screenId participant in it
-    let host = participants.find(
-      (participant: Participant) =>
-        participant.ScreenID === screenId && participant.ScreenOn === true,
-    );
-
-    // Operations to update the UI
-    if (host && membersReceived) {
-      screenId = producerId;
-      shareScreenStarted = true;
-      deferScreenReceived = false;
-
-      updateScreenId(screenId);
-      updateShareScreenStarted(shareScreenStarted);
-      updateDeferScreenReceived(deferScreenReceived);
-    } else {
-      deferScreenReceived = true;
-      screenId = producerId;
-
-      updateScreenId(screenId);
-      updateDeferScreenReceived(deferScreenReceived);
-    }
+    return sharedScreenProducerId({
+      producerId,
+      screenId,
+      membersReceived,
+      shareScreenStarted,
+      deferScreenReceived,
+      participants,
+      updateScreenId,
+      updateShareScreenStarted,
+      updateDeferScreenReceived,
+    });
   };
 }

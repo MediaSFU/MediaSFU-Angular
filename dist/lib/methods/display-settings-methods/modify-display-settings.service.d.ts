@@ -5,6 +5,7 @@ export interface ModifyDisplaySettingsParameters extends OnScreenChangesParamete
     meetingDisplayType: string;
     autoWave: boolean;
     forceFullDisplay: boolean;
+    showSubtitlesOnCards?: boolean;
     meetingVideoOptimized: boolean;
     islevel: string;
     recordStarted: boolean;
@@ -18,6 +19,7 @@ export interface ModifyDisplaySettingsParameters extends OnScreenChangesParamete
     updateMeetingDisplayType: (displayType: string) => void;
     updateAutoWave: (autoWave: boolean) => void;
     updateForceFullDisplay: (forceFullDisplay: boolean) => void;
+    updateShowSubtitlesOnCards?: (showSubtitlesOnCards: boolean) => void;
     updateMeetingVideoOptimized: (optimized: boolean) => void;
     updatePrevForceFullDisplay: (forceFullDisplay: boolean) => void;
     updatePrevMeetingDisplayType: (displayType: string) => void;

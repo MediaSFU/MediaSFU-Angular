@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, NgZone, Inject, Optional } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -9,7 +9,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { getOverlayPosition } from '../../../methods/utils/get-overlay-position.util';
 import { ControlMedia } from '../../../consumers/control-media.service';
-import { MiniCard } from '../mini-card/mini-card.component';
+import { ModernMiniCardComponent } from '../../../modern/display-components/modern-mini-card.component';
+import { SubtitleOverlayComponent } from '../subtitle-overlay/subtitle-overlay.component';
 import {
   Participant,
   ControlsPosition,
@@ -21,6 +22,8 @@ import {
   CustomComponent,
 } from '../../../@types/types';
 import { Socket } from 'socket.io-client';
+import { LiveSubtitleService } from '../../../services/live-subtitle.service';
+import { isSubtitleExpired } from '../../../producers/socket-receive-methods/translation-receive-methods.service';
 
 export interface AudioCardParameters {
   audioDecibels: AudioDecibels[];
@@ -122,12 +125,12 @@ export type AudioCardType = (options: AudioCardOptions) => HTMLElement;
  **/
 @Component({
     selector: 'app-audio-card',
-    imports: [CommonModule, FontAwesomeModule, MiniCard],
+  imports: [CommonModule, FontAwesomeModule, ModernMiniCardComponent, SubtitleOverlayComponent],
     templateUrl: './audio-card.component.html',
     styleUrls: ['./audio-card.component.css']
 })
 
-export class AudioCard implements OnInit, OnDestroy {
+export class AudioCard implements OnInit, OnDestroy, OnChanges {
   @Input() controlUserMedia?: (options: ControlMediaOptions) => Promise<void>;
   @Input() customStyle: Partial<CSSStyleDeclaration> = {};
   @Input() name = '';
@@ -152,13 +155,17 @@ export class AudioCard implements OnInit, OnDestroy {
   faMicrophone = faMicrophone;
   faMicrophoneSlash = faMicrophoneSlash;
 
-  waveformAnimations: number[] = Array.from({ length: 9 }, () => 0);
-  showWaveform = true;
-  interval: any;
+  waveformAnimations: number[] = Array.from({ length: 5 }, () => 3);
+  ringBarIndices = Array.from({ length: 9 }, (_, index) => index);
+  showWaveform = false;
+  audioLevelInterval: any;
+  waveformInterval: any;
+  isDarkModeEnabled = false;
+  imageLoadFailed = false;
 
   constructor(
-    private ngZone: NgZone,
     private controlMediaService: ControlMedia,
+    private liveSubtitleService: LiveSubtitleService,
     @Optional()
     @Inject('controlUserMedia')
     injectedControlUserMedia: (options: ControlMediaOptions) => Promise<void>,
@@ -204,7 +211,25 @@ export class AudioCard implements OnInit, OnDestroy {
     this.parameters = injectedParameters || this.parameters;
   }
 
+  get liveSubtitleText(): string | null {
+    if (!this.liveSubtitleService.getShowSubtitlesOnCards()) {
+      return null;
+    }
+
+    const speakerId = this.participant?.id || '';
+    const speakerName = this.participant?.name || this.name || '';
+    const subtitle = this.liveSubtitleService.getSubtitleForSpeaker(speakerId, speakerName);
+
+    if (!subtitle || isSubtitleExpired(subtitle)) {
+      return null;
+    }
+
+    return subtitle.text;
+  }
+
   ngOnInit() {
+    this.syncThemeMode(this.parameters?.getUpdatedAllParams?.());
+
     if (!this.controlUserMedia) {
       this.controlUserMedia = async (options: ControlMediaOptions) => {
         await this.controlMediaService.controlMedia(options);
@@ -212,57 +237,90 @@ export class AudioCard implements OnInit, OnDestroy {
     }
 
     if (this.parameters) {
-      this.ngZone.runOutsideAngular(() => {
-        this.interval = setInterval(() => {
-          const { audioDecibels, participants } = this.parameters.getUpdatedAllParams();
-          const existingEntry = audioDecibels.find((entry: any) => entry.name == this.name);
-          this.participant = participants.find((p: Participant) => p.name == this.name) || null;
+      this.audioLevelInterval = setInterval(() => {
+        const params = this.parameters.getUpdatedAllParams();
+        const { audioDecibels, participants } = params;
+        this.syncThemeMode(params);
+        const existingEntry = audioDecibels.find((entry: any) => entry.name == this.name);
+        this.participant = participants.find((p: Participant) => p.name == this.name) || null;
 
-          if (
-            existingEntry &&
-            existingEntry.averageLoudness > 127.5 &&
-            this.participant &&
-            !this.participant.muted
-          ) {
-            this.animateWaveform();
-          } else {
-            this.resetWaveform();
-          }
-        }, 1000);
-      });
+        if (
+          existingEntry &&
+          existingEntry.averageLoudness > 127.5 &&
+          this.participant &&
+          !this.participant.muted
+        ) {
+          this.animateWaveform();
+        } else {
+          this.resetWaveform();
+        }
+      }, 1000);
     }
+  }
 
-    if (this.participant?.muted) {
-      this.showWaveform = false;
-    } else {
-      this.showWaveform = true;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['imageSource']) {
+      this.imageLoadFailed = false;
     }
   }
 
   ngOnDestroy() {
-    clearInterval(this.interval);
+    clearInterval(this.audioLevelInterval);
+    clearInterval(this.waveformInterval);
   }
 
-  animateBar(index: number) {
-    this.waveformAnimations[index] = 1;
-    setTimeout(() => {
-      this.waveformAnimations[index] = 0;
-    }, this.getAnimationDuration(index));
+  get hasRenderableImage(): boolean {
+    return Boolean(this.imageSource) && !this.imageLoadFailed;
+  }
+
+  get isSpeaking(): boolean {
+    return this.showWaveform && !this.participant?.muted;
+  }
+
+  getWaveformRingHeight(index: number): number {
+    const value = this.waveformAnimations[index % this.waveformAnimations.length] ?? 8;
+    return Math.max(8, Math.min(28, value));
+  }
+
+  handleImageError() {
+    this.imageLoadFailed = true;
   }
 
   animateWaveform() {
-    this.waveformAnimations.forEach((_, index) => {
-      setInterval(() => this.animateBar(index), this.getAnimationDuration(index) * 2);
-    });
+    this.showWaveform = true;
+
+    if (this.waveformInterval) {
+      return;
+    }
+
+    this.waveformInterval = setInterval(() => {
+      this.waveformAnimations = this.waveformAnimations.map(
+        () => Math.floor(Math.random() * 18) + 4,
+      );
+    }, 150);
   }
 
   resetWaveform() {
-    this.waveformAnimations.fill(0);
+    this.showWaveform = false;
+
+    if (this.waveformInterval) {
+      clearInterval(this.waveformInterval);
+      this.waveformInterval = null;
+    }
+
+    this.waveformAnimations = this.waveformAnimations.map(() => 3);
   }
 
-  getAnimationDuration(index: number): number {
-    const durations = [474, 433, 407, 458, 400, 427, 441, 419, 487];
-    return durations[index] || 0;
+  syncThemeMode(params?: any) {
+    if (typeof params?.isDarkModeValue === 'boolean') {
+      this.isDarkModeEnabled = params.isDarkModeValue;
+      return;
+    }
+
+    this.isDarkModeEnabled =
+      typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+        : false;
   }
 
   async toggleAudio() {

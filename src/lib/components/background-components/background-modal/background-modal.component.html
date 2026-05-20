@@ -1,9 +1,9 @@
-<ng-container *ngIf="isVisible && customTemplate">
+<ng-container *ngIf="shouldRenderState() && customTemplate">
   <ng-container
     *ngTemplateOutlet="
       customTemplate;
       context: {
-        isVisible: isVisible,
+        isVisible: isVisibleState(),
         parameters: parameters,
         position: position,
         backgroundColor: backgroundColor,
@@ -14,31 +14,67 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="isVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
-    <div [ngStyle]="getCombinedContentStyle()">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h2 style="font-size: x-large; font-weight: bold; color: black;">Background Settings</h2>
-        <button (click)="onClose()" style="border: none; background: none; cursor: pointer;">
-          <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>
+<div
+  *ngIf="shouldRenderState() && !customTemplate"
+  class="background-modal__overlay"
+  [class.background-modal__overlay--dark]="resolvedIsDarkMode"
+  [class.background-modal__overlay--light]="!resolvedIsDarkMode"
+  [class.background-modal__overlay--embedded]="isEmbedded()"
+  [ngStyle]="getCombinedOverlayStyle()"
+>
+    <div
+      class="background-modal__content"
+      [class.background-modal__content--embedded]="isEmbedded()"
+      [ngStyle]="getCombinedContentStyle()"
+    >
+      <div *ngIf="showHeader" class="background-modal__header">
+        <div class="background-modal__heading">
+          <div class="background-modal__eyebrow">{{ isEmbedded() ? 'Shared sidebar' : 'Camera effects' }}</div>
+          <h2 class="background-modal__title">Background Settings</h2>
+          <p class="background-modal__subtitle">Select a built-in backdrop or upload a custom image before previewing your camera feed.</p>
+        </div>
+        <button (click)="handleModalClose()" class="background-modal__close">
+          <fa-icon [icon]="faTimes" size="xl" class="background-modal__close-icon"></fa-icon>
         </button>
       </div>
-      <hr style="height: 1px; background-color: black; margin-top: 5px; margin-bottom: 5px;" />
-      <div style="max-width: 95%; overflow-x: auto;">
-        <div id="defaultImages" #defaultImagesContainer></div>
-        <div class="form-group" style="max-width: 70%; overflow-x: auto;">
-          <label for="uploadImage">Upload Custom Image</label>
-          <input type="file" class="form-control" id="uploadImage" #uploadImageInput (change)="handleImageUpload($event)" />
+      <hr *ngIf="showHeader" class="background-modal__divider" />
+      <div class="background-modal__body">
+        <div class="background-modal__status" [class.background-modal__status--success]="guidanceTone() === 'success'">
+          <span class="background-modal__status-chip">{{ stageStatusCopy() }}</span>
+          <p class="background-modal__status-copy">{{ guidanceCopy() }}</p>
+        </div>
+        <div id="defaultImages" #defaultImagesContainer class="background-modal__gallery"></div>
+        <p class="background-modal__hint">Black screen? Change the selected image to update or clear the preview.</p>
+        <div class="background-modal__upload">
+          <label for="uploadImage" class="background-modal__label">Upload Custom Image</label>
+          <p class="background-modal__upload-copy">PNG and JPG files work best for background replacement.</p>
+          <input type="file" class="background-modal__file-input" id="uploadImage" #uploadImageInput (change)="handleImageUpload($event)" />
         </div>
         <canvas id="mainCanvas" #mainCanvas class="d-none"></canvas>
-        <canvas id="backgroundCanvas" #backgroundCanvas class="d-none" style="width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;"></canvas>
-        <video id="captureVideo" #captureVideo class="d-none" muted autoplay playsinline></video>
-        <video id="previewVideo" #videoPreview class="d-none" muted autoplay playsinline style="width: 100%; max-width: 400px; height: auto; background-color: transparent; border: 1px solid black;"></video>
-        <div id="loadingOverlay" #loadingOverlay class="d-none" [ngStyle]="{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 'justify-content': 'center', 'align-items': 'center', zIndex: 1000 }">
-          <div [ngStyle]="{ width: '50px', height: '50px', border: '5px solid rgba(255, 255, 255, 0.3)', borderRadius: '50%', borderTop: '5px solid white', animation: 'spin 1s linear infinite' }"></div>
+        <div class="background-modal__preview-shell">
+          <div class="background-modal__preview-header">
+            <div class="background-modal__preview-copy">
+              <span class="background-modal__preview-label">Preview stage</span>
+              <span class="background-modal__preview-caption">Live background preview updates here.</span>
+            </div>
+            <span class="background-modal__preview-state">{{ stageStatusCopy() }}</span>
+          </div>
+          <div class="background-modal__preview">
+            <canvas id="backgroundCanvas" #backgroundCanvas class="d-none background-modal__stage"></canvas>
+            <video id="captureVideo" #captureVideo class="d-none" muted autoplay playsinline></video>
+            <video id="previewVideo" #videoPreview class="d-none background-modal__stage" muted autoplay playsinline></video>
+            <div id="loadingOverlay" #loadingOverlay class="background-modal__loading d-none">
+              <div class="background-modal__spinner-shell">
+                <div class="background-modal__spinner-halo"></div>
+                <div class="background-modal__spinner"></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <br />
-        <button id="applyBackgroundButton" #applyBackgroundButton class="btn btn-primary" (click)="applyBackground()">Preview Background</button>
-        <button id="saveBackgroundButton" #saveBackgroundButton class="btn btn-success d-none" (click)="saveBackground()">Save Background</button>
+        <div class="background-modal__actions">
+          <button id="applyBackgroundButton" #applyBackgroundButton class="background-modal__action background-modal__action--primary" (click)="applyBackground()">Preview Background</button>
+          <button id="saveBackgroundButton" #saveBackgroundButton class="background-modal__action background-modal__action--success d-none" (click)="saveBackground()">Save Background</button>
+        </div>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ type Device = types.Device;
 import { AParamsType, CoHostResponsibility, EventType, HParamsType, Participant, Poll, ScreenParamsType, Stream, VidCons, VParamsType, ConsumeSocket, MeetingRoomParams, UserRecordingParams, ScreenState, AudioDecibels, CustomMediaComponent, GridSizes, Message, WaitingRoomParticipant, Request, BreakoutParticipant, WhiteboardUser, Shape, ResponseJoinRoom, ComponentSizes, Transport as TransportType } from '../../@types/types';
 import { Socket } from 'socket.io-client';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import { TranslationRoomConfig } from '../../producers/socket-receive-methods/translation-receive-methods.service';
 export interface InitialValuesStateType {
     roomName: string;
     member: string;
@@ -219,6 +220,20 @@ export interface InitialValuesStateType {
     videoSetting: string;
     screenshareSetting: string;
     chatSetting: string;
+    translationSupported: boolean;
+    translationConfig: TranslationRoomConfig | null;
+    mySpokenLanguage: string;
+    mySpokenLanguageEnabled: boolean;
+    myDefaultOutputLanguage: string | null;
+    myDefaultListenLanguage: string | null;
+    listenPreferences: Map<string, string>;
+    translationProducerMap: Record<string, Record<string, string>>;
+    availableTranslationChannels: Map<string, {
+        languages: string[];
+        originalProducerId: string;
+    }>;
+    canUsePersonalTranslation: boolean;
+    personalTranslationUsername?: string;
     displayOption: string;
     autoWave: boolean;
     forceFullDisplay: boolean;
@@ -235,13 +250,15 @@ export interface InitialValuesStateType {
     totalReqWait: number;
     alertVisible: boolean;
     alertMessage: string;
-    alertType: 'success' | 'danger';
+    alertType: 'success' | 'danger' | 'info' | 'warning';
+    alertPosition: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
     alertDuration: number;
     progressTimerVisible: boolean;
     progressTimerValue: number;
     isMenuModalVisible: boolean;
     isRecordingModalVisible: boolean;
     isSettingsModalVisible: boolean;
+    isTranslationSettingsModalVisible: boolean;
     isRequestsModalVisible: boolean;
     isWaitingModalVisible: boolean;
     isCoHostModalVisible: boolean;

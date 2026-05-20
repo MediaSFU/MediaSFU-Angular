@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { connectSendTransportAudio as sharedConnectSendTransportAudio } from 'mediasfu-shared';
 
 import { types } from 'mediasoup-client';
 type Transport = types.Transport;
@@ -174,6 +175,11 @@ export class ConnectSendTransportAudio {
     audioParams,
     parameters,
   }: ConnectSendTransportAudioOptions): Promise<void> {
+    return sharedConnectSendTransportAudio({
+      audioParams,
+      parameters,
+    } as unknown as Parameters<typeof sharedConnectSendTransportAudio>[0]) as Promise<void>;
+
     try {
       let { audioProducer, producerTransport, updateAudioProducer, updateProducerTransport } =
         parameters;

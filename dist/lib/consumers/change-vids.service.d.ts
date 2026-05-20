@@ -196,7 +196,7 @@ export type ChangeVidsType = (options: ChangeVidsOptions) => Promise<void>;
  * ```
  */
 export declare class ChangeVids {
-    changeVids: ({ screenChanged, parameters }: ChangeVidsOptions) => Promise<void>;
+    changeVids({ screenChanged, parameters }: ChangeVidsOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ChangeVids, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ChangeVids>;
 }

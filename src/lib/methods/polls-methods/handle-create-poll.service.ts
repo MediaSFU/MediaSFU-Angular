@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Poll, ShowAlert } from '../../@types/types';
 import { Socket } from 'socket.io-client';
+import { handleCreatePoll as sharedHandleCreatePoll } from 'mediasfu-shared';
 export interface HandleCreatePollOptions {
   poll: Poll;
   socket: Socket;
@@ -64,28 +65,9 @@ export class HandleCreatePoll {
    * @returns {Promise<void>} - A promise that resolves when the poll is created successfully.
    */
 
-  async handleCreatePoll({
-    poll,
-    socket,
-    roomName,
-    showAlert,
-    updateIsPollModalVisible,
-  }: HandleCreatePollOptions): Promise<void> {
-    try {
-      socket.emit(
-        'createPoll',
-        { roomName, poll },
-        (response: { success: boolean; reason?: string }) => {
-          if (response.success) {
-            showAlert?.({ message: 'Poll created successfully', type: 'success' });
-            updateIsPollModalVisible(false);
-          } else {
-            showAlert?.({ message: response.reason || 'Failed to create poll', type: 'danger' });
-          }
-        },
-      );
-    } catch {
-      /* handle error */
-    }
+  async handleCreatePoll(options: HandleCreatePollOptions): Promise<void> {
+    await sharedHandleCreatePoll(
+      options as unknown as Parameters<typeof sharedHandleCreatePoll>[0],
+    );
   }
 }

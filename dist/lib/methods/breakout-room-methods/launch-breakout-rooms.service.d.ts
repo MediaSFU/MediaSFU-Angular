@@ -1,9 +1,6 @@
+import type { LaunchBreakoutRoomsOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchBreakoutRoomsOptions {
-    updateIsBreakoutRoomsModalVisible: (isVisible: boolean) => void;
-    isBreakoutRoomsModalVisible: boolean;
-}
-export type LaunchBreakoutRoomsType = (options: LaunchBreakoutRoomsOptions) => void;
+export type { LaunchBreakoutRoomsOptions, LaunchBreakoutRoomsType } from 'mediasfu-shared';
 /**
  * Launches the breakout rooms by toggling the visibility of the breakout rooms modal.
  *

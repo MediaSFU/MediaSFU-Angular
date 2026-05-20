@@ -1,9 +1,6 @@
+import type { LaunchParticipantsOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchParticipantsOptions {
-    updateIsParticipantsModalVisible: (isVisible: boolean) => void;
-    isParticipantsModalVisible: boolean;
-}
-export type LaunchParticipantsType = (options: LaunchParticipantsOptions) => void;
+export type { LaunchParticipantsOptions, LaunchParticipantsType } from 'mediasfu-shared';
 /**
  * Toggles the visibility of the participants modal.
  *

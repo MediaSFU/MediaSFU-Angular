@@ -1,7 +1,6 @@
 import { Component, Input, Inject } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ControlIconBadgeWidgetComponent } from './control-icon-badge-widget.component';
 
 
 /**
@@ -31,50 +30,25 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @Component({
     selector: 'app-message-widget',
     template: `
-    <div style="position: relative; display: inline-block;">
-      <fa-icon [icon]="icon" size="lg" [ngStyle]="{ color: iconColor }"></fa-icon>
-      <div
-        style="
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    "
-      >
-        <div
-          style="
-        background-color: red;
-        border-radius: 8px;
-        padding: 4px 8px;
-        min-width: 16px; /* Ensure a minimum width for consistent circular shape */
-        min-height: 16px; /* Ensure a minimum height for consistent circular shape */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      "
-          *ngIf="showBadge"
-        >
-          <span style="color: white; font-size: 8px; font-weight: bold;">
-            {{ badgeValue }}
-          </span>
-        </div>
-      </div>
-    </div>
+    <app-control-icon-badge-widget
+      [icon]="icon"
+      [iconColor]="iconColor"
+      [badgeValue]="badgeValue"
+      [showBadge]="showBadge"
+    ></app-control-icon-badge-widget>
   `,
-    imports: [CommonModule, FontAwesomeModule]
+    imports: [ControlIconBadgeWidgetComponent]
 })
 export class MessageWidget {
   @Input() icon!: IconDefinition;
   @Input() iconColor = 'black';
-  @Input() badgeValue!: number;
+  @Input() badgeValue!: number | string;
   @Input() showBadge = false;
 
   constructor(
     @Inject('icon') icon: IconDefinition,
     @Inject('iconColor') iconColor: string,
-    @Inject('badgeValue') badgeValue: number,
+    @Inject('badgeValue') badgeValue: number | string,
     @Inject('showBadge') showBadge: boolean,
   ) {
     this.icon = icon;

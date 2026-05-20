@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MeetingProgressTimer } from '../meeting-progress-timer/meeting-progress-timer.component';
+import { ModernMeetingProgressTimerComponent } from '../../../modern/display-components/modern-meeting-progress-timer.component';
 
 export interface OtherGridComponentOptions {
   backgroundColor?: string;
@@ -57,7 +57,7 @@ export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTM
 
 @Component({
     selector: 'app-other-grid-component',
-    imports: [CommonModule, MeetingProgressTimer],
+  imports: [CommonModule, ModernMeetingProgressTimerComponent],
     template: `
     <div *ngIf="customTemplate; else defaultTemplate" [ngStyle]="otherGridContainerStyle">
       <ng-container *ngTemplateOutlet="customTemplate; context: {
@@ -74,12 +74,12 @@ export type OtherGridComponentType = (options: OtherGridComponentOptions) => HTM
     </div>
     <ng-template #defaultTemplate>
       <div [ngStyle]="otherGridContainerStyle">
-        <app-meeting-progress-timer
+        <app-modern-meeting-progress-timer
           *ngIf="showTimer"
           [meetingProgressTime]="meetingProgressTime"
           [initialBackgroundColor]="timeBackgroundColor"
           [showTimer]="showTimer"
-        ></app-meeting-progress-timer>
+        ></app-modern-meeting-progress-timer>
         <ng-content></ng-content>
       </div>
     </ng-template>
@@ -103,16 +103,18 @@ export class OtherGridComponent {
       height: this.height + 'px',
       display: this.showAspect ? 'block' : 'none',
       overflow: 'hidden',
+      position: 'relative',
+      boxSizing: 'border-box',
       'border-style': 'solid',
-      'border-color': 'black',
-      'border-width': '2px',
+      'border-color': 'rgba(148, 163, 184, 0.12)',
+      'border-width': '1px',
       'border-radius': '0',
       margin: '0',
       padding: '0'
     };
     return {
       ...baseStyles,
-      ...(this.containerStyle as any),
+      ...(this.containerStyle ?? {}),
     };
   }
 }

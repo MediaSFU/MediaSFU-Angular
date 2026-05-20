@@ -1,0 +1,55 @@
+import { OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
+import { Socket } from 'socket.io-client';
+import { WaitingRoomParticipant } from '../../@types/types';
+import { RespondToWaiting, RespondToWaitingType } from '../../methods/waiting-methods/respond-to-waiting.service';
+import { ModernRenderMode } from '../utils/render-mode.utils';
+import * as i0 from "@angular/core";
+interface WaitingRoomModalParameters {
+    filteredWaitingRoomList: WaitingRoomParticipant[];
+    getUpdatedAllParams?: () => WaitingRoomModalParameters;
+    [key: string]: unknown;
+}
+export declare class ModernWaitingRoomModalComponent implements OnChanges, OnInit {
+    private readonly respondToWaitingService;
+    isWaitingModalVisible: boolean;
+    onWaitingRoomClose: () => void;
+    waitingRoomCounter: number;
+    onWaitingRoomFilterChange: (filter: string) => void;
+    waitingRoomList: WaitingRoomParticipant[];
+    updateWaitingList: (updatedList: WaitingRoomParticipant[]) => void;
+    roomName: string;
+    socket: Socket;
+    position: string;
+    backgroundColor: string;
+    parameters: WaitingRoomModalParameters;
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<unknown>;
+    onWaitingRoomItemPress?: RespondToWaitingType;
+    renderMode: ModernRenderMode;
+    showHeader: boolean;
+    readonly faCheck: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    readonly faSearch: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    readonly faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    waitingRoomCounterState: number;
+    waitingRoomListState: WaitingRoomParticipant[];
+    waitingFilterValue: string;
+    constructor(respondToWaitingService: RespondToWaiting);
+    ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    isVisible(): boolean;
+    isEmbedded(): boolean;
+    handleModalClose(): void;
+    handleFilterChange(event: Event): void;
+    waitingEmptyTitle(): string;
+    waitingEmptyDetail(): string;
+    handleItemPress(participant: WaitingRoomParticipant, type: boolean): void;
+    resolvedOverlayStyle(): Record<string, string | number>;
+    resolvedContentStyle(): Record<string, string | number>;
+    private updateParameters;
+    private resolvePositionStyle;
+    private normalizeStyle;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ModernWaitingRoomModalComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModernWaitingRoomModalComponent, "app-waiting-room-modal", never, { "isWaitingModalVisible": { "alias": "isWaitingModalVisible"; "required": false; }; "onWaitingRoomClose": { "alias": "onWaitingRoomClose"; "required": false; }; "waitingRoomCounter": { "alias": "waitingRoomCounter"; "required": false; }; "onWaitingRoomFilterChange": { "alias": "onWaitingRoomFilterChange"; "required": false; }; "waitingRoomList": { "alias": "waitingRoomList"; "required": false; }; "updateWaitingList": { "alias": "updateWaitingList"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; "onWaitingRoomItemPress": { "alias": "onWaitingRoomItemPress"; "required": false; }; "renderMode": { "alias": "renderMode"; "required": false; }; "showHeader": { "alias": "showHeader"; "required": false; }; }, {}, never, never, true, never>;
+}
+export {};

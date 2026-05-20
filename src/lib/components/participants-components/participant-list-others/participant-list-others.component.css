@@ -1,3 +1,12 @@
+.participant-list-others {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.participant-list-others__row {
+  min-width: 0;
+}
 .separator {
   border: none;
   border-top: 1px solid #e0e0e0;

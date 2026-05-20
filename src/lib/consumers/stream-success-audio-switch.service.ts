@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { streamSuccessAudioSwitch as sharedStreamSuccessAudioSwitch } from 'mediasfu-shared';
 import { types } from 'mediasoup-client';
 type Producer = types.Producer;
 type ProducerCodecOptions = types.ProducerCodecOptions;
@@ -255,6 +256,11 @@ export class StreamSuccessAudioSwitch {
     stream,
     parameters,
   }: StreamSuccessAudioSwitchOptions): Promise<void> {
+    return sharedStreamSuccessAudioSwitch({
+      stream,
+      parameters,
+    } as unknown as Parameters<typeof sharedStreamSuccessAudioSwitch>[0]) as Promise<void>;
+
     let {
       audioProducer,
       localAudioProducer,

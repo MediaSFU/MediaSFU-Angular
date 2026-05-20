@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { streamSuccessAudio as sharedStreamSuccessAudio } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import {
   Participant,
@@ -185,6 +186,11 @@ export class StreamSuccessAudio {
    */
 
   async streamSuccessAudio({ stream, parameters }: StreamSuccessAudioOptions): Promise<void> {
+    return sharedStreamSuccessAudio({
+      stream,
+      parameters,
+    } as unknown as Parameters<typeof sharedStreamSuccessAudio>[0]) as Promise<void>;
+
     let {
       socket,
       participants,

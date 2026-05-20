@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { getOverlayPosition } from '../../../methods/utils/get-overlay-position.util';
 
@@ -79,7 +79,8 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
     imports: [CommonModule],
     template: `
     <div class="card" [ngStyle]="customStyle">
-      <img *ngIf="imageSource" [src]="imageSource" [ngStyle]="getImageStyle()" alt="Background" />
+      <img *ngIf="hasRenderableImage" [src]="imageSource" [ngStyle]="getImageStyle()" [alt]="name || 'Audio participant'" class="background-image" (error)="handleImageError()" />
+      <div *ngIf="!hasRenderableImage" class="avatar-fallback" [ngStyle]="{ borderColor: barColor }">{{ fallbackInitials }}</div>
       <div [ngStyle]="getOverlayPosition(overlayPosition)" [class.overlay-web]="true">
         <div class="name-column">
           <span class="name-text" [ngStyle]="{ color: textColor }">{{ name }}</span>
@@ -104,7 +105,11 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
         height: 100%;
         margin: 0;
         padding: 0;
-        background-color: #2c678f;
+        position: relative;
+        overflow: hidden;
+        border-radius: 14px;
+        background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       }
       .overlay-web {
         position: absolute;
@@ -145,20 +150,38 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
         position: absolute;
         width: 80px;
         height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         top: 50%;
         left: 50%;
+        object-fit: cover;
+        border-radius: 18px;
+        border: 2px solid rgba(255, 255, 255, 0.16);
+        transform: translate(-40px, -40px);
+      }
+      .avatar-fallback {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: 50%;
+        left: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        border: 2px solid;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.78), rgba(20, 184, 166, 0.74));
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
         transform: translate(-40px, -40px);
       }
       .rounded-image {
-        border-radius: 20%;
+        border-radius: 20px;
       }
     `,
     ]
 })
-export class MiniCardAudio implements OnInit, OnDestroy {
+export class MiniCardAudio implements OnInit, OnDestroy, OnChanges {
   @Input() customStyle: any;
   @Input() name = '';
   @Input() showWaveform = false;
@@ -170,7 +193,8 @@ export class MiniCardAudio implements OnInit, OnDestroy {
   @Input() imageStyle: any = {};
 
   waveformAnimations: number[] = Array.from({ length: 9 }, () => 0);
-  intervals: NodeJS.Timeout[] = [];
+  intervals: ReturnType<typeof setInterval>[] = [];
+  imageLoadFailed = false;
 
   constructor(
     @Optional() @Inject('customStyle') injectedCustomStyle: Partial<CSSStyleDeclaration>,
@@ -196,10 +220,16 @@ export class MiniCardAudio implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.showWaveform) {
-      this.animateWaveform();
-    } else {
-      this.resetWaveform();
+    this.syncWaveformState();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['showWaveform']) {
+      this.syncWaveformState();
+    }
+
+    if (changes['imageSource']) {
+      this.imageLoadFailed = false;
     }
   }
 
@@ -207,7 +237,16 @@ export class MiniCardAudio implements OnInit, OnDestroy {
     this.clearIntervals();
   }
 
+  syncWaveformState() {
+    if (this.showWaveform) {
+      this.animateWaveform();
+    } else {
+      this.resetWaveform();
+    }
+  }
+
   animateWaveform() {
+    this.clearIntervals();
     this.intervals = this.waveformAnimations.map((_, index) =>
       setInterval(() => {
         this.waveformAnimations[index] = (this.waveformAnimations[index] + 1) % 2;
@@ -216,11 +255,13 @@ export class MiniCardAudio implements OnInit, OnDestroy {
   }
 
   resetWaveform() {
+    this.clearIntervals();
     this.waveformAnimations.fill(0);
   }
 
   clearIntervals() {
     this.intervals.forEach((interval) => clearInterval(interval));
+    this.intervals = [];
   }
 
   getAnimationDuration(index: number): number {
@@ -233,6 +274,27 @@ export class MiniCardAudio implements OnInit, OnDestroy {
       ...this.imageStyle,
       ...(this.roundedImage ? { borderRadius: '20%' } : {}),
     };
+  }
+
+  get hasRenderableImage(): boolean {
+    return Boolean(this.imageSource) && !this.imageLoadFailed;
+  }
+
+  get fallbackInitials(): string {
+    const trimmedName = this.name.trim();
+    if (!trimmedName) {
+      return 'AU';
+    }
+
+    return trimmedName
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('');
+  }
+
+  handleImageError() {
+    this.imageLoadFailed = true;
   }
 
   getOverlayPosition(position: string) {

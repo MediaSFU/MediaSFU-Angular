@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { resumePauseAudioStreams as sharedResumePauseAudioStreams } from 'mediasfu-shared';
 import {
   Participant,
   Stream,
@@ -115,6 +116,12 @@ export class ResumePauseAudioStreams {
     inBreakRoom = false,
     parameters,
   }: ResumePauseAudioStreamsOptions): Promise<void> => {
+    return sharedResumePauseAudioStreams({
+      breakRoom,
+      inBreakRoom,
+      parameters: parameters as unknown as Parameters<typeof sharedResumePauseAudioStreams>[0]['parameters'],
+    }) as Promise<void>;
+
     let { getUpdatedAllParams } = parameters;
     parameters = getUpdatedAllParams();
 

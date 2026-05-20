@@ -1,10 +1,11 @@
-<div class="container">
-  <div class="name-container">
-    <span class="name-text">
+<div class="participant-readonly-item">
+  <div class="participant-readonly-item__identity">
+    <span class="participant-readonly-item__avatar">{{ participant.name.charAt(0).toUpperCase() }}</span>
+    <span class="participant-readonly-item__name">
       {{ getParticipantDisplayName() }}
     </span>
   </div>
-  <div class="icon-container">
-    <fa-icon [icon]="faCircle" [style.color]="participant.muted ? 'red' : 'green'"></fa-icon>
+  <div class="participant-readonly-item__status" [class.participant-readonly-item__status--muted]="participant.muted">
+    <fa-icon [icon]="faCircle"></fa-icon>
   </div>
 </div>

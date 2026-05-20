@@ -1,7 +1,8 @@
-import { OnInit, OnDestroy, NgZone } from '@angular/core';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlMedia } from '../../../consumers/control-media.service';
 import { Participant, ControlsPosition, InfoPosition, AudioDecibels, ControlMediaOptions, ShowAlert, CoHostResponsibility, CustomComponent } from '../../../@types/types';
 import { Socket } from 'socket.io-client';
+import { LiveSubtitleService } from '../../../services/live-subtitle.service';
 import * as i0 from "@angular/core";
 export interface AudioCardParameters {
     audioDecibels: AudioDecibels[];
@@ -96,9 +97,9 @@ export type AudioCardType = (options: AudioCardOptions) => HTMLElement;
  * ```
  *
  **/
-export declare class AudioCard implements OnInit, OnDestroy {
-    private ngZone;
+export declare class AudioCard implements OnInit, OnDestroy, OnChanges {
     private controlMediaService;
+    private liveSubtitleService;
     controlUserMedia?: (options: ControlMediaOptions) => Promise<void>;
     customStyle: Partial<CSSStyleDeclaration>;
     name: string;
@@ -122,15 +123,24 @@ export declare class AudioCard implements OnInit, OnDestroy {
     faMicrophone: import("@fortawesome/fontawesome-common-types").IconDefinition;
     faMicrophoneSlash: import("@fortawesome/fontawesome-common-types").IconDefinition;
     waveformAnimations: number[];
+    ringBarIndices: number[];
     showWaveform: boolean;
-    interval: any;
-    constructor(ngZone: NgZone, controlMediaService: ControlMedia, injectedControlUserMedia: (options: ControlMediaOptions) => Promise<void>, injectedCustomStyle: Partial<CSSStyleDeclaration>, injectedName: string, injectedBarColor: string, injectedTextColor: string, injectedImageSource: string, injectedRoundedImage: boolean, injectedImageStyle: Partial<CSSStyleDeclaration>, injectedShowControls: boolean, injectedShowInfo: boolean, injectedVideoInfoComponent: HTMLElement | CustomComponent, injectedVideoControlsComponent: HTMLElement | CustomComponent, injectedControlsPosition: ControlsPosition, injectedInfoPosition: InfoPosition, injectedParticipant: Participant | null, injectedBackgroundColor: string, injectedAudioDecibels: AudioDecibels, injectedParameters: AudioCardParameters);
+    audioLevelInterval: any;
+    waveformInterval: any;
+    isDarkModeEnabled: boolean;
+    imageLoadFailed: boolean;
+    constructor(controlMediaService: ControlMedia, liveSubtitleService: LiveSubtitleService, injectedControlUserMedia: (options: ControlMediaOptions) => Promise<void>, injectedCustomStyle: Partial<CSSStyleDeclaration>, injectedName: string, injectedBarColor: string, injectedTextColor: string, injectedImageSource: string, injectedRoundedImage: boolean, injectedImageStyle: Partial<CSSStyleDeclaration>, injectedShowControls: boolean, injectedShowInfo: boolean, injectedVideoInfoComponent: HTMLElement | CustomComponent, injectedVideoControlsComponent: HTMLElement | CustomComponent, injectedControlsPosition: ControlsPosition, injectedInfoPosition: InfoPosition, injectedParticipant: Participant | null, injectedBackgroundColor: string, injectedAudioDecibels: AudioDecibels, injectedParameters: AudioCardParameters);
+    get liveSubtitleText(): string | null;
     ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
-    animateBar(index: number): void;
+    get hasRenderableImage(): boolean;
+    get isSpeaking(): boolean;
+    getWaveformRingHeight(index: number): number;
+    handleImageError(): void;
     animateWaveform(): void;
     resetWaveform(): void;
-    getAnimationDuration(index: number): number;
+    syncThemeMode(params?: any): void;
     toggleAudio(): Promise<void>;
     toggleVideo(): Promise<void>;
     renderControls(): boolean;

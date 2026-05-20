@@ -1,6 +1,3 @@
-/**
- * Defines the style object for positioning the modal.
- */
 import { ModalPositionStyle } from '../../@types/types';
 export interface GetModalPositionOptions {
     position: string;

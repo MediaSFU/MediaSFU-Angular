@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchConfirmExitOptions {
-  updateIsConfirmExitModalVisible: (isVisible: boolean) => void;
-  isConfirmExitModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchConfirmExitType = (options: LaunchConfirmExitOptions) => void;
+import { launchConfirmExit as sharedLaunchConfirmExit } from 'mediasfu-shared';
+import type { LaunchConfirmExitOptions } from 'mediasfu-shared';
+export type { LaunchConfirmExitOptions, LaunchConfirmExitType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility of the confirmation exit modal.
@@ -44,6 +40,9 @@ export class LaunchConfirmExit {
     updateIsConfirmExitModalVisible,
     isConfirmExitModalVisible,
   }: LaunchConfirmExitOptions): void {
-    updateIsConfirmExitModalVisible(!isConfirmExitModalVisible);
+    sharedLaunchConfirmExit({
+      updateIsConfirmExitModalVisible,
+      isConfirmExitModalVisible,
+    });
   }
 }

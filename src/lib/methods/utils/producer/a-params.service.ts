@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import { types } from 'mediasoup-client';
-type ProducerCodecOptions = types.ProducerCodecOptions;
-type RtpEncodingParameters = types.RtpEncodingParameters;
-// Export the type definition for the function
-export type AParamsType = {
-  encodings: RtpEncodingParameters[];
-  codecOptions?: ProducerCodecOptions;
-};
+import { aParams as sharedAParams } from 'mediasfu-shared';
+import type { AParamsType as SharedAParamsType } from 'mediasfu-shared';
+
+export type AParamsType = SharedAParamsType;
 
 /**
  * The `AParams` service provides the encoding parameters for audio production in a media session using the Mediasoup library.
@@ -51,12 +47,5 @@ export type AParamsType = {
   providedIn: 'root',
 })
 export class AParams {
-  aParams: AParamsType = {
-    encodings: [
-      {
-        rid: 'r0',
-        maxBitrate: 64000,
-      },
-    ],
-  };
+  aParams: AParamsType = sharedAParams;
 }

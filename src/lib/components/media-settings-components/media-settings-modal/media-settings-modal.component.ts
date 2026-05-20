@@ -257,13 +257,13 @@ export class MediaSettingsModal implements OnInit, OnChanges {
     if (!this.selectedVideoInput && this.parameters.videoInputs.length > 0) {
       this.selectedVideoInput = this.parameters.videoInputs[0].deviceId;
       this.prevSelectedVideoInput = this.selectedVideoInput;
-      this.handleVideoSwitch({ target: { value: this.selectedVideoInput } } as any);
+      this.handleVideoSwitch({ target: { value: this.selectedVideoInput } } as unknown as Event);
     }
 
     if (!this.selectedAudioInput && this.parameters.audioInputs.length > 0) {
       this.selectedAudioInput = this.parameters.audioInputs[0].deviceId;
       this.prevSelectedAudioInput = this.selectedAudioInput;
-      this.handleAudioSwitch({ target: { value: this.selectedAudioInput } } as any);
+      this.handleAudioSwitch({ target: { value: this.selectedAudioInput } } as unknown as Event);
     }
   }
 

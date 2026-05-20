@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { receiveAllPipedTransports as sharedReceiveAllPipedTransports } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { GetPipedProducersAltType, GetPipedProducersAltParameters } from '../@types/types';
 
@@ -80,6 +81,12 @@ export class ReceiveAllPipedTransports {
     community = false,
     parameters,
   }: ReceiveAllPipedTransportsOptions): Promise<void> => {
+    return sharedReceiveAllPipedTransports({
+      nsock,
+      community,
+      parameters,
+    } as unknown as Parameters<typeof sharedReceiveAllPipedTransports>[0]) as Promise<void>;
+
     try {
       // Destructure parameters
       const { roomName, member, getPipedProducersAlt } = parameters;

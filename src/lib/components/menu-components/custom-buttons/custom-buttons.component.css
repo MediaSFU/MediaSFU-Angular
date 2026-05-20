@@ -1,34 +1,40 @@
 .customButtonsContainer {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: left;
+  gap: 10px;
 }
 
 .customButton {
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 5px;
+  margin: 0;
   background-color: transparent;
-  align-items: left;
-  justify-content: left;
+  align-items: stretch;
+  justify-content: flex-start;
   border: none;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.customButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
 }
 
 .buttonContent {
   display: flex;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
 }
 
 .customButtonIcon {
   font-size: 20px;
-  color: #000000; /* Default color for the button icon */
-  margin-right: 4px;
+  color: inherit;
+  margin-right: 0;
 }
 
 .customButtonText {
-  color: #000000; /* Default color for the button text */
+  color: inherit;
+  font-weight: 700;
+  line-height: 1.4;
 }

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-// Socket manager for media socket.
-import io, { Socket } from 'socket.io-client'; // Importing socket type
-import { MeetingRoomParams, RecordingParams } from "../@types/types";
+import { Socket } from 'socket.io-client';
+import {
+  connectSocket as sharedConnectSocket,
+  connectLocalSocket as sharedConnectLocalSocket,
+  disconnectSocket as sharedDisconnectSocket,
+} from 'mediasfu-shared';
+import { MeetingRoomParams, RecordingParams } from '../@types/types';
 
 /**
  * Validates the provided API key or token.
@@ -91,8 +95,6 @@ export type ConnectLocalSocketType = (options: ConnectLocalSocketOptions) => Pro
   providedIn: 'root',
 })
 export class SocketManager {
-  private socket!: Socket;
-
   async validateApiKeyToken(value: string): Promise<boolean> {
     if (!/^[a-z0-9]{64}$/i.test(value)) {
       throw new Error('Invalid API key or token.');
@@ -134,50 +136,14 @@ export class SocketManager {
     apiToken,
     link,
   }: ConnectSocketOptions): Promise<Socket> => {
-    if (!apiUserName) {
-      throw new Error('API username required.');
-    }
-    if (!(apiKey || apiToken)) {
-      throw new Error('API key or token required.');
-    }
-    if (!link) {
-      throw new Error('Socket link required.');
-    }
-
-    let useKey = false;
-    try {
-      if (apiKey && apiKey.length === 64) {
-        await this.validateApiKeyToken(apiKey);
-        useKey = true;
-      } else {
-        if (apiToken) {
-          await this.validateApiKeyToken(apiToken);
-        } else {
-          throw new Error('API token is required.');
-        }
-        useKey = false;
-      }
-    } catch (error) {
-      throw new Error('Invalid API key or token.');
-    }
-
-    return new Promise((resolve, reject) => {
-      const query = useKey ? { apiUserName, apiKey } : { apiUserName, apiToken };
-
-      this.socket = io(`${link}/media`, {
-        transports: ['websocket'],
-        query,
-      });
-
-      this.socket.on('connect', () => {
-        console.log('Connected to media socket.', this.socket.id);
-        resolve(this.socket);
-      });
-
-      this.socket.on('connect_error', () => {
-        reject(new Error('Error connecting to media socket.'));
-      });
-    });
+    return sharedConnectSocket(
+      {
+        apiUserName,
+        apiKey,
+        apiToken,
+        link,
+      } as unknown as Parameters<typeof sharedConnectSocket>[0],
+    ) as unknown as Promise<Socket>;
   };
 
 
@@ -205,38 +171,9 @@ export class SocketManager {
    */
 
   connectLocalSocket = async ({ link }: ConnectLocalSocketOptions): Promise<ResponseLocalConnection> => {
-    if (!link) {
-      throw new Error("Socket link required.");
-    }
-
-    let socket: Socket;
-
-    return new Promise((resolve, reject) => {
-      // Connect to socket using the link provided
-      socket = io(`${link}/media`, {
-        transports: ["websocket"],
-      });
-
-
-      // Handle socket connection events
-      socket.on("connection-success", (data: ResponseLocalConnectionData) => {
-        //check if link contains mediasfu.com and contains more than one c
-        let conn = 'media';
-        try {
-          if (link.includes('mediasfu.com') && (link.match(/c/g)?.length ?? 0) > 1) {
-            conn = 'consume';
-          }
-        } catch {
-          // do nothing
-        }
-        console.log(`Connected to ${conn} socket with ID: ${socket.id}`);
-        resolve({ socket, data });
-      });
-
-      socket.on("connect_error", (error: Error) => {
-        reject(new Error("Error connecting to media socket: " + error.message));
-      });
-    });
+    return sharedConnectLocalSocket(
+      { link } as unknown as Parameters<typeof sharedConnectLocalSocket>[0],
+    ) as unknown as Promise<ResponseLocalConnection>;
   }
 
   /**
@@ -263,10 +200,8 @@ export class SocketManager {
    */
 
   disconnectSocket = async ({ socket }: DisconnectSocketOptions): Promise<boolean> => {
-    if (socket) {
-      socket.disconnect();
-      return true;
-    }
-    return false;
+    return sharedDisconnectSocket(
+      { socket } as unknown as Parameters<typeof sharedDisconnectSocket>[0],
+    );
   };
 }

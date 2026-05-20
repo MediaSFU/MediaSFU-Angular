@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { types } from 'mediasoup-client';
-type ProducerCodecOptions = types.ProducerCodecOptions;
-type RtpEncodingParameters = types.RtpEncodingParameters;
-export type HParamsType = {
-  encodings: RtpEncodingParameters[];
-  codecOptions?: ProducerCodecOptions;
-};
+import { hParams as sharedHParams } from 'mediasfu-shared';
+import type { HParamsType as SharedHParamsType } from 'mediasfu-shared';
+
+export type HParamsType = SharedHParamsType;
 
 /**
  * The `HParams` service provides encoding parameters for video production in a media session using the Mediasoup library.
@@ -63,28 +60,5 @@ export type HParamsType = {
   providedIn: 'root',
 })
 export class HParams {
-  hParams: HParamsType = {
-    encodings: [
-      {
-        rid: 'r8',
-        maxBitrate: 240000,
-        scalabilityMode: 'L1T3',
-        scaleResolutionDownBy: 4.0,
-      },
-      {
-        rid: 'r9',
-        maxBitrate: 480000,
-        scalabilityMode: 'L1T3',
-        scaleResolutionDownBy: 2.0,
-      },
-      {
-        rid: 'r10',
-        maxBitrate: 960000,
-        scalabilityMode: 'L1T3',
-      },
-    ],
-    codecOptions: {
-      videoGoogleStartBitrate: 320,
-    },
-  };
+  hParams: HParamsType = sharedHParams;
 }

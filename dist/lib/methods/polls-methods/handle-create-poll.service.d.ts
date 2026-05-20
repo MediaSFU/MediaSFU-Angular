@@ -56,7 +56,7 @@ export declare class HandleCreatePoll {
      * @param {Object} options.parameters - Additional parameters for creating the poll.
      * @returns {Promise<void>} - A promise that resolves when the poll is created successfully.
      */
-    handleCreatePoll({ poll, socket, roomName, showAlert, updateIsPollModalVisible, }: HandleCreatePollOptions): Promise<void>;
+    handleCreatePoll(options: HandleCreatePollOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<HandleCreatePoll, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<HandleCreatePoll>;
 }

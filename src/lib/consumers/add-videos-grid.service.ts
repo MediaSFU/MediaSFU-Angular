@@ -185,16 +185,11 @@ export class AddVideosGrid {
               name: participant.name,
               barColor: 'red',
               textColor: 'white',
-              customStyle: {
-                backgroundColor: 'transparent',
-                border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-              },
               controlsPosition: 'topLeft',
               infoPosition: 'topRight',
               showWaveform: true,
               roundedImage: true,
               parameters,
-              backgroundColor: 'transparent',
               showControls: eventType !== 'chat',
               participant,
             },
@@ -205,10 +200,6 @@ export class AddVideosGrid {
             inputs: {
               initials: participant.name,
               fontSize: 20,
-              customStyle: {
-                backgroundColor: 'transparent',
-                border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-              },
             },
           });
         }
@@ -230,10 +221,6 @@ export class AddVideosGrid {
               inputs: {
                 initials: name,
                 fontSize: 20,
-                customStyle: {
-                  backgroundColor: 'transparent',
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
               },
             });
           } else {
@@ -258,11 +245,7 @@ export class AddVideosGrid {
                 remoteProducerId: participant.stream ? participant.stream.id : null,
                 eventType,
                 forceFullDisplay: eventType == 'webinar' ? false : forceFullDisplay,
-                customStyle: {
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
                 participant: participant,
-                backgroundColor: 'transparent',
                 showControls: false,
                 showInfo: false,
                 name: participant.name,
@@ -281,11 +264,7 @@ export class AddVideosGrid {
                 remoteProducerId,
                 eventType,
                 forceFullDisplay,
-                customStyle: {
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
                 participant: participant_,
-                backgroundColor: 'transparent',
                 showControls: eventType !== 'chat',
                 showInfo: true,
                 name: participant_.name,
@@ -355,16 +334,11 @@ export class AddVideosGrid {
                 name: participant.name,
                 barColor: 'red',
                 textColor: 'white',
-                customStyle: {
-                  backgroundColor: 'transparent',
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
                 controlsPosition: 'topLeft',
                 infoPosition: 'topRight',
                 showWaveform: true,
                 roundedImage: true,
                 parameters,
-                backgroundColor: 'transparent',
                 showControls: eventType !== 'chat',
                 participant,
               },
@@ -375,10 +349,6 @@ export class AddVideosGrid {
               inputs: {
                 initials: participant.name,
                 fontSize: 20,
-                customStyle: {
-                  backgroundColor: 'transparent',
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
               },
             });
           }
@@ -391,11 +361,7 @@ export class AddVideosGrid {
               remoteProducerId,
               eventType,
               forceFullDisplay,
-              customStyle: {
-                border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-              },
               participant: participant_,
-              backgroundColor: 'transparent',
               showControls: eventType !== 'chat',
               showInfo: true,
               name: participant.name,
@@ -405,7 +371,7 @@ export class AddVideosGrid {
           });
         }
 
-        if (i === numtoadd - 1) {
+        if (i === altGridStreams.length - 1) {
           otherGridStreams[1] = newComponents[1];
 
           await updateMiniCardsGrid({

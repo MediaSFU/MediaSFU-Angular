@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { types } from 'mediasoup-client';
-type ProducerCodecOptions = types.ProducerCodecOptions;
-type RtpEncodingParameters = types.RtpEncodingParameters;
-export type ScreenParamsType = {
-  encodings: RtpEncodingParameters[];
-  codecOptions?: ProducerCodecOptions;
-};
+import { screenParams as sharedScreenParams } from 'mediasfu-shared';
+import type { ScreenParamsType as SharedScreenParamsType } from 'mediasfu-shared';
+
+export type ScreenParamsType = SharedScreenParamsType;
 
 /**
  * The `ScreenParams` service provides encoding parameters specifically for screen sharing in a media session using the Mediasoup library.
@@ -50,15 +47,5 @@ export type ScreenParamsType = {
   providedIn: 'root',
 })
 export class ScreenParams {
-  screenParams: ScreenParamsType = {
-    encodings: [
-      {
-        rid: 'r7',
-        maxBitrate: 3000000,
-      },
-    ],
-    codecOptions: {
-      videoGoogleStartBitrate: 1000,
-    },
-  };
+  screenParams: ScreenParamsType = sharedScreenParams;
 }

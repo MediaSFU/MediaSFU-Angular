@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { getVideos as sharedGetVideos } from 'mediasfu-shared';
 import { Stream, Participant } from '../@types/types';
 export interface GetVideosOptions {
   participants: Participant[];
@@ -72,6 +73,15 @@ export class GetVideos {
     updateAllVideoStreams,
     updateOldAllStreams,
   }: GetVideosOptions): Promise<void> {
+    return sharedGetVideos({
+      participants,
+      allVideoStreams,
+      oldAllStreams,
+      adminVidID,
+      updateAllVideoStreams,
+      updateOldAllStreams,
+    } as unknown as Parameters<typeof sharedGetVideos>[0]) as Promise<void>;
+
     try {
       // Filter out the admin's video stream and update state variables
       let admin = participants.filter((participant: any) => participant.islevel === '2');

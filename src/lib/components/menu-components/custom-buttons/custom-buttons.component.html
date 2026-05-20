@@ -2,7 +2,7 @@
   <ng-container *ngFor="let button of buttons; let i = index">
     <!-- Render as button or div based on renderAsButton -->
     <button
-      *ngIf="button.renderAsButton !== false"
+      *ngIf="button.renderAsButton !== false && isButtonVisible(button)"
       (click)="button.action && button.action()"
       (keydown.enter)="button.action && button.action()"
       (keydown.space)="button.action && button.action()"
@@ -44,7 +44,7 @@
 
     <!-- Render as div when renderAsButton is false -->
     <div
-      *ngIf="button.renderAsButton === false"
+      *ngIf="button.renderAsButton === false && isButtonVisible(button)"
       (click)="button.action && button.action()"
       (keydown.enter)="button.action && button.action()"
       (keydown.space)="button.action && button.action()"

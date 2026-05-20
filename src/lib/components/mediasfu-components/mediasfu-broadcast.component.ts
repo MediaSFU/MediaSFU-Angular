@@ -31,24 +31,27 @@ import {
   faDotCircle,
   faVideo,
   faMicrophone,
+  faSun,
+  faMoon,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
 
 // Components for display
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
-import { LoadingModal } from '../display-components/loading-modal/loading-modal.component';
 import { ControlButtonsComponentTouch } from '../display-components/control-buttons-component-touch/control-buttons-component-touch.component';
 import { MainScreenComponent } from '../display-components/main-screen-component/main-screen-component.component';
 import { MainGridComponent } from '../display-components/main-grid-component/main-grid-component.component';
 import { MainContainerComponent } from '../display-components/main-container-component/main-container-component.component';
-import { AlertComponent } from '../display-components/alert-component/alert.component.component';
-import { RecordingModal } from '../recording-components/recording-modal/recording-modal.component';
-import { ParticipantsModal } from '../participants-components/participants-modal/participants-modal.component';
-import { MessagesModal } from '../message-components/messages-modal/messages-modal.component';
-import { ConfirmExitModal } from '../exit-components/confirm-exit-modal/confirm-exit-modal.component';
-import { ConfirmHereModal } from '../misc-components/confirm-here-modal/confirm-here-modal.component';
-import { ShareEventModal } from '../misc-components/share-event-modal/share-event-modal.component';
+import { ModernAlertComponent } from '../../modern/display-components/modern-alert.component';
+import { ModernLoadingModalComponent } from '../../modern/display-components/modern-loading-modal.component';
+import { ModernConfirmExitModalComponent } from '../../modern/modal-components/modern-confirm-exit-modal.component';
+import { ModernConfirmHereModalComponent } from '../../modern/modal-components/modern-confirm-here-modal.component';
+import { ModernMessagesModalComponent } from '../../modern/modal-components/modern-messages-modal.component';
+import { ModernParticipantsModalComponent } from '../../modern/modal-components/modern-participants-modal.component';
+import { ModernRecordingModalComponent } from '../../modern/modal-components/modern-recording-modal.component';
+import { ModernShareEventModalComponent } from '../../modern/modal-components/modern-share-event-modal.component';
+import { ModernEventSettingsModalComponent } from '../../modern/modal-components/modern-event-settings-modal.component';
 import {
   WelcomePage,
   WelcomePageOptions,
@@ -317,17 +320,18 @@ export type MediasfuBroadcastOptions = {
   selector: 'app-mediasfu-broadcast',
   imports: [
     CommonModule,
-    AlertComponent,
+    ModernAlertComponent,
     AudioGrid,
     ControlButtonsComponentTouch,
     FlexibleVideo,
-    LoadingModal,
-    ConfirmExitModal,
-    MessagesModal,
-    ConfirmHereModal,
-    ShareEventModal,
-    ParticipantsModal,
-    RecordingModal,
+    ModernLoadingModalComponent,
+    ModernConfirmExitModalComponent,
+    ModernMessagesModalComponent,
+    ModernConfirmHereModalComponent,
+    ModernShareEventModalComponent,
+    ModernEventSettingsModalComponent,
+    ModernParticipantsModalComponent,
+    ModernRecordingModalComponent,
     MainAspectComponent,
     MainContainerComponent,
     MainGridComponent,
@@ -382,7 +386,7 @@ export type MediasfuBroadcastOptions = {
                 "
               >
                 <app-main-aspect-component
-                  [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                  [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
@@ -415,7 +419,7 @@ export type MediasfuBroadcastOptions = {
                         <app-main-grid-component
                           [height]="componentSizes.value.mainHeight"
                           [width]="componentSizes.value.mainWidth"
-                          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+                          [backgroundColor]="roomSurfaceColor()"
                           [mainSize]="mainHeightWidth.value"
                           [showAspect]="mainHeightWidth.value > 0"
                           [timeBackgroundColor]="recordState.value"
@@ -529,24 +533,24 @@ export type MediasfuBroadcastOptions = {
       <ng-container
         *appWithOverride="'alert'; default: AlertComponentRef; props: alertOverrideProps"
       >
-        <app-alert-component
+        <app-modern-alert-component
           [visible]="alertVisible.value"
           [message]="alertMessage.value"
           [type]="alertType.value"
+          [position]="alertPosition.value"
           [duration]="alertDuration.value"
           [onHide]="onAlertHide"
-          textColor="#ffffff"
-        ></app-alert-component>
+          [isDarkMode]="modernThemeDarkMode.value"
+        ></app-modern-alert-component>
       </ng-container>
 
       <ng-container
         *appWithOverride="'loadingModal'; default: LoadingModalComponentRef; props: loadingModalOverrideProps"
       >
-        <app-loading-modal
+        <app-modern-loading-modal
           [isVisible]="isLoadingModalVisible.value"
-          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-          displayColor="black"
-        ></app-loading-modal>
+          [isDarkMode]="modernThemeDarkMode.value"
+        ></app-modern-loading-modal>
       </ng-container>
 
       <app-participants-modal
@@ -555,7 +559,7 @@ export type MediasfuBroadcastOptions = {
           default: ParticipantsModalComponentRef;
           props: participantsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isParticipantsModalVisible]="isParticipantsModalVisible.value"
         [onParticipantsClose]="onParticipantsClose"
         [participantsCounter]="participantsCounter.value"
@@ -569,12 +573,12 @@ export type MediasfuBroadcastOptions = {
           default: RecordingModalComponentRef;
           props: recordingModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isRecordingModalVisible]="isRecordingModalVisible.value"
         [onClose]="onRecordingClose"
         [startRecording]="startRecording.startRecording"
         [confirmRecording]="confirmRecording.confirmRecording"
-        [parameters]="getAllParams()"
+        [parameters]="mediaSFUParameters"
       ></app-recording-modal>
 
       <app-confirm-exit-modal
@@ -583,7 +587,7 @@ export type MediasfuBroadcastOptions = {
           default: ConfirmExitModalComponentRef;
           props: confirmExitModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
+        [backgroundColor]="roomAccentSurfaceColor()"
         [isConfirmExitModalVisible]="isConfirmExitModalVisible.value"
         [onConfirmExitClose]="onConfirmExitClose"
         [position]="'topRight'"
@@ -599,9 +603,10 @@ export type MediasfuBroadcastOptions = {
           default: ConfirmHereModalComponentRef;
           props: confirmHereModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
+        [backgroundColor]="roomModalSurfaceColor()"
         [isConfirmHereModalVisible]="isConfirmHereModalVisible.value"
         [onConfirmHereClose]="onConfirmHereClose"
+        [onSuppressConfirmHere]="onSuppressConfirmHere"
         [member]="member.value"
         [roomName]="roomName.value"
         [socket]="socket.value"
@@ -613,7 +618,9 @@ export type MediasfuBroadcastOptions = {
           default: ShareEventModalComponentRef;
           props: shareEventModalOverrideProps
         "
+        [backgroundColor]="roomModalSurfaceColor()"
         [isShareEventModalVisible]="isShareEventModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
         [onShareEventClose]="onShareEventClose"
         [roomName]="roomName.value"
         [islevel]="islevel.value"
@@ -622,17 +629,36 @@ export type MediasfuBroadcastOptions = {
         [localLink]="localLink"
       ></app-share-event-modal>
 
+      <app-event-settings-modal
+        *appWithOverride="
+          'eventSettingsModal';
+          default: EventSettingsModalComponentRef;
+          props: eventSettingsModalOverrideProps
+        "
+        [isEventSettingsModalVisible]="isSettingsModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
+        [onEventSettingsClose]="onEventSettingsClose"
+        [audioSetting]="audioSetting.value"
+        [videoSetting]="videoSetting.value"
+        [screenshareSetting]="screenshareSetting.value"
+        [chatSetting]="chatSetting.value"
+        [updateAudioSetting]="updateAudioSetting"
+        [updateVideoSetting]="updateVideoSetting"
+        [updateScreenshareSetting]="updateScreenshareSetting"
+        [updateChatSetting]="updateChatSetting"
+        [updateIsSettingsModalVisible]="updateIsSettingsModalVisible"
+        [roomName]="roomName.value"
+        [socket]="socket.value"
+        [showAlert]="showAlert"
+      ></app-event-settings-modal>
+
       <app-messages-modal
         *appWithOverride="
           'messagesModal';
           default: MessagesModalComponentRef;
           props: messagesModalOverrideProps
         "
-        [backgroundColor]="
-          eventType.value === 'webinar' || eventType.value === 'conference'
-            ? '#f5f5f5'
-            : 'rgba(255, 255, 255, 0.25)'
-        "
+        [backgroundColor]="roomModalSurfaceColor()"
         [isMessagesModalVisible]="isMessagesModalVisible.value"
         [onMessagesClose]="onMessagesClose"
         [messages]="messages.value"
@@ -686,7 +712,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   @Input() seedData?: SeedData;
   @Input() useSeed = false;
   @Input() imgSrc = 'https://mediasfu.com/images/logo192.png';
-  @Input() sourceParameters?: { [key: string]: any } = {};
+  @Input() sourceParameters: { [key: string]: any } = {};
   @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
   @Input() returnUI? = true;
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
@@ -712,14 +738,15 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   protected readonly FlexibleVideoComponentRef = FlexibleVideo;
   protected readonly AudioGridComponentRef = AudioGrid;
   protected readonly ControlButtonsTouchComponentRef = ControlButtonsComponentTouch;
-  protected readonly AlertComponentRef = AlertComponent;
-  protected readonly LoadingModalComponentRef = LoadingModal;
-  protected readonly ParticipantsModalComponentRef = ParticipantsModal;
-  protected readonly RecordingModalComponentRef = RecordingModal;
-  protected readonly ConfirmExitModalComponentRef = ConfirmExitModal;
-  protected readonly ConfirmHereModalComponentRef = ConfirmHereModal;
-  protected readonly ShareEventModalComponentRef = ShareEventModal;
-  protected readonly MessagesModalComponentRef = MessagesModal;
+  protected readonly AlertComponentRef = ModernAlertComponent;
+  protected readonly LoadingModalComponentRef = ModernLoadingModalComponent;
+  protected readonly ParticipantsModalComponentRef = ModernParticipantsModalComponent;
+  protected readonly RecordingModalComponentRef = ModernRecordingModalComponent;
+  protected readonly ConfirmExitModalComponentRef = ModernConfirmExitModalComponent;
+  protected readonly ConfirmHereModalComponentRef = ModernConfirmHereModalComponent;
+  protected readonly ShareEventModalComponentRef = ModernShareEventModalComponent;
+  protected readonly EventSettingsModalComponentRef = ModernEventSettingsModalComponent;
+  protected readonly MessagesModalComponentRef = ModernMessagesModalComponent;
 
   mainContainerOverrideProps = () => ({
     containerStyle: this.containerStyle,
@@ -727,7 +754,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   });
 
   mainAspectOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     defaultFraction: 1 - this.controlHeight.value,
     showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
     updateIsWideScreen: this.updateIsWideScreen,
@@ -748,7 +775,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   mainGridOverrideProps = () => ({
     height: this.componentSizes.value.mainHeight,
     width: this.componentSizes.value.mainWidth,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomSurfaceColor(),
     mainSize: this.mainHeightWidth.value,
     showAspect: this.mainHeightWidth.value > 0,
     timeBackgroundColor: this.recordState.value,
@@ -813,21 +840,21 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     visible: this.alertVisible.value,
     message: this.alertMessage.value,
     type: this.alertType.value,
+    position: this.alertPosition.value,
     duration: this.alertDuration.value,
     onHide: this.onAlertHide,
-    textColor: '#ffffff',
+    isDarkMode: this.modernThemeDarkMode.value,
     parameters: this.mediaSFUParameters,
   });
 
   loadingModalOverrideProps = () => ({
     isVisible: this.isLoadingModalVisible.value,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
-    displayColor: 'black',
+    isDarkMode: this.modernThemeDarkMode.value,
     parameters: this.mediaSFUParameters,
   });
 
   participantsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isParticipantsModalVisible: this.isParticipantsModalVisible.value,
     onParticipantsClose: this.onParticipantsClose,
     participantsCounter: this.participantsCounter.value,
@@ -836,7 +863,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   });
 
   recordingModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isRecordingModalVisible: this.isRecordingModalVisible.value,
     onClose: this.onRecordingClose,
     startRecording: this.startRecording.startRecording,
@@ -845,7 +872,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   });
 
   confirmExitModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: this.roomAccentSurfaceColor(),
     isConfirmExitModalVisible: this.isConfirmExitModalVisible.value,
     onConfirmExitClose: this.onConfirmExitClose,
     position: 'topRight',
@@ -857,9 +884,10 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   });
 
   confirmHereModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isConfirmHereModalVisible: this.isConfirmHereModalVisible.value,
     onConfirmHereClose: this.onConfirmHereClose,
+    onSuppressConfirmHere: this.onSuppressConfirmHere,
     member: this.member.value,
     roomName: this.roomName.value,
     socket: this.socket.value,
@@ -867,7 +895,9 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   });
 
   shareEventModalOverrideProps = () => ({
+    backgroundColor: this.roomModalSurfaceColor(),
     isShareEventModalVisible: this.isShareEventModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
     onShareEventClose: this.onShareEventClose,
     roomName: this.roomName.value,
     islevel: this.islevel.value,
@@ -877,11 +907,27 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     parameters: this.mediaSFUParameters,
   });
 
+  eventSettingsModalOverrideProps = () => ({
+    isEventSettingsModalVisible: this.isSettingsModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
+    onEventSettingsClose: this.onEventSettingsClose,
+    audioSetting: this.audioSetting.value,
+    videoSetting: this.videoSetting.value,
+    screenshareSetting: this.screenshareSetting.value,
+    chatSetting: this.chatSetting.value,
+    updateAudioSetting: this.updateAudioSetting,
+    updateVideoSetting: this.updateVideoSetting,
+    updateScreenshareSetting: this.updateScreenshareSetting,
+    updateChatSetting: this.updateChatSetting,
+    updateIsSettingsModalVisible: this.updateIsSettingsModalVisible,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    showAlert: this.showAlert,
+    parameters: this.mediaSFUParameters,
+  });
+
   messagesModalOverrideProps = () => ({
-    backgroundColor:
-      this.eventType.value === 'webinar' || this.eventType.value === 'conference'
-        ? '#f5f5f5'
-        : 'rgba(255, 255, 255, 0.25)',
+    backgroundColor: this.roomModalSurfaceColor(),
     isMessagesModalVisible: this.isMessagesModalVisible.value,
     onMessagesClose: this.onMessagesClose,
     messages: this.messages.value,
@@ -1020,6 +1066,10 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   ) { }
 
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     const inj = Injector.create({
       providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),
       parent: this.injector,
@@ -1083,7 +1133,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   };
 
   // Initial values
-  mediaSFUFunctions = () => {
+  mediaSFUFunctions = (): any => {
     return {
       updateMiniCardsGrid:
         this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -1502,7 +1552,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   canRecord = new BehaviorSubject<boolean>(false);
   startReport = new BehaviorSubject<boolean>(false);
   endReport = new BehaviorSubject<boolean>(false);
-  recordTimerInterval = new BehaviorSubject<NodeJS.Timeout | null>(null);
+  recordTimerInterval = new BehaviorSubject<number | null>(null);
   recordStartTime = new BehaviorSubject<number>(0);
   recordElapsedTime = new BehaviorSubject<number>(0);
   isTimerRunning = new BehaviorSubject<boolean>(false);
@@ -1935,7 +1985,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     this.endReport.next(value);
   };
 
-  updateRecordTimerInterval = (value: NodeJS.Timeout | null) => {
+  updateRecordTimerInterval = (value: number | null) => {
     this.recordTimerInterval.next(value);
   };
 
@@ -2508,7 +2558,10 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   // Alerts
   alertVisible = new BehaviorSubject<boolean>(false);
   alertMessage = new BehaviorSubject<string>('');
-  alertType = new BehaviorSubject<'success' | 'danger'>('success');
+  alertType = new BehaviorSubject<'success' | 'danger' | 'info' | 'warning'>('success');
+  alertPosition = new BehaviorSubject<
+    'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center'
+  >('top');
   alertDuration = new BehaviorSubject<number>(3000);
 
   // Progress Timer
@@ -2530,8 +2583,43 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   isMessagesModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmExitModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmHereModalVisible = new BehaviorSubject<boolean>(false);
+  private suppressConfirmHereForSession = false;
   isShareEventModalVisible = new BehaviorSubject<boolean>(false);
   isLoadingModalVisible = new BehaviorSubject<boolean>(false);
+  modernThemeDarkMode = new BehaviorSubject<boolean>(false);
+
+  resolvePreferredTheme = (): boolean => {
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  };
+
+  updateModernThemeDarkMode = (value: boolean) => {
+    this.modernThemeDarkMode.next(value);
+    this.messageWidget = this.buildMessageWidget();
+    this.updateMenuParticipantsWidget();
+    void this.updateRecordButtons();
+    this.updateControlBroadcastButtons();
+    this.cdr.detectChanges();
+  };
+
+  roomSurfaceColor = (): string =>
+    this.modernThemeDarkMode.value
+      ? 'rgba(9, 18, 32, 0.98)'
+      : 'rgba(217, 227, 234, 0.99)';
+
+  roomModalSurfaceColor = (): string =>
+    this.modernThemeDarkMode.value
+      ? 'rgba(15, 27, 49, 0.96)'
+      : 'rgba(217, 227, 234, 0.99)';
+
+  roomAccentSurfaceColor = (): string =>
+    this.modernThemeDarkMode.value
+      ? 'rgba(14, 33, 45, 0.96)'
+      : 'rgba(181, 233, 229, 0.97)';
+
+  touchControlNeutralColor = (): string =>
+    this.modernThemeDarkMode.value ? '#f8fafc' : '#10233f';
 
   // Recording Options
   recordingMediaOptions = new BehaviorSubject<string>('video');
@@ -2761,8 +2849,14 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     this.alertMessage.next(value);
   };
 
-  updateAlertType = (value: 'success' | 'danger') => {
+  updateAlertType = (value: 'success' | 'danger' | 'info' | 'warning') => {
     this.alertType.next(value);
+  };
+
+  updateAlertPosition = (
+    value: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center',
+  ) => {
+    this.alertPosition.next(value);
   };
 
   updateAlertDuration = (value: number) => {
@@ -3253,13 +3347,18 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     message,
     type,
     duration = 3000,
+    position,
   }: {
     message: string;
-    type: 'success' | 'danger';
+    type: 'success' | 'danger' | 'info' | 'warning';
     duration?: number;
+    position?: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
   }) => {
+    const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
+
     this.updateAlertMessage(message);
     this.updateAlertType(type);
+    this.updateAlertPosition(effectivePosition);
     this.updateAlertDuration(duration);
     this.updateAlertVisible(true);
   };
@@ -3505,6 +3604,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
       alertVisible: this.alertVisible.value,
       alertMessage: this.alertMessage.value,
       alertType: this.alertType.value,
+      alertPosition: this.alertPosition.value,
       alertDuration: this.alertDuration.value,
 
       // Progress Timer
@@ -4009,6 +4109,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+      isDarkModeValue: this.modernThemeDarkMode.value,
+      updateIsDarkMode: this.updateModernThemeDarkMode.bind(this),
 
       customVideoCard: this.customVideoCard,
       customAudioCard: this.customAudioCard,
@@ -4019,12 +4121,13 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
 
         try {
           if (this.sourceParameters !== null) {
-            this.sourceParameters = {
+            const nextSourceParameters = {
               ...this.getAllParams(),
               ...this.mediaSFUFunctions(),
             };
+            this.sourceParameters = nextSourceParameters;
             if (this.updateSourceParameters) {
-              this.updateSourceParameters(this.sourceParameters);
+              this.updateSourceParameters(nextSourceParameters);
             }
           }
         } catch {
@@ -4039,12 +4142,12 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     };
   }
 
-  mediaSFUParameters = {
+  mediaSFUParameters: any = {
     ...this.getAllParams(),
     ...this.mediaSFUFunctions(),
   };
 
-  getUpdatedAllParams = () => {
+  getUpdatedAllParams = (): any => {
     return {
       ...this.getAllParams(),
       ...this.mediaSFUFunctions(),
@@ -4133,6 +4236,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.updateModernThemeDarkMode(this.resolvePreferredTheme());
+
     // Initialize UI overrides if provided
     if (this.uiOverrides) {
       this.uiOverrideResolver.setOverrides(this.uiOverrides);
@@ -4305,12 +4410,13 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
 
       try {
         if (this.sourceParameters !== null) {
-          this.sourceParameters = {
+          const nextSourceParameters = {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),
           };
+          this.sourceParameters = nextSourceParameters;
           if (this.updateSourceParameters) {
-            this.updateSourceParameters(this.sourceParameters);
+            this.updateSourceParameters(nextSourceParameters);
           }
         }
       } catch {
@@ -4818,6 +4924,10 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     this.updateIsConfirmHereModalVisible(false);
   };
 
+  onSuppressConfirmHere = () => {
+    this.suppressConfirmHereForSession = true;
+  };
+
   onScreenboardClose = () => {
     this.updateIsScreenboardModalVisible(false);
   };
@@ -4869,8 +4979,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
           localUIMode: this.localUIMode.value,
         });
       },
-      activeColor: 'black',
-      inActiveColor: 'black',
+      activeColor: () => this.touchControlNeutralColor(),
+      inActiveColor: () => this.touchControlNeutralColor(),
       show: true,
     },
   ];
@@ -4885,8 +4995,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
         this.updateRecording.updateRecording({
           parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
         }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      activeColor: () => this.touchControlNeutralColor(),
+      inActiveColor: () => this.touchControlNeutralColor(),
       alternateIcon: this.faPauseCircle,
       show: () => true,
     },
@@ -4898,7 +5008,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
           parameters: { ...this.getAllParams(), ...this.mediaSFUFunctions() },
         }),
       activeColor: 'green',
-      inActiveColor: 'black',
+      inActiveColor: () => this.touchControlNeutralColor(),
       show: () => true,
     },
     {
@@ -4910,7 +5020,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
       icon: this.faDotCircle,
       active: () => false,
       onPress: () => console.log('Status pressed'),
-      activeColor: 'black',
+      activeColor: () => this.touchControlNeutralColor(),
       inActiveColor: () => (this.recordPaused.value ? 'yellow' : 'red'),
       show: () => true,
     },
@@ -4933,7 +5043,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
           localUIMode: this.localUIMode.value,
         }),
       activeColor: 'green',
-      inActiveColor: 'black',
+      inActiveColor: () => this.touchControlNeutralColor(),
       show: () => true,
     },
   ];
@@ -4950,9 +5060,7 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
             : button.customComponent
           : undefined,
         activeColor:
-          typeof button.inActiveColor === 'function'
-            ? button.inActiveColor()
-            : button.inActiveColor,
+          typeof button.activeColor === 'function' ? button.activeColor() : button.activeColor,
         inActiveColor:
           typeof button.inActiveColor === 'function'
             ? button.inActiveColor()
@@ -4967,15 +5075,19 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
   }
 
   // Create instances of the custom widgets
-  messageWidget = {
-    component: MessageWidget,
-    injector: this.createInjector({
-      icon: this.faComments,
-      showBadge: this.showMessagesBadge.value,
-      badgeValue: 1,
-      iconColor: 'black',
-    }),
-  };
+  private buildMessageWidget() {
+    return {
+      component: MessageWidget,
+      injector: this.createInjector({
+        icon: this.faComments,
+        showBadge: this.showMessagesBadge.value,
+        badgeValue: 1,
+        iconColor: this.touchControlNeutralColor(),
+      }),
+    };
+  }
+
+  messageWidget = this.buildMessageWidget();
 
   menuRecordWidget = {
     component: MenuRecordWidget,
@@ -5003,24 +5115,21 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
     return menuRecordWidget;
   };
 
-  menuParticipantsWidget = {
-    component: MenuParticipantsWidget,
-    injector: this.createInjector({
-      icon: this.faChartBar,
-      participantsCounter: this.participantsCounter.value,
-      iconColor: 'black',
-    }),
-  };
-
-  updateMenuParticipantsWidget = (count: number = this.participantsCounter.value): any => {
-    const menuParticipantsWidget = {
+  private buildMenuParticipantsWidget(count: number = this.participantsCounter.value) {
+    return {
       component: MenuParticipantsWidget,
       injector: this.createInjector({
-        icon: this.faChartBar,
+        icon: this.faUsers,
         participantsCounter: count,
-        iconColor: 'black',
+        iconColor: this.touchControlNeutralColor(),
       }),
     };
+  }
+
+  menuParticipantsWidget = this.buildMenuParticipantsWidget();
+
+  updateMenuParticipantsWidget = (count: number = this.participantsCounter.value): any => {
+    const menuParticipantsWidget = this.buildMenuParticipantsWidget(count);
 
     this.menuParticipantsWidget = { ...menuParticipantsWidget };
 
@@ -5037,11 +5146,25 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
         ...button,
         show: typeof button.show === 'function' ? button.show() : button.show,
         active: typeof button.active === 'function' ? button.active() : button.active,
+        customComponent: button.customComponent
+          ? typeof button.customComponent === 'function'
+            ? button.customComponent()
+            : button.customComponent
+          : undefined,
       };
     });
   }
 
   controlBroadcastButtonsArray: ButtonTouch[] = [
+    {
+      icon: faMoon,
+      alternateIcon: faSun,
+      active: () => this.modernThemeDarkMode.value,
+      onPress: () => this.updateModernThemeDarkMode(!this.modernThemeDarkMode.value),
+      activeColor: 'rgba(255,255,255,0.9)',
+      inActiveColor: 'rgba(0,0,0,0.9)',
+      show: () => true,
+    },
     {
       icon: this.faUsers,
       active: true,
@@ -5051,8 +5174,9 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
           updateIsParticipantsModalVisible: this.updateIsParticipantsModalVisible.bind(this),
           isParticipantsModalVisible: this.isParticipantsModalVisible.value,
         }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      backgroundColor: { default: 'transparent' },
+      activeColor: () => this.touchControlNeutralColor(),
+      inActiveColor: () => this.touchControlNeutralColor(),
       show: () => this.islevel.value == '2',
     },
     {
@@ -5060,12 +5184,13 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
       active: true,
       alternateIcon: this.faShareAlt,
       onPress: () => this.updateIsShareEventModalVisible(!this.isShareEventModalVisible.value),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      backgroundColor: { default: 'transparent' },
+      activeColor: () => this.touchControlNeutralColor(),
+      inActiveColor: () => this.touchControlNeutralColor(),
       show: () => true,
     },
     {
-      customComponent: this.messageWidget,
+      customComponent: () => this.messageWidget,
       onPress: () =>
         this.launchMessages.launchMessages({
           updateIsMessagesModalVisible: this.updateIsMessagesModalVisible.bind(this),
@@ -5084,8 +5209,9 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
             ...this.mediaSFUFunctions(),
           },
         }),
-      activeColor: 'black',
-      inActiveColor: 'black',
+      backgroundColor: { default: 'transparent' },
+      activeColor: () => this.touchControlNeutralColor(),
+      inActiveColor: () => this.touchControlNeutralColor(),
       show: () => this.islevel.value == '2',
     },
     {
@@ -5116,10 +5242,6 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
         }),
       activeColor: 'green',
       inActiveColor: 'red',
-      show: () => this.islevel.value == '2',
-    },
-    {
-      customComponent: () => this.menuParticipantsWidget,
       show: () => this.islevel.value == '2',
     },
     {
@@ -5345,6 +5467,10 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
         );
 
         socketDefault.on('meetingStillThere', async () => {
+          if (this.suppressConfirmHereForSession) {
+            return;
+          }
+
           this.meetingStillThere.meetingStillThere({
             updateIsConfirmHereModalVisible: this.updateIsConfirmHereModalVisible.bind(this),
           });

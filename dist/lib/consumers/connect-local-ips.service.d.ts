@@ -48,34 +48,7 @@ export declare class ConnectLocalIps {
     private newPipeProducerService;
     private producerClosedService;
     constructor(newPipeProducerService: NewPipeProducer, producerClosedService: ProducerClosed);
-    /**
-     * Connects to remote IPs and manages socket connections.
-     *
-     * This method establishes connections to remote IPs for media streaming, handles new pipe producer events,
-     * and manages producer closure events. It updates the necessary state in the application to reflect
-     * the current connections and stream configurations.
-     *
-     * @param {ConnectLocalIpsOptions} options - The options for connecting IPs.
-     * @param {Socket} options.socket - The socket connection to use for communication.
-     * @param {Function} [options.newProducerMethod] - The method to handle new pipe producer events (default: newPipeProducer).
-     * @param {Function} [options.closedProducerMethod] - The method to handle producer closed events (default: producerClosed).
-     * @param {ConnectLocalIpsParameters} options.parameters - Additional parameters for the operation.
-     *
-     * @returns {Promise<void>} A promise that resolves when the connection is established.
-     *
-     * @throws Will throw an error if required parameters are missing or if there is an issue connecting to a remote IP.
-     *
-     * @example
-     * ```typescript
-     * const result = await connectLocalIps({
-    *     socket,
-    *     newProducerMethod: newPipeProducer,
-    *     closedProducerMethod: producerClosed,
-    *     parameters,
-    *   });
-    * ```
-    */
-    connectLocalIps: ({ socket, newProducerMethod, closedProducerMethod, parameters, }: ConnectLocalIpsOptions) => Promise<void>;
+    connectLocalIps: ConnectLocalIpsType;
     static ɵfac: i0.ɵɵFactoryDeclaration<ConnectLocalIps, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConnectLocalIps>;
 }

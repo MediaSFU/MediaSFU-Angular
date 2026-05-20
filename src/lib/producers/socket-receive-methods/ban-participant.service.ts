@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Participant, ReorderStreamsType, ReorderStreamsParameters } from '../../@types/types';
+import { banParticipant as sharedBanParticipant } from 'mediasfu-shared';
 
 export interface BanParticipantParameters extends ReorderStreamsParameters {
   activeNames: string[];
@@ -78,21 +79,9 @@ export class BanParticipant {
    * @returns {Promise<void>} A promise that resolves when the participant has been banned and streams reordered.
    */
   banParticipant = async ({ name, parameters }: BanParticipantOptions): Promise<void> => {
-    const { activeNames, dispActiveNames, participants, updateParticipants, reorderStreams } =
-      parameters;
-
-    // Check if the participant is in the active or display names array
-    if (activeNames.includes(name) || dispActiveNames.includes(name)) {
-      // Filter out the banned participant from the participants array
-      const updatedParticipants = participants.filter(
-        (participant: Participant) => participant.name !== name,
-      );
-
-      // Update the participants array
-      updateParticipants(updatedParticipants);
-
-      // Reorder streams after participant removal
-      await reorderStreams({ add: false, screenChanged: true, parameters });
-    }
+    return sharedBanParticipant({
+      name,
+      parameters,
+    });
   };
 }

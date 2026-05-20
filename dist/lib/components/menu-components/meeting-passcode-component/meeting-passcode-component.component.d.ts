@@ -36,6 +36,7 @@ export type MeetingPasscodeComponentType = (options: MeetingPasscodeComponentOpt
  */
 export declare class MeetingPasscodeComponent {
     meetingPasscode: string;
+    isDarkMode?: boolean;
     labelText?: string;
     containerAttributes?: {
         [key: string]: any;
@@ -50,10 +51,18 @@ export declare class MeetingPasscodeComponent {
     renderLabel?: TemplateRef<MeetingPasscodeRenderContext>;
     renderInput?: TemplateRef<MeetingPasscodeRenderContext>;
     renderContent?: TemplateRef<MeetingPasscodeRenderContext>;
+    readonly copyIcon: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    readonly revealIcon: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    readonly hideIcon: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    isCopied: boolean;
+    isRevealed: boolean;
     get renderContext(): MeetingPasscodeRenderContext;
+    get resolvedIsDarkMode(): boolean;
+    handleCopy(): Promise<void>;
+    toggleVisibility(): void;
     getLabelText(): string;
     getInputValue(): string;
     getInputReadOnly(): boolean;
     static ɵfac: i0.ɵɵFactoryDeclaration<MeetingPasscodeComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MeetingPasscodeComponent, "app-meeting-passcode-component", never, { "meetingPasscode": { "alias": "meetingPasscode"; "required": false; }; "labelText": { "alias": "labelText"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "labelAttributes": { "alias": "labelAttributes"; "required": false; }; "inputAttributes": { "alias": "inputAttributes"; "required": false; }; "renderContainer": { "alias": "renderContainer"; "required": false; }; "renderLabel": { "alias": "renderLabel"; "required": false; }; "renderInput": { "alias": "renderInput"; "required": false; }; "renderContent": { "alias": "renderContent"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MeetingPasscodeComponent, "app-meeting-passcode-component", never, { "meetingPasscode": { "alias": "meetingPasscode"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "labelText": { "alias": "labelText"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "labelAttributes": { "alias": "labelAttributes"; "required": false; }; "inputAttributes": { "alias": "inputAttributes"; "required": false; }; "renderContainer": { "alias": "renderContainer"; "required": false; }; "renderLabel": { "alias": "renderLabel"; "required": false; }; "renderInput": { "alias": "renderInput"; "required": false; }; "renderContent": { "alias": "renderContent"; "required": false; }; }, {}, never, never, true, never>;
 }

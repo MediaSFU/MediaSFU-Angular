@@ -80,7 +80,7 @@ export declare class ModifySettings {
      *
      * @throws Will show an alert if any setting is set to "approval" in demo mode (room name starts with "d").
      */
-    modifySettings: ({ showAlert, roomName, audioSet, videoSet, screenshareSet, chatSet, socket, updateAudioSetting, updateVideoSetting, updateScreenshareSetting, updateChatSetting, updateIsSettingsModalVisible, }: ModifySettingsOptions) => Promise<void>;
+    modifySettings: ({ roomName, audioSet, videoSet, screenshareSet, chatSet, socket, updateAudioSetting, updateVideoSetting, updateScreenshareSetting, updateChatSetting, updateIsSettingsModalVisible, }: ModifySettingsOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModifySettings, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ModifySettings>;
 }

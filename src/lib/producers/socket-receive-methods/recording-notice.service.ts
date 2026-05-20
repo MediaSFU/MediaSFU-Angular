@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { SoundPlayer } from '../../methods/utils/sound-player.service';
-
 import { EventType, UserRecordingParams } from '../../@types/types';
+import { recordingNotice as sharedRecordingNotice } from 'mediasfu-shared';
 
 export interface RecordingNoticeParameters {
   islevel: string;
   userRecordingParams: UserRecordingParams;
+  pauseRecordCount: number;
   recordElapsedTime: number;
   recordStartTime: number;
   recordStarted: boolean;
@@ -106,8 +106,6 @@ export type RecordingNoticeType = (options: RecordingNoticeOptions) => Promise<v
   providedIn: 'root',
 })
 export class RecordingNotice {
-  constructor(private SoundPlayerService: SoundPlayer) {}
-
   /**
    * Handles the recording notice state and updates various recording parameters accordingly.
    *
@@ -171,178 +169,12 @@ export class RecordingNotice {
     timeDone,
     parameters,
   }: RecordingNoticeOptions): Promise<void> => {
-    let {
-      islevel,
-      userRecordingParams,
-      pauseRecordCount,
-      recordElapsedTime,
-      recordStartTime,
-      recordStarted,
-      recordPaused,
-      canLaunchRecord,
-      stopLaunchRecord,
-      recordStopped,
-      isTimerRunning,
-      canPauseResume,
-      eventType,
-
-      updateRecordingProgressTime,
-      updateShowRecordButtons,
-      updateUserRecordingParams,
-      updateRecordingMediaOptions,
-      updateRecordingAudioOptions,
-      updateRecordingVideoOptions,
-      updateRecordingVideoType,
-      updateRecordingVideoOptimized,
-      updateRecordingDisplayType,
-      updateRecordingAddHLS,
-      updateRecordingNameTags,
-      updateRecordingBackgroundColor,
-      updateRecordingNameTagsColor,
-      updateRecordingOrientationVideo,
-      updateRecordingAddText,
-      updateRecordingCustomText,
-      updateRecordingCustomTextPosition,
-      updateRecordingCustomTextColor,
-      updatePauseRecordCount,
-      updateRecordElapsedTime,
-      updateRecordStartTime,
-      updateRecordStarted,
-      updateRecordPaused,
-      updateCanLaunchRecord,
-      updateStopLaunchRecord,
-      updateRecordStopped,
-      updateIsTimerRunning,
-      updateCanPauseResume,
-      updateRecordState,
-    } = parameters;
-
-    try {
-      if (islevel !== '2') {
-        if (state === 'pause') {
-          updateRecordStarted(true);
-          updateRecordPaused(true);
-          updateRecordState('yellow');
-          eventType !== 'broadcast' &&
-            this.SoundPlayerService.playSound({
-              soundUrl: 'https://www.mediasfu.com/sounds/record-paused.mp3',
-            });
-        } else if (state === 'stop') {
-          updateRecordStarted(true);
-          updateRecordStopped(true);
-          updateRecordState('green');
-          eventType !== 'broadcast' &&
-            this.SoundPlayerService.playSound({
-              soundUrl: 'https://www.mediasfu.com/sounds/record-stopped.mp3',
-            });
-        } else {
-          updateRecordState('red');
-          updateRecordStarted(true);
-          updateRecordPaused(false);
-          eventType !== 'broadcast' &&
-            this.SoundPlayerService.playSound({
-              soundUrl: 'https://www.mediasfu.com/sounds/record-progress.mp3',
-            });
-        }
-      } else {
-        if (state === 'pause') {
-          updateRecordState('yellow');
-          if (userRecordingParam) {
-            userRecordingParams.mainSpecs = userRecordingParam.mainSpecs;
-            userRecordingParams.dispSpecs = userRecordingParam.dispSpecs;
-            userRecordingParams.textSpecs = userRecordingParam.textSpecs;
-
-            updateUserRecordingParams(userRecordingParams);
-            updateRecordingMediaOptions(userRecordingParams.mainSpecs.mediaOptions);
-            updateRecordingAudioOptions(userRecordingParams.mainSpecs.audioOptions);
-            updateRecordingVideoOptions(userRecordingParams.mainSpecs.videoOptions);
-            updateRecordingVideoType(userRecordingParams.mainSpecs.videoType);
-            updateRecordingVideoOptimized(userRecordingParams.mainSpecs.videoOptimized);
-            updateRecordingDisplayType(userRecordingParams.mainSpecs.recordingDisplayType);
-            updateRecordingAddHLS(userRecordingParams.mainSpecs.addHLS);
-            updateRecordingNameTags(userRecordingParams.dispSpecs.nameTags);
-            updateRecordingBackgroundColor(userRecordingParams.dispSpecs.backgroundColor);
-            updateRecordingNameTagsColor(userRecordingParams.dispSpecs.nameTagsColor);
-            updateRecordingOrientationVideo(userRecordingParams.dispSpecs.orientationVideo);
-            updateRecordingAddText(userRecordingParams.textSpecs?.addText ?? false);
-            updateRecordingCustomText(userRecordingParams.textSpecs?.customText ?? '');
-            updateRecordingCustomTextPosition(
-              userRecordingParams.textSpecs?.customTextPosition ?? '',
-            );
-            updateRecordingCustomTextColor(userRecordingParams.textSpecs?.customTextColor ?? '');
-
-            pauseRecordCount = pauseCount;
-            updatePauseRecordCount(pauseRecordCount);
-
-            recordElapsedTime = timeDone;
-            recordElapsedTime = Math.floor(recordElapsedTime / 1000);
-            recordStartTime = Math.floor(Date.now() / 1000) - recordElapsedTime;
-            updateRecordStartTime(recordStartTime);
-            updateRecordElapsedTime(recordElapsedTime);
-
-            recordStarted = true;
-            recordPaused = true;
-            canLaunchRecord = false;
-            recordStopped = false;
-
-            updateRecordStarted(recordStarted);
-            updateRecordPaused(recordPaused);
-            updateCanLaunchRecord(canLaunchRecord);
-            updateRecordStopped(recordStopped);
-            updateShowRecordButtons(true);
-
-            isTimerRunning = false;
-            canPauseResume = true;
-
-            updateIsTimerRunning(isTimerRunning);
-            updateCanPauseResume(canPauseResume);
-
-            const formattedTime = this.formatElapsedTime(recordElapsedTime);
-            updateRecordingProgressTime(formattedTime);
-          }
-          this.SoundPlayerService.playSound({
-            soundUrl: 'https://www.mediasfu.com/sounds/record-paused.mp3',
-          });
-        } else if (state === 'stop') {
-          updateRecordStarted(true);
-          updateRecordStopped(true);
-          canLaunchRecord = false;
-          stopLaunchRecord = true;
-
-          updateRecordStarted(recordStarted);
-          updateRecordStopped(recordStopped);
-          updateCanLaunchRecord(canLaunchRecord);
-          updateStopLaunchRecord(stopLaunchRecord);
-          updateShowRecordButtons(false);
-
-          updateRecordState('green');
-          this.SoundPlayerService.playSound({
-            soundUrl: 'https://www.mediasfu.com/sounds/record-stopped.mp3',
-          });
-        } else {
-          updateRecordState('red');
-          updateRecordStarted(true);
-          updateRecordPaused(false);
-          this.SoundPlayerService.playSound({
-            soundUrl: 'https://www.mediasfu.com/sounds/record-progress.mp3',
-          });
-        }
-      }
-    } catch (error) {
-      console.log('Error in RecordingNotice: ', error);
-      // throw new Error("Failed to handle recording state and status.");
-    }
-  };
-
-  private formatElapsedTime = (recordElapsedTime: number): string => {
-    const hours = Math.floor(recordElapsedTime / 3600);
-    const minutes = Math.floor((recordElapsedTime % 3600) / 60);
-    const seconds = recordElapsedTime % 60;
-
-    return `${this.padNumber(hours)}:${this.padNumber(minutes)}:${this.padNumber(seconds)}`;
-  };
-
-  private padNumber = (number: number): string => {
-    return number.toString().padStart(2, '0');
+    return sharedRecordingNotice({
+      state,
+      userRecordingParam,
+      pauseCount,
+      timeDone,
+      parameters,
+    });
   };
 }

@@ -1,5 +1,6 @@
 // whiteboard.service.ts
 import { Injectable } from '@angular/core';
+import { launchConfigureWhiteboard as sharedLaunchConfigureWhiteboard } from 'mediasfu-shared';
 export interface LaunchConfigureWhiteboardOptions {
   updateIsConfigureWhiteboardModalVisible: (visible: boolean) => void;
   isConfigureWhiteboardModalVisible: boolean;
@@ -45,7 +46,9 @@ export class LaunchConfigureWhiteboard {
     updateIsConfigureWhiteboardModalVisible,
     isConfigureWhiteboardModalVisible,
   }: LaunchConfigureWhiteboardOptions): void {
-    // Open or close the menu modal
-    updateIsConfigureWhiteboardModalVisible(!isConfigureWhiteboardModalVisible);
+    sharedLaunchConfigureWhiteboard({
+      updateIsConfigureWhiteboardModalVisible,
+      isConfigureWhiteboardModalVisible,
+    });
   }
 }

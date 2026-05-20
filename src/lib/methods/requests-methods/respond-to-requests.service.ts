@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { respondToRequests as sharedRespondToRequests } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
-import { Request, RequestResponse } from '../../@types/types';
+import { Request } from '../../@types/types';
 
 export interface RespondToRequestsOptions {
   socket: Socket;
@@ -11,7 +12,6 @@ export interface RespondToRequestsOptions {
   roomName: string;
 }
 
-// Export the type definition for the function
 export type RespondToRequestsType = (options: RespondToRequestsOptions) => Promise<void>;
 
 /**
@@ -81,27 +81,15 @@ export class RespondToRequests {
     action,
     roomName,
   }: RespondToRequestsOptions): Promise<void> {
-    // Filter out the request that is being responded to
-    let newRequestList = requestList.filter((request_: any) => {
-      return !(
-        request_.id === request.id &&
-        request_.icon === request.icon &&
-        request_.name === request.name
-      );
-    });
-
-    // Update the request list
-    updateRequestList(newRequestList);
-
-    // Prepare the request response object
-    let requestResponse: RequestResponse = {
-      id: request.id,
-      name: request.name,
-      type: request.icon,
-      action: action,
-    };
-
-    // Emit the response via the socket
-    socket.emit('updateUserofRequestStatus', { requestResponse, roomName });
+    return sharedRespondToRequests(
+      {
+        socket,
+        request,
+        updateRequestList,
+        requestList,
+        action,
+        roomName,
+      } as unknown as Parameters<typeof sharedRespondToRequests>[0],
+    );
   }
 }

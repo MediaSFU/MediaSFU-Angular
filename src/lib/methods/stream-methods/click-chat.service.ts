@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShowAlert } from '../../@types/types';
+import { clickChat as sharedClickChat } from 'mediasfu-shared';
 export interface ClickChatOptions {
   isMessagesModalVisible: boolean;
   updateIsMessagesModalVisible: (isVisible: boolean) => void;
@@ -61,27 +62,7 @@ export class ClickChat {
    * @returns {Promise<void>} A promise that resolves when the operation is complete.
    */
 
-  async clickChat({
-    isMessagesModalVisible,
-    updateIsMessagesModalVisible,
-    chatSetting,
-    islevel,
-    showAlert,
-  }: ClickChatOptions): Promise<void> {
-    if (isMessagesModalVisible) {
-      updateIsMessagesModalVisible(false);
-    } else {
-      // Check if chat is allowed based on event settings and participant level
-      if (chatSetting !== 'allow' && islevel !== '2') {
-        updateIsMessagesModalVisible(false);
-        showAlert?.({
-          message: 'Chat is disabled for this event.',
-          type: 'danger',
-          duration: 3000,
-        });
-      } else {
-        updateIsMessagesModalVisible(true);
-      }
-    }
+  async clickChat(options: ClickChatOptions): Promise<void> {
+    await sharedClickChat(options as unknown as Parameters<typeof sharedClickChat>[0]);
   }
 }

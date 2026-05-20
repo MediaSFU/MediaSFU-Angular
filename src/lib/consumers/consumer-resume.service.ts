@@ -213,11 +213,28 @@ export class ConsumerResume {
       if (params.kind === 'audio') {
         // Audio resumed
 
+        const activeTranslationProducerIds = (parameters as any).activeTranslationProducerIds as Set<string> | undefined;
+        const isTranslationAudio = Boolean(
+          activeTranslationProducerIds?.has(remoteProducerId) ||
+          consumer.appData?.type === 'translation' ||
+          consumer.appData?.isTranslation,
+        );
+
         // Check if the participant with audioID == remoteProducerId has a valid videoID
         let participant = participants.filter((p) => p.audioID === remoteProducerId);
         let name__ = participant.length > 0 ? participant[0].name || '' : '';
 
-        if (name__ === member) return;
+        if (isTranslationAudio && !name__) {
+          const translationMeta = consumer.appData?.translationMeta as {
+            speakerName?: string;
+            speakerId?: string;
+            language?: string;
+          } | undefined;
+
+          name__ = translationMeta?.speakerName || `Translation-${remoteProducerId.slice(0, 8)}`;
+        }
+
+        if (name__ === member && !isTranslationAudio) return;
 
         //find any participants with ScreenID not null and ScreenOn == true
         let screenParticipant_alt = participants.filter(
@@ -280,7 +297,7 @@ export class ConsumerResume {
         allAudioStreams = [...allAudioStreams, { producerId: remoteProducerId, stream: nStream }];
         updateAllAudioStreams(allAudioStreams);
 
-        let name;
+        let name = '';
 
         try {
           name = participant[0].name;
@@ -288,12 +305,12 @@ export class ConsumerResume {
           /* handle error */
         }
 
-        if (name) {
+        if (name || isTranslationAudio) {
           // Add to audStreamNames array; add producerId, name
           audStreamNames = [...audStreamNames, { producerId: remoteProducerId, name: name__ }];
           updateAudStreamNames(audStreamNames);
 
-          if (!mainScreenFilled && participant[0].islevel === '2') {
+          if (!isTranslationAudio && !mainScreenFilled && participant[0].islevel === '2') {
             updateMainWindow = true;
             updateUpdateMainWindow(updateMainWindow);
             await prepopulateUserMedia({
@@ -302,6 +319,10 @@ export class ConsumerResume {
             });
             updateMainWindow = false;
             updateUpdateMainWindow(updateMainWindow);
+          }
+
+          if (isTranslationAudio) {
+            return;
           }
         } else {
           return;

@@ -1,9 +1,6 @@
+import type { LaunchDisplaySettingsOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchDisplaySettingsOptions {
-    updateIsDisplaySettingsModalVisible: (isVisible: boolean) => void;
-    isDisplaySettingsModalVisible: boolean;
-}
-export type LaunchDisplaySettingsType = (options: LaunchDisplaySettingsOptions) => void;
+export type { LaunchDisplaySettingsOptions, LaunchDisplaySettingsType } from 'mediasfu-shared';
 /**
  * Toggles the visibility of the display settings modal.
  *

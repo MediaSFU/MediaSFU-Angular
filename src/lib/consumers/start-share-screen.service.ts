@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { startShareScreen as sharedStartShareScreen } from 'mediasfu-shared';
 import { StreamSuccessScreenType, StreamSuccessScreenParameters, ShowAlert } from '../@types/types';
 export interface StartShareScreenParameters extends StreamSuccessScreenParameters {
   shared: boolean;
@@ -83,6 +84,10 @@ export class StartShareScreen {
    * @throws Will log an error message if there is an issue starting the screen share.
    */
   startShareScreen = async ({ parameters }: StartShareScreenOptions): Promise<void> => {
+    return sharedStartShareScreen({
+      parameters: parameters as unknown as Parameters<typeof sharedStartShareScreen>[0]['parameters'],
+    }) as Promise<void>;
+
     // start screen share function
     // attempt to start screen share and return true if successful
 

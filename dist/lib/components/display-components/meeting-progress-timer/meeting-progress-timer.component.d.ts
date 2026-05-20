@@ -1,4 +1,3 @@
-import { SimpleChanges, OnChanges } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface MeetingProgressTimerOptions {
     meetingProgressTime: string;
@@ -54,7 +53,7 @@ export type MeetingProgressTimerType = (options: MeetingProgressTimerOptions) =>
  * ></app-meeting-progress-timer>
  * ```
  **/
-export declare class MeetingProgressTimer implements OnChanges {
+export declare class MeetingProgressTimer {
     meetingProgressTime: string;
     initialBackgroundColor: string;
     position: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
@@ -62,16 +61,24 @@ export declare class MeetingProgressTimer implements OnChanges {
         [key: string]: string | number;
     };
     showTimer: boolean;
-    positions: {
-        [key: string]: {
-            position: string;
-            top?: string;
-            bottom?: string;
-            left?: string;
-            right?: string;
-        };
+    readonly faClock: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    get positionStyle(): {
+        [key: string]: string;
     };
-    ngOnChanges(changes: SimpleChanges): void;
+    get badgeStyle(): {
+        [key: string]: string;
+    };
+    get iconToneClass(): string;
+    get badgeTitle(): string;
+    get ariaLabel(): string;
+    isRecordingState(): boolean;
+    private get resolvedTone();
+    private getAccentColor;
+    private getResolvedBackground;
+    private isCustomBackground;
+    private parseTimeInSeconds;
+    private normalizeColor;
+    private withAlpha;
     static ɵfac: i0.ɵɵFactoryDeclaration<MeetingProgressTimer, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<MeetingProgressTimer, "app-meeting-progress-timer", never, { "meetingProgressTime": { "alias": "meetingProgressTime"; "required": false; }; "initialBackgroundColor": { "alias": "initialBackgroundColor"; "required": false; }; "position": { "alias": "position"; "required": false; }; "textStyle": { "alias": "textStyle"; "required": false; }; "showTimer": { "alias": "showTimer"; "required": false; }; }, {}, never, never, true, never>;
 }

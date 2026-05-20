@@ -1,0 +1,175 @@
+<div
+  *ngIf="isVisibleState()"
+  class="translation-modal-overlay"
+  [class.translation-modal-overlay--embedded]="isEmbedded()"
+  [ngStyle]="resolvedOverlayStyle()"
+>
+  <div
+    class="translation-modal"
+    [class.translation-modal--dark]="isDarkMode"
+    [class.translation-modal--embedded]="isEmbedded()"
+    [ngStyle]="resolvedContentStyle()"
+  >
+    <div *ngIf="showHeader" class="translation-modal__header">
+      <div class="translation-modal__title-wrap">
+        <span class="translation-modal__eyebrow">Language routing</span>
+        <div class="translation-modal__title">
+          <fa-icon [icon]="faLanguage"></fa-icon>
+          <span>Translation Settings</span>
+        </div>
+        <p class="translation-modal__subtitle">
+          Configure how your voice is translated out and how translated audio is routed back in.
+        </p>
+      </div>
+      <button type="button" class="translation-modal__close" (click)="closeModal()" aria-label="Close translation settings">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </div>
+
+    <div class="translation-modal__body" [class.translation-modal__body--embedded]="isEmbedded()">
+      <div *ngIf="!translationAvailable" class="translation-modal__notice translation-modal__notice--warning">
+        Translation is not enabled for this room yet.
+      </div>
+
+      <div *ngIf="canUsePersonalTranslation" class="translation-modal__notice">
+        Personal translation is available{{ personalTranslationUsername ? ' for ' + personalTranslationUsername : '' }}.
+      </div>
+
+      <div class="translation-modal__tabs" role="tablist" aria-label="Translation settings tabs">
+        <button
+          type="button"
+          class="translation-modal__tab"
+          [class.translation-modal__tab--active]="activeTab === 'speaking'"
+          [attr.aria-selected]="activeTab === 'speaking'"
+          (click)="activeTab = 'speaking'"
+        >
+          <fa-icon [icon]="faMicrophone"></fa-icon>
+          <span>My Voice Output</span>
+        </button>
+
+        <button
+          type="button"
+          class="translation-modal__tab"
+          [class.translation-modal__tab--active]="activeTab === 'listening'"
+          [attr.aria-selected]="activeTab === 'listening'"
+          (click)="activeTab = 'listening'"
+        >
+          <fa-icon [icon]="faHeadphones"></fa-icon>
+          <span>Listen To</span>
+        </button>
+      </div>
+
+      <div *ngIf="activeTab === 'speaking'" class="translation-modal__section translation-modal__section--card">
+        <div class="translation-modal__section-heading">
+          <h3>My Voice Output</h3>
+          <p>
+            Choose your spoken language and decide whether your microphone should be translated for other participants.
+          </p>
+        </div>
+
+        <label class="translation-modal__toggle">
+          <input type="checkbox" [(ngModel)]="localSpokenEnabled" [disabled]="!translationAvailable" />
+          <span>Speak in a different language (translate my voice)</span>
+        </label>
+
+        <label class="translation-modal__field">
+          <span>Spoken Language</span>
+          <select
+            [(ngModel)]="localSpokenLanguage"
+            [disabled]="!translationAvailable || (translationConfig?.allowSpokenLanguageChange === false)"
+          >
+            <option *ngFor="let language of spokenLanguageOptions" [value]="language.code">
+              {{ language.name }}
+            </option>
+          </select>
+        </label>
+
+        <label class="translation-modal__field">
+          <span>Output Language</span>
+          <select [(ngModel)]="localDefaultOutputLanguage" [disabled]="!translationAvailable">
+            <option [value]="originalAudioValue">Same as spoken language</option>
+            <option *ngFor="let language of listenLanguageOptions" [value]="language.code">
+              {{ language.name }}
+            </option>
+          </select>
+        </label>
+      </div>
+
+      <div *ngIf="activeTab === 'listening'" class="translation-modal__section translation-modal__section--card">
+        <div class="translation-modal__section-heading">
+          <h3>Listen To</h3>
+          <p>
+            Pick a default translated feed for the room, or switch to per-speaker routing when individual channels are available.
+          </p>
+        </div>
+
+        <label class="translation-modal__toggle">
+          <input type="checkbox" [(ngModel)]="perSpeakerMode" [disabled]="!translationAvailable || (translationConfig?.allowListenLanguageChange === false)" />
+          <span>Use per-speaker translation preferences</span>
+        </label>
+
+        <label class="translation-modal__field" *ngIf="!perSpeakerMode">
+          <span>Default Listening Language</span>
+          <select
+            [(ngModel)]="localDefaultListenLanguage"
+            [disabled]="!translationAvailable || (translationConfig?.allowListenLanguageChange === false)"
+          >
+            <option [value]="originalAudioValue">Original audio</option>
+            <option *ngFor="let language of listenLanguageOptions" [value]="language.code">
+              {{ language.name }}
+            </option>
+          </select>
+        </label>
+
+        <div *ngIf="perSpeakerMode" class="translation-modal__speaker-list">
+          <div *ngFor="let participant of listeningParticipants" class="translation-modal__speaker-row">
+            <div class="translation-modal__speaker-meta">
+              <span class="translation-modal__speaker-name">{{ getSpeakerName(participant) }}</span>
+              <span class="translation-modal__speaker-status" *ngIf="!hasSpeakerOptions(participant)">
+                No channels announced yet
+              </span>
+            </div>
+
+            <select
+              [ngModel]="getSpeakerSelection(participant)"
+              (ngModelChange)="updateSpeakerPreference(participant, $event)"
+              [disabled]="!hasSpeakerOptions(participant) || !translationAvailable"
+            >
+              <option [value]="originalAudioValue">Original audio</option>
+              <option *ngFor="let language of getSpeakerOptions(participant)" [value]="language.code">
+                {{ language.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="updateShowSubtitlesOnCards" class="translation-modal__section translation-modal__section--card">
+        <div class="translation-modal__section-heading">
+          <h3>
+            <fa-icon [icon]="faClosedCaptioning"></fa-icon>
+            <span>Show Subtitles on Video</span>
+          </h3>
+          <p>Display translated speech as subtitles on participant cards.</p>
+        </div>
+
+        <label class="translation-modal__toggle">
+          <input type="checkbox" [(ngModel)]="localShowSubtitlesOnCards" />
+          <span>Show translated speech as live subtitles on participant cards</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="translation-modal__footer">
+      <button type="button" class="translation-modal__secondary" (click)="closeModal()">Cancel</button>
+      <button
+        type="button"
+        class="translation-modal__primary"
+        (click)="saveSettings()"
+        [disabled]="isSaving || (!translationAvailable && !updateShowSubtitlesOnCards)"
+      >
+        {{ isSaving ? 'Saving...' : 'Apply Changes' }}
+      </button>
+    </div>
+  </div>
+</div>

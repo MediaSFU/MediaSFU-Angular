@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { modifyDisplaySettings as sharedModifyDisplaySettings } from 'mediasfu-shared';
 import { OnScreenChangesParameters, OnScreenChangesType, ShowAlert } from '../../@types/types';
 
 export interface ModifyDisplaySettingsParameters extends OnScreenChangesParameters {
@@ -6,6 +7,7 @@ export interface ModifyDisplaySettingsParameters extends OnScreenChangesParamete
   meetingDisplayType: string;
   autoWave: boolean;
   forceFullDisplay: boolean;
+  showSubtitlesOnCards?: boolean;
   meetingVideoOptimized: boolean;
   islevel: string;
   recordStarted: boolean;
@@ -19,6 +21,7 @@ export interface ModifyDisplaySettingsParameters extends OnScreenChangesParamete
   updateMeetingDisplayType: (displayType: string) => void;
   updateAutoWave: (autoWave: boolean) => void;
   updateForceFullDisplay: (forceFullDisplay: boolean) => void;
+  updateShowSubtitlesOnCards?: (showSubtitlesOnCards: boolean) => void;
   updateMeetingVideoOptimized: (optimized: boolean) => void;
   updatePrevForceFullDisplay: (forceFullDisplay: boolean) => void;
   updatePrevMeetingDisplayType: (displayType: string) => void;
@@ -157,115 +160,8 @@ export class ModifyDisplaySettings {
    */
 
   modifyDisplaySettings = async ({ parameters }: ModifyDisplaySettingsOptions): Promise<void> => {
-    // Destructure the parameters
-    let {
-      showAlert,
-      meetingDisplayType,
-      autoWave,
-      forceFullDisplay,
-      meetingVideoOptimized,
-      islevel,
-      recordStarted,
-      recordResumed,
-      recordStopped,
-      recordPaused,
-      recordingDisplayType,
-      recordingVideoOptimized,
-      prevForceFullDisplay,
-      prevMeetingDisplayType,
-      updateMeetingDisplayType,
-      updateAutoWave,
-      updateForceFullDisplay,
-      updateMeetingVideoOptimized,
-      updatePrevForceFullDisplay,
-      updatePrevMeetingDisplayType,
-      updateIsDisplaySettingsModalVisible,
-      updateFirstAll,
-      updateUpdateMainWindow,
-      breakOutRoomStarted,
-      breakOutRoomEnded,
-      onScreenChanges,
-    } = parameters;
-
-    // Update previous states
-    updateAutoWave(autoWave);
-    updateForceFullDisplay(forceFullDisplay);
-
-    if (islevel === '2' && (recordStarted || recordResumed) && !recordStopped && !recordPaused) {
-      if (
-        recordingDisplayType === 'video' &&
-        meetingDisplayType === 'video' &&
-        meetingVideoOptimized &&
-        !recordingVideoOptimized
-      ) {
-        showAlert?.({
-          message:
-            'Meeting display type can be either video, media, or all when recording display type is non-optimized video.',
-          type: 'danger',
-          duration: 3000,
-        });
-        // Reset to previous values or handle as needed
-        meetingDisplayType = recordingDisplayType;
-        updateMeetingDisplayType(meetingDisplayType);
-        meetingVideoOptimized = recordingVideoOptimized;
-        updateMeetingVideoOptimized(meetingVideoOptimized);
-        return;
-      } else if (recordingDisplayType === 'media' && meetingDisplayType === 'video') {
-        showAlert?.({
-          message:
-            'Meeting display type can be either media or all when recording display type is media.',
-          type: 'danger',
-          duration: 3000,
-        });
-
-        // Reset to previous values or handle as needed
-        meetingDisplayType = recordingDisplayType;
-        updateMeetingDisplayType(meetingDisplayType);
-        return;
-      } else if (
-        recordingDisplayType === 'all' &&
-        (meetingDisplayType === 'video' || meetingDisplayType === 'media')
-      ) {
-        showAlert?.({
-          message: 'Meeting display type can be only all when recording display type is all.',
-          type: 'danger',
-          duration: 3000,
-        });
-        // Reset to previous values or handle as needed
-        meetingDisplayType = recordingDisplayType;
-        updateMeetingDisplayType(meetingDisplayType);
-        return;
-      }
-    }
-
-    updateMeetingDisplayType(meetingDisplayType);
-    updateMeetingVideoOptimized(meetingVideoOptimized);
-
-    // Close the modal or perform additional actions
-    updateIsDisplaySettingsModalVisible(false);
-
-    if (
-      prevMeetingDisplayType !== meetingDisplayType ||
-      prevForceFullDisplay !== forceFullDisplay
-    ) {
-      if (breakOutRoomStarted && !breakOutRoomEnded && meetingDisplayType !== 'all') {
-        showAlert?.({
-          message: 'Breakout room is active. Display type can only be all.',
-          type: 'danger',
-        });
-        meetingDisplayType = prevMeetingDisplayType;
-        updateMeetingDisplayType(prevMeetingDisplayType);
-        return;
-      }
-
-      updateFirstAll(meetingDisplayType !== 'all' ? true : false);
-      updateUpdateMainWindow(true);
-      await onScreenChanges({
-        changed: true,
-        parameters: { ...parameters, meetingDisplayType, forceFullDisplay },
-      });
-      updatePrevForceFullDisplay(forceFullDisplay);
-      updatePrevMeetingDisplayType(meetingDisplayType);
-    }
+    return sharedModifyDisplaySettings(
+      { parameters } as unknown as Parameters<typeof sharedModifyDisplaySettings>[0],
+    );
   };
 }

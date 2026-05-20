@@ -36,33 +36,70 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     selector: 'app-screen-share-button',
     imports: [CommonModule, FontAwesomeModule],
     template: `
-    <div style="position: relative; display: inline-block;">
-      <!-- Desktop icon, change color based on disabled state -->
-      <fa-icon [icon]="faDesktop" size="lg" [style.color]="computedDisabled ? 'black' : 'green'">
-      </fa-icon>
-
-      <!-- Red Ban icon on top if disabled -->
+    <div class="screen-share-widget" [class.screen-share-widget--disabled]="computedDisabled">
       <fa-icon
-        *ngIf="computedDisabled"
-        [icon]="faBan"
+        [icon]="faDesktop"
         size="lg"
-        style="color: red; position: absolute; top: 0; right: 0;"
+        class="screen-share-widget__icon"
+        [style.color]="computedDisabled ? iconColor : '#10b981'"
       >
       </fa-icon>
+
+      <span *ngIf="computedDisabled" class="screen-share-widget__overlay" aria-hidden="true">
+        <fa-icon [icon]="faBan" size="xs"></fa-icon>
+      </span>
     </div>
-  `
+  `,
+    styles: [
+        `
+      .screen-share-widget {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        line-height: 1;
+      }
+
+      .screen-share-widget__icon {
+        filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.24));
+      }
+
+      .screen-share-widget__overlay {
+        position: absolute;
+        top: -2px;
+        right: -4px;
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #fb7185 0%, #ef4444 48%, #dc2626 100%);
+        color: #ffffff;
+        border: 1.5px solid rgba(255, 255, 255, 0.94);
+        box-shadow: 0 6px 12px rgba(220, 38, 38, 0.24);
+      }
+    `,
+    ]
 })
 export class ScreenShareWidget {
   @Input() disabled = false; // Input to toggle disabled state
+  @Input() iconColor = 'currentColor';
 
   faDesktop = faDesktop;
   faBan = faBan;
 
   computedDisabled: boolean;
 
-  constructor(@Optional() @Inject('disabled') private injectedDisabled: boolean) {
+  constructor(
+    @Optional() @Inject('disabled') private injectedDisabled: boolean,
+    @Optional() @Inject('iconColor') private injectedIconColor: string,
+  ) {
     // Use the injected value if provided, otherwise fall back to the @Input value
     this.computedDisabled = this.injectedDisabled != null ? this.injectedDisabled : this.disabled;
+    this.iconColor = this.injectedIconColor || this.iconColor;
   }
 
   ngOnChanges() {

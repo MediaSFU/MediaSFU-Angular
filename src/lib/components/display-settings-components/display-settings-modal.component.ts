@@ -153,6 +153,7 @@ export class DisplaySettingsModal {
   meetingDisplayTypeState!: string;
   autoWaveState = false;
   forceFullDisplayState = false;
+  showSubtitlesOnCardsState = true;
   meetingVideoOptimizedState = false;
 
   constructor(private modifyDisplaySettingsService: ModifyDisplaySettings) {}
@@ -161,6 +162,7 @@ export class DisplaySettingsModal {
     this.meetingDisplayTypeState = this.parameters.meetingDisplayType;
     this.autoWaveState = this.parameters.autoWave;
     this.forceFullDisplayState = this.parameters.forceFullDisplay;
+    this.showSubtitlesOnCardsState = this.parameters.showSubtitlesOnCards ?? true;
     this.meetingVideoOptimizedState = this.parameters.meetingVideoOptimized;
 
     if (!this.onModifyDisplaySettings) {
@@ -177,6 +179,7 @@ export class DisplaySettingsModal {
         meetingDisplayType: this.meetingDisplayTypeState,
         autoWave: this.autoWaveState,
         forceFullDisplay: this.forceFullDisplayState,
+        showSubtitlesOnCards: this.showSubtitlesOnCardsState,
         meetingVideoOptimized: this.meetingVideoOptimizedState,
       },
     });

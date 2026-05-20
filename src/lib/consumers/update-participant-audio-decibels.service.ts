@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { updateParticipantAudioDecibels as sharedUpdateParticipantAudioDecibels } from 'mediasfu-shared';
 import { AudioDecibels } from '../@types/types';
 export interface UpdateParticipantAudioDecibelsOptions {
   name: string;
@@ -81,6 +82,13 @@ export class UpdateParticipantAudioDecibels {
     audioDecibels,
     updateAudioDecibels,
   }: UpdateParticipantAudioDecibelsOptions): void {
+    return sharedUpdateParticipantAudioDecibels({
+      name,
+      averageLoudness,
+      audioDecibels,
+      updateAudioDecibels,
+    } as unknown as Parameters<typeof sharedUpdateParticipantAudioDecibels>[0]) as void;
+
     // Function to update the audioDecibels array
     // Check if the entry already exists in audioDecibels
     const existingEntry = audioDecibels.find((entry: any) => entry.name === name);

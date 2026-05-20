@@ -1,15 +1,21 @@
 .share-buttons-container {
   display: flex;
   flex-direction: row;
-  margin: 10px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 0;
 }
 
 .share-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 0 5px;
+  padding: 0;
   cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.share-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
 }

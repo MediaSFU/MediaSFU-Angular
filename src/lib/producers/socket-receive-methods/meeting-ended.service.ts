@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EventType, ShowAlert } from '../../@types/types';
+import { meetingEnded as sharedMeetingEnded } from 'mediasfu-shared';
 
 export interface MeetingEndedOptions {
   showAlert?: ShowAlert;
@@ -64,23 +65,6 @@ export class MeetingEnded {
     onWeb,
     eventType,
   }: MeetingEndedOptions): Promise<void> => {
-    // Show an alert that the meeting has ended and wait for 2 seconds before redirecting to the home page
-    if (eventType !== 'chat') {
-      showAlert?.({
-        message: 'The event has ended. You will be redirected to the home page in 2 seconds.',
-        type: 'danger',
-        duration: 2000,
-      });
-    }
-
-    if (onWeb && redirectURL) {
-      setTimeout(() => {
-        window.location.href = redirectURL;
-      }, 2000);
-    } else {
-      // setTimeout(() => {
-      //   updateValidated(false);
-      // }, 2000);
-    }
+    return sharedMeetingEnded({ showAlert, redirectURL, onWeb, eventType });
   };
 }

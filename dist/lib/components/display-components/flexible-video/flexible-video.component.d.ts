@@ -12,6 +12,10 @@ export interface FlexibleVideoOptions {
     Screenboard?: CustomMediaComponent;
     annotateScreenStream?: boolean;
     localStreamScreen: MediaStream | null;
+    isDarkMode?: boolean;
+    enableGlassmorphism?: boolean;
+    cellBorderRadius?: number;
+    enableGlow?: boolean;
 }
 export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
 /**
@@ -64,6 +68,10 @@ export declare class FlexibleVideo implements OnInit, OnChanges {
     Screenboard?: CustomMediaComponent;
     annotateScreenStream?: boolean;
     localStreamScreen?: MediaStream;
+    isDarkMode: boolean;
+    enableGlassmorphism: boolean;
+    cellBorderRadius: number;
+    enableGlow: boolean;
     key: number;
     cardWidth: number;
     cardHeight: number;
@@ -75,8 +83,40 @@ export declare class FlexibleVideo implements OnInit, OnChanges {
     constructor(injector: Injector);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
+    updateDimensions(): void;
     generateGrid(): void;
+    getContainerStyle(): {
+        maxWidth: string;
+        left: string;
+    };
+    getCellStyle(component?: CustomMediaComponent): {
+        flex: number;
+        width: string;
+        height: string;
+        background: string;
+        margin: string;
+        padding: string;
+        borderRadius: string;
+        left: string;
+        overflow: string;
+        border: string;
+        backdropFilter: string;
+        boxShadow: string;
+        display: string;
+        alignItems: string;
+        justifyContent: string;
+        position: string;
+    };
+    getScreenboardStyle(): {
+        left: string;
+        width: string;
+        height: string;
+        backgroundColor: string;
+        borderRadius: string;
+        boxShadow: string;
+        border: string;
+    };
     createInjector(inputs: any): Injector;
     static ɵfac: i0.ɵɵFactoryDeclaration<FlexibleVideo, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FlexibleVideo, "app-flexible-video", never, { "customWidth": { "alias": "customWidth"; "required": false; }; "customHeight": { "alias": "customHeight"; "required": false; }; "rows": { "alias": "rows"; "required": false; }; "columns": { "alias": "columns"; "required": false; }; "componentsToRender": { "alias": "componentsToRender"; "required": false; }; "showAspect": { "alias": "showAspect"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "Screenboard": { "alias": "Screenboard"; "required": false; }; "annotateScreenStream": { "alias": "annotateScreenStream"; "required": false; }; "localStreamScreen": { "alias": "localStreamScreen"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FlexibleVideo, "app-flexible-video", never, { "customWidth": { "alias": "customWidth"; "required": false; }; "customHeight": { "alias": "customHeight"; "required": false; }; "rows": { "alias": "rows"; "required": false; }; "columns": { "alias": "columns"; "required": false; }; "componentsToRender": { "alias": "componentsToRender"; "required": false; }; "showAspect": { "alias": "showAspect"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "Screenboard": { "alias": "Screenboard"; "required": false; }; "annotateScreenStream": { "alias": "annotateScreenStream"; "required": false; }; "localStreamScreen": { "alias": "localStreamScreen"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "enableGlassmorphism": { "alias": "enableGlassmorphism"; "required": false; }; "cellBorderRadius": { "alias": "cellBorderRadius"; "required": false; }; "enableGlow": { "alias": "enableGlow"; "required": false; }; }, {}, never, never, true, never>;
 }

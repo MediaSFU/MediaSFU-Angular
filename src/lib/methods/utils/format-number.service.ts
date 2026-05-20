@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatNumber as sharedFormatNumber } from 'mediasfu-shared';
 export interface FormatNumberOptions {
   number: number;
 }
@@ -39,18 +40,6 @@ export type FormatNumberType = (options: FormatNumberOptions) => Promise<string 
 export class FormatNumber {
 
   async formatNumber({ number }: FormatNumberOptions): Promise<string | undefined> {
-    if (number) {
-      if (number < 1e3) {
-        return number.toString();
-      } else if (number < 1e6) {
-        return (number / 1e3).toFixed(1) + 'K';
-      } else if (number < 1e9) {
-        return (number / 1e6).toFixed(1) + 'M';
-      } else if (number < 1e12) {
-        return (number / 1e9).toFixed(1) + 'B';
-      }
-    }
-    // Return undefined for falsy input values
-    return undefined;
+    return sharedFormatNumber({ number });
   }
 }

@@ -1,3 +1,4 @@
+import { getOverlayPosition as sharedGetOverlayPosition } from 'mediasfu-shared';
 import { OverlayPositionStyle } from '../../@types/types';
 
 export interface GetOverlayPositionOptions {
@@ -26,16 +27,5 @@ export type GetOverlayPositionType = (options: GetOverlayPositionOptions) => Ove
 
 
 export function getOverlayPosition({ position }: GetOverlayPositionOptions): OverlayPositionStyle {
-  switch (position) {
-    case 'topLeft':
-      return { top: 0, left: 0 };
-    case 'topRight':
-      return { top: 0, right: 0 };
-    case 'bottomLeft':
-      return { bottom: 0, left: 0 };
-    case 'bottomRight':
-      return { bottom: 0, right: 0 };
-    default:
-      return {};
-  }
+  return sharedGetOverlayPosition({ position }) as OverlayPositionStyle;
 }

@@ -1,9 +1,6 @@
+import type { LaunchCoHostOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchCoHostOptions {
-    updateIsCoHostModalVisible: (isVisible: boolean) => void;
-    isCoHostModalVisible: boolean;
-}
-export type LaunchCoHostType = (options: LaunchCoHostOptions) => void;
+export type { LaunchCoHostOptions, LaunchCoHostType } from 'mediasfu-shared';
 /**
  * Toggles the visibility of the co-host modal.
  *

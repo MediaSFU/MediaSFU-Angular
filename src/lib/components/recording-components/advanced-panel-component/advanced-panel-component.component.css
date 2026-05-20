@@ -1,0 +1,155 @@
+.ms-recording-panel {
+	display: grid;
+	gap: 18px;
+	color: var(--ms-modern-text-primary, #10233f);
+}
+
+.ms-recording-panel__intro {
+	display: grid;
+	gap: 8px;
+}
+
+.ms-recording-panel__eyebrow {
+	color: var(--ms-modern-text-muted, rgba(59, 78, 104, 0.72));
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.ms-recording-panel__title {
+	margin: 0;
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 1rem;
+	font-weight: 800;
+}
+
+.ms-recording-panel__copy {
+	margin: 0;
+	color: var(--ms-modern-text-secondary, rgba(16, 35, 63, 0.78));
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.88rem;
+	line-height: 1.55;
+}
+
+.ms-recording-panel__stack {
+	display: grid;
+	gap: 14px;
+}
+
+.ms-recording-panel__field {
+	display: grid;
+	gap: 8px;
+	padding: 14px;
+	border-radius: 18px;
+	border: 1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, 0.22));
+	background: color-mix(in srgb, var(--ms-modern-panel-surface, rgba(255, 255, 255, 0.82)) 92%, transparent);
+}
+
+.ms-recording-panel__label {
+	color: var(--ms-modern-text-primary, #10233f);
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.84rem;
+	font-weight: 800;
+}
+
+.ms-recording-panel__hint {
+	color: var(--ms-modern-text-secondary, rgba(16, 35, 63, 0.78));
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.8rem;
+	line-height: 1.45;
+}
+
+.ms-recording-panel__field select,
+.ms-recording-panel__field input[type='text'] {
+	width: 100%;
+	min-height: 46px;
+	border: 1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, 0.24));
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.96);
+	color: var(--ms-modern-text-primary, #10233f);
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.92rem;
+	font-weight: 600;
+	padding: 0 14px;
+	box-sizing: border-box;
+}
+
+.ms-recording-panel__field input[type='text'] {
+	padding: 12px 14px;
+}
+
+.ms-recording-panel__field--color {
+	gap: 12px;
+}
+
+.ms-recording-panel__color-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: center;
+}
+
+.ms-recording-panel__color-preview {
+	min-height: 72px;
+	display: grid;
+	align-content: space-between;
+	gap: 8px;
+	padding: 14px;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.42);
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+	color: #fff;
+}
+
+.ms-recording-panel__color-preview span,
+.ms-recording-panel__color-preview strong {
+	text-shadow: 0 1px 2px rgba(15, 23, 42, 0.32);
+}
+
+.ms-recording-panel__color-preview span {
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.ms-recording-panel__color-preview strong {
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.88rem;
+	font-weight: 700;
+}
+
+.ms-recording-panel__color-input {
+	display: grid;
+	gap: 8px;
+	justify-items: center;
+	color: var(--ms-modern-text-secondary, rgba(16, 35, 63, 0.78));
+	font-family: var(--ms-modern-font-family, 'Segoe UI', sans-serif);
+	font-size: 0.76rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.ms-recording-panel__color-input input[type='color'] {
+	width: 54px;
+	height: 54px;
+	padding: 0;
+	border: none;
+	border-radius: 16px;
+	background: transparent;
+	cursor: pointer;
+}
+
+@media (max-width: 640px) {
+	.ms-recording-panel__color-row {
+		grid-template-columns: 1fr;
+	}
+
+	.ms-recording-panel__color-input {
+		justify-items: flex-start;
+	}
+}

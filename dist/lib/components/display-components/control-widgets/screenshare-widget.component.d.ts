@@ -28,12 +28,14 @@ import * as i0 from "@angular/core";
  */
 export declare class ScreenShareWidget {
     private injectedDisabled;
+    private injectedIconColor;
     disabled: boolean;
+    iconColor: string;
     faDesktop: import("@fortawesome/fontawesome-common-types").IconDefinition;
     faBan: import("@fortawesome/fontawesome-common-types").IconDefinition;
     computedDisabled: boolean;
-    constructor(injectedDisabled: boolean);
+    constructor(injectedDisabled: boolean, injectedIconColor: string);
     ngOnChanges(): void;
-    static ɵfac: i0.ɵɵFactoryDeclaration<ScreenShareWidget, [{ optional: true; }]>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ScreenShareWidget, "app-screen-share-button", never, { "disabled": { "alias": "disabled"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ScreenShareWidget, [{ optional: true; }, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ScreenShareWidget, "app-screen-share-button", never, { "disabled": { "alias": "disabled"; "required": false; }; "iconColor": { "alias": "iconColor"; "required": false; }; }, {}, never, never, true, never>;
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { joinRoomOnMediaSFU as sharedJoinRoomOnMediaSFU } from 'mediasfu-shared';
 import {
   CreateMediaSFURoomOptions,
   JoinMediaSFURoomOptions,
@@ -158,48 +159,14 @@ export class JoinRoomOnMediaSFU {
     data: CreateJoinRoomResponse | CreateJoinRoomError | null;
     success: boolean;
   }> {
-    try {
-      if (
-        !apiUserName ||
-        !apiKey ||
-        apiUserName === 'yourAPIUSERNAME' ||
-        apiKey === 'yourAPIKEY' ||
-        apiKey.length !== 64 ||
-        apiUserName.length < 6
-      ) {
-        return { data: { error: 'Invalid credentials' }, success: false };
-      }
-
-      let API_URL =  'https://mediasfu.com/v1/rooms/';
-
-      if (localLink && localLink.trim() !== '' && !localLink.includes('mediasfu.com')) {
-        localLink = localLink.replace(/\/$/, '');
-        API_URL = localLink + '/joinRoom';
-      }
-
-
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiUserName}:${apiKey}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
-      }
-
-      const data = await response.json();
-      return { data, success: true };
-    } catch (error) {
-      const errorMessage = (error as any).reason ? (error as any).reason : 'unknown error';
-      return {
-        data: { error: `Unable to join room, ${errorMessage}` },
-        success: false,
-      };
-    }
+    return sharedJoinRoomOnMediaSFU({
+      payload: payload as JoinMediaSFURoomOptions,
+      apiUserName,
+      apiKey,
+      localLink,
+    }) as Promise<{
+      data: CreateJoinRoomResponse | CreateJoinRoomError | null;
+      success: boolean;
+    }>;
   }
 }

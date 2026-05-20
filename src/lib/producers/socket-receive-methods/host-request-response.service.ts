@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShowAlert, Request, RequestResponse } from '../../@types/types';
+import { hostRequestResponse as sharedHostRequestResponse } from 'mediasfu-shared';
 
 export interface HostRequestResponseOptions {
   requestResponse: RequestResponse;
@@ -87,107 +88,24 @@ export class HostRequestResponse {
     updateChatRequestTime,
     updateRequestIntervalSeconds,
   }: HostRequestResponseOptions): Promise<void> => {
-    // Filter out the request from the list
-    const filteredRequests = requestList.filter(
-      (request) =>
-        request.id !== requestResponse.id &&
-        request.icon !== requestResponse.type &&
-        request.name !== requestResponse.name &&
-        request.username !== requestResponse.username,
-    );
-    updateRequestList(filteredRequests);
-
-    const requestType = requestResponse.type;
-
-    // Handle accepted actions
-    if (requestResponse.action === 'accepted') {
-      switch (requestType) {
-        case 'fa-microphone':
-          showAlert?.({
-            message: 'Unmute request was accepted; click the mic button again to begin.',
-            type: 'success',
-            duration: 10000,
-          });
-          updateMicAction(true);
-          updateAudioRequestState('accepted');
-          break;
-        case 'fa-video':
-          showAlert?.({
-            message: 'Video request was accepted; click the video button again to begin.',
-            type: 'success',
-            duration: 10000,
-          });
-          updateVideoAction(true);
-          updateVideoRequestState('accepted');
-          break;
-        case 'fa-desktop':
-          showAlert?.({
-            message: 'Screenshare request was accepted; click the screen button again to begin.',
-            type: 'success',
-            duration: 10000,
-          });
-          updateScreenAction(true);
-          updateScreenRequestState('accepted');
-          break;
-        case 'fa-comments':
-          showAlert?.({
-            message: 'Chat request was accepted; click the chat button again to begin.',
-            type: 'success',
-            duration: 10000,
-          });
-          updateChatAction(true);
-          updateChatRequestState('accepted');
-          break;
-      }
-    } else {
-      // Handle rejected actions
-      let timerDate: Date;
-      switch (requestType) {
-        case 'fa-microphone':
-          showAlert?.({
-            message: 'Unmute request was not accepted',
-            type: 'danger',
-            duration: 10000,
-          });
-          updateAudioRequestState('rejected');
-          timerDate = new Date();
-          timerDate.setSeconds(timerDate.getSeconds() + updateRequestIntervalSeconds);
-          updateAudioRequestTime(timerDate.getTime());
-          break;
-        case 'fa-video':
-          showAlert?.({
-            message: 'Video request was not accepted',
-            type: 'danger',
-            duration: 10000,
-          });
-          updateVideoRequestState('rejected');
-          timerDate = new Date();
-          timerDate.setSeconds(timerDate.getSeconds() + updateRequestIntervalSeconds);
-          updateVideoRequestTime(timerDate.getTime());
-          break;
-        case 'fa-desktop':
-          showAlert?.({
-            message: 'Screenshare request was not accepted',
-            type: 'danger',
-            duration: 10000,
-          });
-          updateScreenRequestState('rejected');
-          timerDate = new Date();
-          timerDate.setSeconds(timerDate.getSeconds() + updateRequestIntervalSeconds);
-          updateScreenRequestTime(timerDate.getTime());
-          break;
-        case 'fa-comments':
-          showAlert?.({
-            message: 'Chat request was not accepted',
-            type: 'danger',
-            duration: 10000,
-          });
-          updateChatRequestState('rejected');
-          timerDate = new Date();
-          timerDate.setSeconds(timerDate.getSeconds() + updateRequestIntervalSeconds);
-          updateChatRequestTime(timerDate.getTime());
-          break;
-      }
-    }
+    return sharedHostRequestResponse({
+      requestResponse,
+      showAlert,
+      requestList,
+      updateRequestList,
+      updateMicAction,
+      updateVideoAction,
+      updateScreenAction,
+      updateChatAction,
+      updateAudioRequestState,
+      updateVideoRequestState,
+      updateScreenRequestState,
+      updateChatRequestState,
+      updateAudioRequestTime,
+      updateVideoRequestTime,
+      updateScreenRequestTime,
+      updateChatRequestTime,
+      updateRequestIntervalSeconds,
+    });
   };
 }

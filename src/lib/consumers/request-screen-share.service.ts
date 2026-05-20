@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { requestScreenShare as sharedRequestScreenShare } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { ShowAlert, StartShareScreenType, StartShareScreenParameters } from '../@types/types';
 
@@ -79,6 +80,10 @@ export class RequestScreenShare {
    * @throws {Error} Throws an error if there is an issue during the screen share request process.
    */
   requestScreenShare = async ({ parameters }: RequestScreenShareOptions): Promise<void> => {
+    return sharedRequestScreenShare({
+      parameters: parameters as unknown as Parameters<typeof sharedRequestScreenShare>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       // Destructure parameters
       const {

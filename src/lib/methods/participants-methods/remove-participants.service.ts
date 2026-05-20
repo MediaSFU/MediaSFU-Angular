@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { removeParticipants as sharedRemoveParticipants } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { CoHostResponsibility, Participant, ShowAlert } from '../../@types/types';
 
@@ -99,41 +100,19 @@ export class RemoveParticipants {
     roomName,
     updateParticipants,
   }: RemoveParticipantsOptions): Promise<void> {
-    let participantsValue = false;
-
-    try {
-      participantsValue =
-        coHostResponsibility.find((item) => item.name === 'participants')?.value ?? false;
-    } catch (error) {
-      participantsValue = false;
-    }
-
-    if (islevel === '2' || (coHost === member && participantsValue === true)) {
-      if (participant.islevel !== '2') {
-        const participantId = participant.id;
-
-        // Emit a socket event to disconnect the user
-        socket.emit('disconnectUserInitiate', {
-          member: participant.name,
-          roomName,
-          id: participantId,
-        });
-
-        // Remove the participant from the local array
-        participants.splice(
-          participants.findIndex((obj: any) => obj.name === participant.name),
-          1,
-        );
-
-        // Update the participants array
-        updateParticipants(participants);
-      }
-    } else {
-      showAlert?.({
-        message: 'You are not allowed to remove other participants',
-        type: 'danger',
-        duration: 3000,
-      });
-    }
+    return sharedRemoveParticipants(
+      {
+        coHostResponsibility,
+        participant,
+        member,
+        islevel,
+        showAlert,
+        coHost,
+        participants,
+        socket,
+        roomName,
+        updateParticipants,
+      } as unknown as Parameters<typeof sharedRemoveParticipants>[0],
+    );
   }
 }

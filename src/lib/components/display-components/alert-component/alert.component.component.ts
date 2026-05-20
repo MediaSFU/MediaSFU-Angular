@@ -1,13 +1,26 @@
-import { Component, Input, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+export type AlertTone = 'success' | 'danger' | 'info' | 'warning';
+
+export type AlertPosition =
+  | 'top'
+  | 'bottom'
+  | 'top-right'
+  | 'top-left'
+  | 'bottom-right'
+  | 'bottom-left'
+  | 'center';
 
 export interface AlertComponentOptions {
   visible: boolean;
   message: string;
-  type: 'success' | 'danger'; // Optional prop with 'success' or 'danger' as default values
+  type: AlertTone;
   duration?: number; // Optional with default value
   onHide?: () => void; // Optional callback function
   textColor?: string; // Optional text color
+  position?: AlertPosition;
+  isDarkMode?: boolean;
   alertStyle?: Partial<CSSStyleDeclaration>;
   customTemplate?: TemplateRef<any>;
 }
@@ -106,17 +119,20 @@ export type AlertComponentType = (options: AlertComponentOptions) => HTMLElement
 })
 
 
-export class AlertComponent implements OnChanges {
+export class AlertComponent implements OnChanges, OnDestroy {
   @Input() visible = false;
   @Input() message = '';
-  @Input() type: 'success' | 'danger' = 'success';
+  @Input() type: AlertTone = 'success';
   @Input() duration = 4000;
-  @Input() textColor = 'black';
+  @Input() textColor = '';
+  @Input() position: AlertPosition = 'top';
+  @Input() isDarkMode?: boolean;
   @Input() onHide!: () => void;
   @Input() alertStyle?: Partial<CSSStyleDeclaration>;
   @Input() customTemplate?: TemplateRef<any>;
 
-  alertType: 'success' | 'danger' = 'success';
+  alertType: AlertTone = 'success';
+  private hideTimeout?: ReturnType<typeof setTimeout>;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['type']) {
@@ -124,15 +140,95 @@ export class AlertComponent implements OnChanges {
     }
 
     if (changes['visible']) {
+      if (this.hideTimeout) {
+        clearTimeout(this.hideTimeout);
+        this.hideTimeout = undefined;
+      }
+
       if (this.visible) {
-        setTimeout(() => {
-          this.onHide();
+        this.hideTimeout = setTimeout(() => {
+          this.onHide?.();
+          this.hideTimeout = undefined;
         }, this.duration);
       }
     }
   }
 
+  ngOnDestroy() {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = undefined;
+    }
+  }
+
   handlePress() {
-    this.onHide();
+    this.onHide?.();
+  }
+
+  get alertLabel(): string {
+    switch (this.alertType) {
+      case 'danger':
+        return 'Attention';
+      case 'info':
+        return 'Update';
+      case 'warning':
+        return 'Warning';
+      default:
+        return 'Success';
+    }
+  }
+
+  get alertMeta(): string {
+    switch (this.alertType) {
+      case 'danger':
+        return 'Action needed';
+      case 'info':
+        return 'Room update';
+      case 'warning':
+        return 'Review needed';
+      default:
+        return 'Completed';
+    }
+  }
+
+  get alertIcon(): string {
+    switch (this.alertType) {
+      case 'danger':
+        return '!';
+      case 'info':
+        return 'i';
+      case 'warning':
+        return '!';
+      default:
+        return '✓';
+    }
+  }
+
+  get alertRole(): 'alert' | 'status' {
+    return this.alertType === 'danger' || this.alertType === 'warning' ? 'alert' : 'status';
+  }
+
+  get shellStyle(): Record<string, string> {
+    const positionStyles: Record<AlertPosition, { justifyContent: string; alignItems: string }> = {
+      top: { justifyContent: 'center', alignItems: 'flex-start' },
+      bottom: { justifyContent: 'center', alignItems: 'flex-end' },
+      'top-right': { justifyContent: 'flex-end', alignItems: 'flex-start' },
+      'top-left': { justifyContent: 'flex-start', alignItems: 'flex-start' },
+      'bottom-right': { justifyContent: 'flex-end', alignItems: 'flex-end' },
+      'bottom-left': { justifyContent: 'flex-start', alignItems: 'flex-end' },
+      center: { justifyContent: 'center', alignItems: 'center' },
+    };
+
+    return positionStyles[this.position] || positionStyles.top;
+  }
+
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
   }
 }

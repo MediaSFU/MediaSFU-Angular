@@ -8,6 +8,7 @@ import {
   ReorderStreamsType,
   Transport,
 } from '../../@types/types';
+import { producerMediaClosed as sharedProducerMediaClosed } from 'mediasfu-shared';
 
 export interface ProducerMediaClosedParameters
   extends CloseAndResizeParameters,
@@ -130,57 +131,10 @@ export class ProducerMediaClosed {
     kind,
     parameters,
   }: ProducerMediaClosedOptions): Promise<void> => {
-    parameters = parameters.getUpdatedAllParams();
-
-    const {
-      consumerTransports,
-      updateConsumerTransports,
-      hostLabel,
-      shared,
-      updateShared,
-      updateShareScreenStarted,
-      updateScreenId,
-      updateShareEnded,
-      closeAndResize,
-      prepopulateUserMedia,
-      reorderStreams,
-    } = parameters;
-
-    const producerToClose = consumerTransports.find(
-      (transportData: any) => transportData.producerId === producerId,
-    );
-
-    if (producerToClose) {
-      try {
-        await producerToClose['consumerTransport'].close();
-      } catch (error) {
-        console.error('Error closing consumer transport:', error);
-      }
-
-      try {
-        producerToClose.consumer.close();
-      } catch (error) {
-        console.error('Error closing consumer:', error);
-      }
-
-      const updatedConsumerTransports = consumerTransports.filter(
-        (transportData: any) => transportData.producerId !== producerId,
-      );
-      updateConsumerTransports(updatedConsumerTransports);
-
-      await closeAndResize({ producerId, kind, parameters });
-    } else {
-      if (kind === 'screenshare' || kind === 'screen') {
-        if (shared) {
-          updateShared(false);
-        } else {
-          updateShareScreenStarted(false);
-          updateScreenId('');
-        }
-        updateShareEnded(true);
-        await prepopulateUserMedia({ name: hostLabel, parameters });
-        await reorderStreams({ add: false, screenChanged: true, parameters });
-      }
-    }
+    return sharedProducerMediaClosed({
+      producerId,
+      kind,
+      parameters,
+    });
   };
 }

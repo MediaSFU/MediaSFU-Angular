@@ -1,44 +1,70 @@
 <div
   class="card"
   [ngStyle]="customStyle"
-  [style.backgroundColor]="backgroundColor"
+  [style.background]="backgroundColor && backgroundColor !== 'transparent' ? backgroundColor : null"
+  [class.card--dark]="isDarkModeEnabled"
+  [class.card--light]="!isDarkModeEnabled"
+  [class.card--speaking]="isSpeaking"
 >
-  <ng-container *ngIf="imageSource; else noImage">
-    <div class="imageContainer">
-      <img
-        [src]="imageSource"
-        [ngStyle]="
-          combineStyles(imageStyle, {
-            'border-radius': roundedImage ? '20%' : '0'
-          })
-        "
-        class="backgroundImage"
-      />
+  <div class="card__body">
+    <div class="card__avatar-shell">
+      <div *ngIf="showWaveform" class="card__waveform-ring" aria-hidden="true">
+        <div
+          *ngFor="let ringIndex of ringBarIndices"
+          class="card__waveform-ring-bar"
+          [style.height.px]="getWaveformRingHeight(ringIndex)"
+          [style.transform]="'rotate(' + (ringIndex * 40) + 'deg) translateY(-90px)'"
+          [style.backgroundColor]="barColor"
+        ></div>
+      </div>
+
+      <ng-container *ngIf="hasRenderableImage; else noImage">
+        <div class="card__avatar-frame">
+          <img
+            [src]="imageSource"
+            [ngStyle]="combineStyles(imageStyle, { 'border-radius': roundedImage ? '50%' : '22px' })"
+            class="card__avatar-image"
+            (error)="handleImageError()"
+          />
+          <span class="card__avatar-gloss" aria-hidden="true"></span>
+        </div>
+      </ng-container>
+      <ng-template #noImage>
+        <div class="card__avatar-frame">
+          <app-modern-mini-card
+            class="card__mini-card"
+            [initials]="name"
+            [fontSize]="24"
+          ></app-modern-mini-card>
+        </div>
+      </ng-template>
     </div>
-  </ng-container>
-  <ng-template #noImage>
-    <div style="width: 100%; height: 100%">
-      <app-mini-card [initials]="name" [fontSize]="20" [ngStyle]="{ 'border': parameters.eventType === 'broadcast' ? '2px solid black' : '0px solid black' }"></app-mini-card>
-    </div>
-  </ng-template>
+  </div>
+
+  <span class="card__glass-overlay" aria-hidden="true"></span>
 
   <ng-container *ngIf="showInfo">
     <div
-      class="overlay"
+      class="card__overlay card__overlay--info"
       [ngStyle]="getOverlayPosition(infoPosition)"
-      [ngClass]="showControls ? 'overlayWeb' : 'overlayWebAlt'"
+      [ngClass]="showControls ? 'card__overlay--with-controls' : 'card__overlay--compact'"
     >
-      <div class="nameColumn">
-        <p [ngStyle]="{ color: textColor }" class="nameText">{{ name }}</p>
+      <div class="card__identity">
+        <span
+          class="card__status-dot"
+          [class.card__status-dot--muted]="participant?.muted"
+          [class.card__status-dot--speaking]="isSpeaking"
+        ></span>
+        <p [ngStyle]="{ color: textColor }" class="card__name" [class.card__name--muted]="participant?.muted">
+          {{ name }}
+        </p>
       </div>
-      <div *ngIf="showWaveform" class="waveformWeb">
+      <div *ngIf="showWaveform" class="card__waveform">
         <div
           *ngFor="let animation of waveformAnimations"
-          [ngStyle]="{
-            height: animation === 0 ? '1px' : '12px',
-            backgroundColor: barColor
-          }"
-          class="bar"
+          class="card__bar"
+          [style.height.px]="animation"
+          [style.backgroundColor]="barColor"
         ></div>
       </div>
     </div>
@@ -46,17 +72,31 @@
 
   <ng-container *ngIf="renderControls()">
     <div
-      class="overlayControls"
+      class="card__overlay card__overlay--controls"
       [ngStyle]="getOverlayPosition(controlsPosition)"
+      role="group"
+      aria-label="Participant controls"
     >
       <ng-container *ngIf="!videoControlsComponent">
-        <button class="controlButton" (click)="toggleAudio()">
+        <button
+          type="button"
+          class="card__control-button"
+          (click)="toggleAudio()"
+          [attr.aria-label]="participant?.muted ? 'Participant muted' : 'Mute participant'"
+          [title]="participant?.muted ? 'Participant is muted' : 'Mute participant'"
+        >
           <fa-icon
             [icon]="participant?.muted ? faMicrophoneSlash : faMicrophone"
             [style.color]="participant?.muted ? 'red' : 'green'"
           ></fa-icon>
         </button>
-        <button class="controlButton" (click)="toggleVideo()">
+        <button
+          type="button"
+          class="card__control-button"
+          (click)="toggleVideo()"
+          [attr.aria-label]="participant?.['videoOn'] ? 'Turn off camera' : 'Camera is off'"
+          [title]="participant?.['videoOn'] ? 'Turn off camera' : 'Camera is off'"
+        >
           <fa-icon
             [icon]="participant?.['videoOn'] ? faVideo : faVideoSlash"
             [style.color]="participant?.['videoOn'] ? 'green' : 'red'"
@@ -78,4 +118,6 @@
       </ng-container>
     </div>
   </ng-container>
+
+  <app-subtitle-overlay [subtitle]="liveSubtitleText"></app-subtitle-overlay>
 </div>

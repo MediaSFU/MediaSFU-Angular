@@ -17,6 +17,8 @@ export interface MenuModalRenderContext {
 export interface MenuModalOptions {
   backgroundColor?: string;
   isVisible: boolean;
+  isDarkMode?: boolean;
+  onToggleTheme?: (value: boolean) => void;
   customButtons?: CustomButton[];
   shareButtons?: boolean;
   position?: string;
@@ -176,8 +178,10 @@ export type MenuModalType = (options: MenuModalOptions) => HTMLElement;
     ]
 })
 export class MenuModal {
-  @Input() backgroundColor = '#83c0e9';
+  @Input() backgroundColor = '';
   @Input() isVisible!: boolean;
+  @Input() isDarkMode?: boolean;
+  @Input() onToggleTheme?: (value: boolean) => void;
   @Input() customButtons: CustomButton[] = [];
   @Input() shareButtons = true;
   @Input() position = 'bottomRight';
@@ -226,38 +230,58 @@ export class MenuModal {
   faBars = faBars;
   faTimes = faTimes;
 
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
+
   modalContainerStyle() {
+    const position = this.position || 'bottomRight';
     return {
       position: 'fixed',
       top: 0,
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: this.isVisible ? 'block' : 'none',
+      backgroundColor: this.resolvedIsDarkMode ? 'rgba(2, 6, 23, 0.62)' : 'rgba(15, 23, 42, 0.18)',
+      backdropFilter: 'blur(10px)',
+      display: this.isVisible ? 'flex' : 'none',
+      alignItems: position.includes('top') ? 'flex-start' : position.includes('bottom') ? 'flex-end' : 'center',
+      justifyContent: position.includes('Left') ? 'flex-start' : position.includes('Right') ? 'flex-end' : 'center',
+      padding: '18px',
       zIndex: 999,
     };
   }
 
   modalContentStyle() {
-    const screenWidth = window.innerWidth;
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1280;
     let modalWidth = 0.7 * screenWidth;
 
-    if (modalWidth > 400) {
-      modalWidth = 400;
+    if (modalWidth > 420) {
+      modalWidth = 420;
     }
 
+    const isDarkMode = this.resolvedIsDarkMode;
+
     return {
-      backgroundColor: this.backgroundColor,
-      borderRadius: '10px',
-      padding: '5px',
+      background: this.backgroundColor || (isDarkMode
+        ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%)'
+        : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.96) 100%)'),
+      borderRadius: '24px',
+      border: isDarkMode
+        ? '1px solid rgba(148, 163, 184, 0.18)'
+        : '1px solid rgba(148, 163, 184, 0.22)',
+      padding: '20px',
       width: `${modalWidth}px`,
       maxHeight: '80%',
-      overflowY: 'auto',
-      top: this.position.includes('top') ? '10px' : 'auto',
-      bottom: this.position.includes('bottom') ? '10px' : 'auto',
-      left: this.position.includes('Left') ? '10px' : 'auto',
-      right: this.position.includes('Right') ? '10px' : 'auto',
+      overflow: 'hidden',
+      boxShadow: '0 24px 48px rgba(15, 23, 42, 0.18)',
+      color: isDarkMode ? '#e2e8f0' : '#0f172a',
     };
   }
 
@@ -270,5 +294,11 @@ export class MenuModal {
 
   handleClose() {
     this.onClose();
+  }
+
+  getDividerStyle() {
+    return {
+      backgroundColor: this.resolvedIsDarkMode ? 'rgba(148, 163, 184, 0.22)' : 'rgba(148, 163, 184, 0.32)',
+    };
   }
 }

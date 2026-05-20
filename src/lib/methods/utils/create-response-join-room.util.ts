@@ -1,3 +1,4 @@
+import { createResponseJoinRoom as sharedCreateResponseJoinRoom } from 'mediasfu-shared';
 import { ResponseJoinLocalRoom, ResponseJoinRoom } from "../../@types/types";
 
 export interface CreateResponseJoinRoomOptions {
@@ -38,22 +39,5 @@ export type CreateResponseJoinRoomType = (options: CreateResponseJoinRoomOptions
 export const createResponseJoinRoom: CreateResponseJoinRoomType = async ({
   localRoom,
 }: CreateResponseJoinRoomOptions): Promise<ResponseJoinRoom> => {
-  return {
-    rtpCapabilities: localRoom.rtpCapabilities ?? null,
-    success: localRoom.rtpCapabilities !== null,
-    roomRecvIPs: [], // Placeholder; populate with necessary values
-    meetingRoomParams: localRoom.eventRoomParams,
-    recordingParams: localRoom.recordingParams,
-    secureCode: localRoom.secureCode,
-    recordOnly: false, // Default assumption unless additional logic applies
-    isHost: localRoom.isHost,
-    safeRoom: false, // Default assumption unless additional logic applies
-    autoStartSafeRoom: false, // Default assumption unless additional logic applies
-    safeRoomStarted: false, // Default assumption unless additional logic applies
-    safeRoomEnded: false, // Default assumption unless additional logic applies
-    reason: localRoom.isBanned ? "User is banned from the room." : undefined,
-    banned: localRoom.isBanned,
-    suspended: false, // Default assumption unless additional logic applies
-    noAdmin: localRoom.hostNotJoined,
-  };
+  return (sharedCreateResponseJoinRoom as unknown as CreateResponseJoinRoomType)({ localRoom });
 };

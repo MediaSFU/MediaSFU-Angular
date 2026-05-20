@@ -424,22 +424,10 @@ export declare class Whiteboard implements OnInit, OnDestroy, OnChanges {
     undo(): void;
     redo(): void;
     saveState(): void;
-    findShape(x: number, y: number): Shape | undefined;
+    findShape(x: number, y: number): Shape;
     drawSelection(shape: any): void;
-    getResizeHandles(shape: any): ({
-        isCenter: boolean;
-        x: any;
-        y: any;
-    } | {
-        isCenter: boolean;
-        x: any;
-        y: any;
-    })[];
-    getHandleAtPosition(x: number, y: number): {
-        isCenter: boolean;
-        x: any;
-        y: any;
-    } | null | undefined;
+    getResizeHandles(shape: any): any[];
+    getHandleAtPosition(x: number, y: number): any;
     resizeShape(shape: any, handle: any, x: number, y: number): void;
     moveShape(shape: any, dx: number, dy: number): void;
     downloadCanvas(tempCanvas: HTMLCanvasElement): void;

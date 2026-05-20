@@ -589,6 +589,13 @@ export class Whiteboard implements OnInit, OnDestroy, OnChanges {
     this.backgroundImage.onload = () => {
       this.drawShapes();
     };
+    this.backgroundImage.onerror = () => {
+      this.drawShapes();
+    };
+
+    if (!this.parameters.useImageBackground || this.backgroundImage.complete) {
+      queueMicrotask(() => this.drawShapes());
+    }
 
     const canvas = this.canvasRef.nativeElement;
 
@@ -1066,9 +1073,9 @@ export class Whiteboard implements OnInit, OnDestroy, OnChanges {
   handleZoom(e: WheelEvent) {
     e.preventDefault();
     if (e.deltaY < 0) {
-      this.zoomCanvas(1.2, e as any);
+      this.zoomCanvas(1.2, e);
     } else {
-      this.zoomCanvas(0.8, e as any);
+      this.zoomCanvas(0.8, e);
     }
   }
 

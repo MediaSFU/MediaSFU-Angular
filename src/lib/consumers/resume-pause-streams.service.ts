@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { resumePauseStreams as sharedResumePauseStreams } from 'mediasfu-shared';
 import { Participant, Transport, Stream } from '../@types/types';
 
 export interface ResumePauseStreamsParameters {
@@ -74,6 +75,10 @@ export class ResumePauseStreams {
    * @throws Will throw an error if there is an issue during the process of resuming or pausing streams.
    */
   resumePauseStreams = async ({ parameters }: ResumePauseStreamsOptions): Promise<void> => {
+    return sharedResumePauseStreams({
+      parameters: parameters as unknown as Parameters<typeof sharedResumePauseStreams>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       // Destructure parameters
       parameters = parameters.getUpdatedAllParams();

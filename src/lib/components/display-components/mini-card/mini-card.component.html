@@ -1,4 +1,19 @@
-<div [ngStyle]="{ ...miniCardStyle, 'font-size': fontSize + 'px', ...customStyle }">
-  <img *ngIf="imageSource" [src]="imageSource" alt="Profile" [ngStyle]="{ ...backgroundImageStyle, ...(roundedImage ? roundedImageStyle : {}), ...imageStyle }" />
-  <div *ngIf="!imageSource" [ngStyle]="{ ...initialsStyle, 'font-size': fontSize + 'px' }">{{ initials }}</div>
+<div class="mini-card" [ngStyle]="getMergedCardStyles()">
+  <div class="mini-card__avatar" [ngStyle]="getAvatarStyle()">
+    <ng-container *ngIf="hasRenderableImage; else noImage">
+      <img
+        [src]="imageSource"
+        alt="Profile"
+        class="mini-card__image"
+        [ngStyle]="getMergedImageStyles()"
+        (error)="handleImageError()"
+      />
+    </ng-container>
+    <ng-template #noImage>
+      <div class="mini-card__initials" [ngStyle]="getInitialsStyle()">
+        {{ resolvedInitials }}
+      </div>
+    </ng-template>
+    <span class="mini-card__gloss" aria-hidden="true"></span>
+  </div>
 </div>

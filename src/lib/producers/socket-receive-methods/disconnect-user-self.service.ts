@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
+import { disconnectUserSelf as sharedDisconnectUserSelf } from 'mediasfu-shared';
 
 export interface DisconnectUserSelfOptions {
   member: string;
@@ -57,20 +58,11 @@ export class DisconnectUserSelf {
     socket,
     localSocket,
   }: DisconnectUserSelfOptions): Promise<void> => {
-    // Update that the user needs to be disconnected; this is initiated by the host when banning a user
-    socket.emit('disconnectUser', { member, roomName, ban: true });
-
-    try {
-      if (localSocket && localSocket.id) {
-        // Emit the disconnection request to the local socket, indicating that the user is being banned
-        localSocket.emit("disconnectUser", {
-          member: member,
-          roomName: roomName,
-          ban: true,
-        });
-      }
-    } catch  {
-      // Do nothing
-    }
+    return sharedDisconnectUserSelf({
+      member,
+      roomName,
+      socket,
+      localSocket,
+    });
   };
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShowAlert } from '../../@types/types';
+import { disconnect as sharedDisconnect } from 'mediasfu-shared';
 
 export interface DisconnectOptions {
   showAlert?: ShowAlert;
@@ -52,18 +53,6 @@ export class Disconnect {
    * @returns {Promise<void>} A promise that resolves when the disconnection handling is complete.
    */
   disconnect = async ({ showAlert, redirectURL, onWeb }: DisconnectOptions): Promise<void> => {
-    // Redirect to the specified URL on the web
-    if (onWeb && redirectURL) {
-      window.location.href = redirectURL;
-    } else {
-      // Display an alert and update the validated state
-      if (showAlert) {
-        showAlert({
-          message: 'You have been disconnected from the session.',
-          type: 'danger',
-          duration: 2000,
-        });
-      }
-    }
+    return sharedDisconnect({ showAlert, redirectURL, onWeb });
   };
 }

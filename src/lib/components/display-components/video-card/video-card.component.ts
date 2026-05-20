@@ -8,6 +8,7 @@ import {
   faVideoSlash,
 } from '@fortawesome/free-solid-svg-icons';
 import { CardVideoDisplay } from '../card-video-display/card-video-display.component';
+import { SubtitleOverlayComponent } from '../subtitle-overlay/subtitle-overlay.component';
 import { getOverlayPosition } from '../../../methods/utils/get-overlay-position.util';
 import { ControlMedia } from '../../../consumers/control-media.service';
 import {
@@ -19,6 +20,8 @@ import {
   CustomComponent,
 } from '../../../@types/types';
 import { Socket } from 'socket.io-client';
+import { LiveSubtitleService } from '../../../services/live-subtitle.service';
+import { isSubtitleExpired } from '../../../producers/socket-receive-methods/translation-receive-methods.service';
 
 export interface VideoCardParameters {
   socket: Socket;
@@ -129,7 +132,7 @@ export type VideoCardType = (options: VideoCardOptions) => HTMLElement;
 
 @Component({
     selector: 'app-video-card',
-    imports: [CommonModule, FontAwesomeModule, CardVideoDisplay],
+  imports: [CommonModule, FontAwesomeModule, CardVideoDisplay, SubtitleOverlayComponent],
     templateUrl: './video-card.component.html',
     styleUrls: ['./video-card.component.css']
 })
@@ -157,9 +160,11 @@ export class VideoCard implements OnInit, OnDestroy {
   @Input() doMirror!: boolean;
   @Input() parameters!: VideoCardParameters;
 
-  waveformAnimations: number[] = Array.from({ length: 9 }, () => 0);
-  showWaveform = true;
-  interval: any;
+  waveformAnimations: number[] = Array.from({ length: 5 }, () => 3);
+  showWaveform = false;
+  audioLevelInterval: any;
+  waveformInterval: any;
+  isDarkModeEnabled = false;
 
   faMicrophone = faMicrophone;
   faMicrophoneSlash = faMicrophoneSlash;
@@ -168,6 +173,7 @@ export class VideoCard implements OnInit, OnDestroy {
 
   constructor(
     private controlMediaService: ControlMedia,
+    private liveSubtitleService: LiveSubtitleService,
     @Optional() @Inject('customStyle') injectedCustomStyle: Partial<CSSStyleDeclaration>,
     @Optional() @Inject('name') injectedName: string,
     @Optional() @Inject('barColor') injectedBarColor: string,
@@ -219,10 +225,29 @@ export class VideoCard implements OnInit, OnDestroy {
     this.parameters = injectedParameters || this.parameters;
   }
 
+  get liveSubtitleText(): string | null {
+    if (!this.liveSubtitleService.getShowSubtitlesOnCards()) {
+      return null;
+    }
+
+    const speakerId = this.participant?.id || '';
+    const speakerName = this.participant?.name || this.name || '';
+    const subtitle = this.liveSubtitleService.getSubtitleForSpeaker(speakerId, speakerName);
+
+    if (!subtitle || isSubtitleExpired(subtitle)) {
+      return null;
+    }
+
+    return subtitle.text;
+  }
+
   ngOnInit() {
-    this.interval = setInterval(() => {
+    this.syncThemeMode(this.parameters?.getUpdatedAllParams?.());
+
+    this.audioLevelInterval = setInterval(() => {
       const params = this.parameters.getUpdatedAllParams();
       const { audioDecibels, participants } = params;
+      this.syncThemeMode(params);
       const existingEntry =
         audioDecibels && audioDecibels.find((entry: AudioDecibels) => entry.name === this.name);
       const participantEntry =
@@ -241,29 +266,45 @@ export class VideoCard implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    clearInterval(this.interval);
+    clearInterval(this.audioLevelInterval);
+    clearInterval(this.waveformInterval);
   }
 
   animateWaveform() {
-    this.waveformAnimations.forEach((_, index) => {
-      setInterval(() => this.animateBar(index), this.getAnimationDuration(index) * 2);
-    });
-  }
+    this.showWaveform = true;
 
-  animateBar(index: number) {
-    this.waveformAnimations[index] = 1;
-    setTimeout(() => {
-      this.waveformAnimations[index] = 0;
-    }, this.getAnimationDuration(index));
+    if (this.waveformInterval) {
+      return;
+    }
+
+    this.waveformInterval = setInterval(() => {
+      this.waveformAnimations = this.waveformAnimations.map(
+        () => Math.floor(Math.random() * 18) + 4,
+      );
+    }, 150);
   }
 
   resetWaveform() {
-    this.waveformAnimations.fill(0);
+    this.showWaveform = false;
+
+    if (this.waveformInterval) {
+      clearInterval(this.waveformInterval);
+      this.waveformInterval = null;
+    }
+
+    this.waveformAnimations = this.waveformAnimations.map(() => 3);
   }
 
-  getAnimationDuration(index: number): number {
-    const durations = [474, 433, 407, 458, 400, 427, 441, 419, 487];
-    return durations[index] || 0;
+  syncThemeMode(params?: any) {
+    if (typeof params?.isDarkModeValue === 'boolean') {
+      this.isDarkModeEnabled = params.isDarkModeValue;
+      return;
+    }
+
+    this.isDarkModeEnabled =
+      typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+        : false;
   }
 
   async toggleAudio() {

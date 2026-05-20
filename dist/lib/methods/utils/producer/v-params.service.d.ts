@@ -1,11 +1,6 @@
-import { types } from 'mediasoup-client';
+import type { VParamsType as SharedVParamsType } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-type ProducerCodecOptions = types.ProducerCodecOptions;
-type RtpEncodingParameters = types.RtpEncodingParameters;
-export type VParamsType = {
-    encodings: RtpEncodingParameters[];
-    codecOptions?: ProducerCodecOptions;
-};
+export type VParamsType = SharedVParamsType;
 /**
  * The `VParams` service provides encoding parameters for video in a media session using the Mediasoup library.
  * It includes a default configuration for RTP encoding parameters optimized for video streaming.
@@ -61,4 +56,3 @@ export declare class VParams {
     static ɵfac: i0.ɵɵFactoryDeclaration<VParams, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<VParams>;
 }
-export {};

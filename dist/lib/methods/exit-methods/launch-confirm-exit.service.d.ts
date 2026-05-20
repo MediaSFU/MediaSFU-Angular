@@ -1,9 +1,6 @@
+import type { LaunchConfirmExitOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchConfirmExitOptions {
-    updateIsConfirmExitModalVisible: (isVisible: boolean) => void;
-    isConfirmExitModalVisible: boolean;
-}
-export type LaunchConfirmExitType = (options: LaunchConfirmExitOptions) => void;
+export type { LaunchConfirmExitOptions, LaunchConfirmExitType } from 'mediasfu-shared';
 /**
  * Toggles the visibility of the confirmation exit modal.
  *

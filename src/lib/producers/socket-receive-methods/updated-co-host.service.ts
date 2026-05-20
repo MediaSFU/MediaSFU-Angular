@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoHostResponsibility, EventType, ShowAlert } from '../../@types/types';
+import { updatedCoHost as sharedUpdatedCoHost } from 'mediasfu-shared';
 export interface UpdatedCoHostOptions {
   coHost: string;
   coHostResponsibility: CoHostResponsibility[];
@@ -91,29 +92,17 @@ export class UpdatedCoHost {
     updateCoHostResponsibility,
     updateYouAreCoHost,
   }: UpdatedCoHostOptions): Promise<void> => {
-    // Update co-host information, responsibility, and user's co-host status
-    if (eventType !== 'broadcast' && eventType !== 'chat') {
-      // Only update the co-host if the event type is not broadcast or chat
-      updateCoHost(coHost);
-      updateCoHostResponsibility(coHostResponsibility);
-
-      if (member === coHost) {
-        if (!youAreCoHost) {
-          updateYouAreCoHost(true);
-
-          showAlert?.({
-            message: 'You are now a co-host.',
-            type: 'success',
-            duration: 3000,
-          });
-        }
-      } else {
-        updateYouAreCoHost(false);
-      }
-    } else {
-      if (islevel !== '2') {
-        updateYouAreCoHost(true);
-      }
-    }
+    return sharedUpdatedCoHost({
+      coHost,
+      coHostResponsibility,
+      showAlert,
+      eventType,
+      islevel,
+      member,
+      youAreCoHost,
+      updateCoHost,
+      updateCoHostResponsibility,
+      updateYouAreCoHost,
+    });
   };
 }

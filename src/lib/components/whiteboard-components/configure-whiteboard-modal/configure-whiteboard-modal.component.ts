@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTimes, faCheck, faSyncAlt, faPlay, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCheck, faSearch, faSyncAlt, faPlay, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
   CaptureCanvasStreamParameters,
   CaptureCanvasStreamType,
@@ -18,6 +18,7 @@ import {
   WhiteboardUser,
 } from '../../../@types/types';
 import { Socket } from 'socket.io-client';
+import { ModernRenderMode, isEmbeddedRenderMode } from '../../../modern/utils/render-mode.utils';
 
 export interface ConfigureWhiteboardModalParameters
   extends OnScreenChangesParameters,
@@ -43,6 +44,7 @@ export interface ConfigureWhiteboardModalParameters
   canStartWhiteboard: boolean;
   whiteboardStarted: boolean;
   whiteboardEnded: boolean;
+  whiteboardUsers: WhiteboardUser[];
   hostLabel: string;
   updateWhiteboardStarted: (started: boolean) => void;
   updateWhiteboardEnded: (ended: boolean) => void;
@@ -65,6 +67,7 @@ export interface ConfigureWhiteboardModalOptions {
   onClose: () => void;
   position?: string;
   backgroundColor?: string;
+  isDarkMode?: boolean;
   parameters: ConfigureWhiteboardModalParameters;
   overlayStyle?: Partial<CSSStyleDeclaration>;
   contentStyle?: Partial<CSSStyleDeclaration>;
@@ -125,16 +128,21 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
     {} as ConfigureWhiteboardModalParameters;
   @Input() backgroundColor = '#83c0e9';
   @Input() position = 'topRight';
+  @Input() isDarkMode?: boolean;
   @Input() onConfigureWhiteboardClose!: () => void;
   @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
   @Input() contentStyle?: Partial<CSSStyleDeclaration>;
   @Input() customTemplate?: any;
+  @Input() renderMode: ModernRenderMode = 'modal';
+  @Input() showHeader = true;
 
   faTimes = faTimes;
   faCheck = faCheck;
+  faSearch = faSearch;
   faSyncAlt = faSyncAlt;
   faPlay = faPlay;
   faSave = faSave;
+  faUser = faUser;
 
   participantsCopy: Participant[] = [];
   whiteboardLimit!: number;
@@ -144,23 +152,63 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
   unassignedParticipants: any[] = [];
   whiteboardStarted = false;
   whiteboardEnded = false;
+  participantSearchTerm = '';
 
   private socket: Socket = {} as Socket;
 
-  ngOnInit() {
-    if (this.parameters && this.isVisible) {
-      try {
-        this.parameters = this.parameters.getUpdatedAllParams();
-      } catch {
-        /* handle error */
-      }
-      this.whiteboardLimit = this.parameters.itemPageLimit;
-      this.whiteboardStarted = this.parameters.whiteboardStarted;
-      this.whiteboardEnded = this.parameters.whiteboardEnded;
-      this.checkCanStartWhiteboard();
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
     }
 
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
+
+  private resolveParameters(): ConfigureWhiteboardModalParameters {
+    if (this.parameters?.getUpdatedAllParams) {
+      return this.parameters.getUpdatedAllParams();
+    }
+
+    return this.parameters;
+  }
+
+  private applyResolvedParameters(params: ConfigureWhiteboardModalParameters) {
+    this.whiteboardLimit = params.itemPageLimit;
+    this.whiteboardStarted = params.whiteboardStarted;
+    this.whiteboardEnded = params.whiteboardEnded;
+
+    this.syncParticipantsCopy(
+      (params.participants ?? []).filter((participant: Participant) => participant.islevel != '2'),
+      params.whiteboardUsers ?? [],
+    );
+    this.checkCanStartWhiteboard();
+  }
+
+  private syncParticipantsCopy(participants: Participant[], whiteboardUsers: WhiteboardUser[] = []) {
+    const selectedUsers = new Map(
+      (whiteboardUsers ?? []).map((user) => [user.name, !!user.useBoard]),
+    );
+
+    this.participantsCopy = participants.map((participant) => ({
+      ...participant,
+      useBoard: selectedUsers.get(participant.name) ?? !!participant.useBoard,
+    }));
+    this.updateParticipantsLists();
+  }
+
+  isVisibleState(): boolean {
+    return this.isEmbedded() || this.isVisible;
+  }
+
+  isEmbedded(): boolean {
+    return isEmbeddedRenderMode(this.renderMode);
+  }
+
+  ngOnInit() {
     if (this.parameters) {
+      this.applyResolvedParameters(this.resolveParameters());
       this.socket = this.parameters.socket;
       if (this.socket) {
         this.setupSocketListeners();
@@ -169,30 +217,15 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['parameters'] && this.parameters) {
-      if (this.parameters && this.isVisible) {
-        this.whiteboardLimit = this.parameters.itemPageLimit;
-        this.whiteboardStarted = this.parameters.whiteboardStarted;
-        this.whiteboardEnded = this.parameters.whiteboardEnded;
-        this.checkCanStartWhiteboard();
-      }
+    if ((changes['parameters'] && this.parameters) || (changes['isVisible'] && this.isVisibleState())) {
+      this.applyResolvedParameters(this.resolveParameters());
+    }
 
+    if (changes['parameters'] && this.parameters) {
       this.socket = this.parameters.socket;
       if (this.socket) {
         this.setupSocketListeners();
       }
-    }
-
-    if (changes['isVisible'] && this.isVisible) {
-      this.parameters = this.parameters.getUpdatedAllParams();
-      if (!this.participantsCopy.length) {
-        const filteredParticipants = this.parameters.participants.filter(
-          (participant: Participant) => participant.islevel != '2',
-        );
-        this.participantsCopy = filteredParticipants;
-        this.updateParticipantsLists();
-      }
-      this.checkCanStartWhiteboard();
     }
   }
 
@@ -201,10 +234,9 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
       this.socket.on('whiteboardUpdated', async (data: WhiteboardUpdatedData) => {
         if (this.parameters.islevel == '2' && data.members) {
           const filteredParticipants = data.members.filter(
-            (participant: any) => !participant.isBanned,
+            (participant: any) => !participant.isBanned && participant.islevel != '2',
           );
-          this.participantsCopy = filteredParticipants;
-          this.updateParticipantsLists();
+          this.syncParticipantsCopy(filteredParticipants, data.whiteboardUsers ?? []);
         }
 
         this.parameters.updateWhiteboardUsers(data.whiteboardUsers);
@@ -238,7 +270,7 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
   };
 
   toggleParticipant = (participant: any, add: boolean) => {
-    this.isEditing = true;
+    this.isEditing = !this.isEmbedded();
     const selectedParticipants = this.participantsCopy.filter((p) => p.useBoard);
     if (add && selectedParticipants.length >= this.whiteboardLimit - 1) {
       this.parameters.showAlert?.({
@@ -254,7 +286,44 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
       p.name === participant.name ? { ...p, useBoard: add } : p,
     );
     this.updateParticipantsLists();
+    this.checkCanStartWhiteboard();
   };
+
+  handleParticipantSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.participantSearchTerm = input.value || '';
+  }
+
+  filteredParticipants() {
+    const searchTerm = this.participantSearchTerm.trim().toLowerCase();
+    if (!searchTerm) {
+      return this.participantsCopy;
+    }
+
+    return this.participantsCopy.filter((participant) =>
+      participant.name?.toLowerCase().includes(searchTerm),
+    );
+  }
+
+  isParticipantAssigned(participant: Participant): boolean {
+    return !!participant.useBoard;
+  }
+
+  whiteboardStatusCopy(): string {
+    return this.whiteboardStarted && !this.whiteboardEnded
+      ? '✓ Whiteboard is active'
+      : 'Select participants who can use the whiteboard';
+  }
+
+  whiteboardEmptyCopy(): string {
+    return this.participantSearchTerm.trim()
+      ? 'No participants match your search'
+      : 'No other participants available yet. The host can still start whiteboard alone.';
+  }
+
+  whiteboardAdditionalParticipantLimit(): number {
+    return Math.max(this.whiteboardLimit - 1, 0);
+  }
 
   validateWhiteboard() {
     const selectedParticipants = this.participantsCopy.filter(
@@ -330,6 +399,7 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
         { whiteboardUsers: filteredWhiteboardUsers, roomName },
         async (response: any) => {
           if (response.success) {
+            this.parameters.updateWhiteboardUsers(filteredWhiteboardUsers);
             showAlert?.({ message: 'Whiteboard active', type: 'success' });
             this.parameters.whiteboardStarted = true;
             this.parameters.whiteboardEnded = false;
@@ -388,16 +458,34 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
   }
 
   modalContainerStyle() {
-    return {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: this.isVisible ? 'block' : 'none',
-      zIndex: 999,
-    };
+    return this.isEmbedded()
+      ? {
+          position: 'static',
+          top: 'auto',
+          left: 'auto',
+          width: '100%',
+          height: '100%',
+          minHeight: 0,
+          backgroundColor: 'transparent',
+          backdropFilter: 'none',
+          display: 'block',
+          padding: '0',
+          zIndex: 'auto',
+        }
+      : {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: this.resolvedIsDarkMode ? 'rgba(2, 6, 23, 0.62)' : 'rgba(15, 23, 42, 0.18)',
+          backdropFilter: 'blur(10px)',
+          display: this.isVisible ? 'flex' : 'none',
+          alignItems: this.position.includes('top') ? 'flex-start' : this.position.includes('bottom') ? 'flex-end' : 'center',
+          justifyContent: this.position.includes('Left') ? 'flex-start' : this.position.includes('Right') ? 'flex-end' : 'center',
+          padding: '18px',
+          zIndex: 999,
+        };
   }
 
   modalContentStyle() {
@@ -406,21 +494,41 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
     if (modalWidth > 400) {
       modalWidth = 400;
     }
-    return {
-      position: 'fixed',
-      backgroundColor: this.backgroundColor,
-      borderRadius: '10px',
-      padding: '10px',
-      width: modalWidth + 'px',
-      maxWidth: modalWidth + 'px',
-      maxHeight: '75%',
-      overflowY: 'auto',
-      overflowX: 'hidden',
-      top: this.position.includes('top') ? '10px' : 'auto',
-      bottom: this.position.includes('bottom') ? '10px' : 'auto',
-      left: this.position.includes('Left') ? '10px' : 'auto',
-      right: this.position.includes('Right') ? '10px' : 'auto',
-    };
+    const isDarkMode = this.resolvedIsDarkMode;
+    return this.isEmbedded()
+      ? {
+          background: 'transparent',
+          borderRadius: '0',
+          border: 'none',
+          boxShadow: 'none',
+          padding: '0',
+          width: '100%',
+          maxWidth: 'none',
+          height: '100%',
+          maxHeight: 'none',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          color: isDarkMode ? '#e2e8f0' : '#0f172a',
+        }
+      : {
+          background: typeof this.isDarkMode === 'boolean'
+            ? isDarkMode
+              ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%)'
+              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.96) 100%)'
+            : this.backgroundColor,
+          borderRadius: '24px',
+          border: isDarkMode
+            ? '1px solid rgba(148, 163, 184, 0.18)'
+            : '1px solid rgba(148, 163, 184, 0.22)',
+          boxShadow: '0 24px 48px rgba(15, 23, 42, 0.18)',
+          padding: '20px',
+          width: modalWidth + 'px',
+          maxWidth: modalWidth + 'px',
+          maxHeight: '84vh',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          color: isDarkMode ? '#e2e8f0' : '#0f172a',
+        };
   }
 
   updateParticipantsLists = () => {

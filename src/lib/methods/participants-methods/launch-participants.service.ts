@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchParticipantsOptions {
-  updateIsParticipantsModalVisible: (isVisible: boolean) => void;
-  isParticipantsModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchParticipantsType = (options: LaunchParticipantsOptions) => void;
+import { launchParticipants as sharedLaunchParticipants } from 'mediasfu-shared';
+import type { LaunchParticipantsOptions } from 'mediasfu-shared';
+export type { LaunchParticipantsOptions, LaunchParticipantsType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility of the participants modal.
@@ -49,6 +45,6 @@ export class LaunchParticipants {
     updateIsParticipantsModalVisible,
     isParticipantsModalVisible,
   }: LaunchParticipantsOptions): void {
-    updateIsParticipantsModalVisible(!isParticipantsModalVisible);
+    sharedLaunchParticipants({ updateIsParticipantsModalVisible, isParticipantsModalVisible });
   }
 }

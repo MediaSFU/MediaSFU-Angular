@@ -1,106 +1,123 @@
-<div>
-  <!-- Video Type -->
-  <div>
-    <label class="label">Video Type:</label>
-    <select [(ngModel)]="selectedRecordingVideoType" (change)="parameters.updateRecordingVideoType(selectedRecordingVideoType)">
-      <option value="fullDisplay">Full Display (no background)</option>
-      <option value="bestDisplay">Full Video</option>
-      <option value="all">All</option>
-    </select>
-  </div>
-  <hr />
+<section class="ms-recording-panel">
+  <header class="ms-recording-panel__intro">
+    <span class="ms-recording-panel__eyebrow">Creative controls</span>
+    <h3 class="ms-recording-panel__title">Advanced styling</h3>
+    <p class="ms-recording-panel__copy">
+      Fine-tune layout emphasis, overlays, and branding details before recording starts.
+    </p>
+  </header>
 
-  <!-- Display Type -->
-  <div *ngIf="parameters.eventType !== 'broadcast'">
-    <label class="label">Display Type:</label>
-    <select [(ngModel)]="selectedRecordingDisplayType" (change)="parameters.updateRecordingDisplayType(selectedRecordingDisplayType)">
-      <option value="video">Only Video Participants</option>
-      <option value="videoOpt">Only Video Participants (optimized)</option>
-      <option value="media">Participants with media</option>
-      <option value="all">All Participants</option>
-    </select>
-  </div>
-  <hr />
+  <div class="ms-recording-panel__stack">
+    <label class="ms-recording-panel__field">
+      <span class="ms-recording-panel__label">Video Type</span>
+      <span class="ms-recording-panel__hint">Choose the visual framing for the exported recording.</span>
+      <select [(ngModel)]="selectedRecordingVideoType" (change)="parameters.updateRecordingVideoType(selectedRecordingVideoType)">
+        <option value="fullDisplay">Full Display (no background)</option>
+        <option value="bestDisplay">Full Video</option>
+        <option value="all">All</option>
+      </select>
+    </label>
 
-  <!-- Background Color -->
-  <div>
-    <label class="label">Background Color:</label>
-    <div class="color-preview" [ngStyle]="{'background-color': parameters.recordingBackgroundColor}">
-      {{ parameters.recordingBackgroundColor }}
-    </div>
-    <input type="color" [(ngModel)]="parameters.recordingBackgroundColor" (change)="handleColorChange('backgroundColor', $event)" />
-    <span class="label">Click to select color</span>
-  </div>
-  <hr />
+    <label *ngIf="parameters.eventType !== 'broadcast'" class="ms-recording-panel__field">
+      <span class="ms-recording-panel__label">Display Type</span>
+      <span class="ms-recording-panel__hint">Control whether the capture prioritizes visible video, active media, or the entire room.</span>
+      <select [(ngModel)]="selectedRecordingDisplayType" (change)="parameters.updateRecordingDisplayType(selectedRecordingDisplayType)">
+        <option value="video">Only Video Participants</option>
+        <option value="videoOpt">Only Video Participants (optimized)</option>
+        <option value="media">Participants with media</option>
+        <option value="all">All Participants</option>
+      </select>
+    </label>
 
-  <!-- Add Text -->
-  <div>
-    <label class="label">Add Text:</label>
-    <select [(ngModel)]="recordingText" (change)="handleTextChange(recordingText)">
-      <option [ngValue]="true">True</option>
-      <option [ngValue]="false">False</option>
-    </select>
-  </div>
-  <hr />
+    <section class="ms-recording-panel__field ms-recording-panel__field--color">
+      <span class="ms-recording-panel__label">Background Color</span>
+      <span class="ms-recording-panel__hint">Set the room backdrop used when the layout includes a generated background.</span>
+      <div class="ms-recording-panel__color-row">
+        <div class="ms-recording-panel__color-preview" [ngStyle]="{'background-color': parameters.recordingBackgroundColor}">
+          <span>Background</span>
+          <strong>{{ parameters.recordingBackgroundColor }}</strong>
+        </div>
+        <label class="ms-recording-panel__color-input">
+          <span>Pick color</span>
+          <input type="color" [(ngModel)]="parameters.recordingBackgroundColor" (change)="handleColorChange('backgroundColor', $event)" />
+        </label>
+      </div>
+    </section>
 
-  <!-- Custom Text -->
-  <div *ngIf="recordingText">
-    <label class="label">Custom Text:</label>
-    <input type="text" [(ngModel)]="customText" (input)="onChangeTextHandler(customText)" />
-    <hr />
-  </div>
+    <label class="ms-recording-panel__field">
+      <span class="ms-recording-panel__label">Custom Text Overlay</span>
+      <span class="ms-recording-panel__hint">Enable a short label or title card directly in the recording output.</span>
+      <select [(ngModel)]="recordingText" (change)="handleTextChange(recordingText)">
+        <option [ngValue]="true">Enabled</option>
+        <option [ngValue]="false">Disabled</option>
+      </select>
+    </label>
 
-  <!-- Custom Text Position -->
-  <div *ngIf="recordingText">
-    <label class="label">Custom Text Position:</label>
-    <select [(ngModel)]="recordingPosition" (change)="parameters.updateRecordingCustomTextPosition(recordingPosition)">
-      <option value="top">Top</option>
-      <option value="middle">Middle</option>
-      <option value="bottom">Bottom</option>
-    </select>
-    <hr />
-  </div>
+    <ng-container *ngIf="recordingText">
+      <label class="ms-recording-panel__field">
+        <span class="ms-recording-panel__label">Custom Text</span>
+        <span class="ms-recording-panel__hint">Use up to 40 letters or numbers for the overlay caption.</span>
+        <input type="text" maxlength="40" [(ngModel)]="customText" (input)="onChangeTextHandler(customText)" />
+      </label>
 
-  <!-- Custom Text Color -->
-  <div *ngIf="recordingText">
-    <label class="label">Custom Text Color:</label>
-    <div class="color-preview" [ngStyle]="{'background-color': parameters.recordingCustomTextColor}">
-      {{ parameters.recordingCustomTextColor }}
-    </div>
-    <input type="color" [(ngModel)]="parameters.recordingCustomTextColor" (change)="handleColorChange('customTextColor', $event)" />
-    <span class="label">Click to select color</span>
-    <hr />
-  </div>
+      <label class="ms-recording-panel__field">
+        <span class="ms-recording-panel__label">Text Position</span>
+        <span class="ms-recording-panel__hint">Place the overlay where it is least likely to cover active participants.</span>
+        <select [(ngModel)]="recordingPosition" (change)="parameters.updateRecordingCustomTextPosition(recordingPosition)">
+          <option value="top">Top</option>
+          <option value="middle">Middle</option>
+          <option value="bottom">Bottom</option>
+        </select>
+      </label>
 
-  <!-- Add Name Tags -->
-  <div>
-    <label class="label">Add Name Tags:</label>
-    <select [(ngModel)]="selectedRecordingNameTags" (change)="parameters.updateRecordingNameTags(selectedRecordingNameTags)">
-      <option [ngValue]="true">True</option>
-      <option [ngValue]="false">False</option>
-    </select>
-  </div>
-  <hr />
+      <section class="ms-recording-panel__field ms-recording-panel__field--color">
+        <span class="ms-recording-panel__label">Text Color</span>
+        <span class="ms-recording-panel__hint">Match the overlay to your room palette while keeping it readable.</span>
+        <div class="ms-recording-panel__color-row">
+          <div class="ms-recording-panel__color-preview" [ngStyle]="{'background-color': parameters.recordingCustomTextColor}">
+            <span>Overlay text</span>
+            <strong>{{ parameters.recordingCustomTextColor }}</strong>
+          </div>
+          <label class="ms-recording-panel__color-input">
+            <span>Pick color</span>
+            <input type="color" [(ngModel)]="parameters.recordingCustomTextColor" (change)="handleColorChange('customTextColor', $event)" />
+          </label>
+        </div>
+      </section>
+    </ng-container>
 
-  <!-- Name Tags Color -->
-  <div>
-    <label class="label">Name Tags Color:</label>
-    <div class="color-preview" [ngStyle]="{'background-color': parameters.recordingNameTagsColor}">
-      {{ parameters.recordingNameTagsColor }}
-    </div>
-    <input type="color" [(ngModel)]="parameters.recordingNameTagsColor" (change)="handleColorChange('nameTagsColor', $event)" />
-    <span class="label">Click to select color</span>
-  </div>
-  <hr />
+    <label class="ms-recording-panel__field">
+      <span class="ms-recording-panel__label">Name Tags</span>
+      <span class="ms-recording-panel__hint">Show participant labels on recorded cards when audience context matters.</span>
+      <select [(ngModel)]="selectedRecordingNameTags" (change)="parameters.updateRecordingNameTags(selectedRecordingNameTags)">
+        <option [ngValue]="true">Enabled</option>
+        <option [ngValue]="false">Disabled</option>
+      </select>
+    </label>
 
-  <!-- Orientation (Video) -->
-  <div>
-    <label class="label">Orientation (Video):</label>
-    <select [(ngModel)]="selectedOrientationVideo" (change)="parameters.updateRecordingOrientationVideo(selectedOrientationVideo)">
-      <option value="landscape">Landscape</option>
-      <option value="portrait">Portrait</option>
-      <option value="all">All</option>
-    </select>
+    <section class="ms-recording-panel__field ms-recording-panel__field--color">
+      <span class="ms-recording-panel__label">Name Tag Color</span>
+      <span class="ms-recording-panel__hint">Adjust the label chip tint for better contrast against the room content.</span>
+      <div class="ms-recording-panel__color-row">
+        <div class="ms-recording-panel__color-preview" [ngStyle]="{'background-color': parameters.recordingNameTagsColor}">
+          <span>Name tags</span>
+          <strong>{{ parameters.recordingNameTagsColor }}</strong>
+        </div>
+        <label class="ms-recording-panel__color-input">
+          <span>Pick color</span>
+          <input type="color" [(ngModel)]="parameters.recordingNameTagsColor" (change)="handleColorChange('nameTagsColor', $event)" />
+        </label>
+      </div>
+    </section>
+
+    <label class="ms-recording-panel__field">
+      <span class="ms-recording-panel__label">Orientation</span>
+      <span class="ms-recording-panel__hint">Set the preferred framing direction for participant video in the export.</span>
+      <select [(ngModel)]="selectedOrientationVideo" (change)="parameters.updateRecordingOrientationVideo(selectedOrientationVideo)">
+        <option value="landscape">Landscape</option>
+        <option value="portrait">Portrait</option>
+        <option value="all">All</option>
+      </select>
+    </label>
   </div>
-  <hr />
-</div>
+</section>

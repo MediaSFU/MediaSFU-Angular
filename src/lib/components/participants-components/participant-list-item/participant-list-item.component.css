@@ -1,31 +1,83 @@
-.container {
+:host {
+  display: block;
+  width: 100%;
+}
+
+.participant-item {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  margin-bottom: 0px;
-  margin-top: 0px;
+  gap: 10px;
+  min-width: 0;
+  width: 100%;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, 0.22));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--ms-modern-panel-surface, #0f172a) 72%, transparent);
 }
 
-.nameContainer {
-  flex: 4;
-}
-
-.nameText {
-  font-size: 16px;
-}
-
-.iconContainer, .buttonContainer {
-  flex: 2;
+.participant-item__identity {
+  flex: 1;
+  min-width: 0;
+  display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-button {
-  padding: 5px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+.participant-item__avatar {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.86), rgba(20, 184, 166, 0.78));
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.85rem;
 }
 
-button.remove {
-  background-color: #dc3545;
+.participant-item__name {
+  min-width: 0;
+  margin: 0;
+  color: var(--ms-modern-text-primary, #e2e8f0);
+  font-size: 0.9rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.participant-item__status {
+  color: #22c55e;
+  font-size: 0.9rem;
+}
+
+.participant-item__status--muted {
+  color: #ef4444;
+}
+
+.participant-item__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.participant-item__button {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ms-modern-accent, #14b8a6) 15%, transparent);
+  color: var(--ms-modern-text-primary, #e2e8f0);
+  cursor: pointer;
+}
+
+.participant-item__button--danger {
+  background: rgba(239, 68, 68, 0.16);
+  color: #f87171;
 }

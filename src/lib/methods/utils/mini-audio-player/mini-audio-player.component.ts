@@ -19,6 +19,11 @@ import {
 import { types } from 'mediasoup-client';
 type Consumer = types.Consumer;
 
+interface SpeakerTranslationState {
+  enabled?: boolean;
+  originalProducerId?: string;
+}
+
 export interface MiniAudioPlayerParameters extends ReUpdateInterParameters {
   breakOutRoomStarted: boolean;
   breakOutRoomEnded: boolean;
@@ -125,6 +130,8 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
 
   private previousShowWaveModal: boolean | null = null;
   private previousIsMuted: boolean | null = null;
+  private previousMiniAudioProps: Record<string, any> | null = null;
+  private audioStateRetryTimer: ReturnType<typeof setTimeout> | null = null;
 
   private injectorCache = new WeakMap<any, Injector>();
   private cachedMiniAudioProps: any;
@@ -148,6 +155,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.stream) {
+      this.scheduleAudioStateSync();
       this.setupAudioProcessing();
     }
   }
@@ -156,7 +164,111 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
+
+    this.clearAudioStateRetryTimer();
   }
+
+  private clearAudioStateRetryTimer(): void {
+    if (this.audioStateRetryTimer) {
+      clearTimeout(this.audioStateRetryTimer);
+      this.audioStateRetryTimer = null;
+    }
+  }
+
+  private getParticipantForProducer(updatedParams: MiniAudioPlayerParameters): Participant | undefined {
+    return updatedParams.participants?.find(
+      (participant: Participant) => participant.audioID == this.remoteProducerId,
+    );
+  }
+
+  private isTranslationAudio(updatedParams: MiniAudioPlayerParameters): boolean {
+    const activeTranslationProducerIds = updatedParams.activeTranslationProducerIds as Set<string> | undefined;
+
+    return Boolean(
+      activeTranslationProducerIds?.has(this.remoteProducerId)
+      || this.consumer?.appData?.type === 'translation'
+      || this.consumer?.appData?.isTranslation,
+    );
+  }
+
+  private isTranslationSuppressingOriginal(
+    updatedParams: MiniAudioPlayerParameters,
+    participant?: Participant,
+  ): boolean {
+    if (!participant?.name) {
+      return false;
+    }
+
+    const speakerTranslationStates = updatedParams.speakerTranslationStates as
+      | Map<string, SpeakerTranslationState>
+      | undefined;
+    const speakerState = speakerTranslationStates?.get(participant.name);
+
+    return Boolean(
+      speakerState?.enabled
+      && speakerState.originalProducerId === this.remoteProducerId,
+    );
+  }
+
+  private syncAudioElementState(muted: boolean, pausePlayback = false): void {
+    const audioElement = this.audioElement?.nativeElement;
+
+    if (!audioElement) {
+      return;
+    }
+
+    audioElement.muted = muted;
+
+    if (pausePlayback || !this.stream) {
+      audioElement.pause();
+      return;
+    }
+
+    const playPromise = audioElement.play();
+    if (playPromise instanceof Promise) {
+      playPromise.catch(() => {
+        // Ignore autoplay rejection
+      });
+    }
+  }
+
+  private scheduleAudioStateSync(): void {
+    this.clearAudioStateRetryTimer();
+
+    let attempts = 0;
+    const maxAttempts = 8;
+
+    const run = () => {
+      this.audioStateRetryTimer = null;
+
+      const updatedParams = this.parameters.getUpdatedAllParams?.() ?? this.parameters;
+      const participant = this.getParticipantForProducer(updatedParams);
+      const isTranslationAudio = this.isTranslationAudio(updatedParams);
+      const translationSuppressingOriginal = this.isTranslationSuppressingOriginal(
+        updatedParams,
+        participant,
+      );
+
+      if (isTranslationAudio) {
+        this.showWaveModal = false;
+        this.isMuted = false;
+        this.syncAudioElementState(false, false);
+      } else {
+        this.isMuted = Boolean(participant?.muted) || translationSuppressingOriginal;
+        this.syncAudioElementState(this.isMuted, translationSuppressingOriginal);
+      }
+
+      if (!this.stream || attempts >= maxAttempts) {
+        return;
+      }
+
+      attempts += 1;
+      this.audioStateRetryTimer = setTimeout(run, 120);
+    };
+
+    setTimeout(run, 0);
+  }
+
     setupAudioProcessing() {
     let averageLoudness = 128;
 
@@ -183,12 +295,14 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
       const updatedParams = this.parameters.getUpdatedAllParams();
       let {
         eventType,
+        meetingDisplayType,
         participants,
         paginatedStreams,
         currentUserPage,
         adminNameStream,
         dispActiveNames,
         activeSounds,
+        autoWave,
         reUpdateInter,
         updateParticipantAudioDecibels,
         updateActiveSounds,
@@ -199,7 +313,19 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
         limitedBreakRoom,
       } = updatedParams;
 
-      const participant = participants.find((obj: any) => obj.audioID == this.remoteProducerId);
+      const participant = this.getParticipantForProducer(updatedParams);
+      const isTranslationAudio = this.isTranslationAudio(updatedParams);
+      const translationSuppressingOriginal = this.isTranslationSuppressingOriginal(
+        updatedParams,
+        participant,
+      );
+
+      if (isTranslationAudio) {
+        this.showWaveModal = false;
+        this.isMuted = false;
+        this.syncAudioElementState(false, false);
+        return;
+      }
 
       let audioActiveInRoom = true;
       if (participant) {
@@ -211,7 +337,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
         }
       }
 
-      if (this.parameters.meetingDisplayType != 'video') {
+      if (meetingDisplayType != 'video') {
         this.autoWaveCheck = true;
       }
       if (shared || shareScreenStarted) {
@@ -219,7 +345,19 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
       }
 
       if (participant) {
-        this.isMuted = participant.muted || false;
+        this.isMuted = (participant.muted || false) || translationSuppressingOriginal;
+        this.syncAudioElementState(this.isMuted, translationSuppressingOriginal);
+
+        if (translationSuppressingOriginal) {
+          this.showWaveModal = false;
+
+          if (participant.name && activeSounds.includes(participant.name)) {
+            activeSounds.splice(activeSounds.indexOf(participant.name), 1);
+          }
+
+          updateActiveSounds(activeSounds);
+          return;
+        }
 
         if (eventType != 'chat' && eventType != 'broadcast') {
           updateParticipantAudioDecibels({
@@ -230,9 +368,10 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
           });
         }
 
-        const inPage = paginatedStreams[currentUserPage].findIndex(
-          (obj: any) => obj.name == participant.name,
-        );
+        const inPage =
+          paginatedStreams[currentUserPage]?.findIndex(
+            (obj: any) => obj.name == participant.name,
+          ) ?? -1;
 
         if (participant.name && !dispActiveNames.includes(participant.name) && inPage == -1) {
           this.autoWaveCheck = false;
@@ -256,7 +395,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
           this.showWaveModal = false;
 
           if (averageLoudness > 127.5) {
-            if (!activeSounds.includes(participant.name)) {
+            if (participant.name && !activeSounds.includes(participant.name)) {
               activeSounds.push(participant.name);
               consLow = false;
 
@@ -274,7 +413,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
               }
             }
           } else {
-            if (activeSounds.includes(participant.name) && consLow) {
+            if (participant.name && activeSounds.includes(participant.name) && consLow) {
               activeSounds.splice(activeSounds.indexOf(participant.name), 1);
 
               if ((shareScreenStarted || shared) && !participant.videoID) {
@@ -294,13 +433,13 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
           }
         } else {
           if (averageLoudness > 127.5) {
-            if (!this.parameters['autoWave']) {
+            if (!autoWave) {
               this.showWaveModal = false;
             } else {
               this.showWaveModal = true;
             }
 
-            if (!activeSounds.includes(participant.name)) {
+            if (participant.name && !activeSounds.includes(participant.name)) {
               activeSounds.push(participant.name);
             }
             if ((shareScreenStarted || shared) && !participant.videoID) {
@@ -317,7 +456,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
             }
           } else {
             this.showWaveModal = false;
-            if (activeSounds.includes(participant.name)) {
+            if (participant.name && activeSounds.includes(participant.name)) {
               activeSounds.splice(activeSounds.indexOf(participant.name), 1);
             }
             if ((shareScreenStarted || shared) && !participant.videoID) {
@@ -338,6 +477,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
       } else {
         this.showWaveModal = false;
         this.isMuted = true;
+        this.syncAudioElementState(true, true);
       }
     }, 2000);
   }
@@ -358,7 +498,8 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
     if (
       !this.cachedMiniAudioProps ||
       this.showWaveModal !== this.previousShowWaveModal ||
-      this.isMuted !== this.previousIsMuted
+      this.isMuted !== this.previousIsMuted ||
+      this.miniAudioProps !== this.previousMiniAudioProps
     ) {
       this.cachedMiniAudioProps = {
         ...this.miniAudioProps,
@@ -368,6 +509,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
 
       this.previousShowWaveModal = this.showWaveModal;
       this.previousIsMuted = this.isMuted;
+      this.previousMiniAudioProps = this.miniAudioProps;
     }
     return this.cachedMiniAudioProps;
   }

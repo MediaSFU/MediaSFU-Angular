@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { breakoutRoomUpdated as sharedBreakoutRoomUpdated } from 'mediasfu-shared';
 import {
   BreakoutParticipant,
   BreakoutRoomUpdatedData,
@@ -151,97 +152,8 @@ export class BreakoutRoomUpdated {
    */
 
   breakoutRoomUpdated = async ({ data, parameters }: BreakoutRoomUpdatedOptions): Promise<void> => {
-    try {
-      parameters = parameters.getUpdatedAllParams();
-
-      let {
-        breakOutRoomStarted,
-        breakOutRoomEnded,
-        breakoutRooms,
-        islevel,
-        participantsAll,
-        participants,
-
-        updateBreakoutRooms,
-        updateBreakOutRoomStarted,
-        updateBreakOutRoomEnded,
-        updateHostNewRoom,
-        updateMeetingDisplayType,
-        meetingDisplayType,
-        prevMeetingDisplayType,
-        updateParticipantsAll,
-        updateParticipants,
-
-        //mediaSfu functions
-        onScreenChanges,
-        rePort,
-      } = parameters;
-
-      if (data.forHost) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        updateHostNewRoom(data.newRoom!);
-        await onScreenChanges({ changed: true, parameters });
-        return;
-      }
-
-      if (islevel == '2' && data.members) {
-        //filter out the participant that isBanned == true
-        participantsAll = data.members;
-        //remove every field other than isBanned and name from participantsAll
-        participantsAll = data.members.map((participant) => ({
-          isBanned: participant.isBanned,
-          name: participant.name,
-          audioID: participant.audioID,
-          videoID: participant.videoID,
-        }));
-        updateParticipantsAll(participantsAll);
-
-        participants = data.members.filter(
-          (participant: Participant) => participant.isBanned == false,
-        );
-        updateParticipants(participants);
-      }
-
-      breakoutRooms = data.breakoutRooms || [];
-      updateBreakoutRooms(breakoutRooms);
-
-      if (data.status == 'started' && (breakOutRoomStarted || !breakOutRoomEnded)) {
-        breakOutRoomStarted = true;
-        breakOutRoomEnded = false;
-        updateBreakOutRoomStarted(true);
-        updateBreakOutRoomEnded(false);
-        prevMeetingDisplayType = meetingDisplayType;
-        if (meetingDisplayType != 'all') {
-          meetingDisplayType = 'all';
-          updateMeetingDisplayType('all');
-        }
-        await onScreenChanges({ changed: true, parameters });
-        if (islevel == '2') {
-          await rePort({ restart: true, parameters });
-        }
-      } else if (data.status == 'ended') {
-        breakOutRoomEnded = true;
-        updateBreakOutRoomEnded(true);
-        if (meetingDisplayType != prevMeetingDisplayType) {
-          meetingDisplayType = prevMeetingDisplayType;
-          updateMeetingDisplayType(prevMeetingDisplayType);
-        }
-        await onScreenChanges({ changed: true, parameters });
-        if (islevel == '2') {
-          await rePort({ restart: true, parameters });
-        }
-      } else if (data.status == 'started' && breakOutRoomStarted) {
-        breakOutRoomStarted = true;
-        breakOutRoomEnded = false;
-        updateBreakOutRoomStarted(true);
-        updateBreakOutRoomEnded(false);
-        await onScreenChanges({ changed: true, parameters });
-        if (islevel == '2') {
-          await rePort({ restart: true, parameters });
-        }
-      }
-    } catch (error: any) {
-      // console.log('Error updating breakout room:', error.message);
-    }
+    return sharedBreakoutRoomUpdated(
+      { data, parameters } as unknown as Parameters<typeof sharedBreakoutRoomUpdated>[0],
+    );
   };
 }

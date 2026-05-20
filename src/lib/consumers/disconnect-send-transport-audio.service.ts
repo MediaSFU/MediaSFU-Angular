@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { disconnectSendTransportAudio as sharedDisconnectSendTransportAudio } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { PrepopulateUserMediaType, PrepopulateUserMediaParameters } from '../@types/types';
 import { types } from 'mediasoup-client';
@@ -176,6 +177,10 @@ export class DisconnectSendTransportAudio {
   async disconnectSendTransportAudio({
     parameters,
   }: DisconnectSendTransportAudioOptions): Promise<void> {
+    return sharedDisconnectSendTransportAudio({
+      parameters: parameters as unknown as Parameters<typeof sharedDisconnectSendTransportAudio>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       // Destructure parameters
       let {

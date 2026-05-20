@@ -1,6 +1,7 @@
 // This method is used to modify the co-host settings in the chat room.
 
 import { Injectable } from '@angular/core';
+import { modifyCoHostSettings as sharedModifyCoHostSettings } from 'mediasfu-shared';
 import { ShowAlert, CoHostResponsibility } from '../../@types/types';
 import { Socket } from 'socket.io-client';
 
@@ -16,7 +17,6 @@ export interface ModifyCoHostSettingsOptions {
   socket: Socket;
 }
 
-// Export the type definition for the function
 export type ModifyCoHostSettingsType = (options: ModifyCoHostSettingsOptions) => Promise<void>;
 
 /**
@@ -93,7 +93,7 @@ export class ModifyCoHostSettings {
    */
   async modifyCoHostSettings({
     roomName,
-    showAlert,
+    // showAlert,
     selectedParticipant,
     coHost,
     coHostResponsibility,
@@ -102,35 +102,17 @@ export class ModifyCoHostSettings {
     updateCoHost,
     socket,
   }: ModifyCoHostSettingsOptions): Promise<void> {
-    // Check if the chat room is in demo mode
-    if (roomName.toLowerCase().startsWith('d')) {
-      showAlert?.({
-        message: 'You cannot add co-host in demo mode.',
-        type: 'danger',
-        duration: 3000,
-      });
-
-      return;
-    }
-
-    let newCoHost = coHost;
-
-    if (
-      coHost != 'No coHost' ||
-      (selectedParticipant && selectedParticipant != 'Select a participant')
-    ) {
-      if (selectedParticipant && selectedParticipant != 'Select a participant') {
-        newCoHost = selectedParticipant;
-        updateCoHost(newCoHost);
-      }
-
-      updateCoHostResponsibility(coHostResponsibility);
-
-      // Emit a socket event to update co-host information
-      socket.emit('updateCoHost', { roomName, coHost: newCoHost, coHostResponsibility });
-    }
-
-    // Close the co-host modal
-    updateIsCoHostModalVisible(false);
+    return sharedModifyCoHostSettings(
+      {
+        roomName,
+        selectedParticipant,
+        coHost,
+        coHostResponsibility,
+        updateIsCoHostModalVisible,
+        updateCoHostResponsibility,
+        updateCoHost,
+        socket,
+      } as unknown as Parameters<typeof sharedModifyCoHostSettings>[0],
+    );
   }
 }

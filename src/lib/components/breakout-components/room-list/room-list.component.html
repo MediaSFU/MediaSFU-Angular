@@ -1,23 +1,47 @@
-<div *ngFor="let room of rooms; let roomIndex = index" class="card mb-3 text-dark">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <span>Room {{ roomIndex + 1 }} <fa-icon [icon]="faUsers"></fa-icon></span>
-      <div>
-        <button class="btn btn-secondary btn-sm" (click)="handleEditRoom(roomIndex)">
-          <fa-icon [icon]="faPen"></fa-icon>
+<div
+  *ngIf="rooms.length === 0"
+  class="room-list__empty-state"
+  [class.room-list__empty-state--dark]="resolvedIsDarkMode"
+  [class.room-list__empty-state--light]="!resolvedIsDarkMode"
+>
+  No breakout rooms configured. Click Random Assign or Add Room to start.
+</div>
+
+<div
+  *ngFor="let room of rooms; let roomIndex = index"
+  class="room-card"
+  [class.room-card--dark]="resolvedIsDarkMode"
+  [class.room-card--light]="!resolvedIsDarkMode"
+>
+    <div class="room-card__header">
+      <span class="room-card__title">
+        Room {{ roomIndex + 1 }} <fa-icon [icon]="faUsers"></fa-icon>
+        <span class="room-card__meta">({{ room.length }} participants)</span>
+      </span>
+      <div class="room-card__controls">
+        <button
+          class="room-card__icon-button room-card__icon-button--neutral"
+          [class.room-card__icon-button--active]="isEditingRoom(roomIndex)"
+          [attr.aria-label]="isEditingRoom(roomIndex) ? 'Close room editor' : 'Edit room participants'"
+          (click)="handleEditRoom(roomIndex)"
+          type="button"
+        >
+          <fa-icon [icon]="isEditingRoom(roomIndex) ? faTimes : faPen"></fa-icon>
         </button>
-        <button class="btn btn-danger btn-sm" (click)="handleDeleteRoom(roomIndex)">
+        <button class="room-card__icon-button room-card__icon-button--danger" aria-label="Delete room" (click)="handleDeleteRoom(roomIndex)" type="button">
           <fa-icon [icon]="faTimes"></fa-icon>
         </button>
       </div>
     </div>
-    <div class="card-body">
-      <ul class="list-group">
-        <li *ngFor="let participant of room; let index = index" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+    <div class="room-card__body">
+      <ul class="room-card__list">
+        <li *ngFor="let participant of room; let index = index" class="room-card__item">
           {{ participant.name }}
-          <button class="btn btn-danger btn-sm" (click)="handleRemoveParticipant(roomIndex, participant)">
+          <button class="room-card__icon-button room-card__icon-button--danger" aria-label="Remove participant from room" (click)="handleRemoveParticipant(roomIndex, participant)" type="button">
             <fa-icon [icon]="faTimes"></fa-icon>
           </button>
         </li>
+        <li *ngIf="room.length === 0" class="room-card__empty">No participants assigned yet.</li>
       </ul>
     </div>
   </div>

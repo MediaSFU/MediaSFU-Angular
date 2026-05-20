@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { switchUserVideo as sharedSwitchUserVideo } from 'mediasfu-shared';
 import { ClickVideo, ClickVideoParameters } from '../methods/stream-methods/click-video.service';
 import {
   ShowAlert,
@@ -129,6 +130,12 @@ export class SwitchUserVideo {
     checkoff: boolean;
     parameters: any;
   }): Promise<void> => {
+    return sharedSwitchUserVideo({
+      videoPreference,
+      checkoff,
+      parameters: parameters as unknown as Parameters<typeof sharedSwitchUserVideo>[0]['parameters'],
+    }) as Promise<void>;
+
     let {
       audioOnlyRoom,
       frameRate,

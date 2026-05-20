@@ -13,6 +13,8 @@ import { BreakoutParticipant, Participant } from '../../../@types/types';
 export class RoomListComponent {
   @Input()
   rooms: BreakoutParticipant[][] = [];
+  @Input() isDarkMode?: boolean;
+  @Input() editingRoomIndex: number | null = null;
   @Output() editRoom = new EventEmitter<number>();
   @Output() deleteRoom = new EventEmitter<number>();
   @Output() removeParticipant = new EventEmitter<{
@@ -24,6 +26,16 @@ export class RoomListComponent {
   faTimes = faTimes;
   faUsers = faUsers;
 
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
+
   handleEditRoom(roomIndex: number) {
     this.editRoom.emit(roomIndex);
   }
@@ -34,5 +46,9 @@ export class RoomListComponent {
 
   handleRemoveParticipant(roomIndex: number, participant: BreakoutParticipant | Participant) {
     this.removeParticipant.emit({ roomIndex, participant });
+  }
+
+  isEditingRoom(roomIndex: number): boolean {
+    return this.editingRoomIndex === roomIndex;
   }
 }

@@ -1,9 +1,6 @@
+import type { LaunchMenuModalOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchMenuModalOptions {
-    updateIsMenuModalVisible: (isVisible: boolean) => void;
-    isMenuModalVisible: boolean;
-}
-export type LaunchMenuModalType = (options: LaunchMenuModalOptions) => void;
+export type { LaunchMenuModalOptions, LaunchMenuModalType } from 'mediasfu-shared';
 /**
  * Toggles the visibility of the menu modal.
  *

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { streamSuccessScreen as sharedStreamSuccessScreen } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import {
   SleepType,
@@ -159,6 +160,11 @@ export class StreamSuccessScreen {
    * @returns {Promise<void>} A promise that resolves when the screen sharing setup is complete.
    */
   async streamSuccessScreen({ stream, parameters }: StreamSuccessScreenOptions): Promise<void> {
+    return sharedStreamSuccessScreen({
+      stream,
+      parameters,
+    } as unknown as Parameters<typeof sharedStreamSuccessScreen>[0]) as Promise<void>;
+
     let { getUpdatedAllParams } = parameters;
     parameters = getUpdatedAllParams();
 

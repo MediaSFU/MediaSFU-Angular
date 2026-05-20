@@ -86,15 +86,18 @@ export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
  */
 export declare class CustomButtons {
     buttons: CustomButton[];
+    isDarkMode?: boolean;
     containerAttributes?: {
         [key: string]: any;
     };
     fallbackSpinner?: TemplateRef<any>;
     faSpinner: IconDefinition;
     mergeStyles(defaultStyle: any, customStyle: any): any;
+    get resolvedIsDarkMode(): boolean;
+    isButtonVisible(button: CustomButton): boolean;
     getButtonStyles(button: CustomButton): any;
     get customButtonIcon(): any;
     isCustomComponentConfig(obj: any): obj is CustomComponent;
     static ɵfac: i0.ɵɵFactoryDeclaration<CustomButtons, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<CustomButtons, "app-custom-buttons", never, { "buttons": { "alias": "buttons"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "fallbackSpinner": { "alias": "fallbackSpinner"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CustomButtons, "app-custom-buttons", never, { "buttons": { "alias": "buttons"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "fallbackSpinner": { "alias": "fallbackSpinner"; "required": false; }; }, {}, never, never, true, never>;
 }

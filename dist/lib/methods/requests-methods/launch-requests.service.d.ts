@@ -1,9 +1,6 @@
+import type { LaunchRequestsOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchRequestsOptions {
-    updateIsRequestsModalVisible: (isVisible: boolean) => void;
-    isRequestsModalVisible: boolean;
-}
-export type LaunchRequestsType = (options: LaunchRequestsOptions) => void;
+export type { LaunchRequestsOptions, LaunchRequestsType } from 'mediasfu-shared';
 /**
  * Toggles the visibility state of the requests modal.
  *

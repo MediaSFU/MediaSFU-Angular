@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { receiveRoomMessages as sharedReceiveRoomMessages } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { Message } from '../@types/types';
 export interface ReceiveRoomMessagesOptions {
@@ -55,6 +56,12 @@ export class ReceiveRoomMessages {
     roomName,
     updateMessages,
   }: ReceiveRoomMessagesOptions): Promise<void> {
+    return sharedReceiveRoomMessages({
+      socket,
+      roomName,
+      updateMessages,
+    } as unknown as Parameters<typeof sharedReceiveRoomMessages>[0]) as Promise<void>;
+
     try {
       // Retrieve messages from the server
       await new Promise<void>((resolve, reject) => {

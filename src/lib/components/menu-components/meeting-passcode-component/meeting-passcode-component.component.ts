@@ -1,5 +1,7 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 export interface MeetingPasscodeRenderContext {
   meetingPasscode: string;
@@ -38,12 +40,13 @@ export type MeetingPasscodeComponentType = (
 @Component({
   selector: 'app-meeting-passcode-component',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './meeting-passcode-component.component.html',
   styleUrls: ['./meeting-passcode-component.component.css'],
 })
 export class MeetingPasscodeComponent {
   @Input() meetingPasscode = '';
+  @Input() isDarkMode?: boolean;
   @Input() labelText?: string;
   @Input() containerAttributes?: { [key: string]: any };
   @Input() labelAttributes?: { [key: string]: any };
@@ -53,10 +56,42 @@ export class MeetingPasscodeComponent {
   @Input() renderInput?: TemplateRef<MeetingPasscodeRenderContext>;
   @Input() renderContent?: TemplateRef<MeetingPasscodeRenderContext>;
 
+  readonly copyIcon = faCopy;
+  readonly revealIcon = faEye;
+  readonly hideIcon = faEyeSlash;
+  isCopied = false;
+  isRevealed = false;
+
   get renderContext(): MeetingPasscodeRenderContext {
     return {
       meetingPasscode: this.meetingPasscode,
     };
+  }
+
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
+
+  async handleCopy(): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(this.meetingPasscode);
+      this.isCopied = true;
+      setTimeout(() => {
+        this.isCopied = false;
+      }, 2000);
+    } catch {
+      // Handle error silently
+    }
+  }
+
+  toggleVisibility(): void {
+    this.isRevealed = !this.isRevealed;
   }
 
   getLabelText(): string {
@@ -66,7 +101,9 @@ export class MeetingPasscodeComponent {
   getInputValue(): string {
     return this.inputAttributes?.['value'] !== undefined
       ? this.inputAttributes['value']
-      : this.meetingPasscode;
+      : this.isRevealed
+      ? this.meetingPasscode
+      : '•'.repeat(Math.max(this.meetingPasscode.length, 6));
   }
 
   getInputReadOnly(): boolean {

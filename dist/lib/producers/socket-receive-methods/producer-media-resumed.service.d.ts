@@ -83,7 +83,7 @@ export declare class ProducerMediaResumed {
      *
      * @returns {Promise<void>} A promise that resolves when the media has been resumed.
      */
-    producerMediaResumed: ({ name, parameters, }: ProducerMediaResumedOptions) => Promise<void>;
+    producerMediaResumed: ({ name, kind, parameters, }: ProducerMediaResumedOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ProducerMediaResumed, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ProducerMediaResumed>;
 }

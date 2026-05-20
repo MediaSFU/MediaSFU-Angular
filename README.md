@@ -1,3 +1,9 @@
+# MediaSFU Angular SDK · [mediasfu-angular on npm](https://www.npmjs.com/package/mediasfu-angular)
+
+**mediasfu-angular** is the Angular 17/18/19 WebRTC SDK for video conferencing, webinars, live streaming, broadcast, screen sharing, whiteboard, chat, recording, live subtitles, translation, and AI agent rooms — powered by MediaSFU Cloud or your self-hosted MediaSFU Open server. Install with `npm install mediasfu-angular`.
+
+---
+
 <p align="center">
   <img src="https://www.mediasfu.com/logo192.png" width="100" alt="MediaSFU Logo">
 </p>
@@ -37,49 +43,122 @@
 
 ---
 
-## 🚨 **BREAKING: AI Phone Agents at $0.10 per 1,000 minutes**
+# MediaSFU Angular SDK
 
-📞 **Call our live AI demos right now:**
-- 🇺🇸 **+1 (785) 369-1724** - Mixed Support Demo  
-- 🇬🇧 **+44 7445 146575** - AI Conversation Demo  
-- 🇨🇦 **+1 (587) 407-1990** - Technical Support Demo  
-- 🇨🇦 **+1 (647) 558-6650** - Friendly AI Chat Demo  
+**Prebuilt Angular SDK for WebRTC video conferencing, webinars, livestreams, chat, screen sharing, recording, breakout rooms, whiteboards, polls, live subtitles, and translation.**
 
-**Traditional providers charge $0.05 per minute. We charge $0.10 per 1,000 minutes. That's 500x cheaper.**
+MediaSFU Angular is an Angular video conferencing SDK with prebuilt room components for meetings, webinars, livestream-style broadcasts, and chat-first rooms. It gives you production-ready room UI plus the lower-level helpers needed to move from a full prebuilt experience to a deeply customized Angular app without rewriting the media stack.
 
-✅ **Deploy AI phone agents in 30 minutes**  
-✅ **Works with ANY SIP provider** (Twilio, Telnyx, Zadarma, etc.)  
-✅ **Seamless AI-to-human handoffs**  
-✅ **Real-time call analytics & transcription**  
+## Quick Start: First Working Room
 
-📖 **[Complete SIP/PSTN Documentation →](https://mediasfu.com/telephony)**
+```bash
+npm install mediasfu-angular
+```
+
+```typescript
+credentials = {
+  apiUserName: 'your-user',
+  apiKey: 'your-key',
+};
+```
+
+```html
+<app-mediasfu-generic
+  [credentials]="credentials"
+  [connectMediaSFU]="true"
+></app-mediasfu-generic>
+```
+
+That is the fastest path to a working Angular video conferencing room. Once the secure create/join path works, layer in branding, overrides, or a fully custom shell.
+
+## Pick the Right Angular Room Component
+
+Use this table to match each Angular room component to the product shape you are building.
+
+| Component | Best for | What users get | When to choose it |
+| --- | --- | --- | --- |
+| `app-mediasfu-generic` | General meetings, team calls, product defaults | Balanced room layout with the broadest starter path | Start here if you are unsure which room type fits best. |
+| `app-mediasfu-webinar` | Host-led presentations, audience participation, stage-centric events | Webinar-style room flow with participant management and moderation surfaces | Choose this when one or a few presenters lead a larger audience. |
+| `app-mediasfu-broadcast` | Livestream-style shows, creator dashboards, host-first production flows | Broadcast-oriented shell with invite/share and host control emphasis | Choose this when the host workflow matters more than equal participant presence. |
+| `app-mediasfu-chat` | Text-first support rooms, low-bandwidth collaboration, chat-centric experiences | Message-forward room UI with the same create/join/runtime foundation | Choose this when conversation is the product and audio/video are secondary. |
+| `app-mediasfu-conference` | Collaborative multi-speaker events, panels, classes, workshops | Multi-participant conference layout with richer shared-presence expectations | Choose this when many participants are expected to be visibly active. |
+
+## Least Confusing Start Path
+
+1. Start with `app-mediasfu-generic` and validate one successful create/join flow.
+2. Decide backend mode early: MediaSFU Cloud or self-hosted MediaSFU Open.
+3. Move to `app-mediasfu-webinar`, `app-mediasfu-broadcast`, or `app-mediasfu-chat` only after the base room flow is working.
+4. Use `uiOverrides`, custom cards, and `customMainComponent` before going fully headless.
+5. Switch to `returnUI="false"` only when you already know which MediaSFU runtime helpers your product needs.
+
+## Common Angular Product Shapes
+
+Use MediaSFU Angular when you need one of these product patterns:
+
+- Angular video meeting UI with secure create/join flow.
+- Angular webinar UI with host, audience, and moderation surfaces.
+- Angular broadcast UI for livestream or creator-style host workflows.
+- Angular chat room UI with MediaSFU room orchestration behind it.
+- Angular collaboration rooms with recording, screen share, whiteboard, polls, captions, and translation in one SDK.
+
+## Why teams use MediaSFU Angular
+
+- **Start fast** with prebuilt room components such as `MediasfuGeneric`, `MediasfuConference`, `MediasfuWebinar`, `MediasfuBroadcast`, and `MediasfuChat`.
+- **Customize progressively** with `uiOverrides`, custom cards, custom layouts, and shared room helper state.
+- **Go headless when needed** by setting `returnUI="false"` and wiring MediaSFU runtime helpers into your own Angular workspace.
+- **Ship collaboration features together**: voice, video, screen share, recording, whiteboard, breakout rooms, chat, polls, and translation in one SDK.
+
+## Choose Your Path
+
+- **Beginner**: install the package, render a prebuilt room, and connect to MediaSFU Cloud or your self-hosted server.
+- **Intermediate**: override cards, modals, and layout surfaces while keeping MediaSFU's room orchestration and transports.
+- **Advanced**: run the runtime headless, consume `sourceParameters`, and build a fully custom Angular UI on top of the same media/session core.
+
+## Important: Backend Required
+
+MediaSFU Angular is a frontend SDK. You still need a MediaSFU-compatible backend for signaling, media routing, and room lifecycle.
+
+| Option | Best for | Link |
+| --- | --- | --- |
+| **MediaSFU Cloud** | Managed production deployments, faster onboarding, less infrastructure work | [MediaSFU Cloud docs](https://www.mediasfu.com/documentation#rooms) |
+| **MediaSFU Open** | Self-hosting, local control, private infrastructure | [MediaSFU Open](https://github.com/MediaSFU/MediaSFUOpen) |
+
+## Start Here
+
+- Want the fastest path to a running room? Jump to [Quick Start](#quick-start-5-minutes).
+- Want copy-paste recipes for different integration levels? Use the [Usage Cookbook](#usage-cookbook) section just below.
+- Want to understand the Angular surface area first? Read [Quick Reference: Component Props & UI Overrides](#quick-reference-component-props--ui-overrides).
+- Want architecture and customization depth? Continue with the [Angular SDK Guide](#angular-sdk-guide).
+- Want self-hosted deployment context? Review [MediaSFU Open](https://github.com/MediaSFU/MediaSFUOpen) alongside this SDK guide.
+
+## Usage Cookbook
+
+Need recipe-style Angular guidance instead of reading the full guide front to back? Use this quick picker:
+
+| Goal | Recommended setup |
+| --- | --- |
+| Ship the bundled room fast | Render `app-mediasfu-generic` with `credentials` and `connectMediaSFU="true"`. |
+| Use MediaSFU Open | Keep the same component and pass `localLink` to your self-hosted server. |
+| Run the runtime headless | Set `returnUI="false"`, pass `noUIPreJoinOptions`, and capture helpers through `updateSourceParameters`. |
+| Replace the main room shell | Keep MediaSFU's transports and room lifecycle, but pass `customMainComponent`. |
+| Override selected surfaces | Keep the default shell and layer `uiOverrides`, `customVideoCard`, `customAudioCard`, `customMiniCard`, and `containerStyle`. |
+
+Source-repo readers can also use the standalone `USAGE_COOKBOOK.md` file for copy-paste examples.
 
 ---
 
-MediaSFU offers a cutting-edge streaming experience that empowers users to customize their recordings and engage their audience with high-quality streams. Whether you're a content creator, educator, or business professional, MediaSFU provides the tools you need to elevate your streaming game.
+# Angular SDK Guide
 
-<div style="text-align: center;">
-
-<img src="https://mediasfu.com/images/header_1.jpg" alt="Preview Page" title="Preview Page" style="max-height: 600px;">
-
-</div>
-
----
-
-# MediaSFU Angular Module Documentation
-
-## Unlock the Power of MediaSFU Community Edition  
-
-**MediaSFU Community Edition is free and open-source**—perfect for developers who want to run their own media server without upfront costs. With robust features and simple setup, you can launch your media solution in minutes. **Ready to scale?** Upgrade seamlessly to **MediaSFU Cloud** for enterprise-grade performance and global scalability.  
-
-**[Get started now on GitHub!](https://github.com/MediaSFU/MediaSFUOpen)** 
-
-### ✅ Angular SDK Setup Guide  
-Coming soon! Watch this space for our comprehensive video tutorial on setting up the Angular SDK.
+MediaSFU Community Edition remains available if you want to self-host the backend and keep full infrastructure control. If you want managed infrastructure, use MediaSFU Cloud with the same Angular SDK surface.
 
 ---
 
 ## Table of Contents
+- [Why teams use MediaSFU Angular](#why-teams-use-mediasfu-angular)
+- [Choose Your Path](#choose-your-path)
+- [Important: Backend Required](#important-backend-required)
+- [Start Here](#start-here)
+- [Usage Cookbook](#usage-cookbook)
 - [Quick Reference: Component Props & UI Overrides](#quick-reference-component-props--ui-overrides)
 - [Features](#features)
 - [Getting Started](#getting-started)
@@ -114,14 +193,15 @@ Every primary MediaSFU UI export—`MediasfuGeneric`, `MediasfuBroadcast`, `Medi
 | `useLocalUIMode` | `boolean` | `false` | Run the interface in local/demo mode with no remote signaling. |
 | `seedData`, `useSeed` | `SeedData`, `boolean` | `{}`, `false` | Pre-populate the UI for demos, snapshot tests, or onboarding tours. |
 | `imgSrc` | `string` | `https://mediasfu.com/images/logo192.png` | Default artwork used across pre-join and modal flows. |
-| `sourceParameters` | `Record<string, unknown>` | `undefined` | Shared helper bag (media devices, participant helpers, layout handlers). Pair with `updateSourceParameters` to mirror the SDK's internal utilities. |
-| `updateSourceParameters` | `EventEmitter` | `undefined` | Receive the latest helper bundle so you can bridge MediaSFU logic into your own components. |
+| `sourceParameters` | `Record<string, unknown>` | `{}` | Shared helper bag (media devices, participant helpers, layout handlers). Pair with `updateSourceParameters` to mirror the SDK's internal utilities. |
+| `updateSourceParameters` | `(data: Record<string, unknown>) => void` | `() => {}` | Receive the latest helper bundle so you can bridge MediaSFU logic into your own components. |
 | `returnUI` | `boolean` | `true` | When `false`, mount the logic only—a perfect stepping stone to a fully bespoke interface. |
-| `noUIPreJoinOptions` | `CreateJoinRoomParameters \| JoinLocalEventRoomParameters` | `undefined` | Feed pre-join data when `returnUI` is `false` and you want to bypass the on-screen wizard. |
-| `joinRoom`, `createRoom` | `Function` | `undefined` | Inject your own networking layers for joining or creating rooms. |
-| `customComponent` | `ComponentType` | `undefined` | Replace the entire UI while retaining transports, sockets, and helpers. |
+| `noUIPreJoinOptions` | `CreateMediaSFURoomOptions \| JoinMediaSFURoomOptions` | `undefined` | Feed pre-join data when `returnUI` is `false` and you want to bypass the on-screen wizard. |
+| `joinMediaSFURoom`, `createMediaSFURoom` | `Function` | `undefined` | Inject your own networking layers for joining or creating rooms. |
+| `canUsePersonalTranslation`, `personalTranslationUsername` | `boolean`, `string` | `false`, `undefined` | Seed translation-aware entry flows when you want personal translation defaults available at startup. |
+| `customMainComponent` | `ComponentType` | `undefined` | Replace the main UI shell while retaining MediaSFU transports, sockets, and room helpers. |
 | `customVideoCard`, `customAudioCard`, `customMiniCard` | `ComponentType` | `undefined` | Override participant card renders to add metadata, CTAs, or badges. |
-| `[customStyles]` | `Record<string, any>` | `undefined` | Apply inline styles to the root wrapper (dashboards, split views, etc.). |
+| `[containerStyle]` | `Record<string, any>` | `undefined` | Apply inline styles to the root wrapper (dashboards, split views, etc.). |
 | `[uiOverrides]` | `MediasfuUICustomOverrides` | `undefined` | Targeted component/function overrides described below. |
 
 > **Power combo:** Set `returnUI="false"` to run MediaSFU logic headless, capture helpers via `updateSourceParameters` output, and selectively bring UI pieces back with `uiOverrides`. That gives you progressive migration with minimal code churn.
@@ -136,7 +216,7 @@ Bring the types into your project to unlock full IntelliSense for every override
 
 ### Custom UI Playbook
 
-Use a toggle-driven "playbook" component to experiment with MediaSFU's customization layers. Flip a couple of booleans and you can watch the SDK jump between prebuilt layouts, headless logic, or a fully bespoke workspace driven by `customComponent`.
+Use a toggle-driven "playbook" component to experiment with MediaSFU's customization layers. Flip a couple of booleans and you can watch the SDK jump between prebuilt layouts, headless logic, or a fully bespoke workspace driven by `customMainComponent`.
 
 #### What the playbook demonstrates
 
@@ -144,7 +224,7 @@ Use a toggle-driven "playbook" component to experiment with MediaSFU's customiza
 - **Experience selector**: the `selectedExperience` switch renders `MediasfuGeneric`, `MediasfuBroadcast`, `MediasfuWebinar`, `MediasfuConference`, or `MediasfuChat` without touching the rest of your stack.
 - **UI strategy flags**: booleans like `showPrebuiltUI`, `enableFullCustomUI`, and `enableNoUIPreJoin` demonstrate how to run the MediaSFU logic with or without the bundled UI.
 - **Layered overrides**: toggles enable the custom video/audio/mini cards, drop-in `uiOverrides` for layout and modal surfaces, container styling, and backend proxy helpers.
-- **Custom workspace demo**: a `customComponent` receives live MediaSFU helpers so you can build dashboards, CRM surfaces, or any bespoke host interface.
+- **Custom workspace demo**: a `customMainComponent` receives live MediaSFU helpers so you can build dashboards, CRM surfaces, or any bespoke host interface.
 - **Debug panel & helpers**: optional JSON panel exposes the `updateSourceParameters` payload so you can see exactly what to wire into your own components.
 
 #### Try it quickly
@@ -160,7 +240,7 @@ Use a toggle-driven "playbook" component to experiment with MediaSFU's customiza
         [connectMediaSFU]="currentPreset.connectMediaSFU"
         [returnUI]="showPrebuiltUI"
         [uiOverrides]="overrides"
-        [customStyles]="containerStyles">
+        [containerStyle]="containerStyle">
       </app-mediasfu-generic>
       
       <app-mediasfu-broadcast *ngSwitchCase="'broadcast'"
@@ -209,7 +289,7 @@ export class CustomUIPlaybookComponent {
     } : undefined,
   };
 
-  containerStyles = {
+  containerStyle = {
     background: 'linear-gradient(135deg, #0f172a, #1e3a8a)',
     minHeight: '100vh'
   };
@@ -231,8 +311,8 @@ Use the same playbook to validate bespoke cards, override bundles, and fully cus
       [customVideoCard]="videoCard"
       [customAudioCard]="audioCard"
       [customMiniCard]="miniCard"
-      [customComponent]="enableFullCustomUI ? customWorkspace : undefined"
-      [customStyles]="containerStyles"
+      [customMainComponent]="enableFullCustomUI ? customWorkspace : undefined"
+      [containerStyle]="containerStyle"
       [uiOverrides]="uiOverrides">
     </app-mediasfu-generic>
   `
@@ -247,7 +327,7 @@ export class AdvancedPlaybookComponent {
   miniCard = MiniCardComponent;
   customWorkspace = CustomWorkspaceComponent;
 
-  containerStyles = {
+  containerStyle = {
     background: '#0f172a',
     borderRadius: '32px',
     overflow: 'hidden'
@@ -318,6 +398,7 @@ Each key accepts a `CustomComponentOverride<Props>` or `CustomFunctionOverride<F
 | `alert` | `AlertComponent` | Route alerts through your notification system. |
 | `menuModal` | `MenuModal` | Redesign quick-action trays. |
 | `eventSettingsModal` | `EventSettingsModal` | Extend host tools with your own settings. |
+| `translationSettingsModal` | `TranslationSettingsModal` | Customize spoken-language, subtitle, and listening-preference controls. |
 | `requestsModal` | `RequestsModal` | Build moderation queues tailored to your workflows. |
 | `waitingRoomModal` | `WaitingRoomModal` | Deliver custom waiting-room experiences. |
 | `coHostModal` | `CoHostModal` | Manage co-hosts with bespoke UX. |
@@ -342,8 +423,8 @@ Each key accepts a `CustomComponentOverride<Props>` or `CustomFunctionOverride<F
 | Key | Default component | Typical use |
 | --- | --- | --- |
 | `welcomePage` | `WelcomePage` | Provide a fully branded welcome/marketing splash. |
-| `preJoinPage` | `PrejoinPage` | Override the wizard used before joining live sessions. |
-| `customMenuButtonsRenderer` | `ControlButtonsAltComponent` | Supply a bespoke renderer for menu button groups without overriding each button. |
+| `preJoinPage` | `PreJoinPage` | Override the wizard used before joining live sessions. |
+| `customMenuButtonsRenderer` | `Menu button group renderer` | Supply a bespoke renderer for grouped menu actions without overriding each button one by one. |
 
 #### Function overrides
 
@@ -526,12 +607,15 @@ Instructions on how to install the module using npm.
 ### 1. **Add the package to your project**
 
     ```bash
-    npm install mediasfu-angular
+  npm install mediasfu-angular bootstrap ngx-cookie-service socket.io-client mediasoup-client @fortawesome/angular-fontawesome @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons
+
+  # Optional but recommended for virtual backgrounds and scanner-based flows
+  npm install @mediapipe/selfie_segmentation @zxing/ngx-scanner
     ```
 
 ### 2. **Bootstrap Integration**
 
-    The `mediasfu-angular` package requires Bootstrap for styling. Bootstrap is included by default with the package, so you do not need to install it separately. Ensure that Bootstrap's CSS is correctly added to your project's styles.
+  The `mediasfu-angular` package expects Bootstrap as a peer dependency. If your Angular app does not already ship with Bootstrap, install it and ensure Bootstrap's CSS is added to your project's styles.
 
     1. **Check `angular.json`:**
 
@@ -557,12 +641,12 @@ Instructions on how to install the module using npm.
       }
       ```
 
-   **Note:** The `mediasfu-angular` package should handle the Bootstrap's package installation automatically. If it's not present, you may need to add it manually install Bootstrap.
+  **Note:** `mediasfu-angular` does not bundle Bootstrap for you. Keep the CSS import explicit so your app and the SDK agree on styling.
 
 
 ### 3. **Configure MediaSFU's PreJoinPage Requirements**
 
-    If you intend to use MediaSFU's `PreJoinPage` component, additional configuration is required. You need to provide the `HttpClient` and `CookieService` providers in your application's configuration. These packages should have been installed by default as well else add manually. 
+    If you intend to use MediaSFU's `PreJoinPage` component, additional configuration is required. Provide `HttpClient` and `CookieService` in your application's configuration, and make sure `ngx-cookie-service` is installed in your Angular app.
 
     #### Update `app.config.ts`
 
@@ -745,7 +829,7 @@ import {
 
 MediaSFU offers three progressive levels of customization:
 
-##### Mode 1: Default UI (Simplest)
+##### Mode 1: Default UI (Beginner / Fastest Path)
 Use MediaSFU's complete pre-built interface - perfect for rapid development.
 
 ```typescript
@@ -768,7 +852,7 @@ export class AppComponent {
 - ✅ Need a production-ready UI quickly
 - ✅ Standard video conferencing features are sufficient
 
-##### Mode 2: Custom UI with MediaSFU Backend (Most Flexible)
+##### Mode 2: Headless Runtime + Custom UI (Intermediate)
 Build your own UI while using MediaSFU's powerful backend infrastructure.
 
 ```typescript
@@ -838,13 +922,14 @@ export class AppComponent implements OnInit {
 - ✅ Building a custom branded experience
 - ✅ Integrating into existing app design
 
-##### Mode 3: Component Replacement (Balanced)
+##### Mode 3: Custom Main Shell (Advanced)
 Replace specific MediaSFU components while keeping the rest of the infrastructure.
 
 ```typescript
 import { Component } from '@angular/core';
 import { 
   MediasfuGeneric, 
+  PreJoinPage,
   FlexibleVideo, 
   FlexibleGrid 
 } from 'mediasfu-angular';
@@ -912,7 +997,7 @@ export class CustomMainComponent {
     <app-mediasfu-generic
       [credentials]="credentials"
       [PrejoinPage]="PreJoinPage"
-      [customComponent]="CustomMainComponent">
+      [customMainComponent]="CustomMainComponent">
     </app-mediasfu-generic>
   `,
 })
@@ -968,11 +1053,11 @@ The `sourceParameters` object (or `parameters` in custom components) is your gat
 // In Mode 2 (Custom UI): Access via sourceParameters
 sourceParameters?.clickVideo({ parameters: sourceParameters });
 
-// In Mode 3 (Component Replacement): Passed to your custom component
+// In Mode 3 (Custom Main Shell): Passed to your custom main component
 @Component({
   template: `<button (click)="toggleVideo()">Toggle</button>`
 })
-export class CustomComponent {
+export class CustomRoomShellComponent {
   @Input() parameters: any;
   
   toggleVideo() {
@@ -2319,7 +2404,7 @@ export type PreJoinPageType = (options: PreJoinPageOptions) => HTMLElement;
 })
 export class PreJoinPage implements OnInit {
   @Input() parameters: PreJoinPageParameters = {} as PreJoinPageParameters;
-  @Input() credentials: Credentials = { apiUserName: 'yourAPIUSERNAME', apiKey: 'yourAPIKEY' };
+  @Input() credentials: Credentials = { apiUserName: '', apiKey: '' };
   @Input() localLink: string | undefined = "";
   @Input() connectMediaSFU: boolean | undefined = true;
   @Input() returnUI?: boolean;
@@ -3273,7 +3358,7 @@ export default AppComponent;
  *       return res.status(401).json({ error: "Invalid or expired credentials" });
  *     }
  *
- *     const response = await fetch("https://mediasfu.com/v1/rooms", {
+ *     const response = await fetch("https://mediasfu.com/v1/rooms/", {
  *       method: "POST",
  *       headers: {
  *         "Content-Type": "application/json",
@@ -3362,7 +3447,7 @@ export default AppComponent;
  *     localLink = '',
  * }) => {
  *     try {
- *         let finalLink = 'https://mediasfu.com/v1/rooms/join';
+ *         let finalLink = 'https://mediasfu.com/v1/rooms/';
  *
  *         // Update finalLink if using a local server
  *         if (localLink) {
@@ -4890,14 +4975,28 @@ https://github.com/MediaSFU/MediaSFU-ReactJS/assets/157974639/a6396722-5b2f-4e93
 
 # Contributing <a name="contributing"></a>
 
-We welcome contributions from the community to improve the project! If you'd like to contribute, please check out our [GitHub repository](https://github.com/MediaSFU-Angular) and follow the guidelines outlined in the README.
+We welcome contributions from the community to improve the project! If you'd like to contribute, please check out our [GitHub repository](https://github.com/MediaSFU/MediaSFU-Angular) and follow the guidelines outlined in the README.
 
 If you encounter any issues or have suggestions for improvement, please feel free to open an issue on GitHub.
 
 We appreciate your interest in contributing to the project!
 
 If you need further assistance or have any questions, feel free to ask!
-```
+
+---
+
+## Related SDKs
+
+| Package | Framework | npm |
+|---------|-----------|-----|
+| [mediasfu-reactjs](https://github.com/MediaSFU/MediaSFU-ReactJS) | React 18/19 | [`npm install mediasfu-reactjs`](https://www.npmjs.com/package/mediasfu-reactjs) |
+| [mediasfu-vue](https://github.com/MediaSFU/MediaSFU-Vue) | Vue 3 | [`npm install mediasfu-vue`](https://www.npmjs.com/package/mediasfu-vue) |
+| **[mediasfu-angular](https://github.com/MediaSFU/MediaSFU-Angular)** | **Angular 17+** | **this package** |
+| [mediasfu-shared](https://github.com/MediaSFU/MediaSFU-Shared) | Framework-agnostic | [`npm install mediasfu-shared`](https://www.npmjs.com/package/mediasfu-shared) |
+
+## License
+
+MIT © [MediaSFU](https://www.mediasfu.com)
 
 
 

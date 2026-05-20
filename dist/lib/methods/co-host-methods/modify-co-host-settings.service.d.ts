@@ -80,7 +80,7 @@ export declare class ModifyCoHostSettings {
      * - A socket event is emitted to update the co-host information.
      * - The co-host modal is closed after updating the settings.
      */
-    modifyCoHostSettings({ roomName, showAlert, selectedParticipant, coHost, coHostResponsibility, updateIsCoHostModalVisible, updateCoHostResponsibility, updateCoHost, socket, }: ModifyCoHostSettingsOptions): Promise<void>;
+    modifyCoHostSettings({ roomName, selectedParticipant, coHost, coHostResponsibility, updateIsCoHostModalVisible, updateCoHostResponsibility, updateCoHost, socket, }: ModifyCoHostSettingsOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModifyCoHostSettings, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ModifyCoHostSettings>;
 }

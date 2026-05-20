@@ -34,6 +34,7 @@ import {
 } from '../../@types/types';
 import { Socket } from 'socket.io-client';
 import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import { TranslationRoomConfig } from '../../producers/socket-receive-methods/translation-receive-methods.service';
 
 export interface InitialValuesStateType {
   roomName: string;
@@ -257,6 +258,17 @@ export interface InitialValuesStateType {
   videoSetting: string;
   screenshareSetting: string;
   chatSetting: string;
+  translationSupported: boolean;
+  translationConfig: TranslationRoomConfig | null;
+  mySpokenLanguage: string;
+  mySpokenLanguageEnabled: boolean;
+  myDefaultOutputLanguage: string | null;
+  myDefaultListenLanguage: string | null;
+  listenPreferences: Map<string, string>;
+  translationProducerMap: Record<string, Record<string, string>>;
+  availableTranslationChannels: Map<string, { languages: string[]; originalProducerId: string }>;
+  canUsePersonalTranslation: boolean;
+  personalTranslationUsername?: string;
   displayOption: string;
   autoWave: boolean;
   forceFullDisplay: boolean;
@@ -273,13 +285,22 @@ export interface InitialValuesStateType {
   totalReqWait: number;
   alertVisible: boolean;
   alertMessage: string;
-  alertType: 'success' | 'danger';
+  alertType: 'success' | 'danger' | 'info' | 'warning';
+  alertPosition:
+    | 'top'
+    | 'bottom'
+    | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'center';
   alertDuration: number;
   progressTimerVisible: boolean;
   progressTimerValue: number;
   isMenuModalVisible: boolean;
   isRecordingModalVisible: boolean;
   isSettingsModalVisible: boolean;
+  isTranslationSettingsModalVisible: boolean;
   isRequestsModalVisible: boolean;
   isWaitingModalVisible: boolean;
   isCoHostModalVisible: boolean;
@@ -657,6 +678,17 @@ export const initialValuesState: InitialValuesStateType = {
   videoSetting: 'allow',
   screenshareSetting: 'allow',
   chatSetting: 'allow',
+  translationSupported: false,
+  translationConfig: null,
+  mySpokenLanguage: 'en',
+  mySpokenLanguageEnabled: false,
+  myDefaultOutputLanguage: null,
+  myDefaultListenLanguage: null,
+  listenPreferences: new Map(),
+  translationProducerMap: {},
+  availableTranslationChannels: new Map(),
+  canUsePersonalTranslation: false,
+  personalTranslationUsername: undefined,
   displayOption: 'media',
   autoWave: true,
   forceFullDisplay: true,
@@ -674,12 +706,14 @@ export const initialValuesState: InitialValuesStateType = {
   alertVisible: false,
   alertMessage: '',
   alertType: 'success',
+  alertPosition: 'top',
   alertDuration: 3000,
   progressTimerVisible: true,
   progressTimerValue: 0,
   isMenuModalVisible: false,
   isRecordingModalVisible: false,
   isSettingsModalVisible: false,
+  isTranslationSettingsModalVisible: false,
   isRequestsModalVisible: false,
   isWaitingModalVisible: false,
   isCoHostModalVisible: false,

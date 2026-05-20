@@ -15,46 +15,63 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="editRoomModalVisible && !customTemplate" class="modal-container" [ngStyle]="getCombinedOverlayStyle()">
-  <div class="modal-content text-dark" [ngStyle]="getCombinedContentStyle()">
-    <div class="modal-header">
-      <h5 class="modal-title">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]="faPen"></fa-icon></h5>
-      <button type="button" class="close" (click)="closeModal()">
+<div
+  *ngIf="editRoomModalVisible && !customTemplate"
+  class="modal-container"
+  [class.modal-container--dark]="resolvedIsDarkMode"
+  [class.modal-container--light]="!resolvedIsDarkMode"
+  [ngStyle]="getCombinedOverlayStyle()"
+>
+  <div
+    class="modal-content edit-room-modal__content"
+    [class.edit-room-modal__content--embedded]="isEmbedded()"
+    [ngStyle]="getCombinedContentStyle()"
+  >
+    <div *ngIf="!isEmbedded()" class="modal-header edit-room-modal__header">
+      <h5 class="modal-title edit-room-modal__title">Edit Room {{ currentRoomIndex + 1 }} <fa-icon [icon]="faPen"></fa-icon></h5>
+      <button type="button" class="edit-room-modal__close" (click)="closeModal()">
         <fa-icon [icon]="faTimes"></fa-icon>
       </button>
     </div>
-    <div class="modal-body">
-      <div class="list-container">
-        <h5>Assigned Participants <fa-icon [icon]="faUsers"></fa-icon></h5>
-        <ul class="list-group">
-          <li *ngFor="let participant of currentRoom; let i = index" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+
+    <div *ngIf="isEmbedded()" class="edit-room-modal__embedded-heading">
+      <span class="edit-room-modal__embedded-badge">Inline editor</span>
+      <span class="edit-room-modal__embedded-title">Room {{ currentRoomIndex + 1 }} assignments</span>
+    </div>
+
+    <div class="modal-body edit-room-modal__body" [class.edit-room-modal__body--embedded]="isEmbedded()">
+      <div class="list-container edit-room-modal__list-container">
+        <h5>{{ isEmbedded() ? 'Assigned' : 'Assigned Participants' }} <fa-icon [icon]="faUsers"></fa-icon></h5>
+        <ul class="list-group edit-room-modal__list">
+          <li *ngFor="let participant of currentRoom; let i = index" class="list-group-item edit-room-modal__item d-flex justify-content-between align-items-center">
             {{ participant.name }}
-            <button class="btn btn-danger btn-sm" (click)="handleRemoveParticipant(currentRoomIndex, participant)">
+            <button class="edit-room-modal__icon-button edit-room-modal__icon-button--danger" (click)="handleRemoveParticipant(currentRoomIndex, participant)" type="button">
               <fa-icon [icon]="faTimes"></fa-icon>
             </button>
           </li>
-          <li *ngIf="currentRoom.length === 0" class="list-group-item d-flex justify-content-between align-items-center text-dark">
-            None assigned
+          <li *ngIf="currentRoom.length === 0" class="list-group-item edit-room-modal__item d-flex justify-content-between align-items-center">
+            {{ isEmbedded() ? 'No participants' : 'None assigned' }}
           </li>
         </ul>
       </div>
-      <div class="list-container">
-        <h5>Unassigned Participants <fa-icon [icon]="faUsers"></fa-icon></h5>
-        <ul class="list-group">
-          <li *ngFor="let participant of unassignedParticipants(); let i = index" class="list-group-item d-flex justify-content-between align-items-center text-dark">
+      <div class="list-container edit-room-modal__list-container">
+        <h5>{{ isEmbedded() ? 'Unassigned' : 'Unassigned Participants' }} <fa-icon [icon]="faUsers"></fa-icon></h5>
+        <ul class="list-group edit-room-modal__list">
+          <li *ngFor="let participant of unassignedParticipants(); let i = index" class="list-group-item edit-room-modal__item d-flex justify-content-between align-items-center">
             {{ participant.name }}
-            <button class="btn btn-primary btn-sm" (click)="handleAddParticipant(currentRoomIndex, participant)">
+            <button class="edit-room-modal__icon-button edit-room-modal__icon-button--primary" (click)="handleAddParticipant(currentRoomIndex, participant)" type="button">
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </li>
-          <li *ngIf="unassignedParticipants().length === 0" class="list-group-item d-flex justify-content-between align-items-center text-dark">
-            None pending
+          <li *ngIf="unassignedParticipants().length === 0" class="list-group-item edit-room-modal__item d-flex justify-content-between align-items-center">
+            {{ isEmbedded() ? 'None available' : 'None pending' }}
           </li>
         </ul>
       </div>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+
+    <div *ngIf="!isEmbedded()" class="modal-footer edit-room-modal__footer">
+      <button type="button" class="edit-room-modal__button" (click)="closeModal()">Close</button>
     </div>
   </div>
 </div>

@@ -1,9 +1,6 @@
+import type { LaunchWaitingOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchWaitingOptions {
-    updateIsWaitingModalVisible: (visible: boolean) => void;
-    isWaitingModalVisible: boolean;
-}
-export type LaunchWaitingType = (options: LaunchWaitingOptions) => void;
+export type { LaunchWaitingOptions, LaunchWaitingType } from 'mediasfu-shared';
 /**
  * Service to toggle the visibility of a waiting modal.
  *

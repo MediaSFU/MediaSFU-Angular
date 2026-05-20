@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WaitingRoomParticipant } from '../../@types/types';
+import { allWaitingRoomMembers as sharedAllWaitingRoomMembers } from 'mediasfu-shared';
 export interface AllWaitingRoomMembersOptions {
   waitingParticipants: WaitingRoomParticipant[];
   updateWaitingRoomList: (participants: WaitingRoomParticipant[]) => void;
@@ -55,13 +56,10 @@ export class AllWaitingRoomMembers {
     updateWaitingRoomList,
     updateTotalReqWait,
   }: AllWaitingRoomMembersOptions): Promise<void> => {
-    // Calculate the total number of waiting room participants
-    const totalReqs = waitingParticipants.length;
-
-    // Update the waiting room participants list
-    updateWaitingRoomList(waitingParticipants);
-
-    // Update the total count of waiting room participants
-    updateTotalReqWait(totalReqs);
+    return sharedAllWaitingRoomMembers({
+      waitingParticipants,
+      updateWaitingRoomList,
+      updateTotalReqWait,
+    });
   };
 }

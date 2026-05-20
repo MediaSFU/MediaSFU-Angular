@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Request, WaitingRoomParticipant } from '../../@types/types';
+import { participantRequested as sharedParticipantRequested } from 'mediasfu-shared';
 export interface ParticipantRequestedOptions {
   userRequest: Request;
 
@@ -67,12 +68,12 @@ export class ParticipantRequested {
     updateTotalReqWait,
     updateRequestList,
   }: ParticipantRequestedOptions): Promise<void> => {
-    // Add the user request to the request list
-    const updatedRequestList = [...requestList, userRequest];
-    updateRequestList(updatedRequestList);
-
-    // Update the total count of requests and waiting room participants
-    const reqCount = updatedRequestList.length + waitingRoomList.length;
-    updateTotalReqWait(reqCount);
+    return sharedParticipantRequested({
+      userRequest,
+      requestList,
+      waitingRoomList,
+      updateTotalReqWait,
+      updateRequestList,
+    });
   };
 }

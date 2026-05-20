@@ -8,6 +8,7 @@ import {
   Participant,
   ConsumeSocket,
 } from '../../@types/types';
+import { updateConsumingDomains as sharedUpdateConsumingDomains } from 'mediasfu-shared';
 
 export interface UpdateConsumingDomainsParameters
   extends ConnectIpsParameters,
@@ -111,31 +112,13 @@ export class UpdateConsumingDomains {
     apiKey,
     apiToken,
   }: UpdateConsumingDomainsOptions): Promise<void> => {
-    let { participants, getDomains, consume_sockets, connectIps } = parameters;
-
-    parameters = parameters.getUpdatedAllParams();
-    consume_sockets = parameters.consume_sockets;
-
-    try {
-      // Check if participants array is not empty
-      if (participants.length > 0) {
-        // Check if alt_domains has keys and remove duplicates
-        if (Object.keys(alt_domains).length > 0) {
-          await getDomains({ domains, alt_domains, apiUserName, apiKey, apiToken, parameters });
-        } else {
-          await connectIps({
-            consume_sockets,
-            remIP: domains,
-            parameters,
-            apiUserName,
-            apiKey,
-            apiToken,
-          });
-        }
-      }
-    } catch (error) {
-      console.log('Error in updateConsumingDomains: ', error);
-      // throw new Error('Failed to update consuming domains.');
-    }
+    return sharedUpdateConsumingDomains<UpdateConsumingDomainsParameters, Participant, ConsumeSocket>({
+      domains,
+      alt_domains,
+      apiUserName,
+      apiKey,
+      apiToken,
+      parameters,
+    });
   };
 }

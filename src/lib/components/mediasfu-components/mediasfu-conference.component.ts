@@ -37,12 +37,13 @@ import {
   faBars,
   faComments,
   faChartBar,
+  faSun,
+  faMoon,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
 
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
-import { LoadingModal } from '../display-components/loading-modal/loading-modal.component';
 import { ControlButtonsComponent } from '../display-components/control-buttons-component/control-buttons-component.component';
 import { ControlButtonsAltComponent } from '../display-components/control-buttons-alt-component/control-buttons-alt-component.component';
 import { OtherGridComponent } from '../display-components/other-grid-component/other-grid-component.component';
@@ -50,37 +51,39 @@ import { MainScreenComponent } from '../display-components/main-screen-component
 import { MainGridComponent } from '../display-components/main-grid-component/main-grid-component.component';
 import { SubAspectComponent } from '../display-components/sub-aspect-component/sub-aspect-component.component';
 import { MainContainerComponent } from '../display-components/main-container-component/main-container-component.component';
-import { AlertComponent } from '../display-components/alert-component/alert.component.component';
-import { MenuModal } from '../menu-components/menu-modal/menu-modal.component';
-import { RecordingModal } from '../recording-components/recording-modal/recording-modal.component';
-import { RequestsModal } from '../requests-components/requests-modal/requests-modal.component';
-import { WaitingRoomModal } from '../waiting-components/waiting-room-modal.component';
-import { DisplaySettingsModal } from '../display-settings-components/display-settings-modal.component';
-import { EventSettingsModal } from '../event-settings-components/event-settings-modal/event-settings-modal.component';
-import { CoHostModal } from '../co-host-components/co-host-modal/co-host-modal.component';
-import { ParticipantsModal } from '../participants-components/participants-modal/participants-modal.component';
-import { MessagesModal } from '../message-components/messages-modal/messages-modal.component';
-import { MediaSettingsModal } from '../media-settings-components/media-settings-modal/media-settings-modal.component';
-import { ConfirmExitModal } from '../exit-components/confirm-exit-modal/confirm-exit-modal.component';
-import { ConfirmHereModal } from '../misc-components/confirm-here-modal/confirm-here-modal.component';
-import { ShareEventModal } from '../misc-components/share-event-modal/share-event-modal.component';
+import { ModernAlertComponent } from '../../modern/display-components/modern-alert.component';
+import { ModernLoadingModalComponent } from '../../modern/display-components/modern-loading-modal.component';
+import { ModernCoHostModalComponent } from '../../modern/modal-components/modern-co-host-modal.component';
+import { ModernConfirmExitModalComponent } from '../../modern/modal-components/modern-confirm-exit-modal.component';
+import { ModernConfirmHereModalComponent } from '../../modern/modal-components/modern-confirm-here-modal.component';
+import { ModernEventSettingsModalComponent } from '../../modern/modal-components/modern-event-settings-modal.component';
+import { ModernMediaSettingsModalComponent } from '../../modern/modal-components/modern-media-settings-modal.component';
+import { ModernMenuModalComponent } from '../../modern/modal-components/modern-menu-modal.component';
+import { ModernMessagesModalComponent } from '../../modern/modal-components/modern-messages-modal.component';
+import { ModernPollModalComponent } from '../../modern/modal-components/modern-poll-modal.component';
+import { ModernParticipantsModalComponent } from '../../modern/modal-components/modern-participants-modal.component';
+import { ModernRecordingModalComponent } from '../../modern/modal-components/modern-recording-modal.component';
+import { ModernRequestsModalComponent } from '../../modern/modal-components/modern-requests-modal.component';
+import { ModernShareEventModalComponent } from '../../modern/modal-components/modern-share-event-modal.component';
+import { ModernWaitingRoomModalComponent } from '../../modern/modal-components/modern-waiting-room-modal.component';
 import {
   WelcomePage,
   WelcomePageOptions,
 } from '../misc-components/welcome-page/welcome-page.component';
 
-import { PollModal } from '../polls-components/poll-modal/poll-modal.component';
 import { BackgroundModal } from '../background-components/background-modal/background-modal.component';
 import { BreakoutRoomsModal } from '../breakout-components/breakout-rooms-modal.component';
 import { ConfigureWhiteboardModal } from '../whiteboard-components/configure-whiteboard-modal/configure-whiteboard-modal.component';
 import { Whiteboard } from '../whiteboard-components/whiteboard/whiteboard.component';
+import { ModernDisplaySettingsModalComponent } from '../../modern/modal-components/modern-display-settings-modal.component';
 import { Screenboard } from '../screenboard-components/screenboard/screenboard.component';
 import { ScreenboardModal } from '../screenboard-components/screenboard-modal/screenboard-modal.component';
 // pagination and display of media (samples)
-import { Pagination } from '../display-components/pagination/pagination.component';
 import { FlexibleGrid } from '../display-components/flexible-grid/flexible-grid.component';
 import { FlexibleVideo } from '../display-components/flexible-video/flexible-video.component';
 import { AudioGrid } from '../display-components/audio-grid/audio-grid.component';
+import { ModernParticipantsCounterBadgeComponent } from '../../modern/display-components/modern-participants-counter-badge.component';
+import { ModernPaginationComponent } from '../../modern/display-components/modern-pagination.component';
 
 import { MenuWidget } from '../display-components/control-widgets/menu-widget.component';
 import { MessageWidget } from '../display-components/control-widgets/message-widget.component';
@@ -377,27 +380,28 @@ export type MediasfuConferenceOptions = {
     WithOverrideDirective,
     BreakoutRoomsModal,
     BackgroundModal,
-    CoHostModal,
-    AlertComponent,
+    ModernCoHostModalComponent,
+    ModernAlertComponent,
     AudioGrid,
     ControlButtonsComponent,
     FlexibleGrid,
     FlexibleVideo,
-    LoadingModal,
-    Pagination,
+    ModernLoadingModalComponent,
+    ModernPaginationComponent,
+    ModernParticipantsCounterBadgeComponent,
     SubAspectComponent,
-    DisplaySettingsModal,
-    EventSettingsModal,
-    ConfirmExitModal,
-    MediaSettingsModal,
-    MenuModal,
-    MessagesModal,
-    ConfirmHereModal,
-    ShareEventModal,
-    ParticipantsModal,
-    PollModal,
-    RecordingModal,
-    RequestsModal,
+    ModernDisplaySettingsModalComponent,
+    ModernEventSettingsModalComponent,
+    ModernConfirmExitModalComponent,
+    ModernMediaSettingsModalComponent,
+    ModernMenuModalComponent,
+    ModernMessagesModalComponent,
+    ModernConfirmHereModalComponent,
+    ModernShareEventModalComponent,
+    ModernParticipantsModalComponent,
+    ModernPollModalComponent,
+    ModernRecordingModalComponent,
+    ModernRequestsModalComponent,
     MainAspectComponent,
     MainContainerComponent,
     MainGridComponent,
@@ -406,7 +410,7 @@ export type MediasfuConferenceOptions = {
     ScreenboardModal,
     Whiteboard,
     ConfigureWhiteboardModal,
-    WaitingRoomModal,
+    ModernWaitingRoomModalComponent,
   ],
   template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
@@ -516,6 +520,12 @@ export type MediasfuConferenceOptions = {
                   [parameters]="mediaSFUParameters"
                   [showAspect]="whiteboardStarted.value && !whiteboardEnded.value"
                 ></app-whiteboard>
+                <app-modern-participants-counter-badge
+                  [participantsCount]="participantsCounter.value"
+                  [position]="'bottomLeft'"
+                  [showBadge]="mainHeightWidth.value > 0"
+                  [isDarkMode]="modernThemeDarkMode.value"
+                ></app-modern-participants-counter-badge>
               </app-main-grid-component>
 
               <app-other-grid-component
@@ -543,14 +553,14 @@ export type MediasfuConferenceOptions = {
                   [style.padding]="'0'"
                   [style.margin]="'0'"
                 >
-                  <app-pagination
+                  <app-modern-pagination
                     [totalPages]="numberPages.value"
                     [currentUserPage]="currentUserPage.value"
                     [showAspect]="doPaginate.value"
                     [paginationHeight]="paginationHeightWidth.value"
                     [direction]="paginationDirection.value"
                     [parameters]="mediaSFUParameters"
-                  ></app-pagination>
+                  ></app-modern-pagination>
                 </div>
 
                 <ng-container
@@ -584,6 +594,12 @@ export type MediasfuConferenceOptions = {
                   [componentsToRender]="otherGridStreams.value[1]"
                   [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
                 ></app-flexible-grid>
+                <app-modern-participants-counter-badge
+                  [participantsCount]="participantsCounter.value"
+                  [position]="'topRight'"
+                  [showBadge]="mainHeightWidth.value === 0"
+                  [isDarkMode]="modernThemeDarkMode.value"
+                ></app-modern-participants-counter-badge>
               </app-other-grid-component>
             </app-main-screen-component>
           </app-main-aspect-component>
@@ -607,7 +623,8 @@ export type MediasfuConferenceOptions = {
             >
               <app-control-buttons-component
                 [buttons]="controlButtons"
-                [buttonColor]="'black'"
+                [isDarkMode]="modernThemeDarkMode.value"
+                [buttonColor]="modernThemeDarkMode.value ? 'rgba(255, 255, 255, 0.92)' : 'rgba(15, 23, 42, 0.88)'"
                 [buttonBackgroundColor]="{
                   default: 'transparent',
                   pressed: 'transparent'
@@ -615,6 +632,7 @@ export type MediasfuConferenceOptions = {
                 [alignment]="'space-between'"
                 [vertical]="false"
                 [buttonsContainerStyle]="{
+                  width: '100%',
                   marginTop: '0',
                   marginBottom: '0',
                   backgroundColor: 'transparent'
@@ -627,21 +645,24 @@ export type MediasfuConferenceOptions = {
       </ng-template>
 
       <ng-container *ngIf="returnUI">
-      <app-menu-modal
+      <app-modern-menu-modal
         *appWithOverride="
           'menuModal';
           default: MenuModalRef;
           props: menuModalOverrideProps
         "
-        [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
+        [backgroundColor]="''"
         [isVisible]="isMenuModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
+        [onToggleTheme]="updateModernThemeDarkMode"
         [onClose]="onCloseMenuModal"
         [customButtons]="customMenuButtons"
         [roomName]="roomName.value"
         [adminPasscode]="adminPasscode.value"
         [islevel]="islevel.value"
+        [eventType]="eventType.value"
         [localLink]="localLink"
-      ></app-menu-modal>
+      ></app-modern-menu-modal>
 
       <app-event-settings-modal
         *appWithOverride="
@@ -649,8 +670,8 @@ export type MediasfuConferenceOptions = {
           default: EventSettingsModalRef;
           props: eventSettingsModalOverrideProps
         "
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
         [isEventSettingsModalVisible]="isSettingsModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
         [onEventSettingsClose]="onEventSettingsClose"
         [audioSetting]="audioSetting.value"
         [videoSetting]="videoSetting.value"
@@ -850,6 +871,7 @@ export type MediasfuConferenceOptions = {
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmHereModalVisible]="isConfirmHereModalVisible.value"
         [onConfirmHereClose]="onConfirmHereClose"
+        [onSuppressConfirmHere]="onSuppressConfirmHere"
         [member]="member.value"
         [roomName]="roomName.value"
         [socket]="socket.value"
@@ -862,6 +884,7 @@ export type MediasfuConferenceOptions = {
           props: shareEventModalOverrideProps
         "
         [isShareEventModalVisible]="isShareEventModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
         [onShareEventClose]="onShareEventClose"
         [roomName]="roomName.value"
         [islevel]="islevel.value"
@@ -942,24 +965,24 @@ export type MediasfuConferenceOptions = {
       <ng-container
         *appWithOverride="'alert'; default: AlertComponentRef; props: alertOverrideProps"
       >
-        <app-alert-component
+        <app-modern-alert-component
           [visible]="alertVisible.value"
           [message]="alertMessage.value"
           [type]="alertType.value"
+          [position]="alertPosition.value"
           [duration]="alertDuration.value"
           [onHide]="onAlertHide"
-          textColor="#ffffff"
-        ></app-alert-component>
+          [isDarkMode]="modernThemeDarkMode.value"
+        ></app-modern-alert-component>
       </ng-container>
 
       <ng-container
         *appWithOverride="'loadingModal'; default: LoadingModalRef; props: loadingModalOverrideProps"
       >
-        <app-loading-modal
+        <app-modern-loading-modal
           [isVisible]="isLoadingModalVisible.value"
-          [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-          displayColor="black"
-        ></app-loading-modal>
+          [isDarkMode]="modernThemeDarkMode.value"
+        ></app-modern-loading-modal>
       </ng-container>
     </ng-container>
     </div>
@@ -1003,7 +1026,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
   @Input() seedData?: SeedData;
   @Input() useSeed = false;
   @Input() imgSrc = 'https://mediasfu.com/images/logo192.png';
-  @Input() sourceParameters?: { [key: string]: any } = {};
+  @Input() sourceParameters: { [key: string]: any } = {};
   @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
   @Input() returnUI? = true;
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
@@ -1034,22 +1057,22 @@ export class MediasfuConference implements OnInit, OnDestroy {
   protected readonly FlexibleGridRef = FlexibleGrid;
   protected readonly ControlButtonsComponentRef = ControlButtonsComponent;
   protected readonly AudioGridRef = AudioGrid;
-  protected readonly AlertComponentRef = AlertComponent;
-  protected readonly LoadingModalRef = LoadingModal;
-  protected readonly MenuModalRef = MenuModal;
-  protected readonly RecordingModalRef = RecordingModal;
-  protected readonly RequestsModalRef = RequestsModal;
-  protected readonly WaitingRoomModalRef = WaitingRoomModal;
-  protected readonly CoHostModalRef = CoHostModal;
-  protected readonly ParticipantsModalRef = ParticipantsModal;
-  protected readonly DisplaySettingsModalRef = DisplaySettingsModal;
-  protected readonly EventSettingsModalRef = EventSettingsModal;
-  protected readonly MediaSettingsModalRef = MediaSettingsModal;
-  protected readonly MessagesModalRef = MessagesModal;
-  protected readonly ConfirmExitModalRef = ConfirmExitModal;
-  protected readonly ConfirmHereModalRef = ConfirmHereModal;
-  protected readonly ShareEventModalRef = ShareEventModal;
-  protected readonly PollModalRef = PollModal;
+  protected readonly AlertComponentRef = ModernAlertComponent;
+  protected readonly LoadingModalRef = ModernLoadingModalComponent;
+  protected readonly MenuModalRef = ModernMenuModalComponent;
+  protected readonly RecordingModalRef = ModernRecordingModalComponent;
+  protected readonly RequestsModalRef = ModernRequestsModalComponent;
+  protected readonly WaitingRoomModalRef = ModernWaitingRoomModalComponent;
+  protected readonly CoHostModalRef = ModernCoHostModalComponent;
+  protected readonly ParticipantsModalRef = ModernParticipantsModalComponent;
+  protected readonly DisplaySettingsModalRef = ModernDisplaySettingsModalComponent;
+  protected readonly EventSettingsModalRef = ModernEventSettingsModalComponent;
+  protected readonly MediaSettingsModalRef = ModernMediaSettingsModalComponent;
+  protected readonly MessagesModalRef = ModernMessagesModalComponent;
+  protected readonly ConfirmExitModalRef = ModernConfirmExitModalComponent;
+  protected readonly ConfirmHereModalRef = ModernConfirmHereModalComponent;
+  protected readonly ShareEventModalRef = ModernShareEventModalComponent;
+  protected readonly PollModalRef = ModernPollModalComponent;
   protected readonly BreakoutRoomsModalRef = BreakoutRoomsModal;
   protected readonly BackgroundModalRef = BackgroundModal;
   protected readonly ConfigureWhiteboardModalRef = ConfigureWhiteboardModal;
@@ -1058,7 +1081,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
   // Override prop factory methods
   protected mainContainerOverrideProps = () => ({
     backgroundColor: this.validated.value ? 'rgba(217, 227, 234, 0.99)' : 'transparent',
-    children: [] as any[],
+    children: [],
   });
 
   protected mainAspectOverrideProps = () => ({
@@ -1138,6 +1161,21 @@ export class MediasfuConference implements OnInit, OnDestroy {
     location: 'bottom',
     direction: 'horizontal',
     showAspect: this.eventType.value !== 'broadcast',
+    isDarkMode: this.modernThemeDarkMode.value,
+    buttonColor: this.modernThemeDarkMode.value ? 'rgba(255, 255, 255, 0.92)' : 'rgba(15, 23, 42, 0.88)',
+    buttonBackgroundColor: {
+      default: 'transparent',
+      pressed: 'transparent',
+    },
+    alignment: 'space-between',
+    vertical: false,
+    buttonsContainerStyle: {
+      width: '100%',
+      marginTop: '0',
+      marginBottom: '0',
+      backgroundColor: 'transparent',
+    },
+    parameters: this.mediaSFUParameters,
   });
 
   protected audioGridOverrideProps = () => ({
@@ -1148,26 +1186,30 @@ export class MediasfuConference implements OnInit, OnDestroy {
     visible: this.alertVisible.value,
     message: this.alertMessage.value,
     type: this.alertType.value,
+    position: this.alertPosition.value,
     duration: this.alertDuration.value,
     onHide: this.onAlertHide,
-    textColor: '#ffffff',
+    isDarkMode: this.modernThemeDarkMode.value,
   });
 
   protected loadingModalOverrideProps = () => ({
     isVisible: this.isLoadingModalVisible.value,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
-    displayColor: '#000000',
+    isDarkMode: this.modernThemeDarkMode.value,
   });
 
   protected menuModalOverrideProps = () => ({
-    backgroundColor: 'rgba(181, 233, 229, 0.97)',
+    backgroundColor: '',
     isVisible: this.isMenuModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
+    onToggleTheme: this.updateModernThemeDarkMode,
     onClose: this.onCloseMenuModal,
     customButtons: this.customMenuButtons,
     roomName: this.roomName.value,
     adminPasscode: this.adminPasscode.value,
     islevel: this.islevel.value,
+    eventType: this.eventType.value,
     localLink: this.localLink,
+    parameters: this.mediaSFUParameters,
   });
 
   protected recordingModalOverrideProps = () => ({
@@ -1243,8 +1285,8 @@ export class MediasfuConference implements OnInit, OnDestroy {
   });
 
   protected eventSettingsModalOverrideProps = () => ({
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
     isEventSettingsModalVisible: this.isSettingsModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
     onEventSettingsClose: this.onEventSettingsClose,
     audioSetting: this.audioSetting.value,
     videoSetting: this.videoSetting.value,
@@ -1302,6 +1344,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
     backgroundColor: 'rgba(181, 233, 229, 0.97)',
     isConfirmHereModalVisible: this.isConfirmHereModalVisible.value,
     onConfirmHereClose: this.onConfirmHereClose,
+    onSuppressConfirmHere: this.onSuppressConfirmHere,
     member: this.member.value,
     roomName: this.roomName.value,
     socket: this.socket.value,
@@ -1309,6 +1352,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
 
   protected shareEventModalOverrideProps = () => ({
     isShareEventModalVisible: this.isShareEventModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
     onShareEventClose: this.onShareEventClose,
     roomName: this.roomName.value,
     islevel: this.islevel.value,
@@ -1495,6 +1539,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
   ) { }
 
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     const inj = Injector.create({
       providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),
       parent: this.injector,
@@ -1558,7 +1606,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
   };
 
   // Initial values
-  mediaSFUFunctions = () => {
+  mediaSFUFunctions = (): any => {
     return {
       updateMiniCardsGrid:
         this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -1987,7 +2035,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
   canRecord = new BehaviorSubject<boolean>(false);
   startReport = new BehaviorSubject<boolean>(false);
   endReport = new BehaviorSubject<boolean>(false);
-  recordTimerInterval = new BehaviorSubject<NodeJS.Timeout | null>(null);
+  recordTimerInterval = new BehaviorSubject<number | null>(null);
   recordStartTime = new BehaviorSubject<number>(0);
   recordElapsedTime = new BehaviorSubject<number>(0);
   isTimerRunning = new BehaviorSubject<boolean>(false);
@@ -2431,7 +2479,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
     this.endReport.next(value);
   };
 
-  updateRecordTimerInterval = (value: NodeJS.Timeout | null) => {
+  updateRecordTimerInterval = (value: number | null) => {
     this.recordTimerInterval.next(value);
   };
 
@@ -3012,7 +3060,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
   // Alerts
   alertVisible = new BehaviorSubject<boolean>(false);
   alertMessage = new BehaviorSubject<string>('');
-  alertType = new BehaviorSubject<'success' | 'danger'>('success');
+  alertType = new BehaviorSubject<'success' | 'danger' | 'info' | 'warning'>('success');
+  alertPosition = new BehaviorSubject<
+    'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center'
+  >('top');
   alertDuration = new BehaviorSubject<number>(3000);
 
   // Progress Timer
@@ -3034,8 +3085,22 @@ export class MediasfuConference implements OnInit, OnDestroy {
   isMessagesModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmExitModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmHereModalVisible = new BehaviorSubject<boolean>(false);
+  private suppressConfirmHereForSession = false;
   isShareEventModalVisible = new BehaviorSubject<boolean>(false);
   isLoadingModalVisible = new BehaviorSubject<boolean>(false);
+  modernThemeDarkMode = new BehaviorSubject<boolean>(false);
+
+  resolvePreferredTheme = (): boolean => {
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  };
+
+  updateModernThemeDarkMode = (value: boolean) => {
+    this.modernThemeDarkMode.next(value);
+    this.updateButtonState('modernThemeDarkMode', value);
+    this.cdr.detectChanges();
+  };
 
   // Recording Options
   recordingMediaOptions = new BehaviorSubject<string>('video');
@@ -3299,8 +3364,14 @@ export class MediasfuConference implements OnInit, OnDestroy {
     this.alertMessage.next(value);
   };
 
-  updateAlertType = (value: 'success' | 'danger') => {
+  updateAlertType = (value: 'success' | 'danger' | 'info' | 'warning') => {
     this.alertType.next(value);
+  };
+
+  updateAlertPosition = (
+    value: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center',
+  ) => {
+    this.alertPosition.next(value);
   };
 
   updateAlertDuration = (value: number) => {
@@ -3791,13 +3862,18 @@ export class MediasfuConference implements OnInit, OnDestroy {
     message,
     type,
     duration = 3000,
+    position,
   }: {
     message: string;
-    type: 'success' | 'danger';
+    type: 'success' | 'danger' | 'info' | 'warning';
     duration?: number;
+    position?: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
   }) => {
+    const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
+
     this.updateAlertMessage(message);
     this.updateAlertType(type);
+    this.updateAlertPosition(effectivePosition);
     this.updateAlertDuration(duration);
     this.updateAlertVisible(true);
   };
@@ -4043,6 +4119,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
       alertVisible: this.alertVisible.value,
       alertMessage: this.alertMessage.value,
       alertType: this.alertType.value,
+      alertPosition: this.alertPosition.value,
       alertDuration: this.alertDuration.value,
 
       // Progress Timer
@@ -4547,6 +4624,8 @@ export class MediasfuConference implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+      isDarkModeValue: this.modernThemeDarkMode.value,
+      updateIsDarkMode: this.updateModernThemeDarkMode.bind(this),
 
       customVideoCard: this.customVideoCard,
       customAudioCard: this.customAudioCard,
@@ -4557,12 +4636,13 @@ export class MediasfuConference implements OnInit, OnDestroy {
 
         try {
           if (this.sourceParameters !== null) {
-            this.sourceParameters = {
+            const nextSourceParameters = {
               ...this.getAllParams(),
               ...this.mediaSFUFunctions(),
             };
+            this.sourceParameters = nextSourceParameters;
             if (this.updateSourceParameters) {
-              this.updateSourceParameters(this.sourceParameters);
+              this.updateSourceParameters(nextSourceParameters);
             }
           }
         } catch {
@@ -4577,12 +4657,12 @@ export class MediasfuConference implements OnInit, OnDestroy {
     };
   }
 
-  mediaSFUParameters = {
+  mediaSFUParameters: any = {
     ...this.getAllParams(),
     ...this.mediaSFUFunctions(),
   };
 
-  getUpdatedAllParams = () => {
+  getUpdatedAllParams = (): any => {
     return {
       ...this.getAllParams(),
       ...this.mediaSFUFunctions(),
@@ -4615,6 +4695,9 @@ export class MediasfuConference implements OnInit, OnDestroy {
         return { ...button, active: value };
       }
       if (buttonType === 'participantsActive' && button.icon === this.faUsers) {
+        return { ...button, active: value };
+      }
+      if (buttonType === 'modernThemeDarkMode' && button.icon === faMoon) {
         return { ...button, active: value };
       }
       if (
@@ -4728,6 +4811,8 @@ export class MediasfuConference implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.updateModernThemeDarkMode(this.resolvePreferredTheme());
+
     // Initialize UI overrides if provided
     if (this.uiOverrides) {
       this.uiOverrideResolver.setOverrides(this.uiOverrides);
@@ -4934,12 +5019,13 @@ export class MediasfuConference implements OnInit, OnDestroy {
 
       try {
         if (this.sourceParameters !== null) {
-          this.sourceParameters = {
+          const nextSourceParameters = {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),
           };
+          this.sourceParameters = nextSourceParameters;
           if (this.updateSourceParameters) {
-            this.updateSourceParameters(this.sourceParameters);
+            this.updateSourceParameters(nextSourceParameters);
           }
         }
       } catch {
@@ -5453,6 +5539,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
     this.updateIsConfirmHereModalVisible(false);
   };
 
+  onSuppressConfirmHere = () => {
+    this.suppressConfirmHereForSession = true;
+  };
+
   onScreenboardClose = () => {
     this.updateIsScreenboardModalVisible(false);
   };
@@ -5636,7 +5726,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
   menuParticipantsWidget = {
     component: MenuParticipantsWidget,
     injector: this.createInjector({
-      icon: this.faChartBar,
+      icon: this.faUsers,
       participantsCounter: this.participantsCounter.value,
       iconColor: 'black',
     }),
@@ -5646,7 +5736,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
     const menuParticipantsWidget = {
       component: MenuParticipantsWidget,
       injector: this.createInjector({
-        icon: this.faChartBar,
+        icon: this.faUsers,
         participantsCounter: count,
         iconColor: 'black',
       }),
@@ -5817,7 +5907,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
     injector: this.createInjector({ disabled: !this.screenShareActive.value }),
   };
 
-  controlButtons = [
+  controlButtons: any[] = [
     {
       icon: this.faMicrophoneSlash,
       alternateIcon: this.faMicrophone,
@@ -5845,7 +5935,7 @@ export class MediasfuConference implements OnInit, OnDestroy {
             ...this.mediaSFUFunctions(),
             MediaStream,
             MediaStreamTrack,
-            mediaDevices: MediaDevices,
+            mediaDevices: navigator.mediaDevices,
             device: this.device.value,
             socket: this.socket.value,
             showAlert: this.showAlert.bind(this),
@@ -6212,6 +6302,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
         );
 
         socketDefault.on('meetingStillThere', async () => {
+          if (this.suppressConfirmHereForSession) {
+            return;
+          }
+
           this.meetingStillThere.meetingStillThere({
             updateIsConfirmHereModalVisible: this.updateIsConfirmHereModalVisible.bind(this),
           });

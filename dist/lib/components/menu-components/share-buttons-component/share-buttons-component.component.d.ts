@@ -67,6 +67,7 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
  */
 export declare class ShareButtonsComponent {
     meetingID: string;
+    isDarkMode?: boolean;
     shareButtons: ShareButton[];
     eventType: EventType;
     localLink?: string;
@@ -82,6 +83,7 @@ export declare class ShareButtonsComponent {
         eventType: EventType;
         localLink?: string;
     }) => string;
+    get resolvedIsDarkMode(): boolean;
     defaultShareButtons: ShareButton[];
     get shareName(): "chat" | "broadcast" | "meeting";
     getShareUrl(): string;
@@ -90,6 +92,7 @@ export declare class ShareButtonsComponent {
     getButtonRenderContext(button: ShareButton, index: number): ShareButtonRenderContext;
     getButtonStyle(button: ShareButton, index: number): any;
     getIconStyle(button: ShareButton): any;
+    getButtonAriaLabel(index: number): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<ShareButtonsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ShareButtonsComponent, "app-share-buttons-component", never, { "meetingID": { "alias": "meetingID"; "required": false; }; "shareButtons": { "alias": "shareButtons"; "required": false; }; "eventType": { "alias": "eventType"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "renderContainer": { "alias": "renderContainer"; "required": false; }; "renderButtons": { "alias": "renderButtons"; "required": false; }; "renderButton": { "alias": "renderButton"; "required": false; }; "renderIcon": { "alias": "renderIcon"; "required": false; }; "getShareUrlFn": { "alias": "getShareUrlFn"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ShareButtonsComponent, "app-share-buttons-component", never, { "meetingID": { "alias": "meetingID"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "shareButtons": { "alias": "shareButtons"; "required": false; }; "eventType": { "alias": "eventType"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "renderContainer": { "alias": "renderContainer"; "required": false; }; "renderButtons": { "alias": "renderButtons"; "required": false; }; "renderButton": { "alias": "renderButton"; "required": false; }; "renderIcon": { "alias": "renderIcon"; "required": false; }; "getShareUrlFn": { "alias": "getShareUrlFn"; "required": false; }; }, {}, never, never, true, never>;
 }

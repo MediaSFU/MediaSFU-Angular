@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { rePort as sharedRePort } from 'mediasfu-shared';
 import {
   ScreenState,
   CompareScreenStatesParameters,
@@ -119,6 +120,11 @@ export class RePort {
    */
 
   async rePort({ restart = false, parameters }: RePortOptions): Promise<void> {
+    return sharedRePort({
+      restart,
+      parameters: parameters as unknown as Parameters<typeof sharedRePort>[0]['parameters'],
+    }) as Promise<void>;
+
     const { getUpdatedAllParams } = parameters;
     const updatedParams = getUpdatedAllParams();
 

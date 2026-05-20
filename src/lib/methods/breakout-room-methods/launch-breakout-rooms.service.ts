@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchBreakoutRoomsOptions {
-  updateIsBreakoutRoomsModalVisible: (isVisible: boolean) => void;
-  isBreakoutRoomsModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchBreakoutRoomsType = (options: LaunchBreakoutRoomsOptions) => void;
+import { launchBreakoutRooms as sharedLaunchBreakoutRooms } from 'mediasfu-shared';
+import type { LaunchBreakoutRoomsOptions } from 'mediasfu-shared';
+export type { LaunchBreakoutRoomsOptions, LaunchBreakoutRoomsType } from 'mediasfu-shared';
 
 
 /**
@@ -49,6 +45,6 @@ export class LaunchBreakoutRooms {
     updateIsBreakoutRoomsModalVisible,
     isBreakoutRoomsModalVisible,
   }: LaunchBreakoutRoomsOptions): void {
-    updateIsBreakoutRoomsModalVisible(!isBreakoutRoomsModalVisible);
+    sharedLaunchBreakoutRooms({ updateIsBreakoutRoomsModalVisible, isBreakoutRoomsModalVisible });
   }
 }

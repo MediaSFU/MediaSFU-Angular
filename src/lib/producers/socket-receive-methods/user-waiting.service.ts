@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShowAlert } from '../../@types/types';
+import { userWaiting as sharedUserWaiting } from 'mediasfu-shared';
 export interface UserWaitingOptions {
   name: string;
   showAlert?: ShowAlert;
@@ -49,15 +50,11 @@ export class UserWaiting {
     totalReqWait,
     updateTotalReqWait,
   }: UserWaitingOptions): Promise<void> => {
-    // Display an alert/notification about the user joining the waiting room
-    showAlert?.({
-      message: `${name} joined the waiting room.`,
-      type: 'success',
-      duration: 3000,
+    return sharedUserWaiting({
+      name,
+      showAlert,
+      totalReqWait,
+      updateTotalReqWait,
     });
-
-    // Update the total number of requests waiting in the waiting room
-    const totalReqs = totalReqWait + 1;
-    updateTotalReqWait(totalReqs);
   };
 }

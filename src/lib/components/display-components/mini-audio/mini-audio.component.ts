@@ -1,4 +1,14 @@
-import { Component, Input, OnInit, OnDestroy, HostListener, Optional, Inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  HostListener,
+  Optional,
+  Inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { getOverlayPosition } from '../../../methods/utils/get-overlay-position.util';
 
@@ -91,33 +101,35 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
     <div
       *ngIf="visible"
       class="modal-container"
+      [class.modal-container--dragging]="isDragging"
       [ngStyle]="{ transform: 'translate(' + position.x + 'px, ' + position.y + 'px)' }"
       (mousedown)="handleMouseDown($event)"
     >
       <div class="card" [ngStyle]="customStyle">
-        <ng-container *ngIf="imageSource">
-          <img
-            [src]="imageSource"
-            [ngStyle]="getImageStyle()"
-            alt="Background"
-            class="background-image"
-          />
-        </ng-container>
-        <div class="name-text" [ngStyle]="combineStyles({ color: textColor }, nameTextStyling)">
-          {{ name }}
-        </div>
         <div [ngStyle]="getOverlayPosition(overlayPosition)" class="overlay-web">
           <div class="waveform-web">
-            <div
-              *ngFor="let animation of waveformAnimations; let i = index"
-              [ngStyle]="{
-                height: animation == 0 ? '1px' : '30px',
-                width: '10px',
-                backgroundColor: barColor
-              }"
-              class="bar"
-            ></div>
+            <ng-container *ngIf="showWaveform">
+              <div class="pulse-ring" [ngStyle]="{ borderColor: barColor, animationDelay: '0s' }"></div>
+              <div class="pulse-ring" [ngStyle]="{ borderColor: barColor, animationDelay: '0.5s' }"></div>
+            </ng-container>
+
+            <div *ngIf="!hasRenderableImage" class="avatar-fallback" [ngStyle]="{ borderColor: barColor }">
+              {{ fallbackInitials }}
+            </div>
+
+          <img
+            *ngIf="hasRenderableImage"
+            [src]="imageSource"
+            [ngStyle]="getImageStyle()"
+            [alt]="name || 'Audio participant'"
+            class="background-image"
+            (error)="handleImageError()"
+          />
           </div>
+        </div>
+
+        <div class="name-text" [ngStyle]="combineStyles({ color: textColor }, nameTextStyling)">
+          {{ name }}
         </div>
       </div>
     </div>
@@ -132,12 +144,17 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
         margin: 0;
         width: 100px;
         height: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(0, 45, 33, 0.5);
+        background-color: transparent;
         z-index: 8;
         elevation: 8;
+        cursor: grab;
+        user-select: none;
+        transition: transform 160ms ease, filter 160ms ease;
+      }
+
+      .modal-container--dragging {
+        cursor: grabbing;
+        filter: drop-shadow(0 18px 28px rgba(15, 23, 42, 0.32));
       }
 
       .card {
@@ -145,42 +162,76 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
         height: 100%;
         margin: 0;
         padding: 0;
-        background-color: #2c678f;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
       }
 
       .background-image {
-        position: absolute;
-        width: 70px;
-        height: 70px;
-        justify-content: center;
+        position: relative;
+        width: 52px;
+        height: 52px;
+        z-index: 2;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .avatar-fallback {
+        width: 52px;
+        height: 52px;
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
         align-items: center;
-        align-self: center;
-        top: 40%;
-        left: 50%;
-        transform: translate(-35px, -10px);
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.78), rgba(20, 184, 166, 0.74));
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
       }
 
       .name-text {
-        font-size: 20px;
-        font-weight: bold;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 11px;
+        font-weight: 700;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgba(0, 0, 0, 0.5);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+        backdrop-filter: blur(4px);
         width: 100%;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        min-height: 24px;
+        padding: 6px 4px;
         text-align: center;
-        z-index: 2;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        z-index: 4;
       }
 
       .overlay-web {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: 1fr 12fr 1fr;
-        grid-gap: 3px;
+        inset: 0 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         z-index: 3;
       }
 
@@ -188,20 +239,40 @@ export type MiniAudioType = (options: MiniAudioOptions) => HTMLElement;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgba(0, 0, 0, 0.05);
+        width: 70px;
+        height: 70px;
+        position: relative;
+        border-radius: 50%;
         padding: 0;
-        flex-direction: row;
       }
 
-      .bar {
-        flex: 1;
-        opacity: 0.35;
-        margin-right: 0.5px;
+      .pulse-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid;
+        opacity: 0.6;
+        animation: miniAudioPulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes miniAudioPulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.6;
+        }
+        50% {
+          transform: scale(1.15);
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(1.3);
+          opacity: 0;
+        }
       }
     `,
     ]
 })
-export class MiniAudio implements OnInit, OnDestroy {
+export class MiniAudio implements OnInit, OnDestroy, OnChanges {
   @Input() visible = true;
   @Input() customStyle: any;
   @Input() name = '';
@@ -215,10 +286,12 @@ export class MiniAudio implements OnInit, OnDestroy {
   @Input() imageStyle: any = {};
 
   waveformAnimations: number[] = Array.from({ length: 9 }, () => 0);
-  intervals: NodeJS.Timeout[] = [];
+  intervals: ReturnType<typeof setInterval>[] = [];
+  timeouts: ReturnType<typeof setTimeout>[] = [];
   position = { x: 0, y: 0 };
   isDragging = false;
   dragOffset = { x: 0, y: 0 };
+  imageLoadFailed = false;
 
   constructor(
     @Optional() @Inject('visible') injectedVisible: boolean,
@@ -247,6 +320,25 @@ export class MiniAudio implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.syncWaveformState();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['showWaveform']) {
+      this.syncWaveformState();
+    }
+
+    if (changes['imageSource']) {
+      this.imageLoadFailed = false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.clearIntervals();
+    this.clearTimeouts();
+  }
+
+  syncWaveformState() {
     if (this.showWaveform) {
       this.animateWaveform();
     } else {
@@ -254,11 +346,9 @@ export class MiniAudio implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.clearIntervals();
-  }
-
   animateWaveform() {
+    this.clearIntervals();
+    this.clearTimeouts();
     this.intervals = this.waveformAnimations.map((_, index) =>
       setInterval(() => this.animateBar(index), this.getAnimationDuration(index) * 2),
     );
@@ -266,17 +356,26 @@ export class MiniAudio implements OnInit, OnDestroy {
 
   animateBar(index: number) {
     this.waveformAnimations[index] = 1;
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       this.waveformAnimations[index] = 0;
     }, this.getAnimationDuration(index));
+    this.timeouts.push(timeout);
   }
 
   resetWaveform() {
+    this.clearIntervals();
+    this.clearTimeouts();
     this.waveformAnimations.fill(0);
   }
 
   clearIntervals() {
     this.intervals.forEach((interval) => clearInterval(interval));
+    this.intervals = [];
+  }
+
+  clearTimeouts() {
+    this.timeouts.forEach((timeout) => clearTimeout(timeout));
+    this.timeouts = [];
   }
 
   getAnimationDuration(index: number): number {
@@ -287,8 +386,29 @@ export class MiniAudio implements OnInit, OnDestroy {
   getImageStyle() {
     return {
       ...this.imageStyle,
-      ...(this.roundedImage ? { borderRadius: '20%' } : {}),
+      ...(this.roundedImage ? { borderRadius: '50%' } : {}),
     };
+  }
+
+  get hasRenderableImage(): boolean {
+    return Boolean(this.imageSource) && !this.imageLoadFailed;
+  }
+
+  get fallbackInitials(): string {
+    const trimmedName = this.name.trim();
+    if (!trimmedName) {
+      return 'AU';
+    }
+
+    return trimmedName
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('');
+  }
+
+  handleImageError() {
+    this.imageLoadFailed = true;
   }
 
   combineStyles(baseStyle: any, additionalStyles: any) {

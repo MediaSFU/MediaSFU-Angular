@@ -1,0 +1,42 @@
+import { OnInit, TemplateRef } from '@angular/core';
+import { Socket } from 'socket.io-client';
+import { ConfirmExit, ConfirmExitOptions } from '../../methods/exit-methods/confirm-exit.service';
+import * as i0 from "@angular/core";
+export declare class ModernConfirmExitModalComponent implements OnInit {
+    private readonly confirmExitService;
+    isConfirmExitModalVisible: boolean;
+    onConfirmExitClose: () => void;
+    position: string;
+    backgroundColor: string;
+    exitEventOnConfirm?: (options: ConfirmExitOptions) => void;
+    member: string;
+    ban: boolean;
+    roomName: string;
+    socket: Socket;
+    islevel: string;
+    title?: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    message?: string | ((context: {
+        islevel: string;
+    }) => string);
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<unknown>;
+    readonly faExclamationTriangle: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    readonly faSignOutAlt: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    readonly faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    constructor(confirmExitService: ConfirmExit);
+    ngOnInit(): void;
+    handleConfirmExit(): void;
+    resolvedTitle(): string;
+    resolvedMessage(): string;
+    resolvedConfirmLabel(): string;
+    resolvedCancelLabel(): string;
+    resolvedOverlayStyle(): Record<string, string | number>;
+    resolvedContentStyle(): Record<string, string | number>;
+    private resolvePositionStyle;
+    private normalizeStyle;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ModernConfirmExitModalComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModernConfirmExitModalComponent, "app-confirm-exit-modal", never, { "isConfirmExitModalVisible": { "alias": "isConfirmExitModalVisible"; "required": false; }; "onConfirmExitClose": { "alias": "onConfirmExitClose"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "exitEventOnConfirm": { "alias": "exitEventOnConfirm"; "required": false; }; "member": { "alias": "member"; "required": false; }; "ban": { "alias": "ban"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "title": { "alias": "title"; "required": false; }; "confirmLabel": { "alias": "confirmLabel"; "required": false; }; "cancelLabel": { "alias": "cancelLabel"; "required": false; }; "message": { "alias": "message"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, never, true, never>;
+}

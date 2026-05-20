@@ -1,3 +1,6 @@
 docs/
 refReact/
 node_modules
+.DS_Store
+._*
+__MACOSX/

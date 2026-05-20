@@ -1,0 +1,16 @@
+:host {
+	display: block;
+	width: 100%;
+}
+
+.participant-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
+
+.participant-list__row {
+	min-width: 0;
+	width: 100%;
+}

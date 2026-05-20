@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchBackgroundOptions {
-  updateIsBackgroundModalVisible: (isVisible: boolean) => void;
-  isBackgroundModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchBackgroundType = (options: LaunchBackgroundOptions) => void;
+import { launchBackground as sharedLaunchBackground } from 'mediasfu-shared';
+import type { LaunchBackgroundOptions } from 'mediasfu-shared';
+export type { LaunchBackgroundOptions, LaunchBackgroundType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility of the background modal.
@@ -49,6 +45,9 @@ export class LaunchBackground {
     updateIsBackgroundModalVisible,
     isBackgroundModalVisible,
   }: LaunchBackgroundOptions): void {
-    updateIsBackgroundModalVisible(!isBackgroundModalVisible);
+    sharedLaunchBackground({
+      updateIsBackgroundModalVisible,
+      isBackgroundModalVisible,
+    });
   }
 }

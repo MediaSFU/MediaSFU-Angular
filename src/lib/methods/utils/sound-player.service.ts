@@ -1,10 +1,11 @@
 import { Injectable, Input, OnInit } from '@angular/core';
+import { SoundPlayer as sharedSoundPlayer } from 'mediasfu-shared';
 export interface SoundPlayerOptions {
   soundUrl: string;
 }
 
 // Export the type definition for the function
-export type SoundPlayerType = (options: SoundPlayerOptions) => void;
+export type SoundPlayerType = (options: SoundPlayerOptions) => void | Promise<void>;
 
 /**
  * SoundPlayer service for playing a sound from a provided URL.
@@ -60,7 +61,6 @@ export class SoundPlayer implements OnInit {
   }
 
   playSound({ soundUrl }: SoundPlayerOptions): void {
-    const audio = new Audio(soundUrl);
-    audio.play().catch((error) => console.error('Error playing sound:', error));
+    void sharedSoundPlayer({ soundUrl });
   }
 }

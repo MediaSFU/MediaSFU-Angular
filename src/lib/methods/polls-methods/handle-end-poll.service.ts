@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
 import { ShowAlert } from '../../@types/types';
+import { handleEndPoll as sharedHandleEndPoll } from 'mediasfu-shared';
 
 export interface HandleEndPollOptions {
   pollId: string;
@@ -63,28 +64,7 @@ export class HandleEndPoll {
    * @returns {Promise<void>} A promise that resolves when the poll end operation is complete.
    */
 
-  async handleEndPoll({
-    pollId,
-    socket,
-    showAlert,
-    roomName,
-    updateIsPollModalVisible,
-  }: HandleEndPollOptions): Promise<void> {
-    try {
-      socket.emit(
-        'endPoll',
-        { roomName, poll_id: pollId },
-        (response: { success: boolean; reason?: string }) => {
-          if (response.success) {
-            showAlert?.({ message: 'Poll ended successfully', type: 'success' });
-            updateIsPollModalVisible(false);
-          } else {
-            showAlert?.({ message: response.reason || 'Failed to end poll', type: 'danger' });
-          }
-        },
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  async handleEndPoll(options: HandleEndPollOptions): Promise<void> {
+    await sharedHandleEndPoll(options as unknown as Parameters<typeof sharedHandleEndPoll>[0]);
   }
 }

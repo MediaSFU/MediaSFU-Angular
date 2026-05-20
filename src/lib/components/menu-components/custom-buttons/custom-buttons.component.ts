@@ -94,6 +94,7 @@ export type CustomButtonsType = (options: CustomButtonsOptions) => HTMLElement;
 export class CustomButtons {
 
   @Input() buttons!: CustomButton[];
+  @Input() isDarkMode?: boolean;
   @Input() containerAttributes?: { [key: string]: any };
   @Input() fallbackSpinner?: TemplateRef<any>;
 
@@ -103,10 +104,37 @@ export class CustomButtons {
     return { ...defaultStyle, ...customStyle };
   }
 
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
+
+  isButtonVisible(button: CustomButton): boolean {
+    const resolvedShow = typeof button.show === 'function' ? button.show() : button.show;
+    return resolvedShow !== false;
+  }
+
   getButtonStyles(button: CustomButton): any {
+    const isDarkMode = this.resolvedIsDarkMode;
+    const backgroundColor = button.backgroundColor || (isDarkMode
+      ? 'rgba(255, 255, 255, 0.06)'
+      : 'rgba(148, 163, 184, 0.12)');
     const baseStyle = {
-      'background-color': (button.show !== false) ? button.backgroundColor : 'transparent',
-      'display': (button.show !== false) ? 'flex' : 'none'
+      display: this.isButtonVisible(button) ? 'flex' : 'none',
+      width: '100%',
+      padding: '14px 16px',
+      borderRadius: '18px',
+      border: isDarkMode ? '1px solid rgba(148, 163, 184, 0.16)' : '1px solid rgba(148, 163, 184, 0.24)',
+      background: backgroundColor,
+      color: isDarkMode ? '#e2e8f0' : '#0f172a',
+      boxShadow: '0 12px 24px rgba(15, 23, 42, 0.12)',
+      opacity: button.disabled ? '0.55' : '1',
+      cursor: button.disabled ? 'not-allowed' : 'pointer',
     };
 
     if (button.buttonAttributes?.['style']) {
@@ -118,8 +146,8 @@ export class CustomButtons {
 
   get customButtonIcon(): any {
     return {
-      fontSize: '20px',
-      marginRight: '5px',
+      fontSize: '18px',
+      color: 'inherit',
     };
   }
 

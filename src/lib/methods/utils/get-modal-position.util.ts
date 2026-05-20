@@ -1,6 +1,7 @@
 /**
  * Defines the style object for positioning the modal.
  */
+import { getModalPosition as sharedGetModalPosition } from 'mediasfu-shared';
 import { ModalPositionStyle } from '../../@types/types';
 
 export interface GetModalPositionOptions {
@@ -29,17 +30,5 @@ export type GetModalPositionType = (options: GetModalPositionOptions) => ModalPo
 
 
 export function getModalPosition({ position }: GetModalPositionOptions): ModalPositionStyle {
-  switch (position) {
-    case 'center':
-      return { justifyContent: 'center', alignItems: 'center' };
-    case 'topLeft':
-      return { justifyContent: 'flex-start', alignItems: 'flex-start' };
-    case 'topRight':
-      return { justifyContent: 'flex-start', alignItems: 'flex-end' };
-    case 'bottomLeft':
-      return { justifyContent: 'flex-end', alignItems: 'flex-start' };
-    case 'bottomRight':
-    default:
-      return { justifyContent: 'flex-end', alignItems: 'flex-end' };
-  }
+  return sharedGetModalPosition({ position }) as ModalPositionStyle;
 }

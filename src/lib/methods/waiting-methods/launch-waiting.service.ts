@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchWaitingOptions {
-  updateIsWaitingModalVisible: (visible: boolean) => void;
-  isWaitingModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchWaitingType = (options: LaunchWaitingOptions) => void;
+import { launchWaiting as sharedLaunchWaiting } from 'mediasfu-shared';
+import type { LaunchWaitingOptions } from 'mediasfu-shared';
+export type { LaunchWaitingOptions, LaunchWaitingType } from 'mediasfu-shared';
 
 /**
  * Service to toggle the visibility of a waiting modal.
@@ -42,7 +38,9 @@ export class LaunchWaiting {
     updateIsWaitingModalVisible,
     isWaitingModalVisible,
   }: LaunchWaitingOptions): void {
-    // Open or close the menu modal
-    updateIsWaitingModalVisible(!isWaitingModalVisible);
+    sharedLaunchWaiting({
+      updateIsWaitingModalVisible,
+      isWaitingModalVisible,
+    });
   }
 }

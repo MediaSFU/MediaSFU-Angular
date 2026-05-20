@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
 import { WaitingRoomParticipant } from '../../@types/types';
+import { respondToWaiting as sharedRespondToWaiting } from 'mediasfu-shared';
 
 export interface RespondToWaitingOptions {
   participantId: string;
@@ -72,20 +73,16 @@ export class RespondToWaiting {
     roomName,
     socket,
   }: RespondToWaitingOptions): Promise<void> {
-    // Filter out the participant from the waiting list
-    const newWaitingList = waitingList.filter((item) => item.name !== participantName);
-
-    // Update the waiting list
-    updateWaitingList(newWaitingList);
-
-    const responseType = type === 'true' || type === true ? 'true' : 'false';
-
-    // Emit an event to allow or deny the participant based on the response type
-    await socket.emit('allowUserIn', {
-      participantId,
-      participantName,
-      type: responseType,
-      roomName,
-    });
+    return sharedRespondToWaiting(
+      {
+        participantId,
+        participantName,
+        updateWaitingList,
+        waitingList,
+        type,
+        roomName,
+        socket,
+      } as unknown as Parameters<typeof sharedRespondToWaiting>[0],
+    );
   }
 }

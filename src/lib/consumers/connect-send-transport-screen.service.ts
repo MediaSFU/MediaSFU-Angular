@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { connectSendTransportScreen as sharedConnectSendTransportScreen } from 'mediasfu-shared';
 import { types } from 'mediasoup-client';
 type Transport = types.Transport;
 type Producer = types.Producer;
@@ -176,6 +177,12 @@ export class ConnectSendTransportScreen {
     parameters,
     targetOption = "all",
   }: ConnectSendTransportScreenOptions): Promise<void> {
+    return sharedConnectSendTransportScreen({
+      stream,
+      parameters,
+      targetOption,
+    } as unknown as Parameters<typeof sharedConnectSendTransportScreen>[0]) as Promise<void>;
+
     try {
       let {
         screenProducer,

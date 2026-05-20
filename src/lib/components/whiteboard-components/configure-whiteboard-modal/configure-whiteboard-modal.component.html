@@ -1,9 +1,9 @@
-<ng-container *ngIf="isVisible && customTemplate">
+<ng-container *ngIf="isVisibleState() && customTemplate">
   <ng-container
     *ngTemplateOutlet="
       customTemplate;
       context: {
-        isVisible: isVisible,
+        isVisible: isVisibleState(),
         parameters: parameters,
         backgroundColor: backgroundColor,
         position: position,
@@ -14,71 +14,127 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="isVisible && !customTemplate" [ngStyle]="getCombinedOverlayStyle()">
-  <div [ngStyle]="getCombinedContentStyle()">
-    <div style="display: flex; flex-direction: column;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h2 style="font-size: x-large; font-weight: bold; color: black;">
+<div
+  *ngIf="isVisibleState() && !customTemplate"
+  class="whiteboard-modal__overlay"
+  [class.whiteboard-modal__overlay--dark]="resolvedIsDarkMode"
+  [class.whiteboard-modal__overlay--light]="!resolvedIsDarkMode"
+  [ngStyle]="getCombinedOverlayStyle()"
+>
+  <div class="whiteboard-modal__content" [ngStyle]="getCombinedContentStyle()">
+    <div class="whiteboard-modal__stack">
+      <div *ngIf="showHeader" class="whiteboard-modal__header">
+        <h2 class="whiteboard-modal__title">
           Configure Whiteboard
         </h2>
-        <button (click)="onConfigureWhiteboardClose()" style="border: none; background: none; cursor: pointer;">
-          <fa-icon [icon]="faTimes" size="xl" style="font-size: 20px; color: black;"></fa-icon>
+        <button (click)="onConfigureWhiteboardClose()" class="whiteboard-modal__close">
+          <fa-icon [icon]="faTimes" size="xl" class="whiteboard-modal__close-icon"></fa-icon>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <h6>Assigned</h6>
-            <ul class="list-group" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc;">
-              <ng-container *ngIf="assignedParticipants.length > 0; else noAssignedParticipants">
-                <li *ngFor="let participant of assignedParticipants" class="list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2">
-                  {{ participant.name }}
-                  <button class="btn btn-danger btn-sm mr-2 ml-2" (click)="toggleParticipant(participant, false)">
-                    <fa-icon [icon]="faTimes"></fa-icon>
-                  </button>
-                </li>
-              </ng-container>
-              <ng-template #noAssignedParticipants>
-                <li class="list-group-item d-flex justify-content-between align-items-center text-dark">
-                  None
-                </li>
-              </ng-template>
-            </ul>
+      <div class="modal-body whiteboard-modal__body">
+        <ng-container *ngIf="isEmbedded(); else legacyWhiteboardLists">
+          <div class="whiteboard-modal__embedded-tools">
+            <div class="whiteboard-modal__limit-badge">
+              <fa-icon [icon]="faUser"></fa-icon>
+              <span>Limit {{ whiteboardLimit }}</span>
+            </div>
+            <p class="whiteboard-modal__limit-copy">
+              Host can start alone. Add up to {{ whiteboardAdditionalParticipantLimit() }} other participants.
+            </p>
           </div>
-          <div class="col-md-6 mt-xs-3 mb-3">
-            <h6>Pending</h6>
-            <ul class="list-group" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc;">
-              <ng-container *ngIf="unassignedParticipants.length > 0; else noPendingParticipants">
-                <li *ngFor="let participant of unassignedParticipants" class="list-group-item d-flex justify-content-between align-items-center text-dark mb-2 mr-2">
-                  {{ participant.name }}
-                  <button class="btn btn-primary btn-sm mr-2 ml-2" (click)="toggleParticipant(participant, true)">
-                    <fa-icon [icon]="faCheck"></fa-icon>
-                  </button>
-                </li>
-              </ng-container>
-              <ng-template #noPendingParticipants>
-                <li class="list-group-item d-flex justify-content-between align-items-center text-dark">
-                  None
-                </li>
-              </ng-template>
-            </ul>
+
+          <label class="whiteboard-modal__search">
+            <fa-icon [icon]="faSearch" class="whiteboard-modal__search-icon"></fa-icon>
+            <input
+              type="search"
+              placeholder="Search participants..."
+              [value]="participantSearchTerm"
+              (input)="handleParticipantSearch($event)"
+            />
+          </label>
+
+          <div class="whiteboard-modal__status">
+            {{ whiteboardStatusCopy() }}
           </div>
-        </div>
+
+          <div class="whiteboard-modal__participant-list">
+            <button
+              *ngFor="let participant of filteredParticipants()"
+              type="button"
+              class="whiteboard-modal__participant-row"
+              [class.whiteboard-modal__participant-row--selected]="isParticipantAssigned(participant)"
+              (click)="toggleParticipant(participant, !isParticipantAssigned(participant))"
+            >
+              <span class="whiteboard-modal__participant-copy">
+                <fa-icon [icon]="faUser"></fa-icon>
+                <span>{{ participant.name }}</span>
+              </span>
+              <span class="whiteboard-modal__participant-check" [class.whiteboard-modal__participant-check--selected]="isParticipantAssigned(participant)">
+                <fa-icon *ngIf="isParticipantAssigned(participant)" [icon]="faCheck"></fa-icon>
+              </span>
+            </button>
+
+            <div *ngIf="filteredParticipants().length === 0" class="whiteboard-modal__empty-state">
+              {{ whiteboardEmptyCopy() }}
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #legacyWhiteboardLists>
+          <div class="row whiteboard-modal__columns">
+            <div class="col-md-6 mb-3 whiteboard-modal__column">
+              <h6>Assigned</h6>
+              <ul class="list-group whiteboard-modal__list">
+                <ng-container *ngIf="assignedParticipants.length > 0; else noAssignedParticipants">
+                  <li *ngFor="let participant of assignedParticipants" class="list-group-item whiteboard-modal__item d-flex justify-content-between align-items-center mb-2 mr-2">
+                    {{ participant.name }}
+                    <button class="btn whiteboard-modal__icon-button whiteboard-modal__icon-button--danger btn-sm mr-2 ml-2" (click)="toggleParticipant(participant, false)">
+                      <fa-icon [icon]="faTimes"></fa-icon>
+                    </button>
+                  </li>
+                </ng-container>
+                <ng-template #noAssignedParticipants>
+                  <li class="list-group-item whiteboard-modal__item d-flex justify-content-between align-items-center">
+                    None
+                  </li>
+                </ng-template>
+              </ul>
+            </div>
+            <div class="col-md-6 mt-xs-3 mb-3 whiteboard-modal__column">
+              <h6>Pending</h6>
+              <ul class="list-group whiteboard-modal__list">
+                <ng-container *ngIf="unassignedParticipants.length > 0; else noPendingParticipants">
+                  <li *ngFor="let participant of unassignedParticipants" class="list-group-item whiteboard-modal__item d-flex justify-content-between align-items-center mb-2 mr-2">
+                    {{ participant.name }}
+                    <button class="btn whiteboard-modal__icon-button whiteboard-modal__icon-button--primary btn-sm mr-2 ml-2" (click)="toggleParticipant(participant, true)">
+                      <fa-icon [icon]="faCheck"></fa-icon>
+                    </button>
+                  </li>
+                </ng-container>
+                <ng-template #noPendingParticipants>
+                  <li class="list-group-item whiteboard-modal__item d-flex justify-content-between align-items-center">
+                    None
+                  </li>
+                </ng-template>
+              </ul>
+            </div>
+          </div>
+        </ng-template>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info" (click)="handleSaveWhiteboard()">
+      <div *ngIf="!isEmbedded()" class="modal-footer whiteboard-modal__footer">
+        <button type="button" class="btn whiteboard-modal__button whiteboard-modal__button--info" (click)="handleSaveWhiteboard()">
           Save <fa-icon [icon]="faSave"></fa-icon>
         </button>
       </div>
-      <hr />
-      <div *ngIf="!isEditing">
-        <button *ngIf="canStartWhiteboard && whiteboardStarted && !whiteboardEnded" class="btn btn-warning mb-2 mr-2" (click)="handleStartWhiteboard()">
+      <hr *ngIf="!isEmbedded()" class="whiteboard-modal__divider" />
+      <div *ngIf="isEmbedded() || !isEditing" class="whiteboard-modal__actions" [class.whiteboard-modal__actions--embedded]="isEmbedded()">
+        <button *ngIf="canStartWhiteboard && whiteboardStarted && !whiteboardEnded" class="btn whiteboard-modal__button whiteboard-modal__button--warning mb-2 mr-2" (click)="handleStartWhiteboard()">
           Update <fa-icon [icon]="faSyncAlt"></fa-icon>
         </button>
-        <button *ngIf="canStartWhiteboard && !whiteboardStarted" class="btn btn-success mb-2 mr-2" (click)="handleStartWhiteboard()">
-          Start <fa-icon [icon]="faPlay"></fa-icon>
+        <button *ngIf="canStartWhiteboard && !whiteboardStarted" class="btn whiteboard-modal__button whiteboard-modal__button--success mb-2 mr-2" (click)="handleStartWhiteboard()">
+          {{ isEmbedded() ? 'Start Whiteboard' : 'Start' }} <fa-icon [icon]="faPlay"></fa-icon>
         </button>
-        <button *ngIf="whiteboardStarted && !whiteboardEnded" class="btn btn-danger mb-2 ml-2" (click)="handleStopWhiteboard()">
+        <button *ngIf="whiteboardStarted && !whiteboardEnded" class="btn whiteboard-modal__button whiteboard-modal__button--danger mb-2 ml-2" (click)="handleStopWhiteboard()">
           Stop <fa-icon [icon]="faTimes"></fa-icon>
         </button>
       </div>

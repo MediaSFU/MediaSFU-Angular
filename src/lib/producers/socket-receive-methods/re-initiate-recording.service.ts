@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
+import { reInitiateRecording as sharedReInitiateRecording } from 'mediasfu-shared';
 
 export interface ReInitiateRecordingOptions {
   roomName: string;
@@ -64,16 +65,11 @@ export class ReInitiateRecording {
     socket,
     adminRestrictSetting,
   }: ReInitiateRecordingOptions): Promise<void> => {
-    if (!adminRestrictSetting) {
-      await new Promise<void>((resolve, reject) => {
-        socket.emit('startRecordIng', { roomName, member }, ({ success }: { success: boolean }) => {
-          if (success) {
-            resolve();
-          } else {
-            reject(new Error('Failed to re-initiate recording.'));
-          }
-        });
-      });
-    }
+    return sharedReInitiateRecording({
+      roomName,
+      member,
+      socket,
+      adminRestrictSetting,
+    });
   };
 }

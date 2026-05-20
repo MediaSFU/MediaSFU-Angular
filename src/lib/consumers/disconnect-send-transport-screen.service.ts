@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { disconnectSendTransportScreen as sharedDisconnectSendTransportScreen } from 'mediasfu-shared';
 import { types } from 'mediasoup-client';
 type Producer = types.Producer;
 import { Socket } from 'socket.io-client';
@@ -145,6 +146,10 @@ export class DisconnectSendTransportScreen {
   async disconnectSendTransportScreen({
     parameters,
   }: DisconnectSendTransportScreenOptions): Promise<void> {
+    return sharedDisconnectSendTransportScreen({
+      parameters: parameters as unknown as Parameters<typeof sharedDisconnectSendTransportScreen>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       // Destructure parameters
       let { screenProducer, socket, roomName, updateScreenProducer } =

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { stopShareScreen as sharedStopShareScreen } from 'mediasfu-shared';
 import {
   DisconnectSendTransportScreenType,
   PrepopulateUserMediaType,
@@ -161,6 +162,10 @@ export class StopShareScreen {
    * @returns {Promise<void>} A promise that resolves when the screen sharing process is stopped.
    */
   stopShareScreen = async ({ parameters }: StopShareScreenOptions): Promise<void> => {
+    return sharedStopShareScreen({
+      parameters: parameters as unknown as Parameters<typeof sharedStopShareScreen>[0]['parameters'],
+    }) as Promise<void>;
+
     let { getUpdatedAllParams } = parameters;
     parameters = getUpdatedAllParams();
 

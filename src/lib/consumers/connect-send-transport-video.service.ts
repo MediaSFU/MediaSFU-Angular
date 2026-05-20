@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { connectSendTransportVideo as sharedConnectSendTransportVideo } from 'mediasfu-shared';
 import { types } from 'mediasoup-client';
 type Device = types.Device;
 type Producer = types.Producer;
@@ -171,6 +172,12 @@ export class ConnectSendTransportVideo {
     parameters,
     targetOption = 'all',
   }: ConnectSendTransportVideoOptions): Promise<void> => {
+    return sharedConnectSendTransportVideo({
+      videoParams,
+      parameters,
+      targetOption,
+    } as unknown as Parameters<typeof sharedConnectSendTransportVideo>[0]) as Promise<void>;
+
     try {
       let {
         videoProducer,

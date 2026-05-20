@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { closeAndResize as sharedCloseAndResize } from 'mediasfu-shared';
 import {
   Stream,
   Participant,
@@ -234,6 +235,12 @@ export class CloseAndResize {
     kind,
     parameters,
   }: CloseAndResizeOptions): Promise<void> => {
+    return sharedCloseAndResize({
+      producerId,
+      kind,
+      parameters: parameters as unknown as Parameters<typeof sharedCloseAndResize>[0]['parameters'],
+    }) as Promise<void>;
+
     let { getUpdatedAllParams } = parameters;
     parameters = getUpdatedAllParams();
 

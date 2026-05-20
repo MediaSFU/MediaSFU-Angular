@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { signalNewConsumerTransport as sharedSignalNewConsumerTransport } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import {
   ReorderStreamsParameters,
@@ -84,6 +85,13 @@ export class SignalNewConsumerTransport {
     nsock,
     parameters,
   }: SignalNewConsumerTransportOptions): Promise<string[] | void> => {
+    return sharedSignalNewConsumerTransport({
+      remoteProducerId,
+      islevel,
+      nsock,
+      parameters,
+    } as unknown as Parameters<typeof sharedSignalNewConsumerTransport>[0]) as Promise<string[] | void>;
+
     try {
       let {
         device,

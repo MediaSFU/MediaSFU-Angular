@@ -1,0 +1,61 @@
+import { OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Socket } from 'socket.io-client';
+import { Request } from '../../@types/types';
+import { RespondToRequests, RespondToRequestsType } from '../../methods/requests-methods/respond-to-requests.service';
+import { ModernRenderMode } from '../utils/render-mode.utils';
+import * as i0 from "@angular/core";
+export interface ModernRequestsModalParameters {
+    filteredRequestList?: Request[];
+    getUpdatedAllParams?: () => {
+        filteredRequestList: Request[];
+    };
+    [key: string]: any;
+}
+export declare class ModernRequestsModalComponent implements OnInit, OnChanges {
+    private readonly respondToRequestsService;
+    isRequestsModalVisible: boolean;
+    requestCounter: number;
+    requestList: Request[];
+    roomName: string;
+    socket: Socket;
+    backgroundColor: string;
+    position: string;
+    parameters: ModernRequestsModalParameters;
+    onRequestClose: () => void;
+    onRequestFilterChange: (_filter: string) => void;
+    onRequestItemPress?: RespondToRequestsType;
+    updateRequestList: (_newRequestList: Request[]) => void;
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<unknown>;
+    renderMode: ModernRenderMode;
+    showHeader: boolean;
+    faTimes: IconDefinition;
+    faCheck: IconDefinition;
+    faSearch: IconDefinition;
+    requestList_s: Request[];
+    requestCounter_s: number;
+    requestFilterValue: string;
+    private readonly iconMap;
+    constructor(respondToRequestsService: RespondToRequests);
+    ngOnInit(): void;
+    ngOnChanges(_changes: SimpleChanges): void;
+    isVisible(): boolean;
+    isEmbedded(): boolean;
+    handleOverlayClick(): void;
+    handleModalClose(): void;
+    handleFilterChange(event: Event): void;
+    emptyStateCopy(): string;
+    handleRequestAction(request: Request, action: string): void;
+    getIcon(iconName: string): IconDefinition;
+    describeRequest(iconName: string): string;
+    resolvedOverlayStyle(): Record<string, string | number>;
+    resolvedContentStyle(): Record<string, string | number>;
+    private ensureHandler;
+    private resolvedRequestHandler;
+    private updateRequests;
+    private normalizeStyle;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ModernRequestsModalComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModernRequestsModalComponent, "app-requests-modal", never, { "isRequestsModalVisible": { "alias": "isRequestsModalVisible"; "required": false; }; "requestCounter": { "alias": "requestCounter"; "required": false; }; "requestList": { "alias": "requestList"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "position": { "alias": "position"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "onRequestClose": { "alias": "onRequestClose"; "required": false; }; "onRequestFilterChange": { "alias": "onRequestFilterChange"; "required": false; }; "onRequestItemPress": { "alias": "onRequestItemPress"; "required": false; }; "updateRequestList": { "alias": "updateRequestList"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; "renderMode": { "alias": "renderMode"; "required": false; }; "showHeader": { "alias": "showHeader"; "required": false; }; }, {}, never, never, true, never>;
+}

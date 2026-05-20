@@ -81,7 +81,7 @@ export declare class ControlButtonsAltComponent {
     getAlignmentStyle(): any;
     getContainerStyle(): any;
     getButtonStyle(button: AltButton): {
-        flexDirection?: string | undefined;
+        flexDirection?: string;
         backgroundColor: string;
         display: string;
         alignItems: string;

@@ -1,7 +1,16 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faStar, faLock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronDown,
+  faChevronLeft,
+  faChevronRight,
+  faChevronUp,
+  faHome,
+  faLock,
+  faStar,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   GeneratePageContent,
   GeneratePageContentParameters,
@@ -103,70 +112,135 @@ export type PaginationType = (options: PaginationOptions) => HTMLElement;
     selector: 'app-pagination',
     imports: [CommonModule, FontAwesomeModule],
     template: `
-    <div
-      [ngStyle]="{
-        'background-color': backgroundColor,
-        'justify-content': position == 'middle' ? 'space-evenly' : position == 'left' ? 'flex-start' : 'flex-end',
-        'align-items': location == 'middle' ? 'center' : location == 'top' ? 'flex-start' : 'flex-end',
-        'padding': '0',
-        'margin': '0',
-        'min-height': direction == 'horizontal' ? paginationHeight + 'px' : componentSizes.otherHeight + 'px',
-        'min-width': direction == 'horizontal' ? componentSizes.otherWidth + 'px' : paginationHeight + 'px',
-        'width': direction == 'horizontal' ? '100%' : paginationHeight + 'px',
-        'height': direction == 'horizontal' ? paginationHeight + 'px' : '100%',
-        'display': showAspect ? 'flex' : 'none',
-        'max-height': direction == 'horizontal' ? paginationHeight + 'px' : '100%',
-        'max-width': direction == 'horizontal' ? '100%' : paginationHeight + 'px',
-        'flex-direction': direction == 'vertical' ? 'column' : 'row',
-        'overflow-x': 'auto',
-      }"
-    >
+    <div class="pagination" [ngStyle]="getContainerStyle()">
+      <button
+        *ngIf="shouldShowNavigationArrows()"
+        type="button"
+        class="pagination__button pagination__button--arrow"
+        [ngStyle]="getArrowStyle(!canNavigateBack())"
+        [disabled]="!canNavigateBack()"
+        [attr.aria-label]="direction === 'vertical' ? 'Previous pages' : 'Previous pages'"
+        (click)="shiftWindowBack()"
+      >
+        <fa-icon [icon]="direction === 'vertical' ? faChevronUp : faChevronLeft"></fa-icon>
+      </button>
       <ng-container *ngFor="let item of data; let index = index">
         <button
-          *ngIf="item == 0"
-          [ngClass]="{ active: item == currentUserPage }"
+          type="button"
+          class="pagination__button"
+          [ngClass]="{ 'pagination__button--active': item == currentUserPage }"
           [ngStyle]="getPageStyle(item)"
+          [attr.aria-label]="getPageAriaLabel(item)"
           (click)="handleClick(item)"
         >
           <fa-icon
+            *ngIf="item == 0"
+            [icon]="faHome"
+            [style.color]="item == currentUserPage ? '#ffffff' : getHomeIconColor()"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="isBreakoutRoom(item)"
+            class="pagination__room-icon"
+            [icon]="faUsers"
+          ></fa-icon>
+          <span
+            *ngIf="item !== 0"
+            class="pagination__label"
+            [ngStyle]="getPageLabelStyle(item)"
+          >
+            {{ getDisplayItem(item) }}
+          </span>
+          <fa-icon
+            *ngIf="isBreakoutRoom(item) && showBreakoutLock(item)"
+            class="pagination__badge"
+            [icon]="faLock"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="isBreakoutRoom(item) && isCurrentBreakoutRoom(item)"
+            class="pagination__badge pagination__badge--star"
             [icon]="faStar"
-            size="lg"
-            [style.color]="item == currentUserPage ? 'yellow' : 'gray'"
           ></fa-icon>
         </button>
-        <button
-          *ngIf="item !== 0"
-          [ngClass]="{ active: item == currentUserPage }"
-          [ngStyle]="getPageStyle(item)"
-          (click)="handleClick(item)"
-        >
-          <span
-            *ngIf="!isBreakoutRoom(item)"
-            class="pageText"
-            [ngStyle]="{ color: item == currentUserPage ? '#ffffff' : '#000000' }"
-            >{{ item }}</span
-          >
-          <span
-            *ngIf="isBreakoutRoom(item)"
-            class="pageText"
-            [ngStyle]="{ color: item == currentUserPage ? '#ffffff' : '#000000' }"
-            >{{ getDisplayItem(item) }}
-            <fa-icon
-              *ngIf="
-                parameters.memberRoom + 1 !== item - (parameters.mainRoomsLength - 1) &&
-                parameters.islevel !== '2'
-              "
-              [icon]="faLock"
-            ></fa-icon
-          ></span>
-        </button>
       </ng-container>
+      <button
+        *ngIf="shouldShowNavigationArrows()"
+        type="button"
+        class="pagination__button pagination__button--arrow"
+        [ngStyle]="getArrowStyle(!canNavigateForward())"
+        [disabled]="!canNavigateForward()"
+        [attr.aria-label]="direction === 'vertical' ? 'Next pages' : 'Next pages'"
+        (click)="shiftWindowForward()"
+      >
+        <fa-icon [icon]="direction === 'vertical' ? faChevronDown : faChevronRight"></fa-icon>
+      </button>
     </div>
   `,
     styles: [
         `
-      .pageButton.active {
-        background-color: #2c678f;
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        gap: 6px;
+        padding: 2px 6px;
+        border-radius: 14px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+      }
+
+      .pagination::-webkit-scrollbar {
+        display: none;
+      }
+
+      .pagination__button {
+        min-width: 30px;
+        height: 30px;
+        padding: 0 9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+        flex: 0 0 auto;
+      }
+
+      .pagination__button--active {
+        transform: translateY(-1px);
+      }
+
+      .pagination__label {
+        font-family: var(--ms-modern-font-family, 'Segoe UI', 'Aptos', 'Trebuchet MS', sans-serif);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+
+      .pagination__badge {
+        font-size: 0.72rem;
+      }
+
+      .pagination__badge--star {
+        color: #f59e0b;
+      }
+
+      .pagination__button--arrow {
+        min-width: 28px;
+        width: 28px;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .pagination__room-icon {
+        font-size: 0.74rem;
       }
     `,
     ]
@@ -184,28 +258,36 @@ export class Pagination implements OnInit, OnChanges {
   @Input() backgroundColor = '#ffffff';
   @Input() paginationHeight = 40;
   @Input() showAspect = true;
+  @Input() maxVisiblePages = 5;
   @Input() parameters: PaginationParameters = {} as PaginationParameters;
 
   constructor(private generatePageContentService: GeneratePageContent) {}
 
+  faHome = faHome;
   faStar = faStar;
   faLock = faLock;
+  faUsers = faUsers;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faChevronUp = faChevronUp;
+  faChevronDown = faChevronDown;
 
   data: number[] = [];
+  private windowStart = 1;
 
   ngOnInit() {
-    this.data = Array.from({ length: this.totalPages + 1 }, (_, index) => index);
-    this.componentSizes = this.parameters.componentSizes;
+    this.componentSizes = this.resolveParameters().componentSizes;
     if (!this.handlePageChange) {
       this.handlePageChange = this.generatePageContentService.generatePageContent.bind(
         this.generatePageContentService,
       );
     }
+    this.refreshVisiblePages();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['totalPages'] || changes['currentUserPage']) {
-      this.data = Array.from({ length: this.totalPages + 1 }, (_, index) => index);
+    if (changes['totalPages'] || changes['currentUserPage'] || changes['parameters']) {
+      this.refreshVisiblePages();
     }
   }
 
@@ -214,24 +296,24 @@ export class Pagination implements OnInit, OnChanges {
       return;
     }
 
-    this.parameters = this.parameters.getUpdatedAllParams();
-    const params = { ...this.parameters };
+    const resolvedParameters = this.resolveParameters();
+    const params = { ...resolvedParameters };
     this.componentSizes = params.componentSizes;
 
-    if (this.parameters.breakOutRoomStarted && !this.parameters.breakOutRoomEnded && page !== 0) {
-      const roomMember = this.parameters.breakoutRooms.find((r: any[]) =>
-        r.find((p) => p.name == this.parameters.member),
+    if (resolvedParameters.breakOutRoomStarted && !resolvedParameters.breakOutRoomEnded && page !== 0) {
+      const roomMember = resolvedParameters.breakoutRooms.find((r: any[]) =>
+        r.find((p) => p.name == resolvedParameters.member),
       );
-      const pageInt = page - this.parameters.mainRoomsLength;
+      const pageInt = page - resolvedParameters.mainRoomsLength;
       let memberBreakRoom = -1;
       if (roomMember) {
-        memberBreakRoom = this.parameters.breakoutRooms.indexOf(roomMember);
+        memberBreakRoom = resolvedParameters.breakoutRooms.indexOf(roomMember);
       }
 
       if ((memberBreakRoom == -1 || memberBreakRoom !== pageInt) && pageInt >= 0) {
-        if (this.parameters.islevel !== '2') {
-          if (this.parameters.showAlert) {
-            this.parameters.showAlert({
+        if (resolvedParameters.islevel !== '2') {
+          if (resolvedParameters.showAlert) {
+            resolvedParameters.showAlert({
               message: `You are not part of the breakout room ${pageInt + 1}.`,
               type: 'danger',
             });
@@ -245,10 +327,10 @@ export class Pagination implements OnInit, OnChanges {
           breakRoom: pageInt,
           inBreakRoom: true,
         });
-        if (this.parameters.hostNewRoom !== pageInt) {
-          this.parameters.socket.emit('updateHostBreakout', {
+        if (resolvedParameters.hostNewRoom !== pageInt) {
+          resolvedParameters.socket.emit('updateHostBreakout', {
             newRoom: pageInt,
-            roomName: this.parameters.roomName,
+            roomName: resolvedParameters.roomName,
           });
         }
       } else {
@@ -258,21 +340,21 @@ export class Pagination implements OnInit, OnChanges {
           breakRoom: pageInt,
           inBreakRoom: pageInt >= 0,
         });
-        if (this.parameters.islevel == '2' && this.parameters.hostNewRoom !== -1) {
-          this.parameters.socket.emit('updateHostBreakout', {
-            prevRoom: this.parameters.hostNewRoom,
+        if (resolvedParameters.islevel == '2' && resolvedParameters.hostNewRoom !== -1) {
+          resolvedParameters.socket.emit('updateHostBreakout', {
+            prevRoom: resolvedParameters.hostNewRoom,
             newRoom: -1,
-            roomName: this.parameters.roomName,
+            roomName: resolvedParameters.roomName,
           });
         }
       }
     } else {
       await this.handlePageChange({ page, parameters: params, breakRoom: 0, inBreakRoom: false });
-      if (this.parameters.islevel == '2' && this.parameters.hostNewRoom !== -1) {
-        this.parameters.socket.emit('updateHostBreakout', {
-          prevRoom: this.parameters.hostNewRoom,
+      if (resolvedParameters.islevel == '2' && resolvedParameters.hostNewRoom !== -1) {
+        resolvedParameters.socket.emit('updateHostBreakout', {
+          prevRoom: resolvedParameters.hostNewRoom,
           newRoom: -1,
-          roomName: this.parameters.roomName,
+          roomName: resolvedParameters.roomName,
         });
       }
     }
@@ -280,30 +362,239 @@ export class Pagination implements OnInit, OnChanges {
 
   componentSizes: ComponentSizes = {} as ComponentSizes;
 
+  resolveParameters(): PaginationParameters {
+    if (this.parameters?.getUpdatedAllParams) {
+      return this.parameters.getUpdatedAllParams();
+    }
+
+    return this.parameters;
+  }
+
+  isDarkModeEnabled(): boolean {
+    const params = this.resolveParameters();
+
+    if (typeof params?.isDarkModeValue === 'boolean') {
+      return params.isDarkModeValue;
+    }
+
+    return false;
+  }
+
+  refreshVisiblePages(): void {
+    this.syncWindowToCurrentPage();
+
+    if (!this.shouldShowNavigationArrows()) {
+      this.data = Array.from({ length: this.totalPages + 1 }, (_, index) => index);
+      return;
+    }
+
+    const windowEnd = Math.min(this.windowStart + this.maxVisiblePages - 1, this.totalPages);
+    this.data = [0];
+
+    for (let page = this.windowStart; page <= windowEnd; page += 1) {
+      this.data.push(page);
+    }
+  }
+
+  shouldShowNavigationArrows(): boolean {
+    return this.totalPages > this.maxVisiblePages + 1;
+  }
+
+  canNavigateBack(): boolean {
+    return this.windowStart > 1;
+  }
+
+  canNavigateForward(): boolean {
+    return this.windowStart + this.maxVisiblePages <= this.totalPages;
+  }
+
+  shiftWindowBack(): void {
+    if (!this.canNavigateBack()) {
+      return;
+    }
+
+    this.windowStart = this.clampWindowStart(this.windowStart - this.getWindowShiftAmount());
+    this.refreshVisiblePages();
+  }
+
+  shiftWindowForward(): void {
+    if (!this.canNavigateForward()) {
+      return;
+    }
+
+    this.windowStart = this.clampWindowStart(this.windowStart + this.getWindowShiftAmount());
+    this.refreshVisiblePages();
+  }
+
+  getArrowStyle(disabled: boolean) {
+    const isDarkMode = this.isDarkModeEnabled();
+
+    return {
+      color: disabled
+        ? isDarkMode
+          ? 'rgba(226, 232, 240, 0.32)'
+          : 'rgba(15, 23, 42, 0.32)'
+        : isDarkMode
+          ? 'rgba(226, 232, 240, 0.86)'
+          : 'rgba(15, 23, 42, 0.82)',
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      opacity: disabled ? '0.6' : '1',
+    };
+  }
+
+  getHomeIconColor(): string {
+    return this.isDarkModeEnabled() ? 'rgba(226, 232, 240, 0.82)' : 'rgba(15, 23, 42, 0.68)';
+  }
+
+  getContainerStyle() {
+    const otherHeight = this.componentSizes?.otherHeight || 0;
+    const otherWidth = this.componentSizes?.otherWidth || 0;
+    const isDarkMode = this.isDarkModeEnabled();
+
+    return {
+      background:
+        this.backgroundColor ||
+        (isDarkMode
+          ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 100%)'
+          : 'linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(226, 232, 240, 0.88) 100%)'),
+      justifyContent:
+        this.position == 'middle'
+          ? 'center'
+          : this.position == 'left'
+            ? 'flex-start'
+            : 'flex-end',
+      alignItems:
+        this.location == 'middle'
+          ? 'center'
+          : this.location == 'top'
+            ? 'flex-start'
+            : 'flex-end',
+      margin: '0',
+      minHeight: this.direction == 'horizontal' ? this.paginationHeight + 'px' : otherHeight + 'px',
+      minWidth: this.direction == 'horizontal' ? otherWidth + 'px' : this.paginationHeight + 'px',
+      width: this.direction == 'horizontal' ? '100%' : this.paginationHeight + 'px',
+      height: this.direction == 'horizontal' ? this.paginationHeight + 'px' : '100%',
+      display: this.showAspect ? 'flex' : 'none',
+      maxHeight: this.direction == 'horizontal' ? this.paginationHeight + 'px' : '100%',
+      maxWidth: this.direction == 'horizontal' ? '100%' : this.paginationHeight + 'px',
+      flexDirection: this.direction == 'vertical' ? 'column' : 'row',
+      border: isDarkMode
+        ? '1px solid rgba(148, 163, 184, 0.18)'
+        : '1px solid rgba(148, 163, 184, 0.24)',
+      ...(this.buttonsContainerStyle || {}),
+    };
+  }
+
   getPageStyle(item: number) {
-    return item == this.currentUserPage ? this.activePageStyle : this.inactivePageStyle;
+    const active = item == this.currentUserPage;
+    const isDarkMode = this.isDarkModeEnabled();
+
+    return {
+      background: active
+        ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.92) 0%, rgba(79, 70, 229, 0.9) 100%)'
+        : isDarkMode
+          ? 'rgba(30, 41, 59, 0.82)'
+          : 'rgba(255, 255, 255, 0.62)',
+      color: active ? '#ffffff' : isDarkMode ? '#e2e8f0' : '#0f172a',
+      boxShadow: active
+        ? '0 12px 26px rgba(37, 99, 235, 0.24)'
+        : isDarkMode
+          ? 'inset 0 1px 0 rgba(255, 255, 255, 0.06)'
+          : 'inset 0 1px 0 rgba(255, 255, 255, 0.22)',
+      ...(active ? this.activePageStyle : this.inactivePageStyle),
+    };
+  }
+
+  getPageLabelStyle(item: number) {
+    const isDarkMode = this.isDarkModeEnabled();
+
+    return {
+      color: item == this.currentUserPage ? '#ffffff' : isDarkMode ? '#e2e8f0' : '#0f172a',
+    };
+  }
+
+  getPageAriaLabel(item: number): string {
+    if (item === 0) {
+      return 'Go to main room';
+    }
+
+    if (this.isBreakoutRoom(item)) {
+      return `Go to breakout room ${this.getBreakoutRoomNumber(item)}`;
+    }
+
+    return `Go to page ${item}`;
   }
 
   isBreakoutRoom = (item: number): boolean => {
-    this.parameters = this.parameters.getUpdatedAllParams();
+    const params = this.resolveParameters();
+
     return (
-      this.parameters.breakOutRoomStarted &&
-      !this.parameters.breakOutRoomEnded &&
-      item >= this.parameters.mainRoomsLength
+      params.breakOutRoomStarted &&
+      !params.breakOutRoomEnded &&
+      item >= params.mainRoomsLength
     );
   };
 
+  isCurrentBreakoutRoom(item: number): boolean {
+    const params = this.resolveParameters();
+
+    return this.isBreakoutRoom(item) && params.memberRoom + 1 === item - (params.mainRoomsLength - 1);
+  }
+
+  showBreakoutLock(item: number): boolean {
+    const params = this.resolveParameters();
+
+    return (
+      this.isBreakoutRoom(item) &&
+      params.memberRoom + 1 !== item - (params.mainRoomsLength - 1) &&
+      params.islevel !== '2'
+    );
+  }
+
   getDisplayItem(item: number) {
-    const roomNumber = item - (this.parameters.mainRoomsLength - 1);
+    const roomNumber = this.getBreakoutRoomNumber(item);
 
     if (this.isBreakoutRoom(item)) {
-      if (this.parameters.memberRoom + 1 !== roomNumber) {
-        return `Room ${roomNumber}`;
-      } else {
-        return `Room ${roomNumber}`;
-      }
+      return roomNumber.toString();
     }
 
     return item.toString();
+  }
+
+  private syncWindowToCurrentPage(): void {
+    if (!this.shouldShowNavigationArrows()) {
+      this.windowStart = 1;
+      return;
+    }
+
+    if (this.currentUserPage <= 0) {
+      this.windowStart = this.clampWindowStart(this.windowStart);
+      return;
+    }
+
+    const windowEnd = this.windowStart + this.maxVisiblePages - 1;
+    if (this.currentUserPage >= this.windowStart && this.currentUserPage <= windowEnd) {
+      this.windowStart = this.clampWindowStart(this.windowStart);
+      return;
+    }
+
+    const centeredStart = this.currentUserPage - Math.floor(this.maxVisiblePages / 2);
+    this.windowStart = this.clampWindowStart(centeredStart);
+  }
+
+  private clampWindowStart(candidate: number): number {
+    const maxStart = Math.max(1, this.totalPages - this.maxVisiblePages + 1);
+
+    return Math.max(1, Math.min(candidate, maxStart));
+  }
+
+  private getWindowShiftAmount(): number {
+    return Math.max(1, this.maxVisiblePages - 2);
+  }
+
+  private getBreakoutRoomNumber(item: number): number {
+    const params = this.resolveParameters();
+
+    return item - (params.mainRoomsLength - 1);
   }
 }

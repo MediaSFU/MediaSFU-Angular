@@ -1,9 +1,9 @@
-<ng-container *ngIf="isVisible && customTemplate">
+<ng-container *ngIf="isVisibleState() && customTemplate">
   <ng-container
     *ngTemplateOutlet="
       customTemplate;
       context: {
-        isVisible: isVisible,
+        isVisible: isVisibleState(),
         parameters: parameters,
         position: position,
         backgroundColor: backgroundColor,
@@ -14,46 +14,80 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="isVisible && !customTemplate" class="modal-container" [ngStyle]="getCombinedOverlayStyle()">
-  <div class="modal-content" [ngStyle]="getCombinedContentStyle()">
-    <div class="modal-header">
+<div
+  *ngIf="isVisibleState() && !customTemplate"
+  class="modal-container"
+  [class.modal-container--dark]="resolvedIsDarkMode"
+  [class.modal-container--light]="!resolvedIsDarkMode"
+  [ngStyle]="getCombinedOverlayStyle()"
+>
+  <div
+    class="modal-content breakout-modal__content"
+    [class.breakout-modal__content--embedded]="isEmbedded()"
+    [ngStyle]="getCombinedContentStyle()"
+  >
+    <div *ngIf="showHeader" class="modal-header breakout-modal__header">
       <h2>Breakout Rooms <fa-icon [icon]="faDoorOpen"></fa-icon></h2>
       <button class="close-btn" (click)="onBreakoutRoomsClose()">
         <fa-icon [icon]="faTimes"></fa-icon>
       </button>
     </div>
-    <hr>
-    <div class="form-group">
-      <label for="numRooms">Number of Rooms <fa-icon [icon]="faUsers"></fa-icon></label>
-      <input type="number" class="form-control" id="numRooms" [(ngModel)]="numRooms">
+    <hr *ngIf="showHeader" class="breakout-modal__divider">
+    <div class="breakout-modal__controls-card">
+      <div *ngIf="isEmbedded()" class="breakout-modal__summary">
+        <span class="breakout-modal__summary-badge">Shared sidebar</span>
+        <p>Build rooms, review assignments, then save before starting or updating breakout sessions.</p>
+      </div>
+
+      <div class="form-group breakout-modal__field">
+        <label for="numRooms">Number of Rooms <fa-icon [icon]="faUsers"></fa-icon></label>
+        <input type="number" class="form-control breakout-modal__input" id="numRooms" [(ngModel)]="numRooms">
+      </div>
+
+      <div class="form-group breakout-modal__actions">
+        <button class="btn breakout-modal__button breakout-modal__button--primary" (click)="handleRandomAssign()">Random Assign <fa-icon [icon]="faRandom"></fa-icon></button>
+        <button *ngIf="!isEmbedded()" class="btn breakout-modal__button breakout-modal__button--secondary" (click)="handleManualAssign()">Manual Assign <fa-icon [icon]="faHandPointer"></fa-icon></button>
+        <button class="btn breakout-modal__button breakout-modal__button--success" (click)="handleAddRoom()">Add Room <fa-icon [icon]="faPlus"></fa-icon></button>
+        <button *ngIf="!isEmbedded()" class="btn breakout-modal__button breakout-modal__button--info" (click)="handleSaveRooms()">Save Rooms <fa-icon [icon]="faSave"></fa-icon></button>
+      </div>
+
+      <div class="form-group breakout-modal__field">
+        <label for="newParticipantAction">New Participant Action <fa-icon [icon]="faUsers"></fa-icon></label>
+        <select class="form-control breakout-modal__input" id="newParticipantAction" [(ngModel)]="newParticipantAction">
+          <option value="autoAssignNewRoom">Add to new room</option>
+          <option value="autoAssignAvailableRoom">Add to open room</option>
+          <option value="manualAssign">No action</option>
+        </select>
+      </div>
     </div>
-    <div class="form-group">
-      <button class="btn btn-primary" (click)="handleRandomAssign()">Random Assign <fa-icon [icon]="faRandom"></fa-icon></button>
-      <button class="btn btn-secondary" (click)="handleManualAssign()">Manual Assign <fa-icon [icon]="faHandPointer"></fa-icon></button>
-      <button class="btn btn-success" (click)="handleAddRoom()">Add Room <fa-icon [icon]="faPlus"></fa-icon></button>
-      <button class="btn btn-info" (click)="handleSaveRooms()">Save Rooms <fa-icon [icon]="faSave"></fa-icon></button>
+
+    <div #roomsContainer class="breakout-modal__rooms">
+      <app-room-list [rooms]="breakoutRoomsRef" [isDarkMode]="resolvedIsDarkMode" [editingRoomIndex]="editRoomModalVisible ? parameters.currentRoomIndex : null" (editRoom)="handleEditRoom($event)" (deleteRoom)="handleDeleteRoom($event)" (removeParticipant)="handleRemoveParticipant($event)"></app-room-list>
     </div>
-    <div class="form-group">
-      <label for="newParticipantAction">New Participant Action <fa-icon [icon]="faUsers"></fa-icon></label>
-      <select class="form-control" id="newParticipantAction" [(ngModel)]="newParticipantAction">
-        <option value="autoAssignNewRoom">Add to new room</option>
-        <option value="autoAssignAvailableRoom">Add to open room</option>
-        <option value="manualAssign">No action</option>
-      </select>
+
+    <div *ngIf="isEmbedded()" class="breakout-modal__footer breakout-modal__footer--embedded">
+      <button class="btn breakout-modal__button breakout-modal__button--info" (click)="handleSaveRooms()">
+        Save <fa-icon [icon]="faSave"></fa-icon>
+      </button>
+      <button *ngIf="startBreakoutButtonVisible" class="btn breakout-modal__button breakout-modal__button--primary" (click)="handleStartBreakout()">
+        {{ parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? 'Update' : 'Start' }} <fa-icon [icon]="parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? faSyncAlt : faPlay"></fa-icon>
+      </button>
+      <button *ngIf="stopBreakoutButtonVisible" class="btn breakout-modal__button breakout-modal__button--danger" (click)="handleStopBreakout()">
+        End <fa-icon [icon]="faStop"></fa-icon>
+      </button>
     </div>
-    <div #roomsContainer>
-      <app-room-list [rooms]="breakoutRoomsRef" (editRoom)="handleEditRoom($event)" (deleteRoom)="handleDeleteRoom($event)" (removeParticipant)="handleRemoveParticipant($event)"></app-room-list>
-    </div>
-    <div *ngIf="startBreakoutButtonVisible">
-      <button class="btn btn-primary mr-2 mb-2" (click)="handleStartBreakout()">
+
+    <div *ngIf="!isEmbedded() && startBreakoutButtonVisible" class="breakout-modal__footer">
+      <button class="btn breakout-modal__button breakout-modal__button--primary" (click)="handleStartBreakout()">
         {{ parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? 'Update Breakout' : 'Start Breakout' }} <fa-icon [icon]="parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded ? faSyncAlt : faPlay"></fa-icon>
       </button>
     </div>
-    <div *ngIf="stopBreakoutButtonVisible">
-      <button class="btn btn-danger mr-2 mb-2" (click)="handleStopBreakout()">
+
+    <div *ngIf="!isEmbedded() && stopBreakoutButtonVisible" class="breakout-modal__footer">
+      <button class="btn breakout-modal__button breakout-modal__button--danger" (click)="handleStopBreakout()">
         Stop Breakout <fa-icon [icon]="faStop"></fa-icon>
       </button>
     </div>
   </div>
-  <app-edit-room-modal [editRoomModalVisible]="editRoomModalVisible" [currentRoom]="currentRoom!" [participantsRef]="participantsRef" [currentRoomIndex]="parameters.currentRoomIndex!" (setEditRoomModalVisible)="editRoomModalVisible = $event" (addParticipant)="handleAddParticipant($event)" (removeParticipant)="handleRemoveParticipant($event)"></app-edit-room-modal>
+  <app-edit-room-modal [editRoomModalVisible]="editRoomModalVisible" [currentRoom]="currentRoom!" [participantsRef]="participantsRef" [currentRoomIndex]="parameters.currentRoomIndex!" [isDarkMode]="resolvedIsDarkMode" [renderMode]="isEmbedded() ? 'inline' : 'modal'" (setEditRoomModalVisible)="editRoomModalVisible = $event" (addParticipant)="handleAddParticipant($event)" (removeParticipant)="handleRemoveParticipant($event)"></app-edit-room-modal>
 </div>

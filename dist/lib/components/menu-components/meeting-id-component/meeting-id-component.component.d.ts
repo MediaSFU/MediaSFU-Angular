@@ -55,6 +55,7 @@ export type MeetingIdComponentType = (options: MeetingIdComponentOptions) => HTM
  */
 export declare class MeetingIdComponent {
     meetingID: string;
+    isDarkMode?: boolean;
     labelText?: string;
     containerAttributes?: {
         [key: string]: any;
@@ -89,6 +90,7 @@ export declare class MeetingIdComponent {
     isCopied: boolean;
     readonly copyIcon: IconDefinition;
     get renderContext(): MeetingIdRenderContext;
+    get resolvedIsDarkMode(): boolean;
     handleCopy(): Promise<void>;
     getIconColor(): string;
     getLabelText(): string;
@@ -96,5 +98,5 @@ export declare class MeetingIdComponent {
     getInputReadOnly(): boolean;
     getIconStyle(): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<MeetingIdComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MeetingIdComponent, "app-meeting-id-component", never, { "meetingID": { "alias": "meetingID"; "required": false; }; "labelText": { "alias": "labelText"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "labelAttributes": { "alias": "labelAttributes"; "required": false; }; "inputContainerAttributes": { "alias": "inputContainerAttributes"; "required": false; }; "inputAttributes": { "alias": "inputAttributes"; "required": false; }; "buttonAttributes": { "alias": "buttonAttributes"; "required": false; }; "iconAttributes": { "alias": "iconAttributes"; "required": false; }; "copyIconColors": { "alias": "copyIconColors"; "required": false; }; "customIcon": { "alias": "customIcon"; "required": false; }; "renderContainer": { "alias": "renderContainer"; "required": false; }; "renderLabel": { "alias": "renderLabel"; "required": false; }; "renderInput": { "alias": "renderInput"; "required": false; }; "renderCopyButton": { "alias": "renderCopyButton"; "required": false; }; "renderIcon": { "alias": "renderIcon"; "required": false; }; "renderInputGroup": { "alias": "renderInputGroup"; "required": false; }; "renderContent": { "alias": "renderContent"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MeetingIdComponent, "app-meeting-id-component", never, { "meetingID": { "alias": "meetingID"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "labelText": { "alias": "labelText"; "required": false; }; "containerAttributes": { "alias": "containerAttributes"; "required": false; }; "labelAttributes": { "alias": "labelAttributes"; "required": false; }; "inputContainerAttributes": { "alias": "inputContainerAttributes"; "required": false; }; "inputAttributes": { "alias": "inputAttributes"; "required": false; }; "buttonAttributes": { "alias": "buttonAttributes"; "required": false; }; "iconAttributes": { "alias": "iconAttributes"; "required": false; }; "copyIconColors": { "alias": "copyIconColors"; "required": false; }; "customIcon": { "alias": "customIcon"; "required": false; }; "renderContainer": { "alias": "renderContainer"; "required": false; }; "renderLabel": { "alias": "renderLabel"; "required": false; }; "renderInput": { "alias": "renderInput"; "required": false; }; "renderCopyButton": { "alias": "renderCopyButton"; "required": false; }; "renderIcon": { "alias": "renderIcon"; "required": false; }; "renderInputGroup": { "alias": "renderInputGroup"; "required": false; }; "renderContent": { "alias": "renderContent"; "required": false; }; }, {}, never, never, true, never>;
 }

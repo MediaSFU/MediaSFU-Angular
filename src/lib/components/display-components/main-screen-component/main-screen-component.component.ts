@@ -141,6 +141,8 @@ export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, On
     if (
       changes['mainSize'] ||
       changes['doStack'] ||
+      changes['containerWidthFraction'] ||
+      changes['containerHeightFraction'] ||
       changes['parentWidth'] ||
       changes['parentHeight'] ||
       changes['showControls'] ||
@@ -205,6 +207,9 @@ export class MainScreenComponent implements OnInit, OnChanges, AfterViewInit, On
       height: `${this.parentHeight}px`,
       padding: 0,
       margin: 0,
+      minWidth: '0',
+      position: 'relative',
+      boxSizing: 'border-box',
     };
     return { ...baseStyle, ...this.containerStyle };
   }

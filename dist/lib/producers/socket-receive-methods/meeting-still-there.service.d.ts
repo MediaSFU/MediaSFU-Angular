@@ -34,7 +34,7 @@ export declare class MeetingStillThere {
      * @param {Function} options.updateIsConfirmHereModalVisible - Function to update the visibility of the "still there?" modal.
      * @returns {Promise<void>} A promise that resolves when the modal visibility is updated.
      */
-    meetingStillThere: ({ updateIsConfirmHereModalVisible }: MeetingStillThereOptions) => void;
+    meetingStillThere: ({ updateIsConfirmHereModalVisible }: MeetingStillThereOptions) => Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MeetingStillThere, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<MeetingStillThere>;
 }

@@ -145,7 +145,7 @@ export class MainContainerComponent implements OnInit, OnDestroy, OnChanges {
 
     this.containerStyles = {
       ...baseStyles,
-      ...(this.containerStyle as any),
+      ...(this.containerStyle ?? {}),
     };
   };
 }

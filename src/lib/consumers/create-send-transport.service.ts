@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { createSendTransport as sharedCreateSendTransport } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { types } from 'mediasoup-client';
 type Device = types.Device;
@@ -299,6 +300,11 @@ export class CreateSendTransport {
    */
 
   async createSendTransport({ option, parameters }: CreateSendTransportOptions): Promise<void> {
+    return sharedCreateSendTransport({
+      option,
+      parameters: parameters as unknown as Parameters<typeof sharedCreateSendTransport>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       // Destructure parameters
       let {

@@ -1,0 +1,186 @@
+.modal-content.breakout-modal__content {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.breakout-modal__content--embedded {
+	gap: 16px;
+	height: 100%;
+	padding-bottom: 12px;
+}
+
+.breakout-modal__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+}
+
+.breakout-modal__header h2 {
+	margin: 0;
+	font-size: 1.15rem;
+	font-weight: 800;
+}
+
+.modal-container--dark .breakout-modal__header h2,
+.modal-container--dark .close-btn {
+	color: #e2e8f0;
+}
+
+.modal-container--light .breakout-modal__header h2,
+.modal-container--light .close-btn {
+	color: #0f172a;
+}
+
+.close-btn {
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: 50%;
+	background: rgba(148, 163, 184, 0.12);
+	cursor: pointer;
+}
+
+.breakout-modal__divider {
+	height: 1px;
+	border: none;
+	margin: 0;
+	background: rgba(148, 163, 184, 0.22);
+}
+
+.breakout-modal__controls-card {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 16px;
+	border-radius: 20px;
+	border: 1px solid rgba(148, 163, 184, 0.18);
+	background: rgba(255, 255, 255, 0.52);
+	box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+}
+
+.modal-container--dark .breakout-modal__controls-card {
+	background: rgba(15, 23, 42, 0.38);
+}
+
+.breakout-modal__summary {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.breakout-modal__summary-badge {
+	display: inline-flex;
+	align-items: center;
+	width: fit-content;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: rgba(37, 99, 235, 0.14);
+	color: #1d4ed8;
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.breakout-modal__summary p {
+	margin: 0;
+	font-size: 0.88rem;
+	line-height: 1.55;
+}
+
+.modal-container--dark .breakout-modal__summary p {
+	color: rgba(226, 232, 240, 0.8);
+}
+
+.modal-container--light .breakout-modal__summary p {
+	color: rgba(15, 23, 42, 0.72);
+}
+
+.breakout-modal__field {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.breakout-modal__field label {
+	font-size: 0.9rem;
+	font-weight: 700;
+}
+
+.breakout-modal__input {
+	border-radius: 14px;
+	border: 1px solid rgba(148, 163, 184, 0.24);
+	padding: 10px 12px;
+	background: rgba(255, 255, 255, 0.74);
+}
+
+.breakout-modal__actions,
+.breakout-modal__footer {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.breakout-modal__footer--embedded {
+	margin-top: auto;
+	padding-top: 4px;
+}
+
+.breakout-modal__footer--embedded .breakout-modal__button {
+	flex: 1 1 160px;
+	justify-content: center;
+}
+
+.breakout-modal__button {
+	border: none;
+	border-radius: 999px;
+	padding: 10px 16px;
+	font-weight: 700;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.breakout-modal__button--primary {
+	background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+	color: #fff;
+}
+
+.breakout-modal__button--secondary {
+	background: rgba(71, 85, 105, 0.14);
+	color: inherit;
+}
+
+.breakout-modal__button--success {
+	background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+	color: #fff;
+}
+
+.breakout-modal__button--info {
+	background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+	color: #fff;
+}
+
+.breakout-modal__button--danger {
+	background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+	color: #fff;
+}
+
+.breakout-modal__rooms {
+	padding: 12px 0;
+	min-height: 0;
+}
+
+@media (max-width: 640px) {
+	.breakout-modal__controls-card {
+		padding: 14px;
+	}
+
+	.breakout-modal__footer--embedded .breakout-modal__button,
+	.breakout-modal__actions .breakout-modal__button {
+		width: 100%;
+	}
+}

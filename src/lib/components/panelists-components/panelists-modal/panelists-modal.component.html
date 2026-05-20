@@ -1,0 +1,124 @@
+<div *ngIf="isPanelistsModalVisible" class="panelists-overlay" (click)="onPanelistsClose()">
+  <div class="panelists-modal-container" [style.backgroundColor]="backgroundColor" (click)="$event.stopPropagation()">
+    
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="header-title-container">
+        <fa-icon [icon]="faUserTie" class="icon-white"></fa-icon>
+        <span class="header-title">Panelists</span>
+        <div class="count-badge">
+          <span class="count-text">{{ localPanelists.length }} / {{ parameters.itemPageLimit }}</span>
+        </div>
+      </div>
+      <button class="close-button" (click)="onPanelistsClose()">
+        <fa-icon [icon]="faTimes" class="icon-white"></fa-icon>
+      </button>
+    </div>
+
+    <!-- Focus Controls -->
+    <div *ngIf="isHost && localPanelists.length > 0" class="focus-container">
+      <div class="focus-row">
+        <div class="focus-label-container">
+          <fa-icon [icon]="isFocused ? faEye : faEyeSlash" [class]="isFocused ? 'icon-purple' : 'icon-faded'"></fa-icon>
+          <span class="focus-label-text">Focus on Panelists</span>
+        </div>
+        <button 
+          (click)="handleToggleFocus()" 
+          class="focus-button" 
+          [style.backgroundColor]="isFocused ? '#ef4444' : '#8b5cf6'">
+          {{ isFocused ? 'Disable Focus' : 'Enable Focus' }}
+        </button>
+      </div>
+
+      <div *ngIf="!isFocused" class="mute-row">
+        <button class="checkbox-container" (click)="toggleMuteOthersMic()">
+          <div class="checkbox" [class.checkbox-checked]="muteOthersMic">
+            <fa-icon *ngIf="muteOthersMic" [icon]="faCheck" class="icon-small"></fa-icon>
+          </div>
+          <fa-icon [icon]="muteOthersMic ? faMicrophoneSlash : faMicrophone" class="icon-white"></fa-icon>
+          <span class="checkbox-text">Mute others' mic</span>
+        </button>
+
+        <button class="checkbox-container" (click)="toggleMuteOthersCamera()">
+          <div class="checkbox" [class.checkbox-checked]="muteOthersCamera">
+            <fa-icon *ngIf="muteOthersCamera" [icon]="faCheck" class="icon-small"></fa-icon>
+          </div>
+          <fa-icon [icon]="muteOthersCamera ? faVideoSlash : faVideo" class="icon-white"></fa-icon>
+          <span class="checkbox-text">Mute others' cam</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-container scrollable-area">
+      <!-- Current Panelists -->
+      <div class="section">
+        <div class="section-header">
+          <fa-icon [icon]="faStar" class="icon-yellow"></fa-icon>
+          <span class="section-title">Current Panelists</span>
+        </div>
+
+        <div *ngIf="localPanelists.length === 0" class="empty-container">
+          <span class="empty-text">No panelists selected yet</span>
+        </div>
+
+        <div *ngIf="localPanelists.length > 0" class="list-container">
+          <div *ngFor="let panelist of localPanelists" class="panelist-item">
+            <div class="panelist-item-left">
+              <fa-icon [icon]="faStar" class="icon-yellow"></fa-icon>
+              <span class="panelist-name">{{ panelist.name }}</span>
+            </div>
+            <button *ngIf="isHost" (click)="handleRemovePanelist(panelist)" class="action-btn remove-btn">
+              <fa-icon [icon]="faMinus" class="btn-icon"></fa-icon>
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Panelists -->
+      <div *ngIf="isHost && localPanelists.length < parameters.itemPageLimit" class="section">
+        <div class="section-header">
+          <fa-icon [icon]="faUsers" class="icon-faded"></fa-icon>
+          <span class="section-title">Add Panelists</span>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+          <fa-icon [icon]="faSearch" class="icon-faded"></fa-icon>
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search participants..." 
+            [value]="searchFilter"
+            (input)="handleSearch($event)" />
+        </div>
+
+        <!-- Available Participants -->
+        <div *ngIf="availableParticipants.length === 0" class="empty-container">
+          <span class="empty-text">{{ searchFilter ? 'No matching participants' : 'No available participants to add' }}</span>
+        </div>
+
+        <div *ngIf="availableParticipants.length > 0" class="available-list scrollable-area">
+          <div *ngFor="let participant of availableParticipants" class="available-item">
+            <div class="panelist-item-left">
+              <span class="participant-name">{{ participant.name }}</span>
+              <div class="level-badge" [ngClass]="participant.islevel === '1' ? 'level-elevated' : 'level-basic'">
+                <span>{{ participant.islevel === '1' ? 'Elevated' : 'Basic' }}</span>
+              </div>
+            </div>
+            <button (click)="handleAddPanelist(participant)" class="action-btn add-btn">
+              <fa-icon [icon]="faPlus" class="btn-icon"></fa-icon>
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Limit Reached Message -->
+      <div *ngIf="isHost && localPanelists.length >= parameters.itemPageLimit" class="limit-container">
+        <span class="limit-text">Maximum panelist limit ({{ parameters.itemPageLimit }}) reached. Remove a panelist to add more.</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { connectRecvTransport as sharedConnectRecvTransport } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import {
   ConsumerResumeType,
@@ -119,6 +120,16 @@ export class ConnectRecvTransport {
     nsock,
     parameters,
   }: ConnectRecvTransportOptions): Promise<void> => {
+    return sharedConnectRecvTransport({
+      consumerTransport:
+        consumerTransport as unknown as Parameters<typeof sharedConnectRecvTransport>[0]['consumerTransport'],
+      remoteProducerId,
+      serverConsumerTransportId,
+      nsock: nsock as unknown as Parameters<typeof sharedConnectRecvTransport>[0]['nsock'],
+      parameters:
+        parameters as unknown as Parameters<typeof sharedConnectRecvTransport>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       parameters = parameters.getUpdatedAllParams();
       const { device, consumerTransports, updateConsumerTransports, consumerResume } = parameters;

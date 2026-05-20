@@ -52,7 +52,7 @@ export declare class ClickChat {
      *
      * @returns {Promise<void>} A promise that resolves when the operation is complete.
      */
-    clickChat({ isMessagesModalVisible, updateIsMessagesModalVisible, chatSetting, islevel, showAlert, }: ClickChatOptions): Promise<void>;
+    clickChat(options: ClickChatOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ClickChat, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ClickChat>;
 }

@@ -1,3 +1,4 @@
+import { PermissionConfig } from '../methods/permissions-methods/update-permission-config.service';
 import * as i0 from "@angular/core";
 export interface CheckPermissionOptions {
     audioSetting: string;
@@ -5,6 +6,8 @@ export interface CheckPermissionOptions {
     screenshareSetting: string;
     chatSetting: string;
     permissionType: 'audioSetting' | 'videoSetting' | 'screenshareSetting' | 'chatSetting';
+    permissionConfig?: PermissionConfig | null;
+    participantLevel?: string;
 }
 export type CheckPermissionType = (options: CheckPermissionOptions) => Promise<number>;
 /**
@@ -45,7 +48,7 @@ export declare class CheckPermission {
      * @returns {Promise<number>} - Returns 0 if the setting is "allow", 1 if the setting is "approval", and 2 for other settings or invalid permission types.
      * @throws Will throw an error if an unexpected error occurs during the permission check.
      */
-    checkPermission({ permissionType, audioSetting, videoSetting, screenshareSetting, chatSetting, }: CheckPermissionOptions): Promise<number>;
+    checkPermission({ permissionType, audioSetting, videoSetting, screenshareSetting, chatSetting, permissionConfig, participantLevel, }: CheckPermissionOptions): Promise<number>;
     static ɵfac: i0.ɵɵFactoryDeclaration<CheckPermission, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<CheckPermission>;
 }

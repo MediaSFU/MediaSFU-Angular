@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchCoHostOptions {
-  updateIsCoHostModalVisible: (isVisible: boolean) => void;
-  isCoHostModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchCoHostType = (options: LaunchCoHostOptions) => void;
+import { launchCoHost as sharedLaunchCoHost } from 'mediasfu-shared';
+import type { LaunchCoHostOptions } from 'mediasfu-shared';
+export type { LaunchCoHostOptions, LaunchCoHostType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility of the co-host modal.
@@ -45,6 +41,6 @@ export class launchCoHost {
    */
 
   launchCoHost({ updateIsCoHostModalVisible, isCoHostModalVisible }: LaunchCoHostOptions): void {
-    updateIsCoHostModalVisible(!isCoHostModalVisible);
+    sharedLaunchCoHost({ updateIsCoHostModalVisible, isCoHostModalVisible });
   }
 }

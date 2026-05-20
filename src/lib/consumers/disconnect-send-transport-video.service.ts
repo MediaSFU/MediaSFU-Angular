@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { disconnectSendTransportVideo as sharedDisconnectSendTransportVideo } from 'mediasfu-shared';
 import { types } from 'mediasoup-client';
 type Producer = types.Producer;
 import { Socket } from 'socket.io-client';
@@ -169,6 +170,10 @@ export class DisconnectSendTransportVideo {
   async disconnectSendTransportVideo({
     parameters,
   }: DisconnectSendTransportVideoOptions): Promise<void> {
+    return sharedDisconnectSendTransportVideo({
+      parameters: parameters as unknown as Parameters<typeof sharedDisconnectSendTransportVideo>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       let {
         videoProducer,

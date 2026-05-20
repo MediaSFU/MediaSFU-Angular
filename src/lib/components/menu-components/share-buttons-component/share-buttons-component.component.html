@@ -5,6 +5,8 @@
 <ng-template #defaultContainer>
   <div
     class="share-buttons-container"
+    [class.share-buttons-container--dark]="resolvedIsDarkMode"
+    [class.share-buttons-container--light]="!resolvedIsDarkMode"
     [ngClass]="containerAttributes?.['class']"
     [ngStyle]="containerAttributes?.['style']"
   >
@@ -19,11 +21,13 @@
         </ng-container>
 
         <ng-template #defaultButton>
-          <div
+          <button
+            type="button"
             (click)="button.action()"
             class="share-button"
             [ngClass]="button.wrapperAttributes?.['class']"
             [ngStyle]="getButtonStyle(button, i)"
+            [attr.aria-label]="getButtonAriaLabel(i)"
           >
             <ng-container *ngIf="renderIcon; else defaultIcon">
               <ng-container *ngTemplateOutlet="renderIcon; context: getButtonRenderContext(button, i)"></ng-container>
@@ -36,7 +40,7 @@
                 [ngStyle]="getIconStyle(button)"
               ></fa-icon>
             </ng-template>
-          </div>
+          </button>
         </ng-template>
       </ng-container>
     </ng-template>

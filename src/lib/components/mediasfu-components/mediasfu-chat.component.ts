@@ -23,22 +23,25 @@ import {
   faSync,
   faVideo,
   faMicrophone,
+  faSun,
+  faMoon,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
 
 // Components for display
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
-import { LoadingModal } from '../display-components/loading-modal/loading-modal.component';
 import { ControlButtonsComponentTouch } from '../display-components/control-buttons-component-touch/control-buttons-component-touch.component';
 import { OtherGridComponent } from '../display-components/other-grid-component/other-grid-component.component';
 import { MainScreenComponent } from '../display-components/main-screen-component/main-screen-component.component';
 import { MainContainerComponent } from '../display-components/main-container-component/main-container-component.component';
-import { AlertComponent } from '../display-components/alert-component/alert.component.component';
-import { MessagesModal } from '../message-components/messages-modal/messages-modal.component';
-import { ConfirmExitModal } from '../exit-components/confirm-exit-modal/confirm-exit-modal.component';
-import { ConfirmHereModal } from '../misc-components/confirm-here-modal/confirm-here-modal.component';
-import { ShareEventModal } from '../misc-components/share-event-modal/share-event-modal.component';
+import { ModernAlertComponent } from '../../modern/display-components/modern-alert.component';
+import { ModernLoadingModalComponent } from '../../modern/display-components/modern-loading-modal.component';
+import { ModernConfirmExitModalComponent } from '../../modern/modal-components/modern-confirm-exit-modal.component';
+import { ModernConfirmHereModalComponent } from '../../modern/modal-components/modern-confirm-here-modal.component';
+import { ModernMessagesModalComponent } from '../../modern/modal-components/modern-messages-modal.component';
+import { ModernShareEventModalComponent } from '../../modern/modal-components/modern-share-event-modal.component';
+import { ModernEventSettingsModalComponent } from '../../modern/modal-components/modern-event-settings-modal.component';
 import {
   WelcomePage,
   WelcomePageOptions,
@@ -291,15 +294,16 @@ export type MediasfuChatOptions = {
   imports: [
     CommonModule,
     WithOverrideDirective,
-    AlertComponent,
+    ModernAlertComponent,
     AudioGrid,
     ControlButtonsComponentTouch,
     FlexibleGrid,
-    LoadingModal,
-    ConfirmExitModal,
-    MessagesModal,
-    ConfirmHereModal,
-    ShareEventModal,
+    ModernLoadingModalComponent,
+    ModernConfirmExitModalComponent,
+    ModernMessagesModalComponent,
+    ModernConfirmHereModalComponent,
+    ModernShareEventModalComponent,
+    ModernEventSettingsModalComponent,
 
     MainAspectComponent,
     MainContainerComponent,
@@ -479,7 +483,7 @@ export type MediasfuChatOptions = {
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmExitModalVisible]="isConfirmExitModalVisible.value"
         [onConfirmExitClose]="onConfirmExitClose"
-        [position]="'topRight'"
+        [position]="'center'"
         [member]="member.value"
         [roomName]="roomName.value"
         [socket]="socket.value"
@@ -495,6 +499,7 @@ export type MediasfuChatOptions = {
         [backgroundColor]="'rgba(181, 233, 229, 0.97)'"
         [isConfirmHereModalVisible]="isConfirmHereModalVisible.value"
         [onConfirmHereClose]="onConfirmHereClose"
+        [onSuppressConfirmHere]="onSuppressConfirmHere"
         [member]="member.value"
         [roomName]="roomName.value"
         [socket]="socket.value"
@@ -507,6 +512,7 @@ export type MediasfuChatOptions = {
           props: shareEventModalOverrideProps
         "
         [isShareEventModalVisible]="isShareEventModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
         [onShareEventClose]="onShareEventClose"
         [roomName]="roomName.value"
         [islevel]="islevel.value"
@@ -515,7 +521,30 @@ export type MediasfuChatOptions = {
         [localLink]="localLink"
       ></app-share-event-modal>
 
-      <app-alert-component
+      <app-event-settings-modal
+        *appWithOverride="
+          'eventSettingsModal';
+          default: EventSettingsModalRef;
+          props: eventSettingsModalOverrideProps
+        "
+        [isEventSettingsModalVisible]="isSettingsModalVisible.value"
+        [isDarkMode]="modernThemeDarkMode.value"
+        [onEventSettingsClose]="onEventSettingsClose"
+        [audioSetting]="audioSetting.value"
+        [videoSetting]="videoSetting.value"
+        [screenshareSetting]="screenshareSetting.value"
+        [chatSetting]="chatSetting.value"
+        [updateAudioSetting]="updateAudioSetting"
+        [updateVideoSetting]="updateVideoSetting"
+        [updateScreenshareSetting]="updateScreenshareSetting"
+        [updateChatSetting]="updateChatSetting"
+        [updateIsSettingsModalVisible]="updateIsSettingsModalVisible"
+        [roomName]="roomName.value"
+        [socket]="socket.value"
+        [showAlert]="showAlert"
+      ></app-event-settings-modal>
+
+      <app-modern-alert-component
         *appWithOverride="
           'alert';
           default: AlertComponentRef;
@@ -524,21 +553,21 @@ export type MediasfuChatOptions = {
         [visible]="alertVisible.value"
         [message]="alertMessage.value"
         [type]="alertType.value"
+        [position]="alertPosition.value"
         [duration]="alertDuration.value"
         [onHide]="onAlertHide"
-        textColor="#ffffff"
-      ></app-alert-component>
+        [isDarkMode]="modernThemeDarkMode.value"
+      ></app-modern-alert-component>
 
-      <app-loading-modal
+      <app-modern-loading-modal
         *appWithOverride="
           'loadingModal';
           default: LoadingModalRef;
           props: loadingModalOverrideProps
         "
         [isVisible]="isLoadingModalVisible.value"
-        [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-        displayColor="black"
-      ></app-loading-modal>
+        [isDarkMode]="modernThemeDarkMode.value"
+      ></app-modern-loading-modal>
     </ng-container>
 
     <!-- Prejoin page for custom component (when not validated) -->
@@ -575,7 +604,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
   @Input() seedData?: SeedData;
   @Input() useSeed = false;
   @Input() imgSrc = 'https://mediasfu.com/images/logo192.png';
-  @Input() sourceParameters?: { [key: string]: any } = {};
+  @Input() sourceParameters: { [key: string]: any } = {};
   @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
   @Input() returnUI? = true;
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
@@ -602,17 +631,18 @@ export class MediasfuChat implements OnInit, OnDestroy {
   protected readonly FlexibleGridRef = FlexibleGrid;
   protected readonly ControlButtonsComponentTouchRef = ControlButtonsComponentTouch;
   protected readonly AudioGridRef = AudioGrid;
-  protected readonly AlertComponentRef = AlertComponent;
-  protected readonly LoadingModalRef = LoadingModal;
-  protected readonly MessagesModalRef = MessagesModal;
-  protected readonly ConfirmExitModalRef = ConfirmExitModal;
-  protected readonly ConfirmHereModalRef = ConfirmHereModal;
-  protected readonly ShareEventModalRef = ShareEventModal;
+  protected readonly AlertComponentRef = ModernAlertComponent;
+  protected readonly LoadingModalRef = ModernLoadingModalComponent;
+  protected readonly MessagesModalRef = ModernMessagesModalComponent;
+  protected readonly ConfirmExitModalRef = ModernConfirmExitModalComponent;
+  protected readonly ConfirmHereModalRef = ModernConfirmHereModalComponent;
+  protected readonly ShareEventModalRef = ModernShareEventModalComponent;
+  protected readonly EventSettingsModalRef = ModernEventSettingsModalComponent;
 
   // Override prop factory methods
   protected mainContainerOverrideProps = () => ({
     backgroundColor: this.validated.value ? 'rgba(217, 227, 234, 0.99)' : 'transparent',
-    children: [] as any[],
+    children: [],
   });
 
   protected mainAspectOverrideProps = () => ({
@@ -667,15 +697,15 @@ export class MediasfuChat implements OnInit, OnDestroy {
     visible: this.alertVisible.value,
     message: this.alertMessage.value,
     type: this.alertType.value,
+    position: this.alertPosition.value,
     duration: this.alertDuration.value,
     onHide: this.onAlertHide,
-    textColor: '#ffffff',
+    isDarkMode: this.modernThemeDarkMode.value,
   });
 
   protected loadingModalOverrideProps = () => ({
     isVisible: this.isLoadingModalVisible.value,
-    backgroundColor: 'rgba(217, 227, 234, 0.99)',
-    displayColor: '#000000',
+    isDarkMode: this.modernThemeDarkMode.value,
   });
 
   protected messagesModalOverrideProps = () => ({
@@ -702,7 +732,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
     backgroundColor: 'rgba(181, 233, 229, 0.97)',
     isConfirmExitModalVisible: this.isConfirmExitModalVisible.value,
     onConfirmExitClose: this.onConfirmExitClose,
-    position: 'bottomRight',
+    position: 'center',
     member: this.member.value,
     roomName: this.roomName.value,
     socket: this.socket.value,
@@ -713,6 +743,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
     backgroundColor: 'rgba(181, 233, 229, 0.97)',
     isConfirmHereModalVisible: this.isConfirmHereModalVisible.value,
     onConfirmHereClose: this.onConfirmHereClose,
+    onSuppressConfirmHere: this.onSuppressConfirmHere,
     member: this.member.value,
     roomName: this.roomName.value,
     socket: this.socket.value,
@@ -720,12 +751,32 @@ export class MediasfuChat implements OnInit, OnDestroy {
 
   protected shareEventModalOverrideProps = () => ({
     isShareEventModalVisible: this.isShareEventModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
     onShareEventClose: this.onShareEventClose,
     roomName: this.roomName.value,
     islevel: this.islevel.value,
     adminPasscode: this.adminPasscode.value,
     eventType: this.eventType.value,
     localLink: this.localLink,
+  });
+
+  protected eventSettingsModalOverrideProps = () => ({
+    isEventSettingsModalVisible: this.isSettingsModalVisible.value,
+    isDarkMode: this.modernThemeDarkMode.value,
+    onEventSettingsClose: this.onEventSettingsClose,
+    audioSetting: this.audioSetting.value,
+    videoSetting: this.videoSetting.value,
+    screenshareSetting: this.screenshareSetting.value,
+    chatSetting: this.chatSetting.value,
+    updateAudioSetting: this.updateAudioSetting,
+    updateVideoSetting: this.updateVideoSetting,
+    updateScreenshareSetting: this.updateScreenshareSetting,
+    updateChatSetting: this.updateChatSetting,
+    updateIsSettingsModalVisible: this.updateIsSettingsModalVisible,
+    roomName: this.roomName.value,
+    socket: this.socket.value,
+    showAlert: this.showAlert,
+    parameters: this.mediaSFUParameters,
   });
 
   private mainHeightWidthSubscription: Subscription | undefined;
@@ -830,6 +881,10 @@ export class MediasfuChat implements OnInit, OnDestroy {
   ) { }
 
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     const inj = Injector.create({
       providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),
       parent: this.injector,
@@ -893,7 +948,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
   };
 
   // Initial values
-  mediaSFUFunctions = () => {
+  mediaSFUFunctions = (): any => {
     return {
       updateMiniCardsGrid:
         this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -1312,7 +1367,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
   canRecord = new BehaviorSubject<boolean>(false);
   startReport = new BehaviorSubject<boolean>(false);
   endReport = new BehaviorSubject<boolean>(false);
-  recordTimerInterval = new BehaviorSubject<NodeJS.Timeout | null>(null);
+  recordTimerInterval = new BehaviorSubject<number | null>(null);
   recordStartTime = new BehaviorSubject<number>(0);
   recordElapsedTime = new BehaviorSubject<number>(0);
   isTimerRunning = new BehaviorSubject<boolean>(false);
@@ -1739,7 +1794,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
     this.endReport.next(value);
   };
 
-  updateRecordTimerInterval = (value: NodeJS.Timeout | null) => {
+  updateRecordTimerInterval = (value: number | null) => {
     this.recordTimerInterval.next(value);
   };
 
@@ -2312,7 +2367,10 @@ export class MediasfuChat implements OnInit, OnDestroy {
   // Alerts
   alertVisible = new BehaviorSubject<boolean>(false);
   alertMessage = new BehaviorSubject<string>('');
-  alertType = new BehaviorSubject<'success' | 'danger'>('success');
+  alertType = new BehaviorSubject<'success' | 'danger' | 'info' | 'warning'>('success');
+  alertPosition = new BehaviorSubject<
+    'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center'
+  >('top');
   alertDuration = new BehaviorSubject<number>(3000);
 
   // Progress Timer
@@ -2334,8 +2392,22 @@ export class MediasfuChat implements OnInit, OnDestroy {
   isMessagesModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmExitModalVisible = new BehaviorSubject<boolean>(false);
   isConfirmHereModalVisible = new BehaviorSubject<boolean>(false);
+  private suppressConfirmHereForSession = false;
   isShareEventModalVisible = new BehaviorSubject<boolean>(false);
   isLoadingModalVisible = new BehaviorSubject<boolean>(false);
+  modernThemeDarkMode = new BehaviorSubject<boolean>(false);
+
+  resolvePreferredTheme = (): boolean => {
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  };
+
+  updateModernThemeDarkMode = (value: boolean) => {
+    this.modernThemeDarkMode.next(value);
+    this.updateControlChatButtons();
+    this.cdr.detectChanges();
+  };
 
   // Recording Options
   recordingMediaOptions = new BehaviorSubject<string>('video');
@@ -2565,8 +2637,14 @@ export class MediasfuChat implements OnInit, OnDestroy {
     this.alertMessage.next(value);
   };
 
-  updateAlertType = (value: 'success' | 'danger') => {
+  updateAlertType = (value: 'success' | 'danger' | 'info' | 'warning') => {
     this.alertType.next(value);
+  };
+
+  updateAlertPosition = (
+    value: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center',
+  ) => {
+    this.alertPosition.next(value);
   };
 
   updateAlertDuration = (value: number) => {
@@ -3056,13 +3134,18 @@ export class MediasfuChat implements OnInit, OnDestroy {
     message,
     type,
     duration = 3000,
+    position,
   }: {
     message: string;
-    type: 'success' | 'danger';
+    type: 'success' | 'danger' | 'info' | 'warning';
     duration?: number;
+    position?: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
   }) => {
+    const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
+
     this.updateAlertMessage(message);
     this.updateAlertType(type);
+    this.updateAlertPosition(effectivePosition);
     this.updateAlertDuration(duration);
     this.updateAlertVisible(true);
   };
@@ -3308,6 +3391,7 @@ export class MediasfuChat implements OnInit, OnDestroy {
       alertVisible: this.alertVisible.value,
       alertMessage: this.alertMessage.value,
       alertType: this.alertType.value,
+      alertPosition: this.alertPosition.value,
       alertDuration: this.alertDuration.value,
 
       // Progress Timer
@@ -3812,6 +3896,8 @@ export class MediasfuChat implements OnInit, OnDestroy {
       updateSocket: this.updateSocket.bind(this),
       updateLocalSocket: this.updateLocalSocket.bind(this),
       updateValidated: this.updateValidated.bind(this),
+      isDarkModeValue: this.modernThemeDarkMode.value,
+      updateIsDarkMode: this.updateModernThemeDarkMode.bind(this),
 
       customVideoCard: this.customVideoCard,
       customAudioCard: this.customAudioCard,
@@ -3822,12 +3908,13 @@ export class MediasfuChat implements OnInit, OnDestroy {
 
         try {
           if (this.sourceParameters !== null) {
-            this.sourceParameters = {
+            const nextSourceParameters = {
               ...this.getAllParams(),
               ...this.mediaSFUFunctions(),
             };
+            this.sourceParameters = nextSourceParameters;
             if (this.updateSourceParameters) {
-              this.updateSourceParameters(this.sourceParameters);
+              this.updateSourceParameters(nextSourceParameters);
             }
           }
         } catch {
@@ -3842,12 +3929,12 @@ export class MediasfuChat implements OnInit, OnDestroy {
     };
   }
 
-  mediaSFUParameters = {
+  mediaSFUParameters: any = {
     ...this.getAllParams(),
     ...this.mediaSFUFunctions(),
   };
 
-  getUpdatedAllParams = () => {
+  getUpdatedAllParams = (): any => {
     return {
       ...this.getAllParams(),
       ...this.mediaSFUFunctions(),
@@ -3936,6 +4023,8 @@ export class MediasfuChat implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.updateModernThemeDarkMode(this.resolvePreferredTheme());
+
     // Initialize UI overrides if provided
     if (this.uiOverrides) {
       this.uiOverrideResolver.setOverrides(this.uiOverrides);
@@ -4058,12 +4147,13 @@ export class MediasfuChat implements OnInit, OnDestroy {
 
       try {
         if (this.sourceParameters !== null) {
-          this.sourceParameters = {
+          const nextSourceParameters = {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),
           };
+          this.sourceParameters = nextSourceParameters;
           if (this.updateSourceParameters) {
-            this.updateSourceParameters(this.sourceParameters);
+            this.updateSourceParameters(nextSourceParameters);
           }
         }
       } catch {
@@ -4548,6 +4638,10 @@ export class MediasfuChat implements OnInit, OnDestroy {
     this.updateIsConfirmHereModalVisible(false);
   };
 
+  onSuppressConfirmHere = () => {
+    this.suppressConfirmHereForSession = true;
+  };
+
   onScreenboardClose = () => {
     this.updateIsScreenboardModalVisible(false);
   };
@@ -4573,6 +4667,15 @@ export class MediasfuChat implements OnInit, OnDestroy {
   controlChatButtons: ButtonTouch[] = [];
 
   controlChatButtonsArray: ButtonTouch[] = [
+    {
+      icon: faMoon,
+      alternateIcon: faSun,
+      active: () => this.modernThemeDarkMode.value,
+      onPress: () => this.updateModernThemeDarkMode(!this.modernThemeDarkMode.value),
+      activeColor: 'rgba(255,255,255,0.9)',
+      inActiveColor: 'rgba(0,0,0,0.9)',
+      show: true,
+    },
     {
       icon: this.faShareAlt,
       active: true,
@@ -4845,6 +4948,10 @@ export class MediasfuChat implements OnInit, OnDestroy {
         );
 
         socketDefault.on('meetingStillThere', async () => {
+          if (this.suppressConfirmHereForSession) {
+            return;
+          }
+
           this.meetingStillThere.meetingStillThere({
             updateIsConfirmHereModalVisible: this.updateIsConfirmHereModalVisible.bind(this),
           });

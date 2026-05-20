@@ -4,7 +4,9 @@
 
 <ng-template #defaultContainer>
   <div
-    class="form-group"
+    class="meeting-field"
+    [class.meeting-field--dark]="resolvedIsDarkMode"
+    [class.meeting-field--light]="!resolvedIsDarkMode"
     [ngClass]="containerAttributes?.['class']"
     [ngStyle]="containerAttributes?.['style']"
   >
@@ -19,7 +21,7 @@
       </ng-container>
       <ng-template #defaultLabel>
         <label
-          class="label"
+          class="meeting-field__label"
           [ngClass]="labelAttributes?.['class']"
           [ngStyle]="labelAttributes?.['style']"
         >
@@ -33,7 +35,7 @@
       </ng-container>
       <ng-template #defaultInputGroup>
         <div
-          class="input-container"
+          class="meeting-field__group"
           [ngClass]="inputContainerAttributes?.['class']"
           [ngStyle]="inputContainerAttributes?.['style']"
         >
@@ -43,7 +45,7 @@
           </ng-container>
           <ng-template #defaultInput>
             <input
-              class="disabled-input"
+              class="meeting-field__input"
               [ngClass]="inputAttributes?.['class']"
               [ngStyle]="inputAttributes?.['style']"
               [value]="getInputValue()"
@@ -60,7 +62,7 @@
             <button
               type="button"
               (click)="handleCopy()"
-              class="copy-button"
+              class="meeting-field__button"
               [ngClass]="buttonAttributes?.['class']"
               [ngStyle]="buttonAttributes?.['style']"
               aria-label="Copy Event ID"

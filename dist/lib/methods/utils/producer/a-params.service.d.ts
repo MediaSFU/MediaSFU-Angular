@@ -1,11 +1,6 @@
-import { types } from 'mediasoup-client';
+import type { AParamsType as SharedAParamsType } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-type ProducerCodecOptions = types.ProducerCodecOptions;
-type RtpEncodingParameters = types.RtpEncodingParameters;
-export type AParamsType = {
-    encodings: RtpEncodingParameters[];
-    codecOptions?: ProducerCodecOptions;
-};
+export type AParamsType = SharedAParamsType;
 /**
  * The `AParams` service provides the encoding parameters for audio production in a media session using the Mediasoup library.
  * It includes a default configuration for RTP encoding parameters, which can be used when creating audio producers.
@@ -48,4 +43,3 @@ export declare class AParams {
     static ɵfac: i0.ɵɵFactoryDeclaration<AParams, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<AParams>;
 }
-export {};

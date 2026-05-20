@@ -53,7 +53,7 @@ export declare class HandleEndPoll {
      * @param {string} options.roomName - The name of the room where the poll is being conducted.
      * @returns {Promise<void>} A promise that resolves when the poll end operation is complete.
      */
-    handleEndPoll({ pollId, socket, showAlert, roomName, updateIsPollModalVisible, }: HandleEndPollOptions): Promise<void>;
+    handleEndPoll(options: HandleEndPollOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<HandleEndPoll, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<HandleEndPoll>;
 }

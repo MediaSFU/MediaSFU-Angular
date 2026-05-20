@@ -216,6 +216,10 @@ export interface MediasfuUICustomOverrides {
    * Display settings modal - Layout and display preferences
    */
   displaySettingsModal?: CustomComponentOverride;
+  /**
+   * Translation settings modal - Spoken/listening translation controls
+   */
+  translationSettingsModal?: CustomComponentOverride;
 
   /**
    * Confirm exit modal - Exit confirmation dialog

@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import * as i0 from "@angular/core";
 export interface MiniCardAudioOptions {
     customStyle?: Partial<CSSStyleDeclaration>;
@@ -69,7 +69,7 @@ export type MiniCardAudioType = (options: MiniCardAudioOptions) => HTMLElement;
  * ></app-mini-card-audio>
  * ```
  */
-export declare class MiniCardAudio implements OnInit, OnDestroy {
+export declare class MiniCardAudio implements OnInit, OnDestroy, OnChanges {
     customStyle: any;
     name: string;
     showWaveform: boolean;
@@ -80,15 +80,21 @@ export declare class MiniCardAudio implements OnInit, OnDestroy {
     roundedImage: boolean;
     imageStyle: any;
     waveformAnimations: number[];
-    intervals: NodeJS.Timeout[];
+    intervals: ReturnType<typeof setInterval>[];
+    imageLoadFailed: boolean;
     constructor(injectedCustomStyle: Partial<CSSStyleDeclaration>, injectedName: string, injectedShowWaveform: boolean, injectedOverlayPosition: string, injectedBarColor: string, injectedTextColor: string, injectedImageSource: string, injectedRoundedImage: boolean, injectedImageStyle: Partial<CSSStyleDeclaration>);
     ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
+    syncWaveformState(): void;
     animateWaveform(): void;
     resetWaveform(): void;
     clearIntervals(): void;
     getAnimationDuration(index: number): number;
     getImageStyle(): any;
+    get hasRenderableImage(): boolean;
+    get fallbackInitials(): string;
+    handleImageError(): void;
     getOverlayPosition(position: string): import("mediasfu-angular").OverlayPositionStyle;
     static ɵfac: i0.ɵɵFactoryDeclaration<MiniCardAudio, [{ optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }]>;
     static ɵcmp: i0.ɵɵComponentDeclaration<MiniCardAudio, "app-mini-card-audio", never, { "customStyle": { "alias": "customStyle"; "required": false; }; "name": { "alias": "name"; "required": false; }; "showWaveform": { "alias": "showWaveform"; "required": false; }; "overlayPosition": { "alias": "overlayPosition"; "required": false; }; "barColor": { "alias": "barColor"; "required": false; }; "textColor": { "alias": "textColor"; "required": false; }; "imageSource": { "alias": "imageSource"; "required": false; }; "roundedImage": { "alias": "roundedImage"; "required": false; }; "imageStyle": { "alias": "imageStyle"; "required": false; }; }, {}, never, never, true, never>;

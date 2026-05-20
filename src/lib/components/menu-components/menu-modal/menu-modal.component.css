@@ -1,31 +1,121 @@
-.modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9;
-}
-
-.modal-content {
-  position: absolute;
+.menu-modal__content {
   display: flex;
   flex-direction: column;
 }
 
-.modal-header {
+.menu-modal__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.modal-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: black;
+.menu-modal__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.menu-modal__title-icon {
+  font-size: 1rem;
+  color: #60a5fa;
+}
+
+.menu-modal__close {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.menu-modal__close-icon {
+  font-size: 1rem;
+}
+
+.menu-modal__divider {
+  height: 1px;
+  border: none;
+  margin: 0 0 16px;
+}
+
+.menu-modal__body {
+  flex: 1;
+  min-height: 0;
+}
+
+.menu-modal__scroll {
+  max-height: calc(70vh - 110px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.menu-modal__section {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.menu-modal__section--theme {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-modal__section-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.82;
+}
+
+.menu-modal__theme-toggle {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.menu-modal__theme-button {
+  min-width: 72px;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: transparent;
+  color: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.menu-modal__theme-button:hover {
+  transform: translateY(-1px);
+}
+
+.menu-modal__theme-button--active {
+  background: rgba(96, 165, 250, 0.18);
+  border-color: rgba(96, 165, 250, 0.38);
+}
+
+.menu-modal__section--share {
+  margin-top: 10px;
+}
+
+.menu-modal__section-divider {
+  height: 1px;
+  margin: 12px 0;
+  background: rgba(148, 163, 184, 0.18);
+}
+
+@media (max-width: 640px) {
+  .menu-modal__scroll {
+    max-height: calc(100vh - 180px);
+  }
 }

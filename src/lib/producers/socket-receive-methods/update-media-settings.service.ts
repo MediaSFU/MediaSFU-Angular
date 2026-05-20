@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Settings } from '../../@types/types';
+import { updateMediaSettings as sharedUpdateMediaSettings } from 'mediasfu-shared';
 export interface UpdateMediaSettingsOptions {
   settings: Settings;
   updateAudioSetting: (value: string) => void;
@@ -67,15 +68,12 @@ export class UpdateMediaSettings {
     updateScreenshareSetting,
     updateChatSetting,
   }: UpdateMediaSettingsOptions): void => {
-    const [audioSetting, videoSetting, screenshareSetting, chatSetting] = settings;
-
-    // Update audio setting
-    updateAudioSetting(audioSetting);
-    // Update video setting
-    updateVideoSetting(videoSetting);
-    // Update screenshare setting
-    updateScreenshareSetting(screenshareSetting);
-    // Update chat setting
-    updateChatSetting(chatSetting);
+    return sharedUpdateMediaSettings({
+      settings,
+      updateAudioSetting,
+      updateVideoSetting,
+      updateScreenshareSetting,
+      updateChatSetting,
+    });
   };
 }

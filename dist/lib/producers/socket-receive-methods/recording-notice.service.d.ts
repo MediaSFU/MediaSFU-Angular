@@ -1,9 +1,9 @@
-import { SoundPlayer } from '../../methods/utils/sound-player.service';
 import { EventType, UserRecordingParams } from '../../@types/types';
 import * as i0 from "@angular/core";
 export interface RecordingNoticeParameters {
     islevel: string;
     userRecordingParams: UserRecordingParams;
+    pauseRecordCount: number;
     recordElapsedTime: number;
     recordStartTime: number;
     recordStarted: boolean;
@@ -92,8 +92,6 @@ export type RecordingNoticeType = (options: RecordingNoticeOptions) => Promise<v
  * await recordingNoticeService.RecordingNotice(options);
  */
 export declare class RecordingNotice {
-    private SoundPlayerService;
-    constructor(SoundPlayerService: SoundPlayer);
     /**
      * Handles the recording notice state and updates various recording parameters accordingly.
      *
@@ -151,8 +149,6 @@ export declare class RecordingNotice {
      * @throws {Error} Throws an error if handling the recording state and status fails.
      */
     RecordingNotice: ({ state, userRecordingParam, pauseCount, timeDone, parameters, }: RecordingNoticeOptions) => Promise<void>;
-    private formatElapsedTime;
-    private padNumber;
     static ɵfac: i0.ɵɵFactoryDeclaration<RecordingNotice, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<RecordingNotice>;
 }

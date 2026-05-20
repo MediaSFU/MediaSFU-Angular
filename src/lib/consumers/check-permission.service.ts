@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
+import { checkPermission as sharedCheckPermission } from 'mediasfu-shared';
+import { PermissionConfig } from '../methods/permissions-methods/update-permission-config.service';
 export interface CheckPermissionOptions {
   audioSetting: string;
   videoSetting: string;
   screenshareSetting: string;
   chatSetting: string;
   permissionType: 'audioSetting' | 'videoSetting' | 'screenshareSetting' | 'chatSetting';
+  permissionConfig?: PermissionConfig | null;
+  participantLevel?: string;
 }
 
 // Export the type definition for the function
@@ -60,7 +64,19 @@ export class CheckPermission {
     videoSetting,
     screenshareSetting,
     chatSetting,
+    permissionConfig,
+    participantLevel,
   }: CheckPermissionOptions): Promise<number> {
+    return sharedCheckPermission({
+      permissionType,
+      audioSetting,
+      videoSetting,
+      screenshareSetting,
+      chatSetting,
+      permissionConfig,
+      participantLevel,
+    }) as Promise<number>;
+
     try {
       // Perform a switch case to check for the permissionType and return the response
       switch (permissionType) {

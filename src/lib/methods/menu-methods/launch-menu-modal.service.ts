@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-export interface LaunchMenuModalOptions {
-  updateIsMenuModalVisible: (isVisible: boolean) => void;
-  isMenuModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchMenuModalType = (options: LaunchMenuModalOptions) => void;
+import { launchMenuModal as sharedLaunchMenuModal } from 'mediasfu-shared';
+import type { LaunchMenuModalOptions } from 'mediasfu-shared';
+export type { LaunchMenuModalOptions, LaunchMenuModalType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility of the menu modal.
@@ -42,6 +38,6 @@ export class LaunchMenuModal {
    */
 
   launchMenuModal({ updateIsMenuModalVisible, isMenuModalVisible }: LaunchMenuModalOptions): void {
-    updateIsMenuModalVisible(!isMenuModalVisible);
+    sharedLaunchMenuModal({ updateIsMenuModalVisible, isMenuModalVisible });
   }
 }

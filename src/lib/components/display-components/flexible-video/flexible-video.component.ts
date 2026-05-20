@@ -12,6 +12,10 @@ export interface FlexibleVideoOptions {
   Screenboard?: CustomMediaComponent;
   annotateScreenStream?: boolean;
   localStreamScreen: MediaStream | null;
+  isDarkMode?: boolean;
+  enableGlassmorphism?: boolean;
+  cellBorderRadius?: number;
+  enableGlow?: boolean;
 }
 
 export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
@@ -60,54 +64,85 @@ export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
     selector: 'app-flexible-video',
     imports: [CommonModule],
     template: `
-    <div
-      style="padding: 0; flex: 1; margin: 0; position: relative; display: {{
-        showAspect ? 'flex' : 'none'
-      }};
-             max-width: {{ customWidth }}px; overflow-x: hidden; overflow-y: auto; left: {{
-        cardLeft > 0 ? cardLeft : 0
-      }}px;"
-    >
+    <div *ngIf="showAspect" class="flexible-video" [ngStyle]="getContainerStyle()">
       <div
         *ngFor="let rowComponents of grid; let rowIndex = index"
-        style="display: flex; flex-direction: row;"
+        class="flexible-video__row"
       >
         <div
           *ngFor="let component of rowComponents; let colIndex = index"
-          [ngStyle]="{
-            flex: 1,
-            width: cardWidth + 'px',
-            height: cardHeight + 'px',
-            backgroundColor: backgroundColor,
-            margin: '1px',
-            padding: 0,
-            borderRadius: '0px',
-            left: cardLeft + 'px'
-          }"
+          class="flexible-video__cell"
+          [ngStyle]="getCellStyle(component)"
         >
-          <ng-container
-            *ngComponentOutlet="component.component; injector: createInjector(component.inputs)"
-          ></ng-container>
+          <ng-container *ngIf="component?.component; else emptyCell">
+            <ng-container
+              *ngComponentOutlet="component.component; injector: createInjector(component.inputs)"
+            ></ng-container>
+          </ng-container>
+          <ng-template #emptyCell>
+            <div class="flexible-video__placeholder">
+              <span class="flexible-video__placeholder-core"></span>
+            </div>
+          </ng-template>
         </div>
       </div>
       <div
         *ngIf="Screenboard && Screenboard.component"
-        [ngStyle]="{
-          position: 'absolute',
-          top: '0',
-          left: canvasLeft + 'px',
-          width: cardWidth + 'px',
-          height: cardHeight + 'px',
-          backgroundColor: 'rgba(0, 0, 0, 0.005)',
-          zIndex: '2'
-        }"
+        class="flexible-video__screenboard"
+        [ngStyle]="getScreenboardStyle()"
       >
         <ng-container
           *ngComponentOutlet="Screenboard.component; injector: createInjector(Screenboard.inputs)"
         ></ng-container>
       </div>
     </div>
-  `
+  `,
+    styles: [
+        `
+      .flexible-video {
+        padding: 0;
+        flex: 1;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .flexible-video__row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .flexible-video__cell {
+        position: relative;
+      }
+
+      .flexible-video__placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .flexible-video__placeholder-core {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(148, 163, 184, 0.18) 0%, rgba(79, 70, 229, 0.18) 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      }
+
+      .flexible-video__screenboard {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        overflow: hidden;
+      }
+    `,
+    ]
 })
 export class FlexibleVideo implements OnInit, OnChanges {
   @Input() customWidth = 0;
@@ -120,6 +155,10 @@ export class FlexibleVideo implements OnInit, OnChanges {
   @Input() Screenboard?: CustomMediaComponent;
   @Input() annotateScreenStream?: boolean = false;
   @Input() localStreamScreen?: MediaStream;
+  @Input() isDarkMode = true;
+  @Input() enableGlassmorphism = true;
+  @Input() cellBorderRadius = 0;
+  @Input() enableGlow = false;
 
   key = 0;
   cardWidth = 0;
@@ -134,6 +173,7 @@ export class FlexibleVideo implements OnInit, OnChanges {
   constructor(private injector: Injector) {}
 
   ngOnInit() {
+    this.updateDimensions();
     if (this.showAspect) {
       this.generateGrid();
     }
@@ -147,12 +187,19 @@ export class FlexibleVideo implements OnInit, OnChanges {
       changes['customWidth'] ||
       changes['customHeight']
     ) {
+      this.updateDimensions();
       if (this.showAspect) {
         this.key++;
         this.generateGrid();
       }
     }
 
+    if (changes['annotateScreenStream'] || changes['localStreamScreen']) {
+      this.updateDimensions();
+    }
+  }
+
+  updateDimensions() {
     if (this.annotateScreenStream && this.localStreamScreen) {
       const videoHeight = this.localStreamScreen.getVideoTracks()[0].getSettings().height || 0;
       const videoWidth = this.localStreamScreen.getVideoTracks()[0].getSettings().width || 0;
@@ -183,7 +230,69 @@ export class FlexibleVideo implements OnInit, OnChanges {
     }
   }
 
+  getContainerStyle() {
+    return {
+      maxWidth: this.customWidth + 'px',
+      left: (this.cardLeft > 0 ? this.cardLeft : 0) + 'px',
+    };
+  }
+
+  getCellStyle(component?: CustomMediaComponent) {
+    const hasContent = !!component?.component;
+    const borderRadius = `${Math.max(this.cellBorderRadius, 0)}px`;
+    const baseBackground = hasContent
+      ? this.backgroundColor || 'transparent'
+      : this.enableGlassmorphism
+        ? this.isDarkMode
+          ? 'rgba(30, 30, 40, 0.6)'
+          : 'rgba(255, 255, 255, 0.6)'
+        : this.backgroundColor || 'transparent';
+    const borderColor = this.enableGlassmorphism
+      ? this.isDarkMode
+        ? 'rgba(255, 255, 255, 0.1)'
+        : 'rgba(0, 0, 0, 0.1)'
+      : 'transparent';
+
+    return {
+      flex: 1,
+      width: this.cardWidth + 'px',
+      height: this.cardHeight + 'px',
+      background: baseBackground,
+      margin: '1px',
+      padding: '0',
+      borderRadius,
+      left: this.cardLeft + 'px',
+      overflow: 'hidden',
+      border: !hasContent && this.enableGlassmorphism ? `1px solid ${borderColor}` : 'none',
+      backdropFilter: !hasContent && this.enableGlassmorphism ? 'blur(10px)' : 'none',
+      boxShadow: this.enableGlow ? '0 4px 16px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.10)' : 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+    };
+  }
+
+  getScreenboardStyle() {
+    return {
+      left: this.canvasLeft + 'px',
+      width: this.cardWidth + 'px',
+      height: this.cardHeight + 'px',
+      backgroundColor: 'rgba(0, 0, 0, 0.005)',
+      borderRadius: `${Math.max(this.cellBorderRadius, 0)}px`,
+      boxShadow: this.enableGlow ? '0 4px 16px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.10)' : 'none',
+      border:
+        this.enableGlassmorphism
+          ? `1px solid ${this.isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`
+          : 'none',
+    };
+  }
+
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     if (!this.injectorCache.has(inputs)) {
       const injector = Injector.create({
         providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),

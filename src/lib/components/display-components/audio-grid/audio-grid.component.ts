@@ -134,13 +134,22 @@ export class AudioGrid implements OnChanges {
 
   constructor(private injector: Injector) {}
 
+  get hasRenderableItems(): boolean {
+    return this.componentsToRender.length > 0;
+  }
+
   get computedContainerStyle() {
     const baseStyles = {
-      'z-index': '9'
+      'z-index': '9',
+      display: this.hasRenderableItems ? 'flex' : 'none',
+      'flex-direction': 'column',
+      gap: '8px',
+      width: '100%',
+      height: 'auto',
     };
     return {
       ...baseStyles,
-      ...(this.containerStyle as any),
+      ...(this.containerStyle ?? {}),
     };
   }
 
@@ -151,6 +160,10 @@ export class AudioGrid implements OnChanges {
   }
 
   createInjector(inputs: any) {
+    if (!inputs || typeof inputs !== 'object') {
+      return this.injector;
+    }
+
     if (!this.injectorCache.has(inputs)) {
       const injector = Injector.create({
         providers: Object.keys(inputs).map((key) => ({ provide: key, useValue: inputs[key] })),

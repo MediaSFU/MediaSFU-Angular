@@ -2,7 +2,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCopy, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faWhatsapp, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faWhatsapp, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { EventType } from '../../../@types/types';
 
@@ -73,6 +73,7 @@ export type ShareButtonsComponentType = (options: ShareButtonsComponentOptions) 
 })
 export class ShareButtonsComponent {
   @Input() meetingID!: string;
+  @Input() isDarkMode?: boolean;
   @Input() shareButtons: ShareButton[] = [];
   @Input() eventType!: EventType;
   @Input() localLink?: string;
@@ -82,6 +83,16 @@ export class ShareButtonsComponent {
   @Input() renderButton?: TemplateRef<ShareButtonRenderContext>;
   @Input() renderIcon?: TemplateRef<ShareButtonRenderContext>;
   @Input() getShareUrlFn?: (options: { meetingID: string; eventType: EventType; localLink?: string }) => string;
+
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
 
   defaultShareButtons: ShareButton[] = [
     {
@@ -94,6 +105,7 @@ export class ShareButtonsComponent {
         }
       },
       show: true,
+      color: '#64748b',
     },
     {
       icon: faEnvelope,
@@ -102,6 +114,7 @@ export class ShareButtonsComponent {
         window.open(emailUrl, '_blank');
       },
       show: true,
+      color: '#ea4335',
     },
     {
       icon: faFacebook,
@@ -112,6 +125,18 @@ export class ShareButtonsComponent {
         window.open(facebookUrl, '_blank');
       },
       show: true,
+      color: '#1877f2',
+    },
+    {
+      icon: faTwitter,
+      action: () => {
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          `Join my ${this.shareName}: ${this.getShareUrl()}`
+        )}`;
+        window.open(twitterUrl, '_blank');
+      },
+      show: true,
+      color: '#1da1f2',
     },
     {
       icon: faWhatsapp,
@@ -122,6 +147,7 @@ export class ShareButtonsComponent {
         window.open(whatsappUrl, '_blank');
       },
       show: true,
+      color: '#25d366',
     },
     {
       icon: faTelegram,
@@ -132,6 +158,7 @@ export class ShareButtonsComponent {
         window.open(telegramUrl, '_blank');
       },
       show: true,
+      color: '#0088cc',
     },
   ];
 
@@ -180,14 +207,17 @@ export class ShareButtonsComponent {
   }
 
   getButtonStyle(button: ShareButton, index: number): any {
+    const isDarkMode = this.resolvedIsDarkMode;
     const baseStyle = {
+      width: '44px',
+      height: '44px',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '10px',
-      borderRadius: '5px',
-      margin: '0 5px',
-      backgroundColor: button.color || 'black',
-      marginRight: index !== this.filteredShareButtons.length - 1 ? '10px' : '0',
+      padding: '0',
+      borderRadius: '14px',
+      border: isDarkMode ? '1px solid rgba(148, 163, 184, 0.14)' : '1px solid rgba(148, 163, 184, 0.22)',
+      backgroundColor: button.color || (isDarkMode ? '#1e293b' : '#0f172a'),
+      boxShadow: '0 12px 24px rgba(15, 23, 42, 0.14)',
       cursor: 'pointer',
     };
 
@@ -200,7 +230,7 @@ export class ShareButtonsComponent {
 
   getIconStyle(button: ShareButton): any {
     const baseStyle = {
-      fontSize: '24px',
+      fontSize: '18px',
       color: button.iconColor || 'white',
     };
 
@@ -209,5 +239,10 @@ export class ShareButtonsComponent {
     }
 
     return baseStyle;
+  }
+
+  getButtonAriaLabel(index: number): string {
+    const labels = ['Copy link', 'Share by email', 'Share on Facebook', 'Share on Twitter', 'Share on WhatsApp', 'Share on Telegram'];
+    return labels[index] || 'Share';
   }
 }

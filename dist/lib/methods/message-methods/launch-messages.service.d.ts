@@ -1,9 +1,6 @@
+import type { LaunchMessagesOptions } from 'mediasfu-shared';
 import * as i0 from "@angular/core";
-export interface LaunchMessagesOptions {
-    updateIsMessagesModalVisible: (visible: boolean) => void;
-    isMessagesModalVisible: boolean;
-}
-export type LaunchMessagesType = (options: LaunchMessagesOptions) => void;
+export type { LaunchMessagesOptions, LaunchMessagesType } from 'mediasfu-shared';
 /**
  * Toggles the visibility state of the messages modal.
  *

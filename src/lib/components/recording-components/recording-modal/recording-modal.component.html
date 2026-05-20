@@ -24,6 +24,10 @@
           </div>
         </div>
         <div style="height: 1px; background-color: white; "></div>
+        <div *ngIf="recordingDisplayAdvice as advice"
+          style="padding: 12px 14px; margin-top: 12px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.35); background: rgba(245, 158, 11, 0.18); color: black; font-size: 13px; font-weight: 600; line-height: 1.45;">
+          {{ advice }}
+        </div>
         <div style="display: flex; justify-content: space-between; margin-top: 20px;">
           <button
             (click)="confirm()"

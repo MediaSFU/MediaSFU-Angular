@@ -65,6 +65,9 @@ export declare class CardVideoDisplay implements OnInit, OnChanges {
         width: string;
         height: string;
         backgroundColor: string;
+        borderRadius: string;
+        overflow: string;
+        position: string;
     };
     getVideoStyle(): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<CardVideoDisplay, never>;

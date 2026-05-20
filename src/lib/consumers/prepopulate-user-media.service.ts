@@ -393,6 +393,13 @@ export class PrepopulateUserMedia {
       }
 
       // If host is not null, check if host videoIsOn
+      const modernMainMiniCardStyle = {
+        background:
+          'radial-gradient(circle at 50% 42%, rgba(79, 70, 229, 0.16) 0%, rgba(79, 70, 229, 0.06) 22%, transparent 52%), radial-gradient(circle at 78% 18%, rgba(20, 184, 166, 0.18) 0%, transparent 38%)',
+        border: 'none',
+        backdropFilter: 'blur(14px)',
+      };
+
       if (host) {
         // Populate the main screen with the host video
         if (shareScreenStarted || shared) {
@@ -407,9 +414,6 @@ export class PrepopulateUserMedia {
                 remoteProducerId: host.ScreenID,
                 eventType,
                 forceFullDisplay: annotateScreenStream && shared ? false : forceFullDisplay,
-                customStyle: {
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
                 participant: host,
                 backgroundColor: 'rgba(217, 227, 234, 0.99)',
                 showControls: false,
@@ -449,9 +453,6 @@ export class PrepopulateUserMedia {
                 remoteProducerId: host.videoID,
                 eventType,
                 forceFullDisplay,
-                customStyle: {
-                  border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                },
                 participant: host,
                 backgroundColor: 'rgba(217, 227, 234, 0.99)',
                 showControls: false,
@@ -490,17 +491,12 @@ export class PrepopulateUserMedia {
                     name: host.name,
                     barColor: 'red',
                     textColor: 'white',
-                    customStyle: {
-                      backgroundColor: 'transparent',
-                      border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                    },
                     controlsPosition: 'topLeft',
                     infoPosition: 'topRight',
                     showWaveform: true,
                     roundedImage: true,
                     parameters: parameters,
                     showControls: false,
-                    backgroundColor: 'transparent',
                   },
                 });
 
@@ -522,11 +518,8 @@ export class PrepopulateUserMedia {
                   component: customMiniCard || MiniCardComponentOverride,
                   inputs: {
                     initials: name,
-                    fontSize: 20,
-                    customStyle: {
-                      backgroundColor: 'transparent',
-                      border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                    },
+                    fontSize: 22,
+                    customStyle: modernMainMiniCardStyle,
                   },
                 });
                 updateMainGridStream(newComponents);
@@ -557,9 +550,6 @@ export class PrepopulateUserMedia {
                     remoteProducerId: host.ScreenID,
                     eventType,
                     forceFullDisplay,
-                    customStyle: {
-                      border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                    },
                     participant: host,
                     backgroundColor: 'rgba(217, 227, 234, 0.99)',
                     showControls: false,
@@ -603,9 +593,6 @@ export class PrepopulateUserMedia {
                     remoteProducerId: host.videoID,
                     eventType,
                     forceFullDisplay,
-                    customStyle: {
-                      border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                    },
                     participant: host,
                     backgroundColor: 'rgba(217, 227, 234, 0.99)',
                     showControls: false,
@@ -626,11 +613,8 @@ export class PrepopulateUserMedia {
                   component: customMiniCard || MiniCardComponentOverride,
                   inputs: {
                     initials: name,
-                    fontSize: 20,
-                    customStyle: {
-                      backgroundColor: 'transparent',
-                      border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-                    },
+                    fontSize: 22,
+                    customStyle: modernMainMiniCardStyle,
                   },
                 });
 
@@ -657,11 +641,8 @@ export class PrepopulateUserMedia {
             component: customMiniCard || MiniCardComponentOverride,
             inputs: {
               initials: name,
-              fontSize: 20,
-              customStyle: {
-                backgroundColor: 'transparent',
-                border: eventType !== 'broadcast' ? '2px solid black' : '0px solid black',
-              },
+              fontSize: 22,
+              customStyle: modernMainMiniCardStyle,
             },
           });
 

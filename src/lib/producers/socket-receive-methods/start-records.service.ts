@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
+import { startRecords as sharedStartRecords } from 'mediasfu-shared';
 
 export interface StartRecordsOptions {
   roomName: string;
@@ -51,14 +52,10 @@ export class StartRecords {
    * @returns {Promise<void>} A promise that resolves when the recording is started.
    */
   startRecords = async ({ roomName, member, socket }: StartRecordsOptions): Promise<void> => {
-    // Send the 'startRecording' event to the server with roomName and member information
-    socket.emit('startRecordIng', { roomName, member }, ({ success }: { success: boolean }) => {
-      // Handle the success or failure of starting recording (if needed)
-      if (success) {
-        console.log('Recording started successfully');
-      } else {
-        console.log('Recording failed to start');
-      }
+    return sharedStartRecords({
+      roomName,
+      member,
+      socket,
     });
   };
 }

@@ -1,5 +1,6 @@
 // piped-producers.service.ts
 import { Injectable } from '@angular/core';
+import { getPipedProducersAlt as sharedGetPipedProducersAlt } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 
 import {
@@ -87,6 +88,13 @@ export class GetPipedProducersAlt {
     islevel,
     parameters,
   }: GetPipedProducersAltOptions): Promise<void> {
+    return sharedGetPipedProducersAlt({
+      community,
+      nsock,
+      islevel,
+      parameters,
+    } as unknown as Parameters<typeof sharedGetPipedProducersAlt>[0]) as Promise<void>;
+
     try {
       // Destructure parameters
       const { member, signalNewConsumerTransport } = parameters;

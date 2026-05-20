@@ -1,3 +1,4 @@
+import { sleep as sharedSleep } from 'mediasfu-shared';
 export interface SleepOptions {
   ms: number;
 }
@@ -21,5 +22,5 @@ export type SleepType = (options: SleepOptions) => Promise<void>;
 
 
 export function sleep({ ms }: SleepOptions): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return sharedSleep({ ms });
 }

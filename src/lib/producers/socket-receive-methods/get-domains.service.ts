@@ -7,6 +7,7 @@ import {
   ConsumeSocket,
 } from '../../@types/types';
 import { types } from 'mediasoup-client';
+import { getDomains as sharedGetDomains } from 'mediasfu-shared';
 type RtpCapabilities = types.RtpCapabilities;
 
 export interface GetDomainsParameters extends ConnectIpsParameters {
@@ -83,34 +84,13 @@ export class GetDomains {
     apiToken,
     parameters,
   }: GetDomainsOptions): Promise<void> => {
-    const { roomRecvIPs, connectIps } = parameters;
-
-    const ipsToConnect: string[] = [];
-
-    let updatedConsumeSockets = parameters.getUpdatedAllParams().consume_sockets;
-
-    try {
-      for (const domain of domains) {
-        const ipToCheck = alt_domains[domain] || domain;
-        // Check if the IP is already in roomRecvIPs
-        if (!roomRecvIPs.includes(ipToCheck)) {
-          ipsToConnect.push(ipToCheck);
-        }
-      }
-
-      const [,] = await connectIps({
-        consume_sockets: updatedConsumeSockets,
-        remIP: ipsToConnect,
-        parameters,
-        apiUserName,
-        apiKey,
-        apiToken,
-      });
-
-      // Handle sockets_ and ips_ if needed
-    } catch (error) {
-      console.error('Error in getDomains: ', error);
-      throw new Error('Failed to retrieve domains.');
-    }
+    return sharedGetDomains({
+      domains,
+      alt_domains,
+      apiUserName,
+      apiKey,
+      apiToken,
+      parameters,
+    });
   };
 }

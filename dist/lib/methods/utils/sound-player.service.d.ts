@@ -3,7 +3,7 @@ import * as i0 from "@angular/core";
 export interface SoundPlayerOptions {
     soundUrl: string;
 }
-export type SoundPlayerType = (options: SoundPlayerOptions) => void;
+export type SoundPlayerType = (options: SoundPlayerOptions) => void | Promise<void>;
 /**
  * SoundPlayer service for playing a sound from a provided URL.
  *

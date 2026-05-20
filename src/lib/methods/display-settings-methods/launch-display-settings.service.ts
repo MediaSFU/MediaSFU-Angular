@@ -1,13 +1,8 @@
 // display-settings.service.ts
 import { Injectable } from '@angular/core';
-
-export interface LaunchDisplaySettingsOptions {
-  updateIsDisplaySettingsModalVisible: (isVisible: boolean) => void;
-  isDisplaySettingsModalVisible: boolean;
-}
-
-// Export the type definition for the function
-export type LaunchDisplaySettingsType = (options: LaunchDisplaySettingsOptions) => void;
+import { launchDisplaySettings as sharedLaunchDisplaySettings } from 'mediasfu-shared';
+import type { LaunchDisplaySettingsOptions } from 'mediasfu-shared';
+export type { LaunchDisplaySettingsOptions, LaunchDisplaySettingsType } from 'mediasfu-shared';
 
 /**
  * Toggles the visibility of the display settings modal.
@@ -47,7 +42,9 @@ export class LaunchDisplaySettings {
     updateIsDisplaySettingsModalVisible,
     isDisplaySettingsModalVisible,
   }: LaunchDisplaySettingsOptions): void {
-    // Toggle the visibility of the display settings modal.
-    updateIsDisplaySettingsModalVisible(!isDisplaySettingsModalVisible);
+    sharedLaunchDisplaySettings({
+      updateIsDisplaySettingsModalVisible,
+      isDisplaySettingsModalVisible,
+    });
   }
 }

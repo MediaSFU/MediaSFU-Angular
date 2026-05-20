@@ -59,7 +59,7 @@ export declare class PollUpdated {
      * @param {Function} options.updateIsPollModalVisible - Function to update the visibility of the poll modal.
      * @returns {Promise<void>} A promise that resolves when the poll update is complete.
      */
-    pollUpdated({ data, polls, poll, member, islevel, showAlert, updatePolls, updatePoll, updateIsPollModalVisible, }: PollUpdatedOptions): Promise<void>;
+    pollUpdated(options: PollUpdatedOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<PollUpdated, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<PollUpdated>;
 }

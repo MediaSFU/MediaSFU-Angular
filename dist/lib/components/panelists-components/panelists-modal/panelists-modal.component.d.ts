@@ -1,0 +1,73 @@
+import { OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Participant, ShowAlert } from '../../../@types/types';
+import { Socket } from 'socket.io-client';
+import { AddPanelist } from '../../../methods/panelists-methods/add-panelist.service';
+import { RemovePanelist } from '../../../methods/panelists-methods/remove-panelist.service';
+import { FocusPanelists } from '../../../methods/panelists-methods/focus-panelists.service';
+import * as i0 from "@angular/core";
+export interface PanelistsModalParameters {
+    participants: Participant[];
+    panelists: Participant[];
+    member: string;
+    islevel: string;
+    socket: Socket;
+    roomName: string;
+    showAlert?: ShowAlert;
+    itemPageLimit: number;
+    panelistsFocused?: boolean;
+    updatePanelists?: (panelists: Participant[]) => void;
+    updatePanelistsFocused?: (focused: boolean) => void;
+    getUpdatedAllParams: () => PanelistsModalParameters;
+}
+export interface PanelistsModalOptions {
+    isPanelistsModalVisible: boolean;
+    onPanelistsClose: () => void;
+    parameters: PanelistsModalParameters;
+    backgroundColor?: string;
+    position?: string;
+}
+export declare class PanelistsModalComponent implements OnInit, OnChanges {
+    private addPanelistService;
+    private removePanelistService;
+    private focusPanelistsService;
+    isPanelistsModalVisible: boolean;
+    onPanelistsClose: () => void;
+    parameters: PanelistsModalParameters;
+    backgroundColor: string;
+    position: string;
+    faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faUserTie: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faEye: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faEyeSlash: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faCheck: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faMicrophone: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faMicrophoneSlash: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faVideo: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faVideoSlash: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faStar: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faMinus: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faUsers: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faSearch: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    faPlus: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    searchFilter: string;
+    localPanelists: Participant[];
+    isFocused: boolean;
+    muteOthersMic: boolean;
+    muteOthersCamera: boolean;
+    participantsState: Participant[];
+    availableParticipants: Participant[];
+    isHost: boolean;
+    constructor(addPanelistService: AddPanelist, removePanelistService: RemovePanelist, focusPanelistsService: FocusPanelists);
+    ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    updateStateFromParams(): void;
+    handleSearch(event: Event): void;
+    updateAvailableParticipants(): void;
+    handleAddPanelist(participant: Participant): Promise<void>;
+    handleRemovePanelist(participant: Participant): Promise<void>;
+    handleToggleFocus(): Promise<void>;
+    toggleMuteOthersMic(): void;
+    toggleMuteOthersCamera(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PanelistsModalComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<PanelistsModalComponent, "app-panelists-modal", never, { "isPanelistsModalVisible": { "alias": "isPanelistsModalVisible"; "required": false; }; "onPanelistsClose": { "alias": "onPanelistsClose"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "position": { "alias": "position"; "required": false; }; }, {}, never, never, true, never>;
+}

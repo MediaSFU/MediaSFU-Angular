@@ -1,4 +1,5 @@
-<div *ngFor="let participant of participants; let i = index">
+<div class="participant-list">
+<div *ngFor="let participant of participants; let i = index" class="participant-list__row">
   <app-participant-list-item
     [participant]="participant"
     [isBroadcast]="isBroadcast"
@@ -10,6 +11,7 @@
     [coHost]="coHost"
     [member]="member"
     [islevel]="islevel"
+    [showAlert]="showAlert"
     [roomName]="roomName"
     [participants]="participants"
     [updateIsMessagesModalVisible]="updateIsMessagesModalVisible"
@@ -17,5 +19,5 @@
     [updateDirectMessageDetails]="updateDirectMessageDetails"
     [updateParticipants]="updateParticipants"
   ></app-participant-list-item>
-  <hr *ngIf="i < participants.length - 1" class="separator" />
+</div>
 </div>

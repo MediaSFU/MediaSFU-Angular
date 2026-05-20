@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes, faPlus, faUsers, faPen } from '@fortawesome/free-solid-svg-icons';
 import { BreakoutParticipant, Participant } from '../../../@types/types';
+import { ModernRenderMode, isEmbeddedRenderMode } from '../../../modern/utils/render-mode.utils';
 
 /**
  * EditRoomModal - Sub-modal for editing individual breakout room participants
@@ -57,16 +58,18 @@ import { BreakoutParticipant, Participant } from '../../../@types/types';
     styleUrls: ['./edit-room-modal.component.css']
 })
 
-export class EditRoomModalComponent implements OnInit {
+export class EditRoomModalComponent implements OnInit, OnDestroy {
   @Input() editRoomModalVisible = false;
   @Input() currentRoom: BreakoutParticipant[] = [];
   @Input() participantsRef: Participant[] = [];
   @Input() currentRoomIndex = -1;
   @Input() position = 'center';
   @Input() backgroundColor = '#fff';
+  @Input() isDarkMode?: boolean;
   @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
   @Input() contentStyle?: Partial<CSSStyleDeclaration>;
   @Input() customTemplate?: any;
+  @Input() renderMode: ModernRenderMode = 'modal';
 
   @Output() setEditRoomModalVisible = new EventEmitter<boolean>();
   @Output() addParticipant = new EventEmitter<{
@@ -84,14 +87,25 @@ export class EditRoomModalComponent implements OnInit {
   faPen = faPen;
 
   modalWidth = 400;
+  private readonly resizeHandler = () => this.calculateModalWidth();
+
+  get resolvedIsDarkMode(): boolean {
+    if (typeof this.isDarkMode === 'boolean') {
+      return this.isDarkMode;
+    }
+
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : false;
+  }
 
   ngOnInit() {
     this.calculateModalWidth();
-    window.addEventListener('resize', this.calculateModalWidth.bind(this));
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   ngOnDestroy() {
-    window.removeEventListener('resize', this.calculateModalWidth.bind(this));
+    window.removeEventListener('resize', this.resizeHandler);
   }
 
   calculateModalWidth() {
@@ -99,29 +113,61 @@ export class EditRoomModalComponent implements OnInit {
     this.modalWidth = screenWidth > 500 ? 400 : screenWidth * 0.8;
   }
 
+  isEmbedded(): boolean {
+    return isEmbeddedRenderMode(this.renderMode);
+  }
+
   modalContainerStyle() {
-    return {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: 1000,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    };
+    return this.isEmbedded()
+      ? {
+          position: 'static',
+          top: 'auto',
+          left: 'auto',
+          width: '100%',
+          height: 'auto',
+          backgroundColor: 'transparent',
+          backdropFilter: 'none',
+          zIndex: 'auto',
+          display: 'block',
+          padding: '16px 0 0',
+        }
+      : {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: this.resolvedIsDarkMode ? 'rgba(2, 6, 23, 0.62)' : 'rgba(15, 23, 42, 0.18)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '18px',
+        };
   }
 
   modalContentStyle() {
+    const isDarkMode = this.resolvedIsDarkMode;
     return {
-      backgroundColor: this.backgroundColor,
-      borderRadius: '10px',
-      padding: '20px',
-      width: `${this.modalWidth}px`,
-      maxHeight: '80%',
+      background: typeof this.isDarkMode === 'boolean'
+        ? isDarkMode
+          ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%)'
+          : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.96) 100%)'
+        : this.backgroundColor,
+      borderRadius: this.isEmbedded() ? '20px' : '24px',
+      border: isDarkMode
+        ? '1px solid rgba(148, 163, 184, 0.18)'
+        : '1px solid rgba(148, 163, 184, 0.22)',
+      boxShadow: this.isEmbedded()
+        ? '0 18px 36px rgba(15, 23, 42, 0.14)'
+        : '0 24px 48px rgba(15, 23, 42, 0.18)',
+      padding: this.isEmbedded() ? '18px' : '20px',
+      width: this.isEmbedded() ? '100%' : `${this.modalWidth}px`,
+      maxWidth: '100%',
+      maxHeight: this.isEmbedded() ? 'none' : '80%',
       overflowY: 'auto',
+      color: isDarkMode ? '#e2e8f0' : '#0f172a',
     };
   }
 

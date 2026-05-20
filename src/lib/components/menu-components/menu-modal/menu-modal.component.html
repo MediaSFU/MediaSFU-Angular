@@ -1,5 +1,5 @@
 <!-- Custom template override - if provided, use it instead of default -->
-<ng-container *ngIf="customTemplate; else defaultTemplate">
+<ng-container *ngIf="isVisible && customTemplate; else defaultTemplate">
   <ng-container *ngTemplateOutlet="customTemplate; context: renderContext"></ng-container>
 </ng-container>
 
@@ -7,13 +7,15 @@
 <ng-template #defaultTemplate>
   <!-- Overlay wrapper with custom attributes -->
   <div
+    *ngIf="isVisible"
+    class="menu-modal__overlay"
     [ngStyle]="modalContainerStyle()"
     [attr.data-testid]="overlayAttributes?.['data-testid']"
     [ngClass]="overlayAttributes?.['class']">
 
     <!-- Content wrapper with custom attributes and styles -->
     <div
-      class="modal-content"
+      class="menu-modal__content"
       [ngStyle]="getCombinedContentStyle()"
       [attr.data-testid]="contentAttributes?.['data-testid']"
       [ngClass]="contentAttributes?.['class']">
@@ -26,7 +28,7 @@
       <!-- Default header -->
       <ng-template #defaultHeader>
         <div
-          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"
+          class="menu-modal__header"
           [attr.data-testid]="headerAttributes?.['data-testid']"
           [ngClass]="headerAttributes?.['class']">
 
@@ -38,12 +40,12 @@
           <!-- Default title -->
           <ng-template #defaultTitle>
             <div
-              style="font-size: 18px; font-weight: bold; color: black;"
+              class="menu-modal__title"
               [attr.data-testid]="titleWrapperAttributes?.['data-testid']"
               [ngClass]="titleWrapperAttributes?.['class']">
               <fa-icon
                 [icon]="faBars"
-                style="font-size: 20px; color: black;"
+                class="menu-modal__title-icon"
                 [attr.data-testid]="menuIconAttributes?.['data-testid']"
                 [ngClass]="menuIconAttributes?.['class']"></fa-icon>
               {{ getTitle() }}
@@ -53,12 +55,12 @@
           <!-- Close button with custom attributes -->
           <div
             (click)="handleClose()"
-            style="padding: 5px; cursor: pointer;"
+            class="menu-modal__close"
             [attr.data-testid]="closeButtonAttributes?.['data-testid']"
             [ngClass]="closeButtonAttributes?.['class']">
             <fa-icon
               [icon]="faTimes"
-              style="font-size: 20px; color: black;"
+              class="menu-modal__close-icon"
               [attr.data-testid]="closeIconAttributes?.['data-testid']"
               [ngClass]="closeIconAttributes?.['class']"></fa-icon>
           </div>
@@ -67,7 +69,8 @@
 
       <!-- Divider with custom attributes -->
       <hr
-        style="height: 1px; background-color: black; margin: 5px 0;"
+        class="menu-modal__divider"
+        [ngStyle]="getDividerStyle()"
         [attr.data-testid]="dividerAttributes?.['data-testid']"
         [ngClass]="dividerAttributes?.['class']" />
 
@@ -79,14 +82,38 @@
       <!-- Default body -->
       <ng-template #defaultBody>
         <div
-          style="flex: 1;"
+          class="menu-modal__body"
           [attr.data-testid]="bodyAttributes?.['data-testid']"
           [ngClass]="bodyAttributes?.['class']">
 
           <div
-            style="max-height: calc(70% - 70px); overflow-y: auto;"
+            class="menu-modal__scroll"
             [attr.data-testid]="scrollWrapperAttributes?.['data-testid']"
             [ngClass]="scrollWrapperAttributes?.['class']">
+
+            <div *ngIf="onToggleTheme" class="menu-modal__section menu-modal__section--theme">
+              <div class="menu-modal__section-label">Theme</div>
+              <div class="menu-modal__theme-toggle">
+                <button
+                  type="button"
+                  class="menu-modal__theme-button"
+                  [class.menu-modal__theme-button--active]="resolvedIsDarkMode"
+                  (click)="onToggleTheme(true)"
+                >
+                  Dark
+                </button>
+                <button
+                  type="button"
+                  class="menu-modal__theme-button"
+                  [class.menu-modal__theme-button--active]="!resolvedIsDarkMode"
+                  (click)="onToggleTheme(false)"
+                >
+                  Light
+                </button>
+              </div>
+            </div>
+
+            <div *ngIf="onToggleTheme" class="menu-modal__section-divider"></div>
 
             <!-- Custom buttons - customizable via renderCustomButtons template -->
             <ng-container *ngIf="renderCustomButtons; else defaultCustomButtons">
@@ -96,13 +123,14 @@
             <!-- Default custom buttons -->
             <ng-template #defaultCustomButtons>
               <div
+                class="menu-modal__section"
                 [attr.data-testid]="customButtonsWrapperAttributes?.['data-testid']"
                 [ngClass]="customButtonsWrapperAttributes?.['class']">
-                <app-custom-buttons [buttons]="customButtons"></app-custom-buttons>
+                <app-custom-buttons [buttons]="customButtons" [isDarkMode]="resolvedIsDarkMode"></app-custom-buttons>
               </div>
             </ng-template>
 
-            <div style="height: 1px; background-color: #ffffff; margin: 10px 0;"></div>
+            <div class="menu-modal__section-divider"></div>
 
             <!-- Meeting passcode - customizable via renderMeetingPasscode template -->
             <ng-container *ngIf="islevel === '2'">
@@ -112,9 +140,12 @@
 
               <!-- Default meeting passcode -->
               <ng-template #defaultMeetingPasscode>
-                <app-meeting-passcode-component
-                  [meetingPasscode]="adminPasscode">
-                </app-meeting-passcode-component>
+                <div class="menu-modal__section">
+                  <app-meeting-passcode-component
+                    [meetingPasscode]="adminPasscode"
+                    [isDarkMode]="resolvedIsDarkMode">
+                  </app-meeting-passcode-component>
+                </div>
               </ng-template>
             </ng-container>
 
@@ -125,8 +156,8 @@
 
             <!-- Default meeting ID -->
             <ng-template #defaultMeetingId>
-              <div style="margin-bottom: 10px;">
-                <app-meeting-id-component [meetingID]="roomName"></app-meeting-id-component>
+              <div class="menu-modal__section">
+                <app-meeting-id-component [meetingID]="roomName" [isDarkMode]="resolvedIsDarkMode"></app-meeting-id-component>
               </div>
             </ng-template>
 
@@ -138,11 +169,14 @@
 
               <!-- Default share buttons -->
               <ng-template #defaultShareButtons>
-                <app-share-buttons-component
-                  [meetingID]="roomName"
-                  [eventType]="eventType"
-                  [localLink]="localLink">
-                </app-share-buttons-component>
+                <div class="menu-modal__section menu-modal__section--share">
+                  <app-share-buttons-component
+                    [meetingID]="roomName"
+                    [eventType]="eventType"
+                    [isDarkMode]="resolvedIsDarkMode"
+                    [localLink]="localLink">
+                  </app-share-buttons-component>
+                </div>
               </ng-template>
             </ng-container>
           </div>

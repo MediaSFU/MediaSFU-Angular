@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MeetingProgressTimer } from '../meeting-progress-timer/meeting-progress-timer.component';
+import { ModernMeetingProgressTimerComponent } from '../../../modern/display-components/modern-meeting-progress-timer.component';
 
 export interface MainGridComponentOptions {
   backgroundColor?: string;
@@ -65,7 +65,7 @@ export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLE
 
 @Component({
     selector: 'app-main-grid-component',
-    imports: [CommonModule, MeetingProgressTimer],
+  imports: [CommonModule, ModernMeetingProgressTimerComponent],
     template: `
     <div *ngIf="customTemplate; else defaultTemplate" [ngStyle]="maingridContainerStyle">
       <ng-container *ngTemplateOutlet="customTemplate; context: {
@@ -83,11 +83,11 @@ export type MainGridComponentType = (options: MainGridComponentOptions) => HTMLE
     </div>
     <ng-template #defaultTemplate>
       <div [ngStyle]="maingridContainerStyle">
-        <app-meeting-progress-timer
+        <app-modern-meeting-progress-timer
           *ngIf="showTimer"
           [meetingProgressTime]="meetingProgressTime"
           [initialBackgroundColor]="timeBackgroundColor"
-        ></app-meeting-progress-timer>
+        ></app-modern-meeting-progress-timer>
         <ng-content></ng-content>
       </div>
     </ng-template>
@@ -111,16 +111,19 @@ export class MainGridComponent {
       backgroundColor: this.backgroundColor,
       height: `${this.height}px`,
       width: `${this.width}px`,
+      position: 'relative',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+      overflow: 'hidden',
+      boxSizing: 'border-box',
       borderStyle: 'solid',
-      borderColor: '#000',
-      borderWidth: '4px',
+      borderColor: 'rgba(148, 163, 184, 0.12)',
+      borderWidth: '1px',
     };
     return {
       ...baseStyles,
-      ...(this.containerStyle as any),
+      ...(this.containerStyle ?? {}),
     };
   }
 }

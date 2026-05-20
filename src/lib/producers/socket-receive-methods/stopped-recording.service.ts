@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShowAlert } from '../../@types/types';
+import { stoppedRecording as sharedStoppedRecording } from 'mediasfu-shared';
 
 export interface StoppedRecordingOptions {
   state: string;
@@ -55,17 +56,10 @@ export class StoppedRecording {
     reason,
     showAlert,
   }: StoppedRecordingOptions): Promise<void> => {
-    try {
-      if (state === 'stop') {
-        showAlert?.({
-          message: `The recording has stopped - ${reason}.`,
-          duration: 3000,
-          type: 'danger',
-        });
-      }
-    } catch (error) {
-      console.error('Error in stoppedRecording: ', error);
-      // throw new Error("Failed to display the recording stopped alert message.");
-    }
+    return sharedStoppedRecording({
+      state,
+      reason,
+      showAlert,
+    });
   };
 }

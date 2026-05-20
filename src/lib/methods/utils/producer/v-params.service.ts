@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { types } from 'mediasoup-client';
-type ProducerCodecOptions = types.ProducerCodecOptions;
-type RtpEncodingParameters = types.RtpEncodingParameters;
-export type VParamsType = {
-  encodings: RtpEncodingParameters[];
-  codecOptions?: ProducerCodecOptions;
-};
+import { vParams as sharedVParams } from 'mediasfu-shared';
+import type { VParamsType as SharedVParamsType } from 'mediasfu-shared';
+
+export type VParamsType = SharedVParamsType;
 
 /**
  * The `VParams` service provides encoding parameters for video in a media session using the Mediasoup library.
@@ -63,28 +60,5 @@ export type VParamsType = {
   providedIn: 'root',
 })
 export class VParams {
-  vParams: VParamsType = {
-    encodings: [
-      {
-        rid: 'r3',
-        maxBitrate: 200000,
-        scalabilityMode: 'L1T3',
-        scaleResolutionDownBy: 4.0,
-      },
-      {
-        rid: 'r4',
-        maxBitrate: 400000,
-        scalabilityMode: 'L1T3',
-        scaleResolutionDownBy: 2.0,
-      },
-      {
-        rid: 'r5',
-        maxBitrate: 800000,
-        scalabilityMode: 'L1T3',
-      },
-    ],
-    codecOptions: {
-      videoGoogleStartBitrate: 320,
-    },
-  };
+  vParams: VParamsType = sharedVParams;
 }

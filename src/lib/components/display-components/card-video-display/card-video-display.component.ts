@@ -128,18 +128,22 @@ export class CardVideoDisplay implements OnInit, OnChanges {
       alignItems: 'center',
       width: '100%',
       height: '100%',
-      backgroundColor: 'black',
+      backgroundColor: this.backgroundColor || 'rgba(8, 17, 32, 0.92)',
+      borderRadius: 'inherit',
+      overflow: 'hidden',
+      position: 'relative',
     };
   }
 
   getVideoStyle() {
     const baseStyles: any = {
-      width: this.forceFullDisplay ? '100%' : 'auto',
+      width: '100%',
       height: '100%',
       maxWidth: '100%',
       maxHeight: '100%',
       objectFit: this.forceFullDisplay ? 'cover' : 'contain',
-      backgroundColor: this.backgroundColor,
+      backgroundColor: this.backgroundColor || 'transparent',
+      display: 'block',
     };
 
     if (this.doMirror) {

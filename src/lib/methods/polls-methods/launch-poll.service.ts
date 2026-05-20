@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { launchPoll as sharedLaunchPoll } from 'mediasfu-shared';
 export interface LaunchPollOptions {
   updateIsPollModalVisible: (isVisible: boolean) => void;
   isPollModalVisible: boolean;
@@ -42,6 +43,6 @@ export class LaunchPoll {
    */
 
   launchPoll({ updateIsPollModalVisible, isPollModalVisible }: LaunchPollOptions): void {
-    updateIsPollModalVisible(!isPollModalVisible);
+    sharedLaunchPoll({ updateIsPollModalVisible, isPollModalVisible });
   }
 }

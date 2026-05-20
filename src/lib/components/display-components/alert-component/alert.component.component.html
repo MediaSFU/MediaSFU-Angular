@@ -12,12 +12,33 @@
 </ng-container>
 
 <!-- Default template -->
-<div *ngIf="visible && !customTemplate"
-     (click)="handlePress()"
-     class="centeredView"
-     [ngStyle]="alertStyle">
-  <div [ngStyle]="{ 'background-color': alertType === 'success' ? 'green' : 'red' }"
-       class="modalView">
-    <p [ngStyle]="{ color: textColor }" class="modalText">{{ message }}</p>
+<div
+  *ngIf="visible && !customTemplate"
+  class="alert-shell"
+  [class.alert-shell--dark]="resolvedIsDarkMode"
+  [class.alert-shell--light]="!resolvedIsDarkMode"
+  [ngStyle]="shellStyle"
+>
+  <div
+    (click)="handlePress()"
+    class="alert-card"
+    [class.alert-card--success]="alertType === 'success'"
+    [class.alert-card--danger]="alertType === 'danger'"
+    [class.alert-card--info]="alertType === 'info'"
+    [class.alert-card--warning]="alertType === 'warning'"
+    [ngStyle]="alertStyle"
+    [attr.role]="alertRole"
+    [attr.aria-live]="alertRole === 'alert' ? 'assertive' : 'polite'"
+  >
+    <div class="alert-accent" aria-hidden="true"></div>
+    <div class="alert-icon" aria-hidden="true">{{ alertIcon }}</div>
+    <div class="alert-copy">
+      <div class="alert-header-row">
+        <div class="alert-label">{{ alertLabel }}</div>
+        <div class="alert-meta">{{ alertMeta }}</div>
+      </div>
+      <p [ngStyle]="textColor ? { color: textColor } : null" class="alert-message">{{ message }}</p>
+    </div>
+    <button type="button" class="alert-close" aria-label="Dismiss notification" (click)="handlePress(); $event.stopPropagation()">×</button>
   </div>
 </div>

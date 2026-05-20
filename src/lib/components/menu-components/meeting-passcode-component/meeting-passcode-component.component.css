@@ -1,19 +1,85 @@
-.form-group {
-  margin-top: 10px;
-  max-width: 300px;
+.meeting-passcode {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.label {
-  font-weight: bold;
+.meeting-passcode__label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.disabled-input {
-  border-width: 1px;
-  border-color: gray;
-  padding: 10px;
-  margin-top: 5px;
-  background-color: #f0f0f0;
-  color: black;
+.meeting-passcode__group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
   width: 100%;
-  border-radius: 5px;
+  max-width: 100%;
+}
+
+.meeting-passcode__group > * {
+  min-width: 0;
+}
+
+.meeting-passcode__input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meeting-passcode__button {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 14px;
+  background: rgba(148, 163, 184, 0.14);
+  cursor: pointer;
+}
+
+@media (max-width: 420px) {
+  .meeting-passcode__group {
+    gap: 8px;
+  }
+
+  .meeting-passcode__input {
+    padding: 11px 12px;
+    border-radius: 14px;
+  }
+
+  .meeting-passcode__button {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+}
+
+.meeting-passcode--dark .meeting-passcode__label {
+  color: rgba(226, 232, 240, 0.8);
+}
+
+.meeting-passcode--dark .meeting-passcode__input {
+  background: rgba(15, 23, 42, 0.52);
+  color: #e2e8f0;
+}
+
+.meeting-passcode--light .meeting-passcode__label {
+  color: rgba(15, 23, 42, 0.72);
+}
+
+.meeting-passcode--light .meeting-passcode__input {
+  background: rgba(255, 255, 255, 0.82);
+  color: #0f172a;
 }

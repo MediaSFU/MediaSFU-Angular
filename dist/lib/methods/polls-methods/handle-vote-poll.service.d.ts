@@ -61,7 +61,7 @@ export declare class HandleVotePoll {
      *
      * @throws Will log an error message if there is an issue submitting the vote.
      */
-    handleVotePoll({ pollId, optionIndex, socket, showAlert, member, roomName, updateIsPollModalVisible, }: HandleVotePollOptions): Promise<void>;
+    handleVotePoll(options: HandleVotePollOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<HandleVotePoll, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<HandleVotePoll>;
 }

@@ -1,69 +1,79 @@
-<div class="container">
-  <div class="logo-container">
-    <img [src]="imgSrc || 'https://mediasfu.com/images/logo192.png'" class="logo-image" alt="Logo" />
+<app-modern-entry-shell>
+  <div msEntryTitle class="ms-modern-welcome__title-wrap">
+    <img [src]="imgSrc || 'https://mediasfu.com/images/logo192.png'" class="ms-modern-welcome__logo" alt="MediaSFU" />
+    <h1 class="ms-modern-welcome__title">Welcome to MediaSFU</h1>
   </div>
-  <form [formGroup]="welcomeForm" (ngSubmit)="handleConfirm()">
-    <div class="input-container">
-      <input
-        formControlName="name"
-        type="text"
-        placeholder="Event Display Name"
-        class="input-field"
-      />
-      <input
-        formControlName="secret"
-        type="text"
-        placeholder="Event Token (Secret)"
-        class="input-field"
-      />
-      <input
-        formControlName="eventID"
-        type="text"
-        placeholder="Event ID"
-        class="input-field"
-      />
-      <input
-        formControlName="link"
-        type="text"
-        placeholder="Event Link"
-        class="input-field"
-      />
-    </div>
-    <button type="submit" class="confirm-button">Confirm</button>
+
+  <p msEntryDescription class="ms-modern-welcome__description">
+    Enter your event details to join, or scan a QR code to fill them automatically.
+  </p>
+
+  <form class="ms-modern-welcome__form" [formGroup]="welcomeForm" (ngSubmit)="handleConfirm()">
+    <app-modern-field
+      label="Display Name"
+      hint="Up to 12 alphanumeric characters."
+      placeholder="Event Display Name"
+      formControlName="name"
+    ></app-modern-field>
+
+    <app-modern-field
+      label="Event Token"
+      hint="Paste the secret token exactly as provided."
+      placeholder="Event Token (Secret)"
+      formControlName="secret"
+    ></app-modern-field>
+
+    <app-modern-field
+      label="Event ID"
+      hint="Use the event identifier associated with the room."
+      placeholder="Event ID"
+      formControlName="eventID"
+    ></app-modern-field>
+
+    <app-modern-field
+      label="Event Link"
+      hint="Enter the meeting URL that issued your credentials."
+      placeholder="Event Link"
+      type="url"
+      autocomplete="url"
+      formControlName="link"
+    ></app-modern-field>
+
+    <p *ngIf="error" class="ms-modern-welcome__error">{{ error }}</p>
+
+    <app-modern-button type="submit" size="lg" [block]="true">
+      Confirm
+    </app-modern-button>
   </form>
 
-  <div class="scanner-container">
-    <div class="or-container">
-      <hr class="horizontal-line" />
-      <span class="or-text">OR</span>
-      <hr class="horizontal-line" />
-    </div>
-    <div *ngIf="isScannerVisible" class="scanner-wrapper">
+  <div class="ms-modern-welcome__divider" aria-hidden="true">
+    <span>or</span>
+  </div>
+
+  <app-modern-surface class="ms-modern-welcome__scanner-shell" [interactive]="!isScannerVisible">
+    <div *ngIf="isScannerVisible" class="ms-modern-welcome__scanner-wrapper">
       <zxing-scanner
         [device]="currentDevice!"
         (scanSuccess)="handleScanSuccess($event)"
         [tryHarder]="true"
       ></zxing-scanner>
     </div>
-    <div class="scan-button-container" *ngIf="!isScannerVisible">
-      <button (click)="toggleScanner()" class="scan-button">
-        <fa-icon [icon]="faQrcode" style="margin-right: 5px"></fa-icon>
-        Scan QR Code
-      </button>
-    </div>
-  </div>
 
-  <div class="additional-options-container">
+    <div class="ms-modern-welcome__scan-button-container" *ngIf="!isScannerVisible">
+      <app-modern-button type="button" variant="secondary" [block]="true" (click)="toggleScanner()">
+        <fa-icon [icon]="faQrcode"></fa-icon>
+        <span>Scan QR Code</span>
+      </app-modern-button>
+    </div>
+  </app-modern-surface>
+
+  <div msEntryFooter class="ms-modern-welcome__help">
+    <p>Provide the event details manually or scan the QR code to autofill.</p>
     <p>
-      Provide the event details either by typing manually or scanning the
-      QR-code to autofill.
+      Need credentials?
+      <a href="https://meeting.mediasfu.com/meeting/start/" target="_blank" rel="noreferrer">
+        Get one from mediasfu.com
+      </a>
     </p>
-    <p>Don't have a secret?</p>
-    <a
-      href="https://meeting.mediasfu.com/meeting/start/"
-      target="_blank"
-      class="link"
-      >Get one from mediasfu.com</a
-    >
   </div>
-</div>
+</app-modern-entry-shell>

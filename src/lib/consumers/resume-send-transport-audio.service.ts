@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { resumeSendTransportAudio as sharedResumeSendTransportAudio } from 'mediasfu-shared';
 import { types } from 'mediasoup-client';
 type Producer = types.Producer;
 import { PrepopulateUserMediaParameters, PrepopulateUserMediaType } from '../@types/types';
@@ -141,6 +142,10 @@ export class ResumeSendTransportAudio {
    */
 
   async resumeSendTransportAudio({ parameters }: ResumeSendTransportAudioOptions): Promise<void> {
+    return sharedResumeSendTransportAudio({
+      parameters: parameters as unknown as Parameters<typeof sharedResumeSendTransportAudio>[0]['parameters'],
+    }) as Promise<void>;
+
     try {
       let {
         audioProducer,

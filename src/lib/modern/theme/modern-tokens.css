@@ -1,0 +1,66 @@
+:host {
+  --ms-modern-page-background: #eef4fb;
+  --ms-modern-page-background-accent: #dce8f5;
+  --ms-modern-panel-surface: rgba(255, 255, 255, 0.82);
+  --ms-modern-panel-surface-elevated: rgba(255, 255, 255, 0.92);
+  --ms-modern-field-background: rgba(248, 250, 252, 0.92);
+  --ms-modern-text-primary: #10233f;
+  --ms-modern-text-secondary: rgba(16, 35, 63, 0.78);
+  --ms-modern-text-muted: rgba(58, 77, 105, 0.68);
+  --ms-modern-border-subtle: rgba(120, 143, 173, 0.28);
+  --ms-modern-border-strong: rgba(46, 108, 188, 0.34);
+  --ms-modern-accent: #1476d2;
+  --ms-modern-accent-strong: #0d5ca8;
+  --ms-modern-danger: #d9485f;
+  --ms-modern-success: #147d64;
+  --ms-modern-warning: #b7791f;
+  --ms-modern-info: #0f6db5;
+  --ms-modern-shadow-panel: 0 24px 64px rgba(14, 30, 53, 0.16);
+  --ms-modern-focus-ring: 0 0 0 3px rgba(20, 118, 210, 0.2);
+  --ms-modern-font-family: 'Segoe UI', 'Aptos', 'Trebuchet MS', sans-serif;
+  --ms-modern-font-headline-lg: clamp(1.8rem, 3.1vw, 2.6rem);
+  --ms-modern-font-headline-md: clamp(1.25rem, 2.2vw, 1.75rem);
+  --ms-modern-font-title: 1.05rem;
+  --ms-modern-font-body: 0.98rem;
+  --ms-modern-font-caption: 0.82rem;
+  --ms-modern-font-label: 0.76rem;
+  --ms-modern-spacing-xs: 4px;
+  --ms-modern-spacing-sm: 8px;
+  --ms-modern-spacing-md: 16px;
+  --ms-modern-spacing-lg: 24px;
+  --ms-modern-spacing-xl: 32px;
+  --ms-modern-spacing-xxl: 48px;
+  --ms-modern-radius-sm: 10px;
+  --ms-modern-radius-md: 18px;
+  --ms-modern-radius-lg: 28px;
+  --ms-modern-radius-pill: 999px;
+  --ms-modern-motion-fast: 160ms;
+  --ms-modern-motion-base: 220ms;
+  --ms-modern-motion-slow: 320ms;
+  --ms-modern-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --ms-modern-content-max-width: 1180px;
+  --ms-modern-onboarding-card-max-width: 540px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    --ms-modern-page-background: #081120;
+    --ms-modern-page-background-accent: #0f1b33;
+    --ms-modern-panel-surface: rgba(10, 18, 33, 0.82);
+    --ms-modern-panel-surface-elevated: rgba(15, 27, 49, 0.9);
+    --ms-modern-field-background: rgba(15, 23, 42, 0.74);
+    --ms-modern-text-primary: #f8fafc;
+    --ms-modern-text-secondary: rgba(226, 232, 240, 0.78);
+    --ms-modern-text-muted: rgba(148, 163, 184, 0.82);
+    --ms-modern-border-subtle: rgba(148, 163, 184, 0.18);
+    --ms-modern-border-strong: rgba(96, 165, 250, 0.32);
+    --ms-modern-accent: #55c6ff;
+    --ms-modern-accent-strong: #8bdbff;
+    --ms-modern-danger: #f9738b;
+    --ms-modern-success: #38d39f;
+    --ms-modern-warning: #f7bf4d;
+    --ms-modern-info: #64b6ff;
+    --ms-modern-shadow-panel: 0 24px 64px rgba(2, 8, 23, 0.3);
+    --ms-modern-focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.24);
+  }
+}

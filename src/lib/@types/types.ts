@@ -226,6 +226,7 @@ export * from '../components/misc-components/confirm-here-modal/confirm-here-mod
 export * from '../components/misc-components/pre-join-page/pre-join-page.component';
 export * from '../components/misc-components/share-event-modal/share-event-modal.component';
 export * from '../components/misc-components/welcome-page/welcome-page.component';
+export * from '../components/translation-components/translation-settings-modal/translation-settings-modal.component';
 export * from '../components/participants-components/participants-modal/participants-modal.component';
 export * from '../components/polls-components/poll-modal/poll-modal.component';
 export * from '../components/recording-components/recording-modal/recording-modal.component';
@@ -319,10 +320,22 @@ export interface AudioDecibels {
   averageLoudness: number;
 }
 
+export type AlertType = 'success' | 'danger' | 'info' | 'warning';
+
+export type AlertPosition =
+  | 'top'
+  | 'bottom'
+  | 'top-right'
+  | 'top-left'
+  | 'bottom-right'
+  | 'bottom-left'
+  | 'center';
+
 export type ShowAlert = (options: {
   message: string;
-  type: 'success' | 'danger';
+  type: AlertType;
   duration?: number;
+  position?: AlertPosition;
 }) => void;
 
 export interface CoHostResponsibility {
@@ -786,3 +799,21 @@ export type CreateWebRTCTransportResponse = {
 
 // Custom Component Types
 export * from './custom-component.types';
+
+export * from '../methods/panelists-methods/add-panelist.service';
+export * from '../methods/panelists-methods/remove-panelist.service';
+export * from '../methods/panelists-methods/focus-panelists.service';
+export * from '../methods/permissions-methods/update-participant-permission.service';
+export * from '../methods/permissions-methods/bulk-update-participant-permissions.service';
+export * from '../methods/permissions-methods/update-permission-config.service';
+export * from '../consumers/translation-consumer-switch.service';
+export * from '../methods/utils/translation-languages.util';
+export * from '../services/live-subtitle.service';
+export * from '../producers/socket-receive-methods/panelists-updated.service';
+export * from '../producers/socket-receive-methods/panelist-focus-changed.service';
+export * from '../producers/socket-receive-methods/receive-control-media.service';
+export * from '../producers/socket-receive-methods/added-as-panelist.service';
+export * from '../producers/socket-receive-methods/removed-from-panelists.service';
+export * from '../producers/socket-receive-methods/permission-updated.service';
+export * from '../producers/socket-receive-methods/permission-config-updated.service';
+export * from '../producers/socket-receive-methods/translation-receive-methods.service';

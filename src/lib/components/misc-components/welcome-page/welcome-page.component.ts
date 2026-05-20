@@ -9,6 +9,11 @@ import { Socket } from 'socket.io-client';
 import { ConnectSocketType } from '../../../sockets/socket-manager.service';
 import { ShowAlert } from '../../../@types/types';
 
+import { ModernButtonComponent } from '../../../modern/primitives/modern-button.component';
+import { ModernEntryShellComponent } from '../../../modern/primitives/modern-entry-shell.component';
+import { ModernFieldComponent } from '../../../modern/primitives/modern-field.component';
+import { ModernSurfaceComponent } from '../../../modern/primitives/modern-surface.component';
+
 const MAX_ATTEMPTS = 10; // Maximum number of unsuccessful attempts before rate limiting
 const RATE_LIMIT_DURATION = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
 
@@ -55,7 +60,16 @@ export type WelcomePageType = (options: WelcomePageOptions) => HTMLElement;
     selector: 'app-welcome-page',
     templateUrl: './welcome-page.component.html',
     styleUrls: ['./welcome-page.component.css'],
-    imports: [ZXingScannerModule, CommonModule, FontAwesomeModule, ReactiveFormsModule],
+    imports: [
+      ZXingScannerModule,
+      CommonModule,
+      FontAwesomeModule,
+      ReactiveFormsModule,
+      ModernButtonComponent,
+      ModernEntryShellComponent,
+      ModernFieldComponent,
+      ModernSurfaceComponent,
+    ],
     providers: [CookieService]
 })
 export class WelcomePage implements OnInit {
@@ -93,6 +107,7 @@ export class WelcomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.imgSrc = this.parameters.imgSrc || '';
     this.askForCameraPermission();
   }
 
@@ -276,6 +291,8 @@ export class WelcomePage implements OnInit {
       this.error = 'Please fill all the fields correctly.';
       return;
     }
+
+    this.error = '';
 
     const { name, secret, eventID, link } = this.welcomeForm.value;
 

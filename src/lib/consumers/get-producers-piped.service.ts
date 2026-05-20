@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { getProducersPiped as sharedGetProducersPiped } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import {
   SignalNewConsumerTransportParameters,
@@ -75,6 +76,12 @@ export class GetProducersPiped {
    */
 
   async getProducersPiped({ nsock, islevel, parameters }: GetProducersPipedOptions): Promise<void> {
+    return sharedGetProducersPiped({
+      nsock,
+      islevel,
+      parameters,
+    } as unknown as Parameters<typeof sharedGetProducersPiped>[0]) as Promise<void>;
+
     try {
       // Destructure parameters
       const { member, signalNewConsumerTransport } = parameters;

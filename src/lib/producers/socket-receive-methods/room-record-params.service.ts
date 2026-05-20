@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { roomRecordParams as sharedRoomRecordParams } from 'mediasfu-shared';
 export interface RecordParams {
   recordingAudioPausesLimit: number;
   recordingAudioPausesCount: number;
@@ -145,48 +146,10 @@ export class RoomRecordParams {
    * @param {Function} params.parameters.updateRecordingMultiFormatsSupport - Function to update the multi-formats support.
    * @returns {Promise<void>} A promise that resolves when all parameters have been updated.
    */
-  roomRecordParams = ({ recordParams, parameters }: RoomRecordParamsOptions): void => {
-    let {
-      updateRecordingAudioPausesLimit,
-      updateRecordingAudioPausesCount,
-      updateRecordingAudioSupport,
-      updateRecordingAudioPeopleLimit,
-      updateRecordingAudioParticipantsTimeLimit,
-      updateRecordingVideoPausesCount,
-      updateRecordingVideoPausesLimit,
-      updateRecordingVideoSupport,
-      updateRecordingVideoPeopleLimit,
-      updateRecordingVideoParticipantsTimeLimit,
-      updateRecordingAllParticipantsSupport,
-      updateRecordingVideoParticipantsSupport,
-      updateRecordingAllParticipantsFullRoomSupport,
-      updateRecordingVideoParticipantsFullRoomSupport,
-      updateRecordingPreferredOrientation,
-      updateRecordingSupportForOtherOrientation,
-      updateRecordingMultiFormatsSupport,
-    } = parameters;
-
-    // Update each recording parameter based on the provided recordParams
-    updateRecordingAudioPausesLimit(recordParams.recordingAudioPausesLimit);
-    updateRecordingAudioPausesCount(recordParams.recordingAudioPausesCount);
-    updateRecordingAudioSupport(recordParams.recordingAudioSupport);
-    updateRecordingAudioPeopleLimit(recordParams.recordingAudioPeopleLimit);
-    updateRecordingAudioParticipantsTimeLimit(recordParams.recordingAudioParticipantsTimeLimit);
-    updateRecordingVideoPausesCount(recordParams.recordingVideoPausesCount);
-    updateRecordingVideoPausesLimit(recordParams.recordingVideoPausesLimit);
-    updateRecordingVideoSupport(recordParams.recordingVideoSupport);
-    updateRecordingVideoPeopleLimit(recordParams.recordingVideoPeopleLimit);
-    updateRecordingVideoParticipantsTimeLimit(recordParams.recordingVideoParticipantsTimeLimit);
-    updateRecordingAllParticipantsSupport(recordParams.recordingAllParticipantsSupport);
-    updateRecordingVideoParticipantsSupport(recordParams.recordingVideoParticipantsSupport);
-    updateRecordingAllParticipantsFullRoomSupport(
-      recordParams.recordingAllParticipantsFullRoomSupport,
-    );
-    updateRecordingVideoParticipantsFullRoomSupport(
-      recordParams.recordingVideoParticipantsFullRoomSupport,
-    );
-    updateRecordingPreferredOrientation(recordParams.recordingPreferredOrientation);
-    updateRecordingSupportForOtherOrientation(recordParams.recordingSupportForOtherOrientation);
-    updateRecordingMultiFormatsSupport(recordParams.recordingMultiFormatsSupport);
+  roomRecordParams = async ({
+    recordParams,
+    parameters,
+  }: RoomRecordParamsOptions): Promise<void> => {
+    return sharedRoomRecordParams({ recordParams, parameters });
   };
 }

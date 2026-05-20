@@ -41,14 +41,7 @@ export type ProducerClosedType = (options: ProducerClosedOptions) => Promise<voi
  * ```
  */
 export declare class ProducerClosed {
-    /**
-     * Handles the closing of a producer and resizes video elements.
-     * @param {Object} options - The options object containing necessary variables.
-     * @param {string} options.remoteProducerId - The ID of the remote producer.
-     * @param {any} options.parameters - Additional parameters required for the function.
-     * @returns {Promise<void>}
-     */
-    producerClosed: ({ remoteProducerId, parameters, }: ProducerClosedOptions) => Promise<void>;
+    producerClosed({ remoteProducerId, parameters, }: ProducerClosedOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ProducerClosed, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ProducerClosed>;
 }

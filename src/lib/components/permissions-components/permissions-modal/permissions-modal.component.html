@@ -1,0 +1,144 @@
+<div *ngIf="isPermissionsModalVisible" class="permissions-overlay" (click)="onPermissionsClose()">
+  <div class="permissions-modal-container" [style.backgroundColor]="backgroundColor" (click)="$event.stopPropagation()">
+    
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="header-title-container">
+        <fa-icon [icon]="faUserShield" class="icon-white"></fa-icon>
+        <span class="header-title">Permissions</span>
+      </div>
+      <button class="close-button" (click)="onPermissionsClose()">
+        <fa-icon [icon]="faTimes" class="icon-white"></fa-icon>
+      </button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container">
+      <button class="tab-button" [class.tab-active]="activeTab === 'users'" (click)="activeTab = 'users'">
+        <fa-icon [icon]="faUsers" [class]="activeTab === 'users' ? 'icon-white' : 'icon-faded'"></fa-icon>
+        <span class="tab-text" [class.tab-text-active]="activeTab === 'users'">User Permissions</span>
+      </button>
+      <button class="tab-button" [class.tab-active]="activeTab === 'config'" (click)="activeTab = 'config'">
+        <fa-icon [icon]="faCog" [class]="activeTab === 'config' ? 'icon-white' : 'icon-faded'"></fa-icon>
+        <span class="tab-text" [class.tab-text-active]="activeTab === 'config'">Level Config</span>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="content-container scrollable-area">
+      <!-- Users Tab -->
+      <div *ngIf="activeTab === 'users'">
+        <!-- Search & Bulk Actions -->
+        <div class="search-section">
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search participants..." 
+            [(ngModel)]="searchFilter" />
+
+          <div *ngIf="isHost" class="bulk-actions-container">
+            <button class="select-action-btn" (click)="handleSelectAll()">
+              {{ selectedParticipants.size === filteredParticipants.length && filteredParticipants.length > 0 ? 'Deselect All' : 'Select All' }}
+            </button>
+
+            <div *ngIf="selectedParticipants.size > 0" class="selected-count-row">
+              <span class="selected-count-text">{{ selectedParticipants.size }} selected &rarr;</span>
+              <button class="bulk-elevate-btn" (click)="handleBulkUpdate('1')">Set Elevated</button>
+              <button class="bulk-basic-btn" (click)="handleBulkUpdate('0')">Set Basic</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Participants by Level -->
+        <div *ngFor="let level of levels" class="level-group">
+          <div class="level-header">
+            <div class="level-dot" [style.backgroundColor]="getLevelColor(level)"></div>
+            <span class="level-title">{{ getLevelLabel(level) }}</span>
+            <div class="level-count-badge">
+              <span class="level-count-text">{{ getParticipantsForLevel(level).length }}</span>
+            </div>
+          </div>
+
+          <div *ngIf="getParticipantsForLevel(level).length === 0" class="empty-level">
+            <span class="empty-level-text">No participants at this level</span>
+          </div>
+
+          <div *ngIf="getParticipantsForLevel(level).length > 0" class="participants-list">
+            <div *ngFor="let participant of getParticipantsForLevel(level)" 
+                 class="participant-item" 
+                 [class.participant-item-selected]="hasSelected(participant.name)">
+              
+              <div class="participant-item-left">
+                <button *ngIf="isHost" class="checkbox-wrapper" (click)="handleParticipantSelect(participant.name)">
+                  <div class="checkbox" [class.checkbox-checked]="hasSelected(participant.name)">
+                    <fa-icon *ngIf="hasSelected(participant.name)" [icon]="faCheck" class="icon-small"></fa-icon>
+                  </div>
+                </button>
+                <span class="participant-name">{{ participant.name }}</span>
+              </div>
+
+              <div *ngIf="isHost" class="action-buttons">
+                <button *ngIf="level === '0'" class="single-action-btn" (click)="handleSingleUpdate(participant, '1')">
+                  Make Elevated
+                </button>
+                <button *ngIf="level === '1'" class="single-action-btn" (click)="handleSingleUpdate(participant, '0')">
+                  Make Basic
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Config Tab -->
+      <div *ngIf="activeTab === 'config'">
+        <p class="config-intro-text">
+          Configure what each permission level can do. Host (level 2) always has full permissions.
+        </p>
+
+        <div *ngFor="let levelKey of configLevels" class="config-level-group">
+          <button class="config-level-header" (click)="toggleLevelConfig(levelKey)">
+            <div class="config-level-header-left">
+              <div class="level-dot" [style.backgroundColor]="levelKey === 'level0' ? '#6b7280' : '#3b82f6'"></div>
+              <span class="config-level-title">{{ levelKey === 'level0' ? 'Basic (Level 0)' : 'Elevated (Level 1)' }}</span>
+            </div>
+            <fa-icon [icon]="expandedLevel === levelKey ? faChevronUp : faChevronDown" class="icon-white"></fa-icon>
+          </button>
+
+          <div *ngIf="expandedLevel === levelKey" class="capabilities-container">
+            <div *ngFor="let capability of capabilities" class="capability-row">
+              <div class="capability-left">
+                <div class="capability-icon-wrap">
+                  <fa-icon [icon]="getCapabilityIcon(capability)" class="icon-faded"></fa-icon>
+                </div>
+                <span class="capability-name">{{ getCapabilityName(capability) }}</span>
+              </div>
+
+              <!-- Host controls -->
+              <div *ngIf="isHost" class="capability-options-row">
+                <button *ngFor="let val of getOptionsForCapability(capability)"
+                        class="config-option-btn"
+                        [class.config-option-btn-selected]="isSelectedConfigOption(levelKey, capability, val)"
+                        (click)="handleConfigChange(levelKey, capability, val)">
+                  <span class="config-option-text" [class.config-option-text-selected]="isSelectedConfigOption(levelKey, capability, val)">
+                    {{ val | titlecase }}
+                  </span>
+                </button>
+              </div>
+
+              <!-- Non-host view -->
+              <div *ngIf="!isHost" class="capability-status" [style.color]="getStatusColor(getConfigValue(levelKey, capability))">
+                <fa-icon [icon]="getStatusIcon(getConfigValue(levelKey, capability))"></fa-icon>
+                <span class="capability-status-text">{{ getConfigValue(levelKey, capability) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button *ngIf="isHost" class="save-config-btn" (click)="handleSaveConfig()">
+          Save Configuration
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

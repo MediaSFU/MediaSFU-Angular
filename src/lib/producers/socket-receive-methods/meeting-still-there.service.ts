@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { meetingStillThere as sharedMeetingStillThere } from 'mediasfu-shared';
 export interface MeetingStillThereOptions {
   updateIsConfirmHereModalVisible: (isVisible: boolean) => void;
 }
@@ -41,8 +42,7 @@ export class MeetingStillThere {
    * @param {Function} options.updateIsConfirmHereModalVisible - Function to update the visibility of the "still there?" modal.
    * @returns {Promise<void>} A promise that resolves when the modal visibility is updated.
    */
-  meetingStillThere = ({ updateIsConfirmHereModalVisible }: MeetingStillThereOptions): void => {
-    // Update the visibility of the "still there?" modal
-    updateIsConfirmHereModalVisible(true);
+  meetingStillThere = async ({ updateIsConfirmHereModalVisible }: MeetingStillThereOptions): Promise<void> => {
+    return sharedMeetingStillThere({ updateIsConfirmHereModalVisible });
   };
 }

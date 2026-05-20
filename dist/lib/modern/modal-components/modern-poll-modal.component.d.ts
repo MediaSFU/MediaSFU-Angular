@@ -1,0 +1,54 @@
+import { OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
+import { Socket } from 'socket.io-client';
+import { HandleCreatePollType, HandleEndPollType, HandleVotePollType, Poll, ShowAlert } from '../../@types/types';
+import { ModernRenderMode } from '../utils/render-mode.utils';
+import * as i0 from "@angular/core";
+interface NewPollFormState {
+    options: string[];
+    question: string;
+    type: '' | 'custom' | 'trueFalse' | 'yesNo';
+}
+export declare class ModernPollModalComponent implements OnInit, OnChanges {
+    isPollModalVisible: boolean;
+    onClose: () => void;
+    position: string;
+    backgroundColor: string;
+    member: string;
+    islevel: string;
+    polls: Poll[];
+    poll: Poll | null;
+    socket: Socket;
+    roomName: string;
+    showAlert: ShowAlert;
+    updateIsPollModalVisible: (isVisible: boolean) => void;
+    handleCreatePoll: HandleCreatePollType;
+    handleEndPoll: HandleEndPollType;
+    handleVotePoll: HandleVotePollType;
+    overlayStyle?: Partial<CSSStyleDeclaration>;
+    contentStyle?: Partial<CSSStyleDeclaration>;
+    customTemplate?: TemplateRef<unknown>;
+    renderMode: ModernRenderMode;
+    showHeader: boolean;
+    readonly faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
+    activeTab: 'active' | 'create' | 'history';
+    newPoll: NewPollFormState;
+    ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    isVisible(): boolean;
+    isEmbedded(): boolean;
+    renderPolls: () => void;
+    calculatePercentage(votes: number[], optionIndex: number): number;
+    handlePollTypeChange(event: Event): void;
+    canCreatePoll(): boolean;
+    setActiveTab(tab: 'active' | 'create' | 'history'): void;
+    validateAndCreatePoll(): Promise<void>;
+    handledVotePoll(pollId: string, optionIndex: number): void;
+    handledEndPoll(pollId: string): void;
+    resolvedOverlayStyle(): Record<string, string | number>;
+    resolvedContentStyle(): Record<string, string | number>;
+    private resolvePositionStyle;
+    private normalizeStyle;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ModernPollModalComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModernPollModalComponent, "app-poll-modal", never, { "isPollModalVisible": { "alias": "isPollModalVisible"; "required": false; }; "onClose": { "alias": "onClose"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "member": { "alias": "member"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "polls": { "alias": "polls"; "required": false; }; "poll": { "alias": "poll"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "showAlert": { "alias": "showAlert"; "required": false; }; "updateIsPollModalVisible": { "alias": "updateIsPollModalVisible"; "required": false; }; "handleCreatePoll": { "alias": "handleCreatePoll"; "required": false; }; "handleEndPoll": { "alias": "handleEndPoll"; "required": false; }; "handleVotePoll": { "alias": "handleVotePoll"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; "renderMode": { "alias": "renderMode"; "required": false; }; "showHeader": { "alias": "showHeader"; "required": false; }; }, {}, never, never, true, never>;
+}
+export {};

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'socket.io-client';
 import { ShowAlert } from '../../@types/types';
+import { handleVotePoll as sharedHandleVotePoll } from 'mediasfu-shared';
 
 export interface HandleVotePollOptions {
   pollId: string;
@@ -71,35 +72,7 @@ export class HandleVotePoll {
    * @throws Will log an error message if there is an issue submitting the vote.
    */
 
-  async handleVotePoll({
-    pollId,
-    optionIndex,
-    socket,
-    showAlert,
-    member,
-    roomName,
-    updateIsPollModalVisible,
-  }: HandleVotePollOptions): Promise<void> {
-    try {
-      socket.emit(
-        'votePoll',
-        {
-          roomName,
-          poll_id: pollId,
-          member,
-          choice: optionIndex,
-        },
-        (response: { success: boolean; reason: string }) => {
-          if (response.success) {
-            showAlert?.({ message: 'Vote submitted successfully', type: 'success' });
-            updateIsPollModalVisible(false);
-          } else {
-            showAlert?.({ message: response.reason, type: 'danger' });
-          }
-        },
-      );
-    } catch (error) {
-      // console.log(error);
-    }
+  async handleVotePoll(options: HandleVotePollOptions): Promise<void> {
+    await sharedHandleVotePoll(options as unknown as Parameters<typeof sharedHandleVotePoll>[0]);
   }
 }

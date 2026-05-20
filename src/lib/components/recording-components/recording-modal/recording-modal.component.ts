@@ -67,6 +67,36 @@ export interface RecordingModalOptions {
 
 export type RecordingModalType = (options: RecordingModalOptions) => HTMLElement;
 
+type RecordingDisplayAdviceParameters = {
+  meetingDisplayType?: string;
+  breakOutRoomStarted?: boolean;
+  breakOutRoomEnded?: boolean;
+  recordingVideoParticipantsFullRoomSupport?: boolean;
+  recordingVideoOptions?: string;
+  recordingMediaOptions?: string;
+};
+
+const getRecordingDisplayAdvice = (parameters?: RecordingDisplayAdviceParameters) => {
+  if (!parameters) {
+    return null;
+  }
+
+  const normalizedRecordingMediaOptions =
+    parameters.recordingMediaOptions === 'all' ? 'video' : parameters.recordingMediaOptions;
+
+  if (
+    !parameters.recordingVideoParticipantsFullRoomSupport &&
+    parameters.recordingVideoOptions === 'all' &&
+    normalizedRecordingMediaOptions === 'video' &&
+    parameters.meetingDisplayType === 'all' &&
+    !(parameters.breakOutRoomStarted && !parameters.breakOutRoomEnded)
+  ) {
+    return 'Meeting display is set to All. This recording setup may be blocked. Switch the meeting display to Media before confirming so only participants with active media are included.';
+  }
+
+  return null;
+};
+
 /**
  * RecordingModal - Modal for configuring and controlling session recording
  * 
@@ -131,6 +161,10 @@ export class RecordingModal implements OnChanges {
   faTimes = faTimes;
   faCheck = faCheck;
   faPlay = faPlay;
+
+  get recordingDisplayAdvice(): string | null {
+    return getRecordingDisplayAdvice(this.parameters);
+  }
 
   get modalContainerStyle() {
     return {

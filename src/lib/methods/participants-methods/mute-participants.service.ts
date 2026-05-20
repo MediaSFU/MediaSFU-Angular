@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { muteParticipants as sharedMuteParticipants } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import { Participant, CoHostResponsibility, ShowAlert } from '../../@types/types';
 export interface MuteParticipantsOptions {
@@ -88,30 +89,17 @@ export class MuteParticipants {
     coHost,
     roomName,
   }: MuteParticipantsOptions): Promise<void> {
-    let mediaValue = false;
-
-    try {
-      mediaValue = coHostResponsibility.find((item) => item.name === 'media')?.value ?? false;
-    } catch (error) {
-      console.error(error);
-    }
-
-    if (islevel === '2' || (coHost === member && mediaValue === true)) {
-      if (!participant.muted && participant.islevel !== '2') {
-        const participantId = participant.id;
-        socket.emit('controlMedia', {
-          participantId,
-          participantName: participant.name,
-          type: 'all',
-          roomName,
-        });
-      }
-    } else {
-      showAlert?.({
-        message: 'You are not allowed to mute other participants',
-        type: 'danger',
-        duration: 3000,
-      });
-    }
+    return sharedMuteParticipants(
+      {
+        socket,
+        coHostResponsibility,
+        participant,
+        member,
+        islevel,
+        showAlert,
+        coHost,
+        roomName,
+      } as unknown as Parameters<typeof sharedMuteParticipants>[0],
+    );
   }
 }
