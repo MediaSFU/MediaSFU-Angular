@@ -181,6 +181,24 @@ export class MessagePanel implements OnInit, OnChanges {
     this.senderId = senderId;
   }
 
+  getComposerPlaceholder() {
+    if (this.type === 'direct') {
+      if (this.senderId) {
+        return `Send a direct message to ${this.senderId}`;
+      }
+
+      if (this.directMessageDetails) {
+        return `Send a direct message to ${this.directMessageDetails.name}`;
+      }
+
+      return this.islevel === '2'
+        ? 'Select a message to reply to'
+        : 'Send a direct message to the host';
+    }
+
+    return this.eventType === 'chat' ? 'Send a message' : 'Send a message to everyone';
+  }
+
   async handleSendButton() {
     const message = this.type === 'direct' ? this.directMessageText : this.groupMessageText;
 
@@ -200,7 +218,7 @@ export class MessagePanel implements OnInit, OnChanges {
     }
 
     if (this.type === 'direct' && !this.senderId && this.islevel == '2') {
-      this.showAlert?.({ message: 'Please select a user to send a message to.', type: 'danger' });
+      this.showAlert?.({ message: 'Please select a message to reply to.', type: 'danger' });
       return;
     }
 

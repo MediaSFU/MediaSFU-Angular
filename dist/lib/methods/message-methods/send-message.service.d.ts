@@ -91,7 +91,7 @@ export declare class SendMessage {
      * @throws Will throw an error if the message, sender, or receivers are not valid.
      * @throws Will throw an error if the user is not allowed to send a message in the event room.
      */
-    sendMessage({ member, islevel, showAlert, coHostResponsibility, coHost, chatSetting, message, roomName, messagesLength, receivers, group, sender, socket, }: SendMessageOptions): Promise<void>;
+    sendMessage({ message, receivers, group, messagesLength, member, sender, islevel, showAlert, coHostResponsibility, coHost, roomName, socket, chatSetting, }: SendMessageOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<SendMessage, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<SendMessage>;
 }

@@ -43,7 +43,7 @@
     <input
       type="text"
       class="message-panel__input"
-      placeholder="{{ type === 'direct' ? (focusedInput && startDirectMessage && directMessageDetails ? 'Send a direct message to ' + directMessageDetails.name : 'Select a message to reply to') : (eventType === 'chat' ? 'Send a message' : 'Send a message to everyone') }}"
+      [placeholder]="getComposerPlaceholder()"
       maxLength="350"
       (input)="handleTextInputChange($event)"
       [value]="type === 'direct' ? directMessageText : groupMessageText"
