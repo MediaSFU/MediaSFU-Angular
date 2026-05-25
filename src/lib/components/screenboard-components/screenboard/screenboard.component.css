@@ -1,3 +1,46 @@
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  min-width: 11rem;
+  padding: 0.5rem 0;
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  text-align: left;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 10px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  clear: both;
+  font-weight: 500;
+  color: #e2e8f0;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: rgba(59, 130, 246, 0.18);
+  color: #ffffff;
+}
+
 #whiteboardCanvas {
   border: 1px solid #000;
   cursor: crosshair;
@@ -52,25 +95,46 @@
   background-color: #454d55;
 }
 
-.toolbarScreen .btn-group button,
-.toolbarScreen .dropdown-menu a {
+.toolbarScreen .btn-group > button {
   font-size: 0.8rem;
   padding: 5px 10px;
   margin: 1px 2px;
   border-radius: 4px;
   transition: background-color 0.2s;
-  background-color: transparent;
-  color: 'black';
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
 }
 
-.toolbarScreen .btn-group button {
-  color: rgb(6, 6, 6);
-  border: none;
+.toolbarScreen {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-.toolbarScreen .dropdown-menu a {
-  background-color: transparent;
-  color: rgb(27, 26, 26);
+.toolbarScreen .btn-group > button {
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+}
+
+.toolbarScreen .btn-group > button:hover,
+.toolbarScreen .btn-group > button:focus-visible {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(191, 219, 254, 0.5);
+  color: #fff;
+}
+
+.toolbarScreen .btn-group > button svg,
+.toolbarScreen .btn-group > button i,
+.toolbarScreen .btn-group > button fa-icon {
+  color: inherit;
+  fill: currentColor;
 }
 
 /* .toolbarScreen .btn-group button:hover,
@@ -79,8 +143,26 @@
   color: black;
 } */
 
-.toolbarScreen .btn-group button.active {
-  background-color: #454d55;
+.toolbarScreen .btn-group > button.active {
+  background-color: rgba(37, 99, 235, 0.72);
+  border-color: rgba(191, 219, 254, 0.55);
+}
+
+.toolbarScreen .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.toolbarScreen .dropdown-item .shape-icon {
+  filter: brightness(0) invert(1);
+}
+
+.toolbarScreen .dropdown-item svg,
+.toolbarScreen .dropdown-item i,
+.toolbarScreen .dropdown-item fa-icon {
+  color: inherit;
+  fill: currentColor;
 }
 
 #toolbar,
@@ -101,6 +183,9 @@
   padding: 2px 2px;
   width: 32px;
   height: 32px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 #lineTypePicker {
@@ -120,12 +205,14 @@
 
 #lineTypePickerScreen {
   font-size: 0.7rem;
-  padding: 2px auto;
-  width: 28px;
-  height: 28px;
-  background-color: rgba(214, 209, 209, 0.4);
-  color: #000;
-  border-radius: 4px;
+  padding: 0 0.6rem;
+  min-width: 108px;
+  width: auto;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 8px;
 }
 
 .toggle-icon {

@@ -403,75 +403,8 @@ export class AppUniqueComponent implements OnInit {
   // Connection scenario
   connectionScenario: 'cloud' | 'hybrid' | 'ce' = 'cloud';
   demoCredentials = {
-    apiUserName: '',
-    apiKey: '',
-  };
-
-  // Experience selector
-  selectedExperience: 'generic' | 'broadcast' | 'conference' | 'webinar' | 'chat' = 'generic';
-
-  // UI flags
-  showPrebuiltUI = true;
-  enableFullCustomUI = false;
-  enableNoUIPreJoin = false;
-  enableCustomCards = false;
-  private _enableUICoreOverrides = false;
-  private _enableModalOverrides = false;
-  enableContainerStyling = false;
-  showDebugPanel = false;
-  showConfig = true;
-
-  // Getters and setters to trigger override updates
-  get enableUICoreOverrides(): boolean {
-    return this._enableUICoreOverrides;
-  }
-  set enableUICoreOverrides(value: boolean) {
-    this._enableUICoreOverrides = value;
-    this.updateUIOverrides();
-  }
-
-  get enableModalOverrides(): boolean {
-    return this._enableModalOverrides;
-  }
-  set enableModalOverrides(value: boolean) {
-    this._enableModalOverrides = value;
-    this.updateUIOverrides();
-  }
-
-  // Connection presets
-  connectionPresets = {
-    cloud: {
-      credentials: this.demoCredentials,
-      localLink: '',
-      connectMediaSFU: true,
-    },
-    hybrid: {
-      credentials: this.demoCredentials,
-      localLink: 'http://localhost:3000',
-      connectMediaSFU: true,
-    },
-    ce: {
-      credentials: undefined,
-      localLink: 'http://localhost:3000',
-      connectMediaSFU: false,
-    },
-  };
-
-  // Source parameters for debug panel
-  sourceParameters: Record<string, unknown> = {};
-
-  // Custom card components (would be imported in real implementation)
-  customVideoCard: any = undefined;
-  customAudioCard: any = undefined;
-  customMiniCard: any = undefined;
-  customComponent: any = undefined;
-
-  // Container styling
-  containerStyle: Record<string, any> = {
-    background: 'linear-gradient(135deg, #0f172a, #1e3a8a)',
-    borderRadius: '32px',
-    padding: '16px',
-    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+    apiUserName: 'your-api-username',
+    apiKey: 'your-api-key',
   };
 
   // UI overrides

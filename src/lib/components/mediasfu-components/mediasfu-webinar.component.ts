@@ -5715,6 +5715,7 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
           parameters: {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),
+            mediaDevices: navigator.mediaDevices,
           },
         }),
       activeColor: 'green',

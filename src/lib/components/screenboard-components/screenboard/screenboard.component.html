@@ -8,7 +8,7 @@
       <fa-icon [icon]="toolbarVisible ? faChevronRight : faChevronLeft"></fa-icon>
     </button>
 
-    <div class="toolbarScreen mb-3" id="toolbarScreen" style="position: absolute; top: 5px; right: 105px; z-index: 1000; background-color: transparent;" [style.display]="toolbarVisible ? 'block' : 'none'">
+    <div class="toolbarScreen mb-3" id="toolbarScreen" style="position: absolute; top: 5px; right: 105px; z-index: 1000;" [style.display]="toolbarVisible ? 'flex' : 'none'">
       <!-- Draw Mode Dropdown -->
       <div class="btn-group" role="group">
         <button class="btn btnBoardScreen btn-secondary dropdown-toggle" id="drawModeScreen" (click)="handleDropdownClick('drawModeScreen')">
