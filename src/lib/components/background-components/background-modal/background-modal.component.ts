@@ -12,7 +12,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import * as SelfieSegmentationPackage from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import {
   ConnectSendTransportVideoParameters,
   ConnectSendTransportVideoType,
@@ -30,6 +31,11 @@ import { types } from 'mediasoup-client';
 import { ModernRenderMode, isEmbeddedRenderMode } from '../../../modern/utils/render-mode.utils';
 type Producer = types.Producer;
 type ProducerOptions = types.ProducerOptions;
+const SelfieSegmentationConstructor =
+  SelfieSegmentationPackage.SelfieSegmentation ??
+  (SelfieSegmentationPackage as typeof SelfieSegmentationPackage & {
+    default?: typeof SelfieSegmentationPackage;
+  }).default?.SelfieSegmentation;
 
 export interface BackgroundModalParameters
   extends CreateSendTransportParameters,
@@ -590,7 +596,11 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
   };
 
   async preloadModel() {
-    this.selfieSegmentation = new SelfieSegmentation({
+    if (!SelfieSegmentationConstructor) {
+      throw new Error('MediaPipe SelfieSegmentation is unavailable.');
+    }
+
+    this.selfieSegmentation = new SelfieSegmentationConstructor({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
     });
     this.selfieSegmentation.setOptions({

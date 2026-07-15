@@ -1,6 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomMediaComponent } from '../../../@types/types';
+import {
+  getContainedContentRect,
+  type ContainRect,
+} from '../../screenboard-components/screenboard/canvas-coordinates.util';
 export interface FlexibleVideoOptions {
   customWidth: number;
   customHeight: number;
@@ -106,13 +110,16 @@ export type FlexibleVideoType = (options: FlexibleVideoOptions) => HTMLElement;
         position: relative;
         display: flex;
         flex-direction: column;
-        overflow-x: hidden;
-        overflow-y: auto;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
       }
 
       .flexible-video__row {
         display: flex;
         flex-direction: row;
+        width: 100%;
+        height: 100%;
       }
 
       .flexible-video__cell {
@@ -161,11 +168,7 @@ export class FlexibleVideo implements OnInit, OnChanges {
   @Input() enableGlow = false;
 
   key = 0;
-  cardWidth = 0;
-  cardHeight = 0;
-  cardTop = 0;
-  cardLeft = 0;
-  canvasLeft = 0;
+  screenContentRect: ContainRect = { left: 0, top: 0, width: 0, height: 0 };
   grid: any[][] = [];
 
   private injectorCache = new WeakMap<any, Injector>();
@@ -200,21 +203,17 @@ export class FlexibleVideo implements OnInit, OnChanges {
   }
 
   updateDimensions() {
-    if (this.annotateScreenStream && this.localStreamScreen) {
-      const videoHeight = this.localStreamScreen.getVideoTracks()[0].getSettings().height || 0;
-      const videoWidth = this.localStreamScreen.getVideoTracks()[0].getSettings().width || 0;
-      this.cardWidth = videoWidth;
-      this.cardHeight = videoHeight;
-      this.cardTop = Math.floor((this.customHeight - videoHeight) / 2);
-      this.cardLeft = Math.floor((this.customWidth - videoWidth) / 2);
-      this.canvasLeft = this.cardLeft < 0 ? this.cardLeft : 0;
-    } else {
-      this.cardWidth = this.customWidth;
-      this.cardHeight = this.customHeight;
-      this.cardTop = 0;
-      this.cardLeft = 0;
-      this.canvasLeft = 0;
-    }
+    const videoTrack = this.annotateScreenStream
+      ? this.localStreamScreen?.getVideoTracks()[0]
+      : undefined;
+    const settings = videoTrack?.getSettings();
+
+    this.screenContentRect = getContainedContentRect(
+      this.customWidth,
+      this.customHeight,
+      settings?.width || 0,
+      settings?.height || 0
+    );
   }
 
   generateGrid() {
@@ -232,8 +231,11 @@ export class FlexibleVideo implements OnInit, OnChanges {
 
   getContainerStyle() {
     return {
+      width: '100%',
+      height: '100%',
       maxWidth: this.customWidth + 'px',
-      left: (this.cardLeft > 0 ? this.cardLeft : 0) + 'px',
+      maxHeight: this.customHeight + 'px',
+      left: '0',
     };
   }
 
@@ -255,13 +257,13 @@ export class FlexibleVideo implements OnInit, OnChanges {
 
     return {
       flex: 1,
-      width: this.cardWidth + 'px',
-      height: this.cardHeight + 'px',
+      width: this.customWidth + 'px',
+      height: this.customHeight + 'px',
       background: baseBackground,
       margin: '1px',
       padding: '0',
       borderRadius,
-      left: this.cardLeft + 'px',
+      left: '0',
       overflow: 'hidden',
       border: !hasContent && this.enableGlassmorphism ? `1px solid ${borderColor}` : 'none',
       backdropFilter: !hasContent && this.enableGlassmorphism ? 'blur(10px)' : 'none',
@@ -275,9 +277,10 @@ export class FlexibleVideo implements OnInit, OnChanges {
 
   getScreenboardStyle() {
     return {
-      left: this.canvasLeft + 'px',
-      width: this.cardWidth + 'px',
-      height: this.cardHeight + 'px',
+      top: this.screenContentRect.top + 'px',
+      left: this.screenContentRect.left + 'px',
+      width: this.screenContentRect.width + 'px',
+      height: this.screenContentRect.height + 'px',
       backgroundColor: 'rgba(0, 0, 0, 0.005)',
       borderRadius: `${Math.max(this.cellBorderRadius, 0)}px`,
       boxShadow: this.enableGlow ? '0 4px 16px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.10)' : 'none',

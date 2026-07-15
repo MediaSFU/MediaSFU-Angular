@@ -311,7 +311,7 @@ type Producer = types.Producer;
 type ProducerOptions = types.ProducerOptions;
 type RtpCapabilities = types.RtpCapabilities;
 type Transport = types.Transport;;
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
 import { UIOverrideResolverService } from '../../services/ui-override-resolver.service';
 import { WithOverrideDirective } from '../../directives/with-override.directive';

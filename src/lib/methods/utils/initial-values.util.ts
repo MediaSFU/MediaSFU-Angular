@@ -33,7 +33,7 @@ import {
   Transport as TransportType,
 } from '../../@types/types';
 import { Socket } from 'socket.io-client';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import { TranslationRoomConfig } from '../../producers/socket-receive-methods/translation-receive-methods.service';
 
 export interface InitialValuesStateType {

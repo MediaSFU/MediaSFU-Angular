@@ -1,4 +1,4 @@
-<div id="screenboard-interface" *ngIf="showAspect" style="position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;" #screenboardRef>
+<div id="screenboard-interface" *ngIf="showAspect" style="position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: hidden;" #screenboardRef>
   <div id="screenboardContent" style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;" #screenboardContentRef>
     <button id="annotateScreen" class="btn btn-primary btnBoardScreen annotateScreenBtn" style="position: absolute; top: 5px; right: 10px; z-index: 1000;" (click)="toggleAnnotate()">
       <fa-icon [icon]="faPencilAlt" [ngStyle]="{'color': parameters.annotateScreenStream ? 'red' : 'green'}"></fa-icon>
@@ -105,6 +105,6 @@
       </select>
     </div>
 
-    <canvas id="canvasRef" width="1280" height="720" [ngStyle]="{'display': parameters.annotateScreenStream ? 'block' : 'none'}" style="padding: 0; margin: 0;" #canvasRef></canvas>
+    <canvas id="canvasRef" width="1280" height="720" [ngStyle]="{'display': parameters.annotateScreenStream ? 'block' : 'none'}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-width: 100%; max-height: 100%; padding: 0; margin: 0;" #canvasRef></canvas>
   </div>
 </div>

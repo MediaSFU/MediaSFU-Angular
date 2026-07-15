@@ -35,6 +35,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SleepType, ShowAlert } from '../../../@types/types';
+import { getCanvasPoint } from './canvas-coordinates.util';
 
 export interface ScreenboardParameters {
   updateCanvasScreenboard: (canvas: HTMLCanvasElement) => void;
@@ -368,18 +369,19 @@ export class Screenboard implements OnInit, AfterViewInit, OnDestroy, OnChanges 
   }
 
   startDrawing(event: MouseEvent) {
+    const point = getCanvasPoint(event, this.canvas);
     this.isDrawing = true;
-    this.startX = event.offsetX;
-    this.startY = event.offsetY;
+    this.startX = point.x;
+    this.startY = point.y;
 
     if (this.mode === 'erase') {
-      this.erase(event.offsetX, event.offsetY);
+      this.erase(point.x, point.y);
     } else if (this.mode === 'draw' || this.mode === 'freehand') {
       this.ctx.beginPath();
-      this.ctx.moveTo(event.offsetX, event.offsetY);
+      this.ctx.moveTo(point.x, point.y);
       if (this.mode === 'freehand') {
         this.freehandDrawing = [
-          { x: event.offsetX, y: event.offsetY, color: this.color, thickness: this.brushThickness },
+          { x: point.x, y: point.y, color: this.color, thickness: this.brushThickness },
         ];
       }
     }
@@ -387,31 +389,32 @@ export class Screenboard implements OnInit, AfterViewInit, OnDestroy, OnChanges 
 
   draw(event: MouseEvent) {
     if (!this.isDrawing) return;
+    const point = getCanvasPoint(event, this.canvas);
 
-    this.currentX = event.offsetX;
-    this.currentY = event.offsetY;
+    this.currentX = point.x;
+    this.currentY = point.y;
 
     if (this.mode === 'erase') {
-      this.erase(event.offsetX, event.offsetY);
+      this.erase(point.x, point.y);
     } else if (this.mode === 'draw') {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.drawShapes();
-      this.drawLine(this.startX, this.startY, event.offsetX, event.offsetY);
+      this.drawLine(this.startX, this.startY, point.x, point.y);
     } else if (this.mode === 'freehand') {
-      this.ctx.lineTo(event.offsetX, event.offsetY);
+      this.ctx.lineTo(point.x, point.y);
       this.ctx.strokeStyle = this.color;
       this.ctx.lineWidth = this.brushThickness;
       this.ctx.stroke();
       this.freehandDrawing.push({
-        x: event.offsetX,
-        y: event.offsetY,
+        x: point.x,
+        y: point.y,
         color: this.color,
         thickness: this.brushThickness,
       });
     } else if (this.mode === 'shape') {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.drawShapes();
-      this.drawShape(this.shape!, this.startX, this.startY, event.offsetX, event.offsetY);
+      this.drawShape(this.shape!, this.startX, this.startY, point.x, point.y);
     }
   }
 

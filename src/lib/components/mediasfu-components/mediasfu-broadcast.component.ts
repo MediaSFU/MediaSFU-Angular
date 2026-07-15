@@ -223,7 +223,7 @@ type Producer = types.Producer;
 type ProducerOptions = types.ProducerOptions;
 type RtpCapabilities = types.RtpCapabilities;
 type Transport = types.Transport;;
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 
 export type MediasfuBroadcastOptions = {
   PrejoinPage?: (options: PreJoinPageOptions | WelcomePageOptions) => HTMLElement;
