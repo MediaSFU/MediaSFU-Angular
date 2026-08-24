@@ -187,10 +187,11 @@ export class ConnectSendTransportAudio {
 
       // Attempt to connect the primary send transport
       if (targetOption === "all" || targetOption === "remote") {
-        audioProducer = await producerTransport!.produce(audioParams);
+        const producedAudio = await producerTransport!.produce(audioParams);
+        audioProducer = producedAudio;
 
         // Update the audio level
-        updateMicLevel(audioProducer, parameters.updateAudioLevel);
+        updateMicLevel(producedAudio, parameters.updateAudioLevel);
 
         // Update state with the new producer and transport
         updateAudioProducer(audioProducer);

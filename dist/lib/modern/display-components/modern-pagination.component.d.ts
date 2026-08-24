@@ -16,6 +16,7 @@ export interface ModernPaginationParameters extends GeneratePageContentParameter
     showAlert?: ShowAlert;
     socket: Socket;
     getUpdatedAllParams: () => ModernPaginationParameters;
+    getCurrentParams?: () => any;
     [key: string]: any;
 }
 export interface ModernPaginationOptions {

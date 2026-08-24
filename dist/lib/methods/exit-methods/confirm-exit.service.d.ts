@@ -6,6 +6,8 @@ export interface ConfirmExitOptions {
     member: string;
     roomName: string;
     ban?: boolean;
+    /** Whether a host exit should end the room for everyone. Defaults to true. */
+    endRoomOnHostExit?: boolean;
 }
 export type ConfirmExitType = (options: ConfirmExitOptions) => Promise<void>;
 /**
@@ -20,6 +22,7 @@ export type ConfirmExitType = (options: ConfirmExitOptions) => Promise<void>;
  * @param {string} options.member - The member who is exiting.
  * @param {string} options.roomName - The name of the room the member is exiting from.
  * @param {boolean} [options.ban=false] - Whether to ban the member from the room.
+ * @param {boolean} [options.endRoomOnHostExit=true] - Whether a host exit ends the room for everyone.
  * @returns {Promise<void>} A promise that resolves when the exit is confirmed.
  *
  * @example
@@ -30,7 +33,8 @@ export type ConfirmExitType = (options: ConfirmExitOptions) => Promise<void>;
  *   localSocket: localSocketInstance,
  *   member: 'JohnDoe',
  *   roomName: 'Room1',
- *   ban: true, // Optional: set to true if you want to ban the member
+ *   ban: false,
+ *   endRoomOnHostExit: false, // Let the host rejoin without ending the room.
  * });
  * ```
  */
@@ -46,7 +50,7 @@ export declare class ConfirmExit {
      * @param {boolean} [options.ban=false] - Whether to ban the member from the room.
      * @returns {Promise<void>} A promise that resolves when the exit is confirmed.
      */
-    confirmExit({ socket, localSocket, member, roomName, ban }: ConfirmExitOptions): Promise<void>;
+    confirmExit({ socket, localSocket, member, roomName, ban, endRoomOnHostExit, }: ConfirmExitOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ConfirmExit, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ConfirmExit>;
 }

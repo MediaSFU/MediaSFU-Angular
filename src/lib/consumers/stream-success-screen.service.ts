@@ -201,8 +201,9 @@ export class StreamSuccessScreen {
     } = parameters;
 
     // Share screen on success
-    localStreamScreen = stream;
-    updateLocalStreamScreen(localStreamScreen);
+    const screenStream = stream;
+    localStreamScreen = screenStream;
+    updateLocalStreamScreen(screenStream);
 
     try {
       // Create transport if not created else connect transport
@@ -213,7 +214,7 @@ export class StreamSuccessScreen {
         });
       } else {
         await connectSendTransportScreen({
-          stream: localStreamScreen,
+          stream: screenStream,
           parameters: { ...parameters, localStreamScreen },
         });
       }
@@ -260,11 +261,14 @@ export class StreamSuccessScreen {
     }
 
     // Handle screen share end
-    localStreamScreen.getVideoTracks()[0].onended = async function () {
-      // Supports both manual and automatic screen share end
-      await disconnectSendTransportScreen({ parameters });
-      await stopShareScreen({ parameters });
-    };
+    const screenTrack = screenStream.getVideoTracks()[0];
+    if (screenTrack) {
+      screenTrack.onended = async function () {
+        // Supports both manual and automatic screen share end
+        await disconnectSendTransportScreen({ parameters });
+        await stopShareScreen({ parameters });
+      };
+    }
 
     // If user requested to share screen, update the screenAction state
     if (screenAction == true) {

@@ -393,7 +393,7 @@ export class ConfigureWhiteboardModal implements OnInit, OnChanges {
         this.whiteboardStarted && !this.whiteboardEnded ? 'updateWhiteboard' : 'startWhiteboard';
       const filteredWhiteboardUsers = this.participantsCopy
         .filter((participant) => participant.useBoard)
-        .map(({ name, useBoard }) => ({ name, useBoard }));
+        .map(({ name, useBoard }) => ({ name, useBoard: useBoard === true }));
       socket.emit(
         emitName,
         { whiteboardUsers: filteredWhiteboardUsers, roomName },

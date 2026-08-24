@@ -25,6 +25,7 @@ export interface CreateSendTransportParameters extends ConnectSendTransportParam
   // mediasfu functions
   connectSendTransport: ConnectSendTransportType;
   getUpdatedAllParams: () => CreateSendTransportParameters;
+  getCurrentParams?: () => any;
   [key: string]: any;
 }
 

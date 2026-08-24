@@ -84,7 +84,7 @@ export interface BackgroundModalParameters
   updateVideoParams: (params: ProducerOptions) => void;
   autoClickBackground: boolean;
   updateAutoClickBackground: (autoClick: boolean) => void;
-  updateMainCanvas: (canvas: HTMLCanvasElement) => void;
+  updateMainCanvas: (canvas: HTMLCanvasElement | null) => void;
 
   // mediasfu functions
   createSendTransport: CreateSendTransportType;

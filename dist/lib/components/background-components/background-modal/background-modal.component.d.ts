@@ -1,5 +1,5 @@
 import { OnChanges, OnDestroy, SimpleChanges, ElementRef, OnInit } from '@angular/core';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import { ConnectSendTransportVideoParameters, ConnectSendTransportVideoType, CreateSendTransportParameters, CreateSendTransportType, DisconnectSendTransportVideoParameters, DisconnectSendTransportVideoType, OnScreenChangesParameters, OnScreenChangesType, ShowAlert, SleepType, VidCons } from '../../../@types/types';
 import { types } from 'mediasoup-client';
 import { ModernRenderMode } from '../../../modern/utils/render-mode.utils';
@@ -49,7 +49,7 @@ export interface BackgroundModalParameters extends CreateSendTransportParameters
     updateVideoParams: (params: ProducerOptions) => void;
     autoClickBackground: boolean;
     updateAutoClickBackground: (autoClick: boolean) => void;
-    updateMainCanvas: (canvas: HTMLCanvasElement) => void;
+    updateMainCanvas: (canvas: HTMLCanvasElement | null) => void;
     createSendTransport: CreateSendTransportType;
     connectSendTransportVideo: ConnectSendTransportVideoType;
     disconnectSendTransportVideo: DisconnectSendTransportVideoType;

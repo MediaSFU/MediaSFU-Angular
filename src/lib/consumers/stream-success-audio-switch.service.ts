@@ -303,23 +303,24 @@ export class StreamSuccessAudioSwitch {
     // Check if the audio device has changed
     if (newDefAudioID != defAudioID) {
       // Close the current audioProducer
-      if (audioProducer) {
-        audioProducer.close();
-        updateAudioProducer(audioProducer);
+      const activeAudioProducer = audioProducer;
+      if (activeAudioProducer) {
+        activeAudioProducer!.close();
+        updateAudioProducer(activeAudioProducer!);
       }
 
       // Emit a pauseProducerMedia event to pause the audio media
       socket.emit('pauseProducerMedia', { mediaTag: 'audio', roomName: roomName, force: true });
 
       try {
-        if (localSocket && localSocket.id) {
-          if (localAudioProducer) {
-            localAudioProducer.close();
-            if (updateLocalAudioProducer) {
-              updateLocalAudioProducer(localAudioProducer);
-            }
+        const activeLocalSocket = localSocket;
+        const activeLocalAudioProducer = localAudioProducer;
+        if (activeLocalSocket?.id) {
+          if (activeLocalAudioProducer) {
+            activeLocalAudioProducer!.close();
+            updateLocalAudioProducer?.(activeLocalAudioProducer!);
           }
-          localSocket.emit("pauseProducerMedia", {
+          activeLocalSocket!.emit("pauseProducerMedia", {
             mediaTag: "audio",
             roomName: roomName,
             force: true,
@@ -330,24 +331,26 @@ export class StreamSuccessAudioSwitch {
       }
 
       // Update the localStreamAudio with the new audio tracks
-      localStreamAudio = stream;
+      const replacementAudioStream = stream;
+      localStreamAudio = replacementAudioStream;
 
       // If localStream is null, create a new MediaStream with the new audio track
       if (localStream == null) {
-        localStream = new MediaStream([localStreamAudio.getAudioTracks()[0]]);
+        localStream = new MediaStream([replacementAudioStream.getAudioTracks()[0]]);
       } else {
         // Remove all existing audio tracks from localStream and add the new audio track
-        localStream.getAudioTracks().forEach((track: MediaStreamTrack) => {
+        localStream!.getAudioTracks().forEach((track: MediaStreamTrack) => {
           localStream?.removeTrack(track);
         });
-        localStream.addTrack(localStreamAudio.getAudioTracks()[0]);
+        localStream!.addTrack(replacementAudioStream.getAudioTracks()[0]);
       }
 
       // Update localStream
-      updateLocalStream(localStream);
+      const updatedLocalStream = localStream as MediaStream;
+      updateLocalStream(updatedLocalStream);
 
       // Get the new default audio device ID from the new audio track
-      const audioTracked = localStream.getAudioTracks()[0];
+      const audioTracked = updatedLocalStream.getAudioTracks()[0];
       defAudioID = audioTracked.getSettings().deviceId ?? '';
       updateDefAudioID(defAudioID);
 
@@ -356,7 +359,7 @@ export class StreamSuccessAudioSwitch {
       updateUserDefaultAudioInputDevice(userDefaultAudioInputDevice);
 
       // Update audioParams with the new audio track
-      audioParams = { track: localStream.getAudioTracks()[0], ...audioParamse };
+      audioParams = { track: updatedLocalStream.getAudioTracks()[0], ...audioParamse };
       updateAudioParams(audioParams);
 
       // Sleep for 500 milliseconds
@@ -389,8 +392,8 @@ export class StreamSuccessAudioSwitch {
         socket.emit('pauseProducerMedia', { mediaTag: 'audio', roomName: roomName });
 
         try {
-          if (localSocket && localSocket.id) {
-            localSocket.emit("pauseProducerMedia", {
+          if (localSocket?.id) {
+            localSocket?.emit("pauseProducerMedia", {
               mediaTag: "audio",
               roomName: roomName,
             });

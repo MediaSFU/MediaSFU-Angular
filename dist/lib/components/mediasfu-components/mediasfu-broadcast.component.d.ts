@@ -1,4 +1,4 @@
-import { Injector, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { EventEmitter, Injector, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
 import { UIOverrideResolverService } from '../../services/ui-override-resolver.service';
 import { BehaviorSubject } from 'rxjs';
@@ -121,7 +121,7 @@ import { CaptureCanvasStream } from '../../methods/whiteboard-methods/capture-ca
 import { ResumePauseAudioStreams } from '../../consumers/resume-pause-audio-streams.service';
 import { ProcessConsumerTransportsAudio } from '../../consumers/process-consumer-transports-audio.service';
 import { types } from 'mediasoup-client';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import * as i0 from "@angular/core";
 type Device = types.Device;
 type Producer = types.Producer;
@@ -150,6 +150,8 @@ export type MediasfuBroadcastOptions = {
     noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
     joinMediaSFURoom?: JoinRoomOnMediaSFUType;
     createMediaSFURoom?: CreateRoomOnMediaSFUType;
+    containerWidthFraction?: number;
+    containerHeightFraction?: number;
 };
 /**
  * MediasfuBroadcast component provides a streaming broadcast interface with various UI components and settings.
@@ -340,15 +342,30 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         [key: string]: any;
     }) => void;
     returnUI?: boolean;
+    /**
+     * Emitted whenever the media graph changes — new/lost streams, a local track
+     * toggling, screen share starting, consumers changing. Reasons are coalesced
+     * into one microtask-deferred emit per tick.
+     *
+     * The reliable way for a [returnUI]="false" surface to re-read media without
+     * polling.
+     */
+    mediaChanged: EventEmitter<{
+        reasons: string[];
+        parameters: any;
+    }>;
     noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
     joinMediaSFURoom?: JoinRoomOnMediaSFUType;
     createMediaSFURoom?: CreateRoomOnMediaSFUType;
+    containerWidthFraction: number;
+    containerHeightFraction: number;
     customVideoCard: any;
     customAudioCard: any;
     customMiniCard: any;
     customMainComponent: any;
     containerStyle?: Record<string, any>;
     uiOverrides?: MediasfuUICustomOverrides;
+    rootContainerStyle: () => Record<string, any>;
     title: string;
     protected readonly MainContainerComponentRef: typeof MainContainerComponent;
     protected readonly MainAspectComponentRef: typeof MainAspectComponent;
@@ -367,10 +384,14 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     protected readonly EventSettingsModalComponentRef: typeof ModernEventSettingsModalComponent;
     protected readonly MessagesModalComponentRef: typeof ModernMessagesModalComponent;
     mainContainerOverrideProps: () => {
+        containerWidthFraction: number;
+        containerHeightFraction: number;
         containerStyle: Record<string, any>;
         parameters: any;
     };
     mainAspectOverrideProps: () => {
+        containerWidthFraction: number;
+        containerHeightFraction: number;
         backgroundColor: string;
         defaultFraction: number;
         showControls: boolean;
@@ -380,6 +401,8 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         parameters: any;
     };
     mainScreenOverrideProps: () => {
+        containerWidthFraction: number;
+        containerHeightFraction: number;
         doStack: boolean;
         mainSize: number;
         defaultFraction: number;
@@ -1881,8 +1904,14 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     getParticipantMedia: (options: {
         id?: string;
         name?: string;
-        kind: "video" | "audio";
+        kind?: "video" | "audio";
     }) => Promise<MediaStream | null>;
+    /** Publish after change detection, coalesced to the latest bag. */
+    private pendingSourceParameters;
+    private sourcePublishQueued;
+    private sourcePublishActive;
+    private publishSourceParameters;
+    getCurrentParams: () => any;
     mediaSFUFunctions: () => any;
     validated: BehaviorSubject<boolean>;
     localUIMode: BehaviorSubject<boolean>;
@@ -2169,6 +2198,14 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     updateLandScaped: (value: boolean) => void;
     updateLock_screen: (value: boolean) => void;
     updateScreenId: (value: string) => void;
+    /**
+     * Coalesced media-change notifier. Several updaters fire in the same tick
+     * during a single transition, so reasons are batched into one
+     * microtask-deferred emit rather than delivered N times.
+     */
+    private pendingMediaReasons;
+    private mediaNotifyQueued;
+    notifyMediaChanged: (reason: string) => void;
     updateAllVideoStreams: (value: (Participant | Stream)[]) => void;
     updateNewLimitedStreams: (value: (Participant | Stream)[]) => void;
     updateNewLimitedStreamsIDs: (value: string[]) => void;
@@ -3355,6 +3392,6 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     controlBroadcastButtonsArray: ButtonTouch[];
     connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuBroadcast, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuBroadcast, "app-mediasfu-broadcast", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuBroadcast, "app-mediasfu-broadcast", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, { "mediaChanged": "mediaChanged"; }, never, never, true, never>;
 }
 export {};

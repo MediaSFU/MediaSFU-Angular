@@ -93,9 +93,9 @@ export class UpdateParticipantAudioDecibels {
     // Check if the entry already exists in audioDecibels
     const existingEntry = audioDecibels.find((entry: any) => entry.name === name);
 
-    if (existingEntry) {
+    if (existingEntry !== undefined) {
       // Entry exists, update the averageLoudness
-      existingEntry.averageLoudness = averageLoudness;
+      existingEntry!.averageLoudness = averageLoudness;
     } else {
       // Entry doesn't exist, add a new entry to audioDecibels
       audioDecibels.push({ name, averageLoudness });

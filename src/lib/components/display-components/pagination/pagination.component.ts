@@ -33,6 +33,7 @@ export interface PaginationParameters extends GeneratePageContentParameters {
 
   // mediasfu functions
   getUpdatedAllParams: () => PaginationParameters;
+  getCurrentParams?: () => any;
   [key: string]: any;
 }
 
@@ -364,7 +365,7 @@ export class Pagination implements OnInit, OnChanges {
 
   resolveParameters(): PaginationParameters {
     if (this.parameters?.getUpdatedAllParams) {
-      return this.parameters.getUpdatedAllParams();
+      return (this.parameters.getCurrentParams?.() ?? this.parameters);
     }
 
     return this.parameters;
@@ -373,8 +374,8 @@ export class Pagination implements OnInit, OnChanges {
   isDarkModeEnabled(): boolean {
     const params = this.resolveParameters();
 
-    if (typeof params?.isDarkModeValue === 'boolean') {
-      return params.isDarkModeValue;
+    if (typeof params?.['isDarkModeValue'] === 'boolean') {
+      return params['isDarkModeValue'];
     }
 
     return false;

@@ -369,7 +369,7 @@ export class ModernConfirmHereModalComponent implements OnInit, OnChanges, OnDes
     const baseStyle: Record<string, string | number> = {
       position: 'fixed',
       width: 'min(420px, calc(100vw - 32px))',
-      background: this.backgroundColor || undefined,
+      ...(this.backgroundColor ? { background: this.backgroundColor } : {}),
       ...this.resolvePositionStyle(),
     };
 

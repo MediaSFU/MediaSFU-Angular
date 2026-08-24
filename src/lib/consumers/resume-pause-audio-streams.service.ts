@@ -144,7 +144,7 @@ export class ResumePauseAudioStreams {
     let currentStreams: (Stream | Participant)[] = [];
     // Determine the room based on breakout status
     if (inBreakRoom && breakRoom !== -1) {
-      room = breakoutRooms[breakRoom];
+      room = breakoutRooms[breakRoom] ?? [];
     } else {
       room = ref_participants.filter(
         (participant) =>
@@ -163,9 +163,7 @@ export class ResumePauseAudioStreams {
       if (islevel !== '2' && eventType === 'conference') {
         const roomMember = breakoutRooms.find((r) => r.find((p) => p.name === member));
         let memberBreakRoom = -1;
-        if (roomMember) {
-          memberBreakRoom = breakoutRooms.indexOf(roomMember);
-        }
+        memberBreakRoom = breakoutRooms.findIndex((room) => room === roomMember);
 
         if (
           (inBreakRoom && breakRoom !== hostNewRoom) ||
@@ -206,10 +204,11 @@ export class ResumePauseAudioStreams {
       if (islevel !== '2' && (eventType === 'webinar' || addHostAudio)) {
         const host = participants.find((obj) => obj.islevel === '2');
         const hostStream = allAudioStreams.find((obj) => obj.producerId === host?.audioID);
-        if (hostStream && !currentStreams.includes(hostStream)) {
-          currentStreams.push(hostStream);
-          if (host?.name && !room.map((obj) => obj.name).includes(host.name)) {
-            room.push({ name: host?.name || '', breakRoom: -1 });
+        const hostName = host?.name ?? '';
+        if (hostStream !== undefined && !currentStreams.includes(hostStream as Stream | Participant)) {
+          currentStreams.push(hostStream as Stream | Participant);
+          if (hostName && !room.map((obj) => obj.name).includes(hostName)) {
+            room.push({ name: hostName, breakRoom: -1 });
           }
           updateLimitedBreakRoom(room);
         }

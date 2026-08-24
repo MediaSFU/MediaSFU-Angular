@@ -182,12 +182,12 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
   }
 
   private isTranslationAudio(updatedParams: MiniAudioPlayerParameters): boolean {
-    const activeTranslationProducerIds = updatedParams.activeTranslationProducerIds as Set<string> | undefined;
+    const activeTranslationProducerIds = updatedParams['activeTranslationProducerIds'] as Set<string> | undefined;
 
     return Boolean(
       activeTranslationProducerIds?.has(this.remoteProducerId)
-      || this.consumer?.appData?.type === 'translation'
-      || this.consumer?.appData?.isTranslation,
+      || this.consumer?.appData?.['type'] === 'translation'
+      || this.consumer?.appData?.['isTranslation'],
     );
   }
 
@@ -199,7 +199,7 @@ export class MiniAudioPlayer implements OnInit, OnDestroy {
       return false;
     }
 
-    const speakerTranslationStates = updatedParams.speakerTranslationStates as
+    const speakerTranslationStates = updatedParams['speakerTranslationStates'] as
       | Map<string, SpeakerTranslationState>
       | undefined;
     const speakerState = speakerTranslationStates?.get(participant.name);

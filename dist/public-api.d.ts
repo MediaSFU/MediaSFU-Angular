@@ -384,6 +384,7 @@ export * from './lib/methods/permissions-methods/update-permission-config.servic
 export * from './lib/consumers/translation-consumer-switch.service';
 export * from './lib/methods/utils/translation-languages.util';
 export * from './lib/services/live-subtitle.service';
+export * from './lib/services/mediasfu-headless.service';
 export * from './lib/producers/socket-receive-methods/panelists-updated.service';
 export * from './lib/producers/socket-receive-methods/panelist-focus-changed.service';
 export * from './lib/producers/socket-receive-methods/receive-control-media.service';

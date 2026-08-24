@@ -32,6 +32,7 @@ export interface ModernPaginationParameters extends GeneratePageContentParameter
   showAlert?: ShowAlert;
   socket: Socket;
   getUpdatedAllParams: () => ModernPaginationParameters;
+  getCurrentParams?: () => any;
   [key: string]: any;
 }
 
@@ -310,7 +311,7 @@ export class ModernPaginationComponent implements OnInit, OnChanges {
 
   resolveParameters(): ModernPaginationParameters {
     if (this.parameters?.getUpdatedAllParams) {
-      return this.parameters.getUpdatedAllParams();
+      return (this.parameters.getCurrentParams?.() ?? this.parameters);
     }
 
     return this.parameters;
@@ -319,8 +320,8 @@ export class ModernPaginationComponent implements OnInit, OnChanges {
   isDarkModeEnabled(): boolean {
     const params = this.resolveParameters();
 
-    if (typeof params?.isDarkModeValue === 'boolean') {
-      return params.isDarkModeValue;
+    if (typeof params?.['isDarkModeValue'] === 'boolean') {
+      return params['isDarkModeValue'];
     }
 
     return false;

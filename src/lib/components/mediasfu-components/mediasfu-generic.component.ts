@@ -1,5 +1,7 @@
 import {
   Component,
+  EventEmitter,
+  Output,
   HostListener,
   Injector,
   ChangeDetectorRef,
@@ -353,6 +355,8 @@ export type MediasfuGenericOptions = {
   noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   createMediaSFURoom?: CreateRoomOnMediaSFUType;
+  containerWidthFraction?: number;
+  containerHeightFraction?: number;
   canUsePersonalTranslation?: boolean;
   personalTranslationUsername?: string;
 };
@@ -509,7 +513,7 @@ type SidebarContent = 'none' | SidebarPanelContent;
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -542,7 +546,10 @@ type SidebarContent = 'none' | SidebarPanelContent;
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -551,6 +558,8 @@ type SidebarContent = 'none' | SidebarPanelContent;
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -569,7 +578,8 @@ type SidebarContent = 'none' | SidebarPanelContent;
                     <app-main-screen-component
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
-                      [containerWidthFraction]="mainScreenWidthFraction()"
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [defaultFraction]="1 - controlHeight.value"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [containerStyle]="mainScreenContainerStyle()"
@@ -1943,9 +1953,21 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   @Input() sourceParameters: { [key: string]: any } = {};
   @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
   @Input() returnUI? = true;
+
+  /**
+   * Emitted whenever the media graph changes — new/lost streams, a local track
+   * toggling, screen share starting, consumers changing. Reasons are coalesced
+   * into one microtask-deferred emit per tick.
+   *
+   * The reliable way for a [returnUI]="false" surface to re-read media without
+   * polling.
+   */
+  @Output() mediaChanged = new EventEmitter<{ reasons: string[]; parameters: any }>();
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
+  @Input() containerWidthFraction = 1;
+  @Input() containerHeightFraction = 1;
   @Input() canUsePersonalTranslation = false;
   @Input() personalTranslationUsername?: string;
 
@@ -1958,6 +1980,14 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   // UI override inputs
   @Input() containerStyle?: Record<string, any>;
   @Input() uiOverrides?: MediasfuUICustomOverrides;
+
+  rootContainerStyle = (): Record<string, any> => ({
+    width: this.containerWidthFraction < 1 ? '100%' : '100vw',
+    maxWidth: this.containerWidthFraction < 1 ? '100%' : '100vw',
+    height: this.containerHeightFraction < 1 ? '100%' : '100vh',
+    maxHeight: this.containerHeightFraction < 1 ? '100%' : '100vh',
+    ...this.containerStyle,
+  });
 
   title = 'MediaSFU-Generic';
 
@@ -2000,6 +2030,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   protected readonly LoadingModalComponentRef = ModernLoadingModalComponent;
 
   mainContainerOverrideProps = () => ({
+    containerWidthFraction: this.containerWidthFraction,
+    containerHeightFraction: this.containerHeightFraction,
     containerStyle: this.containerStyle,
     controlHeight: this.controlHeight.value,
     eventType: this.eventType.value,
@@ -2040,6 +2072,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   mainAspectOverrideProps = () => ({
+    containerWidthFraction: this.containerWidthFraction,
+    containerHeightFraction: this.containerHeightFraction,
     backgroundColor: this.roomSurfaceColor(),
     defaultFraction: 1 - this.controlHeight.value,
     showControls:
@@ -2059,7 +2093,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     showControls:
       this.eventType.value === 'webinar' ||
       this.eventType.value === 'conference',
-    containerWidthFraction: this.mainScreenWidthFraction(),
+    containerWidthFraction: this.containerWidthFraction,
+    containerHeightFraction: this.containerHeightFraction,
     containerStyle: this.mainScreenContainerStyle(),
     updateComponentSizes: this.updateComponentSizes,
     parameters: this.mediaSFUParameters,
@@ -2855,38 +2890,84 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   getParticipantMedia = async (options: {
     id?: string;
     name?: string;
-    kind: 'video' | 'audio';
+    kind?: 'video' | 'audio';
   }): Promise<MediaStream | null> => {
-    const { id, name, kind } = options;
-
+    // Resolve a participant's media stream by participant id, participant name,
+    // or a producer id.
     try {
-      const streams =
-        kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
+      const id = options.id || '';
+      const name = options.name || '';
+      const kind = options.kind || 'video';
 
-      // Search by producerId if provided
-      if (id) {
-        const streamObj = streams.find((obj: any) => obj.producerId === id);
-        if (streamObj && 'stream' in streamObj) {
-          return streamObj.stream || null;
-        }
+      const participantsRef = this.participants.value || [];
+      const streams = (
+        kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value
+      ) as any[] | undefined;
+      if (!streams || streams.length === 0) return null;
+
+      let participant = id
+        ? participantsRef.find((part: any) => part.id === id)
+        : undefined;
+      if (!participant && name) {
+        participant = participantsRef.find((part: any) => part.name === name);
       }
 
-      // Search by name if provided
-      if (name) {
-        const streamObj = streams.find((obj: any) => obj.name === name);
-        if (streamObj && 'stream' in streamObj) {
-          return streamObj.stream || null;
-        }
+      // allVideoStreams / allAudioStreams are keyed by producerId only. Matching
+      // a stream's own `name` (the previous behaviour) fails because those
+      // entries do not reliably carry one, and a participant's `id` is its
+      // membership id — the producer reference is videoID / audioID.
+      const producerId = participant
+        ? kind === 'video'
+          ? participant.videoID
+          : participant.audioID
+        : '';
+      if (producerId) {
+        const match = streams.find((stream: any) => stream.producerId === producerId);
+        if (match && match.stream) return match.stream;
+      }
+
+      // A caller that already holds a producer id may pass it directly as `id`.
+      if (id) {
+        const direct = streams.find((stream: any) => stream.producerId === id);
+        if (direct && direct.stream) return direct.stream;
       }
 
       return null;
-    } catch (error) {
-      console.error('Error getting participant media:', error);
+    } catch {
       return null;
     }
   };
 
   // Initial values
+  /** Publish after change detection, coalesced to the latest bag. */
+  private pendingSourceParameters: any = null;
+  private sourcePublishQueued = false;
+  private sourcePublishActive = true;
+  private publishSourceParameters = (bag: any): void => {
+    if (!this.updateSourceParameters) return;
+    this.pendingSourceParameters = bag;
+    if (this.sourcePublishQueued) return;
+    this.sourcePublishQueued = true;
+    Promise.resolve().then(() => {
+      this.sourcePublishQueued = false;
+      const next = this.pendingSourceParameters;
+      this.pendingSourceParameters = null;
+      if (!this.sourcePublishActive || !next || !this.updateSourceParameters) return;
+      try {
+        this.updateSourceParameters(next);
+      } catch {
+        // A consumer observer must never break the room.
+      }
+    });
+  };
+  getCurrentParams = (): any => {
+    // Same value as getUpdatedAllParams(), without the republish side effect.
+    // Safe to call from a template, an event handler, or a polling loop.
+    return {
+      ...this.getAllParams(),
+      ...this.mediaSFUFunctions(),
+    };
+  };
   mediaSFUFunctions = (): any => {
     return {
       updateMiniCardsGrid:
@@ -3227,6 +3308,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         }),
       getMediaDevicesList: this.getMediaDevicesList,
       getParticipantMedia: this.getParticipantMedia,
+      getCurrentParams: this.getCurrentParams,
     };
   };
 
@@ -3836,8 +3918,31 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     this.screenId.next(value);
   };
 
+  /**
+   * Coalesced media-change notifier. Several updaters fire in the same tick
+   * during a single transition, so reasons are batched into one
+   * microtask-deferred emit rather than delivered N times.
+   */
+  private pendingMediaReasons = new Set<string>();
+  private mediaNotifyQueued = false;
+  notifyMediaChanged = (reason: string) => {
+    this.pendingMediaReasons.add(reason);
+    if (this.mediaNotifyQueued) return;
+    this.mediaNotifyQueued = true;
+    Promise.resolve().then(() => {
+      this.mediaNotifyQueued = false;
+      const reasons = Array.from(this.pendingMediaReasons);
+      this.pendingMediaReasons.clear();
+      try {
+        this.mediaChanged.emit({ reasons, parameters: this.getCurrentParams() });
+      } catch {
+        // A consumer's observer must never break the media path.
+      }
+    });
+  };
   updateAllVideoStreams = (value: (Participant | Stream)[]) => {
     this.allVideoStreams.next(value);
+    this.notifyMediaChanged('video-streams');
   };
 
   updateNewLimitedStreams = (value: (Participant | Stream)[]) => {
@@ -3914,6 +4019,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateLocalStreamVideo = (value: MediaStream | null) => {
     this.localStreamVideo.next(value);
+    this.notifyMediaChanged('local-video');
   };
 
   updateUserDefaultVideoInputDevice = (value: string) => {
@@ -4018,6 +4124,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateLocalStreamScreen = (value: MediaStream | null) => {
     this.localStreamScreen.next(value);
+    this.notifyMediaChanged('screen-share');
   };
 
   updateScreenAlreadyOn = (value: boolean) => {
@@ -4034,6 +4141,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateOldAllStreams = (value: (Participant | Stream)[]) => {
     this.oldAllStreams.next(value);
+    this.notifyMediaChanged('video-streams');
   };
 
   updateAdminVidID = (value: string) => {
@@ -4070,6 +4178,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateLocalStreamAudio = (value: MediaStream | null) => {
     this.localStreamAudio.next(value);
+    this.notifyMediaChanged('local-audio');
   };
 
   updateDefAudioID = (value: string) => {
@@ -4238,6 +4347,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateAllAudioStreams = (value: (Participant | Stream)[]) => {
     this.allAudioStreams.next(value);
+    this.notifyMediaChanged('audio-streams');
   };
 
   updateRemoteScreenStream = (value: Stream[]) => {
@@ -4282,6 +4392,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateAudioOnlyStreams = (value: CustomMediaComponent[]) => {
     this.audioOnlyStreams.next(value);
+    this.notifyMediaChanged('audio-streams');
   };
 
   updateVideoInputs = (value: MediaDeviceInfo[]) => {
@@ -5984,6 +6095,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   updateConsumerTransports = (value: TransportType[]) => {
     this.consumerTransports.next(value);
+    this.notifyMediaChanged('consumers');
   };
 
   updateConsumingTransports = (value: string[]) => {
@@ -6202,6 +6314,23 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     duration?: number;
     position?: 'top' | 'bottom' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
   }) => {
+    // Alerts are the SDK's only signal for a refused or failed control, so a
+    // headless consumer ([returnUI]="false") must receive them deterministically.
+    // Subject updates alone never publish; the fields are passed explicitly
+    // here because the assignments below have not run yet.
+    try {
+      if (this.sourceParameters !== null && this.updateSourceParameters) {
+        this.publishSourceParameters({
+          ...this.getAllParams(),
+          ...this.mediaSFUFunctions(),
+          alertMessage: message,
+          alertType: type,
+          alertVisible: true,
+        });
+      }
+    } catch {
+      // Publishing must never block the alert itself.
+    }
     const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
 
     this.updateAlertMessage(message);
@@ -7036,7 +7165,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
             };
             this.sourceParameters = nextSourceParameters;
             if (this.updateSourceParameters) {
-              this.updateSourceParameters(nextSourceParameters);
+              this.publishSourceParameters(nextSourceParameters);
             }
           }
         } catch {
@@ -7206,6 +7335,10 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Field initialisers run before Angular binds @Input()s, so autoWave cannot
+    // be defaulted from returnUI where it is declared — it would read undefined.
+    // ngOnInit is the first point the input is guaranteed bound.
+    this.autoWave.next(this.returnUI !== false);
     this.updateModernThemeDarkMode(this.resolvePreferredTheme());
 
     // Initialize UI overrides if provided
@@ -7346,6 +7479,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.sourcePublishActive = false;
+    this.pendingSourceParameters = null;
     window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('orientationchange', this.handleResize);
     if (this.mainHeightWidthSubscription) {
@@ -7428,7 +7563,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
           };
           this.sourceParameters = nextSourceParameters;
           if (this.updateSourceParameters) {
-            this.updateSourceParameters(nextSourceParameters);
+            this.publishSourceParameters(nextSourceParameters);
           }
         }
       } catch {
@@ -7463,8 +7598,8 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     }
 
     const dimensions = this.computeDimensionsMethod({
-      containerWidthFraction: this.mainScreenWidthFraction(),
-      containerHeightFraction: 1,
+      containerWidthFraction: this.containerWidthFraction,
+      containerHeightFraction: this.containerHeightFraction,
       mainSize: this.mainHeightWidth.value,
       doStack: true,
       defaultFraction:

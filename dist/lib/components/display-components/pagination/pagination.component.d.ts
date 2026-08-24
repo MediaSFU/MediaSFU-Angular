@@ -16,6 +16,7 @@ export interface PaginationParameters extends GeneratePageContentParameters {
     showAlert?: ShowAlert;
     socket: Socket;
     getUpdatedAllParams: () => PaginationParameters;
+    getCurrentParams?: () => any;
     [key: string]: any;
 }
 export interface PaginationOptions {

@@ -1,14 +1,14 @@
 import * as i0 from '@angular/core';
 import { Injectable, Input, Optional, Inject, Component, ViewChild, HostListener, Injector, EventEmitter, Output, ContentChildren, forwardRef, ViewEncapsulation, InjectionToken, TemplateRef, Directive } from '@angular/core';
-import { joinConsumeRoom, producerClosed, newPipeProducer, getOverlayPosition as getOverlayPosition$1, translationRoomConfig, translationConfigUpdated, translationLanguageSet, translationSubscribed, translationUnsubscribed, translationProducerReady, translationProducerClosed, translationChannelsAvailable, translationMemberState, translationError, translationTranscript, translationSpeakerOutputChanged, controlMedia, isSubtitleExpired, autoAdjust, calculateRowsAndColumns, changeVids, checkGrid, checkPermission, checkScreenShare, closeAndResize, compareActiveNames, compareScreenStates, connectIps, connectLocalIps, connectRecvTransport, connectSendTransport, connectSendTransportAudio, connectSendTransportScreen, connectSendTransportVideo, createSendTransport, disconnectSendTransportAudio, disconnectSendTransportVideo, disconnectSendTransportScreen, dispStreams, generatePageContent, getEstimate, getPipedProducersAlt, getProducersPiped, getVideos, mixStreams, onScreenChanges, processConsumerTransports, processConsumerTransportsAudio, readjust, receiveAllPipedTransports, reorderStreams, rePort, requestScreenShare, resumePauseAudioStreams, resumePauseStreams, resumeSendTransportAudio, reUpdateInter, signalNewConsumerTransport, startShareScreen, stopShareScreen, streamSuccessAudio, streamSuccessAudioSwitch, streamSuccessScreen, switchUserAudio, clickVideo, switchUserVideo, switchUserVideoAlt, trigger, updateMiniCardsGrid, updateParticipantAudioDecibels, aParams, hParams, screenParams, vParams, launchBackground, launchBreakoutRooms, breakoutRoomUpdated, launchCoHost as launchCoHost$1, modifyCoHostSettings, launchDisplaySettings, modifyDisplaySettings, launchConfirmExit, confirmExit, launchMediaSettings, launchMenuModal, launchMessages, launchParticipants, messageParticipants, muteParticipants, removeParticipants, handleCreatePoll, handleEndPoll, handleVotePoll, launchPoll, pollUpdated, checkPauseState, checkResumeState, confirmRecording, launchRecording, recordPauseTimer, recordResumeTimer, recordStartTimer, recordUpdateTimer, startRecording, stopRecording, updateRecording, launchRequests, respondToRequests, launchSettings, modifySettings, clickAudio, clickChat, clickScreenShare, switchAudio, switchVideo, switchVideoAlt, joinRoomOnMediaSFU, formatNumber, getModalPosition as getModalPosition$1, sleep as sleep$1, validateAlphanumeric, launchWaiting, respondToWaiting, launchConfigureWhiteboard, createDeviceClient, joinRoomClient, updateRoomParametersClient, joinConRoom, joinRoom, checkMediasfuURL, joinLocalRoom, allMembers, allMembersRest, allWaitingRoomMembers, banParticipant, controlMediaHost, disconnect, disconnectUserSelf, getDomains, hostRequestResponse, meetingEnded, meetingStillThere, meetingTimeRemaining, participantRequested, personJoined, producerMediaClosed, producerMediaPaused, producerMediaResumed, reInitiateRecording, receiveMessage, recordingNotice, roomRecordParams, screenProducerId, startRecords, stoppedRecording, timeLeftRecording, updateConsumingDomains, updateMediaSettings, updatedCoHost, userWaiting, connectSocket, connectLocalSocket, disconnectSocket, checkLimitsAndMakeRequest, createRoomOnMediaSFU, SUPPORTED_LANGUAGE_CODES as SUPPORTED_LANGUAGE_CODES$1, isLanguageSupported as isLanguageSupported$1, normalizeLanguageCode as normalizeLanguageCode$1, getLanguageName as getLanguageName$1, getLanguageNativeName as getLanguageNativeName$1, getSupportedLanguages as getSupportedLanguages$1, getLanguageMetadata, addPanelist, removePanelist, focusPanelists, updateParticipantPermission, bulkUpdateParticipantPermissions, updatePermissionConfig, isSpeakerInMyBreakoutRoom, pauseOriginalProducer, resumeOriginalProducer, isConsumingTranslationForSpeaker, getActiveTranslationConsumers, findOriginalProducerForSpeaker, stopConsumingTranslation, syncTranslationStateAfterBreakoutChange, panelistsUpdated, panelistFocusChanged, panelistControlMedia, addedAsPanelist, removedFromPanelists, permissionUpdated, permissionConfigUpdated, receiveRoomMessages, createResponseJoinRoom as createResponseJoinRoom$1, createLiveSubtitle, SoundPlayer as SoundPlayer$1 } from 'mediasfu-shared';
+import { joinConsumeRoom, producerClosed, newPipeProducer, getOverlayPosition as getOverlayPosition$1, translationRoomConfig, translationConfigUpdated, translationLanguageSet, translationSubscribed, translationUnsubscribed, translationProducerReady, translationProducerClosed, translationChannelsAvailable, translationMemberState, translationError, translationTranscript, translationSpeakerOutputChanged, controlMedia, isSubtitleExpired, autoAdjust, calculateRowsAndColumns, changeVids, checkGrid, checkPermission, checkScreenShare, closeAndResize, compareActiveNames, compareScreenStates, connectIps, connectLocalIps, connectRecvTransport, connectSendTransport, connectSendTransportAudio, connectSendTransportScreen, connectSendTransportVideo, createSendTransport, disconnectSendTransportAudio, disconnectSendTransportVideo, disconnectSendTransportScreen, dispStreams, generatePageContent, getEstimate, getPipedProducersAlt, getProducersPiped, getVideos, mixStreams, onScreenChanges, processConsumerTransports, processConsumerTransportsAudio, readjust, receiveAllPipedTransports, reorderStreams, rePort, requestScreenShare, resumePauseAudioStreams, resumePauseStreams, resumeSendTransportAudio, reUpdateInter, signalNewConsumerTransport, startShareScreen, stopShareScreen, streamSuccessAudio, streamSuccessAudioSwitch, streamSuccessScreen, switchUserAudio, clickVideo, switchUserVideo, switchUserVideoAlt, trigger, updateMiniCardsGrid, updateParticipantAudioDecibels, aParams, hParams, screenParams, vParams, launchBackground, launchBreakoutRooms, breakoutRoomUpdated, launchCoHost as launchCoHost$1, modifyCoHostSettings, launchDisplaySettings, modifyDisplaySettings, launchConfirmExit, confirmExit, launchMediaSettings, launchMenuModal, launchMessages, launchParticipants, messageParticipants, muteParticipants, removeParticipants, handleCreatePoll, handleEndPoll, handleVotePoll, launchPoll, pollUpdated, checkPauseState, checkResumeState, confirmRecording, launchRecording, recordPauseTimer, recordResumeTimer, recordStartTimer, recordUpdateTimer, startRecording, stopRecording, updateRecording, launchRequests, respondToRequests, launchSettings, modifySettings, clickAudio, clickChat, clickScreenShare, switchAudio, switchVideo, switchVideoAlt, joinRoomOnMediaSFU, formatNumber, getModalPosition as getModalPosition$1, sleep as sleep$1, validateAlphanumeric, launchWaiting, respondToWaiting, launchConfigureWhiteboard, createDeviceClient, joinRoomClient, updateRoomParametersClient, joinConRoom, joinRoom, checkMediasfuURL, joinLocalRoom, allMembers, allMembersRest, allWaitingRoomMembers, banParticipant, controlMediaHost, disconnect, disconnectUserSelf, getDomains, hostRequestResponse, meetingEnded, meetingStillThere, meetingTimeRemaining, participantRequested, personJoined, producerMediaClosed, producerMediaPaused, producerMediaResumed, reInitiateRecording, receiveMessage, recordingNotice, roomRecordParams, screenProducerId, startRecords, stoppedRecording, timeLeftRecording, updateConsumingDomains, updateMediaSettings, updatedCoHost, userWaiting, connectSocket, connectLocalSocket, disconnectSocket, checkLimitsAndMakeRequest, createRoomOnMediaSFU, SUPPORTED_LANGUAGE_CODES as SUPPORTED_LANGUAGE_CODES$1, isLanguageSupported as isLanguageSupported$1, normalizeLanguageCode as normalizeLanguageCode$1, getLanguageName as getLanguageName$1, getLanguageNativeName as getLanguageNativeName$1, getSupportedLanguages as getSupportedLanguages$1, getLanguageMetadata, addPanelist, removePanelist, focusPanelists, updateParticipantPermission, bulkUpdateParticipantPermissions, updatePermissionConfig, isSpeakerInMyBreakoutRoom, pauseOriginalProducer, resumeOriginalProducer, isConsumingTranslationForSpeaker, getActiveTranslationConsumers, findOriginalProducerForSpeaker, stopConsumingTranslation, syncTranslationStateAfterBreakoutChange, panelistsUpdated, panelistFocusChanged, panelistControlMedia, addedAsPanelist, removedFromPanelists, permissionUpdated, permissionConfigUpdated, receiveRoomMessages, createResponseJoinRoom as createResponseJoinRoom$1, createLiveSubtitle, SoundPlayer as SoundPlayer$1, getRoomReadiness, getLocalVideoStream, getLocalAudioStream, getRemoteVideoStreams, getScreenShareStream, getAudioGridComponents, listParticipantMediaStates, getModerationPermissions, getRecordingState, getWhiteboardState, getPollState, getBreakoutState, leaveRoom, sendChatMessage, flipCamera, switchCamera, switchMicrophone, runMediaControl, setCoHost, respondToParticipantRequest, respondToWaitingParticipant, removeParticipant, muteEveryone, setParticipantMedia, stopParticipantScreenShare, disableParticipantVideo, muteParticipant, endRoomPoll, voteInRoomPoll, createRoomPoll, stopWhiteboard, startWhiteboard, stopRoomRecording, resumeRoomRecording, pauseRoomRecording, startRoomRecording, stopProducing, replaceProducerTrack, produceDisplay, produceElement, produceCanvas, produceMedia } from 'mediasfu-shared';
 export { createLiveSubtitle, isSubtitleExpired } from 'mediasfu-shared';
 import * as i1 from '@angular/common';
 import { CommonModule } from '@angular/common';
 import * as i2 from '@fortawesome/angular-fontawesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMicrophone, faMicrophoneSlash, faVideo, faVideoSlash, faTimes, faPen, faUsers, faPlus, faDoorOpen, faRandom, faHandPointer, faSave, faPlay, faSyncAlt, faStop, faClock, faHome, faStar, faLock, faChevronLeft, faChevronRight, faChevronUp, faChevronDown, faCamera, faPhotoFilm, faSpinner, faCopy, faEye, faEyeSlash, faEnvelope, faBars, faPaperPlane, faReply, faQrcode, faClosedCaptioning, faHeadphones, faLanguage, faComment, faTrash, faDotCircle, faCircle, faCheck, faDesktop, faComments, faPencilAlt, faPaintBrush, faShapes, faEraser, faSearch, faSearchPlus, faSearchMinus, faFont, faTextHeight, faUndo, faRedo, faMousePointer, faUser, faHandPaper, faUpload, faCog, faExclamationTriangle, faSignOutAlt, faDisplay, faExpand, faGaugeHigh, faWaveSquare, faMessage, faBan, faCheckCircle, faArrowLeft, faMoon, faSun, faLink, faShareNodes, faRecordVinyl, faPlayCircle, faPauseCircle, faStopCircle, faUserPlus, faTools, faPoll, faUserFriends, faChalkboardTeacher, faSync, faPhone, faShareAlt, faChartBar, faUserTie, faMinus, faUserShield } from '@fortawesome/free-solid-svg-icons';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import * as SelfieSegmentationPackage from '@mediapipe/selfie_segmentation';
 import * as i2$1 from '@angular/forms';
 import { FormsModule, NG_VALUE_ACCESSOR, Validators, ReactiveFormsModule } from '@angular/forms';
 import { faFacebook, faTwitter, faWhatsapp, faTelegram } from '@fortawesome/free-brands-svg-icons';
@@ -714,22 +714,23 @@ class ControlMedia {
             let participant = participants.find((obj) => obj.name === participantName);
             if (islevel === '2' || (coHost === member && mediaValue === true)) {
                 // Check if the participant is not muted and is not a host
-                if (participant &&
-                    ((!participant.muted && participant.islevel !== '2' && type == 'audio') ||
-                        (participant.islevel !== '2' && type == 'video' && participant['videoOn']))) {
+                const targetParticipant = participant;
+                const participantLevel = targetParticipant?.islevel;
+                const canControlAudio = targetParticipant?.muted === false && participantLevel !== '2' && type === 'audio';
+                const canControlVideo = participantLevel !== undefined && participantLevel !== '2' && type === 'video' &&
+                    targetParticipant?.['videoOn'] === true;
+                if (canControlAudio || canControlVideo) {
                     // Emit controlMedia event to the server
                     socket.emit('controlMedia', { participantId, participantName, type, roomName });
                 }
             }
             else {
                 // Display an alert if the participant is not allowed to mute other participants
-                if (showAlert) {
-                    showAlert({
-                        message: 'You are not allowed to control media for other participants.',
-                        type: 'danger',
-                        duration: 3000,
-                    });
-                }
+                showAlert?.({
+                    message: 'You are not allowed to control media for other participants.',
+                    type: 'danger',
+                    duration: 3000,
+                });
             }
         }
         catch (error) {
@@ -921,7 +922,7 @@ class VideoCard {
     ngOnInit() {
         this.syncThemeMode(this.parameters?.getUpdatedAllParams?.());
         this.audioLevelInterval = setInterval(() => {
-            const params = this.parameters.getUpdatedAllParams();
+            const params = (this.parameters.getCurrentParams?.() ?? this.parameters);
             const { audioDecibels, participants } = params;
             this.syncThemeMode(params);
             const existingEntry = audioDecibels && audioDecibels.find((entry) => entry.name === this.name);
@@ -988,7 +989,7 @@ class VideoCard {
     }
     async toggleVideo() {
         if (this.participant) {
-            const params = this.parameters.getUpdatedAllParams();
+            const params = (this.parameters.getCurrentParams?.() ?? this.parameters);
             await this.controlMediaService.controlMedia({
                 participantId: this.participant.id || '',
                 participantName: this.participant.name,
@@ -1477,7 +1478,7 @@ class AudioCard {
         }
         if (this.parameters) {
             this.audioLevelInterval = setInterval(() => {
-                const params = this.parameters.getUpdatedAllParams();
+                const params = (this.parameters.getCurrentParams?.() ?? this.parameters);
                 const { audioDecibels, participants } = params;
                 this.syncThemeMode(params);
                 const existingEntry = audioDecibels.find((entry) => entry.name == this.name);
@@ -2657,7 +2658,7 @@ class CloseAndResize {
                 participant = participants.find((obj) => obj.audioID === producerId);
                 if (participant) {
                     //check if the participants videoID is not null or ""
-                    if (participant.videoID !== null && participant.videoID !== '') {
+                    if (participant?.videoID !== null && participant?.videoID !== '') {
                         // do nothing
                     }
                     else {
@@ -2673,9 +2674,9 @@ class CloseAndResize {
             let alt_checker = false;
             if (meetingDisplayType == 'video' && participant) {
                 checker =
-                    participant[0].videoID != null &&
-                        participant[0].videoID != '' &&
-                        participant[0].videoID != undefined;
+                    participant?.videoID != null &&
+                        participant?.videoID != '' &&
+                        participant?.videoID != undefined;
             }
             else {
                 checker = true;
@@ -3125,7 +3126,7 @@ class ConnectRecvTransport {
             const { device, consumerTransports, updateConsumerTransports, consumerResume } = parameters;
             // Emit 'consume' event to signal consumption initiation
             nsock.emit('consume', {
-                rtpCapabilities: device ? device.rtpCapabilities : null,
+                rtpCapabilities: device?.rtpCapabilities ?? null,
                 remoteProducerId,
                 serverConsumerTransportId,
             }, async ({ params }) => {
@@ -3478,9 +3479,10 @@ class ConnectSendTransportAudio {
             let { audioProducer, producerTransport, updateAudioProducer, updateProducerTransport } = parameters;
             // Attempt to connect the primary send transport
             if (targetOption === "all" || targetOption === "remote") {
-                audioProducer = await producerTransport.produce(audioParams);
+                const producedAudio = await producerTransport.produce(audioParams);
+                audioProducer = producedAudio;
                 // Update the audio level
-                updateMicLevel(audioProducer, parameters.updateAudioLevel);
+                updateMicLevel(producedAudio, parameters.updateAudioLevel);
                 // Update state with the new producer and transport
                 updateAudioProducer(audioProducer);
                 updateProducerTransport(producerTransport);
@@ -4314,16 +4316,16 @@ class MiniAudioPlayer {
         return updatedParams.participants?.find((participant) => participant.audioID == this.remoteProducerId);
     }
     isTranslationAudio(updatedParams) {
-        const activeTranslationProducerIds = updatedParams.activeTranslationProducerIds;
+        const activeTranslationProducerIds = updatedParams['activeTranslationProducerIds'];
         return Boolean(activeTranslationProducerIds?.has(this.remoteProducerId)
-            || this.consumer?.appData?.type === 'translation'
-            || this.consumer?.appData?.isTranslation);
+            || this.consumer?.appData?.['type'] === 'translation'
+            || this.consumer?.appData?.['isTranslation']);
     }
     isTranslationSuppressingOriginal(updatedParams, participant) {
         if (!participant?.name) {
             return false;
         }
-        const speakerTranslationStates = updatedParams.speakerTranslationStates;
+        const speakerTranslationStates = updatedParams['speakerTranslationStates'];
         const speakerState = speakerTranslationStates?.get(participant.name);
         return Boolean(speakerState?.enabled
             && speakerState.originalProducerId === this.remoteProducerId);
@@ -4691,13 +4693,13 @@ class ConsumerResume {
                 // Audio resumed
                 const activeTranslationProducerIds = parameters.activeTranslationProducerIds;
                 const isTranslationAudio = Boolean(activeTranslationProducerIds?.has(remoteProducerId) ||
-                    consumer.appData?.type === 'translation' ||
-                    consumer.appData?.isTranslation);
+                    consumer.appData?.['type'] === 'translation' ||
+                    consumer.appData?.['isTranslation']);
                 // Check if the participant with audioID == remoteProducerId has a valid videoID
                 let participant = participants.filter((p) => p.audioID === remoteProducerId);
                 let name__ = participant.length > 0 ? participant[0].name || '' : '';
                 if (isTranslationAudio && !name__) {
-                    const translationMeta = consumer.appData?.translationMeta;
+                    const translationMeta = consumer.appData?.['translationMeta'];
                     name__ = translationMeta?.speakerName || `Translation-${remoteProducerId.slice(0, 8)}`;
                 }
                 if (name__ === member && !isTranslationAudio)
@@ -7550,7 +7552,7 @@ class ResumePauseAudioStreams {
         let currentStreams = [];
         // Determine the room based on breakout status
         if (inBreakRoom && breakRoom !== -1) {
-            room = breakoutRooms[breakRoom];
+            room = breakoutRooms[breakRoom] ?? [];
         }
         else {
             room = ref_participants.filter((participant) => !breakoutRooms
@@ -7564,9 +7566,7 @@ class ResumePauseAudioStreams {
             if (islevel !== '2' && eventType === 'conference') {
                 const roomMember = breakoutRooms.find((r) => r.find((p) => p.name === member));
                 let memberBreakRoom = -1;
-                if (roomMember) {
-                    memberBreakRoom = breakoutRooms.indexOf(roomMember);
-                }
+                memberBreakRoom = breakoutRooms.findIndex((room) => room === roomMember);
                 if ((inBreakRoom && breakRoom !== hostNewRoom) ||
                     (!inBreakRoom && hostNewRoom !== -1 && hostNewRoom !== memberBreakRoom)) {
                     const host = participants.find((obj) => obj.islevel === '2');
@@ -7598,10 +7598,11 @@ class ResumePauseAudioStreams {
             if (islevel !== '2' && (eventType === 'webinar' || addHostAudio)) {
                 const host = participants.find((obj) => obj.islevel === '2');
                 const hostStream = allAudioStreams.find((obj) => obj.producerId === host?.audioID);
-                if (hostStream && !currentStreams.includes(hostStream)) {
+                const hostName = host?.name ?? '';
+                if (hostStream !== undefined && !currentStreams.includes(hostStream)) {
                     currentStreams.push(hostStream);
-                    if (host?.name && !room.map((obj) => obj.name).includes(host.name)) {
-                        room.push({ name: host?.name || '', breakRoom: -1 });
+                    if (hostName && !room.map((obj) => obj.name).includes(hostName)) {
+                        room.push({ name: hostName, breakRoom: -1 });
                     }
                     updateLimitedBreakRoom(room);
                 }
@@ -7685,7 +7686,7 @@ class ResumePauseStreams {
             let { participants, dispActiveNames, consumerTransports, screenId, islevel } = parameters;
             // Get the videoID of the host (islevel=2)
             let host = participants.find((obj) => obj.islevel === '2');
-            let hostVideoID = host ? host.videoID : null;
+            let hostVideoID = host?.videoID ?? null;
             // Get videoIDs of participants in dispActiveNames and screenproducerId
             let videosIDs = dispActiveNames.map((name) => {
                 let participant = participants.find((obj) => obj.name === name);
@@ -7693,7 +7694,7 @@ class ResumePauseStreams {
             });
             // Add screenproducerId to allVideoIDs if it's not null or empty
             if (screenId) {
-                videosIDs.push(screenId);
+                videosIDs.push(screenId ?? null);
             }
             // Add hostVideoID to allVideoIDs if it's not null or empty (only if the user is not the host)
             if (islevel !== '2' && hostVideoID) {
@@ -8534,18 +8535,19 @@ class StreamSuccessAudio {
         updateParticipants, updateTransportCreated, updateTransportCreatedAudio, updateAudioAlreadyOn, updateMicAction, updateAudioParams, updateLocalStream, updateLocalStreamAudio, updateDefAudioID, updateUserDefaultAudioInputDevice, updateUpdateMainWindow, 
         // mediasfu functions
         createSendTransport, connectSendTransportAudio, resumeSendTransportAudio, prepopulateUserMedia, } = parameters;
-        localStreamAudio = stream;
-        updateLocalStreamAudio(localStreamAudio);
+        const replacementAudioStream = stream;
+        localStreamAudio = replacementAudioStream;
+        updateLocalStreamAudio(replacementAudioStream);
         // Add the audio stream track to the localStream
         if (localStream == null) {
-            localStream = new MediaStream([localStreamAudio.getAudioTracks()[0]]);
-            updateLocalStream(localStream);
+            localStream = new MediaStream([replacementAudioStream.getAudioTracks()[0]]);
         }
         else {
-            localStream.addTrack(localStreamAudio.getAudioTracks()[0]);
-            updateLocalStream(localStream);
+            localStream.addTrack(replacementAudioStream.getAudioTracks()[0]);
         }
-        const audioTracked = localStream.getAudioTracks()[0];
+        const updatedLocalStream = localStream;
+        updateLocalStream(updatedLocalStream);
+        const audioTracked = updatedLocalStream.getAudioTracks()[0];
         defAudioID = audioTracked.getSettings().deviceId || '';
         userDefaultAudioInputDevice = defAudioID;
         // Update the state variables
@@ -8554,7 +8556,7 @@ class StreamSuccessAudio {
         try {
             params = aParams;
             audioParamse = { ...params };
-            audioParams = { track: localStream.getAudioTracks()[0], ...audioParamse };
+            audioParams = { track: updatedLocalStream.getAudioTracks()[0], ...audioParamse };
             updateAudioParams(audioParams);
             // Create transport if not created else connect transport
             if (!transportCreated) {
@@ -8813,21 +8815,22 @@ class StreamSuccessAudioSwitch {
         // Check if the audio device has changed
         if (newDefAudioID != defAudioID) {
             // Close the current audioProducer
-            if (audioProducer) {
-                audioProducer.close();
-                updateAudioProducer(audioProducer);
+            const activeAudioProducer = audioProducer;
+            if (activeAudioProducer) {
+                activeAudioProducer.close();
+                updateAudioProducer(activeAudioProducer);
             }
             // Emit a pauseProducerMedia event to pause the audio media
             socket.emit('pauseProducerMedia', { mediaTag: 'audio', roomName: roomName, force: true });
             try {
-                if (localSocket && localSocket.id) {
-                    if (localAudioProducer) {
-                        localAudioProducer.close();
-                        if (updateLocalAudioProducer) {
-                            updateLocalAudioProducer(localAudioProducer);
-                        }
+                const activeLocalSocket = localSocket;
+                const activeLocalAudioProducer = localAudioProducer;
+                if (activeLocalSocket?.id) {
+                    if (activeLocalAudioProducer) {
+                        activeLocalAudioProducer.close();
+                        updateLocalAudioProducer?.(activeLocalAudioProducer);
                     }
-                    localSocket.emit("pauseProducerMedia", {
+                    activeLocalSocket.emit("pauseProducerMedia", {
                         mediaTag: "audio",
                         roomName: roomName,
                         force: true,
@@ -8838,29 +8841,31 @@ class StreamSuccessAudioSwitch {
                 // Do nothing
             }
             // Update the localStreamAudio with the new audio tracks
-            localStreamAudio = stream;
+            const replacementAudioStream = stream;
+            localStreamAudio = replacementAudioStream;
             // If localStream is null, create a new MediaStream with the new audio track
             if (localStream == null) {
-                localStream = new MediaStream([localStreamAudio.getAudioTracks()[0]]);
+                localStream = new MediaStream([replacementAudioStream.getAudioTracks()[0]]);
             }
             else {
                 // Remove all existing audio tracks from localStream and add the new audio track
                 localStream.getAudioTracks().forEach((track) => {
                     localStream?.removeTrack(track);
                 });
-                localStream.addTrack(localStreamAudio.getAudioTracks()[0]);
+                localStream.addTrack(replacementAudioStream.getAudioTracks()[0]);
             }
             // Update localStream
-            updateLocalStream(localStream);
+            const updatedLocalStream = localStream;
+            updateLocalStream(updatedLocalStream);
             // Get the new default audio device ID from the new audio track
-            const audioTracked = localStream.getAudioTracks()[0];
+            const audioTracked = updatedLocalStream.getAudioTracks()[0];
             defAudioID = audioTracked.getSettings().deviceId ?? '';
             updateDefAudioID(defAudioID);
             // Update userDefaultAudioInputDevice
             userDefaultAudioInputDevice = defAudioID;
             updateUserDefaultAudioInputDevice(userDefaultAudioInputDevice);
             // Update audioParams with the new audio track
-            audioParams = { track: localStream.getAudioTracks()[0], ...audioParamse };
+            audioParams = { track: updatedLocalStream.getAudioTracks()[0], ...audioParamse };
             updateAudioParams(audioParams);
             // Sleep for 500 milliseconds
             await sleep({ ms: 500 });
@@ -8891,8 +8896,8 @@ class StreamSuccessAudioSwitch {
                 updateAudioProducer(audioProducer);
                 socket.emit('pauseProducerMedia', { mediaTag: 'audio', roomName: roomName });
                 try {
-                    if (localSocket && localSocket.id) {
-                        localSocket.emit("pauseProducerMedia", {
+                    if (localSocket?.id) {
+                        localSocket?.emit("pauseProducerMedia", {
                             mediaTag: "audio",
                             roomName: roomName,
                         });
@@ -9024,8 +9029,9 @@ class StreamSuccessScreen {
         // mediasfu functions
         createSendTransport, connectSendTransportScreen, disconnectSendTransportScreen, stopShareScreen, reorderStreams, prepopulateUserMedia, rePort, } = parameters;
         // Share screen on success
-        localStreamScreen = stream;
-        updateLocalStreamScreen(localStreamScreen);
+        const screenStream = stream;
+        localStreamScreen = screenStream;
+        updateLocalStreamScreen(screenStream);
         try {
             // Create transport if not created else connect transport
             if (!transportCreated) {
@@ -9036,7 +9042,7 @@ class StreamSuccessScreen {
             }
             else {
                 await connectSendTransportScreen({
-                    stream: localStreamScreen,
+                    stream: screenStream,
                     parameters: { ...parameters, localStreamScreen },
                 });
             }
@@ -9083,11 +9089,14 @@ class StreamSuccessScreen {
             }
         }
         // Handle screen share end
-        localStreamScreen.getVideoTracks()[0].onended = async function () {
-            // Supports both manual and automatic screen share end
-            await disconnectSendTransportScreen({ parameters });
-            await stopShareScreen({ parameters });
-        };
+        const screenTrack = screenStream.getVideoTracks()[0];
+        if (screenTrack) {
+            screenTrack.onended = async function () {
+                // Supports both manual and automatic screen share end
+                await disconnectSendTransportScreen({ parameters });
+                await stopShareScreen({ parameters });
+            };
+        }
         // If user requested to share screen, update the screenAction state
         if (screenAction == true) {
             screenAction = false;
@@ -10208,7 +10217,7 @@ class UpdateParticipantAudioDecibels {
         // Function to update the audioDecibels array
         // Check if the entry already exists in audioDecibels
         const existingEntry = audioDecibels.find((entry) => entry.name === name);
-        if (existingEntry) {
+        if (existingEntry !== undefined) {
             // Entry exists, update the averageLoudness
             existingEntry.averageLoudness = averageLoudness;
         }
@@ -10770,7 +10779,7 @@ class ModifyCoHostSettings {
      * - A socket event is emitted to update the co-host information.
      * - The co-host modal is closed after updating the settings.
      */
-    async modifyCoHostSettings({ roomName, 
+    async modifyCoHostSettings({ roomName,
     // showAlert,
     selectedParticipant, coHost, coHostResponsibility, updateIsCoHostModalVisible, updateCoHostResponsibility, updateCoHost, socket, }) {
         return modifyCoHostSettings({
@@ -11019,6 +11028,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
  * @param {string} options.member - The member who is exiting.
  * @param {string} options.roomName - The name of the room the member is exiting from.
  * @param {boolean} [options.ban=false] - Whether to ban the member from the room.
+ * @param {boolean} [options.endRoomOnHostExit=true] - Whether a host exit ends the room for everyone.
  * @returns {Promise<void>} A promise that resolves when the exit is confirmed.
  *
  * @example
@@ -11029,7 +11039,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
  *   localSocket: localSocketInstance,
  *   member: 'JohnDoe',
  *   roomName: 'Room1',
- *   ban: true, // Optional: set to true if you want to ban the member
+ *   ban: false,
+ *   endRoomOnHostExit: false, // Let the host rejoin without ending the room.
  * });
  * ```
  */
@@ -11045,13 +11056,14 @@ class ConfirmExit {
      * @param {boolean} [options.ban=false] - Whether to ban the member from the room.
      * @returns {Promise<void>} A promise that resolves when the exit is confirmed.
      */
-    async confirmExit({ socket, localSocket, member, roomName, ban = false }) {
+    async confirmExit({ socket, localSocket, member, roomName, ban = false, endRoomOnHostExit = true, }) {
         return confirmExit({
             socket,
             localSocket,
             member,
             roomName,
             ban,
+            endRoomOnHostExit,
         });
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ConfirmExit, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
@@ -12517,7 +12529,7 @@ class ModifySettings {
      *
      * @throws Will show an alert if any setting is set to "approval" in demo mode (room name starts with "d").
      */
-    modifySettings = async ({ 
+    modifySettings = async ({
     // showAlert,
     roomName, audioSet, videoSet, screenshareSet, chatSet, socket, updateAudioSetting, updateVideoSetting, updateScreenshareSetting, updateChatSetting, updateIsSettingsModalVisible, }) => {
         return modifySettings({
@@ -16212,6 +16224,8 @@ const resolveModernHeaderTitle = (title, fallbackTitle) => {
 };
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+const SelfieSegmentationConstructor = SelfieSegmentationPackage.SelfieSegmentation ??
+    SelfieSegmentationPackage.default?.SelfieSegmentation;
 /**
  * BackgroundModal - Component to manage background selection and manipulation in media streams.
  *
@@ -16616,7 +16630,10 @@ class BackgroundModal {
         }
     };
     async preloadModel() {
-        this.selfieSegmentation = new SelfieSegmentation({
+        if (!SelfieSegmentationConstructor) {
+            throw new Error('MediaPipe SelfieSegmentation is unavailable.');
+        }
+        this.selfieSegmentation = new SelfieSegmentationConstructor({
             locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
         });
         this.selfieSegmentation.setOptions({
@@ -19249,30 +19266,30 @@ class ControlButtonsComponentTouch {
             gap: '4px',
         };
         if (this.location === 'bottom') {
-            style.bottom = '0';
-            style.top = 'auto';
+            style['bottom'] = '0';
+            style['top'] = 'auto';
         }
         else if (this.location === 'center') {
-            style.top = '50%';
-            style.bottom = 'auto';
-            style.transform = 'translateY(-50%)';
+            style['top'] = '50%';
+            style['bottom'] = 'auto';
+            style['transform'] = 'translateY(-50%)';
         }
         else {
-            style.top = '0';
-            style.bottom = 'auto';
+            style['top'] = '0';
+            style['bottom'] = 'auto';
         }
         if (this.position === 'right') {
-            style.right = '0';
-            style.left = 'auto';
+            style['right'] = '0';
+            style['left'] = 'auto';
         }
         else if (this.position === 'middle') {
-            style.left = '50%';
-            style.right = 'auto';
-            style.transform = this.location === 'center' ? 'translate(-50%, -50%)' : 'translateX(-50%)';
+            style['left'] = '50%';
+            style['right'] = 'auto';
+            style['transform'] = this.location === 'center' ? 'translate(-50%, -50%)' : 'translateX(-50%)';
         }
         else {
-            style.left = '0';
-            style.right = 'auto';
+            style['left'] = '0';
+            style['right'] = 'auto';
         }
         return style;
     }
@@ -19778,6 +19795,35 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 type: Input
             }] } });
 
+/** Returns the centered content box produced by object-fit: contain. */
+const getContainedContentRect = (containerWidth, containerHeight, sourceWidth, sourceHeight) => {
+    const safeWidth = Math.max(containerWidth, 0);
+    const safeHeight = Math.max(containerHeight, 0);
+    if (safeWidth === 0 || safeHeight === 0 || sourceWidth <= 0 || sourceHeight <= 0) {
+        return { left: 0, top: 0, width: safeWidth, height: safeHeight };
+    }
+    const scale = Math.min(safeWidth / sourceWidth, safeHeight / sourceHeight);
+    const width = sourceWidth * scale;
+    const height = sourceHeight * scale;
+    return {
+        left: (safeWidth - width) / 2,
+        top: (safeHeight - height) / 2,
+        width,
+        height,
+    };
+};
+/** Convert viewport pointer coordinates into the canvas backing-buffer space. */
+const getCanvasPoint = (event, canvas) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) {
+        return { x: event.offsetX, y: event.offsetY };
+    }
+    return {
+        x: (event.clientX - rect.left) * (canvas.width / rect.width),
+        y: (event.clientY - rect.top) * (canvas.height / rect.height),
+    };
+};
+
 /**
  * FlexibleVideo component displays a customizable video grid, supporting dynamic layout and optional screenboard overlay.
  *
@@ -19833,11 +19879,7 @@ class FlexibleVideo {
     cellBorderRadius = 0;
     enableGlow = false;
     key = 0;
-    cardWidth = 0;
-    cardHeight = 0;
-    cardTop = 0;
-    cardLeft = 0;
-    canvasLeft = 0;
+    screenContentRect = { left: 0, top: 0, width: 0, height: 0 };
     grid = [];
     injectorCache = new WeakMap();
     constructor(injector) {
@@ -19866,22 +19908,11 @@ class FlexibleVideo {
         }
     }
     updateDimensions() {
-        if (this.annotateScreenStream && this.localStreamScreen) {
-            const videoHeight = this.localStreamScreen.getVideoTracks()[0].getSettings().height || 0;
-            const videoWidth = this.localStreamScreen.getVideoTracks()[0].getSettings().width || 0;
-            this.cardWidth = videoWidth;
-            this.cardHeight = videoHeight;
-            this.cardTop = Math.floor((this.customHeight - videoHeight) / 2);
-            this.cardLeft = Math.floor((this.customWidth - videoWidth) / 2);
-            this.canvasLeft = this.cardLeft < 0 ? this.cardLeft : 0;
-        }
-        else {
-            this.cardWidth = this.customWidth;
-            this.cardHeight = this.customHeight;
-            this.cardTop = 0;
-            this.cardLeft = 0;
-            this.canvasLeft = 0;
-        }
+        const videoTrack = this.annotateScreenStream
+            ? this.localStreamScreen?.getVideoTracks()[0]
+            : undefined;
+        const settings = videoTrack?.getSettings();
+        this.screenContentRect = getContainedContentRect(this.customWidth, this.customHeight, settings?.width || 0, settings?.height || 0);
     }
     generateGrid() {
         this.grid = [];
@@ -19897,8 +19928,11 @@ class FlexibleVideo {
     }
     getContainerStyle() {
         return {
+            width: '100%',
+            height: '100%',
             maxWidth: this.customWidth + 'px',
-            left: (this.cardLeft > 0 ? this.cardLeft : 0) + 'px',
+            maxHeight: this.customHeight + 'px',
+            left: '0',
         };
     }
     getCellStyle(component) {
@@ -19918,13 +19952,13 @@ class FlexibleVideo {
             : 'transparent';
         return {
             flex: 1,
-            width: this.cardWidth + 'px',
-            height: this.cardHeight + 'px',
+            width: this.customWidth + 'px',
+            height: this.customHeight + 'px',
             background: baseBackground,
             margin: '1px',
             padding: '0',
             borderRadius,
-            left: this.cardLeft + 'px',
+            left: '0',
             overflow: 'hidden',
             border: !hasContent && this.enableGlassmorphism ? `1px solid ${borderColor}` : 'none',
             backdropFilter: !hasContent && this.enableGlassmorphism ? 'blur(10px)' : 'none',
@@ -19937,9 +19971,10 @@ class FlexibleVideo {
     }
     getScreenboardStyle() {
         return {
-            left: this.canvasLeft + 'px',
-            width: this.cardWidth + 'px',
-            height: this.cardHeight + 'px',
+            top: this.screenContentRect.top + 'px',
+            left: this.screenContentRect.left + 'px',
+            width: this.screenContentRect.width + 'px',
+            height: this.screenContentRect.height + 'px',
             backgroundColor: 'rgba(0, 0, 0, 0.005)',
             borderRadius: `${Math.max(this.cellBorderRadius, 0)}px`,
             boxShadow: this.enableGlow ? '0 4px 16px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.10)' : 'none',
@@ -19996,7 +20031,7 @@ class FlexibleVideo {
         ></ng-container>
       </div>
     </div>
-  `, isInline: true, styles: [".flexible-video{padding:0;flex:1;margin:0;position:relative;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto}.flexible-video__row{display:flex;flex-direction:row}.flexible-video__cell{position:relative}.flexible-video__placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.flexible-video__placeholder-core{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#94a3b82e,#4f46e52e);box-shadow:inset 0 1px #ffffff29}.flexible-video__screenboard{position:absolute;top:0;z-index:2;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
+  `, isInline: true, styles: [".flexible-video{padding:0;flex:1;margin:0;position:relative;display:flex;flex-direction:column;width:100%;height:100%;overflow:hidden}.flexible-video__row{display:flex;flex-direction:row;width:100%;height:100%}.flexible-video__cell{position:relative}.flexible-video__placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.flexible-video__placeholder-core{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#94a3b82e,#4f46e52e);box-shadow:inset 0 1px #ffffff29}.flexible-video__screenboard{position:absolute;top:0;z-index:2;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: FlexibleVideo, decorators: [{
             type: Component,
@@ -20033,7 +20068,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
         ></ng-container>
       </div>
     </div>
-  `, styles: [".flexible-video{padding:0;flex:1;margin:0;position:relative;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto}.flexible-video__row{display:flex;flex-direction:row}.flexible-video__cell{position:relative}.flexible-video__placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.flexible-video__placeholder-core{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#94a3b82e,#4f46e52e);box-shadow:inset 0 1px #ffffff29}.flexible-video__screenboard{position:absolute;top:0;z-index:2;overflow:hidden}\n"] }]
+  `, styles: [".flexible-video{padding:0;flex:1;margin:0;position:relative;display:flex;flex-direction:column;width:100%;height:100%;overflow:hidden}.flexible-video__row{display:flex;flex-direction:row;width:100%;height:100%}.flexible-video__cell{position:relative}.flexible-video__placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.flexible-video__placeholder-core{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#94a3b82e,#4f46e52e);box-shadow:inset 0 1px #ffffff29}.flexible-video__screenboard{position:absolute;top:0;z-index:2;overflow:hidden}\n"] }]
         }], ctorParameters: () => [{ type: i0.Injector }], propDecorators: { customWidth: [{
                 type: Input
             }], customHeight: [{
@@ -21966,14 +22001,14 @@ class Pagination {
     componentSizes = {};
     resolveParameters() {
         if (this.parameters?.getUpdatedAllParams) {
-            return this.parameters.getUpdatedAllParams();
+            return (this.parameters.getCurrentParams?.() ?? this.parameters);
         }
         return this.parameters;
     }
     isDarkModeEnabled() {
         const params = this.resolveParameters();
-        if (typeof params?.isDarkModeValue === 'boolean') {
-            return params.isDarkModeValue;
+        if (typeof params?.['isDarkModeValue'] === 'boolean') {
+            return params['isDarkModeValue'];
         }
         return false;
     }
@@ -23072,21 +23107,25 @@ class ConfirmExitModal {
             this.islevel = changes['islevel'].currentValue;
         }
     }
-    handleConfirmExit() {
+    isHostExit() {
+        return this.islevel === '2' && !this.ban;
+    }
+    handleConfirmExit(endRoomOnHostExit = true) {
         this.exitEventOnConfirm({
             socket: this.socket,
             member: this.member,
             roomName: this.roomName,
             ban: this.ban,
+            endRoomOnHostExit,
         });
         this.onConfirmExitClose();
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ConfirmExitModal, deps: [{ token: ConfirmExit }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ConfirmExitModal, isStandalone: true, selector: "app-confirm-exit-modal", inputs: { isConfirmExitModalVisible: "isConfirmExitModalVisible", onConfirmExitClose: "onConfirmExitClose", position: "position", backgroundColor: "backgroundColor", exitEventOnConfirm: "exitEventOnConfirm", member: "member", ban: "ban", roomName: "roomName", socket: "socket", islevel: "islevel", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate" }, usesOnChanges: true, ngImport: i0, template: "<!-- Custom template override -->\r\n<ng-container *ngIf=\"isConfirmExitModalVisible && customTemplate\">\r\n  <ng-container *ngTemplateOutlet=\"customTemplate; context: {\r\n    $implicit: {\r\n      isConfirmExitModalVisible,\r\n      onConfirmExitClose,\r\n      position,\r\n      backgroundColor,\r\n      member,\r\n      ban,\r\n      roomName,\r\n      socket,\r\n      islevel,\r\n      handleConfirmExit: handleConfirmExit.bind(this)\r\n    }\r\n  }\"></ng-container>\r\n</ng-container>\r\n\r\n<!-- Default template -->\r\n<div *ngIf=\"isConfirmExitModalVisible && !customTemplate\"\r\n     class=\"modal-container\"\r\n     [ngStyle]=\"overlayStyle\">\r\n  <div class=\"modal-content\"\r\n       [ngStyle]=\"getCombinedContentStyle()\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}\r\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\r\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit()\">\r\n        {{ islevel === '2' ? 'End Event' : 'Exit' }}\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end}.cancel-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000;margin-right:20px}.confirm-button{background-color:red}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ConfirmExitModal, isStandalone: true, selector: "app-confirm-exit-modal", inputs: { isConfirmExitModalVisible: "isConfirmExitModalVisible", onConfirmExitClose: "onConfirmExitClose", position: "position", backgroundColor: "backgroundColor", exitEventOnConfirm: "exitEventOnConfirm", member: "member", ban: "ban", roomName: "roomName", socket: "socket", islevel: "islevel", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate" }, usesOnChanges: true, ngImport: i0, template: "<!-- Custom template override -->\r\n<ng-container *ngIf=\"isConfirmExitModalVisible && customTemplate\">\r\n  <ng-container *ngTemplateOutlet=\"customTemplate; context: {\r\n    $implicit: {\r\n      isConfirmExitModalVisible,\r\n      onConfirmExitClose,\r\n      position,\r\n      backgroundColor,\r\n      member,\r\n      ban,\r\n      roomName,\r\n      socket,\r\n      islevel,\n      handleConfirmExit: handleConfirmExit.bind(this),\n      leaveWithoutEnding: handleConfirmExit.bind(this, false)\n    }\r\n  }\"></ng-container>\r\n</ng-container>\r\n\r\n<!-- Default template -->\r\n<div *ngIf=\"isConfirmExitModalVisible && !customTemplate\"\r\n     class=\"modal-container\"\r\n     [ngStyle]=\"overlayStyle\">\r\n  <div class=\"modal-content\"\r\n       [ngStyle]=\"getCombinedContentStyle()\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ isHostExit() ? 'Leave room keeps the event active for everyone else and lets you rejoin. End for everyone closes it for all participants.' : 'Are you sure you want to exit?' }}\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\n      <button *ngIf=\"isHostExit()\" class=\"leave-button\" (click)=\"handleConfirmExit(false)\">Leave room</button>\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit(true)\">\n        {{ isHostExit() ? 'End for everyone' : 'Exit' }}\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px}.cancel-button,.leave-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000}.leave-button{background-color:#475569}.confirm-button{background-color:red}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FormsModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ConfirmExitModal, decorators: [{
             type: Component,
-            args: [{ selector: 'app-confirm-exit-modal', imports: [CommonModule, FormsModule, FontAwesomeModule], template: "<!-- Custom template override -->\r\n<ng-container *ngIf=\"isConfirmExitModalVisible && customTemplate\">\r\n  <ng-container *ngTemplateOutlet=\"customTemplate; context: {\r\n    $implicit: {\r\n      isConfirmExitModalVisible,\r\n      onConfirmExitClose,\r\n      position,\r\n      backgroundColor,\r\n      member,\r\n      ban,\r\n      roomName,\r\n      socket,\r\n      islevel,\r\n      handleConfirmExit: handleConfirmExit.bind(this)\r\n    }\r\n  }\"></ng-container>\r\n</ng-container>\r\n\r\n<!-- Default template -->\r\n<div *ngIf=\"isConfirmExitModalVisible && !customTemplate\"\r\n     class=\"modal-container\"\r\n     [ngStyle]=\"overlayStyle\">\r\n  <div class=\"modal-content\"\r\n       [ngStyle]=\"getCombinedContentStyle()\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}\r\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\r\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit()\">\r\n        {{ islevel === '2' ? 'End Event' : 'Exit' }}\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end}.cancel-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000;margin-right:20px}.confirm-button{background-color:red}\n"] }]
+            args: [{ selector: 'app-confirm-exit-modal', imports: [CommonModule, FormsModule, FontAwesomeModule], template: "<!-- Custom template override -->\r\n<ng-container *ngIf=\"isConfirmExitModalVisible && customTemplate\">\r\n  <ng-container *ngTemplateOutlet=\"customTemplate; context: {\r\n    $implicit: {\r\n      isConfirmExitModalVisible,\r\n      onConfirmExitClose,\r\n      position,\r\n      backgroundColor,\r\n      member,\r\n      ban,\r\n      roomName,\r\n      socket,\r\n      islevel,\n      handleConfirmExit: handleConfirmExit.bind(this),\n      leaveWithoutEnding: handleConfirmExit.bind(this, false)\n    }\r\n  }\"></ng-container>\r\n</ng-container>\r\n\r\n<!-- Default template -->\r\n<div *ngIf=\"isConfirmExitModalVisible && !customTemplate\"\r\n     class=\"modal-container\"\r\n     [ngStyle]=\"overlayStyle\">\r\n  <div class=\"modal-content\"\r\n       [ngStyle]=\"getCombinedContentStyle()\">\r\n    <div class=\"modal-header\" style=\"display: flex; justify-content: space-between;\">\r\n      <h2 class=\"modal-title\">Confirm Exit</h2>\r\n      <span class=\"close-icon\" (click)=\"onConfirmExitClose()\">\r\n        <fa-icon [icon]=\"faTimes\" size=\"lg\"></fa-icon>\r\n      </span>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-body\">\r\n      <p class=\"confirm-exit-text\">\r\n        {{ isHostExit() ? 'Leave room keeps the event active for everyone else and lets you rejoin. End for everyone closes it for all participants.' : 'Are you sure you want to exit?' }}\n      </p>\r\n    </div>\r\n    <hr />\r\n    <div class=\"modal-footer\">\r\n      <button class=\"cancel-button\" (click)=\"onConfirmExitClose()\">Cancel</button>\n      <button *ngIf=\"isHostExit()\" class=\"leave-button\" (click)=\"handleConfirmExit(false)\">Leave room</button>\n      <button class=\"confirm-button\" (click)=\"handleConfirmExit(true)\">\n        {{ isHostExit() ? 'End for everyone' : 'Exit' }}\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".modal-container{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#00000080;z-index:999}.modal-content{position:fixed;background-color:#83c0e9;border-radius:10px;padding:10px;width:80%;max-width:350px;max-height:65%;overflow-y:auto}.modal-header{display:flex;justify-content:space-between}.close-icon{cursor:pointer;color:#000;font-size:large;font-weight:700;margin-right:20px}.modal-footer{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px}.cancel-button,.leave-button,.confirm-button{border-radius:5px;color:#fff;padding:5px 10px}.cancel-button{background-color:#000}.leave-button{background-color:#475569}.confirm-button{background-color:red}\n"] }]
         }], ctorParameters: () => [{ type: ConfirmExit }], propDecorators: { isConfirmExitModalVisible: [{
                 type: Input
             }], onConfirmExitClose: [{
@@ -25825,7 +25864,9 @@ class PreJoinPage {
                 return;
             }
         }
-        if (!this.localLink && !this.hasCloudCredentials()) {
+        // A custom room callback is the credential boundary for proxy-backed apps.
+        // Only the built-in cloud client requires credentials in this browser.
+        if (!this.localLink && !this.createMediaSFURoom && !this.hasCloudCredentials()) {
             this.failMissingCloudCredentials();
             return;
         }
@@ -26107,7 +26148,8 @@ class PreJoinPage {
             this.pending.next(false);
             return;
         }
-        if (!this.hasCloudCredentials()) {
+        // Proxy-backed joins intentionally keep API credentials on the server.
+        if (!this.joinMediaSFURoom && !this.hasCloudCredentials()) {
             this.failMissingCloudCredentials();
             return;
         }
@@ -29394,18 +29436,19 @@ class Screenboard {
         this.dropdownOpen = null;
     }
     startDrawing(event) {
+        const point = getCanvasPoint(event, this.canvas);
         this.isDrawing = true;
-        this.startX = event.offsetX;
-        this.startY = event.offsetY;
+        this.startX = point.x;
+        this.startY = point.y;
         if (this.mode === 'erase') {
-            this.erase(event.offsetX, event.offsetY);
+            this.erase(point.x, point.y);
         }
         else if (this.mode === 'draw' || this.mode === 'freehand') {
             this.ctx.beginPath();
-            this.ctx.moveTo(event.offsetX, event.offsetY);
+            this.ctx.moveTo(point.x, point.y);
             if (this.mode === 'freehand') {
                 this.freehandDrawing = [
-                    { x: event.offsetX, y: event.offsetY, color: this.color, thickness: this.brushThickness },
+                    { x: point.x, y: point.y, color: this.color, thickness: this.brushThickness },
                 ];
             }
         }
@@ -29413,24 +29456,25 @@ class Screenboard {
     draw(event) {
         if (!this.isDrawing)
             return;
-        this.currentX = event.offsetX;
-        this.currentY = event.offsetY;
+        const point = getCanvasPoint(event, this.canvas);
+        this.currentX = point.x;
+        this.currentY = point.y;
         if (this.mode === 'erase') {
-            this.erase(event.offsetX, event.offsetY);
+            this.erase(point.x, point.y);
         }
         else if (this.mode === 'draw') {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.drawShapes();
-            this.drawLine(this.startX, this.startY, event.offsetX, event.offsetY);
+            this.drawLine(this.startX, this.startY, point.x, point.y);
         }
         else if (this.mode === 'freehand') {
-            this.ctx.lineTo(event.offsetX, event.offsetY);
+            this.ctx.lineTo(point.x, point.y);
             this.ctx.strokeStyle = this.color;
             this.ctx.lineWidth = this.brushThickness;
             this.ctx.stroke();
             this.freehandDrawing.push({
-                x: event.offsetX,
-                y: event.offsetY,
+                x: point.x,
+                y: point.y,
                 color: this.color,
                 thickness: this.brushThickness,
             });
@@ -29438,7 +29482,7 @@ class Screenboard {
         else if (this.mode === 'shape') {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.drawShapes();
-            this.drawShape(this.shape, this.startX, this.startY, event.offsetX, event.offsetY);
+            this.drawShape(this.shape, this.startX, this.startY, point.x, point.y);
         }
     }
     stopDrawing() {
@@ -29697,11 +29741,11 @@ class Screenboard {
         this.parameters.updateIsScreenboardModalVisible(false);
     };
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: Screenboard, deps: [{ token: 'customWidth', optional: true }, { token: 'customHeight', optional: true }, { token: 'parameters', optional: true }, { token: 'showAspect', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: Screenboard, isStandalone: true, selector: "app-screenboard", inputs: { customWidth: "customWidth", customHeight: "customHeight", parameters: "parameters", showAspect: "showAspect" }, viewQueries: [{ propertyName: "canvasRef", first: true, predicate: ["canvasRef"], descendants: true }, { propertyName: "screenboardRef", first: true, predicate: ["screenboardRef"], descendants: true }, { propertyName: "screenboardContentRef", first: true, predicate: ["screenboardContentRef"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\" #screenboardRef>\r\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000;\" [style.display]=\"toolbarVisible ? 'flex' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"padding: 0; margin: 0;\" #canvasRef></canvas>\r\n  </div>\r\n</div>\r\n", styles: [".dropdown-menu{position:absolute;top:100%;left:0;z-index:1050;display:none;min-width:11rem;padding:.5rem 0;margin:.25rem 0 0;font-size:.85rem;color:#e2e8f0;text-align:left;background:#0f172afa;border:1px solid rgba(148,163,184,.24);border-radius:10px;box-shadow:0 18px 40px #0f172a59;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.dropdown-menu.show{display:block}.dropdown-item{display:block;width:100%;padding:.5rem 1rem;clear:both;font-weight:500;color:#e2e8f0;text-align:inherit;white-space:nowrap;background-color:transparent;border:0}.dropdown-item:hover,.dropdown-item:focus{background-color:#3b82f62e;color:#fff}#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group>button{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:#ffffff14;color:#f8fafc}.toolbarScreen{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#0f172aeb;border:1px solid rgba(148,163,184,.28);box-shadow:0 16px 32px #0f172a47;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.toolbarScreen .btn-group>button{color:#f8fafc;border:1px solid rgba(148,163,184,.28)}.toolbarScreen .btn-group>button:hover,.toolbarScreen .btn-group>button:focus-visible{background-color:#ffffff2e;border-color:#bfdbfe80;color:#fff}.toolbarScreen .btn-group>button svg,.toolbarScreen .btn-group>button i,.toolbarScreen .btn-group>button fa-icon{color:inherit;fill:currentColor}.toolbarScreen .btn-group>button.active{background-color:#2563ebb8;border-color:#bfdbfe8c}.toolbarScreen .dropdown-item{display:flex;align-items:center;gap:.65rem}.toolbarScreen .dropdown-item .shape-icon{filter:brightness(0) invert(1)}.toolbarScreen .dropdown-item svg,.toolbarScreen .dropdown-item i,.toolbarScreen .dropdown-item fa-icon{color:inherit;fill:currentColor}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px;border:1px solid rgba(148,163,184,.28);border-radius:8px;background-color:#ffffff14}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:0 .6rem;min-width:108px;width:auto;height:36px;background-color:#ffffff14;color:#f8fafc;border:1px solid rgba(148,163,184,.28);border-radius:8px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$1.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$1.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$1.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: Screenboard, isStandalone: true, selector: "app-screenboard", inputs: { customWidth: "customWidth", customHeight: "customHeight", parameters: "parameters", showAspect: "showAspect" }, viewQueries: [{ propertyName: "canvasRef", first: true, predicate: ["canvasRef"], descendants: true }, { propertyName: "screenboardRef", first: true, predicate: ["screenboardRef"], descendants: true }, { propertyName: "screenboardContentRef", first: true, predicate: ["screenboardContentRef"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: hidden;\" #screenboardRef>\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000;\" [style.display]=\"toolbarVisible ? 'flex' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-width: 100%; max-height: 100%; padding: 0; margin: 0;\" #canvasRef></canvas>\n  </div>\r\n</div>\r\n", styles: [".dropdown-menu{position:absolute;top:100%;left:0;z-index:1050;display:none;min-width:11rem;padding:.5rem 0;margin:.25rem 0 0;font-size:.85rem;color:#e2e8f0;text-align:left;background:#0f172afa;border:1px solid rgba(148,163,184,.24);border-radius:10px;box-shadow:0 18px 40px #0f172a59;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.dropdown-menu.show{display:block}.dropdown-item{display:block;width:100%;padding:.5rem 1rem;clear:both;font-weight:500;color:#e2e8f0;text-align:inherit;white-space:nowrap;background-color:transparent;border:0}.dropdown-item:hover,.dropdown-item:focus{background-color:#3b82f62e;color:#fff}#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group>button{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:#ffffff14;color:#f8fafc}.toolbarScreen{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#0f172aeb;border:1px solid rgba(148,163,184,.28);box-shadow:0 16px 32px #0f172a47;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.toolbarScreen .btn-group>button{color:#f8fafc;border:1px solid rgba(148,163,184,.28)}.toolbarScreen .btn-group>button:hover,.toolbarScreen .btn-group>button:focus-visible{background-color:#ffffff2e;border-color:#bfdbfe80;color:#fff}.toolbarScreen .btn-group>button svg,.toolbarScreen .btn-group>button i,.toolbarScreen .btn-group>button fa-icon{color:inherit;fill:currentColor}.toolbarScreen .btn-group>button.active{background-color:#2563ebb8;border-color:#bfdbfe8c}.toolbarScreen .dropdown-item{display:flex;align-items:center;gap:.65rem}.toolbarScreen .dropdown-item .shape-icon{filter:brightness(0) invert(1)}.toolbarScreen .dropdown-item svg,.toolbarScreen .dropdown-item i,.toolbarScreen .dropdown-item fa-icon{color:inherit;fill:currentColor}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px;border:1px solid rgba(148,163,184,.28);border-radius:8px;background-color:#ffffff14}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:0 .6rem;min-width:108px;width:auto;height:36px;background-color:#ffffff14;color:#f8fafc;border:1px solid rgba(148,163,184,.28);border-radius:8px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i2$1.NgSelectOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.ɵNgSelectMultipleOption, selector: "option", inputs: ["ngValue", "value"] }, { kind: "directive", type: i2$1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i2$1.SelectControlValueAccessor, selector: "select:not([multiple])[formControlName],select:not([multiple])[formControl],select:not([multiple])[ngModel]", inputs: ["compareWith"] }, { kind: "directive", type: i2$1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i2$1.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: Screenboard, decorators: [{
             type: Component,
-            args: [{ selector: 'app-screenboard', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto;\" #screenboardRef>\r\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000;\" [style.display]=\"toolbarVisible ? 'flex' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"padding: 0; margin: 0;\" #canvasRef></canvas>\r\n  </div>\r\n</div>\r\n", styles: [".dropdown-menu{position:absolute;top:100%;left:0;z-index:1050;display:none;min-width:11rem;padding:.5rem 0;margin:.25rem 0 0;font-size:.85rem;color:#e2e8f0;text-align:left;background:#0f172afa;border:1px solid rgba(148,163,184,.24);border-radius:10px;box-shadow:0 18px 40px #0f172a59;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.dropdown-menu.show{display:block}.dropdown-item{display:block;width:100%;padding:.5rem 1rem;clear:both;font-weight:500;color:#e2e8f0;text-align:inherit;white-space:nowrap;background-color:transparent;border:0}.dropdown-item:hover,.dropdown-item:focus{background-color:#3b82f62e;color:#fff}#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group>button{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:#ffffff14;color:#f8fafc}.toolbarScreen{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#0f172aeb;border:1px solid rgba(148,163,184,.28);box-shadow:0 16px 32px #0f172a47;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.toolbarScreen .btn-group>button{color:#f8fafc;border:1px solid rgba(148,163,184,.28)}.toolbarScreen .btn-group>button:hover,.toolbarScreen .btn-group>button:focus-visible{background-color:#ffffff2e;border-color:#bfdbfe80;color:#fff}.toolbarScreen .btn-group>button svg,.toolbarScreen .btn-group>button i,.toolbarScreen .btn-group>button fa-icon{color:inherit;fill:currentColor}.toolbarScreen .btn-group>button.active{background-color:#2563ebb8;border-color:#bfdbfe8c}.toolbarScreen .dropdown-item{display:flex;align-items:center;gap:.65rem}.toolbarScreen .dropdown-item .shape-icon{filter:brightness(0) invert(1)}.toolbarScreen .dropdown-item svg,.toolbarScreen .dropdown-item i,.toolbarScreen .dropdown-item fa-icon{color:inherit;fill:currentColor}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px;border:1px solid rgba(148,163,184,.28);border-radius:8px;background-color:#ffffff14}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:0 .6rem;min-width:108px;width:auto;height:36px;background-color:#ffffff14;color:#f8fafc;border:1px solid rgba(148,163,184,.28);border-radius:8px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"] }]
+            args: [{ selector: 'app-screenboard', imports: [CommonModule, FontAwesomeModule, FormsModule], template: "<div id=\"screenboard-interface\" *ngIf=\"showAspect\" style=\"position: relative; display: block; justify-content: center; align-items: center; background-color: transparent; z-index: 1000; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: hidden;\" #screenboardRef>\n  <div id=\"screenboardContent\" style=\"position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; top: 0; left: 0;\" #screenboardContentRef>\r\n    <button id=\"annotateScreen\" class=\"btn btn-primary btnBoardScreen annotateScreenBtn\" style=\"position: absolute; top: 5px; right: 10px; z-index: 1000;\" (click)=\"toggleAnnotate()\">\r\n      <fa-icon [icon]=\"faPencilAlt\" [ngStyle]=\"{'color': parameters.annotateScreenStream ? 'red' : 'green'}\"></fa-icon>\r\n    </button>\r\n\r\n    <button id=\"toolbarToggleScreen\" *ngIf=\"parameters.annotateScreenStream\" class=\"btn btnBoardScreen btn-primary\" style=\"position: absolute; top: 5px; right: 55px; z-index: 1000;\" (click)=\"toggleToolbar()\">\r\n      <fa-icon [icon]=\"toolbarVisible ? faChevronRight : faChevronLeft\"></fa-icon>\r\n    </button>\r\n\r\n    <div class=\"toolbarScreen mb-3\" id=\"toolbarScreen\" style=\"position: absolute; top: 5px; right: 105px; z-index: 1000;\" [style.display]=\"toolbarVisible ? 'flex' : 'none'\">\r\n      <!-- Draw Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-secondary dropdown-toggle\" id=\"drawModeScreen\" (click)=\"handleDropdownClick('drawModeScreen')\">\r\n          <fa-icon [icon]=\"faPencilAlt\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'drawModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(3)\">XX-Small (3px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(6)\">X-Small (6px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(12)\">Small (12px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(18)\">Medium (18px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(24)\">Large (24px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setDrawMode(36)\">X-Large (36px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Freehand Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"freehandModeScreen\" (click)=\"handleDropdownClick('freehandModeScreen')\">\r\n          <fa-icon [icon]=\"faPaintBrush\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'freehandModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(40)\">Large (40px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setFreehandMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Shape Mode Dropdown with Images -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-dark dropdown-toggle\" id=\"shapeModeScreen\" (click)=\"handleDropdownClick('shapeModeScreen')\">\r\n          <fa-icon [icon]=\"faShapes\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'shapeModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('square')\">\r\n            <img src=\"https://mediasfu.com/images/svg/square.svg\" alt=\"Square\" class=\"shape-icon\" /> Square\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rectangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rectangle.svg\" alt=\"Rectangle\" class=\"shape-icon\" /> Rectangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('circle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/circle.svg\" alt=\"Circle\" class=\"shape-icon\" /> Circle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('triangle')\">\r\n            <img src=\"https://mediasfu.com/images/svg/triangle.svg\" alt=\"Triangle\" class=\"shape-icon\" /> Triangle\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('hexagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/hexagon.svg\" alt=\"Hexagon\" class=\"shape-icon\" /> Hexagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('pentagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/pentagon.svg\" alt=\"Pentagon\" class=\"shape-icon\" /> Pentagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('rhombus')\">\r\n            <img src=\"https://mediasfu.com/images/svg/rhombus.svg\" alt=\"Rhombus\" class=\"shape-icon\" /> Rhombus\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('octagon')\">\r\n            <img src=\"https://mediasfu.com/images/svg/octagon.svg\" alt=\"Octagon\" class=\"shape-icon\" /> Octagon\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('oval')\">\r\n            <img src=\"https://mediasfu.com/images/svg/oval.svg\" alt=\"Oval\" class=\"shape-icon\" /> Oval\r\n          </button>\r\n          <button class=\"dropdown-item\" (click)=\"setShapeMode('parallelogram')\">\r\n            <img src=\"https://mediasfu.com/images/svg/parallelogram.svg\" alt=\"Parallelogram\" class=\"shape-icon\" /> Parallelogram\r\n          </button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Erase Mode Dropdown -->\r\n      <div class=\"btn-group\" role=\"group\">\r\n        <button class=\"btn btnBoardScreen btn-danger dropdown-toggle\" id=\"eraseModeScreen\" (click)=\"handleDropdownClick('eraseModeScreen')\">\r\n          <fa-icon [icon]=\"faEraser\"></fa-icon>\r\n        </button>\r\n        <div *ngIf=\"dropdownOpen === 'eraseModeScreen'\" class=\"dropdown-menu show\">\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(5)\">X-Small (5px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(10)\">Small (10px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(20)\">Medium (20px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(30)\">Large (30px)</button>\r\n          <button class=\"dropdown-item\" (click)=\"setEraseMode(60)\">X-Large (60px)</button>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Additional Toolbar Controls -->\r\n      <button class=\"btn btnBoard btn-success\" id=\"zoomResetScreen\" style=\"display: none;\">\r\n        <fa-icon [icon]=\"faSearch\"></fa-icon>\r\n      </button>\r\n\r\n      <input type=\"color\" class=\"btn\" id=\"colorPickerScreen\" [(ngModel)]=\"color\">\r\n      <select id=\"lineTypePickerScreen\" class=\"custom-select\" style=\"width: auto;\" [(ngModel)]=\"lineType\">\r\n        <option value=\"solid\">Solid</option>\r\n        <option value=\"dashed\">Dashed</option>\r\n        <option value=\"dotted\">Dotted</option>\r\n        <option value=\"dashDot\">Dash-Dot</option>\r\n      </select>\r\n    </div>\r\n\r\n    <canvas id=\"canvasRef\" width=\"1280\" height=\"720\" [ngStyle]=\"{'display': parameters.annotateScreenStream ? 'block' : 'none'}\" style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-width: 100%; max-height: 100%; padding: 0; margin: 0;\" #canvasRef></canvas>\n  </div>\r\n</div>\r\n", styles: [".dropdown-menu{position:absolute;top:100%;left:0;z-index:1050;display:none;min-width:11rem;padding:.5rem 0;margin:.25rem 0 0;font-size:.85rem;color:#e2e8f0;text-align:left;background:#0f172afa;border:1px solid rgba(148,163,184,.24);border-radius:10px;box-shadow:0 18px 40px #0f172a59;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.dropdown-menu.show{display:block}.dropdown-item{display:block;width:100%;padding:.5rem 1rem;clear:both;font-weight:500;color:#e2e8f0;text-align:inherit;white-space:nowrap;background-color:transparent;border:0}.dropdown-item:hover,.dropdown-item:focus{background-color:#3b82f62e;color:#fff}#whiteboardCanvas{border:1px solid #000;cursor:crosshair;background-color:#fff}.resize-handle,.move-handle{width:8px;height:8px;background:red;position:absolute}.move-handle{background:#00f}#textInput{display:none;position:absolute;z-index:10;width:200px}.shape-icon{width:20px;height:20px;color:#fff}.toolbar .btn-group button,.toolbar .dropdown-menu a{font-size:.8rem;padding:5px 10px;margin:0 2px;border-radius:4px;transition:background-color .2s}.toolbar .dropdown-menu a{background-color:transparent;color:#1b1a1a}.toolbar .btn-group button:hover,.toolbar .dropdown-menu a:hover{background-color:#e3e7eb}.toolbar .btn-group button.active{background-color:#454d55}.toolbarScreen .btn-group>button{font-size:.8rem;padding:5px 10px;margin:1px 2px;border-radius:4px;transition:background-color .2s;background-color:#ffffff14;color:#f8fafc}.toolbarScreen{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:#0f172aeb;border:1px solid rgba(148,163,184,.28);box-shadow:0 16px 32px #0f172a47;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.toolbarScreen .btn-group>button{color:#f8fafc;border:1px solid rgba(148,163,184,.28)}.toolbarScreen .btn-group>button:hover,.toolbarScreen .btn-group>button:focus-visible{background-color:#ffffff2e;border-color:#bfdbfe80;color:#fff}.toolbarScreen .btn-group>button svg,.toolbarScreen .btn-group>button i,.toolbarScreen .btn-group>button fa-icon{color:inherit;fill:currentColor}.toolbarScreen .btn-group>button.active{background-color:#2563ebb8;border-color:#bfdbfe8c}.toolbarScreen .dropdown-item{display:flex;align-items:center;gap:.65rem}.toolbarScreen .dropdown-item .shape-icon{filter:brightness(0) invert(1)}.toolbarScreen .dropdown-item svg,.toolbarScreen .dropdown-item i,.toolbarScreen .dropdown-item fa-icon{color:inherit;fill:currentColor}#toolbar,#toolbarScreen{transition:display .3s ease-in-out}#toolbarToggle,#toolbarToggleScreen{cursor:pointer;border:\"2px solid black\"!important;font-size:.8rem}#colorPicker,#colorPickerScreen{font-size:.8rem;padding:2px;width:32px;height:32px;border:1px solid rgba(148,163,184,.28);border-radius:8px;background-color:#ffffff14}#lineTypePicker{font-size:.8rem;padding:2px auto;width:32px;height:32px}.btnBoard{font-size:1rem;padding:2px;width:40px;height:40px;margin:2px}#lineTypePickerScreen{font-size:.7rem;padding:0 .6rem;min-width:108px;width:auto;height:36px;background-color:#ffffff14;color:#f8fafc;border:1px solid rgba(148,163,184,.28);border-radius:8px}.toggle-icon{width:30px;height:30px;padding:0;margin:0}#toggleBackground.active{background-color:#fdfeff}.annotateScreenBtn{background-color:#2d2e2f!important;border:2px solid #000!important;color:green!important;font-size:.75rem}\n"] }]
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Optional
                 }, {
@@ -30664,7 +30708,7 @@ class ConfigureWhiteboardModal {
             const emitName = this.whiteboardStarted && !this.whiteboardEnded ? 'updateWhiteboard' : 'startWhiteboard';
             const filteredWhiteboardUsers = this.participantsCopy
                 .filter((participant) => participant.useBoard)
-                .map(({ name, useBoard }) => ({ name, useBoard }));
+                .map(({ name, useBoard }) => ({ name, useBoard: useBoard === true }));
             socket.emit(emitName, { whiteboardUsers: filteredWhiteboardUsers, roomName }, async (response) => {
                 if (response.success) {
                     this.parameters.updateWhiteboardUsers(filteredWhiteboardUsers);
@@ -36351,6 +36395,7 @@ class ModernConfirmExitModalComponent {
     islevel = '';
     title;
     confirmLabel;
+    leaveLabel;
     cancelLabel;
     message;
     overlayStyle;
@@ -36367,12 +36412,16 @@ class ModernConfirmExitModalComponent {
             this.exitEventOnConfirm = this.confirmExitService.confirmExit.bind(this.confirmExitService);
         }
     }
-    handleConfirmExit() {
+    isHostExit() {
+        return this.islevel === '2' && !this.ban;
+    }
+    handleConfirmExit(endRoomOnHostExit = true) {
         this.exitEventOnConfirm?.({
             socket: this.socket,
             member: this.member,
             roomName: this.roomName,
             ban: this.ban,
+            endRoomOnHostExit,
         });
         this.onConfirmExitClose();
     }
@@ -36383,7 +36432,7 @@ class ModernConfirmExitModalComponent {
         if (this.ban) {
             return 'Ban participant';
         }
-        return this.islevel === '2' ? 'End Meeting' : 'Leave Meeting';
+        return this.isHostExit() ? 'Leave or end meeting' : 'Leave Meeting';
     }
     resolvedMessage() {
         if (typeof this.message === 'function') {
@@ -36395,8 +36444,8 @@ class ModernConfirmExitModalComponent {
         if (this.ban) {
             return `Are you sure you want to remove ${this.member || 'this participant'} and block re-entry?`;
         }
-        return this.islevel === '2'
-            ? 'Are you sure you want to end the meeting for everyone?'
+        return this.isHostExit()
+            ? 'Leave room keeps the meeting active for everyone else and lets you rejoin. End for everyone closes it for all participants.'
             : 'Are you sure you want to leave the meeting?';
     }
     resolvedConfirmLabel() {
@@ -36406,7 +36455,10 @@ class ModernConfirmExitModalComponent {
         if (this.ban) {
             return 'Ban & Exit';
         }
-        return this.islevel === '2' ? 'End Meeting' : 'Leave';
+        return this.isHostExit() ? 'End for everyone' : 'Leave';
+    }
+    resolvedLeaveLabel() {
+        return this.leaveLabel || 'Leave room';
     }
     resolvedCancelLabel() {
         return this.cancelLabel || 'Cancel';
@@ -36451,7 +36503,7 @@ class ModernConfirmExitModalComponent {
         return style ? { ...style } : {};
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernConfirmExitModalComponent, deps: [{ token: ConfirmExit }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernConfirmExitModalComponent, isStandalone: true, selector: "app-confirm-exit-modal", inputs: { isConfirmExitModalVisible: "isConfirmExitModalVisible", onConfirmExitClose: "onConfirmExitClose", position: "position", backgroundColor: "backgroundColor", exitEventOnConfirm: "exitEventOnConfirm", member: "member", ban: "ban", roomName: "roomName", socket: "socket", islevel: "islevel", title: "title", confirmLabel: "confirmLabel", cancelLabel: "cancelLabel", message: "message", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate" }, ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernConfirmExitModalComponent, isStandalone: true, selector: "app-confirm-exit-modal", inputs: { isConfirmExitModalVisible: "isConfirmExitModalVisible", onConfirmExitClose: "onConfirmExitClose", position: "position", backgroundColor: "backgroundColor", exitEventOnConfirm: "exitEventOnConfirm", member: "member", ban: "ban", roomName: "roomName", socket: "socket", islevel: "islevel", title: "title", confirmLabel: "confirmLabel", leaveLabel: "leaveLabel", cancelLabel: "cancelLabel", message: "message", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate" }, ngImport: i0, template: `
     <ng-container *ngIf="isConfirmExitModalVisible && customTemplate">
       <ng-container
         *ngTemplateOutlet="
@@ -36470,8 +36522,10 @@ class ModernConfirmExitModalComponent {
               title: resolvedTitle(),
               message: resolvedMessage(),
               confirmLabel: resolvedConfirmLabel(),
+              leaveLabel: resolvedLeaveLabel(),
               cancelLabel: resolvedCancelLabel(),
-              handleConfirmExit: handleConfirmExit.bind(this)
+              handleConfirmExit: handleConfirmExit.bind(this),
+              leaveWithoutEnding: handleConfirmExit.bind(this, false)
             }
           }
         "
@@ -36528,9 +36582,18 @@ class ModernConfirmExitModalComponent {
           </button>
 
           <button
+            *ngIf="isHostExit()"
+            type="button"
+            class="ms-modern-confirm-exit__action ms-modern-confirm-exit__action--secondary"
+            (click)="handleConfirmExit(false)"
+          >
+            {{ resolvedLeaveLabel() }}
+          </button>
+
+          <button
             type="button"
             class="ms-modern-confirm-exit__action ms-modern-confirm-exit__action--primary"
-            (click)="handleConfirmExit()"
+            (click)="handleConfirmExit(true)"
           >
             {{ resolvedConfirmLabel() }}
           </button>
@@ -36560,8 +36623,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
               title: resolvedTitle(),
               message: resolvedMessage(),
               confirmLabel: resolvedConfirmLabel(),
+              leaveLabel: resolvedLeaveLabel(),
               cancelLabel: resolvedCancelLabel(),
-              handleConfirmExit: handleConfirmExit.bind(this)
+              handleConfirmExit: handleConfirmExit.bind(this),
+              leaveWithoutEnding: handleConfirmExit.bind(this, false)
             }
           }
         "
@@ -36618,9 +36683,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
           </button>
 
           <button
+            *ngIf="isHostExit()"
+            type="button"
+            class="ms-modern-confirm-exit__action ms-modern-confirm-exit__action--secondary"
+            (click)="handleConfirmExit(false)"
+          >
+            {{ resolvedLeaveLabel() }}
+          </button>
+
+          <button
             type="button"
             class="ms-modern-confirm-exit__action ms-modern-confirm-exit__action--primary"
-            (click)="handleConfirmExit()"
+            (click)="handleConfirmExit(true)"
           >
             {{ resolvedConfirmLabel() }}
           </button>
@@ -36651,6 +36725,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
             }], title: [{
                 type: Input
             }], confirmLabel: [{
+                type: Input
+            }], leaveLabel: [{
                 type: Input
             }], cancelLabel: [{
                 type: Input
@@ -36743,7 +36819,7 @@ class ModernConfirmHereModalComponent {
         const baseStyle = {
             position: 'fixed',
             width: 'min(420px, calc(100vw - 32px))',
-            background: this.backgroundColor || undefined,
+            ...(this.backgroundColor ? { background: this.backgroundColor } : {}),
             ...this.resolvePositionStyle(),
         };
         return { ...baseStyle, ...this.normalizeStyle(this.contentStyle) };
@@ -39108,3813 +39184,7 @@ class ModernMenuModalComponent {
         </div>
       </section>
     </div>
-  `, isInline: true, styles: [".ms-modern-modal-shell{position:fixed;inset:0;z-index:999;background:#0509148f}.ms-modern-modal-shell--embedded{background:transparent;z-index:auto}.ms-modern-menu-modal{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;overflow:hidden;color:var(--ms-modern-text-primary, #10233f);background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:28px;box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16));backdrop-filter:blur(20px)}.ms-modern-menu-modal--embedded{border-radius:24px}.ms-modern-menu-modal__header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:16px 18px 0}.ms-modern-menu-modal__back{flex:0 0 auto;min-height:36px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 88%,rgba(226,232,240,.72));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;font-weight:700;cursor:pointer;box-shadow:0 10px 24px #0e1e351f}.ms-modern-menu-modal__title-wrap{min-width:0;flex:1 1 220px;display:flex;flex-direction:column;gap:6px}.ms-modern-menu-modal__eyebrow{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.ms-modern-menu-modal__title{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;font-weight:800;line-height:1.2}.ms-modern-menu-modal__subtitle{margin:0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;line-height:1.5}.ms-modern-menu-modal__close{flex:0 0 auto;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 86%,rgba(226,232,240,.8));color:var(--ms-modern-text-primary, #10233f);box-shadow:0 12px 28px #0e1e351f;cursor:pointer}.ms-modern-menu-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:0 18px 18px;overflow-y:auto}.ms-modern-menu-modal__panel{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 92%,rgba(226,232,240,.68));box-shadow:inset 0 1px #ffffff57;box-sizing:border-box}.ms-modern-menu-modal__panel-heading{display:flex;flex-direction:column;gap:4px}.ms-modern-menu-modal__panel-label{color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.ms-modern-menu-modal__panel-copy{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;line-height:1.45}.ms-modern-menu-modal__theme-toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ms-modern-menu-modal__theme-button{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 86%,rgba(226,232,240,.72));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.86rem;font-weight:700;cursor:pointer;box-shadow:inset 0 1px #ffffff3d}.ms-modern-menu-modal__theme-button--active{border-color:var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:color-mix(in srgb,var(--ms-modern-accent-strong, rgba(37, 99, 235, 1)) 18%,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)))}.ms-modern-menu-modal--dark{color:#e2e8f0;background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .94)) 0%,var(--ms-modern-panel-surface, rgba(7, 15, 28, .88)) 100%);border-color:#60a5fa33;box-shadow:0 24px 64px #02081757}.ms-modern-menu-modal--dark .ms-modern-menu-modal__eyebrow,.ms-modern-menu-modal--dark .ms-modern-menu-modal__panel-copy{color:#e2e8f0b8}.ms-modern-menu-modal--dark .ms-modern-menu-modal__back{color:#e2e8f0;border-color:#94a3b82e;background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 88%,rgba(2,8,23,.46));box-shadow:0 10px 24px #02081747}.ms-modern-menu-modal--dark .ms-modern-menu-modal__subtitle,.ms-modern-menu-modal--dark .ms-modern-menu-modal__panel-label{color:#e2e8f0c7}.ms-modern-menu-modal--dark .ms-modern-menu-modal__panel{background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 88%,rgba(2,8,23,.42));border-color:#94a3b838;box-shadow:inset 0 1px #ffffff0d}.ms-modern-menu-modal--dark .ms-modern-menu-modal__close,.ms-modern-menu-modal--dark .ms-modern-menu-modal__theme-button{color:#e2e8f0;background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 84%,rgba(2,8,23,.38));border-color:#94a3b833;box-shadow:inset 0 1px #ffffff0a}.ms-modern-menu-modal--dark .ms-modern-menu-modal__theme-button--active{border-color:#8bdbff61;background:color-mix(in srgb,var(--ms-modern-accent-strong, #8bdbff) 22%,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)))}@media(max-width:575px){.ms-modern-menu-modal__header,.ms-modern-menu-modal__body{padding-left:18px;padding-right:18px}.ms-modern-menu-modal__body{padding-bottom:18px}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: CustomButtons, selector: "app-custom-buttons", inputs: ["buttons", "isDarkMode", "containerAttributes", "fallbackSpinner"] }, { kind: "component", type: MeetingIdComponent, selector: "app-meeting-id-component", inputs: ["meetingID", "isDarkMode", "labelText", "containerAttributes", "labelAttributes", "inputContainerAttributes", "inputAttributes", "buttonAttributes", "iconAttributes", "copyIconColors", "customIcon", "renderContainer", "renderLabel", "renderInput", "renderCopyButton", "renderIcon", "renderInputGroup", "renderContent"] }, { kind: "component", type: MeetingPasscodeComponent, selector: "app-meeting-passcode-component", inputs: ["meetingPasscode", "isDarkMode", "labelText", "containerAttributes", "labelAttributes", "inputAttributes", "renderContainer", "renderLabel", "renderInput", "renderContent"] }, { kind: "component", type: ShareButtonsComponent, selector: "app-share-buttons-component", inputs: ["meetingID", "isDarkMode", "shareButtons", "eventType", "localLink", "containerAttributes", "renderContainer", "renderButtons", "renderButton", "renderIcon", "getShareUrlFn"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernMenuModalComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-modern-menu-modal', imports: [
-                        CommonModule,
-                        FontAwesomeModule,
-                        CustomButtons,
-                        MeetingIdComponent,
-                        MeetingPasscodeComponent,
-                        ShareButtonsComponent,
-                    ], template: `
-    <ng-container *ngIf="isVisible && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isVisible: isVisible,
-              isDarkMode: resolvedIsDarkMode,
-              customButtons: customButtons,
-              roomName: roomName,
-              adminPasscode: adminPasscode,
-              islevel: islevel,
-              eventType: eventType,
-              localLink: localLink,
-              onToggleTheme: onToggleTheme,
-              onClose: onClose
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible && !customTemplate"
-      class="ms-modern-modal-shell"
-      [class.ms-modern-modal-shell--embedded]="isEmbedded()"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-menu-modal"
-        [class.ms-modern-menu-modal--embedded]="isEmbedded()"
-        [class.ms-modern-menu-modal--dark]="resolvedIsDarkMode"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-menu-modal__header">
-          <button
-            *ngIf="showBackButton"
-            type="button"
-            class="ms-modern-menu-modal__back"
-            [attr.aria-label]="backLabel || 'Back'"
-            (click)="handleBack()"
-          >
-            <fa-icon [icon]="faArrowLeft"></fa-icon>
-            <span>{{ backLabel || 'Back' }}</span>
-          </button>
-
-          <div class="ms-modern-menu-modal__title-wrap">
-            <span class="ms-modern-menu-modal__eyebrow">{{ headerEyebrow() }}</span>
-            <h2 class="ms-modern-menu-modal__title">
-              <fa-icon [icon]="faBars"></fa-icon>
-              <span>{{ title || 'Menu' }}</span>
-            </h2>
-            <p class="ms-modern-menu-modal__subtitle">
-              {{ headerSubtitle() }}
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-menu-modal__close"
-            aria-label="Close menu"
-            (click)="handleClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-menu-modal__body">
-          <ng-container *ngIf="showDefaultSections">
-            <section class="ms-modern-menu-modal__panel">
-              <div class="ms-modern-menu-modal__panel-heading">
-                <span class="ms-modern-menu-modal__panel-label">Theme</span>
-                <span class="ms-modern-menu-modal__panel-copy">Switch the room shell without leaving the sidebar.</span>
-              </div>
-
-              <div class="ms-modern-menu-modal__theme-toggle" role="group" aria-label="Theme mode">
-                <button
-                  type="button"
-                  class="ms-modern-menu-modal__theme-button"
-                  [class.ms-modern-menu-modal__theme-button--active]="resolvedIsDarkMode"
-                  (click)="toggleTheme(true)"
-                >
-                  <fa-icon [icon]="faMoon"></fa-icon>
-                  <span>Dark</span>
-                </button>
-
-                <button
-                  type="button"
-                  class="ms-modern-menu-modal__theme-button"
-                  [class.ms-modern-menu-modal__theme-button--active]="!resolvedIsDarkMode"
-                  (click)="toggleTheme(false)"
-                >
-                  <fa-icon [icon]="faSun"></fa-icon>
-                  <span>Light</span>
-                </button>
-              </div>
-            </section>
-
-            <section class="ms-modern-menu-modal__panel">
-              <div class="ms-modern-menu-modal__panel-heading">
-                <span class="ms-modern-menu-modal__panel-label">Actions</span>
-                <span class="ms-modern-menu-modal__panel-copy">Launch secondary room tools from the same sidebar surface.</span>
-              </div>
-
-              <app-custom-buttons
-                [buttons]="customButtons"
-                [isDarkMode]="resolvedIsDarkMode"
-                [containerAttributes]="{
-                  style: {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '10px'
-                  }
-                }"
-              ></app-custom-buttons>
-            </section>
-
-            <section class="ms-modern-menu-modal__panel">
-              <div class="ms-modern-menu-modal__panel-heading">
-                <span class="ms-modern-menu-modal__panel-label">Meeting ID</span>
-                <span class="ms-modern-menu-modal__panel-copy">Copy the active room identifier instantly.</span>
-              </div>
-
-              <app-meeting-id-component
-                [meetingID]="roomName"
-                [labelText]="'Meeting ID'"
-                [isDarkMode]="resolvedIsDarkMode"
-              ></app-meeting-id-component>
-            </section>
-
-            <section *ngIf="islevel === '2'" class="ms-modern-menu-modal__panel">
-              <div class="ms-modern-menu-modal__panel-heading">
-                <span class="ms-modern-menu-modal__panel-label">Host Passcode</span>
-                <span class="ms-modern-menu-modal__panel-copy">Keep moderator access details close by while you manage the room.</span>
-              </div>
-
-              <app-meeting-passcode-component
-                [meetingPasscode]="adminPasscode"
-                [labelText]="'Host Passcode'"
-                [isDarkMode]="resolvedIsDarkMode"
-              ></app-meeting-passcode-component>
-            </section>
-
-            <section *ngIf="shareButtons" class="ms-modern-menu-modal__panel">
-              <div class="ms-modern-menu-modal__panel-heading">
-                <span class="ms-modern-menu-modal__panel-label">Share</span>
-                <span class="ms-modern-menu-modal__panel-copy">Send room access through the built-in sharing actions.</span>
-              </div>
-
-              <app-share-buttons-component
-                [meetingID]="roomName"
-                [eventType]="eventType"
-                [isDarkMode]="resolvedIsDarkMode"
-                [localLink]="localLink"
-              ></app-share-buttons-component>
-            </section>
-          </ng-container>
-
-          <ng-content></ng-content>
-        </div>
-      </section>
-    </div>
-  `, styles: [".ms-modern-modal-shell{position:fixed;inset:0;z-index:999;background:#0509148f}.ms-modern-modal-shell--embedded{background:transparent;z-index:auto}.ms-modern-menu-modal{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;overflow:hidden;color:var(--ms-modern-text-primary, #10233f);background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:28px;box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16));backdrop-filter:blur(20px)}.ms-modern-menu-modal--embedded{border-radius:24px}.ms-modern-menu-modal__header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:16px 18px 0}.ms-modern-menu-modal__back{flex:0 0 auto;min-height:36px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 88%,rgba(226,232,240,.72));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;font-weight:700;cursor:pointer;box-shadow:0 10px 24px #0e1e351f}.ms-modern-menu-modal__title-wrap{min-width:0;flex:1 1 220px;display:flex;flex-direction:column;gap:6px}.ms-modern-menu-modal__eyebrow{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.ms-modern-menu-modal__title{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;font-weight:800;line-height:1.2}.ms-modern-menu-modal__subtitle{margin:0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;line-height:1.5}.ms-modern-menu-modal__close{flex:0 0 auto;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 86%,rgba(226,232,240,.8));color:var(--ms-modern-text-primary, #10233f);box-shadow:0 12px 28px #0e1e351f;cursor:pointer}.ms-modern-menu-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:0 18px 18px;overflow-y:auto}.ms-modern-menu-modal__panel{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 92%,rgba(226,232,240,.68));box-shadow:inset 0 1px #ffffff57;box-sizing:border-box}.ms-modern-menu-modal__panel-heading{display:flex;flex-direction:column;gap:4px}.ms-modern-menu-modal__panel-label{color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.ms-modern-menu-modal__panel-copy{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;line-height:1.45}.ms-modern-menu-modal__theme-toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ms-modern-menu-modal__theme-button{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 86%,rgba(226,232,240,.72));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.86rem;font-weight:700;cursor:pointer;box-shadow:inset 0 1px #ffffff3d}.ms-modern-menu-modal__theme-button--active{border-color:var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:color-mix(in srgb,var(--ms-modern-accent-strong, rgba(37, 99, 235, 1)) 18%,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)))}.ms-modern-menu-modal--dark{color:#e2e8f0;background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .94)) 0%,var(--ms-modern-panel-surface, rgba(7, 15, 28, .88)) 100%);border-color:#60a5fa33;box-shadow:0 24px 64px #02081757}.ms-modern-menu-modal--dark .ms-modern-menu-modal__eyebrow,.ms-modern-menu-modal--dark .ms-modern-menu-modal__panel-copy{color:#e2e8f0b8}.ms-modern-menu-modal--dark .ms-modern-menu-modal__back{color:#e2e8f0;border-color:#94a3b82e;background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 88%,rgba(2,8,23,.46));box-shadow:0 10px 24px #02081747}.ms-modern-menu-modal--dark .ms-modern-menu-modal__subtitle,.ms-modern-menu-modal--dark .ms-modern-menu-modal__panel-label{color:#e2e8f0c7}.ms-modern-menu-modal--dark .ms-modern-menu-modal__panel{background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 88%,rgba(2,8,23,.42));border-color:#94a3b838;box-shadow:inset 0 1px #ffffff0d}.ms-modern-menu-modal--dark .ms-modern-menu-modal__close,.ms-modern-menu-modal--dark .ms-modern-menu-modal__theme-button{color:#e2e8f0;background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 84%,rgba(2,8,23,.38));border-color:#94a3b833;box-shadow:inset 0 1px #ffffff0a}.ms-modern-menu-modal--dark .ms-modern-menu-modal__theme-button--active{border-color:#8bdbff61;background:color-mix(in srgb,var(--ms-modern-accent-strong, #8bdbff) 22%,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)))}@media(max-width:575px){.ms-modern-menu-modal__header,.ms-modern-menu-modal__body{padding-left:18px;padding-right:18px}.ms-modern-menu-modal__body{padding-bottom:18px}}\n"] }]
-        }], propDecorators: { backgroundColor: [{
-                type: Input
-            }], isVisible: [{
-                type: Input
-            }], isDarkMode: [{
-                type: Input
-            }], onToggleTheme: [{
-                type: Input
-            }], customButtons: [{
-                type: Input
-            }], shareButtons: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], roomName: [{
-                type: Input
-            }], adminPasscode: [{
-                type: Input
-            }], islevel: [{
-                type: Input
-            }], eventType: [{
-                type: Input
-            }], localLink: [{
-                type: Input
-            }], title: [{
-                type: Input
-            }], overlayStyle: [{
-                type: Input
-            }], contentStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }], onClose: [{
-                type: Input
-            }], renderMode: [{
-                type: Input
-            }], showHeader: [{
-                type: Input
-            }], showDefaultSections: [{
-                type: Input
-            }], showBackButton: [{
-                type: Input
-            }], backLabel: [{
-                type: Input
-            }], onBack: [{
-                type: Input
-            }] } });
-
-class ModernParticipantsModalComponent {
-    muteParticipantsService;
-    messageParticipantsService;
-    removeParticipantsService;
-    isParticipantsModalVisible = false;
-    onParticipantsClose = () => { };
-    onParticipantsFilterChange = (_filter) => { };
-    participantsCounter = 0;
-    onMuteParticipants;
-    onMessageParticipants;
-    onRemoveParticipants;
-    parameters = {};
-    position = 'topRight';
-    backgroundColor = 'var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, 0.94))';
-    overlayStyle;
-    contentStyle;
-    customTemplate;
-    renderMode = 'modal';
-    showHeader = true;
-    faTimes = faTimes;
-    participant_s = [];
-    participantsCounter_s = 0;
-    constructor(muteParticipantsService, messageParticipantsService, removeParticipantsService) {
-        this.muteParticipantsService = muteParticipantsService;
-        this.messageParticipantsService = messageParticipantsService;
-        this.removeParticipantsService = removeParticipantsService;
-    }
-    ngOnInit() {
-        this.ensureHandlers();
-        this.updateParticipantsData();
-    }
-    ngOnChanges(_changes) {
-        this.ensureHandlers();
-        this.updateParticipantsData();
-    }
-    isVisible() {
-        return this.isEmbedded() || this.isParticipantsModalVisible;
-    }
-    isEmbedded() {
-        return isEmbeddedRenderMode(this.renderMode);
-    }
-    handleOverlayClick() {
-        if (!this.isEmbedded()) {
-            this.handleClose();
-        }
-    }
-    handleFilterChange(event) {
-        const inputElement = event.target;
-        this.onParticipantsFilterChange(inputElement.value);
-    }
-    handleClose() {
-        this.onParticipantsClose();
-    }
-    canShowParticipantList() {
-        const participantsValue = this.parameters.coHostResponsibility?.find((item) => item.name === 'participants')?.value;
-        return (this.parameters.islevel === '2' ||
-            (this.parameters.coHost === this.parameters.member && participantsValue === true));
-    }
-    resolvedMuteHandler() {
-        return (this.onMuteParticipants ??
-            this.muteParticipantsService.muteParticipants.bind(this.muteParticipantsService));
-    }
-    resolvedMessageHandler() {
-        return (this.onMessageParticipants ??
-            this.messageParticipantsService.messageParticipants.bind(this.messageParticipantsService));
-    }
-    resolvedRemoveHandler() {
-        return (this.onRemoveParticipants ??
-            this.removeParticipantsService.removeParticipants.bind(this.removeParticipantsService));
-    }
-    resolvedOverlayStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'static',
-                inset: 'auto',
-                width: '100%',
-                height: '100%',
-                minHeight: 0,
-                display: 'block',
-                background: 'transparent',
-                zIndex: 'auto',
-            }
-            : {
-                position: 'fixed',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                background: 'rgba(5, 9, 20, 0.56)',
-                zIndex: 999,
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.overlayStyle) };
-    }
-    resolvedContentStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'relative',
-                inset: 'auto',
-                width: '100%',
-                maxWidth: 'none',
-                height: '100%',
-                maxHeight: 'none',
-                margin: 0,
-                background: this.backgroundColor,
-            }
-            : {
-                position: 'fixed',
-                top: this.position.includes('top') ? '16px' : 'auto',
-                bottom: this.position.includes('bottom') ? '16px' : 'auto',
-                left: this.position.includes('Left') ? '16px' : 'auto',
-                right: this.position.includes('Right') ? '16px' : 'auto',
-                width: 'min(460px, calc(100% - 32px))',
-                maxWidth: 'calc(100% - 32px)',
-                maxHeight: 'calc(100% - 32px)',
-                background: this.backgroundColor,
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.contentStyle) };
-    }
-    ensureHandlers() {
-        if (!this.onMuteParticipants) {
-            this.onMuteParticipants = this.muteParticipantsService.muteParticipants.bind(this.muteParticipantsService);
-        }
-        if (!this.onMessageParticipants) {
-            this.onMessageParticipants = this.messageParticipantsService.messageParticipants.bind(this.messageParticipantsService);
-        }
-        if (!this.onRemoveParticipants) {
-            this.onRemoveParticipants = this.removeParticipantsService.removeParticipants.bind(this.removeParticipantsService);
-        }
-    }
-    updateParticipantsData() {
-        const freshParameters = this.parameters?.getUpdatedAllParams
-            ? this.parameters.getUpdatedAllParams()
-            : this.parameters;
-        this.parameters = freshParameters ?? {};
-        this.participant_s = this.parameters.filteredParticipants ?? [];
-        this.participantsCounter_s = this.participant_s.length;
-    }
-    normalizeStyle(style) {
-        return style ? { ...style } : {};
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernParticipantsModalComponent, deps: [{ token: MuteParticipants }, { token: MessageParticipants }, { token: RemoveParticipants }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernParticipantsModalComponent, isStandalone: true, selector: "app-participants-modal", inputs: { isParticipantsModalVisible: "isParticipantsModalVisible", onParticipantsClose: "onParticipantsClose", onParticipantsFilterChange: "onParticipantsFilterChange", participantsCounter: "participantsCounter", onMuteParticipants: "onMuteParticipants", onMessageParticipants: "onMessageParticipants", onRemoveParticipants: "onRemoveParticipants", parameters: "parameters", position: "position", backgroundColor: "backgroundColor", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate", renderMode: "renderMode", showHeader: "showHeader" }, usesOnChanges: true, ngImport: i0, template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isParticipantsModalVisible: isParticipantsModalVisible,
-              participantsCounter: participantsCounter_s,
-              position: position,
-              backgroundColor: backgroundColor,
-              parameters: parameters,
-              onParticipantsClose: onParticipantsClose,
-              onParticipantsFilterChange: onParticipantsFilterChange,
-              handleFilterChange: handleFilterChange.bind(this),
-              handleClose: handleClose.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-modal-shell"
-      [class.ms-modern-modal-shell--embedded]="isEmbedded()"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-participants-modal"
-        [class.ms-modern-participants-modal--embedded]="isEmbedded()"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-participants-modal__header">
-          <div class="ms-modern-participants-modal__title-wrap">
-            <div class="ms-modern-participants-modal__title-row">
-              <h2 class="ms-modern-participants-modal__title">Participants</h2>
-              <span class="ms-modern-participants-modal__badge">{{ participantsCounter_s }}</span>
-            </div>
-            <p class="ms-modern-participants-modal__subtitle">
-              Search the room roster and take host or co-host actions where permitted.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-participants-modal__close"
-            (click)="handleClose()"
-            aria-label="Close participants"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-participants-modal__body">
-          <label class="ms-modern-participants-modal__search">
-            <input
-              type="text"
-              class="ms-modern-participants-modal__search-input"
-              placeholder="Search participants"
-              (input)="handleFilterChange($event)"
-            />
-          </label>
-
-          <div class="ms-modern-participants-modal__lists">
-            <ng-container *ngIf="parameters.participants?.length; else emptyState">
-              <div class="ms-modern-participants-modal__list-panel">
-                <app-participant-list
-                  *ngIf="canShowParticipantList(); else readOnlyList"
-                  [participants]="participant_s"
-                  [isBroadcast]="parameters.eventType === 'broadcast'"
-                  [onMuteParticipants]="resolvedMuteHandler()"
-                  [onMessageParticipants]="resolvedMessageHandler()"
-                  [onRemoveParticipants]="resolvedRemoveHandler()"
-                  [socket]="parameters.socket"
-                  [coHostResponsibility]="parameters.coHostResponsibility"
-                  [coHost]="parameters.coHost"
-                  [member]="parameters.member"
-                  [islevel]="parameters.islevel"
-                  [roomName]="parameters.roomName"
-                  [updateIsMessagesModalVisible]="parameters.updateIsMessagesModalVisible"
-                  [updateStartDirectMessage]="parameters.updateStartDirectMessage"
-                  [updateDirectMessageDetails]="parameters.updateDirectMessageDetails"
-                  [updateParticipants]="parameters.updateParticipants"
-                ></app-participant-list>
-
-                <ng-template #readOnlyList>
-                  <app-participant-list-others
-                    [participants]="participant_s"
-                    [coHost]="parameters.coHost"
-                    [member]="parameters.member"
-                  ></app-participant-list-others>
-                </ng-template>
-              </div>
-            </ng-container>
-
-            <ng-template #emptyState>
-              <div class="ms-modern-participants-modal__empty">
-                No participants match the current filter.
-              </div>
-            </ng-template>
-          </div>
-        </div>
-      </section>
-    </div>
-  `, isInline: true, styles: [".ms-modern-modal-shell{position:fixed;inset:0;z-index:999;background:#0509148f}.ms-modern-modal-shell--embedded{background:transparent;z-index:auto}.ms-modern-participants-modal{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;overflow:hidden;color:var(--ms-modern-text-primary, #10233f);background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:28px;box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16));backdrop-filter:blur(20px)}.ms-modern-participants-modal--embedded{border-radius:24px}.ms-modern-participants-modal__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 22px 0}.ms-modern-participants-modal__title-wrap{min-width:0;display:flex;flex-direction:column;gap:6px}.ms-modern-participants-modal__title-row{display:flex;align-items:center;gap:10px}.ms-modern-participants-modal__title{margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1rem;font-weight:700;line-height:1.2}.ms-modern-participants-modal__badge{min-width:36px;min-height:32px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:999px;background:linear-gradient(135deg,var(--ms-modern-accent, #1476d2),var(--ms-modern-accent-strong, #0d5ca8));color:#fff;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.8rem;font-weight:700}.ms-modern-participants-modal__subtitle{margin:0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.55}.ms-modern-participants-modal__close{flex:0 0 auto;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-field-background, rgba(248, 250, 252, .92)) 100%);color:var(--ms-modern-text-primary, #10233f);box-shadow:0 12px 28px #0e1e351f;cursor:pointer}.ms-modern-participants-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:0 22px 22px}.ms-modern-participants-modal__search{display:block}.ms-modern-participants-modal__search-input{width:100%;min-height:46px;padding:0 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-field-background, rgba(248, 250, 252, .92));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;box-sizing:border-box}.ms-modern-participants-modal__lists{flex:1;min-height:0;overflow-y:auto}.ms-modern-participants-modal__list-panel{min-height:100%;padding:12px;border-radius:20px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-panel-surface, rgba(255, 255, 255, .82));box-sizing:border-box}.ms-modern-participants-modal__empty{padding:24px 16px;border-radius:18px;border:1px dashed var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;text-align:center}:host ::ng-deep .container,:host ::ng-deep .participant-item,:host ::ng-deep .participant-item-others{min-width:0}:host ::ng-deep .participant-item{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:\"identity danger\" \"actions actions\"!important;align-items:center!important;column-gap:10px!important;row-gap:10px!important}:host ::ng-deep .participant-item__identity{grid-area:identity!important;min-width:0}:host ::ng-deep .participant-item__status{display:none!important}:host ::ng-deep .participant-item__actions:not(.participant-item__actions--danger){grid-area:actions!important;justify-content:flex-end!important}:host ::ng-deep .participant-item__actions--danger{grid-area:danger!important;justify-self:end!important}@media(max-width:575px){.ms-modern-participants-modal__header,.ms-modern-participants-modal__body{padding-left:18px;padding-right:18px}.ms-modern-participants-modal__body{padding-bottom:18px}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: ParticipantList, selector: "app-participant-list", inputs: ["participants", "isBroadcast", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "socket", "coHostResponsibility", "member", "islevel", "showAlert", "coHost", "roomName", "updateIsMessagesModalVisible", "updateDirectMessageDetails", "updateStartDirectMessage", "updateParticipants"] }, { kind: "component", type: ParticipantListOthers, selector: "app-participant-list-others", inputs: ["participants", "coHost", "member"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernParticipantsModalComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-participants-modal', imports: [CommonModule, FontAwesomeModule, ParticipantList, ParticipantListOthers], template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isParticipantsModalVisible: isParticipantsModalVisible,
-              participantsCounter: participantsCounter_s,
-              position: position,
-              backgroundColor: backgroundColor,
-              parameters: parameters,
-              onParticipantsClose: onParticipantsClose,
-              onParticipantsFilterChange: onParticipantsFilterChange,
-              handleFilterChange: handleFilterChange.bind(this),
-              handleClose: handleClose.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-modal-shell"
-      [class.ms-modern-modal-shell--embedded]="isEmbedded()"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-participants-modal"
-        [class.ms-modern-participants-modal--embedded]="isEmbedded()"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-participants-modal__header">
-          <div class="ms-modern-participants-modal__title-wrap">
-            <div class="ms-modern-participants-modal__title-row">
-              <h2 class="ms-modern-participants-modal__title">Participants</h2>
-              <span class="ms-modern-participants-modal__badge">{{ participantsCounter_s }}</span>
-            </div>
-            <p class="ms-modern-participants-modal__subtitle">
-              Search the room roster and take host or co-host actions where permitted.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-participants-modal__close"
-            (click)="handleClose()"
-            aria-label="Close participants"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-participants-modal__body">
-          <label class="ms-modern-participants-modal__search">
-            <input
-              type="text"
-              class="ms-modern-participants-modal__search-input"
-              placeholder="Search participants"
-              (input)="handleFilterChange($event)"
-            />
-          </label>
-
-          <div class="ms-modern-participants-modal__lists">
-            <ng-container *ngIf="parameters.participants?.length; else emptyState">
-              <div class="ms-modern-participants-modal__list-panel">
-                <app-participant-list
-                  *ngIf="canShowParticipantList(); else readOnlyList"
-                  [participants]="participant_s"
-                  [isBroadcast]="parameters.eventType === 'broadcast'"
-                  [onMuteParticipants]="resolvedMuteHandler()"
-                  [onMessageParticipants]="resolvedMessageHandler()"
-                  [onRemoveParticipants]="resolvedRemoveHandler()"
-                  [socket]="parameters.socket"
-                  [coHostResponsibility]="parameters.coHostResponsibility"
-                  [coHost]="parameters.coHost"
-                  [member]="parameters.member"
-                  [islevel]="parameters.islevel"
-                  [roomName]="parameters.roomName"
-                  [updateIsMessagesModalVisible]="parameters.updateIsMessagesModalVisible"
-                  [updateStartDirectMessage]="parameters.updateStartDirectMessage"
-                  [updateDirectMessageDetails]="parameters.updateDirectMessageDetails"
-                  [updateParticipants]="parameters.updateParticipants"
-                ></app-participant-list>
-
-                <ng-template #readOnlyList>
-                  <app-participant-list-others
-                    [participants]="participant_s"
-                    [coHost]="parameters.coHost"
-                    [member]="parameters.member"
-                  ></app-participant-list-others>
-                </ng-template>
-              </div>
-            </ng-container>
-
-            <ng-template #emptyState>
-              <div class="ms-modern-participants-modal__empty">
-                No participants match the current filter.
-              </div>
-            </ng-template>
-          </div>
-        </div>
-      </section>
-    </div>
-  `, styles: [".ms-modern-modal-shell{position:fixed;inset:0;z-index:999;background:#0509148f}.ms-modern-modal-shell--embedded{background:transparent;z-index:auto}.ms-modern-participants-modal{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;overflow:hidden;color:var(--ms-modern-text-primary, #10233f);background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:28px;box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16));backdrop-filter:blur(20px)}.ms-modern-participants-modal--embedded{border-radius:24px}.ms-modern-participants-modal__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 22px 0}.ms-modern-participants-modal__title-wrap{min-width:0;display:flex;flex-direction:column;gap:6px}.ms-modern-participants-modal__title-row{display:flex;align-items:center;gap:10px}.ms-modern-participants-modal__title{margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1rem;font-weight:700;line-height:1.2}.ms-modern-participants-modal__badge{min-width:36px;min-height:32px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:999px;background:linear-gradient(135deg,var(--ms-modern-accent, #1476d2),var(--ms-modern-accent-strong, #0d5ca8));color:#fff;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.8rem;font-weight:700}.ms-modern-participants-modal__subtitle{margin:0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.55}.ms-modern-participants-modal__close{flex:0 0 auto;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-field-background, rgba(248, 250, 252, .92)) 100%);color:var(--ms-modern-text-primary, #10233f);box-shadow:0 12px 28px #0e1e351f;cursor:pointer}.ms-modern-participants-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:0 22px 22px}.ms-modern-participants-modal__search{display:block}.ms-modern-participants-modal__search-input{width:100%;min-height:46px;padding:0 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-field-background, rgba(248, 250, 252, .92));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;box-sizing:border-box}.ms-modern-participants-modal__lists{flex:1;min-height:0;overflow-y:auto}.ms-modern-participants-modal__list-panel{min-height:100%;padding:12px;border-radius:20px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-panel-surface, rgba(255, 255, 255, .82));box-sizing:border-box}.ms-modern-participants-modal__empty{padding:24px 16px;border-radius:18px;border:1px dashed var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;text-align:center}:host ::ng-deep .container,:host ::ng-deep .participant-item,:host ::ng-deep .participant-item-others{min-width:0}:host ::ng-deep .participant-item{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:\"identity danger\" \"actions actions\"!important;align-items:center!important;column-gap:10px!important;row-gap:10px!important}:host ::ng-deep .participant-item__identity{grid-area:identity!important;min-width:0}:host ::ng-deep .participant-item__status{display:none!important}:host ::ng-deep .participant-item__actions:not(.participant-item__actions--danger){grid-area:actions!important;justify-content:flex-end!important}:host ::ng-deep .participant-item__actions--danger{grid-area:danger!important;justify-self:end!important}@media(max-width:575px){.ms-modern-participants-modal__header,.ms-modern-participants-modal__body{padding-left:18px;padding-right:18px}.ms-modern-participants-modal__body{padding-bottom:18px}}\n"] }]
-        }], ctorParameters: () => [{ type: MuteParticipants }, { type: MessageParticipants }, { type: RemoveParticipants }], propDecorators: { isParticipantsModalVisible: [{
-                type: Input
-            }], onParticipantsClose: [{
-                type: Input
-            }], onParticipantsFilterChange: [{
-                type: Input
-            }], participantsCounter: [{
-                type: Input
-            }], onMuteParticipants: [{
-                type: Input
-            }], onMessageParticipants: [{
-                type: Input
-            }], onRemoveParticipants: [{
-                type: Input
-            }], parameters: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], backgroundColor: [{
-                type: Input
-            }], overlayStyle: [{
-                type: Input
-            }], contentStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }], renderMode: [{
-                type: Input
-            }], showHeader: [{
-                type: Input
-            }] } });
-
-class ModernRequestsModalComponent {
-    respondToRequestsService;
-    isRequestsModalVisible = false;
-    requestCounter = 0;
-    requestList = [];
-    roomName = '';
-    socket = {};
-    backgroundColor = 'var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, 0.94))';
-    position = 'topRight';
-    parameters = {};
-    onRequestClose = () => { };
-    onRequestFilterChange = (_filter) => { };
-    onRequestItemPress;
-    updateRequestList = (_newRequestList) => { };
-    overlayStyle;
-    contentStyle;
-    customTemplate;
-    renderMode = 'modal';
-    showHeader = true;
-    faTimes = faTimes;
-    faCheck = faCheck;
-    faSearch = faSearch;
-    requestList_s = [];
-    requestCounter_s = 0;
-    requestFilterValue = '';
-    iconMap = {
-        'fa-microphone': faMicrophone,
-        'fa-desktop': faDesktop,
-        'fa-video': faVideo,
-        'fa-comments': faComments,
-    };
-    constructor(respondToRequestsService) {
-        this.respondToRequestsService = respondToRequestsService;
-    }
-    ngOnInit() {
-        this.ensureHandler();
-        this.updateRequests();
-    }
-    ngOnChanges(_changes) {
-        this.ensureHandler();
-        this.updateRequests();
-    }
-    isVisible() {
-        return this.isEmbedded() || this.isRequestsModalVisible;
-    }
-    isEmbedded() {
-        return isEmbeddedRenderMode(this.renderMode);
-    }
-    handleOverlayClick() {
-        if (!this.isEmbedded()) {
-            this.handleModalClose();
-        }
-    }
-    handleModalClose() {
-        this.onRequestClose();
-    }
-    handleFilterChange(event) {
-        const input = event.target;
-        this.requestFilterValue = input.value;
-        this.onRequestFilterChange(this.requestFilterValue);
-        this.updateRequests();
-    }
-    emptyStateCopy() {
-        return this.requestFilterValue.trim()
-            ? 'No requests match the current filter.'
-            : 'No pending requests.';
-    }
-    handleRequestAction(request, action) {
-        this.resolvedRequestHandler()({
-            request,
-            updateRequestList: this.updateRequestList,
-            requestList: this.requestList,
-            action,
-            roomName: this.roomName,
-            socket: this.socket,
-        });
-    }
-    getIcon(iconName) {
-        return this.iconMap[iconName] ?? faComments;
-    }
-    describeRequest(iconName) {
-        switch (iconName) {
-            case 'fa-microphone':
-                return 'Wants permission to unmute and speak.';
-            case 'fa-desktop':
-                return 'Asked to share a screen or presentation.';
-            case 'fa-video':
-                return 'Requested camera access in the active room.';
-            case 'fa-comments':
-                return 'Needs a host response through the room chat flow.';
-            default:
-                return 'Needs a host response.';
-        }
-    }
-    resolvedOverlayStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'static',
-                inset: 'auto',
-                width: '100%',
-                height: '100%',
-                minHeight: 0,
-                background: 'transparent',
-                zIndex: 'auto',
-            }
-            : {
-                position: 'fixed',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                background: 'rgba(2, 8, 23, 0.62)',
-                zIndex: 999,
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.overlayStyle) };
-    }
-    resolvedContentStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'relative',
-                inset: 'auto',
-                width: '100%',
-                maxWidth: 'none',
-                height: '100%',
-                maxHeight: 'none',
-                margin: 0,
-            }
-            : {
-                position: 'fixed',
-                top: this.position.includes('top') ? '16px' : 'auto',
-                bottom: this.position.includes('bottom') ? '16px' : 'auto',
-                left: this.position.includes('Left') ? '16px' : 'auto',
-                right: this.position.includes('Right') ? '16px' : 'auto',
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.contentStyle) };
-    }
-    ensureHandler() {
-        if (!this.onRequestItemPress) {
-            this.onRequestItemPress = this.respondToRequestsService.respondToRequests.bind(this.respondToRequestsService);
-        }
-    }
-    resolvedRequestHandler() {
-        return (this.onRequestItemPress ??
-            this.respondToRequestsService.respondToRequests.bind(this.respondToRequestsService));
-    }
-    updateRequests() {
-        const freshParameters = this.parameters?.getUpdatedAllParams
-            ? this.parameters.getUpdatedAllParams()
-            : this.parameters;
-        this.requestList_s = freshParameters?.filteredRequestList ?? this.requestList ?? [];
-        this.requestCounter_s = this.requestList_s.length;
-    }
-    normalizeStyle(style) {
-        return style ? { ...style } : {};
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernRequestsModalComponent, deps: [{ token: RespondToRequests }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernRequestsModalComponent, isStandalone: true, selector: "app-requests-modal", inputs: { isRequestsModalVisible: "isRequestsModalVisible", requestCounter: "requestCounter", requestList: "requestList", roomName: "roomName", socket: "socket", backgroundColor: "backgroundColor", position: "position", parameters: "parameters", onRequestClose: "onRequestClose", onRequestFilterChange: "onRequestFilterChange", onRequestItemPress: "onRequestItemPress", updateRequestList: "updateRequestList", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate", renderMode: "renderMode", showHeader: "showHeader" }, usesOnChanges: true, ngImport: i0, template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isRequestsModalVisible: isRequestsModalVisible,
-              requestCounter: requestCounter_s,
-              requestList: requestList_s,
-              roomName: roomName,
-              socket: socket,
-              onRequestClose: onRequestClose,
-              onRequestFilterChange: onRequestFilterChange,
-              handleFilterChange: handleFilterChange.bind(this),
-              handleModalClose: handleModalClose.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-requests-overlay"
-      [class.ms-modern-requests-overlay--embedded]="isEmbedded()"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-requests-modal"
-        [class.ms-modern-requests-modal--embedded]="isEmbedded()"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-requests-modal__header">
-          <div class="ms-modern-requests-modal__title-wrap">
-            <div class="ms-modern-requests-modal__title-row">
-              <h2 class="ms-modern-requests-modal__title">Requests</h2>
-              <span class="ms-modern-requests-modal__badge">{{ requestCounter_s }}</span>
-            </div>
-            <p class="ms-modern-requests-modal__subtitle">
-              Review participant requests and respond without leaving the room workflow.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-requests-modal__close"
-            aria-label="Close requests"
-            (click)="handleModalClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-requests-modal__body">
-          <label class="ms-modern-requests-modal__search">
-            <fa-icon [icon]="faSearch" class="ms-modern-requests-modal__search-icon"></fa-icon>
-            <input
-              type="text"
-              class="ms-modern-requests-modal__search-input"
-              placeholder="Search requests..."
-              [value]="requestFilterValue"
-              (input)="handleFilterChange($event)"
-            />
-          </label>
-
-          <div class="ms-modern-requests-modal__list">
-            <ng-container *ngIf="requestList_s.length; else emptyState">
-              <article
-                *ngFor="let requestItem of requestList_s"
-                class="ms-modern-requests-modal__item"
-              >
-                <div class="ms-modern-requests-modal__item-main">
-                  <div class="ms-modern-requests-modal__icon-wrap">
-                    <fa-icon
-                      [icon]="getIcon(requestItem.icon)"
-                      class="ms-modern-requests-modal__icon"
-                    ></fa-icon>
-                  </div>
-                  <div class="ms-modern-requests-modal__copy">
-                    <div class="ms-modern-requests-modal__name">
-                      {{ requestItem.name || requestItem.username || 'Participant' }}
-                    </div>
-                    <div class="ms-modern-requests-modal__detail">
-                      {{ describeRequest(requestItem.icon) }}
-                    </div>
-                  </div>
-                </div>
-
-                <div class="ms-modern-requests-modal__actions">
-                  <button
-                    type="button"
-                    class="ms-modern-requests-modal__action ms-modern-requests-modal__action--accept"
-                    aria-label="Accept request"
-                    (click)="handleRequestAction(requestItem, 'accepted')"
-                  >
-                    <fa-icon [icon]="faCheck"></fa-icon>
-                  </button>
-                  <button
-                    type="button"
-                    class="ms-modern-requests-modal__action ms-modern-requests-modal__action--reject"
-                    aria-label="Reject request"
-                    (click)="handleRequestAction(requestItem, 'rejected')"
-                  >
-                    <fa-icon [icon]="faTimes"></fa-icon>
-                  </button>
-                </div>
-              </article>
-            </ng-container>
-
-            <ng-template #emptyState>
-              <div class="ms-modern-requests-modal__empty">
-                {{ emptyStateCopy() }}
-              </div>
-            </ng-template>
-          </div>
-        </div>
-      </section>
-    </div>
-  `, isInline: true, styles: [".ms-modern-requests-overlay{position:fixed;inset:0;z-index:999;background:#0208179e;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.ms-modern-requests-overlay--embedded{position:static;inset:auto;width:100%;height:100%;min-height:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;z-index:auto}.ms-modern-requests-modal{position:fixed;width:min(420px,calc(100vw - 32px));max-height:min(580px,calc(100vh - 32px));display:flex;flex-direction:column;overflow:hidden;border-radius:28px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);color:var(--ms-modern-text-primary, #10233f);box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16))}.ms-modern-requests-modal--embedded{position:relative;width:100%;max-width:none;max-height:none;height:100%;border-radius:24px}.ms-modern-requests-modal__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 18px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28))}.ms-modern-requests-modal__title-wrap{min-width:0}.ms-modern-requests-modal__title-row{display:flex;align-items:center;gap:10px}.ms-modern-requests-modal__title{margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1.08rem;font-weight:700}.ms-modern-requests-modal__badge{min-width:36px;min-height:32px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:999px;background:linear-gradient(135deg,var(--ms-modern-accent, #1476d2),var(--ms-modern-accent-strong, #0d5ca8));color:#fff;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.8rem;font-weight:700}.ms-modern-requests-modal__subtitle{margin:8px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.55}.ms-modern-requests-modal__close{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:var(--ms-modern-field-background, rgba(248, 250, 252, .92));color:var(--ms-modern-text-primary, #10233f);cursor:pointer}.ms-modern-requests-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:22px}.ms-modern-requests-modal__search-input{width:100%;min-height:46px;padding:0 16px 0 42px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-field-background, rgba(248, 250, 252, .92));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;box-sizing:border-box}.ms-modern-requests-modal__search{position:relative;display:block}.ms-modern-requests-modal__search-icon{position:absolute;top:50%;left:16px;transform:translateY(-50%);color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .52));pointer-events:none}.ms-modern-requests-modal__list{flex:1;min-height:0;display:grid;gap:12px;overflow-y:auto}.ms-modern-requests-modal__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-panel-surface, rgba(255, 255, 255, .82))}.ms-modern-requests-modal__item-main{min-width:0;display:flex;align-items:center;gap:12px}.ms-modern-requests-modal__icon-wrap{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:color-mix(in srgb,var(--ms-modern-accent, #1476d2) 14%,transparent);color:var(--ms-modern-accent, #1476d2)}.ms-modern-requests-modal__copy{min-width:0}.ms-modern-requests-modal__name{font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;font-weight:700}.ms-modern-requests-modal__detail{margin-top:4px;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.5}.ms-modern-requests-modal__actions{display:inline-flex;align-items:center;gap:8px}.ms-modern-requests-modal__action{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid transparent;cursor:pointer}.ms-modern-requests-modal__action--accept{background:color-mix(in srgb,var(--ms-modern-success, #147d64) 16%,transparent);color:var(--ms-modern-success, #147d64)}.ms-modern-requests-modal__action--reject{background:color-mix(in srgb,var(--ms-modern-danger, #d9485f) 14%,transparent);color:var(--ms-modern-danger, #d9485f)}.ms-modern-requests-modal__empty{padding:24px 16px;border-radius:18px;border:1px dashed var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;text-align:center}@media(max-width:575px){.ms-modern-requests-modal__header,.ms-modern-requests-modal__body{padding-left:18px;padding-right:18px}.ms-modern-requests-modal__item{align-items:flex-start;flex-direction:column}.ms-modern-requests-modal__actions{width:100%;justify-content:flex-end}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernRequestsModalComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-requests-modal', imports: [CommonModule, FontAwesomeModule], template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isRequestsModalVisible: isRequestsModalVisible,
-              requestCounter: requestCounter_s,
-              requestList: requestList_s,
-              roomName: roomName,
-              socket: socket,
-              onRequestClose: onRequestClose,
-              onRequestFilterChange: onRequestFilterChange,
-              handleFilterChange: handleFilterChange.bind(this),
-              handleModalClose: handleModalClose.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-requests-overlay"
-      [class.ms-modern-requests-overlay--embedded]="isEmbedded()"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-requests-modal"
-        [class.ms-modern-requests-modal--embedded]="isEmbedded()"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-requests-modal__header">
-          <div class="ms-modern-requests-modal__title-wrap">
-            <div class="ms-modern-requests-modal__title-row">
-              <h2 class="ms-modern-requests-modal__title">Requests</h2>
-              <span class="ms-modern-requests-modal__badge">{{ requestCounter_s }}</span>
-            </div>
-            <p class="ms-modern-requests-modal__subtitle">
-              Review participant requests and respond without leaving the room workflow.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-requests-modal__close"
-            aria-label="Close requests"
-            (click)="handleModalClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-requests-modal__body">
-          <label class="ms-modern-requests-modal__search">
-            <fa-icon [icon]="faSearch" class="ms-modern-requests-modal__search-icon"></fa-icon>
-            <input
-              type="text"
-              class="ms-modern-requests-modal__search-input"
-              placeholder="Search requests..."
-              [value]="requestFilterValue"
-              (input)="handleFilterChange($event)"
-            />
-          </label>
-
-          <div class="ms-modern-requests-modal__list">
-            <ng-container *ngIf="requestList_s.length; else emptyState">
-              <article
-                *ngFor="let requestItem of requestList_s"
-                class="ms-modern-requests-modal__item"
-              >
-                <div class="ms-modern-requests-modal__item-main">
-                  <div class="ms-modern-requests-modal__icon-wrap">
-                    <fa-icon
-                      [icon]="getIcon(requestItem.icon)"
-                      class="ms-modern-requests-modal__icon"
-                    ></fa-icon>
-                  </div>
-                  <div class="ms-modern-requests-modal__copy">
-                    <div class="ms-modern-requests-modal__name">
-                      {{ requestItem.name || requestItem.username || 'Participant' }}
-                    </div>
-                    <div class="ms-modern-requests-modal__detail">
-                      {{ describeRequest(requestItem.icon) }}
-                    </div>
-                  </div>
-                </div>
-
-                <div class="ms-modern-requests-modal__actions">
-                  <button
-                    type="button"
-                    class="ms-modern-requests-modal__action ms-modern-requests-modal__action--accept"
-                    aria-label="Accept request"
-                    (click)="handleRequestAction(requestItem, 'accepted')"
-                  >
-                    <fa-icon [icon]="faCheck"></fa-icon>
-                  </button>
-                  <button
-                    type="button"
-                    class="ms-modern-requests-modal__action ms-modern-requests-modal__action--reject"
-                    aria-label="Reject request"
-                    (click)="handleRequestAction(requestItem, 'rejected')"
-                  >
-                    <fa-icon [icon]="faTimes"></fa-icon>
-                  </button>
-                </div>
-              </article>
-            </ng-container>
-
-            <ng-template #emptyState>
-              <div class="ms-modern-requests-modal__empty">
-                {{ emptyStateCopy() }}
-              </div>
-            </ng-template>
-          </div>
-        </div>
-      </section>
-    </div>
-  `, styles: [".ms-modern-requests-overlay{position:fixed;inset:0;z-index:999;background:#0208179e;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.ms-modern-requests-overlay--embedded{position:static;inset:auto;width:100%;height:100%;min-height:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;z-index:auto}.ms-modern-requests-modal{position:fixed;width:min(420px,calc(100vw - 32px));max-height:min(580px,calc(100vh - 32px));display:flex;flex-direction:column;overflow:hidden;border-radius:28px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);color:var(--ms-modern-text-primary, #10233f);box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16))}.ms-modern-requests-modal--embedded{position:relative;width:100%;max-width:none;max-height:none;height:100%;border-radius:24px}.ms-modern-requests-modal__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 18px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28))}.ms-modern-requests-modal__title-wrap{min-width:0}.ms-modern-requests-modal__title-row{display:flex;align-items:center;gap:10px}.ms-modern-requests-modal__title{margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1.08rem;font-weight:700}.ms-modern-requests-modal__badge{min-width:36px;min-height:32px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:999px;background:linear-gradient(135deg,var(--ms-modern-accent, #1476d2),var(--ms-modern-accent-strong, #0d5ca8));color:#fff;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.8rem;font-weight:700}.ms-modern-requests-modal__subtitle{margin:8px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.55}.ms-modern-requests-modal__close{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:var(--ms-modern-field-background, rgba(248, 250, 252, .92));color:var(--ms-modern-text-primary, #10233f);cursor:pointer}.ms-modern-requests-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:22px}.ms-modern-requests-modal__search-input{width:100%;min-height:46px;padding:0 16px 0 42px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-field-background, rgba(248, 250, 252, .92));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;box-sizing:border-box}.ms-modern-requests-modal__search{position:relative;display:block}.ms-modern-requests-modal__search-icon{position:absolute;top:50%;left:16px;transform:translateY(-50%);color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .52));pointer-events:none}.ms-modern-requests-modal__list{flex:1;min-height:0;display:grid;gap:12px;overflow-y:auto}.ms-modern-requests-modal__item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:var(--ms-modern-panel-surface, rgba(255, 255, 255, .82))}.ms-modern-requests-modal__item-main{min-width:0;display:flex;align-items:center;gap:12px}.ms-modern-requests-modal__icon-wrap{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:color-mix(in srgb,var(--ms-modern-accent, #1476d2) 14%,transparent);color:var(--ms-modern-accent, #1476d2)}.ms-modern-requests-modal__copy{min-width:0}.ms-modern-requests-modal__name{font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;font-weight:700}.ms-modern-requests-modal__detail{margin-top:4px;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.5}.ms-modern-requests-modal__actions{display:inline-flex;align-items:center;gap:8px}.ms-modern-requests-modal__action{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid transparent;cursor:pointer}.ms-modern-requests-modal__action--accept{background:color-mix(in srgb,var(--ms-modern-success, #147d64) 16%,transparent);color:var(--ms-modern-success, #147d64)}.ms-modern-requests-modal__action--reject{background:color-mix(in srgb,var(--ms-modern-danger, #d9485f) 14%,transparent);color:var(--ms-modern-danger, #d9485f)}.ms-modern-requests-modal__empty{padding:24px 16px;border-radius:18px;border:1px dashed var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;text-align:center}@media(max-width:575px){.ms-modern-requests-modal__header,.ms-modern-requests-modal__body{padding-left:18px;padding-right:18px}.ms-modern-requests-modal__item{align-items:flex-start;flex-direction:column}.ms-modern-requests-modal__actions{width:100%;justify-content:flex-end}}\n"] }]
-        }], ctorParameters: () => [{ type: RespondToRequests }], propDecorators: { isRequestsModalVisible: [{
-                type: Input
-            }], requestCounter: [{
-                type: Input
-            }], requestList: [{
-                type: Input
-            }], roomName: [{
-                type: Input
-            }], socket: [{
-                type: Input
-            }], backgroundColor: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], parameters: [{
-                type: Input
-            }], onRequestClose: [{
-                type: Input
-            }], onRequestFilterChange: [{
-                type: Input
-            }], onRequestItemPress: [{
-                type: Input
-            }], updateRequestList: [{
-                type: Input
-            }], overlayStyle: [{
-                type: Input
-            }], contentStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }], renderMode: [{
-                type: Input
-            }], showHeader: [{
-                type: Input
-            }] } });
-
-class ModernShareEventModalComponent {
-    defaultBackgroundColor = 'var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, 0.96))';
-    backgroundColor = this.defaultBackgroundColor;
-    isShareEventModalVisible = false;
-    onShareEventClose = () => { };
-    shareButtons = true;
-    position = 'topRight';
-    roomName = '';
-    adminPasscode = '';
-    islevel = '';
-    eventType = 'webinar';
-    localLink = '';
-    isDarkMode;
-    overlayStyle;
-    contentStyle;
-    customTemplate;
-    renderMode = 'modal';
-    showHeader = true;
-    faLink = faLink;
-    faShareNodes = faShareNodes;
-    faTimes = faTimes;
-    get resolvedIsDarkMode() {
-        if (typeof this.isDarkMode === 'boolean') {
-            return this.isDarkMode;
-        }
-        return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-            ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            : false;
-    }
-    isVisible() {
-        return this.isEmbedded() || this.isShareEventModalVisible;
-    }
-    isEmbedded() {
-        return isEmbeddedRenderMode(this.renderMode);
-    }
-    handleClose() {
-        this.onShareEventClose();
-    }
-    handleOverlayClick() {
-        if (!this.isEmbedded()) {
-            this.handleClose();
-        }
-    }
-    resolvedSummary() {
-        if (this.localLink?.trim()) {
-            return 'Your custom event link is ready to copy and share.';
-        }
-        switch (this.eventType) {
-            case 'broadcast':
-                return 'Share this broadcast entry link with viewers or co-hosts.';
-            case 'conference':
-                return 'Share this collaboration room with invited participants.';
-            case 'chat':
-                return 'Share this room link so participants can join the conversation.';
-            case 'webinar':
-            default:
-                return 'Share this webinar invite with attendees and speakers.';
-        }
-    }
-    resolvedOverlayStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'static',
-                inset: 'auto',
-                width: '100%',
-                height: '100%',
-                minHeight: 0,
-                display: 'block',
-                background: 'transparent',
-                backdropFilter: 'none',
-                zIndex: 'auto',
-            }
-            : {
-                position: 'fixed',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                background: this.resolvedIsDarkMode ? 'rgba(2, 8, 23, 0.72)' : 'rgba(15, 23, 42, 0.18)',
-                backdropFilter: 'blur(12px)',
-                zIndex: 999,
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.overlayStyle) };
-    }
-    resolvedContentStyle() {
-        const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1280;
-        const modalWidth = Math.min(430, Math.round(0.82 * screenWidth));
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'relative',
-                inset: 'auto',
-                width: '100%',
-                maxWidth: 'none',
-                height: '100%',
-                maxHeight: 'none',
-                margin: 0,
-                background: this.resolvedBackground(),
-            }
-            : {
-                position: 'fixed',
-                width: `${modalWidth}px`,
-                maxHeight: 'min(78vh, 720px)',
-                background: this.resolvedBackground(),
-                ...this.resolvePositionStyle(),
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.contentStyle) };
-    }
-    resolvePositionStyle() {
-        const normalizedPosition = this.position.toLowerCase();
-        if (normalizedPosition.includes('center')) {
-            return {
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            };
-        }
-        return {
-            top: this.position.includes('top') ? '16px' : 'auto',
-            bottom: this.position.includes('bottom') ? '16px' : 'auto',
-            left: this.position.includes('Left') ? '16px' : 'auto',
-            right: this.position.includes('Right') ? '16px' : 'auto',
-        };
-    }
-    normalizeStyle(style) {
-        return style ? { ...style } : {};
-    }
-    resolvedBackground() {
-        if (this.backgroundColor && this.backgroundColor !== this.defaultBackgroundColor) {
-            return this.backgroundColor;
-        }
-        return this.resolvedIsDarkMode
-            ? 'linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.94) 100%)'
-            : 'linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.95) 100%)';
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernShareEventModalComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernShareEventModalComponent, isStandalone: true, selector: "app-share-event-modal", inputs: { backgroundColor: "backgroundColor", isShareEventModalVisible: "isShareEventModalVisible", onShareEventClose: "onShareEventClose", shareButtons: "shareButtons", position: "position", roomName: "roomName", adminPasscode: "adminPasscode", islevel: "islevel", eventType: "eventType", localLink: "localLink", isDarkMode: "isDarkMode", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate", renderMode: "renderMode", showHeader: "showHeader" }, ngImport: i0, template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isShareEventModalVisible: isShareEventModalVisible,
-              backgroundColor: backgroundColor,
-              position: position,
-              roomName: roomName,
-              adminPasscode: adminPasscode,
-              islevel: islevel,
-              shareButtons: shareButtons,
-              eventType: eventType,
-              localLink: localLink,
-              handleClose: handleClose.bind(this),
-              onShareEventClose: onShareEventClose
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-share-event-overlay"
-      [class.ms-modern-share-event-overlay--embedded]="isEmbedded()"
-      [class.ms-modern-share-event-overlay--dark]="resolvedIsDarkMode"
-      [class.ms-modern-share-event-overlay--light]="!resolvedIsDarkMode"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-share-event"
-        [class.ms-modern-share-event--embedded]="isEmbedded()"
-        [class.ms-modern-share-event--headerless]="!showHeader"
-        [class.ms-modern-share-event--dark]="resolvedIsDarkMode"
-        [class.ms-modern-share-event--light]="!resolvedIsDarkMode"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-share-event__header">
-          <div class="ms-modern-share-event__heading">
-            <span class="ms-modern-share-event__eyebrow">Invite</span>
-            <h2 class="ms-modern-share-event__title">
-              <fa-icon [icon]="faShareNodes"></fa-icon>
-              <span>Share event</span>
-            </h2>
-            <p class="ms-modern-share-event__subtitle">
-              Send the room details and access link without leaving the active workflow.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-share-event__close"
-            aria-label="Close share event"
-            (click)="handleClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-share-event__body">
-          <div class="ms-modern-share-event__summary">
-            <div class="ms-modern-share-event__summary-icon">
-              <fa-icon [icon]="faLink"></fa-icon>
-            </div>
-
-            <div class="ms-modern-share-event__summary-copy">
-              <strong>{{ roomName }}</strong>
-              <span>{{ resolvedSummary() }}</span>
-            </div>
-          </div>
-
-          <div class="ms-modern-share-event__panel" *ngIf="islevel === '2'">
-            <span class="ms-modern-share-event__panel-label">Host passcode</span>
-            <app-meeting-passcode-component [meetingPasscode]="adminPasscode" [isDarkMode]="resolvedIsDarkMode"></app-meeting-passcode-component>
-          </div>
-
-          <div class="ms-modern-share-event__panel">
-            <span class="ms-modern-share-event__panel-label">Meeting ID</span>
-            <app-meeting-id-component [meetingID]="roomName" [isDarkMode]="resolvedIsDarkMode"></app-meeting-id-component>
-          </div>
-
-          <div class="ms-modern-share-event__panel" *ngIf="shareButtons">
-            <span class="ms-modern-share-event__panel-label">Share actions</span>
-            <app-share-buttons-component
-              [meetingID]="roomName"
-              [eventType]="eventType"
-              [isDarkMode]="resolvedIsDarkMode"
-              [localLink]="localLink"
-            ></app-share-buttons-component>
-          </div>
-        </div>
-      </section>
-    </div>
-  `, isInline: true, styles: [".ms-modern-share-event-overlay{position:fixed;inset:0;display:block;background:#020817a8;backdrop-filter:blur(10px);z-index:999}.ms-modern-share-event-overlay--embedded{background:transparent;backdrop-filter:none}.ms-modern-share-event{box-sizing:border-box;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-radius:28px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .96)) 0%,var(--ms-modern-panel-surface, rgba(248, 250, 252, .95)) 100%);box-shadow:0 28px 70px #0f172a47;color:var(--ms-modern-text-primary, #10233f);backdrop-filter:blur(20px)}.ms-modern-share-event--embedded{height:100%;max-height:none;border-radius:24px}.ms-modern-share-event__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 16px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22))}.ms-modern-share-event__heading{min-width:0}.ms-modern-share-event__eyebrow{display:block;color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.ms-modern-share-event__title{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1.34rem;font-weight:800;line-height:1.1}.ms-modern-share-event__subtitle{margin:8px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;line-height:1.5}.ms-modern-share-event__close{width:40px;height:40px;flex:0 0 auto;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));border-radius:999px;background:#fff6;color:var(--ms-modern-text-primary, #10233f);cursor:pointer}.ms-modern-share-event--dark{background:linear-gradient(180deg,#0f172af5,#1e293bf0);color:#e2e8f0}.ms-modern-share-event--dark .ms-modern-share-event__eyebrow,.ms-modern-share-event--dark .ms-modern-share-event__panel-label{color:#e2e8f0ad}.ms-modern-share-event--dark .ms-modern-share-event__subtitle,.ms-modern-share-event--dark .ms-modern-share-event__summary-copy span{color:#e2e8f0c2}.ms-modern-share-event--dark .ms-modern-share-event__header{border-bottom-color:#94a3b82e}.ms-modern-share-event--dark .ms-modern-share-event__close{border-color:#94a3b82e;background:#0f172a8a;color:#e2e8f0}.ms-modern-share-event--dark .ms-modern-share-event__summary{border-color:#6366f12e;background:#4f46e51f}.ms-modern-share-event--dark .ms-modern-share-event__panel{border-color:#94a3b82e;background:#0f172a75}.ms-modern-share-event--light{background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .96)) 0%,var(--ms-modern-panel-surface, rgba(248, 250, 252, .95)) 100%);color:var(--ms-modern-text-primary, #10233f)}.ms-modern-share-event__body{display:grid;flex:1;gap:14px;min-height:0;overflow-y:auto;padding:18px 22px 22px}.ms-modern-share-event--headerless .ms-modern-share-event__body{padding-top:22px}.ms-modern-share-event__summary{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:16px;border-radius:20px;border:1px solid rgba(79,70,229,.12);background:#4f46e50f;align-items:center}.ms-modern-share-event__summary-icon{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:linear-gradient(135deg,#4f46e52e,#14b8a629);color:var(--ms-modern-brand-primary, #4f46e5);font-size:1.1rem}.ms-modern-share-event__summary-copy{min-width:0;display:grid;gap:4px}.ms-modern-share-event__summary-copy strong{font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.98rem;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ms-modern-share-event__summary-copy span{color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.84rem;line-height:1.45}.ms-modern-share-event__panel{display:grid;gap:10px;padding:16px;border-radius:20px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:#ffffffb3}.ms-modern-share-event__panel-label{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}@media(max-width:640px){.ms-modern-share-event__header,.ms-modern-share-event__body{padding-left:18px;padding-right:18px}.ms-modern-share-event__summary{grid-template-columns:1fr;justify-items:start}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "component", type: MeetingIdComponent, selector: "app-meeting-id-component", inputs: ["meetingID", "isDarkMode", "labelText", "containerAttributes", "labelAttributes", "inputContainerAttributes", "inputAttributes", "buttonAttributes", "iconAttributes", "copyIconColors", "customIcon", "renderContainer", "renderLabel", "renderInput", "renderCopyButton", "renderIcon", "renderInputGroup", "renderContent"] }, { kind: "component", type: MeetingPasscodeComponent, selector: "app-meeting-passcode-component", inputs: ["meetingPasscode", "isDarkMode", "labelText", "containerAttributes", "labelAttributes", "inputAttributes", "renderContainer", "renderLabel", "renderInput", "renderContent"] }, { kind: "component", type: ShareButtonsComponent, selector: "app-share-buttons-component", inputs: ["meetingID", "isDarkMode", "shareButtons", "eventType", "localLink", "containerAttributes", "renderContainer", "renderButtons", "renderButton", "renderIcon", "getShareUrlFn"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernShareEventModalComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-share-event-modal', imports: [
-                        CommonModule,
-                        FontAwesomeModule,
-                        MeetingIdComponent,
-                        MeetingPasscodeComponent,
-                        ShareButtonsComponent,
-                    ], template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isShareEventModalVisible: isShareEventModalVisible,
-              backgroundColor: backgroundColor,
-              position: position,
-              roomName: roomName,
-              adminPasscode: adminPasscode,
-              islevel: islevel,
-              shareButtons: shareButtons,
-              eventType: eventType,
-              localLink: localLink,
-              handleClose: handleClose.bind(this),
-              onShareEventClose: onShareEventClose
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-share-event-overlay"
-      [class.ms-modern-share-event-overlay--embedded]="isEmbedded()"
-      [class.ms-modern-share-event-overlay--dark]="resolvedIsDarkMode"
-      [class.ms-modern-share-event-overlay--light]="!resolvedIsDarkMode"
-      [ngStyle]="resolvedOverlayStyle()"
-      (click)="handleOverlayClick()"
-    >
-      <section
-        class="ms-modern-share-event"
-        [class.ms-modern-share-event--embedded]="isEmbedded()"
-        [class.ms-modern-share-event--headerless]="!showHeader"
-        [class.ms-modern-share-event--dark]="resolvedIsDarkMode"
-        [class.ms-modern-share-event--light]="!resolvedIsDarkMode"
-        [ngStyle]="resolvedContentStyle()"
-        (click)="$event.stopPropagation()"
-      >
-        <header *ngIf="showHeader" class="ms-modern-share-event__header">
-          <div class="ms-modern-share-event__heading">
-            <span class="ms-modern-share-event__eyebrow">Invite</span>
-            <h2 class="ms-modern-share-event__title">
-              <fa-icon [icon]="faShareNodes"></fa-icon>
-              <span>Share event</span>
-            </h2>
-            <p class="ms-modern-share-event__subtitle">
-              Send the room details and access link without leaving the active workflow.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-share-event__close"
-            aria-label="Close share event"
-            (click)="handleClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-share-event__body">
-          <div class="ms-modern-share-event__summary">
-            <div class="ms-modern-share-event__summary-icon">
-              <fa-icon [icon]="faLink"></fa-icon>
-            </div>
-
-            <div class="ms-modern-share-event__summary-copy">
-              <strong>{{ roomName }}</strong>
-              <span>{{ resolvedSummary() }}</span>
-            </div>
-          </div>
-
-          <div class="ms-modern-share-event__panel" *ngIf="islevel === '2'">
-            <span class="ms-modern-share-event__panel-label">Host passcode</span>
-            <app-meeting-passcode-component [meetingPasscode]="adminPasscode" [isDarkMode]="resolvedIsDarkMode"></app-meeting-passcode-component>
-          </div>
-
-          <div class="ms-modern-share-event__panel">
-            <span class="ms-modern-share-event__panel-label">Meeting ID</span>
-            <app-meeting-id-component [meetingID]="roomName" [isDarkMode]="resolvedIsDarkMode"></app-meeting-id-component>
-          </div>
-
-          <div class="ms-modern-share-event__panel" *ngIf="shareButtons">
-            <span class="ms-modern-share-event__panel-label">Share actions</span>
-            <app-share-buttons-component
-              [meetingID]="roomName"
-              [eventType]="eventType"
-              [isDarkMode]="resolvedIsDarkMode"
-              [localLink]="localLink"
-            ></app-share-buttons-component>
-          </div>
-        </div>
-      </section>
-    </div>
-  `, styles: [".ms-modern-share-event-overlay{position:fixed;inset:0;display:block;background:#020817a8;backdrop-filter:blur(10px);z-index:999}.ms-modern-share-event-overlay--embedded{background:transparent;backdrop-filter:none}.ms-modern-share-event{box-sizing:border-box;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-radius:28px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .96)) 0%,var(--ms-modern-panel-surface, rgba(248, 250, 252, .95)) 100%);box-shadow:0 28px 70px #0f172a47;color:var(--ms-modern-text-primary, #10233f);backdrop-filter:blur(20px)}.ms-modern-share-event--embedded{height:100%;max-height:none;border-radius:24px}.ms-modern-share-event__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 16px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22))}.ms-modern-share-event__heading{min-width:0}.ms-modern-share-event__eyebrow{display:block;color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.ms-modern-share-event__title{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1.34rem;font-weight:800;line-height:1.1}.ms-modern-share-event__subtitle{margin:8px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;line-height:1.5}.ms-modern-share-event__close{width:40px;height:40px;flex:0 0 auto;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));border-radius:999px;background:#fff6;color:var(--ms-modern-text-primary, #10233f);cursor:pointer}.ms-modern-share-event--dark{background:linear-gradient(180deg,#0f172af5,#1e293bf0);color:#e2e8f0}.ms-modern-share-event--dark .ms-modern-share-event__eyebrow,.ms-modern-share-event--dark .ms-modern-share-event__panel-label{color:#e2e8f0ad}.ms-modern-share-event--dark .ms-modern-share-event__subtitle,.ms-modern-share-event--dark .ms-modern-share-event__summary-copy span{color:#e2e8f0c2}.ms-modern-share-event--dark .ms-modern-share-event__header{border-bottom-color:#94a3b82e}.ms-modern-share-event--dark .ms-modern-share-event__close{border-color:#94a3b82e;background:#0f172a8a;color:#e2e8f0}.ms-modern-share-event--dark .ms-modern-share-event__summary{border-color:#6366f12e;background:#4f46e51f}.ms-modern-share-event--dark .ms-modern-share-event__panel{border-color:#94a3b82e;background:#0f172a75}.ms-modern-share-event--light{background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .96)) 0%,var(--ms-modern-panel-surface, rgba(248, 250, 252, .95)) 100%);color:var(--ms-modern-text-primary, #10233f)}.ms-modern-share-event__body{display:grid;flex:1;gap:14px;min-height:0;overflow-y:auto;padding:18px 22px 22px}.ms-modern-share-event--headerless .ms-modern-share-event__body{padding-top:22px}.ms-modern-share-event__summary{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:16px;border-radius:20px;border:1px solid rgba(79,70,229,.12);background:#4f46e50f;align-items:center}.ms-modern-share-event__summary-icon{width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:linear-gradient(135deg,#4f46e52e,#14b8a629);color:var(--ms-modern-brand-primary, #4f46e5);font-size:1.1rem}.ms-modern-share-event__summary-copy{min-width:0;display:grid;gap:4px}.ms-modern-share-event__summary-copy strong{font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.98rem;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ms-modern-share-event__summary-copy span{color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.84rem;line-height:1.45}.ms-modern-share-event__panel{display:grid;gap:10px;padding:16px;border-radius:20px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:#ffffffb3}.ms-modern-share-event__panel-label{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}@media(max-width:640px){.ms-modern-share-event__header,.ms-modern-share-event__body{padding-left:18px;padding-right:18px}.ms-modern-share-event__summary{grid-template-columns:1fr;justify-items:start}}\n"] }]
-        }], propDecorators: { backgroundColor: [{
-                type: Input
-            }], isShareEventModalVisible: [{
-                type: Input
-            }], onShareEventClose: [{
-                type: Input
-            }], shareButtons: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], roomName: [{
-                type: Input
-            }], adminPasscode: [{
-                type: Input
-            }], islevel: [{
-                type: Input
-            }], eventType: [{
-                type: Input
-            }], localLink: [{
-                type: Input
-            }], isDarkMode: [{
-                type: Input
-            }], overlayStyle: [{
-                type: Input
-            }], contentStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }], renderMode: [{
-                type: Input
-            }], showHeader: [{
-                type: Input
-            }] } });
-
-class ModernWaitingRoomModalComponent {
-    respondToWaitingService;
-    isWaitingModalVisible = false;
-    onWaitingRoomClose = () => { };
-    waitingRoomCounter = 0;
-    onWaitingRoomFilterChange = () => { };
-    waitingRoomList = [];
-    updateWaitingList = () => { };
-    roomName = '';
-    socket = {};
-    position = 'topRight';
-    backgroundColor = 'var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, 0.96))';
-    parameters = {};
-    overlayStyle;
-    contentStyle;
-    customTemplate;
-    onWaitingRoomItemPress;
-    renderMode = 'modal';
-    showHeader = true;
-    faCheck = faCheck;
-    faSearch = faSearch;
-    faTimes = faTimes;
-    waitingRoomCounterState = 0;
-    waitingRoomListState = [];
-    waitingFilterValue = '';
-    constructor(respondToWaitingService) {
-        this.respondToWaitingService = respondToWaitingService;
-    }
-    ngOnInit() {
-        if (!this.onWaitingRoomItemPress) {
-            this.onWaitingRoomItemPress = (data) => this.respondToWaitingService.respondToWaiting(data);
-        }
-    }
-    ngOnChanges(changes) {
-        if (this.isVisible() &&
-            (changes['isWaitingModalVisible'] || changes['waitingRoomList'] || changes['parameters'])) {
-            this.updateParameters();
-        }
-    }
-    isVisible() {
-        return this.isEmbedded() || this.isWaitingModalVisible;
-    }
-    isEmbedded() {
-        return isEmbeddedRenderMode(this.renderMode);
-    }
-    handleModalClose() {
-        this.onWaitingRoomClose();
-    }
-    handleFilterChange(event) {
-        const inputElement = event.target;
-        const value = inputElement?.value || '';
-        this.waitingFilterValue = value;
-        this.onWaitingRoomFilterChange(value);
-        this.updateParameters();
-    }
-    waitingEmptyTitle() {
-        return this.waitingFilterValue.trim() ? 'No matching participants' : 'No one is waiting';
-    }
-    waitingEmptyDetail() {
-        return this.waitingFilterValue.trim()
-            ? 'No waiting-room entries match the current filter.'
-            : 'The waiting room is currently clear.';
-    }
-    handleItemPress(participant, type) {
-        this.onWaitingRoomItemPress?.({
-            participantId: participant.id,
-            participantName: participant.name,
-            updateWaitingList: this.updateWaitingList,
-            waitingList: this.waitingRoomList,
-            roomName: this.roomName,
-            type,
-            socket: this.socket,
-        });
-    }
-    resolvedOverlayStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'static',
-                inset: 'auto',
-                width: '100%',
-                height: '100%',
-                minHeight: 0,
-                background: 'transparent',
-                zIndex: 'auto',
-            }
-            : {
-                position: 'fixed',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                background: 'rgba(2, 8, 23, 0.66)',
-                zIndex: 999,
-            };
-        return { ...baseStyle, ...this.normalizeStyle(this.overlayStyle) };
-    }
-    resolvedContentStyle() {
-        const baseStyle = this.isEmbedded()
-            ? {
-                position: 'relative',
-                inset: 'auto',
-                width: '100%',
-                maxWidth: 'none',
-                height: '100%',
-                maxHeight: 'none',
-                margin: 0,
-                overflowY: 'auto',
-                background: this.backgroundColor,
-            }
-            : (() => {
-                const screenWidth = window.innerWidth;
-                let modalWidth = 0.84 * screenWidth;
-                if (modalWidth > 440) {
-                    modalWidth = 440;
-                }
-                return {
-                    position: 'fixed',
-                    width: `${modalWidth}px`,
-                    maxHeight: 'min(82vh, 760px)',
-                    overflowY: 'auto',
-                    background: this.backgroundColor,
-                    ...this.resolvePositionStyle(),
-                };
-            })();
-        return { ...baseStyle, ...this.normalizeStyle(this.contentStyle) };
-    }
-    updateParameters() {
-        const freshParameters = this.parameters?.getUpdatedAllParams
-            ? this.parameters.getUpdatedAllParams()
-            : this.parameters;
-        const filteredWaitingRoomList = Array.isArray(freshParameters?.filteredWaitingRoomList)
-            ? freshParameters.filteredWaitingRoomList
-            : this.waitingRoomList;
-        this.waitingRoomListState = filteredWaitingRoomList;
-        this.waitingRoomCounterState = filteredWaitingRoomList.length || this.waitingRoomCounter;
-    }
-    resolvePositionStyle() {
-        const normalizedPosition = this.position.toLowerCase();
-        if (normalizedPosition.includes('center')) {
-            return {
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            };
-        }
-        return {
-            top: this.position.includes('top') ? '16px' : 'auto',
-            bottom: this.position.includes('bottom') ? '16px' : 'auto',
-            left: this.position.includes('Left') ? '16px' : 'auto',
-            right: this.position.includes('Right') ? '16px' : 'auto',
-        };
-    }
-    normalizeStyle(style) {
-        return style ? { ...style } : {};
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernWaitingRoomModalComponent, deps: [{ token: RespondToWaiting }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernWaitingRoomModalComponent, isStandalone: true, selector: "app-waiting-room-modal", inputs: { isWaitingModalVisible: "isWaitingModalVisible", onWaitingRoomClose: "onWaitingRoomClose", waitingRoomCounter: "waitingRoomCounter", onWaitingRoomFilterChange: "onWaitingRoomFilterChange", waitingRoomList: "waitingRoomList", updateWaitingList: "updateWaitingList", roomName: "roomName", socket: "socket", position: "position", backgroundColor: "backgroundColor", parameters: "parameters", overlayStyle: "overlayStyle", contentStyle: "contentStyle", customTemplate: "customTemplate", onWaitingRoomItemPress: "onWaitingRoomItemPress", renderMode: "renderMode", showHeader: "showHeader" }, usesOnChanges: true, ngImport: i0, template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isWaitingModalVisible: isWaitingModalVisible,
-              waitingRoomCounter: waitingRoomCounterState,
-              waitingRoomList: waitingRoomListState,
-              position: position,
-              backgroundColor: backgroundColor,
-              roomName: roomName,
-              socket: socket,
-              onWaitingRoomClose: onWaitingRoomClose,
-              onWaitingRoomFilterChange: onWaitingRoomFilterChange,
-              handleFilterChange: handleFilterChange.bind(this),
-              handleItemPress: handleItemPress.bind(this),
-              handleModalClose: handleModalClose.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-waiting-overlay"
-      [ngStyle]="resolvedOverlayStyle()"
-    >
-      <section class="ms-modern-waiting" [ngStyle]="resolvedContentStyle()">
-        <header *ngIf="showHeader" class="ms-modern-waiting__header">
-          <div class="ms-modern-waiting__heading">
-            <span class="ms-modern-waiting__eyebrow">Lobby control</span>
-            <h2 class="ms-modern-waiting__title">
-              Waiting room
-              <span class="ms-modern-waiting__badge">{{ waitingRoomCounterState }}</span>
-            </h2>
-            <p class="ms-modern-waiting__subtitle">
-              Review pending participants and admit or reject them without leaving the room.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-waiting__close"
-            aria-label="Close waiting room"
-            (click)="handleModalClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-waiting__body">
-          <label class="ms-modern-waiting__search">
-            <fa-icon [icon]="faSearch" class="ms-modern-waiting__search-icon"></fa-icon>
-            <input
-              type="search"
-              placeholder="Search waiting list..."
-              [value]="waitingFilterValue"
-              (input)="handleFilterChange($event)"
-            />
-          </label>
-
-          <section class="ms-modern-waiting__list" *ngIf="waitingRoomListState.length; else emptyState">
-            <article
-              *ngFor="let participant of waitingRoomListState"
-              class="ms-modern-waiting__item"
-            >
-              <div class="ms-modern-waiting__participant-copy">
-                <strong>{{ participant.name }}</strong>
-                <p>Pending admission to {{ roomName || 'this room' }}.</p>
-              </div>
-
-              <div class="ms-modern-waiting__actions">
-                <button
-                  type="button"
-                  class="ms-modern-waiting__action ms-modern-waiting__action--approve"
-                  (click)="handleItemPress(participant, true)"
-                >
-                  <fa-icon [icon]="faCheck"></fa-icon>
-                  Admit
-                </button>
-
-                <button
-                  type="button"
-                  class="ms-modern-waiting__action ms-modern-waiting__action--reject"
-                  (click)="handleItemPress(participant, false)"
-                >
-                  <fa-icon [icon]="faTimes"></fa-icon>
-                  Reject
-                </button>
-              </div>
-            </article>
-          </section>
-
-          <ng-template #emptyState>
-            <div class="ms-modern-waiting__empty-state">
-              <strong>{{ waitingEmptyTitle() }}</strong>
-              <p>{{ waitingEmptyDetail() }}</p>
-            </div>
-          </ng-template>
-        </div>
-      </section>
-    </div>
-  `, isInline: true, styles: [".ms-modern-waiting-overlay{position:fixed;inset:0;background:#020817a8;backdrop-filter:blur(10px);z-index:999}.ms-modern-waiting{display:flex;flex-direction:column;overflow:hidden;border-radius:28px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .96)) 0%,var(--ms-modern-panel-surface, rgba(248, 250, 252, .95)) 100%);box-shadow:0 28px 70px #0f172a47;color:var(--ms-modern-text-primary, #10233f)}.ms-modern-waiting__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 16px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22))}.ms-modern-waiting__eyebrow{display:block;color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.ms-modern-waiting__title{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1.34rem;font-weight:800;line-height:1.1}.ms-modern-waiting__badge{min-width:30px;min-height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0 10px;border-radius:999px;background:linear-gradient(135deg,var(--ms-modern-brand-primary, #4f46e5) 0%,var(--ms-modern-brand-secondary, #14b8a6) 100%);color:#fff;font-size:.86rem}.ms-modern-waiting__subtitle{margin:8px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;line-height:1.5}.ms-modern-waiting__close{width:40px;height:40px;flex:0 0 auto;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));border-radius:999px;background:#fff6;color:var(--ms-modern-text-primary, #10233f);cursor:pointer}.ms-modern-waiting__body{display:grid;gap:16px;padding:18px 22px 22px}.ms-modern-waiting__search{position:relative;display:block}.ms-modern-waiting__search input{min-height:46px;width:100%;border-radius:14px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:#fffffff0;color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.92rem;font-weight:600;padding:0 14px 0 42px;box-sizing:border-box}.ms-modern-waiting__search-icon{position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .52));pointer-events:none}.ms-modern-waiting__list{display:grid;gap:12px}.ms-modern-waiting__item,.ms-modern-waiting__empty-state{border-radius:20px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:#ffffffb8}.ms-modern-waiting__item{display:grid;gap:14px;grid-template-columns:minmax(0,1fr) auto;align-items:center;padding:16px}.ms-modern-waiting__participant-copy strong{display:block;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.95rem;font-weight:800}.ms-modern-waiting__participant-copy p,.ms-modern-waiting__empty-state p{margin:4px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.45}.ms-modern-waiting__actions{display:inline-flex;gap:10px}.ms-modern-waiting__action{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:0 14px;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.86rem;font-weight:700;cursor:pointer}.ms-modern-waiting__action--approve{border:none;background:linear-gradient(135deg,#14b8a6,#22c55e);color:#fff}.ms-modern-waiting__action--reject{border:1px solid rgba(239,68,68,.22);background:#fef2f2e0;color:#b91c1c}.ms-modern-waiting__empty-state{padding:24px;text-align:center}.ms-modern-waiting__empty-state strong{font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.96rem;font-weight:800}@media(max-width:640px){.ms-modern-waiting__item{grid-template-columns:1fr}.ms-modern-waiting__actions{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }, { kind: "ngmodule", type: FormsModule }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernWaitingRoomModalComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-waiting-room-modal', imports: [CommonModule, FontAwesomeModule, FormsModule], template: `
-    <ng-container *ngIf="isVisible() && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isWaitingModalVisible: isWaitingModalVisible,
-              waitingRoomCounter: waitingRoomCounterState,
-              waitingRoomList: waitingRoomListState,
-              position: position,
-              backgroundColor: backgroundColor,
-              roomName: roomName,
-              socket: socket,
-              onWaitingRoomClose: onWaitingRoomClose,
-              onWaitingRoomFilterChange: onWaitingRoomFilterChange,
-              handleFilterChange: handleFilterChange.bind(this),
-              handleItemPress: handleItemPress.bind(this),
-              handleModalClose: handleModalClose.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="isVisible() && !customTemplate"
-      class="ms-modern-waiting-overlay"
-      [ngStyle]="resolvedOverlayStyle()"
-    >
-      <section class="ms-modern-waiting" [ngStyle]="resolvedContentStyle()">
-        <header *ngIf="showHeader" class="ms-modern-waiting__header">
-          <div class="ms-modern-waiting__heading">
-            <span class="ms-modern-waiting__eyebrow">Lobby control</span>
-            <h2 class="ms-modern-waiting__title">
-              Waiting room
-              <span class="ms-modern-waiting__badge">{{ waitingRoomCounterState }}</span>
-            </h2>
-            <p class="ms-modern-waiting__subtitle">
-              Review pending participants and admit or reject them without leaving the room.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            class="ms-modern-waiting__close"
-            aria-label="Close waiting room"
-            (click)="handleModalClose()"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div class="ms-modern-waiting__body">
-          <label class="ms-modern-waiting__search">
-            <fa-icon [icon]="faSearch" class="ms-modern-waiting__search-icon"></fa-icon>
-            <input
-              type="search"
-              placeholder="Search waiting list..."
-              [value]="waitingFilterValue"
-              (input)="handleFilterChange($event)"
-            />
-          </label>
-
-          <section class="ms-modern-waiting__list" *ngIf="waitingRoomListState.length; else emptyState">
-            <article
-              *ngFor="let participant of waitingRoomListState"
-              class="ms-modern-waiting__item"
-            >
-              <div class="ms-modern-waiting__participant-copy">
-                <strong>{{ participant.name }}</strong>
-                <p>Pending admission to {{ roomName || 'this room' }}.</p>
-              </div>
-
-              <div class="ms-modern-waiting__actions">
-                <button
-                  type="button"
-                  class="ms-modern-waiting__action ms-modern-waiting__action--approve"
-                  (click)="handleItemPress(participant, true)"
-                >
-                  <fa-icon [icon]="faCheck"></fa-icon>
-                  Admit
-                </button>
-
-                <button
-                  type="button"
-                  class="ms-modern-waiting__action ms-modern-waiting__action--reject"
-                  (click)="handleItemPress(participant, false)"
-                >
-                  <fa-icon [icon]="faTimes"></fa-icon>
-                  Reject
-                </button>
-              </div>
-            </article>
-          </section>
-
-          <ng-template #emptyState>
-            <div class="ms-modern-waiting__empty-state">
-              <strong>{{ waitingEmptyTitle() }}</strong>
-              <p>{{ waitingEmptyDetail() }}</p>
-            </div>
-          </ng-template>
-        </div>
-      </section>
-    </div>
-  `, styles: [".ms-modern-waiting-overlay{position:fixed;inset:0;background:#020817a8;backdrop-filter:blur(10px);z-index:999}.ms-modern-waiting{display:flex;flex-direction:column;overflow:hidden;border-radius:28px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .96)) 0%,var(--ms-modern-panel-surface, rgba(248, 250, 252, .95)) 100%);box-shadow:0 28px 70px #0f172a47;color:var(--ms-modern-text-primary, #10233f)}.ms-modern-waiting__header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 16px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22))}.ms-modern-waiting__eyebrow{display:block;color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.ms-modern-waiting__title{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:1.34rem;font-weight:800;line-height:1.1}.ms-modern-waiting__badge{min-width:30px;min-height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0 10px;border-radius:999px;background:linear-gradient(135deg,var(--ms-modern-brand-primary, #4f46e5) 0%,var(--ms-modern-brand-secondary, #14b8a6) 100%);color:#fff;font-size:.86rem}.ms-modern-waiting__subtitle{margin:8px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.9rem;line-height:1.5}.ms-modern-waiting__close{width:40px;height:40px;flex:0 0 auto;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));border-radius:999px;background:#fff6;color:var(--ms-modern-text-primary, #10233f);cursor:pointer}.ms-modern-waiting__body{display:grid;gap:16px;padding:18px 22px 22px}.ms-modern-waiting__search{position:relative;display:block}.ms-modern-waiting__search input{min-height:46px;width:100%;border-radius:14px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:#fffffff0;color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.92rem;font-weight:600;padding:0 14px 0 42px;box-sizing:border-box}.ms-modern-waiting__search-icon{position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .52));pointer-events:none}.ms-modern-waiting__list{display:grid;gap:12px}.ms-modern-waiting__item,.ms-modern-waiting__empty-state{border-radius:20px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .22));background:#ffffffb8}.ms-modern-waiting__item{display:grid;gap:14px;grid-template-columns:minmax(0,1fr) auto;align-items:center;padding:16px}.ms-modern-waiting__participant-copy strong{display:block;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.95rem;font-weight:800}.ms-modern-waiting__participant-copy p,.ms-modern-waiting__empty-state p{margin:4px 0 0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.82rem;line-height:1.45}.ms-modern-waiting__actions{display:inline-flex;gap:10px}.ms-modern-waiting__action{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:0 14px;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.86rem;font-weight:700;cursor:pointer}.ms-modern-waiting__action--approve{border:none;background:linear-gradient(135deg,#14b8a6,#22c55e);color:#fff}.ms-modern-waiting__action--reject{border:1px solid rgba(239,68,68,.22);background:#fef2f2e0;color:#b91c1c}.ms-modern-waiting__empty-state{padding:24px;text-align:center}.ms-modern-waiting__empty-state strong{font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.96rem;font-weight:800}@media(max-width:640px){.ms-modern-waiting__item{grid-template-columns:1fr}.ms-modern-waiting__actions{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}\n"] }]
-        }], ctorParameters: () => [{ type: RespondToWaiting }], propDecorators: { isWaitingModalVisible: [{
-                type: Input
-            }], onWaitingRoomClose: [{
-                type: Input
-            }], waitingRoomCounter: [{
-                type: Input
-            }], onWaitingRoomFilterChange: [{
-                type: Input
-            }], waitingRoomList: [{
-                type: Input
-            }], updateWaitingList: [{
-                type: Input
-            }], roomName: [{
-                type: Input
-            }], socket: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], backgroundColor: [{
-                type: Input
-            }], parameters: [{
-                type: Input
-            }], overlayStyle: [{
-                type: Input
-            }], contentStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }], onWaitingRoomItemPress: [{
-                type: Input
-            }], renderMode: [{
-                type: Input
-            }], showHeader: [{
-                type: Input
-            }] } });
-
-class ModernAlertComponent {
-    visible = false;
-    message = '';
-    type = 'success';
-    duration = 4000;
-    textColor = '';
-    position = 'top';
-    isDarkMode;
-    onHide;
-    alertStyle;
-    customTemplate;
-    alertType = 'success';
-    hideTimeout;
-    ngOnChanges(changes) {
-        if (changes['type']) {
-            this.alertType = this.type;
-        }
-        if (changes['visible']) {
-            if (this.hideTimeout) {
-                clearTimeout(this.hideTimeout);
-                this.hideTimeout = undefined;
-            }
-            if (this.visible) {
-                this.hideTimeout = setTimeout(() => {
-                    this.onHide?.();
-                    this.hideTimeout = undefined;
-                }, this.duration);
-            }
-        }
-    }
-    ngOnDestroy() {
-        if (this.hideTimeout) {
-            clearTimeout(this.hideTimeout);
-            this.hideTimeout = undefined;
-        }
-    }
-    handlePress() {
-        this.onHide?.();
-    }
-    get alertLabel() {
-        switch (this.alertType) {
-            case 'danger':
-                return 'Attention';
-            case 'info':
-                return 'Update';
-            case 'warning':
-                return 'Warning';
-            default:
-                return 'Success';
-        }
-    }
-    get alertMeta() {
-        switch (this.alertType) {
-            case 'danger':
-                return 'Action needed';
-            case 'info':
-                return 'Room update';
-            case 'warning':
-                return 'Review needed';
-            default:
-                return 'Completed';
-        }
-    }
-    get alertIcon() {
-        switch (this.alertType) {
-            case 'danger':
-                return '!';
-            case 'info':
-                return 'i';
-            case 'warning':
-                return '!';
-            default:
-                return '✓';
-        }
-    }
-    get alertRole() {
-        return this.alertType === 'danger' || this.alertType === 'warning' ? 'alert' : 'status';
-    }
-    get shellStyle() {
-        const positionStyles = {
-            top: { justifyContent: 'center', alignItems: 'flex-start' },
-            bottom: { justifyContent: 'center', alignItems: 'flex-end' },
-            'top-right': { justifyContent: 'flex-end', alignItems: 'flex-start' },
-            'top-left': { justifyContent: 'flex-start', alignItems: 'flex-start' },
-            'bottom-right': { justifyContent: 'flex-end', alignItems: 'flex-end' },
-            'bottom-left': { justifyContent: 'flex-start', alignItems: 'flex-end' },
-            center: { justifyContent: 'center', alignItems: 'center' },
-        };
-        return positionStyles[this.position] || positionStyles.top;
-    }
-    get resolvedIsDarkMode() {
-        if (typeof this.isDarkMode === 'boolean') {
-            return this.isDarkMode;
-        }
-        return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-            ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            : false;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernAlertComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernAlertComponent, isStandalone: true, selector: "app-modern-alert-component", inputs: { visible: "visible", message: "message", type: "type", duration: "duration", textColor: "textColor", position: "position", isDarkMode: "isDarkMode", onHide: "onHide", alertStyle: "alertStyle", customTemplate: "customTemplate" }, usesOnChanges: true, ngImport: i0, template: `
-    <ng-container *ngIf="visible && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              visible,
-              message,
-              type: alertType,
-              textColor,
-              handlePress: handlePress.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="visible && !customTemplate"
-      class="ms-modern-alert-shell"
-      [class.ms-modern-alert-shell--dark]="resolvedIsDarkMode"
-      [class.ms-modern-alert-shell--light]="!resolvedIsDarkMode"
-      [ngStyle]="shellStyle"
-    >
-      <div
-        (click)="handlePress()"
-        class="ms-modern-alert-card"
-        [class.ms-modern-alert-card--success]="alertType === 'success'"
-        [class.ms-modern-alert-card--danger]="alertType === 'danger'"
-        [class.ms-modern-alert-card--info]="alertType === 'info'"
-        [class.ms-modern-alert-card--warning]="alertType === 'warning'"
-        [ngStyle]="alertStyle"
-        [attr.role]="alertRole"
-        [attr.aria-live]="alertRole === 'alert' ? 'assertive' : 'polite'"
-      >
-        <div class="ms-modern-alert-accent" aria-hidden="true"></div>
-        <div class="ms-modern-alert-icon" aria-hidden="true">{{ alertIcon }}</div>
-        <div class="ms-modern-alert-copy">
-          <p [ngStyle]="textColor ? { color: textColor } : null" class="ms-modern-alert-message">
-            {{ message }}
-          </p>
-        </div>
-        <button
-          type="button"
-          class="ms-modern-alert-close"
-          aria-label="Dismiss notification"
-          (click)="handlePress(); $event.stopPropagation()"
-        >
-          ×
-        </button>
-      </div>
-    </div>
-  `, isInline: true, styles: [".ms-modern-alert-shell{display:flex;position:fixed;inset:0;padding:16px;pointer-events:none;z-index:1100}.ms-modern-alert-card{--alert-border: rgba(20, 125, 100, .24);--alert-glow: rgba(20, 125, 100, .16);--alert-icon-bg: rgba(20, 125, 100, .14);--alert-icon-color: var(--ms-modern-success, #147d64);--alert-accent: linear-gradient(180deg, var(--ms-modern-success, #147d64) 0%, rgba(56, 211, 159, .9) 100%);min-width:min(448px,calc(100vw - 32px));max-width:min(448px,calc(100vw - 32px));display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px 20px 18px 22px;border-radius:var(--ms-modern-radius-lg, 28px);border:1px solid var(--alert-border);box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16)),0 0 32px var(--alert-glow);backdrop-filter:blur(22px);pointer-events:auto;cursor:pointer;position:relative;overflow:hidden;animation:ms-modern-alert-enter var(--ms-modern-motion-base, .22s) var(--ms-modern-motion-easing, cubic-bezier(.22, 1, .36, 1))}.ms-modern-alert-shell--dark .ms-modern-alert-card{background:linear-gradient(135deg,rgba(15,23,42,.96) 0%,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 100%)}.ms-modern-alert-shell--light .ms-modern-alert-card{background:linear-gradient(135deg,rgba(255,255,255,.98) 0%,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .92)) 100%)}.ms-modern-alert-card--danger{--alert-border: rgba(217, 72, 95, .28);--alert-glow: rgba(217, 72, 95, .14);--alert-icon-bg: rgba(217, 72, 95, .14);--alert-icon-color: var(--ms-modern-danger, #d9485f);--alert-accent: linear-gradient(180deg, var(--ms-modern-danger, #d9485f) 0%, rgba(248, 113, 113, .86) 100%)}.ms-modern-alert-card--info{--alert-border: rgba(15, 109, 181, .28);--alert-glow: rgba(15, 109, 181, .14);--alert-icon-bg: rgba(15, 109, 181, .14);--alert-icon-color: var(--ms-modern-info, #0f6db5);--alert-accent: linear-gradient(180deg, var(--ms-modern-info, #0f6db5) 0%, rgba(100, 182, 255, .86) 100%)}.ms-modern-alert-card--warning{--alert-border: rgba(183, 121, 31, .28);--alert-glow: rgba(183, 121, 31, .14);--alert-icon-bg: rgba(183, 121, 31, .14);--alert-icon-color: var(--ms-modern-warning, #b7791f);--alert-accent: linear-gradient(180deg, var(--ms-modern-warning, #b7791f) 0%, rgba(247, 191, 77, .88) 100%)}.ms-modern-alert-accent{position:absolute;top:10px;bottom:10px;left:8px;width:4px;border-radius:var(--ms-modern-radius-pill, 999px);background:var(--alert-accent)}.ms-modern-alert-icon{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:1rem;font-weight:800;background:var(--alert-icon-bg);color:var(--alert-icon-color);box-shadow:inset 0 0 0 1px #ffffff14;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif)}.ms-modern-alert-copy{min-width:0;display:flex;align-items:center}.ms-modern-alert-shell--dark .ms-modern-alert-close{color:var(--ms-modern-text-primary, #f8fafc)}.ms-modern-alert-shell--light .ms-modern-alert-close{color:var(--ms-modern-text-primary, #10233f)}.ms-modern-alert-message{margin:0;font-size:var(--ms-modern-font-body, .98rem);line-height:1.5;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif)}.ms-modern-alert-shell--dark .ms-modern-alert-message{color:var(--ms-modern-text-primary, #f8fafc)}.ms-modern-alert-shell--light .ms-modern-alert-message{color:var(--ms-modern-text-primary, #10233f)}.ms-modern-alert-close{width:34px;height:34px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:50%;background:transparent;font-size:1.1rem;cursor:pointer;transition:transform var(--ms-modern-motion-fast, .16s) ease,background-color var(--ms-modern-motion-fast, .16s) ease,border-color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-alert-shell--dark .ms-modern-alert-close{background:#ffffff0d}.ms-modern-alert-shell--light .ms-modern-alert-close{background:#ffffff94}.ms-modern-alert-close:hover{transform:translateY(-1px)}.ms-modern-alert-shell--dark .ms-modern-alert-close:hover{background:#ffffff1a;border-color:#94a3b847}.ms-modern-alert-shell--light .ms-modern-alert-close:hover{background:#fffc;border-color:#94a3b84d}@keyframes ms-modern-alert-enter{0%{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@media(max-width:640px){.ms-modern-alert-shell{padding:12px}.ms-modern-alert-card{min-width:min(100vw - 24px,100%);max-width:min(100vw - 24px,100%);gap:14px;padding:16px 18px 16px 20px}}@media(prefers-reduced-motion:reduce){.ms-modern-alert-card,.ms-modern-alert-close{animation:none;transition:none}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernAlertComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-modern-alert-component', imports: [CommonModule], template: `
-    <ng-container *ngIf="visible && customTemplate">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              visible,
-              message,
-              type: alertType,
-              textColor,
-              handlePress: handlePress.bind(this)
-            }
-          }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <div
-      *ngIf="visible && !customTemplate"
-      class="ms-modern-alert-shell"
-      [class.ms-modern-alert-shell--dark]="resolvedIsDarkMode"
-      [class.ms-modern-alert-shell--light]="!resolvedIsDarkMode"
-      [ngStyle]="shellStyle"
-    >
-      <div
-        (click)="handlePress()"
-        class="ms-modern-alert-card"
-        [class.ms-modern-alert-card--success]="alertType === 'success'"
-        [class.ms-modern-alert-card--danger]="alertType === 'danger'"
-        [class.ms-modern-alert-card--info]="alertType === 'info'"
-        [class.ms-modern-alert-card--warning]="alertType === 'warning'"
-        [ngStyle]="alertStyle"
-        [attr.role]="alertRole"
-        [attr.aria-live]="alertRole === 'alert' ? 'assertive' : 'polite'"
-      >
-        <div class="ms-modern-alert-accent" aria-hidden="true"></div>
-        <div class="ms-modern-alert-icon" aria-hidden="true">{{ alertIcon }}</div>
-        <div class="ms-modern-alert-copy">
-          <p [ngStyle]="textColor ? { color: textColor } : null" class="ms-modern-alert-message">
-            {{ message }}
-          </p>
-        </div>
-        <button
-          type="button"
-          class="ms-modern-alert-close"
-          aria-label="Dismiss notification"
-          (click)="handlePress(); $event.stopPropagation()"
-        >
-          ×
-        </button>
-      </div>
-    </div>
-  `, styles: [".ms-modern-alert-shell{display:flex;position:fixed;inset:0;padding:16px;pointer-events:none;z-index:1100}.ms-modern-alert-card{--alert-border: rgba(20, 125, 100, .24);--alert-glow: rgba(20, 125, 100, .16);--alert-icon-bg: rgba(20, 125, 100, .14);--alert-icon-color: var(--ms-modern-success, #147d64);--alert-accent: linear-gradient(180deg, var(--ms-modern-success, #147d64) 0%, rgba(56, 211, 159, .9) 100%);min-width:min(448px,calc(100vw - 32px));max-width:min(448px,calc(100vw - 32px));display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px 20px 18px 22px;border-radius:var(--ms-modern-radius-lg, 28px);border:1px solid var(--alert-border);box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16)),0 0 32px var(--alert-glow);backdrop-filter:blur(22px);pointer-events:auto;cursor:pointer;position:relative;overflow:hidden;animation:ms-modern-alert-enter var(--ms-modern-motion-base, .22s) var(--ms-modern-motion-easing, cubic-bezier(.22, 1, .36, 1))}.ms-modern-alert-shell--dark .ms-modern-alert-card{background:linear-gradient(135deg,rgba(15,23,42,.96) 0%,var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9)) 100%)}.ms-modern-alert-shell--light .ms-modern-alert-card{background:linear-gradient(135deg,rgba(255,255,255,.98) 0%,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .92)) 100%)}.ms-modern-alert-card--danger{--alert-border: rgba(217, 72, 95, .28);--alert-glow: rgba(217, 72, 95, .14);--alert-icon-bg: rgba(217, 72, 95, .14);--alert-icon-color: var(--ms-modern-danger, #d9485f);--alert-accent: linear-gradient(180deg, var(--ms-modern-danger, #d9485f) 0%, rgba(248, 113, 113, .86) 100%)}.ms-modern-alert-card--info{--alert-border: rgba(15, 109, 181, .28);--alert-glow: rgba(15, 109, 181, .14);--alert-icon-bg: rgba(15, 109, 181, .14);--alert-icon-color: var(--ms-modern-info, #0f6db5);--alert-accent: linear-gradient(180deg, var(--ms-modern-info, #0f6db5) 0%, rgba(100, 182, 255, .86) 100%)}.ms-modern-alert-card--warning{--alert-border: rgba(183, 121, 31, .28);--alert-glow: rgba(183, 121, 31, .14);--alert-icon-bg: rgba(183, 121, 31, .14);--alert-icon-color: var(--ms-modern-warning, #b7791f);--alert-accent: linear-gradient(180deg, var(--ms-modern-warning, #b7791f) 0%, rgba(247, 191, 77, .88) 100%)}.ms-modern-alert-accent{position:absolute;top:10px;bottom:10px;left:8px;width:4px;border-radius:var(--ms-modern-radius-pill, 999px);background:var(--alert-accent)}.ms-modern-alert-icon{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:1rem;font-weight:800;background:var(--alert-icon-bg);color:var(--alert-icon-color);box-shadow:inset 0 0 0 1px #ffffff14;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif)}.ms-modern-alert-copy{min-width:0;display:flex;align-items:center}.ms-modern-alert-shell--dark .ms-modern-alert-close{color:var(--ms-modern-text-primary, #f8fafc)}.ms-modern-alert-shell--light .ms-modern-alert-close{color:var(--ms-modern-text-primary, #10233f)}.ms-modern-alert-message{margin:0;font-size:var(--ms-modern-font-body, .98rem);line-height:1.5;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif)}.ms-modern-alert-shell--dark .ms-modern-alert-message{color:var(--ms-modern-text-primary, #f8fafc)}.ms-modern-alert-shell--light .ms-modern-alert-message{color:var(--ms-modern-text-primary, #10233f)}.ms-modern-alert-close{width:34px;height:34px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:50%;background:transparent;font-size:1.1rem;cursor:pointer;transition:transform var(--ms-modern-motion-fast, .16s) ease,background-color var(--ms-modern-motion-fast, .16s) ease,border-color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-alert-shell--dark .ms-modern-alert-close{background:#ffffff0d}.ms-modern-alert-shell--light .ms-modern-alert-close{background:#ffffff94}.ms-modern-alert-close:hover{transform:translateY(-1px)}.ms-modern-alert-shell--dark .ms-modern-alert-close:hover{background:#ffffff1a;border-color:#94a3b847}.ms-modern-alert-shell--light .ms-modern-alert-close:hover{background:#fffc;border-color:#94a3b84d}@keyframes ms-modern-alert-enter{0%{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@media(max-width:640px){.ms-modern-alert-shell{padding:12px}.ms-modern-alert-card{min-width:min(100vw - 24px,100%);max-width:min(100vw - 24px,100%);gap:14px;padding:16px 18px 16px 20px}}@media(prefers-reduced-motion:reduce){.ms-modern-alert-card,.ms-modern-alert-close{animation:none;transition:none}}\n"] }]
-        }], propDecorators: { visible: [{
-                type: Input
-            }], message: [{
-                type: Input
-            }], type: [{
-                type: Input
-            }], duration: [{
-                type: Input
-            }], textColor: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], isDarkMode: [{
-                type: Input
-            }], onHide: [{
-                type: Input
-            }], alertStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }] } });
-
-class ModernLoadingModalComponent {
-    isVisible = false;
-    backgroundColor = '';
-    displayColor = '';
-    isDarkMode;
-    loadingText = 'Loading...';
-    showSpinner = true;
-    overlayStyle;
-    contentStyle;
-    spinnerStyle;
-    textStyle;
-    customTemplate;
-    get modalContainerStyle() {
-        const isDarkMode = this.resolvedIsDarkMode;
-        const baseStyles = {
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100%',
-            height: '100%',
-            backgroundColor: this.backgroundColor || (isDarkMode ? 'rgba(2, 6, 23, 0.72)' : 'rgba(15, 23, 42, 0.34)'),
-            backdropFilter: 'blur(14px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: '999',
-        };
-        return {
-            ...baseStyles,
-            ...(this.overlayStyle ?? {}),
-        };
-    }
-    get modalContentStyle() {
-        const isDarkMode = this.resolvedIsDarkMode;
-        const baseStyles = {
-            background: isDarkMode
-                ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 41, 59, 0.92) 100%)'
-                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(241, 245, 249, 0.94) 100%)',
-            borderRadius: '28px',
-            padding: '28px 32px',
-            minWidth: '240px',
-            border: isDarkMode
-                ? '1px solid rgba(148, 163, 184, 0.18)'
-                : '1px solid rgba(148, 163, 184, 0.24)',
-            boxShadow: '0 28px 56px rgba(15, 23, 42, 0.24), 0 0 28px rgba(20, 118, 210, 0.12)',
-            textAlign: 'center',
-        };
-        return {
-            ...baseStyles,
-            ...(this.contentStyle ?? {}),
-        };
-    }
-    get spinnerContainerStyle() {
-        return {
-            marginBottom: '0',
-            ...(this.spinnerStyle ?? {}),
-        };
-    }
-    get loadingTextStyle() {
-        const isDarkMode = this.resolvedIsDarkMode;
-        const baseStyles = {
-            color: this.displayColor || (isDarkMode ? '#e2e8f0' : '#0f172a'),
-            fontSize: '0.98rem',
-            fontWeight: '700',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-        };
-        return {
-            ...baseStyles,
-            ...(this.textStyle ?? {}),
-        };
-    }
-    get resolvedIsDarkMode() {
-        if (typeof this.isDarkMode === 'boolean') {
-            return this.isDarkMode;
-        }
-        return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-            ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            : false;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernLoadingModalComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernLoadingModalComponent, isStandalone: true, selector: "app-modern-loading-modal", inputs: { isVisible: "isVisible", backgroundColor: "backgroundColor", displayColor: "displayColor", isDarkMode: "isDarkMode", loadingText: "loadingText", showSpinner: "showSpinner", overlayStyle: "overlayStyle", contentStyle: "contentStyle", spinnerStyle: "spinnerStyle", textStyle: "textStyle", customTemplate: "customTemplate" }, ngImport: i0, template: `
-    <div *ngIf="isVisible && customTemplate" [ngStyle]="modalContainerStyle" class="ms-modern-loading-overlay">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isVisible,
-              backgroundColor,
-              displayColor,
-              loadingText,
-              showSpinner
-            }
-          }
-        "
-      ></ng-container>
-    </div>
-
-    <div *ngIf="isVisible && !customTemplate" [ngStyle]="modalContainerStyle" class="ms-modern-loading-overlay">
-      <div [ngStyle]="modalContentStyle" class="ms-modern-loading-panel">
-        <div *ngIf="showSpinner" class="ms-modern-loading-spinner-shell">
-          <div class="ms-modern-loading-spinner-halo" aria-hidden="true"></div>
-          <div class="ms-modern-loading-spinner" [ngStyle]="spinnerContainerStyle"></div>
-        </div>
-        <div [ngStyle]="loadingTextStyle" class="ms-modern-loading-text">{{ loadingText }}</div>
-      </div>
-    </div>
-  `, isInline: true, styles: [".ms-modern-loading-overlay{animation:ms-modern-loading-fade-in var(--ms-modern-motion-fast, .16s) ease-out}.ms-modern-loading-panel{display:flex;flex-direction:column;align-items:center;gap:14px;animation:ms-modern-loading-panel-in var(--ms-modern-motion-base, .22s) var(--ms-modern-motion-easing, cubic-bezier(.22, 1, .36, 1))}.ms-modern-loading-spinner{border:4px solid rgba(255,255,255,.16);border-top:4px solid var(--ms-modern-accent, #1476d2);border-radius:50%;width:52px;height:52px;animation:ms-modern-loading-spin 1s linear infinite}.ms-modern-loading-spinner-shell{position:relative;width:72px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#1476d229,#0f6db533);animation:ms-modern-loading-pulse 1.6s ease-in-out infinite}.ms-modern-loading-spinner-halo{position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,#1476d22e,#1476d200 72%);animation:ms-modern-loading-halo 1.8s ease-in-out infinite}.ms-modern-loading-text{margin-top:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif)}@keyframes ms-modern-loading-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}@keyframes ms-modern-loading-fade-in{0%{opacity:0}to{opacity:1}}@keyframes ms-modern-loading-panel-in{0%{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes ms-modern-loading-pulse{0%,to{transform:scale(.98)}50%{transform:scale(1.02)}}@keyframes ms-modern-loading-halo{0%,to{opacity:.65;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}}@media(prefers-reduced-motion:reduce){.ms-modern-loading-overlay,.ms-modern-loading-panel,.ms-modern-loading-spinner-shell,.ms-modern-loading-spinner-halo,.ms-modern-loading-spinner{animation:none}}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernLoadingModalComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-modern-loading-modal', imports: [CommonModule], template: `
-    <div *ngIf="isVisible && customTemplate" [ngStyle]="modalContainerStyle" class="ms-modern-loading-overlay">
-      <ng-container
-        *ngTemplateOutlet="
-          customTemplate;
-          context: {
-            $implicit: {
-              isVisible,
-              backgroundColor,
-              displayColor,
-              loadingText,
-              showSpinner
-            }
-          }
-        "
-      ></ng-container>
-    </div>
-
-    <div *ngIf="isVisible && !customTemplate" [ngStyle]="modalContainerStyle" class="ms-modern-loading-overlay">
-      <div [ngStyle]="modalContentStyle" class="ms-modern-loading-panel">
-        <div *ngIf="showSpinner" class="ms-modern-loading-spinner-shell">
-          <div class="ms-modern-loading-spinner-halo" aria-hidden="true"></div>
-          <div class="ms-modern-loading-spinner" [ngStyle]="spinnerContainerStyle"></div>
-        </div>
-        <div [ngStyle]="loadingTextStyle" class="ms-modern-loading-text">{{ loadingText }}</div>
-      </div>
-    </div>
-  `, styles: [".ms-modern-loading-overlay{animation:ms-modern-loading-fade-in var(--ms-modern-motion-fast, .16s) ease-out}.ms-modern-loading-panel{display:flex;flex-direction:column;align-items:center;gap:14px;animation:ms-modern-loading-panel-in var(--ms-modern-motion-base, .22s) var(--ms-modern-motion-easing, cubic-bezier(.22, 1, .36, 1))}.ms-modern-loading-spinner{border:4px solid rgba(255,255,255,.16);border-top:4px solid var(--ms-modern-accent, #1476d2);border-radius:50%;width:52px;height:52px;animation:ms-modern-loading-spin 1s linear infinite}.ms-modern-loading-spinner-shell{position:relative;width:72px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#1476d229,#0f6db533);animation:ms-modern-loading-pulse 1.6s ease-in-out infinite}.ms-modern-loading-spinner-halo{position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,#1476d22e,#1476d200 72%);animation:ms-modern-loading-halo 1.8s ease-in-out infinite}.ms-modern-loading-text{margin-top:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif)}@keyframes ms-modern-loading-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}@keyframes ms-modern-loading-fade-in{0%{opacity:0}to{opacity:1}}@keyframes ms-modern-loading-panel-in{0%{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes ms-modern-loading-pulse{0%,to{transform:scale(.98)}50%{transform:scale(1.02)}}@keyframes ms-modern-loading-halo{0%,to{opacity:.65;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}}@media(prefers-reduced-motion:reduce){.ms-modern-loading-overlay,.ms-modern-loading-panel,.ms-modern-loading-spinner-shell,.ms-modern-loading-spinner-halo,.ms-modern-loading-spinner{animation:none}}\n"] }]
-        }], propDecorators: { isVisible: [{
-                type: Input
-            }], backgroundColor: [{
-                type: Input
-            }], displayColor: [{
-                type: Input
-            }], isDarkMode: [{
-                type: Input
-            }], loadingText: [{
-                type: Input
-            }], showSpinner: [{
-                type: Input
-            }], overlayStyle: [{
-                type: Input
-            }], contentStyle: [{
-                type: Input
-            }], spinnerStyle: [{
-                type: Input
-            }], textStyle: [{
-                type: Input
-            }], customTemplate: [{
-                type: Input
-            }] } });
-
-class ModernSidebarPanelComponent {
-    visible = false;
-    width = 0;
-    height = 0;
-    title = '';
-    badgeText = null;
-    backLabel = 'Back';
-    canNavigateBack = false;
-    contentKey = '';
-    navigateBack = new EventEmitter();
-    close = new EventEmitter();
-    contentContainer;
-    scrollResetTimer = null;
-    faArrowLeft = faArrowLeft;
-    faTimes = faTimes;
-    ngAfterViewInit() {
-        this.scheduleScrollReset();
-    }
-    ngOnChanges(changes) {
-        if (changes['visible'] || changes['contentKey']) {
-            this.scheduleScrollReset();
-        }
-    }
-    ngOnDestroy() {
-        if (this.scrollResetTimer !== null && typeof window !== 'undefined') {
-            window.clearTimeout(this.scrollResetTimer);
-            this.scrollResetTimer = null;
-        }
-    }
-    scheduleScrollReset() {
-        if (!this.visible || typeof window === 'undefined') {
-            return;
-        }
-        if (this.scrollResetTimer !== null) {
-            window.clearTimeout(this.scrollResetTimer);
-        }
-        this.scrollResetTimer = window.setTimeout(() => {
-            this.scrollResetTimer = null;
-            if (this.contentContainer?.nativeElement) {
-                this.contentContainer.nativeElement.scrollTop = 0;
-            }
-        }, 0);
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernSidebarPanelComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernSidebarPanelComponent, isStandalone: true, selector: "app-modern-sidebar-panel", inputs: { visible: "visible", width: "width", height: "height", title: "title", badgeText: "badgeText", backLabel: "backLabel", canNavigateBack: "canNavigateBack", contentKey: "contentKey" }, outputs: { navigateBack: "navigateBack", close: "close" }, host: { properties: { "style.width.px": "visible ? width : 0", "style.flex": "visible ? '0 0 ' + width + 'px' : '0 0 0px'", "style.height.px": "height", "style.pointer-events": "visible ? 'auto' : 'none'" } }, viewQueries: [{ propertyName: "contentContainer", first: true, predicate: ["contentContainer"], descendants: true }], usesOnChanges: true, ngImport: i0, template: `
-    <div
-      class="ms-modern-sidebar-panel__rail"
-    >
-      <section *ngIf="visible" class="ms-modern-sidebar-panel">
-        <header class="ms-modern-sidebar-panel__header">
-          <div *ngIf="canNavigateBack; else titleHeader" class="ms-modern-sidebar-panel__header-main">
-            <button
-              type="button"
-              class="ms-modern-sidebar-panel__back-button"
-              (click)="navigateBack.emit()"
-              [attr.aria-label]="backLabel"
-            >
-              <fa-icon [icon]="faArrowLeft"></fa-icon>
-              <span>{{ backLabel }}</span>
-            </button>
-          </div>
-
-          <ng-template #titleHeader>
-            <div class="ms-modern-sidebar-panel__header-main">
-            <h2 class="ms-modern-sidebar-panel__title">{{ title }}</h2>
-
-            <span *ngIf="badgeText !== null && badgeText !== undefined" class="ms-modern-sidebar-panel__badge">
-              {{ badgeText }}
-            </span>
-            </div>
-          </ng-template>
-
-          <button
-            type="button"
-            class="ms-modern-sidebar-panel__icon-button"
-            (click)="close.emit()"
-            aria-label="Close sidebar"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div #contentContainer class="ms-modern-sidebar-panel__content">
-          <ng-content></ng-content>
-        </div>
-      </section>
-    </div>
-  `, isInline: true, styles: [":host{display:block;min-width:0;min-height:0;overflow:hidden;contain:layout paint;transition:width .22s cubic-bezier(.22,1,.36,1),flex-basis .22s cubic-bezier(.22,1,.36,1)}.ms-modern-sidebar-panel__rail{position:relative;width:100%;height:100%;overflow:hidden}.ms-modern-sidebar-panel{box-sizing:border-box;height:100%;display:flex;flex-direction:column;color:var(--ms-modern-text-primary, #e2e8f0);background:linear-gradient(180deg,#1476d214,#fff0),var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9));border-left:1px solid var(--ms-modern-border-strong, rgba(59, 130, 246, .22));border-radius:0;box-shadow:-18px 0 42px #0e1e3524;backdrop-filter:blur(18px);overflow:hidden}.ms-modern-sidebar-panel__header{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:64px;padding:14px 18px 12px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .18))}.ms-modern-sidebar-panel__header-main{flex:1;min-width:0;display:flex;align-items:center;gap:12px}.ms-modern-sidebar-panel__title{margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.96rem;font-weight:800;line-height:1.2}.ms-modern-sidebar-panel__badge{min-width:28px;min-height:24px;display:inline-flex;align-items:center;justify-content:center;padding:0 9px;border-radius:999px;background:color-mix(in srgb,var(--ms-modern-accent) 18%,transparent);border:1px solid color-mix(in srgb,var(--ms-modern-accent) 24%,transparent);color:var(--ms-modern-text-primary, #e2e8f0);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.72rem;font-weight:700}.ms-modern-sidebar-panel__icon-button{flex:0 0 auto;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .18));background:color-mix(in srgb,var(--ms-modern-panel-surface) 84%,transparent);color:var(--ms-modern-text-secondary, rgba(226, 232, 240, .78));cursor:pointer;transition:border-color var(--ms-modern-motion-fast, .16s) ease,background-color var(--ms-modern-motion-fast, .16s) ease,color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-sidebar-panel__icon-button:hover{border-color:var(--ms-modern-border-strong, rgba(59, 130, 246, .28));background:color-mix(in srgb,var(--ms-modern-accent) 12%,transparent);color:var(--ms-modern-text-primary, #e2e8f0)}.ms-modern-sidebar-panel__back-button{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:6px 10px;border:0;border-radius:8px;background:transparent;color:#22c55e;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color var(--ms-modern-motion-fast, .16s) ease,color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-sidebar-panel__back-button:hover{background:color-mix(in srgb,var(--ms-modern-accent) 10%,transparent)}.ms-modern-sidebar-panel__content{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernSidebarPanelComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-modern-sidebar-panel', imports: [CommonModule, FontAwesomeModule], host: {
-                        '[style.width.px]': 'visible ? width : 0',
-                        '[style.flex]': "visible ? '0 0 ' + width + 'px' : '0 0 0px'",
-                        '[style.height.px]': 'height',
-                        '[style.pointer-events]': "visible ? 'auto' : 'none'",
-                    }, template: `
-    <div
-      class="ms-modern-sidebar-panel__rail"
-    >
-      <section *ngIf="visible" class="ms-modern-sidebar-panel">
-        <header class="ms-modern-sidebar-panel__header">
-          <div *ngIf="canNavigateBack; else titleHeader" class="ms-modern-sidebar-panel__header-main">
-            <button
-              type="button"
-              class="ms-modern-sidebar-panel__back-button"
-              (click)="navigateBack.emit()"
-              [attr.aria-label]="backLabel"
-            >
-              <fa-icon [icon]="faArrowLeft"></fa-icon>
-              <span>{{ backLabel }}</span>
-            </button>
-          </div>
-
-          <ng-template #titleHeader>
-            <div class="ms-modern-sidebar-panel__header-main">
-            <h2 class="ms-modern-sidebar-panel__title">{{ title }}</h2>
-
-            <span *ngIf="badgeText !== null && badgeText !== undefined" class="ms-modern-sidebar-panel__badge">
-              {{ badgeText }}
-            </span>
-            </div>
-          </ng-template>
-
-          <button
-            type="button"
-            class="ms-modern-sidebar-panel__icon-button"
-            (click)="close.emit()"
-            aria-label="Close sidebar"
-          >
-            <fa-icon [icon]="faTimes"></fa-icon>
-          </button>
-        </header>
-
-        <div #contentContainer class="ms-modern-sidebar-panel__content">
-          <ng-content></ng-content>
-        </div>
-      </section>
-    </div>
-  `, styles: [":host{display:block;min-width:0;min-height:0;overflow:hidden;contain:layout paint;transition:width .22s cubic-bezier(.22,1,.36,1),flex-basis .22s cubic-bezier(.22,1,.36,1)}.ms-modern-sidebar-panel__rail{position:relative;width:100%;height:100%;overflow:hidden}.ms-modern-sidebar-panel{box-sizing:border-box;height:100%;display:flex;flex-direction:column;color:var(--ms-modern-text-primary, #e2e8f0);background:linear-gradient(180deg,#1476d214,#fff0),var(--ms-modern-panel-surface-elevated, rgba(15, 27, 49, .9));border-left:1px solid var(--ms-modern-border-strong, rgba(59, 130, 246, .22));border-radius:0;box-shadow:-18px 0 42px #0e1e3524;backdrop-filter:blur(18px);overflow:hidden}.ms-modern-sidebar-panel__header{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:64px;padding:14px 18px 12px;border-bottom:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .18))}.ms-modern-sidebar-panel__header-main{flex:1;min-width:0;display:flex;align-items:center;gap:12px}.ms-modern-sidebar-panel__title{margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.96rem;font-weight:800;line-height:1.2}.ms-modern-sidebar-panel__badge{min-width:28px;min-height:24px;display:inline-flex;align-items:center;justify-content:center;padding:0 9px;border-radius:999px;background:color-mix(in srgb,var(--ms-modern-accent) 18%,transparent);border:1px solid color-mix(in srgb,var(--ms-modern-accent) 24%,transparent);color:var(--ms-modern-text-primary, #e2e8f0);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.72rem;font-weight:700}.ms-modern-sidebar-panel__icon-button{flex:0 0 auto;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-subtle, rgba(148, 163, 184, .18));background:color-mix(in srgb,var(--ms-modern-panel-surface) 84%,transparent);color:var(--ms-modern-text-secondary, rgba(226, 232, 240, .78));cursor:pointer;transition:border-color var(--ms-modern-motion-fast, .16s) ease,background-color var(--ms-modern-motion-fast, .16s) ease,color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-sidebar-panel__icon-button:hover{border-color:var(--ms-modern-border-strong, rgba(59, 130, 246, .28));background:color-mix(in srgb,var(--ms-modern-accent) 12%,transparent);color:var(--ms-modern-text-primary, #e2e8f0)}.ms-modern-sidebar-panel__back-button{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:6px 10px;border:0;border-radius:8px;background:transparent;color:#22c55e;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color var(--ms-modern-motion-fast, .16s) ease,color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-sidebar-panel__back-button:hover{background:color-mix(in srgb,var(--ms-modern-accent) 10%,transparent)}.ms-modern-sidebar-panel__content{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px}\n"] }]
-        }], propDecorators: { visible: [{
-                type: Input
-            }], width: [{
-                type: Input
-            }], height: [{
-                type: Input
-            }], title: [{
-                type: Input
-            }], badgeText: [{
-                type: Input
-            }], backLabel: [{
-                type: Input
-            }], canNavigateBack: [{
-                type: Input
-            }], contentKey: [{
-                type: Input
-            }], navigateBack: [{
-                type: Output
-            }], close: [{
-                type: Output
-            }], contentContainer: [{
-                type: ViewChild,
-                args: ['contentContainer']
-            }] } });
-
-class ModernParticipantsCounterBadgeComponent {
-    participantsCount = 0;
-    position = 'bottomLeft';
-    showBadge = true;
-    backgroundColor;
-    textColor;
-    isDarkMode = true;
-    customStyle = {};
-    faUsers = faUsers;
-    get containerStyle() {
-        const offset = 16;
-        const positions = {
-            topLeft: { top: `${offset}px`, left: `${offset}px` },
-            topRight: { top: `${offset}px`, right: `${offset}px` },
-            bottomLeft: { bottom: `${offset}px`, left: `${offset}px` },
-            bottomRight: { bottom: `${offset}px`, right: `${offset}px` },
-        };
-        return {
-            ...positions[this.position],
-            ...this.customStyle,
-        };
-    }
-    get badgeStyle() {
-        const style = {};
-        if (this.backgroundColor) {
-            style['background'] = this.backgroundColor;
-        }
-        if (this.textColor) {
-            style['color'] = this.textColor;
-        }
-        return style;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernParticipantsCounterBadgeComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernParticipantsCounterBadgeComponent, isStandalone: true, selector: "app-modern-participants-counter-badge", inputs: { participantsCount: "participantsCount", position: "position", showBadge: "showBadge", backgroundColor: "backgroundColor", textColor: "textColor", isDarkMode: "isDarkMode", customStyle: "customStyle" }, ngImport: i0, template: `
-    <div *ngIf="showBadge" class="ms-modern-participants-badge" [ngStyle]="containerStyle">
-      <div
-        class="ms-modern-participants-badge__pill"
-        [class.ms-modern-participants-badge__pill--dark]="isDarkMode"
-        [class.ms-modern-participants-badge__pill--light]="!isDarkMode"
-        [ngStyle]="badgeStyle"
-      >
-        <fa-icon class="ms-modern-participants-badge__icon" [icon]="faUsers"></fa-icon>
-        <span class="ms-modern-participants-badge__count">{{ participantsCount }}</span>
-      </div>
-    </div>
-  `, isInline: true, styles: [".ms-modern-participants-badge{position:absolute;z-index:100;pointer-events:none}.ms-modern-participants-badge__pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:20px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.ms-modern-participants-badge__pill--dark{background:#2d3436d9;color:#fff;box-shadow:0 4px 12px #0000004d,inset 0 1px #ffffff1a;border:1px solid rgba(255,255,255,.15)}.ms-modern-participants-badge__pill--light{background:#ffffffe6;color:#1f2937;box-shadow:0 4px 12px #0000001a,inset 0 1px #ffffff80;border:1px solid rgba(0,0,0,.1)}.ms-modern-participants-badge__icon{font-size:14px;opacity:.9}.ms-modern-participants-badge__count{font-family:var(--ms-modern-font-family, \"Segoe UI\", \"Aptos\", \"Trebuchet MS\", sans-serif);font-size:14px;font-weight:600;letter-spacing:.5px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernParticipantsCounterBadgeComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-modern-participants-counter-badge', imports: [CommonModule, FontAwesomeModule], template: `
-    <div *ngIf="showBadge" class="ms-modern-participants-badge" [ngStyle]="containerStyle">
-      <div
-        class="ms-modern-participants-badge__pill"
-        [class.ms-modern-participants-badge__pill--dark]="isDarkMode"
-        [class.ms-modern-participants-badge__pill--light]="!isDarkMode"
-        [ngStyle]="badgeStyle"
-      >
-        <fa-icon class="ms-modern-participants-badge__icon" [icon]="faUsers"></fa-icon>
-        <span class="ms-modern-participants-badge__count">{{ participantsCount }}</span>
-      </div>
-    </div>
-  `, styles: [".ms-modern-participants-badge{position:absolute;z-index:100;pointer-events:none}.ms-modern-participants-badge__pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:20px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.ms-modern-participants-badge__pill--dark{background:#2d3436d9;color:#fff;box-shadow:0 4px 12px #0000004d,inset 0 1px #ffffff1a;border:1px solid rgba(255,255,255,.15)}.ms-modern-participants-badge__pill--light{background:#ffffffe6;color:#1f2937;box-shadow:0 4px 12px #0000001a,inset 0 1px #ffffff80;border:1px solid rgba(0,0,0,.1)}.ms-modern-participants-badge__icon{font-size:14px;opacity:.9}.ms-modern-participants-badge__count{font-family:var(--ms-modern-font-family, \"Segoe UI\", \"Aptos\", \"Trebuchet MS\", sans-serif);font-size:14px;font-weight:600;letter-spacing:.5px}\n"] }]
-        }], propDecorators: { participantsCount: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], showBadge: [{
-                type: Input
-            }], backgroundColor: [{
-                type: Input
-            }], textColor: [{
-                type: Input
-            }], isDarkMode: [{
-                type: Input
-            }], customStyle: [{
-                type: Input
-            }] } });
-
-class ModernPaginationComponent {
-    generatePageContentService;
-    totalPages = 0;
-    currentUserPage = 0;
-    handlePageChange;
-    position = 'middle';
-    location = 'middle';
-    direction = 'horizontal';
-    buttonsContainerStyle = {};
-    activePageStyle = { backgroundColor: '#2c678f' };
-    inactivePageStyle = {};
-    backgroundColor = '#ffffff';
-    paginationHeight = 40;
-    showAspect = true;
-    maxVisiblePages = 5;
-    parameters = {};
-    constructor(generatePageContentService) {
-        this.generatePageContentService = generatePageContentService;
-    }
-    faHome = faHome;
-    faStar = faStar;
-    faLock = faLock;
-    faUsers = faUsers;
-    faChevronLeft = faChevronLeft;
-    faChevronRight = faChevronRight;
-    faChevronUp = faChevronUp;
-    faChevronDown = faChevronDown;
-    data = [];
-    windowStart = 1;
-    componentSizes = {};
-    ngOnInit() {
-        this.componentSizes = this.resolveParameters().componentSizes;
-        if (!this.handlePageChange) {
-            this.handlePageChange = this.generatePageContentService.generatePageContent.bind(this.generatePageContentService);
-        }
-        this.refreshVisiblePages();
-    }
-    ngOnChanges(changes) {
-        if (changes['totalPages'] || changes['currentUserPage'] || changes['parameters']) {
-            this.refreshVisiblePages();
-        }
-    }
-    handleClick = async (page) => {
-        if (page == this.currentUserPage) {
-            return;
-        }
-        const resolvedParameters = this.resolveParameters();
-        const params = { ...resolvedParameters };
-        this.componentSizes = params.componentSizes;
-        if (resolvedParameters.breakOutRoomStarted && !resolvedParameters.breakOutRoomEnded && page !== 0) {
-            const roomMember = resolvedParameters.breakoutRooms.find((room) => room.find((participant) => participant.name == resolvedParameters.member));
-            const pageInt = page - resolvedParameters.mainRoomsLength;
-            let memberBreakRoom = -1;
-            if (roomMember) {
-                memberBreakRoom = resolvedParameters.breakoutRooms.indexOf(roomMember);
-            }
-            if ((memberBreakRoom == -1 || memberBreakRoom !== pageInt) && pageInt >= 0) {
-                if (resolvedParameters.islevel !== '2') {
-                    resolvedParameters.showAlert?.({
-                        message: `You are not part of the breakout room ${pageInt + 1}.`,
-                        type: 'danger',
-                    });
-                    return;
-                }
-                await this.handlePageChange({
-                    page,
-                    parameters: params,
-                    breakRoom: pageInt,
-                    inBreakRoom: true,
-                });
-                if (resolvedParameters.hostNewRoom !== pageInt) {
-                    resolvedParameters.socket.emit('updateHostBreakout', {
-                        newRoom: pageInt,
-                        roomName: resolvedParameters.roomName,
-                    });
-                }
-            }
-            else {
-                await this.handlePageChange({
-                    page,
-                    parameters: params,
-                    breakRoom: pageInt,
-                    inBreakRoom: pageInt >= 0,
-                });
-                if (resolvedParameters.islevel == '2' && resolvedParameters.hostNewRoom !== -1) {
-                    resolvedParameters.socket.emit('updateHostBreakout', {
-                        prevRoom: resolvedParameters.hostNewRoom,
-                        newRoom: -1,
-                        roomName: resolvedParameters.roomName,
-                    });
-                }
-            }
-        }
-        else {
-            await this.handlePageChange({ page, parameters: params, breakRoom: 0, inBreakRoom: false });
-            if (resolvedParameters.islevel == '2' && resolvedParameters.hostNewRoom !== -1) {
-                resolvedParameters.socket.emit('updateHostBreakout', {
-                    prevRoom: resolvedParameters.hostNewRoom,
-                    newRoom: -1,
-                    roomName: resolvedParameters.roomName,
-                });
-            }
-        }
-    };
-    resolveParameters() {
-        if (this.parameters?.getUpdatedAllParams) {
-            return this.parameters.getUpdatedAllParams();
-        }
-        return this.parameters;
-    }
-    isDarkModeEnabled() {
-        const params = this.resolveParameters();
-        if (typeof params?.isDarkModeValue === 'boolean') {
-            return params.isDarkModeValue;
-        }
-        return false;
-    }
-    refreshVisiblePages() {
-        this.syncWindowToCurrentPage();
-        if (!this.shouldShowNavigationArrows()) {
-            this.data = Array.from({ length: this.totalPages + 1 }, (_, index) => index);
-            return;
-        }
-        const windowEnd = Math.min(this.windowStart + this.maxVisiblePages - 1, this.totalPages);
-        this.data = [0];
-        for (let page = this.windowStart; page <= windowEnd; page += 1) {
-            this.data.push(page);
-        }
-    }
-    shouldShowNavigationArrows() {
-        return this.totalPages > this.maxVisiblePages + 1;
-    }
-    canNavigateBack() {
-        return this.windowStart > 1;
-    }
-    canNavigateForward() {
-        return this.windowStart + this.maxVisiblePages <= this.totalPages;
-    }
-    shiftWindowBack() {
-        if (!this.canNavigateBack()) {
-            return;
-        }
-        this.windowStart = this.clampWindowStart(this.windowStart - this.getWindowShiftAmount());
-        this.refreshVisiblePages();
-    }
-    shiftWindowForward() {
-        if (!this.canNavigateForward()) {
-            return;
-        }
-        this.windowStart = this.clampWindowStart(this.windowStart + this.getWindowShiftAmount());
-        this.refreshVisiblePages();
-    }
-    getArrowStyle(disabled) {
-        const isDarkMode = this.isDarkModeEnabled();
-        return {
-            color: disabled
-                ? isDarkMode
-                    ? 'rgba(226, 232, 240, 0.32)'
-                    : 'rgba(15, 23, 42, 0.32)'
-                : isDarkMode
-                    ? 'rgba(226, 232, 240, 0.86)'
-                    : 'rgba(15, 23, 42, 0.82)',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            opacity: disabled ? '0.6' : '1',
-        };
-    }
-    getHomeIconColor() {
-        return this.isDarkModeEnabled() ? 'rgba(226, 232, 240, 0.82)' : 'rgba(15, 23, 42, 0.68)';
-    }
-    getContainerStyle() {
-        const otherHeight = this.componentSizes?.otherHeight || 0;
-        const otherWidth = this.componentSizes?.otherWidth || 0;
-        const isDarkMode = this.isDarkModeEnabled();
-        return {
-            background: this.backgroundColor ||
-                (isDarkMode
-                    ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 100%)'
-                    : 'linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(226, 232, 240, 0.88) 100%)'),
-            justifyContent: this.position == 'middle'
-                ? 'center'
-                : this.position == 'left'
-                    ? 'flex-start'
-                    : 'flex-end',
-            alignItems: this.location == 'middle'
-                ? 'center'
-                : this.location == 'top'
-                    ? 'flex-start'
-                    : 'flex-end',
-            margin: '0',
-            minHeight: this.direction == 'horizontal' ? this.paginationHeight + 'px' : otherHeight + 'px',
-            minWidth: this.direction == 'horizontal' ? otherWidth + 'px' : this.paginationHeight + 'px',
-            width: this.direction == 'horizontal' ? '100%' : this.paginationHeight + 'px',
-            height: this.direction == 'horizontal' ? this.paginationHeight + 'px' : '100%',
-            display: this.showAspect ? 'flex' : 'none',
-            maxHeight: this.direction == 'horizontal' ? this.paginationHeight + 'px' : '100%',
-            maxWidth: this.direction == 'horizontal' ? '100%' : this.paginationHeight + 'px',
-            flexDirection: this.direction == 'vertical' ? 'column' : 'row',
-            border: isDarkMode
-                ? '1px solid rgba(148, 163, 184, 0.18)'
-                : '1px solid rgba(148, 163, 184, 0.24)',
-            ...(this.buttonsContainerStyle || {}),
-        };
-    }
-    getPageStyle(item) {
-        const active = item == this.currentUserPage;
-        const isDarkMode = this.isDarkModeEnabled();
-        return {
-            background: active
-                ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.92) 0%, rgba(79, 70, 229, 0.9) 100%)'
-                : isDarkMode
-                    ? 'rgba(30, 41, 59, 0.82)'
-                    : 'rgba(255, 255, 255, 0.62)',
-            color: active ? '#ffffff' : isDarkMode ? '#e2e8f0' : '#0f172a',
-            boxShadow: active
-                ? '0 12px 26px rgba(37, 99, 235, 0.24)'
-                : isDarkMode
-                    ? 'inset 0 1px 0 rgba(255, 255, 255, 0.06)'
-                    : 'inset 0 1px 0 rgba(255, 255, 255, 0.22)',
-            ...(active ? this.activePageStyle : this.inactivePageStyle),
-        };
-    }
-    getPageLabelStyle(item) {
-        const isDarkMode = this.isDarkModeEnabled();
-        return {
-            color: item == this.currentUserPage ? '#ffffff' : isDarkMode ? '#e2e8f0' : '#0f172a',
-        };
-    }
-    getPageAriaLabel(item) {
-        if (item === 0) {
-            return 'Go to main room';
-        }
-        if (this.isBreakoutRoom(item)) {
-            return `Go to breakout room ${this.getBreakoutRoomNumber(item)}`;
-        }
-        return `Go to page ${item}`;
-    }
-    isBreakoutRoom = (item) => {
-        const params = this.resolveParameters();
-        return params.breakOutRoomStarted && !params.breakOutRoomEnded && item >= params.mainRoomsLength;
-    };
-    isCurrentBreakoutRoom(item) {
-        const params = this.resolveParameters();
-        return this.isBreakoutRoom(item) && params.memberRoom + 1 === item - (params.mainRoomsLength - 1);
-    }
-    showBreakoutLock(item) {
-        const params = this.resolveParameters();
-        return (this.isBreakoutRoom(item) &&
-            params.memberRoom + 1 !== item - (params.mainRoomsLength - 1) &&
-            params.islevel !== '2');
-    }
-    getDisplayItem(item) {
-        const roomNumber = this.getBreakoutRoomNumber(item);
-        if (this.isBreakoutRoom(item)) {
-            return roomNumber.toString();
-        }
-        return item.toString();
-    }
-    syncWindowToCurrentPage() {
-        if (!this.shouldShowNavigationArrows()) {
-            this.windowStart = 1;
-            return;
-        }
-        if (this.currentUserPage <= 0) {
-            this.windowStart = this.clampWindowStart(this.windowStart);
-            return;
-        }
-        const windowEnd = this.windowStart + this.maxVisiblePages - 1;
-        if (this.currentUserPage >= this.windowStart && this.currentUserPage <= windowEnd) {
-            this.windowStart = this.clampWindowStart(this.windowStart);
-            return;
-        }
-        const centeredStart = this.currentUserPage - Math.floor(this.maxVisiblePages / 2);
-        this.windowStart = this.clampWindowStart(centeredStart);
-    }
-    clampWindowStart(candidate) {
-        const maxStart = Math.max(1, this.totalPages - this.maxVisiblePages + 1);
-        return Math.max(1, Math.min(candidate, maxStart));
-    }
-    getWindowShiftAmount() {
-        return Math.max(1, this.maxVisiblePages - 2);
-    }
-    getBreakoutRoomNumber(item) {
-        const params = this.resolveParameters();
-        return item - (params.mainRoomsLength - 1);
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernPaginationComponent, deps: [{ token: GeneratePageContent }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernPaginationComponent, isStandalone: true, selector: "app-modern-pagination", inputs: { totalPages: "totalPages", currentUserPage: "currentUserPage", handlePageChange: "handlePageChange", position: "position", location: "location", direction: "direction", buttonsContainerStyle: "buttonsContainerStyle", activePageStyle: "activePageStyle", inactivePageStyle: "inactivePageStyle", backgroundColor: "backgroundColor", paginationHeight: "paginationHeight", showAspect: "showAspect", maxVisiblePages: "maxVisiblePages", parameters: "parameters" }, usesOnChanges: true, ngImport: i0, template: `
-    <div class="ms-modern-pagination" [ngStyle]="getContainerStyle()">
-      <button
-        *ngIf="shouldShowNavigationArrows()"
-        type="button"
-        class="ms-modern-pagination__button ms-modern-pagination__button--arrow"
-        [ngStyle]="getArrowStyle(!canNavigateBack())"
-        [disabled]="!canNavigateBack()"
-        [attr.aria-label]="direction === 'vertical' ? 'Previous pages' : 'Previous pages'"
-        (click)="shiftWindowBack()"
-      >
-        <fa-icon [icon]="direction === 'vertical' ? faChevronUp : faChevronLeft"></fa-icon>
-      </button>
-
-      <ng-container *ngFor="let item of data">
-        <button
-          type="button"
-          class="ms-modern-pagination__button"
-          [ngClass]="{ 'ms-modern-pagination__button--active': item == currentUserPage }"
-          [ngStyle]="getPageStyle(item)"
-          [attr.aria-label]="getPageAriaLabel(item)"
-          (click)="handleClick(item)"
-        >
-          <fa-icon
-            *ngIf="item == 0"
-            [icon]="faHome"
-            [style.color]="item == currentUserPage ? '#ffffff' : getHomeIconColor()"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="isBreakoutRoom(item)"
-            class="ms-modern-pagination__room-icon"
-            [icon]="faUsers"
-          ></fa-icon>
-          <span
-            *ngIf="item !== 0"
-            class="ms-modern-pagination__label"
-            [ngStyle]="getPageLabelStyle(item)"
-          >
-            {{ getDisplayItem(item) }}
-          </span>
-          <fa-icon
-            *ngIf="isBreakoutRoom(item) && showBreakoutLock(item)"
-            class="ms-modern-pagination__badge"
-            [icon]="faLock"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="isBreakoutRoom(item) && isCurrentBreakoutRoom(item)"
-            class="ms-modern-pagination__badge ms-modern-pagination__badge--star"
-            [icon]="faStar"
-          ></fa-icon>
-        </button>
-      </ng-container>
-
-      <button
-        *ngIf="shouldShowNavigationArrows()"
-        type="button"
-        class="ms-modern-pagination__button ms-modern-pagination__button--arrow"
-        [ngStyle]="getArrowStyle(!canNavigateForward())"
-        [disabled]="!canNavigateForward()"
-        [attr.aria-label]="direction === 'vertical' ? 'Next pages' : 'Next pages'"
-        (click)="shiftWindowForward()"
-      >
-        <fa-icon [icon]="direction === 'vertical' ? faChevronDown : faChevronRight"></fa-icon>
-      </button>
-    </div>
-  `, isInline: true, styles: [".ms-modern-pagination{box-sizing:border-box;gap:4px;padding:2px 6px;border-radius:var(--ms-modern-radius-md, 16px);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;backdrop-filter:blur(12px);box-shadow:0 14px 28px #0f172a29}.ms-modern-pagination::-webkit-scrollbar{display:none}.ms-modern-pagination__button{box-sizing:border-box;min-width:30px;height:30px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:4px;border:none;border-radius:var(--ms-modern-radius-pill, 999px);cursor:pointer;transition:transform var(--ms-modern-motion-fast, .16s) ease,box-shadow var(--ms-modern-motion-fast, .16s) ease,background-color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-pagination__button--active{transform:translateY(-1px)}.ms-modern-pagination__label{font-family:var(--ms-modern-font-family, \"Segoe UI\", \"Aptos\", \"Trebuchet MS\", sans-serif);font-size:.76rem;font-weight:800;letter-spacing:.04em;white-space:nowrap}.ms-modern-pagination__badge{font-size:.72rem}.ms-modern-pagination__badge--star{color:#f59e0b}.ms-modern-pagination__button--arrow{min-width:28px;width:28px;height:28px;padding:0;background:transparent;box-shadow:none}.ms-modern-pagination__room-icon{font-size:.68rem}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernPaginationComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-modern-pagination', imports: [CommonModule, FontAwesomeModule], template: `
-    <div class="ms-modern-pagination" [ngStyle]="getContainerStyle()">
-      <button
-        *ngIf="shouldShowNavigationArrows()"
-        type="button"
-        class="ms-modern-pagination__button ms-modern-pagination__button--arrow"
-        [ngStyle]="getArrowStyle(!canNavigateBack())"
-        [disabled]="!canNavigateBack()"
-        [attr.aria-label]="direction === 'vertical' ? 'Previous pages' : 'Previous pages'"
-        (click)="shiftWindowBack()"
-      >
-        <fa-icon [icon]="direction === 'vertical' ? faChevronUp : faChevronLeft"></fa-icon>
-      </button>
-
-      <ng-container *ngFor="let item of data">
-        <button
-          type="button"
-          class="ms-modern-pagination__button"
-          [ngClass]="{ 'ms-modern-pagination__button--active': item == currentUserPage }"
-          [ngStyle]="getPageStyle(item)"
-          [attr.aria-label]="getPageAriaLabel(item)"
-          (click)="handleClick(item)"
-        >
-          <fa-icon
-            *ngIf="item == 0"
-            [icon]="faHome"
-            [style.color]="item == currentUserPage ? '#ffffff' : getHomeIconColor()"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="isBreakoutRoom(item)"
-            class="ms-modern-pagination__room-icon"
-            [icon]="faUsers"
-          ></fa-icon>
-          <span
-            *ngIf="item !== 0"
-            class="ms-modern-pagination__label"
-            [ngStyle]="getPageLabelStyle(item)"
-          >
-            {{ getDisplayItem(item) }}
-          </span>
-          <fa-icon
-            *ngIf="isBreakoutRoom(item) && showBreakoutLock(item)"
-            class="ms-modern-pagination__badge"
-            [icon]="faLock"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="isBreakoutRoom(item) && isCurrentBreakoutRoom(item)"
-            class="ms-modern-pagination__badge ms-modern-pagination__badge--star"
-            [icon]="faStar"
-          ></fa-icon>
-        </button>
-      </ng-container>
-
-      <button
-        *ngIf="shouldShowNavigationArrows()"
-        type="button"
-        class="ms-modern-pagination__button ms-modern-pagination__button--arrow"
-        [ngStyle]="getArrowStyle(!canNavigateForward())"
-        [disabled]="!canNavigateForward()"
-        [attr.aria-label]="direction === 'vertical' ? 'Next pages' : 'Next pages'"
-        (click)="shiftWindowForward()"
-      >
-        <fa-icon [icon]="direction === 'vertical' ? faChevronDown : faChevronRight"></fa-icon>
-      </button>
-    </div>
-  `, styles: [".ms-modern-pagination{box-sizing:border-box;gap:4px;padding:2px 6px;border-radius:var(--ms-modern-radius-md, 16px);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;backdrop-filter:blur(12px);box-shadow:0 14px 28px #0f172a29}.ms-modern-pagination::-webkit-scrollbar{display:none}.ms-modern-pagination__button{box-sizing:border-box;min-width:30px;height:30px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:4px;border:none;border-radius:var(--ms-modern-radius-pill, 999px);cursor:pointer;transition:transform var(--ms-modern-motion-fast, .16s) ease,box-shadow var(--ms-modern-motion-fast, .16s) ease,background-color var(--ms-modern-motion-fast, .16s) ease}.ms-modern-pagination__button--active{transform:translateY(-1px)}.ms-modern-pagination__label{font-family:var(--ms-modern-font-family, \"Segoe UI\", \"Aptos\", \"Trebuchet MS\", sans-serif);font-size:.76rem;font-weight:800;letter-spacing:.04em;white-space:nowrap}.ms-modern-pagination__badge{font-size:.72rem}.ms-modern-pagination__badge--star{color:#f59e0b}.ms-modern-pagination__button--arrow{min-width:28px;width:28px;height:28px;padding:0;background:transparent;box-shadow:none}.ms-modern-pagination__room-icon{font-size:.68rem}\n"] }]
-        }], ctorParameters: () => [{ type: GeneratePageContent }], propDecorators: { totalPages: [{
-                type: Input
-            }], currentUserPage: [{
-                type: Input
-            }], handlePageChange: [{
-                type: Input
-            }], position: [{
-                type: Input
-            }], location: [{
-                type: Input
-            }], direction: [{
-                type: Input
-            }], buttonsContainerStyle: [{
-                type: Input
-            }], activePageStyle: [{
-                type: Input
-            }], inactivePageStyle: [{
-                type: Input
-            }], backgroundColor: [{
-                type: Input
-            }], paginationHeight: [{
-                type: Input
-            }], showAspect: [{
-                type: Input
-            }], maxVisiblePages: [{
-                type: Input
-            }], parameters: [{
-                type: Input
-            }] } });
-
-class ControlIconBadgeWidgetComponent {
-    icon;
-    iconColor = 'currentColor';
-    badgeValue;
-    showBadge = false;
-    get normalizedBadgeValue() {
-        const rawValue = this.badgeValue == null ? '' : String(this.badgeValue).trim();
-        if (!rawValue) {
-            return '';
-        }
-        const numericValue = Number(rawValue);
-        if (Number.isFinite(numericValue) && /^\d+$/.test(rawValue)) {
-            return numericValue > 99 ? '99+' : rawValue;
-        }
-        return rawValue;
-    }
-    get isDotBadge() {
-        return this.normalizedBadgeValue === '*' || this.normalizedBadgeValue === '•';
-    }
-    get shouldRenderBadge() {
-        return this.showBadge && this.normalizedBadgeValue.length > 0;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ControlIconBadgeWidgetComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ControlIconBadgeWidgetComponent, isStandalone: true, selector: "app-control-icon-badge-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
-    <div class="control-widget control-widget--modern">
-      <span class="control-widget__icon-shell" [style.color]="iconColor">
-        <fa-icon [icon]="icon" size="lg"></fa-icon>
-      </span>
-      <span
-        *ngIf="shouldRenderBadge"
-        class="control-widget__badge"
-        [class.control-widget__badge--dot]="isDotBadge"
-      >
-        {{ isDotBadge ? '' : normalizedBadgeValue }}
-      </span>
-    </div>
-  `, isInline: true, styles: [".control-widget{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;line-height:1;isolation:isolate}.control-widget__icon-shell{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;filter:drop-shadow(0 1px 2px rgba(15,23,42,.24))}.control-widget__badge{position:absolute;top:-7px;right:-10px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fb7185,#ef4444 48%,#dc2626);color:#fff;font-size:10px;font-weight:700;line-height:1;letter-spacing:.02em;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.94);box-shadow:0 6px 16px #dc262647;pointer-events:none}.control-widget__badge--dot{top:-3px;right:-3px;min-width:10px;width:10px;height:10px;padding:0;border-width:2px;box-shadow:0 0 0 1px #0f172a29,0 6px 12px #dc26264d}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ControlIconBadgeWidgetComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-control-icon-badge-widget', standalone: true, imports: [CommonModule, FontAwesomeModule], template: `
-    <div class="control-widget control-widget--modern">
-      <span class="control-widget__icon-shell" [style.color]="iconColor">
-        <fa-icon [icon]="icon" size="lg"></fa-icon>
-      </span>
-      <span
-        *ngIf="shouldRenderBadge"
-        class="control-widget__badge"
-        [class.control-widget__badge--dot]="isDotBadge"
-      >
-        {{ isDotBadge ? '' : normalizedBadgeValue }}
-      </span>
-    </div>
-  `, styles: [".control-widget{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;line-height:1;isolation:isolate}.control-widget__icon-shell{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;filter:drop-shadow(0 1px 2px rgba(15,23,42,.24))}.control-widget__badge{position:absolute;top:-7px;right:-10px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fb7185,#ef4444 48%,#dc2626);color:#fff;font-size:10px;font-weight:700;line-height:1;letter-spacing:.02em;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.94);box-shadow:0 6px 16px #dc262647;pointer-events:none}.control-widget__badge--dot{top:-3px;right:-3px;min-width:10px;width:10px;height:10px;padding:0;border-width:2px;box-shadow:0 0 0 1px #0f172a29,0 6px 12px #dc26264d}\n"] }]
-        }], propDecorators: { icon: [{
-                type: Input
-            }], iconColor: [{
-                type: Input
-            }], badgeValue: [{
-                type: Input
-            }], showBadge: [{
-                type: Input
-            }] } });
-
-/**
- * MenuWidget displays an icon with an optional badge counter, used for notifications or alerts.
- *
- * @selector app-menu-widget
- * @standalone true
- * @imports CommonModule, FontAwesomeModule
- *
- * @inputs
- * - `icon` (IconDefinition): FontAwesome icon to display.
- * - `iconColor` (string): Color of the icon. Default is 'black'.
- * - `badgeValue` (number): The numeric value displayed within the badge.
- * - `showBadge` (boolean): Controls the visibility of the badge. Default is false.
- *
- * @example
- * ```html
- * <app-menu-widget
- *   [icon]="faBell"
- *   iconColor="blue"
- *   [badgeValue]="5"
- *   [showBadge]="true"
- * ></app-menu-widget>
- * ```
- **/
-class MenuWidget {
-    icon;
-    iconColor = 'black';
-    badgeValue;
-    showBadge = false;
-    constructor(icon, iconColor, badgeValue, showBadge) {
-        this.icon = icon;
-        this.iconColor = iconColor;
-        this.badgeValue = badgeValue;
-        this.showBadge = showBadge;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MenuWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'badgeValue' }, { token: 'showBadge' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MenuWidget, isStandalone: true, selector: "app-menu-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
-    <app-control-icon-badge-widget
-      [icon]="icon"
-      [iconColor]="iconColor"
-      [badgeValue]="badgeValue"
-      [showBadge]="showBadge"
-    ></app-control-icon-badge-widget>
-  `, isInline: true, dependencies: [{ kind: "component", type: ControlIconBadgeWidgetComponent, selector: "app-control-icon-badge-widget", inputs: ["icon", "iconColor", "badgeValue", "showBadge"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MenuWidget, decorators: [{
-            type: Component,
-            args: [{
-                    selector: 'app-menu-widget',
-                    template: `
-    <app-control-icon-badge-widget
-      [icon]="icon"
-      [iconColor]="iconColor"
-      [badgeValue]="badgeValue"
-      [showBadge]="showBadge"
-    ></app-control-icon-badge-widget>
-  `,
-                    imports: [ControlIconBadgeWidgetComponent]
-                }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['icon']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['iconColor']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['badgeValue']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['showBadge']
-                }] }], propDecorators: { icon: [{
-                type: Input
-            }], iconColor: [{
-                type: Input
-            }], badgeValue: [{
-                type: Input
-            }], showBadge: [{
-                type: Input
-            }] } });
-
-/**
- * MessageWidget displays an icon with an optional badge counter, useful for unread message notifications.
- *
- * @selector app-message-widget
- * @standalone true
- * @imports CommonModule, FontAwesomeModule
- *
- * @inputs
- * - `icon` (IconDefinition): FontAwesome icon to represent the message feature.
- * - `iconColor` (string): Color of the icon. Default is 'black'.
- * - `badgeValue` (number): Numeric value displayed in the badge, e.g., unread message count.
- * - `showBadge` (boolean): Controls the visibility of the badge. Default is false.
- *
- * @example
- * ```html
- * <app-message-widget
- *   [icon]="faEnvelope"
- *   iconColor="blue"
- *   [badgeValue]="3"
- *   [showBadge]="true"
- * ></app-message-widget>
- * ```
- **/
-class MessageWidget {
-    icon;
-    iconColor = 'black';
-    badgeValue;
-    showBadge = false;
-    constructor(icon, iconColor, badgeValue, showBadge) {
-        this.icon = icon;
-        this.iconColor = iconColor;
-        this.badgeValue = badgeValue;
-        this.showBadge = showBadge;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MessageWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'badgeValue' }, { token: 'showBadge' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MessageWidget, isStandalone: true, selector: "app-message-widget", inputs: { icon: "icon", iconColor: "iconColor", badgeValue: "badgeValue", showBadge: "showBadge" }, ngImport: i0, template: `
-    <app-control-icon-badge-widget
-      [icon]="icon"
-      [iconColor]="iconColor"
-      [badgeValue]="badgeValue"
-      [showBadge]="showBadge"
-    ></app-control-icon-badge-widget>
-  `, isInline: true, dependencies: [{ kind: "component", type: ControlIconBadgeWidgetComponent, selector: "app-control-icon-badge-widget", inputs: ["icon", "iconColor", "badgeValue", "showBadge"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MessageWidget, decorators: [{
-            type: Component,
-            args: [{
-                    selector: 'app-message-widget',
-                    template: `
-    <app-control-icon-badge-widget
-      [icon]="icon"
-      [iconColor]="iconColor"
-      [badgeValue]="badgeValue"
-      [showBadge]="showBadge"
-    ></app-control-icon-badge-widget>
-  `,
-                    imports: [ControlIconBadgeWidgetComponent]
-                }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['icon']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['iconColor']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['badgeValue']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['showBadge']
-                }] }], propDecorators: { icon: [{
-                type: Input
-            }], iconColor: [{
-                type: Input
-            }], badgeValue: [{
-                type: Input
-            }], showBadge: [{
-                type: Input
-            }] } });
-
-/**
- * MenuRecordWidget is a configurable widget that displays a set of record control buttons, with customizable icon, color, and actions.
- *
- * @selector app-menu-record-widget
- * @standalone true
- * @imports CommonModule, FontAwesomeModule, ControlButtonsAltComponent
- *
- * @inputs
- * - `buttons` (RecordButton[]): Array of record button configurations, each with properties for icon, active state, colors, and actions.
- * - `direction` ('horizontal' | 'vertical'): Layout direction for the buttons. Default is 'horizontal'.
- *
- * @example
- * ```html
- * <app-menu-record-widget
- *   [buttons]="[
- *     { icon: faCircle, text: 'Record', onPress: startRecording, activeColor: 'red' },
- *     { icon: faStop, text: 'Stop', onPress: stopRecording, inActiveColor: 'gray' }
- *   ]"
- *   direction="horizontal"
- * ></app-menu-record-widget>
- * ```
- **/
-class MenuRecordWidget {
-    buttons = [];
-    direction = 'horizontal';
-    constructor(buttons, direction) {
-        this.buttons = buttons;
-        this.direction = direction;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MenuRecordWidget, deps: [{ token: 'buttons' }, { token: 'direction' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MenuRecordWidget, isStandalone: true, selector: "app-menu-record-widget", ngImport: i0, template: `
-    <app-control-buttons-alt-component
-      [buttons]="buttons"
-      [direction]="direction"
-      [showAspect]="true"
-    ></app-control-buttons-alt-component>
-  `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: ControlButtonsAltComponent, selector: "app-control-buttons-alt-component", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MenuRecordWidget, decorators: [{
-            type: Component,
-            args: [{
-                    selector: 'app-menu-record-widget',
-                    template: `
-    <app-control-buttons-alt-component
-      [buttons]="buttons"
-      [direction]="direction"
-      [showAspect]="true"
-    ></app-control-buttons-alt-component>
-  `,
-                    imports: [CommonModule, FontAwesomeModule, ControlButtonsAltComponent]
-                }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['buttons']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['direction']
-                }] }] });
-
-/**
- * RecordTimerWidget displays the current recording progress time.
- *
- * @selector app-record-timer-widget
- * @standalone true
- * @imports CommonModule
- *
- * @inputs
- * - `recordingProgressTime` (string): The time to display as recording progress.
- *
- * @example
- * ```html
- * <app-record-timer-widget [recordingProgressTime]="'00:05:23'"></app-record-timer-widget>
- * ```
- **/
-class RecordTimerWidget {
-    recordingProgressTime = '';
-    constructor(recordingProgressTime) {
-        this.recordingProgressTime = recordingProgressTime;
-    }
-    get displayTime() {
-        return (this.recordingProgressTime || '00:00:00').trim() || '00:00:00';
-    }
-    get ariaLabel() {
-        return `Recording timer ${this.displayTime}`;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: RecordTimerWidget, deps: [{ token: 'recordingProgressTime' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: RecordTimerWidget, isStandalone: true, selector: "app-record-timer-widget", ngImport: i0, template: `
-    <div class="record-timer-widget" [attr.aria-label]="ariaLabel">
-      <span class="record-timer-widget__dot" aria-hidden="true"></span>
-      <span class="record-timer-widget__label">REC</span>
-      <span class="record-timer-widget__value">{{ displayTime }}</span>
-    </div>
-  `, isInline: true, styles: [".record-timer-widget{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:26px;padding:0 10px;margin:0;border-radius:999px;background:linear-gradient(135deg,#7f1d1d29,#dc26262e);border:1px solid rgba(248,113,113,.28);box-shadow:0 10px 20px #7f1d1d2e;color:#991b1b;line-height:1;backdrop-filter:blur(10px)}.record-timer-widget__dot{width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,#fb7185,#ef4444 60%,#dc2626);box-shadow:0 0 0 4px #f871711f}.record-timer-widget__label,.record-timer-widget__value{font-size:11px;font-weight:700;letter-spacing:.04em}.record-timer-widget__label{color:#b91c1c}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: RecordTimerWidget, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-record-timer-widget', template: `
-    <div class="record-timer-widget" [attr.aria-label]="ariaLabel">
-      <span class="record-timer-widget__dot" aria-hidden="true"></span>
-      <span class="record-timer-widget__label">REC</span>
-      <span class="record-timer-widget__value">{{ displayTime }}</span>
-    </div>
-  `, imports: [CommonModule], styles: [".record-timer-widget{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:26px;padding:0 10px;margin:0;border-radius:999px;background:linear-gradient(135deg,#7f1d1d29,#dc26262e);border:1px solid rgba(248,113,113,.28);box-shadow:0 10px 20px #7f1d1d2e;color:#991b1b;line-height:1;backdrop-filter:blur(10px)}.record-timer-widget__dot{width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,#fb7185,#ef4444 60%,#dc2626);box-shadow:0 0 0 4px #f871711f}.record-timer-widget__label,.record-timer-widget__value{font-size:11px;font-weight:700;letter-spacing:.04em}.record-timer-widget__label{color:#b91c1c}\n"] }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['recordingProgressTime']
-                }] }] });
-
-/**
- * MenuParticipantsWidget displays an icon and a counter for participants in a compact, customizable widget.
- *
- * @selector app-menu-participants-widget
- * @standalone true
- * @imports CommonModule, FontAwesomeModule
- *
- * @inputs
- * - `icon` (IconDefinition): The FontAwesome icon to display.
- * - `iconColor` (string): The color of the icon. Default is 'black'.
- * - `participantsCounter` (number): The number of participants displayed next to the icon.
- *
- * @example
- * ```html
- * <app-menu-participants-widget
- *   [icon]="faUsers"
- *   iconColor="blue"
- *   [participantsCounter]="10"
- * ></app-menu-participants-widget>
- * ```
- **/
-class MenuParticipantsWidget {
-    icon;
-    iconColor = 'black';
-    participantsCounter;
-    constructor(icon, iconColor, participantsCounter) {
-        this.icon = icon;
-        this.iconColor = iconColor;
-        this.participantsCounter = participantsCounter;
-    }
-    get normalizedCount() {
-        return this.participantsCounter > 99 ? '99+' : String(Math.max(this.participantsCounter, 0));
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MenuParticipantsWidget, deps: [{ token: 'icon' }, { token: 'iconColor' }, { token: 'participantsCounter' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MenuParticipantsWidget, isStandalone: true, selector: "app-menu-participants-widget", inputs: { icon: "icon", iconColor: "iconColor", participantsCounter: "participantsCounter" }, ngImport: i0, template: `
-    <div class="menu-participants-widget">
-      <span class="menu-participants-widget__icon" [style.color]="iconColor">
-        <fa-icon [icon]="icon" size="lg"></fa-icon>
-      </span>
-      <span class="menu-participants-widget__value">{{ normalizedCount }}</span>
-    </div>
-  `, isInline: true, styles: [".menu-participants-widget{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:26px;padding:0 9px 0 7px;margin:0;border-radius:999px;background:#0f172a1f;border:1px solid rgba(255,255,255,.24);box-shadow:0 8px 18px #0f172a24;line-height:1;backdrop-filter:blur(10px)}.menu-participants-widget__icon{display:inline-flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(15,23,42,.18))}.menu-participants-widget__value{color:currentColor;font-size:11px;font-weight:700;letter-spacing:.02em}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MenuParticipantsWidget, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-menu-participants-widget', template: `
-    <div class="menu-participants-widget">
-      <span class="menu-participants-widget__icon" [style.color]="iconColor">
-        <fa-icon [icon]="icon" size="lg"></fa-icon>
-      </span>
-      <span class="menu-participants-widget__value">{{ normalizedCount }}</span>
-    </div>
-  `, imports: [CommonModule, FontAwesomeModule], styles: [".menu-participants-widget{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:26px;padding:0 9px 0 7px;margin:0;border-radius:999px;background:#0f172a1f;border:1px solid rgba(255,255,255,.24);box-shadow:0 8px 18px #0f172a24;line-height:1;backdrop-filter:blur(10px)}.menu-participants-widget__icon{display:inline-flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(15,23,42,.18))}.menu-participants-widget__value{color:currentColor;font-size:11px;font-weight:700;letter-spacing:.02em}\n"] }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['icon']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['iconColor']
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['participantsCounter']
-                }] }], propDecorators: { icon: [{
-                type: Input
-            }], iconColor: [{
-                type: Input
-            }], participantsCounter: [{
-                type: Input
-            }] } });
-
-/**
- * ScreenShareWidget - Component representing a screen share button with an optional disabled state.
- *
- * This component displays a screen share icon (desktop icon) and an overlay ban icon if disabled.
- * The disabled state can be controlled either by an injected dependency or an @Input property.
- *
- * @component
- * @name ScreenShareWidget
- * @example
- * ```html
- * <app-screen-share-button [disabled]="isDisabled"></app-screen-share-button>
- * ```
- *
- * @param {boolean} disabled - Optional input to toggle the disabled state of the button.
- *
- * @property {boolean} computedDisabled - Internal state to determine if the button is disabled, controlled by either injected value or @Input property.
- * @property {faDesktop} faDesktop - FontAwesome desktop icon for screen sharing.
- * @property {faBan} faBan - FontAwesome ban icon indicating a disabled state.
- *
- * @example
- * <app-screen-share-button [disabled]="true"></app-screen-share-button>
- *
- * @constructor
- * @param {boolean} [injectedDisabled] - Optional injected disabled value.
- *
- * @method ngOnChanges - Updates the computedDisabled property based on changes to the @Input disabled.
- */
-class ScreenShareWidget {
-    injectedDisabled;
-    injectedIconColor;
-    disabled = false; // Input to toggle disabled state
-    iconColor = 'currentColor';
-    faDesktop = faDesktop;
-    faBan = faBan;
-    computedDisabled;
-    constructor(injectedDisabled, injectedIconColor) {
-        this.injectedDisabled = injectedDisabled;
-        this.injectedIconColor = injectedIconColor;
-        // Use the injected value if provided, otherwise fall back to the @Input value
-        this.computedDisabled = this.injectedDisabled != null ? this.injectedDisabled : this.disabled;
-        this.iconColor = this.injectedIconColor || this.iconColor;
-    }
-    ngOnChanges() {
-        // Update computedDisabled whenever the Input changes
-        if (this.injectedDisabled == null) {
-            this.computedDisabled = this.disabled;
-        }
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ScreenShareWidget, deps: [{ token: 'disabled', optional: true }, { token: 'iconColor', optional: true }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ScreenShareWidget, isStandalone: true, selector: "app-screen-share-button", inputs: { disabled: "disabled", iconColor: "iconColor" }, usesOnChanges: true, ngImport: i0, template: `
-    <div class="screen-share-widget" [class.screen-share-widget--disabled]="computedDisabled">
-      <fa-icon
-        [icon]="faDesktop"
-        size="lg"
-        class="screen-share-widget__icon"
-        [style.color]="computedDisabled ? iconColor : '#10b981'"
-      >
-      </fa-icon>
-
-      <span *ngIf="computedDisabled" class="screen-share-widget__overlay" aria-hidden="true">
-        <fa-icon [icon]="faBan" size="xs"></fa-icon>
-      </span>
-    </div>
-  `, isInline: true, styles: [".screen-share-widget{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;line-height:1}.screen-share-widget__icon{filter:drop-shadow(0 1px 2px rgba(15,23,42,.24))}.screen-share-widget__overlay{position:absolute;top:-2px;right:-4px;width:12px;height:12px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fb7185,#ef4444 48%,#dc2626);color:#fff;border:1.5px solid rgba(255,255,255,.94);box-shadow:0 6px 12px #dc26263d}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "ngmodule", type: FontAwesomeModule }, { kind: "component", type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "animation", "mask", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "transform", "a11yRole"] }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ScreenShareWidget, decorators: [{
-            type: Component,
-            args: [{ selector: 'app-screen-share-button', imports: [CommonModule, FontAwesomeModule], template: `
-    <div class="screen-share-widget" [class.screen-share-widget--disabled]="computedDisabled">
-      <fa-icon
-        [icon]="faDesktop"
-        size="lg"
-        class="screen-share-widget__icon"
-        [style.color]="computedDisabled ? iconColor : '#10b981'"
-      >
-      </fa-icon>
-
-      <span *ngIf="computedDisabled" class="screen-share-widget__overlay" aria-hidden="true">
-        <fa-icon [icon]="faBan" size="xs"></fa-icon>
-      </span>
-    </div>
-  `, styles: [".screen-share-widget{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;line-height:1}.screen-share-widget__icon{filter:drop-shadow(0 1px 2px rgba(15,23,42,.24))}.screen-share-widget__overlay{position:absolute;top:-2px;right:-4px;width:12px;height:12px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fb7185,#ef4444 48%,#dc2626);color:#fff;border:1.5px solid rgba(255,255,255,.94);box-shadow:0 6px 12px #dc26263d}\n"] }]
-        }], ctorParameters: () => [{ type: undefined, decorators: [{
-                    type: Optional
-                }, {
-                    type: Inject,
-                    args: ['disabled']
-                }] }, { type: undefined, decorators: [{
-                    type: Optional
-                }, {
-                    type: Inject,
-                    args: ['iconColor']
-                }] }], propDecorators: { disabled: [{
-                type: Input
-            }], iconColor: [{
-                type: Input
-            }] } });
-
-/**
- * Creates a ResponseJoinRoom object from a ResponseJoinLocalRoom object.
- *
- * @param {CreateResponseJoinRoomOptions} options - The options containing the ResponseJoinLocalRoom object.
- * @returns {Promise<ResponseJoinRoom>} - A promise that resolves to a ResponseJoinRoom object.
- *
- * @example
- * ```typescript
- * const localRoom: ResponseJoinLocalRoom = {
- *   rtpCapabilities: null,
- *   isHost: true,
- *   eventStarted: false,
- *   isBanned: false,
- *   hostNotJoined: false,
- *   eventRoomParams: { /* MeetingRoomParams * / },
- *   recordingParams: { /* RecordingParams * / },
- *   secureCode: "12345",
- *   mediasfuURL: "https://example.com",
- *   apiKey: "api-key",
- *   apiUserName: "user-name",
- *   allowRecord: true,
- * };
- *
- * const joinRoom = await createResponseJoinRoom({ localRoom });
- * console.log(joinRoom);
- * ```
- */
-const createResponseJoinRoom = async ({ localRoom, }) => {
-    return createResponseJoinRoom$1({ localRoom });
-};
-
-;
-/**
- * MediasfuGeneric component provides a customizable interface with a full suite of modal windows and flexible layout options for interactive media applications.
- *
- * @component
- * @selector app-mediasfu-generic
- * @standalone true
- * @imports [RouterOutlet, CommonModule, BreakoutRoomsModal, BackgroundModal, CoHostModal, AlertComponent, AudioGrid, ControlButtonsAltComponent, ControlButtonsComponentTouch, ControlButtonsComponent, FlexibleGrid, FlexibleVideo, LoadingModal, Pagination, SubAspectComponent, DisplaySettingsModal, EventSettingsModal, ConfirmExitModal, MediaSettingsModal, MenuModal, MessagesModal, ConfirmHereModal, ShareEventModal, WelcomePage, ParticipantsModal, PollModal, RecordingModal, RequestsModal, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, OtherGridComponent, Screenboard, ScreenboardModal, Whiteboard, ConfigureWhiteboardModal, WaitingRoomModal, MenuWidget, MessageWidget, MenuRecordWidget, RecordTimerWidget, MenuParticipantsWidget, ScreenShareWidget]
- *
- * @template
- * The template structure:
- * - Conditional rendering of a PrejoinPage or WelcomePage for introductory or pre-session screens.
- * - Main content area with nested components for grid layouts, flexible video, and audio grids.
- * - Modals for user interactions, including participant management, event settings, breakout rooms, whiteboarding, and media settings.
- *
- * @input {any} PrejoinPage - Component for the prejoin page, defaults to `WelcomePage`.
- * @input {MediasfuGenericOptions} options - Configuration options for the component.
- * @input {boolean} connectMediaSFU - Flag to enable/disable connection to the MediaSFU server.
- * @input {string} localLink - Local link for the Community Edition server.
- * @input {{ apiUserName: string; apiKey: string }} credentials - API credentials for secure access.
- * @input {boolean} useLocalUIMode - Flag to toggle local UI settings.
- * @input {SeedData} seedData - Seed data for initializing the component with specific configurations.
- * @input {boolean} useSeed - Enable/disable use of seed data.
- * @input {string} imgSrc - URL for branding images or logos.
- * @input {object} sourceParameters - Additional parameters for the source.
- * @input {Function} updateSourceParameters - Function to update the source parameters.
- * @input {boolean} returnUI - Flag to return the UI elements.
- * @input {CreateMediaSFURoomOptions | JoinMediaSFURoomOptions} noUIPreJoinOptions - Options for the prejoin page without UI.
- * @input {JoinRoomOnMediaSFUType} joinMediaSFURoom - Function to join a room on MediaSFU.
- * @input {CreateRoomOnMediaSFUType} createMediaSFURoom - Function to create a room on MediaSFU.
- * @input {any} customVideoCard - Custom component to replace the default VideoCard component.
- * @input {any} customAudioCard - Custom component to replace the default AudioCard component.
- * @input {any} customMiniCard - Custom component to replace the default MiniCard component.
- * @input {any} customMainComponent - Custom component that provides complete control over the main UI, bypassing default MediaSFU styling.
- *
- * @property {string} title - The title of the component, defaults to "MediaSFU-Generic".
- *
- * @styles
- * Component-specific styles, including full-screen settings and customizable colors for backgrounds.
- *
- * @providers [CookieService] - Provides cookies service for session handling.
- *
- * @constructor
- * @class MediasfuGeneric
- * @implements OnInit, OnDestroy
- *
- * @method ngOnInit - Initializes the component and its configurations.
- * @method ngOnDestroy - Performs cleanup, removing event listeners and intervals as needed.
- *
- * @example
- * ```html
- * <app-mediasfu-generic
- *   [PrejoinPage]="CustomPrejoinComponent"
- *   [localLink]="'https://localhost:3000'"
- *   [connectMediaSFU]="true"
- *   [credentials]="{ apiUserName: 'username', apiKey: 'apikey' }"
- *   [useLocalUIMode]="true"
- *   [seedData]="seedDataObject"
- *   [useSeed]="true"
- *   [imgSrc]="'https://example.com/logo.png'"
- *   [sourceParameters]="{ source: 'camera', width: 640, height: 480 }"
- *   [updateSourceParameters]="updateSourceParameters"
- *   [returnUI]="true"
- *   [noUIPreJoinOptions]="{ roomName: 'room1', userName: 'user1' }"
- *   [joinMediaSFURoom]="joinMediaSFURoom"
- *   [createMediaSFURoom]="createMediaSFURoom"
- *   [customVideoCard]="CustomVideoCardComponent"
- *   [customAudioCard]="CustomAudioCardComponent"
- *   [customMiniCard]="CustomMiniCardComponent"
- *   [customMainComponent]="CustomMainComponent">
- * </app-mediasfu-generic>
- * ```
- */
-class MediasfuGeneric {
-    cdr;
-    injector;
-    updateMiniCardsGrid;
-    mixStreams;
-    dispStreams;
-    stopShareScreen;
-    checkScreenShare;
-    startShareScreen;
-    requestScreenShare;
-    reorderStreams;
-    prepopulateUserMedia;
-    getVideos;
-    rePort;
-    trigger;
-    consumerResume;
-    connectSendTransport;
-    connectSendTransportAudio;
-    connectSendTransportVideo;
-    connectSendTransportScreen;
-    processConsumerTransports;
-    resumePauseStreams;
-    readjust;
-    checkGrid;
-    getEstimate;
-    calculateRowsAndColumns;
-    addVideosGrid;
-    onScreenChanges;
-    changeVids;
-    compareActiveNames;
-    compareScreenStates;
-    createSendTransport;
-    resumeSendTransportAudio;
-    receiveAllPipedTransports;
-    disconnectSendTransportVideo;
-    disconnectSendTransportAudio;
-    disconnectSendTransportScreen;
-    getPipedProducersAlt;
-    signalNewConsumerTransport;
-    connectRecvTransport;
-    reUpdateInter;
-    updateParticipantAudioDecibels;
-    closeAndResize;
-    autoAdjust;
-    switchUserVideoAlt;
-    switchUserVideo;
-    switchUserAudio;
-    getDomains;
-    formatNumber;
-    connectIps;
-    connectLocalIps;
-    createDeviceClient;
-    handleCreatePoll;
-    handleEndPoll;
-    handleVotePoll;
-    captureCanvasStream;
-    resumePauseAudioStreams;
-    processConsumerTransportsAudio;
-    launchMenuModal;
-    launchRecording;
-    startRecording;
-    confirmRecording;
-    launchWaiting;
-    launchCoHost;
-    launchMediaSettings;
-    launchDisplaySettings;
-    launchSettings;
-    launchRequests;
-    launchParticipants;
-    launchMessages;
-    launchConfirmExit;
-    sendMessage;
-    muteParticipants;
-    messageParticipants;
-    removeParticipants;
-    launchPoll;
-    launchBreakoutRooms;
-    launchConfigureWhiteboard;
-    startMeetingProgressTimer;
-    updateRecording;
-    stopRecording;
-    userWaiting;
-    personJoined;
-    allWaitingRoomMembers;
-    roomRecordParams;
-    banParticipant;
-    updatedCoHost;
-    participantRequested;
-    screenProducerId;
-    updateMediaSettings;
-    producerMediaPaused;
-    producerMediaResumed;
-    producerMediaClosed;
-    controlMediaHost;
-    meetingEnded;
-    disconnectUserSelf;
-    receiveMessage;
-    meetingTimeRemaining;
-    meetingStillThere;
-    startRecords;
-    reInitiateRecording;
-    recordingNotice;
-    timeLeftRecording;
-    stoppedRecording;
-    hostRequestResponse;
-    allMembers;
-    allMembersRest;
-    disconnect;
-    pollUpdated;
-    breakoutRoomUpdated;
-    socketManager;
-    joinRoomClient;
-    joinLocalRoom;
-    updateRoomParametersClient;
-    clickVideo;
-    clickAudio;
-    clickScreenShare;
-    switchVideoAlt;
-    streamSuccessVideo;
-    streamSuccessAudio;
-    streamSuccessScreen;
-    streamSuccessAudioSwitch;
-    checkPermission;
-    updateConsumingDomains;
-    receiveRoomMessages;
-    uiOverrideResolver;
-    liveSubtitleService;
-    translationConsumerSwitch;
-    panelistsUpdated;
-    panelistFocusChanged;
-    receiveControlMedia;
-    addedAsPanelist;
-    removedFromPanelists;
-    permissionUpdated;
-    permissionConfigUpdated;
-    translationReceiveMethods;
-    PrejoinPage = WelcomePage;
-    localLink = '';
-    connectMediaSFU = true;
-    credentials = { apiUserName: '', apiKey: '' };
-    useLocalUIMode = false;
-    seedData;
-    useSeed = false;
-    imgSrc = 'https://mediasfu.com/images/logo192.png';
-    sourceParameters = {};
-    updateSourceParameters = (data) => { };
-    returnUI = true;
-    noUIPreJoinOptions;
-    joinMediaSFURoom;
-    createMediaSFURoom;
-    canUsePersonalTranslation = false;
-    personalTranslationUsername;
-    // Custom component inputs
-    customVideoCard;
-    customAudioCard;
-    customMiniCard;
-    customMainComponent;
-    // UI override inputs
-    containerStyle;
-    uiOverrides;
-    title = 'MediaSFU-Generic';
-    MainContainerComponentRef = MainContainerComponent;
-    MainAspectComponentRef = MainAspectComponent;
-    MainScreenComponentRef = MainScreenComponent;
-    MainGridComponentRef = MainGridComponent;
-    OtherGridComponentRef = OtherGridComponent;
-    FlexibleVideoComponentRef = FlexibleVideo;
-    WhiteboardComponentRef = Whiteboard;
-    PaginationComponentRef = ModernPaginationComponent;
-    AudioGridComponentRef = AudioGrid;
-    FlexibleGridComponentRef = FlexibleGrid;
-    SubAspectComponentRef = SubAspectComponent;
-    ControlButtonsComponentRef = ControlButtonsComponent;
-    ControlButtonsTouchComponentRef = ControlButtonsComponentTouch;
-    ControlButtonsAltComponentRef = ControlButtonsAltComponent;
-    AlertComponentRef = ModernAlertComponent;
-    MenuModalComponentRef = ModernMenuModalComponent;
-    SidebarMenuModalComponentRef = ModernMenuModalComponent;
-    EventSettingsModalComponentRef = ModernEventSettingsModalComponent;
-    TranslationSettingsModalComponentRef = TranslationSettingsModal;
-    RequestsModalComponentRef = ModernRequestsModalComponent;
-    WaitingRoomModalComponentRef = ModernWaitingRoomModalComponent;
-    CoHostModalComponentRef = ModernCoHostModalComponent;
-    MediaSettingsModalComponentRef = ModernMediaSettingsModalComponent;
-    ParticipantsModalComponentRef = ModernParticipantsModalComponent;
-    MessagesModalComponentRef = ModernMessagesModalComponent;
-    DisplaySettingsModalComponentRef = ModernDisplaySettingsModalComponent;
-    ConfirmExitModalComponentRef = ModernConfirmExitModalComponent;
-    ConfirmHereModalComponentRef = ModernConfirmHereModalComponent;
-    ShareEventModalComponentRef = ModernShareEventModalComponent;
-    RecordingModalComponentRef = ModernRecordingModalComponent;
-    PollModalComponentRef = ModernPollModalComponent;
-    BackgroundModalComponentRef = BackgroundModal;
-    BreakoutRoomsModalComponentRef = BreakoutRoomsModal;
-    ConfigureWhiteboardModalComponentRef = ConfigureWhiteboardModal;
-    ScreenboardModalComponentRef = ScreenboardModal;
-    ScreenboardComponentRef = Screenboard;
-    LoadingModalComponentRef = ModernLoadingModalComponent;
-    mainContainerOverrideProps = () => ({
-        containerStyle: this.containerStyle,
-        controlHeight: this.controlHeight.value,
-        eventType: this.eventType.value,
-        parameters: this.mediaSFUParameters,
-    });
-    roomSurfaceColor = () => this.modernMenuDarkMode.value
-        ? 'rgba(9, 18, 32, 0.98)'
-        : 'rgba(217, 227, 234, 0.99)';
-    roomModalSurfaceColor = () => this.modernMenuDarkMode.value
-        ? 'rgba(15, 27, 49, 0.96)'
-        : 'rgba(217, 227, 234, 0.99)';
-    roomAccentSurfaceColor = () => this.modernMenuDarkMode.value
-        ? 'rgba(14, 33, 45, 0.96)'
-        : 'rgba(181, 233, 229, 0.97)';
-    controlStripTextColor = () => this.modernMenuDarkMode.value ? '#f8fafc' : '#10233f';
-    mainAspectContainerStyle = () => ({
-        display: 'flex',
-        flexDirection: 'row',
-        flex: '1 1 auto',
-        minWidth: '0',
-        width: 'auto',
-        position: 'relative',
-        boxSizing: 'border-box',
-    });
-    mainScreenContainerStyle = () => ({
-        flex: '1 1 auto',
-        minWidth: '0',
-    });
-    mainAspectOverrideProps = () => ({
-        backgroundColor: this.roomSurfaceColor(),
-        defaultFraction: 1 - this.controlHeight.value,
-        showControls: this.eventType.value === 'webinar' ||
-            this.eventType.value === 'conference',
-        updateIsWideScreen: this.updateIsWideScreen,
-        updateIsMediumScreen: this.updateIsMediumScreen,
-        updateIsSmallScreen: this.updateIsSmallScreen,
-        containerStyle: this.mainAspectContainerStyle(),
-        parameters: this.mediaSFUParameters,
-    });
-    mainScreenOverrideProps = () => ({
-        doStack: true,
-        mainSize: this.mainHeightWidth.value,
-        defaultFraction: 1 - this.controlHeight.value,
-        showControls: this.eventType.value === 'webinar' ||
-            this.eventType.value === 'conference',
-        containerWidthFraction: this.mainScreenWidthFraction(),
-        containerStyle: this.mainScreenContainerStyle(),
-        updateComponentSizes: this.updateComponentSizes,
-        parameters: this.mediaSFUParameters,
-    });
-    mainGridOverrideProps = () => ({
-        height: this.componentSizes.value.mainHeight,
-        width: this.componentSizes.value.mainWidth,
-        backgroundColor: this.roomSurfaceColor(),
-        mainSize: this.mainHeightWidth.value,
-        showAspect: this.mainHeightWidth.value > 0,
-        timeBackgroundColor: this.recordState.value,
-        meetingProgressTime: this.meetingProgressTime.value,
-        parameters: this.mediaSFUParameters,
-    });
-    flexibleVideoOverrideProps = () => ({
-        customWidth: this.componentSizes.value.mainWidth,
-        customHeight: this.componentSizes.value.mainHeight,
-        rows: 1,
-        columns: 1,
-        componentsToRender: this.mainGridStream.value,
-        showAspect: this.mainGridStream.value.length > 0 &&
-            !(this.whiteboardStarted.value && !this.whiteboardEnded.value),
-        localStreamScreen: this.localStreamScreen.value ?? undefined,
-        annotateScreenStream: this.annotateScreenStream.value,
-        Screenboard: this.shared.value ? this.ScreenboardWidget : undefined,
-        parameters: this.mediaSFUParameters,
-        customVideoCard: this.customVideoCard,
-        customAudioCard: this.customAudioCard,
-        customMiniCard: this.customMiniCard,
-    });
-    whiteboardOverrideProps = () => ({
-        customWidth: this.componentSizes.value.mainWidth,
-        customHeight: this.componentSizes.value.mainHeight,
+  `, isInline: true, styles: [".ms-modern-modal-shell{position:fixed;inset:0;z-index:999;background:#0509148f}.ms-modern-modal-shell--embedded{background:transparent;z-index:auto}.ms-modern-menu-modal{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;overflow:hidden;color:var(--ms-modern-text-primary, #10233f);background:linear-gradient(180deg,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 0%,var(--ms-modern-panel-surface, rgba(255, 255, 255, .82)) 100%);border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));border-radius:28px;box-shadow:var(--ms-modern-shadow-panel, 0 24px 64px rgba(14, 30, 53, .16));backdrop-filter:blur(20px)}.ms-modern-menu-modal--embedded{border-radius:24px}.ms-modern-menu-modal__header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:16px 18px 0}.ms-modern-menu-modal__back{flex:0 0 auto;min-height:36px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 88%,rgba(226,232,240,.72));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;font-weight:700;cursor:pointer;box-shadow:0 10px 24px #0e1e351f}.ms-modern-menu-modal__title-wrap{min-width:0;flex:1 1 220px;display:flex;flex-direction:column;gap:6px}.ms-modern-menu-modal__eyebrow{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.ms-modern-menu-modal__title{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.94rem;font-weight:800;line-height:1.2}.ms-modern-menu-modal__subtitle{margin:0;color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;line-height:1.5}.ms-modern-menu-modal__close{flex:0 0 auto;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--ms-modern-border-strong, rgba(46, 108, 188, .34));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 86%,rgba(226,232,240,.8));color:var(--ms-modern-text-primary, #10233f);box-shadow:0 12px 28px #0e1e351f;cursor:pointer}.ms-modern-menu-modal__body{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:0 18px 18px;overflow-y:auto}.ms-modern-menu-modal__panel{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:18px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 92%,rgba(226,232,240,.68));box-shadow:inset 0 1px #ffffff57;box-sizing:border-box}.ms-modern-menu-modal__panel-heading{display:flex;flex-direction:column;gap:4px}.ms-modern-menu-modal__panel-label{color:var(--ms-modern-text-secondary, rgba(16, 35, 63, .78));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.ms-modern-menu-modal__panel-copy{color:var(--ms-modern-text-muted, rgba(59, 78, 104, .72));font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.78rem;line-height:1.45}.ms-modern-menu-modal__theme-toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ms-modern-menu-modal__theme-button{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;border:1px solid var(--ms-modern-border-subtle, rgba(120, 143, 173, .28));background:color-mix(in srgb,var(--ms-modern-panel-surface-elevated, rgba(255, 255, 255, .94)) 86%,rgba(226,232,240,.72));color:var(--ms-modern-text-primary, #10233f);font-family:var(--ms-modern-font-family, \"Segoe UI\", sans-serif);font-size:.86rem;font-wgustomHeight: this.componentSizes.value.mainHeight,
         parameters: this.mediaSFUParameters,
         showAspect: this.whiteboardStarted.value && !this.whiteboardEnded.value,
     });
@@ -43612,31 +39882,82 @@ class MediasfuGeneric {
      * @returns A promise that resolves to the participant's MediaStream or null if not found
      */
     getParticipantMedia = async (options) => {
-        const { id, name, kind } = options;
+        // Resolve a participant's media stream by participant id, participant name,
+        // or a producer id.
         try {
-            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
-            // Search by producerId if provided
-            if (id) {
-                const streamObj = streams.find((obj) => obj.producerId === id);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            const id = options.id || '';
+            const name = options.name || '';
+            const kind = options.kind || 'video';
+            const participantsRef = this.participants.value || [];
+            const streams = (kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value);
+            if (!streams || streams.length === 0)
+                return null;
+            let participant = id
+                ? participantsRef.find((part) => part.id === id)
+                : undefined;
+            if (!participant && name) {
+                participant = participantsRef.find((part) => part.name === name);
             }
-            // Search by name if provided
-            if (name) {
-                const streamObj = streams.find((obj) => obj.name === name);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            // allVideoStreams / allAudioStreams are keyed by producerId only. Matching
+            // a stream's own `name` (the previous behaviour) fails because those
+            // entries do not reliably carry one, and a participant's `id` is its
+            // membership id — the producer reference is videoID / audioID.
+            const producerId = participant
+                ? kind === 'video'
+                    ? participant.videoID
+                    : participant.audioID
+                : '';
+            if (producerId) {
+                const match = streams.find((stream) => stream.producerId === producerId);
+                if (match && match.stream)
+                    return match.stream;
+            }
+            // A caller that already holds a producer id may pass it directly as `id`.
+            if (id) {
+                const direct = streams.find((stream) => stream.producerId === id);
+                if (direct && direct.stream)
+                    return direct.stream;
             }
             return null;
         }
-        catch (error) {
-            console.error('Error getting participant media:', error);
+        catch {
             return null;
         }
     };
     // Initial values
+    /** Publish after change detection, coalesced to the latest bag. */
+    pendingSourceParameters = null;
+    sourcePublishQueued = false;
+    sourcePublishActive = true;
+    publishSourceParameters = (bag) => {
+        if (!this.updateSourceParameters)
+            return;
+        this.pendingSourceParameters = bag;
+        if (this.sourcePublishQueued)
+            return;
+        this.sourcePublishQueued = true;
+        Promise.resolve().then(() => {
+            this.sourcePublishQueued = false;
+            const next = this.pendingSourceParameters;
+            this.pendingSourceParameters = null;
+            if (!this.sourcePublishActive || !next || !this.updateSourceParameters)
+                return;
+            try {
+                this.updateSourceParameters(next);
+            }
+            catch {
+                // A consumer observer must never break the room.
+            }
+        });
+    };
+    getCurrentParams = () => {
+        // Same value as getUpdatedAllParams(), without the republish side effect.
+        // Safe to call from a template, an event handler, or a polling loop.
+        return {
+            ...this.getAllParams(),
+            ...this.mediaSFUFunctions(),
+        };
+    };
     mediaSFUFunctions = () => {
         return {
             updateMiniCardsGrid: this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -43910,6 +40231,7 @@ class MediasfuGeneric {
                 }),
             getMediaDevicesList: this.getMediaDevicesList,
             getParticipantMedia: this.getParticipantMedia,
+            getCurrentParams: this.getCurrentParams,
         };
     };
     validated = new BehaviorSubject(false);
@@ -44425,8 +40747,33 @@ class MediasfuGeneric {
     updateScreenId = (value) => {
         this.screenId.next(value);
     };
+    /**
+     * Coalesced media-change notifier. Several updaters fire in the same tick
+     * during a single transition, so reasons are batched into one
+     * microtask-deferred emit rather than delivered N times.
+     */
+    pendingMediaReasons = new Set();
+    mediaNotifyQueued = false;
+    notifyMediaChanged = (reason) => {
+        this.pendingMediaReasons.add(reason);
+        if (this.mediaNotifyQueued)
+            return;
+        this.mediaNotifyQueued = true;
+        Promise.resolve().then(() => {
+            this.mediaNotifyQueued = false;
+            const reasons = Array.from(this.pendingMediaReasons);
+            this.pendingMediaReasons.clear();
+            try {
+                this.mediaChanged.emit({ reasons, parameters: this.getCurrentParams() });
+            }
+            catch {
+                // A consumer's observer must never break the media path.
+            }
+        });
+    };
     updateAllVideoStreams = (value) => {
         this.allVideoStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateNewLimitedStreams = (value) => {
         this.newLimitedStreams.next(value);
@@ -44484,6 +40831,7 @@ class MediasfuGeneric {
     };
     updateLocalStreamVideo = (value) => {
         this.localStreamVideo.next(value);
+        this.notifyMediaChanged('local-video');
     };
     updateUserDefaultVideoInputDevice = (value) => {
         this.userDefaultVideoInputDevice.next(value);
@@ -44562,6 +40910,7 @@ class MediasfuGeneric {
     };
     updateLocalStreamScreen = (value) => {
         this.localStreamScreen.next(value);
+        this.notifyMediaChanged('screen-share');
     };
     updateScreenAlreadyOn = (value) => {
         this.screenAlreadyOn.next(value);
@@ -44574,6 +40923,7 @@ class MediasfuGeneric {
     };
     updateOldAllStreams = (value) => {
         this.oldAllStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateAdminVidID = (value) => {
         this.adminVidID.next(value);
@@ -44601,6 +40951,7 @@ class MediasfuGeneric {
     };
     updateLocalStreamAudio = (value) => {
         this.localStreamAudio.next(value);
+        this.notifyMediaChanged('local-audio');
     };
     updateDefAudioID = (value) => {
         this.defAudioID.next(value);
@@ -44727,6 +41078,7 @@ class MediasfuGeneric {
     };
     updateAllAudioStreams = (value) => {
         this.allAudioStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateRemoteScreenStream = (value) => {
         this.remoteScreenStream.next(value);
@@ -44760,6 +41112,7 @@ class MediasfuGeneric {
     };
     updateAudioOnlyStreams = (value) => {
         this.audioOnlyStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateVideoInputs = (value) => {
         this.videoInputs.next(value);
@@ -46080,6 +42433,7 @@ class MediasfuGeneric {
     };
     updateConsumerTransports = (value) => {
         this.consumerTransports.next(value);
+        this.notifyMediaChanged('consumers');
     };
     updateConsumingTransports = (value) => {
         this.consumingTransports.next(value);
@@ -46236,6 +42590,24 @@ class MediasfuGeneric {
         return isPortrait ? 'portrait' : 'landscape';
     };
     showAlert = ({ message, type, duration = 3000, position, }) => {
+        // Alerts are the SDK's only signal for a refused or failed control, so a
+        // headless consumer ([returnUI]="false") must receive them deterministically.
+        // Subject updates alone never publish; the fields are passed explicitly
+        // here because the assignments below have not run yet.
+        try {
+            if (this.sourceParameters !== null && this.updateSourceParameters) {
+                this.publishSourceParameters({
+                    ...this.getAllParams(),
+                    ...this.mediaSFUFunctions(),
+                    alertMessage: message,
+                    alertType: type,
+                    alertVisible: true,
+                });
+            }
+        }
+        catch {
+            // Publishing must never block the alert itself.
+        }
         const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
         this.updateAlertMessage(message);
         this.updateAlertType(type);
@@ -46998,7 +43370,7 @@ class MediasfuGeneric {
                         };
                         this.sourceParameters = nextSourceParameters;
                         if (this.updateSourceParameters) {
-                            this.updateSourceParameters(nextSourceParameters);
+                            this.publishSourceParameters(nextSourceParameters);
                         }
                     }
                 }
@@ -47138,6 +43510,10 @@ class MediasfuGeneric {
         }
     }
     ngOnInit() {
+        // Field initialisers run before Angular binds @Input()s, so autoWave cannot
+        // be defaulted from returnUI where it is declared — it would read undefined.
+        // ngOnInit is the first point the input is guaranteed bound.
+        this.autoWave.next(this.returnUI !== false);
         this.updateModernThemeDarkMode(this.resolvePreferredTheme());
         // Initialize UI overrides if provided
         if (this.uiOverrides) {
@@ -47237,6 +43613,8 @@ class MediasfuGeneric {
         };
     }
     ngOnDestroy() {
+        this.sourcePublishActive = false;
+        this.pendingSourceParameters = null;
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('orientationchange', this.handleResize);
         if (this.mainHeightWidthSubscription) {
@@ -47314,7 +43692,7 @@ class MediasfuGeneric {
                     };
                     this.sourceParameters = nextSourceParameters;
                     if (this.updateSourceParameters) {
-                        this.updateSourceParameters(nextSourceParameters);
+                        this.publishSourceParameters(nextSourceParameters);
                     }
                 }
             }
@@ -47343,8 +43721,8 @@ class MediasfuGeneric {
             }
         }
         const dimensions = this.computeDimensionsMethod({
-            containerWidthFraction: this.mainScreenWidthFraction(),
-            containerHeightFraction: 1,
+            containerWidthFraction: this.containerWidthFraction,
+            containerHeightFraction: this.containerHeightFraction,
             mainSize: this.mainHeightWidth.value,
             doStack: true,
             defaultFraction: this.eventType.value == 'webinar' || this.eventType.value == 'conference'
@@ -49281,7 +45659,7 @@ class MediasfuGeneric {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuGeneric, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: SendMessage }, { token: MuteParticipants }, { token: MessageParticipants }, { token: RemoveParticipants }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }, { token: UIOverrideResolverService }, { token: LiveSubtitleService }, { token: TranslationConsumerSwitch }, { token: PanelistsUpdated }, { token: PanelistFocusChanged }, { token: ReceiveControlMedia }, { token: AddedAsPanelist }, { token: RemovedFromPanelists }, { token: PermissionUpdated }, { token: PermissionConfigUpdated }, { token: TranslationReceiveMethods }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", canUsePersonalTranslation: "canUsePersonalTranslation", personalTranslationUsername: "personalTranslationUsername", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", canUsePersonalTranslation: "canUsePersonalTranslation", personalTranslationUsername: "personalTranslationUsername", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -49297,7 +45675,7 @@ class MediasfuGeneric {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -49330,7 +45708,10 @@ class MediasfuGeneric {
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -49339,6 +45720,8 @@ class MediasfuGeneric {
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -49357,7 +45740,8 @@ class MediasfuGeneric {
                     <app-main-screen-component
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
-                      [containerWidthFraction]="mainScreenWidthFraction()"
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [defaultFraction]="1 - controlHeight.value"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [containerStyle]="mainScreenContainerStyle()"
@@ -50704,7 +47088,7 @@ class MediasfuGeneric {
       >
       </ng-container>
     </ng-container>
-  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: i1.NgSwitch, selector: "[ngSwitch]", inputs: ["ngSwitch"] }, { kind: "directive", type: i1.NgSwitchCase, selector: "[ngSwitchCase]", inputs: ["ngSwitchCase"] }, { kind: "directive", type: i1.NgSwitchDefault, selector: "[ngSwitchDefault]" }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: TranslationSettingsModal, selector: "app-translation-settings-modal", inputs: ["isVisible", "onClose", "translationSupported", "translationConfig", "member", "islevel", "audioProducerId", "participants", "mySpokenLanguage", "mySpokenLanguageEnabled", "myDefaultOutputLanguage", "myDefaultListenLanguage", "listenPreferences", "availableTranslationChannels", "updateMySpokenLanguage", "updateMySpokenLanguageEnabled", "updateMyDefaultOutputLanguage", "updateMyDefaultListenLanguage", "updateListenPreferences", "socket", "roomName", "showAlert", "showSubtitlesOnCards", "updateShowSubtitlesOnCards", "canUsePersonalTranslation", "personalTranslationUsername", "overlayStyle", "contentStyle", "isDarkMode", "renderMode", "showHeader"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernSidebarPanelComponent, selector: "app-modern-sidebar-panel", inputs: ["visible", "width", "height", "title", "badgeText", "backLabel", "canNavigateBack", "contentKey"], outputs: ["navigateBack", "close"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: i1.NgSwitch, selector: "[ngSwitch]", inputs: ["ngSwitch"] }, { kind: "directive", type: i1.NgSwitchCase, selector: "[ngSwitchCase]", inputs: ["ngSwitchCase"] }, { kind: "directive", type: i1.NgSwitchDefault, selector: "[ngSwitchDefault]" }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: TranslationSettingsModal, selector: "app-translation-settings-modal", inputs: ["isVisible", "onClose", "translationSupported", "translationConfig", "member", "islevel", "audioProducerId", "participants", "mySpokenLanguage", "mySpokenLanguageEnabled", "myDefaultOutputLanguage", "myDefaultListenLanguage", "listenPreferences", "availableTranslationChannels", "updateMySpokenLanguage", "updateMySpokenLanguageEnabled", "updateMyDefaultOutputLanguage", "updateMyDefaultListenLanguage", "updateListenPreferences", "socket", "roomName", "showAlert", "showSubtitlesOnCards", "updateShowSubtitlesOnCards", "canUsePersonalTranslation", "personalTranslationUsername", "overlayStyle", "contentStyle", "isDarkMode", "renderMode", "showHeader"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernSidebarPanelComponent, selector: "app-modern-sidebar-panel", inputs: ["visible", "width", "height", "title", "badgeText", "backLabel", "canNavigateBack", "contentKey"], outputs: ["navigateBack", "close"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuGeneric, decorators: [{
             type: Component,
@@ -50763,7 +47147,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -50796,7 +47180,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -50805,6 +47192,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -50823,7 +47212,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                     <app-main-screen-component
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
-                      [containerWidthFraction]="mainScreenWidthFraction()"
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [defaultFraction]="1 - controlHeight.value"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [containerStyle]="mainScreenContainerStyle()"
@@ -52193,11 +48583,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 type: Input
             }], returnUI: [{
                 type: Input
+            }], mediaChanged: [{
+                type: Output
             }], noUIPreJoinOptions: [{
                 type: Input
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], containerWidthFraction: [{
+                type: Input
+            }], containerHeightFraction: [{
                 type: Input
             }], canUsePersonalTranslation: [{
                 type: Input
@@ -52406,9 +48802,20 @@ class MediasfuBroadcast {
     sourceParameters = {};
     updateSourceParameters = (data) => { };
     returnUI = true;
+    /**
+     * Emitted whenever the media graph changes — new/lost streams, a local track
+     * toggling, screen share starting, consumers changing. Reasons are coalesced
+     * into one microtask-deferred emit per tick.
+     *
+     * The reliable way for a [returnUI]="false" surface to re-read media without
+     * polling.
+     */
+    mediaChanged = new EventEmitter();
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    containerWidthFraction = 1;
+    containerHeightFraction = 1;
     // Custom component inputs
     customVideoCard;
     customAudioCard;
@@ -52417,6 +48824,13 @@ class MediasfuBroadcast {
     // UI customization inputs
     containerStyle;
     uiOverrides;
+    rootContainerStyle = () => ({
+        width: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        maxWidth: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        height: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        maxHeight: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        ...this.containerStyle,
+    });
     title = 'MediaSFU-Broadcast';
     MainContainerComponentRef = MainContainerComponent;
     MainAspectComponentRef = MainAspectComponent;
@@ -52435,10 +48849,14 @@ class MediasfuBroadcast {
     EventSettingsModalComponentRef = ModernEventSettingsModalComponent;
     MessagesModalComponentRef = ModernMessagesModalComponent;
     mainContainerOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         containerStyle: this.containerStyle,
         parameters: this.mediaSFUParameters,
     });
     mainAspectOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         backgroundColor: this.roomSurfaceColor(),
         defaultFraction: 1 - this.controlHeight.value,
         showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
@@ -52448,6 +48866,8 @@ class MediasfuBroadcast {
         parameters: this.mediaSFUParameters,
     });
     mainScreenOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         doStack: true,
         mainSize: this.mainHeightWidth.value,
         defaultFraction: 1 - this.controlHeight.value,
@@ -52750,31 +49170,82 @@ class MediasfuBroadcast {
      * @returns A promise that resolves to the participant's MediaStream or null if not found
      */
     getParticipantMedia = async (options) => {
-        const { id, name, kind } = options;
+        // Resolve a participant's media stream by participant id, participant name,
+        // or a producer id.
         try {
-            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
-            // Search by producerId if provided
-            if (id) {
-                const streamObj = streams.find((obj) => obj.producerId === id);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            const id = options.id || '';
+            const name = options.name || '';
+            const kind = options.kind || 'video';
+            const participantsRef = this.participants.value || [];
+            const streams = (kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value);
+            if (!streams || streams.length === 0)
+                return null;
+            let participant = id
+                ? participantsRef.find((part) => part.id === id)
+                : undefined;
+            if (!participant && name) {
+                participant = participantsRef.find((part) => part.name === name);
             }
-            // Search by name if provided
-            if (name) {
-                const streamObj = streams.find((obj) => obj.name === name);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            // allVideoStreams / allAudioStreams are keyed by producerId only. Matching
+            // a stream's own `name` (the previous behaviour) fails because those
+            // entries do not reliably carry one, and a participant's `id` is its
+            // membership id — the producer reference is videoID / audioID.
+            const producerId = participant
+                ? kind === 'video'
+                    ? participant.videoID
+                    : participant.audioID
+                : '';
+            if (producerId) {
+                const match = streams.find((stream) => stream.producerId === producerId);
+                if (match && match.stream)
+                    return match.stream;
+            }
+            // A caller that already holds a producer id may pass it directly as `id`.
+            if (id) {
+                const direct = streams.find((stream) => stream.producerId === id);
+                if (direct && direct.stream)
+                    return direct.stream;
             }
             return null;
         }
-        catch (error) {
-            console.error('Error getting participant media:', error);
+        catch {
             return null;
         }
     };
     // Initial values
+    /** Publish after change detection, coalesced to the latest bag. */
+    pendingSourceParameters = null;
+    sourcePublishQueued = false;
+    sourcePublishActive = true;
+    publishSourceParameters = (bag) => {
+        if (!this.updateSourceParameters)
+            return;
+        this.pendingSourceParameters = bag;
+        if (this.sourcePublishQueued)
+            return;
+        this.sourcePublishQueued = true;
+        Promise.resolve().then(() => {
+            this.sourcePublishQueued = false;
+            const next = this.pendingSourceParameters;
+            this.pendingSourceParameters = null;
+            if (!this.sourcePublishActive || !next || !this.updateSourceParameters)
+                return;
+            try {
+                this.updateSourceParameters(next);
+            }
+            catch {
+                // A consumer observer must never break the room.
+            }
+        });
+    };
+    getCurrentParams = () => {
+        // Same value as getUpdatedAllParams(), without the republish side effect.
+        // Safe to call from a template, an event handler, or a polling loop.
+        return {
+            ...this.getAllParams(),
+            ...this.mediaSFUFunctions(),
+        };
+    };
     mediaSFUFunctions = () => {
         return {
             updateMiniCardsGrid: this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -53035,6 +49506,7 @@ class MediasfuBroadcast {
                 }),
             getMediaDevicesList: this.getMediaDevicesList,
             getParticipantMedia: this.getParticipantMedia,
+            getCurrentParams: this.getCurrentParams,
         };
     };
     validated = new BehaviorSubject(false);
@@ -53538,8 +50010,33 @@ class MediasfuBroadcast {
     updateScreenId = (value) => {
         this.screenId.next(value);
     };
+    /**
+     * Coalesced media-change notifier. Several updaters fire in the same tick
+     * during a single transition, so reasons are batched into one
+     * microtask-deferred emit rather than delivered N times.
+     */
+    pendingMediaReasons = new Set();
+    mediaNotifyQueued = false;
+    notifyMediaChanged = (reason) => {
+        this.pendingMediaReasons.add(reason);
+        if (this.mediaNotifyQueued)
+            return;
+        this.mediaNotifyQueued = true;
+        Promise.resolve().then(() => {
+            this.mediaNotifyQueued = false;
+            const reasons = Array.from(this.pendingMediaReasons);
+            this.pendingMediaReasons.clear();
+            try {
+                this.mediaChanged.emit({ reasons, parameters: this.getCurrentParams() });
+            }
+            catch {
+                // A consumer's observer must never break the media path.
+            }
+        });
+    };
     updateAllVideoStreams = (value) => {
         this.allVideoStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateNewLimitedStreams = (value) => {
         this.newLimitedStreams.next(value);
@@ -53597,6 +50094,7 @@ class MediasfuBroadcast {
     };
     updateLocalStreamVideo = (value) => {
         this.localStreamVideo.next(value);
+        this.notifyMediaChanged('local-video');
     };
     updateUserDefaultVideoInputDevice = (value) => {
         this.userDefaultVideoInputDevice.next(value);
@@ -53675,6 +50173,7 @@ class MediasfuBroadcast {
     };
     updateLocalStreamScreen = (value) => {
         this.localStreamScreen.next(value);
+        this.notifyMediaChanged('screen-share');
     };
     updateScreenAlreadyOn = (value) => {
         this.screenAlreadyOn.next(value);
@@ -53687,6 +50186,7 @@ class MediasfuBroadcast {
     };
     updateOldAllStreams = (value) => {
         this.oldAllStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateAdminVidID = (value) => {
         this.adminVidID.next(value);
@@ -53714,6 +50214,7 @@ class MediasfuBroadcast {
     };
     updateLocalStreamAudio = (value) => {
         this.localStreamAudio.next(value);
+        this.notifyMediaChanged('local-audio');
     };
     updateDefAudioID = (value) => {
         this.defAudioID.next(value);
@@ -53840,6 +50341,7 @@ class MediasfuBroadcast {
     };
     updateAllAudioStreams = (value) => {
         this.allAudioStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateRemoteScreenStream = (value) => {
         this.remoteScreenStream.next(value);
@@ -53873,6 +50375,7 @@ class MediasfuBroadcast {
     };
     updateAudioOnlyStreams = (value) => {
         this.audioOnlyStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateVideoInputs = (value) => {
         this.videoInputs.next(value);
@@ -54391,6 +50894,7 @@ class MediasfuBroadcast {
     };
     updateConsumerTransports = (value) => {
         this.consumerTransports.next(value);
+        this.notifyMediaChanged('consumers');
     };
     updateConsumingTransports = (value) => {
         this.consumingTransports.next(value);
@@ -54538,6 +51042,24 @@ class MediasfuBroadcast {
         return isPortrait ? 'portrait' : 'landscape';
     };
     showAlert = ({ message, type, duration = 3000, position, }) => {
+        // Alerts are the SDK's only signal for a refused or failed control, so a
+        // headless consumer ([returnUI]="false") must receive them deterministically.
+        // Subject updates alone never publish; the fields are passed explicitly
+        // here because the assignments below have not run yet.
+        try {
+            if (this.sourceParameters !== null && this.updateSourceParameters) {
+                this.publishSourceParameters({
+                    ...this.getAllParams(),
+                    ...this.mediaSFUFunctions(),
+                    alertMessage: message,
+                    alertType: type,
+                    alertVisible: true,
+                });
+            }
+        }
+        catch {
+            // Publishing must never block the alert itself.
+        }
         const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
         this.updateAlertMessage(message);
         this.updateAlertType(type);
@@ -55246,7 +51768,7 @@ class MediasfuBroadcast {
                         };
                         this.sourceParameters = nextSourceParameters;
                         if (this.updateSourceParameters) {
-                            this.updateSourceParameters(nextSourceParameters);
+                            this.publishSourceParameters(nextSourceParameters);
                         }
                     }
                 }
@@ -55329,6 +51851,10 @@ class MediasfuBroadcast {
         }
     }
     ngOnInit() {
+        // Field initialisers run before Angular binds @Input()s, so autoWave cannot
+        // be defaulted from returnUI where it is declared — it would read undefined.
+        // ngOnInit is the first point the input is guaranteed bound.
+        this.autoWave.next(this.returnUI !== false);
         this.updateModernThemeDarkMode(this.resolvePreferredTheme());
         // Initialize UI overrides if provided
         if (this.uiOverrides) {
@@ -55396,6 +51922,8 @@ class MediasfuBroadcast {
         };
     }
     ngOnDestroy() {
+        this.sourcePublishActive = false;
+        this.pendingSourceParameters = null;
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('orientationchange', this.handleResize);
         if (this.mainHeightWidthSubscription) {
@@ -55473,7 +52001,7 @@ class MediasfuBroadcast {
                     };
                     this.sourceParameters = nextSourceParameters;
                     if (this.updateSourceParameters) {
-                        this.updateSourceParameters(nextSourceParameters);
+                        this.publishSourceParameters(nextSourceParameters);
                     }
                 }
             }
@@ -55502,8 +52030,8 @@ class MediasfuBroadcast {
             }
         }
         const dimensions = this.computeDimensionsMethod({
-            containerWidthFraction: 1,
-            containerHeightFraction: 1,
+            containerWidthFraction: this.containerWidthFraction,
+            containerHeightFraction: this.containerHeightFraction,
             mainSize: this.mainHeightWidth.value,
             doStack: true,
             defaultFraction: this.eventType.value == 'webinar' || this.eventType.value == 'conference'
@@ -56460,7 +52988,7 @@ class MediasfuBroadcast {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuBroadcast, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: PersonJoined }, { token: RoomRecordParams }, { token: BanParticipant }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }, { token: UIOverrideResolverService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuBroadcast, isStandalone: true, selector: "app-mediasfu-broadcast", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuBroadcast, isStandalone: true, selector: "app-mediasfu-broadcast", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -56476,7 +53004,7 @@ class MediasfuBroadcast {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <!-- Conditional Rendering: PrejoinPage or Main Content -->
       <ng-container *ngIf="!validated.value; else mainContent">
@@ -56499,7 +53027,10 @@ class MediasfuBroadcast {
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -56508,6 +53039,8 @@ class MediasfuBroadcast {
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -56524,6 +53057,8 @@ class MediasfuBroadcast {
                     "
                   >
                     <app-main-screen-component
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
                       [defaultFraction]="1 - controlHeight.value"
@@ -56810,7 +53345,7 @@ class MediasfuBroadcast {
       >
       </ng-container>
     </ng-container>
-  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuBroadcast, decorators: [{
             type: Component,
@@ -56849,7 +53384,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <!-- Conditional Rendering: PrejoinPage or Main Content -->
       <ng-container *ngIf="!validated.value; else mainContent">
@@ -56872,7 +53407,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -56881,6 +53419,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -56897,6 +53437,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                     "
                   >
                     <app-main-screen-component
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
                       [defaultFraction]="1 - controlHeight.value"
@@ -57206,11 +53748,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 type: Input
             }], returnUI: [{
                 type: Input
+            }], mediaChanged: [{
+                type: Output
             }], noUIPreJoinOptions: [{
                 type: Input
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], containerWidthFraction: [{
+                type: Input
+            }], containerHeightFraction: [{
                 type: Input
             }], customVideoCard: [{
                 type: Input
@@ -57435,9 +53983,20 @@ class MediasfuWebinar {
     sourceParameters = {};
     updateSourceParameters = (data) => { };
     returnUI = true;
+    /**
+     * Emitted whenever the media graph changes — new/lost streams, a local track
+     * toggling, screen share starting, consumers changing. Reasons are coalesced
+     * into one microtask-deferred emit per tick.
+     *
+     * The reliable way for a [returnUI]="false" surface to re-read media without
+     * polling.
+     */
+    mediaChanged = new EventEmitter();
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    containerWidthFraction = 1;
+    containerHeightFraction = 1;
     // Custom component inputs
     customVideoCard;
     customAudioCard;
@@ -57446,6 +54005,13 @@ class MediasfuWebinar {
     // UI customization inputs
     containerStyle;
     uiOverrides;
+    rootContainerStyle = () => ({
+        width: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        maxWidth: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        height: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        maxHeight: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        ...this.containerStyle,
+    });
     title = 'MediaSFU-Webinar';
     MainContainerComponentRef = MainContainerComponent;
     MainAspectComponentRef = MainAspectComponent;
@@ -57461,12 +54027,16 @@ class MediasfuWebinar {
     ControlButtonsComponentRef = ControlButtonsComponent;
     MenuModalRef = ModernMenuModalComponent;
     mainContainerOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         containerStyle: this.containerStyle,
         controlHeight: this.controlHeight.value,
         eventType: this.eventType.value,
         parameters: this.mediaSFUParameters,
     });
     mainAspectOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         backgroundColor: 'rgba(217, 227, 234, 0.99)',
         defaultFraction: 1 - this.controlHeight.value,
         showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
@@ -57476,6 +54046,8 @@ class MediasfuWebinar {
         parameters: this.mediaSFUParameters,
     });
     mainScreenOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         doStack: true,
         mainSize: this.mainHeightWidth.value,
         defaultFraction: 1 - this.controlHeight.value,
@@ -57759,31 +54331,82 @@ class MediasfuWebinar {
      * @returns A promise that resolves to the participant's MediaStream or null if not found
      */
     getParticipantMedia = async (options) => {
-        const { id, name, kind } = options;
+        // Resolve a participant's media stream by participant id, participant name,
+        // or a producer id.
         try {
-            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
-            // Search by producerId if provided
-            if (id) {
-                const streamObj = streams.find((obj) => obj.producerId === id);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            const id = options.id || '';
+            const name = options.name || '';
+            const kind = options.kind || 'video';
+            const participantsRef = this.participants.value || [];
+            const streams = (kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value);
+            if (!streams || streams.length === 0)
+                return null;
+            let participant = id
+                ? participantsRef.find((part) => part.id === id)
+                : undefined;
+            if (!participant && name) {
+                participant = participantsRef.find((part) => part.name === name);
             }
-            // Search by name if provided
-            if (name) {
-                const streamObj = streams.find((obj) => obj.name === name);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            // allVideoStreams / allAudioStreams are keyed by producerId only. Matching
+            // a stream's own `name` (the previous behaviour) fails because those
+            // entries do not reliably carry one, and a participant's `id` is its
+            // membership id — the producer reference is videoID / audioID.
+            const producerId = participant
+                ? kind === 'video'
+                    ? participant.videoID
+                    : participant.audioID
+                : '';
+            if (producerId) {
+                const match = streams.find((stream) => stream.producerId === producerId);
+                if (match && match.stream)
+                    return match.stream;
+            }
+            // A caller that already holds a producer id may pass it directly as `id`.
+            if (id) {
+                const direct = streams.find((stream) => stream.producerId === id);
+                if (direct && direct.stream)
+                    return direct.stream;
             }
             return null;
         }
-        catch (error) {
-            console.error('Error getting participant media:', error);
+        catch {
             return null;
         }
     };
     // Initial values
+    /** Publish after change detection, coalesced to the latest bag. */
+    pendingSourceParameters = null;
+    sourcePublishQueued = false;
+    sourcePublishActive = true;
+    publishSourceParameters = (bag) => {
+        if (!this.updateSourceParameters)
+            return;
+        this.pendingSourceParameters = bag;
+        if (this.sourcePublishQueued)
+            return;
+        this.sourcePublishQueued = true;
+        Promise.resolve().then(() => {
+            this.sourcePublishQueued = false;
+            const next = this.pendingSourceParameters;
+            this.pendingSourceParameters = null;
+            if (!this.sourcePublishActive || !next || !this.updateSourceParameters)
+                return;
+            try {
+                this.updateSourceParameters(next);
+            }
+            catch {
+                // A consumer observer must never break the room.
+            }
+        });
+    };
+    getCurrentParams = () => {
+        // Same value as getUpdatedAllParams(), without the republish side effect.
+        // Safe to call from a template, an event handler, or a polling loop.
+        return {
+            ...this.getAllParams(),
+            ...this.mediaSFUFunctions(),
+        };
+    };
     mediaSFUFunctions = () => {
         return {
             updateMiniCardsGrid: this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -58052,6 +54675,7 @@ class MediasfuWebinar {
                 }),
             getMediaDevicesList: this.getMediaDevicesList,
             getParticipantMedia: this.getParticipantMedia,
+            getCurrentParams: this.getCurrentParams,
         };
     };
     validated = new BehaviorSubject(false);
@@ -58565,8 +55189,33 @@ class MediasfuWebinar {
     updateScreenId = (value) => {
         this.screenId.next(value);
     };
+    /**
+     * Coalesced media-change notifier. Several updaters fire in the same tick
+     * during a single transition, so reasons are batched into one
+     * microtask-deferred emit rather than delivered N times.
+     */
+    pendingMediaReasons = new Set();
+    mediaNotifyQueued = false;
+    notifyMediaChanged = (reason) => {
+        this.pendingMediaReasons.add(reason);
+        if (this.mediaNotifyQueued)
+            return;
+        this.mediaNotifyQueued = true;
+        Promise.resolve().then(() => {
+            this.mediaNotifyQueued = false;
+            const reasons = Array.from(this.pendingMediaReasons);
+            this.pendingMediaReasons.clear();
+            try {
+                this.mediaChanged.emit({ reasons, parameters: this.getCurrentParams() });
+            }
+            catch {
+                // A consumer's observer must never break the media path.
+            }
+        });
+    };
     updateAllVideoStreams = (value) => {
         this.allVideoStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateNewLimitedStreams = (value) => {
         this.newLimitedStreams.next(value);
@@ -58624,6 +55273,7 @@ class MediasfuWebinar {
     };
     updateLocalStreamVideo = (value) => {
         this.localStreamVideo.next(value);
+        this.notifyMediaChanged('local-video');
     };
     updateUserDefaultVideoInputDevice = (value) => {
         this.userDefaultVideoInputDevice.next(value);
@@ -58702,6 +55352,7 @@ class MediasfuWebinar {
     };
     updateLocalStreamScreen = (value) => {
         this.localStreamScreen.next(value);
+        this.notifyMediaChanged('screen-share');
     };
     updateScreenAlreadyOn = (value) => {
         this.screenAlreadyOn.next(value);
@@ -58714,6 +55365,7 @@ class MediasfuWebinar {
     };
     updateOldAllStreams = (value) => {
         this.oldAllStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateAdminVidID = (value) => {
         this.adminVidID.next(value);
@@ -58741,6 +55393,7 @@ class MediasfuWebinar {
     };
     updateLocalStreamAudio = (value) => {
         this.localStreamAudio.next(value);
+        this.notifyMediaChanged('local-audio');
     };
     updateDefAudioID = (value) => {
         this.defAudioID.next(value);
@@ -58867,6 +55520,7 @@ class MediasfuWebinar {
     };
     updateAllAudioStreams = (value) => {
         this.allAudioStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateRemoteScreenStream = (value) => {
         this.remoteScreenStream.next(value);
@@ -58900,6 +55554,7 @@ class MediasfuWebinar {
     };
     updateAudioOnlyStreams = (value) => {
         this.audioOnlyStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateVideoInputs = (value) => {
         this.videoInputs.next(value);
@@ -59433,6 +56088,7 @@ class MediasfuWebinar {
     };
     updateConsumerTransports = (value) => {
         this.consumerTransports.next(value);
+        this.notifyMediaChanged('consumers');
     };
     updateConsumingTransports = (value) => {
         this.consumingTransports.next(value);
@@ -59580,6 +56236,24 @@ class MediasfuWebinar {
         return isPortrait ? 'portrait' : 'landscape';
     };
     showAlert = ({ message, type, duration = 3000, position, }) => {
+        // Alerts are the SDK's only signal for a refused or failed control, so a
+        // headless consumer ([returnUI]="false") must receive them deterministically.
+        // Subject updates alone never publish; the fields are passed explicitly
+        // here because the assignments below have not run yet.
+        try {
+            if (this.sourceParameters !== null && this.updateSourceParameters) {
+                this.publishSourceParameters({
+                    ...this.getAllParams(),
+                    ...this.mediaSFUFunctions(),
+                    alertMessage: message,
+                    alertType: type,
+                    alertVisible: true,
+                });
+            }
+        }
+        catch {
+            // Publishing must never block the alert itself.
+        }
         const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
         this.updateAlertMessage(message);
         this.updateAlertType(type);
@@ -60288,7 +56962,7 @@ class MediasfuWebinar {
                         };
                         this.sourceParameters = nextSourceParameters;
                         if (this.updateSourceParameters) {
-                            this.updateSourceParameters(nextSourceParameters);
+                            this.publishSourceParameters(nextSourceParameters);
                         }
                     }
                 }
@@ -60427,6 +57101,10 @@ class MediasfuWebinar {
         }
     }
     ngOnInit() {
+        // Field initialisers run before Angular binds @Input()s, so autoWave cannot
+        // be defaulted from returnUI where it is declared — it would read undefined.
+        // ngOnInit is the first point the input is guaranteed bound.
+        this.autoWave.next(this.returnUI !== false);
         this.updateModernThemeDarkMode(this.resolvePreferredTheme());
         // Initialize UI overrides if provided
         if (this.uiOverrides) {
@@ -60518,6 +57196,8 @@ class MediasfuWebinar {
         };
     }
     ngOnDestroy() {
+        this.sourcePublishActive = false;
+        this.pendingSourceParameters = null;
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('orientationchange', this.handleResize);
         if (this.mainHeightWidthSubscription) {
@@ -60595,7 +57275,7 @@ class MediasfuWebinar {
                     };
                     this.sourceParameters = nextSourceParameters;
                     if (this.updateSourceParameters) {
-                        this.updateSourceParameters(nextSourceParameters);
+                        this.publishSourceParameters(nextSourceParameters);
                     }
                 }
             }
@@ -60624,8 +57304,8 @@ class MediasfuWebinar {
             }
         }
         const dimensions = this.computeDimensionsMethod({
-            containerWidthFraction: 1,
-            containerHeightFraction: 1,
+            containerWidthFraction: this.containerWidthFraction,
+            containerHeightFraction: this.containerHeightFraction,
             mainSize: this.mainHeightWidth.value,
             doStack: true,
             defaultFraction: this.eventType.value == 'webinar' || this.eventType.value == 'conference'
@@ -61828,7 +58508,7 @@ class MediasfuWebinar {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuWebinar, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }, { token: UIOverrideResolverService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuWebinar, isStandalone: true, selector: "app-mediasfu-webinar", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuWebinar, isStandalone: true, selector: "app-mediasfu-webinar", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -61844,7 +58524,7 @@ class MediasfuWebinar {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -61865,7 +58545,10 @@ class MediasfuWebinar {
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -61874,6 +58557,8 @@ class MediasfuWebinar {
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -61889,6 +58574,8 @@ class MediasfuWebinar {
                     "
                   >
                     <app-main-screen-component
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
                       [defaultFraction]="1 - controlHeight.value"
@@ -62366,7 +59053,7 @@ class MediasfuWebinar {
       >
       </ng-container>
     </ng-container>
-  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuWebinar, decorators: [{
             type: Component,
@@ -62422,7 +59109,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -62443,7 +59130,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
               props: mainContainerOverrideProps
             "
           >
-            <app-main-container-component>
+            <app-main-container-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
+            >
               <ng-container
                 *appWithOverride="
                   'mainAspect';
@@ -62452,6 +59142,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 "
               >
                 <app-main-aspect-component
+                  [containerWidthFraction]="containerWidthFraction"
+                  [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
                   [defaultFraction]="1 - controlHeight.value"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
@@ -62467,6 +59159,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                     "
                   >
                     <app-main-screen-component
+                      [containerWidthFraction]="containerWidthFraction"
+                      [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
                       [defaultFraction]="1 - controlHeight.value"
@@ -62967,11 +59661,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 type: Input
             }], returnUI: [{
                 type: Input
+            }], mediaChanged: [{
+                type: Output
             }], noUIPreJoinOptions: [{
                 type: Input
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], containerWidthFraction: [{
+                type: Input
+            }], containerHeightFraction: [{
                 type: Input
             }], customVideoCard: [{
                 type: Input
@@ -63198,9 +59898,20 @@ class MediasfuConference {
     sourceParameters = {};
     updateSourceParameters = (data) => { };
     returnUI = true;
+    /**
+     * Emitted whenever the media graph changes — new/lost streams, a local track
+     * toggling, screen share starting, consumers changing. Reasons are coalesced
+     * into one microtask-deferred emit per tick.
+     *
+     * The reliable way for a [returnUI]="false" surface to re-read media without
+     * polling.
+     */
+    mediaChanged = new EventEmitter();
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    containerWidthFraction = 1;
+    containerHeightFraction = 1;
     // Custom component inputs
     customVideoCard;
     customAudioCard;
@@ -63209,6 +59920,13 @@ class MediasfuConference {
     // UI customization inputs
     containerStyle;
     uiOverrides;
+    rootContainerStyle = () => ({
+        width: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        maxWidth: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        height: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        maxHeight: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        ...this.containerStyle,
+    });
     title = 'MediaSFU-Conference';
     // Component references for override directive
     MainContainerComponentRef = MainContainerComponent;
@@ -63244,10 +59962,14 @@ class MediasfuConference {
     ScreenboardModalRef = ScreenboardModal;
     // Override prop factory methods
     mainContainerOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         backgroundColor: this.validated.value ? 'rgba(217, 227, 234, 0.99)' : 'transparent',
         children: [],
     });
     mainAspectOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         backgroundColor: 'rgba(217, 227, 234, 0.99)',
         defaultFraction: 1 - this.controlHeight.value,
         showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
@@ -63256,6 +59978,8 @@ class MediasfuConference {
         updateIsSmallScreen: this.updateIsSmallScreen,
     });
     mainScreenOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         doStack: true,
         mainSize: this.mainHeightWidth.value,
         defaultFraction: 1 - this.controlHeight.value,
@@ -63699,31 +60423,82 @@ class MediasfuConference {
      * @returns A promise that resolves to the participant's MediaStream or null if not found
      */
     getParticipantMedia = async (options) => {
-        const { id, name, kind } = options;
+        // Resolve a participant's media stream by participant id, participant name,
+        // or a producer id.
         try {
-            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
-            // Search by producerId if provided
-            if (id) {
-                const streamObj = streams.find((obj) => obj.producerId === id);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            const id = options.id || '';
+            const name = options.name || '';
+            const kind = options.kind || 'video';
+            const participantsRef = this.participants.value || [];
+            const streams = (kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value);
+            if (!streams || streams.length === 0)
+                return null;
+            let participant = id
+                ? participantsRef.find((part) => part.id === id)
+                : undefined;
+            if (!participant && name) {
+                participant = participantsRef.find((part) => part.name === name);
             }
-            // Search by name if provided
-            if (name) {
-                const streamObj = streams.find((obj) => obj.name === name);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            // allVideoStreams / allAudioStreams are keyed by producerId only. Matching
+            // a stream's own `name` (the previous behaviour) fails because those
+            // entries do not reliably carry one, and a participant's `id` is its
+            // membership id — the producer reference is videoID / audioID.
+            const producerId = participant
+                ? kind === 'video'
+                    ? participant.videoID
+                    : participant.audioID
+                : '';
+            if (producerId) {
+                const match = streams.find((stream) => stream.producerId === producerId);
+                if (match && match.stream)
+                    return match.stream;
+            }
+            // A caller that already holds a producer id may pass it directly as `id`.
+            if (id) {
+                const direct = streams.find((stream) => stream.producerId === id);
+                if (direct && direct.stream)
+                    return direct.stream;
             }
             return null;
         }
-        catch (error) {
-            console.error('Error getting participant media:', error);
+        catch {
             return null;
         }
     };
     // Initial values
+    /** Publish after change detection, coalesced to the latest bag. */
+    pendingSourceParameters = null;
+    sourcePublishQueued = false;
+    sourcePublishActive = true;
+    publishSourceParameters = (bag) => {
+        if (!this.updateSourceParameters)
+            return;
+        this.pendingSourceParameters = bag;
+        if (this.sourcePublishQueued)
+            return;
+        this.sourcePublishQueued = true;
+        Promise.resolve().then(() => {
+            this.sourcePublishQueued = false;
+            const next = this.pendingSourceParameters;
+            this.pendingSourceParameters = null;
+            if (!this.sourcePublishActive || !next || !this.updateSourceParameters)
+                return;
+            try {
+                this.updateSourceParameters(next);
+            }
+            catch {
+                // A consumer observer must never break the room.
+            }
+        });
+    };
+    getCurrentParams = () => {
+        // Same value as getUpdatedAllParams(), without the republish side effect.
+        // Safe to call from a template, an event handler, or a polling loop.
+        return {
+            ...this.getAllParams(),
+            ...this.mediaSFUFunctions(),
+        };
+    };
     mediaSFUFunctions = () => {
         return {
             updateMiniCardsGrid: this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -63992,6 +60767,7 @@ class MediasfuConference {
                 }),
             getMediaDevicesList: this.getMediaDevicesList,
             getParticipantMedia: this.getParticipantMedia,
+            getCurrentParams: this.getCurrentParams,
         };
     };
     validated = new BehaviorSubject(false);
@@ -64505,8 +61281,33 @@ class MediasfuConference {
     updateScreenId = (value) => {
         this.screenId.next(value);
     };
+    /**
+     * Coalesced media-change notifier. Several updaters fire in the same tick
+     * during a single transition, so reasons are batched into one
+     * microtask-deferred emit rather than delivered N times.
+     */
+    pendingMediaReasons = new Set();
+    mediaNotifyQueued = false;
+    notifyMediaChanged = (reason) => {
+        this.pendingMediaReasons.add(reason);
+        if (this.mediaNotifyQueued)
+            return;
+        this.mediaNotifyQueued = true;
+        Promise.resolve().then(() => {
+            this.mediaNotifyQueued = false;
+            const reasons = Array.from(this.pendingMediaReasons);
+            this.pendingMediaReasons.clear();
+            try {
+                this.mediaChanged.emit({ reasons, parameters: this.getCurrentParams() });
+            }
+            catch {
+                // A consumer's observer must never break the media path.
+            }
+        });
+    };
     updateAllVideoStreams = (value) => {
         this.allVideoStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateNewLimitedStreams = (value) => {
         this.newLimitedStreams.next(value);
@@ -64564,6 +61365,7 @@ class MediasfuConference {
     };
     updateLocalStreamVideo = (value) => {
         this.localStreamVideo.next(value);
+        this.notifyMediaChanged('local-video');
     };
     updateUserDefaultVideoInputDevice = (value) => {
         this.userDefaultVideoInputDevice.next(value);
@@ -64642,6 +61444,7 @@ class MediasfuConference {
     };
     updateLocalStreamScreen = (value) => {
         this.localStreamScreen.next(value);
+        this.notifyMediaChanged('screen-share');
     };
     updateScreenAlreadyOn = (value) => {
         this.screenAlreadyOn.next(value);
@@ -64654,6 +61457,7 @@ class MediasfuConference {
     };
     updateOldAllStreams = (value) => {
         this.oldAllStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateAdminVidID = (value) => {
         this.adminVidID.next(value);
@@ -64681,6 +61485,7 @@ class MediasfuConference {
     };
     updateLocalStreamAudio = (value) => {
         this.localStreamAudio.next(value);
+        this.notifyMediaChanged('local-audio');
     };
     updateDefAudioID = (value) => {
         this.defAudioID.next(value);
@@ -64807,6 +61612,7 @@ class MediasfuConference {
     };
     updateAllAudioStreams = (value) => {
         this.allAudioStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateRemoteScreenStream = (value) => {
         this.remoteScreenStream.next(value);
@@ -64840,6 +61646,7 @@ class MediasfuConference {
     };
     updateAudioOnlyStreams = (value) => {
         this.audioOnlyStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateVideoInputs = (value) => {
         this.videoInputs.next(value);
@@ -65373,6 +62180,7 @@ class MediasfuConference {
     };
     updateConsumerTransports = (value) => {
         this.consumerTransports.next(value);
+        this.notifyMediaChanged('consumers');
     };
     updateConsumingTransports = (value) => {
         this.consumingTransports.next(value);
@@ -65520,6 +62328,24 @@ class MediasfuConference {
         return isPortrait ? 'portrait' : 'landscape';
     };
     showAlert = ({ message, type, duration = 3000, position, }) => {
+        // Alerts are the SDK's only signal for a refused or failed control, so a
+        // headless consumer ([returnUI]="false") must receive them deterministically.
+        // Subject updates alone never publish; the fields are passed explicitly
+        // here because the assignments below have not run yet.
+        try {
+            if (this.sourceParameters !== null && this.updateSourceParameters) {
+                this.publishSourceParameters({
+                    ...this.getAllParams(),
+                    ...this.mediaSFUFunctions(),
+                    alertMessage: message,
+                    alertType: type,
+                    alertVisible: true,
+                });
+            }
+        }
+        catch {
+            // Publishing must never block the alert itself.
+        }
         const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
         this.updateAlertMessage(message);
         this.updateAlertType(type);
@@ -66228,7 +63054,7 @@ class MediasfuConference {
                         };
                         this.sourceParameters = nextSourceParameters;
                         if (this.updateSourceParameters) {
-                            this.updateSourceParameters(nextSourceParameters);
+                            this.publishSourceParameters(nextSourceParameters);
                         }
                     }
                 }
@@ -66367,6 +63193,10 @@ class MediasfuConference {
         }
     }
     ngOnInit() {
+        // Field initialisers run before Angular binds @Input()s, so autoWave cannot
+        // be defaulted from returnUI where it is declared — it would read undefined.
+        // ngOnInit is the first point the input is guaranteed bound.
+        this.autoWave.next(this.returnUI !== false);
         this.updateModernThemeDarkMode(this.resolvePreferredTheme());
         // Initialize UI overrides if provided
         if (this.uiOverrides) {
@@ -66458,6 +63288,8 @@ class MediasfuConference {
         };
     }
     ngOnDestroy() {
+        this.sourcePublishActive = false;
+        this.pendingSourceParameters = null;
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('orientationchange', this.handleResize);
         if (this.mainHeightWidthSubscription) {
@@ -66535,7 +63367,7 @@ class MediasfuConference {
                     };
                     this.sourceParameters = nextSourceParameters;
                     if (this.updateSourceParameters) {
-                        this.updateSourceParameters(nextSourceParameters);
+                        this.publishSourceParameters(nextSourceParameters);
                     }
                 }
             }
@@ -66564,8 +63396,8 @@ class MediasfuConference {
             }
         }
         const dimensions = this.computeDimensionsMethod({
-            containerWidthFraction: 1,
-            containerHeightFraction: 1,
+            containerWidthFraction: this.containerWidthFraction,
+            containerHeightFraction: this.containerHeightFraction,
             mainSize: this.mainHeightWidth.value,
             doStack: true,
             defaultFraction: this.eventType.value == 'webinar' || this.eventType.value == 'conference'
@@ -67769,7 +64601,7 @@ class MediasfuConference {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuConference, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }, { token: UIOverrideResolverService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuConference, isStandalone: true, selector: "app-mediasfu-conference", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuConference, isStandalone: true, selector: "app-mediasfu-conference", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -67785,7 +64617,7 @@ class MediasfuConference {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -67801,6 +64633,8 @@ class MediasfuConference {
         <!-- Default Main Component -->
         <ng-container *ngIf="returnUI">
         <app-main-container-component
+          [containerWidthFraction]="containerWidthFraction"
+          [containerHeightFraction]="containerHeightFraction"
           *appWithOverride="
             'mainContainer';
             default: MainContainerComponentRef;
@@ -67808,6 +64642,8 @@ class MediasfuConference {
           "
         >
           <app-main-aspect-component
+            [containerWidthFraction]="containerWidthFraction"
+            [containerHeightFraction]="containerHeightFraction"
             *appWithOverride="
               'mainAspect';
               default: MainAspectComponentRef;
@@ -67821,6 +64657,8 @@ class MediasfuConference {
             [updateIsSmallScreen]="updateIsSmallScreen"
           >
             <app-main-screen-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
               *appWithOverride="
                 'mainScreen';
                 default: MainScreenComponentRef;
@@ -68359,7 +65197,7 @@ class MediasfuConference {
       >
       </ng-container>
     </ng-container>
-  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }] });
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuConference, decorators: [{
             type: Component,
@@ -68415,7 +65253,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -68431,6 +65269,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
         <!-- Default Main Component -->
         <ng-container *ngIf="returnUI">
         <app-main-container-component
+          [containerWidthFraction]="containerWidthFraction"
+          [containerHeightFraction]="containerHeightFraction"
           *appWithOverride="
             'mainContainer';
             default: MainContainerComponentRef;
@@ -68438,6 +65278,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
           "
         >
           <app-main-aspect-component
+            [containerWidthFraction]="containerWidthFraction"
+            [containerHeightFraction]="containerHeightFraction"
             *appWithOverride="
               'mainAspect';
               default: MainAspectComponentRef;
@@ -68451,6 +65293,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
             [updateIsSmallScreen]="updateIsSmallScreen"
           >
             <app-main-screen-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
               *appWithOverride="
                 'mainScreen';
                 default: MainScreenComponentRef;
@@ -69012,11 +65856,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 type: Input
             }], returnUI: [{
                 type: Input
+            }], mediaChanged: [{
+                type: Output
             }], noUIPreJoinOptions: [{
                 type: Input
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], containerWidthFraction: [{
+                type: Input
+            }], containerHeightFraction: [{
                 type: Input
             }], customVideoCard: [{
                 type: Input
@@ -69207,9 +66057,20 @@ class MediasfuChat {
     sourceParameters = {};
     updateSourceParameters = (data) => { };
     returnUI = true;
+    /**
+     * Emitted whenever the media graph changes — new/lost streams, a local track
+     * toggling, screen share starting, consumers changing. Reasons are coalesced
+     * into one microtask-deferred emit per tick.
+     *
+     * The reliable way for a [returnUI]="false" surface to re-read media without
+     * polling.
+     */
+    mediaChanged = new EventEmitter();
     noUIPreJoinOptions;
     joinMediaSFURoom;
     createMediaSFURoom;
+    containerWidthFraction = 1;
+    containerHeightFraction = 1;
     // Custom component inputs
     customVideoCard;
     customAudioCard;
@@ -69218,6 +66079,13 @@ class MediasfuChat {
     // UI customization inputs
     containerStyle;
     uiOverrides;
+    rootContainerStyle = () => ({
+        width: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        maxWidth: this.containerWidthFraction < 1 ? '100%' : '100vw',
+        height: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        maxHeight: this.containerHeightFraction < 1 ? '100%' : '100vh',
+        ...this.containerStyle,
+    });
     title = 'MediaSFU-Chat';
     // Component references for override directive
     MainContainerComponentRef = MainContainerComponent;
@@ -69236,10 +66104,14 @@ class MediasfuChat {
     EventSettingsModalRef = ModernEventSettingsModalComponent;
     // Override prop factory methods
     mainContainerOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         backgroundColor: this.validated.value ? 'rgba(217, 227, 234, 0.99)' : 'transparent',
         children: [],
     });
     mainAspectOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         backgroundColor: 'rgba(217, 227, 234, 0.99)',
         defaultFraction: 1 - this.controlHeight.value,
         showControls: false,
@@ -69248,6 +66120,8 @@ class MediasfuChat {
         updateIsSmallScreen: this.updateIsSmallScreen,
     });
     mainScreenOverrideProps = () => ({
+        containerWidthFraction: this.containerWidthFraction,
+        containerHeightFraction: this.containerHeightFraction,
         doStack: true,
         mainSize: this.mainHeightWidth.value,
         defaultFraction: 1 - this.controlHeight.value,
@@ -69483,31 +66357,82 @@ class MediasfuChat {
      * @returns A promise that resolves to the participant's MediaStream or null if not found
      */
     getParticipantMedia = async (options) => {
-        const { id, name, kind } = options;
+        // Resolve a participant's media stream by participant id, participant name,
+        // or a producer id.
         try {
-            const streams = kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value;
-            // Search by producerId if provided
-            if (id) {
-                const streamObj = streams.find((obj) => obj.producerId === id);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            const id = options.id || '';
+            const name = options.name || '';
+            const kind = options.kind || 'video';
+            const participantsRef = this.participants.value || [];
+            const streams = (kind === 'video' ? this.allVideoStreams.value : this.allAudioStreams.value);
+            if (!streams || streams.length === 0)
+                return null;
+            let participant = id
+                ? participantsRef.find((part) => part.id === id)
+                : undefined;
+            if (!participant && name) {
+                participant = participantsRef.find((part) => part.name === name);
             }
-            // Search by name if provided
-            if (name) {
-                const streamObj = streams.find((obj) => obj.name === name);
-                if (streamObj && 'stream' in streamObj) {
-                    return streamObj.stream || null;
-                }
+            // allVideoStreams / allAudioStreams are keyed by producerId only. Matching
+            // a stream's own `name` (the previous behaviour) fails because those
+            // entries do not reliably carry one, and a participant's `id` is its
+            // membership id — the producer reference is videoID / audioID.
+            const producerId = participant
+                ? kind === 'video'
+                    ? participant.videoID
+                    : participant.audioID
+                : '';
+            if (producerId) {
+                const match = streams.find((stream) => stream.producerId === producerId);
+                if (match && match.stream)
+                    return match.stream;
+            }
+            // A caller that already holds a producer id may pass it directly as `id`.
+            if (id) {
+                const direct = streams.find((stream) => stream.producerId === id);
+                if (direct && direct.stream)
+                    return direct.stream;
             }
             return null;
         }
-        catch (error) {
-            console.error('Error getting participant media:', error);
+        catch {
             return null;
         }
     };
     // Initial values
+    /** Publish after change detection, coalesced to the latest bag. */
+    pendingSourceParameters = null;
+    sourcePublishQueued = false;
+    sourcePublishActive = true;
+    publishSourceParameters = (bag) => {
+        if (!this.updateSourceParameters)
+            return;
+        this.pendingSourceParameters = bag;
+        if (this.sourcePublishQueued)
+            return;
+        this.sourcePublishQueued = true;
+        Promise.resolve().then(() => {
+            this.sourcePublishQueued = false;
+            const next = this.pendingSourceParameters;
+            this.pendingSourceParameters = null;
+            if (!this.sourcePublishActive || !next || !this.updateSourceParameters)
+                return;
+            try {
+                this.updateSourceParameters(next);
+            }
+            catch {
+                // A consumer observer must never break the room.
+            }
+        });
+    };
+    getCurrentParams = () => {
+        // Same value as getUpdatedAllParams(), without the republish side effect.
+        // Safe to call from a template, an event handler, or a polling loop.
+        return {
+            ...this.getAllParams(),
+            ...this.mediaSFUFunctions(),
+        };
+    };
     mediaSFUFunctions = () => {
         return {
             updateMiniCardsGrid: this.updateMiniCardsGrid?.updateMiniCardsGrid ||
@@ -69768,6 +66693,7 @@ class MediasfuChat {
                 }),
             getMediaDevicesList: this.getMediaDevicesList,
             getParticipantMedia: this.getParticipantMedia,
+            getCurrentParams: this.getCurrentParams,
         };
     };
     validated = new BehaviorSubject(false);
@@ -70265,8 +67191,33 @@ class MediasfuChat {
     updateScreenId = (value) => {
         this.screenId.next(value);
     };
+    /**
+     * Coalesced media-change notifier. Several updaters fire in the same tick
+     * during a single transition, so reasons are batched into one
+     * microtask-deferred emit rather than delivered N times.
+     */
+    pendingMediaReasons = new Set();
+    mediaNotifyQueued = false;
+    notifyMediaChanged = (reason) => {
+        this.pendingMediaReasons.add(reason);
+        if (this.mediaNotifyQueued)
+            return;
+        this.mediaNotifyQueued = true;
+        Promise.resolve().then(() => {
+            this.mediaNotifyQueued = false;
+            const reasons = Array.from(this.pendingMediaReasons);
+            this.pendingMediaReasons.clear();
+            try {
+                this.mediaChanged.emit({ reasons, parameters: this.getCurrentParams() });
+            }
+            catch {
+                // A consumer's observer must never break the media path.
+            }
+        });
+    };
     updateAllVideoStreams = (value) => {
         this.allVideoStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateNewLimitedStreams = (value) => {
         this.newLimitedStreams.next(value);
@@ -70324,6 +67275,7 @@ class MediasfuChat {
     };
     updateLocalStreamVideo = (value) => {
         this.localStreamVideo.next(value);
+        this.notifyMediaChanged('local-video');
     };
     updateUserDefaultVideoInputDevice = (value) => {
         this.userDefaultVideoInputDevice.next(value);
@@ -70402,6 +67354,7 @@ class MediasfuChat {
     };
     updateLocalStreamScreen = (value) => {
         this.localStreamScreen.next(value);
+        this.notifyMediaChanged('screen-share');
     };
     updateScreenAlreadyOn = (value) => {
         this.screenAlreadyOn.next(value);
@@ -70414,6 +67367,7 @@ class MediasfuChat {
     };
     updateOldAllStreams = (value) => {
         this.oldAllStreams.next(value);
+        this.notifyMediaChanged('video-streams');
     };
     updateAdminVidID = (value) => {
         this.adminVidID.next(value);
@@ -70441,6 +67395,7 @@ class MediasfuChat {
     };
     updateLocalStreamAudio = (value) => {
         this.localStreamAudio.next(value);
+        this.notifyMediaChanged('local-audio');
     };
     updateDefAudioID = (value) => {
         this.defAudioID.next(value);
@@ -70567,6 +67522,7 @@ class MediasfuChat {
     };
     updateAllAudioStreams = (value) => {
         this.allAudioStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateRemoteScreenStream = (value) => {
         this.remoteScreenStream.next(value);
@@ -70600,6 +67556,7 @@ class MediasfuChat {
     };
     updateAudioOnlyStreams = (value) => {
         this.audioOnlyStreams.next(value);
+        this.notifyMediaChanged('audio-streams');
     };
     updateVideoInputs = (value) => {
         this.videoInputs.next(value);
@@ -71104,6 +68061,7 @@ class MediasfuChat {
     };
     updateConsumerTransports = (value) => {
         this.consumerTransports.next(value);
+        this.notifyMediaChanged('consumers');
     };
     updateConsumingTransports = (value) => {
         this.consumingTransports.next(value);
@@ -71251,6 +68209,24 @@ class MediasfuChat {
         return isPortrait ? 'portrait' : 'landscape';
     };
     showAlert = ({ message, type, duration = 3000, position, }) => {
+        // Alerts are the SDK's only signal for a refused or failed control, so a
+        // headless consumer ([returnUI]="false") must receive them deterministically.
+        // Subject updates alone never publish; the fields are passed explicitly
+        // here because the assignments below have not run yet.
+        try {
+            if (this.sourceParameters !== null && this.updateSourceParameters) {
+                this.publishSourceParameters({
+                    ...this.getAllParams(),
+                    ...this.mediaSFUFunctions(),
+                    alertMessage: message,
+                    alertType: type,
+                    alertVisible: true,
+                });
+            }
+        }
+        catch {
+            // Publishing must never block the alert itself.
+        }
         const effectivePosition = position ?? (type === 'danger' || type === 'warning' ? 'center' : 'top');
         this.updateAlertMessage(message);
         this.updateAlertType(type);
@@ -71959,7 +68935,7 @@ class MediasfuChat {
                         };
                         this.sourceParameters = nextSourceParameters;
                         if (this.updateSourceParameters) {
-                            this.updateSourceParameters(nextSourceParameters);
+                            this.publishSourceParameters(nextSourceParameters);
                         }
                     }
                 }
@@ -72042,6 +69018,10 @@ class MediasfuChat {
         }
     }
     ngOnInit() {
+        // Field initialisers run before Angular binds @Input()s, so autoWave cannot
+        // be defaulted from returnUI where it is declared — it would read undefined.
+        // ngOnInit is the first point the input is guaranteed bound.
+        this.autoWave.next(this.returnUI !== false);
         this.updateModernThemeDarkMode(this.resolvePreferredTheme());
         // Initialize UI overrides if provided
         if (this.uiOverrides) {
@@ -72080,6 +69060,8 @@ class MediasfuChat {
         };
     }
     ngOnDestroy() {
+        this.sourcePublishActive = false;
+        this.pendingSourceParameters = null;
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('orientationchange', this.handleResize);
         if (this.mainHeightWidthSubscription) {
@@ -72157,7 +69139,7 @@ class MediasfuChat {
                     };
                     this.sourceParameters = nextSourceParameters;
                     if (this.updateSourceParameters) {
-                        this.updateSourceParameters(nextSourceParameters);
+                        this.publishSourceParameters(nextSourceParameters);
                     }
                 }
             }
@@ -72186,8 +69168,8 @@ class MediasfuChat {
             }
         }
         const dimensions = this.computeDimensionsMethod({
-            containerWidthFraction: 1,
-            containerHeightFraction: 1,
+            containerWidthFraction: this.containerWidthFraction,
+            containerHeightFraction: this.containerHeightFraction,
             mainSize: this.mainHeightWidth.value,
             doStack: true,
             defaultFraction: this.eventType.value == 'webinar' || this.eventType.value == 'conference'
@@ -72867,7 +69849,7 @@ class MediasfuChat {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuChat, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: StartMeetingProgressTimer }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }, { token: UIOverrideResolverService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuChat, isStandalone: true, selector: "app-mediasfu-chat", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuChat, isStandalone: true, selector: "app-mediasfu-chat", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -72883,7 +69865,7 @@ class MediasfuChat {
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -72899,6 +69881,8 @@ class MediasfuChat {
         <!-- Default Main Component -->
         <ng-container *ngIf="returnUI">
         <app-main-container-component
+          [containerWidthFraction]="containerWidthFraction"
+          [containerHeightFraction]="containerHeightFraction"
           *appWithOverride="
             'mainContainer';
             default: MainContainerComponentRef;
@@ -72906,6 +69890,8 @@ class MediasfuChat {
           "
         >
           <app-main-aspect-component
+            [containerWidthFraction]="containerWidthFraction"
+            [containerHeightFraction]="containerHeightFraction"
             *appWithOverride="
               'mainAspect';
               default: MainAspectComponentRef;
@@ -72919,6 +69905,8 @@ class MediasfuChat {
             [updateIsSmallScreen]="updateIsSmallScreen"
           >
             <app-main-screen-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
               *appWithOverride="
                 'mainScreen';
                 default: MainScreenComponentRef;
@@ -73136,7 +70124,7 @@ class MediasfuChat {
       >
       </ng-container>
     </ng-container>
-  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }] });
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuChat, decorators: [{
             type: Component,
@@ -73173,7 +70161,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
     <div
       *ngIf="!customMainComponent"
       class="MediaSFU"
-      [ngStyle]="containerStyle"
+      [ngStyle]="rootContainerStyle()"
     >
       <ng-container *ngIf="!validated.value; else mainContent">
         <ng-container
@@ -73189,6 +70177,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
         <!-- Default Main Component -->
         <ng-container *ngIf="returnUI">
         <app-main-container-component
+          [containerWidthFraction]="containerWidthFraction"
+          [containerHeightFraction]="containerHeightFraction"
           *appWithOverride="
             'mainContainer';
             default: MainContainerComponentRef;
@@ -73196,6 +70186,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
           "
         >
           <app-main-aspect-component
+            [containerWidthFraction]="containerWidthFraction"
+            [containerHeightFraction]="containerHeightFraction"
             *appWithOverride="
               'mainAspect';
               default: MainAspectComponentRef;
@@ -73209,6 +70201,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
             [updateIsSmallScreen]="updateIsSmallScreen"
           >
             <app-main-screen-component
+              [containerWidthFraction]="containerWidthFraction"
+              [containerHeightFraction]="containerHeightFraction"
               *appWithOverride="
                 'mainScreen';
                 default: MainScreenComponentRef;
@@ -73449,11 +70443,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 type: Input
             }], returnUI: [{
                 type: Input
+            }], mediaChanged: [{
+                type: Output
             }], noUIPreJoinOptions: [{
                 type: Input
             }], joinMediaSFURoom: [{
                 type: Input
             }], createMediaSFURoom: [{
+                type: Input
+            }], containerWidthFraction: [{
+                type: Input
+            }], containerHeightFraction: [{
                 type: Input
             }], customVideoCard: [{
                 type: Input
@@ -73909,8 +70909,153 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
             }] } });
 
 /**
+ * The Angular equivalent of the React SDK's `useMediasfuHeadless`.
+ *
+ * Field names deliberately mirror the hook one-for-one, so every recipe in
+ * HEADLESS_GUIDE.md reads the same here — only the reactivity idiom changes
+ * (observables instead of hook state).
+ *
+ * Two rules are baked in, and they are where most headless integrations go
+ * wrong:
+ *
+ *  - **Take every publication.** Each field on the bag is a snapshot of an
+ *    internal ref the SDK reassigns, so a bag you hold is stale the moment a
+ *    producer changes. De-duplicating (`distinctUntilChanged`) or deep-comparing
+ *    publications freezes your view on whatever it rendered first — do not add
+ *    it to these streams.
+ *  - **Keep `sourceParameters` stable.** The object handed to the component is a
+ *    seed it writes through; a fresh object per change-detection pass makes the
+ *    SDK re-render and can loop. This service keeps one seed.
+ *
+ * Provided in root, but you can also provide it per-component to scope one
+ * instance to one call surface.
+ *
+ * @example
+ * ```ts
+ * export class CallComponent {
+ *   constructor(public room: MediasfuHeadlessService) {}
+ * }
+ * ```
+ * ```html
+ * <app-mediasfu-generic
+ *   [sourceParameters]="room.sourceParameters"
+ *   [updateSourceParameters]="room.updateSourceParameters"
+ *   [returnUI]="false"
+ *   (mediaChanged)="room.onMediaChanged($event)">
+ * </app-mediasfu-generic>
+ * <video [srcObject]="room.localVideo$ | async" autoplay muted playsinline></video>
+ * ```
+ */
+class MediasfuHeadlessService {
+    /** Bind to the component's `[sourceParameters]`. Stable for the lifetime. */
+    sourceParameters = {};
+    parameters$$ = new BehaviorSubject(this.sourceParameters);
+    sourceChanged$$ = new BehaviorSubject(0);
+    /** The latest bag. Read it; do not hold it across publications. */
+    parameters$ = this.parameters$$.asObservable();
+    /** Increments on every publication. */
+    sourceChanged$ = this.sourceChanged$$.asObservable();
+    readiness$ = this.parameters$.pipe(map((parameters) => getRoomReadiness({ parameters })));
+    ready$ = this.readiness$.pipe(map((readiness) => readiness.ready));
+    localVideo$ = this.parameters$.pipe(map((parameters) => getLocalVideoStream({ parameters })));
+    localAudio$ = this.parameters$.pipe(map((parameters) => getLocalAudioStream({ parameters })));
+    remoteVideos$ = this.parameters$.pipe(map((parameters) => getRemoteVideoStreams({ parameters })));
+    screenShare$ = this.parameters$.pipe(map((parameters) => getScreenShareStream({ parameters })));
+    /** Render all of these (hidden is fine) or participants will be inaudible. */
+    audioComponents$ = this.parameters$.pipe(map((parameters) => getAudioGridComponents({ parameters })));
+    participants$ = this.parameters$.pipe(map((parameters) => listParticipantMediaStates({ parameters })));
+    micOn$ = this.parameters$.pipe(map((p) => Boolean(p.audioAlreadyOn)));
+    cameraOn$ = this.parameters$.pipe(map((p) => Boolean(p.videoAlreadyOn)));
+    permissions$ = this.parameters$.pipe(map((parameters) => getModerationPermissions({ parameters })));
+    recording$ = this.parameters$.pipe(map((parameters) => getRecordingState({ parameters })));
+    whiteboard$ = this.parameters$.pipe(map((parameters) => getWhiteboardState({ parameters })));
+    polls$ = this.parameters$.pipe(map((parameters) => getPollState({ parameters })));
+    breakout$ = this.parameters$.pipe(map((parameters) => getBreakoutState({ parameters })));
+    /**
+     * Bind to the component's `[updateSourceParameters]`.
+     *
+     * An arrow property, not a method: it is handed to the component as a value
+     * and would otherwise lose `this`.
+     */
+    updateSourceParameters = (next) => {
+        this.parameters$$.next(next || {});
+        this.sourceChanged$$.next(this.sourceChanged$$.value + 1);
+    };
+    /** Bind to the component's `(mediaChanged)`. Removes any need to poll. */
+    onMediaChanged = (info) => {
+        if (info?.parameters)
+            this.updateSourceParameters(info.parameters);
+        else
+            this.sourceChanged$$.next(this.sourceChanged$$.value + 1);
+    };
+    /** Read the newest bag at call time so actions never use a stale one. */
+    live() {
+        return this.parameters$$.value;
+    }
+    // --- controls ---------------------------------------------------------
+    controls = {
+        toggleMic: () => runMediaControl({ parameters: this.live(), control: 'clickAudio' }),
+        toggleCamera: () => runMediaControl({ parameters: this.live(), control: 'clickVideo' }),
+        toggleScreenShare: () => runMediaControl({ parameters: this.live(), control: 'clickScreenShare' }),
+        // Not runMediaControl: switchAudio/switchVideo are never published on the
+        // parameter bag, so routing through it always failed.
+        selectMic: (deviceId) => switchMicrophone({ parameters: this.live(), deviceId }),
+        selectCamera: (deviceId) => switchCamera({ parameters: this.live(), deviceId }),
+        flipCamera: () => flipCamera({ parameters: this.live() }),
+        sendChat: (message, options = {}) => sendChatMessage({
+            parameters: this.live(),
+            message,
+            receivers: options.receivers,
+            group: options.group,
+        }),
+        leave: (ban = false, endRoomOnHostExit = true) => leaveRoom({ parameters: this.live(), ban, endRoomOnHostExit }),
+    };
+    // --- moderation -------------------------------------------------------
+    moderation = {
+        muteParticipant: (name) => muteParticipant({ parameters: this.live(), name }),
+        disableParticipantVideo: (name) => disableParticipantVideo({ parameters: this.live(), name }),
+        stopParticipantScreenShare: (name) => stopParticipantScreenShare({ parameters: this.live(), name }),
+        setParticipantMedia: (name, kind) => setParticipantMedia({ parameters: this.live(), name, kind }),
+        muteEveryone: (kind = 'audio') => muteEveryone({ parameters: this.live(), kind }),
+        removeParticipant: (name) => removeParticipant({ parameters: this.live(), name }),
+        admitWaiting: (nameOrId) => respondToWaitingParticipant({ parameters: this.live(), id: nameOrId, name: nameOrId, admit: true }),
+        denyWaiting: (nameOrId) => respondToWaitingParticipant({ parameters: this.live(), id: nameOrId, name: nameOrId, admit: false }),
+        approveRequest: (requestId) => respondToParticipantRequest({ parameters: this.live(), requestId, approve: true }),
+        rejectRequest: (requestId) => respondToParticipantRequest({ parameters: this.live(), requestId, approve: false }),
+        setCoHost: (name, areas) => setCoHost({ parameters: this.live(), name, areas }),
+    };
+    // --- session ----------------------------------------------------------
+    session = {
+        startRecording: () => startRoomRecording({ parameters: this.live() }),
+        pauseRecording: () => pauseRoomRecording({ parameters: this.live() }),
+        resumeRecording: () => resumeRoomRecording({ parameters: this.live() }),
+        stopRecording: () => stopRoomRecording({ parameters: this.live() }),
+        startWhiteboard: (users) => startWhiteboard({ parameters: this.live(), users }),
+        stopWhiteboard: () => stopWhiteboard({ parameters: this.live() }),
+        createPoll: (question, options) => createRoomPoll({ parameters: this.live(), question, options }),
+        votePoll: (pollId, optionIndex) => voteInRoomPoll({ parameters: this.live(), pollId, optionIndex }),
+        endPoll: (pollId) => endRoomPoll({ parameters: this.live(), pollId }),
+    };
+    // --- production -------------------------------------------------------
+    produce = {
+        media: (stream, kind) => produceMedia({ parameters: this.live(), stream, kind }),
+        canvas: (canvas, frameRate) => produceCanvas({ parameters: this.live(), canvas, frameRate }),
+        element: (element) => produceElement({ parameters: this.live(), element }),
+        display: (withAudio = false) => produceDisplay({ parameters: this.live(), withAudio }),
+        replaceTrack: (track) => replaceProducerTrack({ parameters: this.live(), track }),
+        stop: (kind) => stopProducing({ parameters: this.live(), kind }),
+    };
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuHeadlessService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuHeadlessService, providedIn: 'root' });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuHeadlessService, decorators: [{
+            type: Injectable,
+            args: [{ providedIn: 'root' }]
+        }] });
+
+/**
  * Generated bundle index. Do not edit.
  */
 
-export { AParams, AWS_POLLY_VOICES, AZURE_NEURAL_VOICES, AddPanelist, AddVideosGrid, AddedAsPanelist, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, BulkUpdateParticipantPermissions, CARTESIA_VOICES, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, CustomComponentInjectionService, DEEPGRAM_VOICES, DEFAULT_VOICE_GENDERS, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, ELEVENLABS_VOICES, EventSettingsModal, FlexibleGrid, FlexibleVideo, FocusPanelists, FormatNumber, GEMINI_VOICES, GOOGLE_VOICES, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, KOKORO_VOICES, LANGUAGE_METADATA, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LiveSubtitleService, LoadingModal, MEDIASFU_CONTAINER_STYLE, MEDIASFU_UI_OVERRIDES, MIN_QUALITY_LEVEL, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModernMessagesModalComponent, ModernPollModalComponent, ModernRecordingModalComponent, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OPENAI_VOICES, OnScreenChanges, OtherGridComponent, Pagination, PanelistFocusChanged, PanelistsModalComponent, PanelistsUpdated, ParticipantRequested, ParticipantsModal, PermissionConfigUpdated, PermissionUpdated, PermissionsModalComponent, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, QUALITY_LEVELS, RIME_VOICES, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveControlMedia, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemovePanelist, RemoveParticipants, RemovedFromPanelists, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, SUPPORTED_LANGUAGE_CODES, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TTS_PROVIDERS, TimeLeftRecording, TranslationConsumerSwitch, TranslationReceiveMethods, TranslationSettingsModal, Trigger, UIOverrideResolverService, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateParticipantPermission, UpdatePermissionConfig, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VOICE_GENDERS, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, WithFunctionOverrideDirective, WithOverrideDirective, clearVoiceCache, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, fetchLanguagesViaSocket, fetchVoicesViaSocket, formatVoiceOption, getAllLanguages, getAvailableVoices, getDefaultVoice, getDefaultVoiceGender, getLanguageName, getLanguageNativeName, getLanguagesByRegion, getLanguagesWithGoodTTS, getModalPosition, getOverlayPosition, getSupportedLanguages, initialValuesState, isLanguageSupported, isValidLanguageCode, launchCoHost, meetsQualityThreshold, normalizeLanguageCode, setVoiceCacheTTL, sleep, updateMicLevel };
+export { AParams, AWS_POLLY_VOICES, AZURE_NEURAL_VOICES, AddPanelist, AddVideosGrid, AddedAsPanelist, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, BulkUpdateParticipantPermissions, CARTESIA_VOICES, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, CustomComponentInjectionService, DEEPGRAM_VOICES, DEFAULT_VOICE_GENDERS, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, ELEVENLABS_VOICES, EventSettingsModal, FlexibleGrid, FlexibleVideo, FocusPanelists, FormatNumber, GEMINI_VOICES, GOOGLE_VOICES, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, KOKORO_VOICES, LANGUAGE_METADATA, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LiveSubtitleService, LoadingModal, MEDIASFU_CONTAINER_STYLE, MEDIASFU_UI_OVERRIDES, MIN_QUALITY_LEVEL, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuHeadlessService, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModernMessagesModalComponent, ModernPollModalComponent, ModernRecordingModalComponent, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OPENAI_VOICES, OnScreenChanges, OtherGridComponent, Pagination, PanelistFocusChanged, PanelistsModalComponent, PanelistsUpdated, ParticipantRequested, ParticipantsModal, PermissionConfigUpdated, PermissionUpdated, PermissionsModalComponent, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, QUALITY_LEVELS, RIME_VOICES, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveControlMedia, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemovePanelist, RemoveParticipants, RemovedFromPanelists, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, SUPPORTED_LANGUAGE_CODES, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TTS_PROVIDERS, TimeLeftRecording, TranslationConsumerSwitch, TranslationReceiveMethods, TranslationSettingsModal, Trigger, UIOverrideResolverService, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateParticipantPermission, UpdatePermissionConfig, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VOICE_GENDERS, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, WithFunctionOverrideDirective, WithOverrideDirective, clearVoiceCache, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, fetchLanguagesViaSocket, fetchVoicesViaSocket, formatVoiceOption, getAllLanguages, getAvailableVoices, getDefaultVoice, getDefaultVoiceGender, getLanguageName, getLanguageNativeName, getLanguagesByRegion, getLanguagesWithGoodTTS, getModalPosition, getOverlayPosition, getSupportedLanguages, initialValuesState, isLanguageSupported, isValidLanguageCode, launchCoHost, meetsQualityThreshold, normalizeLanguageCode, setVoiceCacheTTL, sleep, updateMicLevel };
 //# sourceMappingURL=mediasfu-angular.mjs.map

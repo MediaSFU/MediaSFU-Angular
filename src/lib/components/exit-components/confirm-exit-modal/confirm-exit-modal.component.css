@@ -35,9 +35,12 @@
 .modal-footer {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .cancel-button,
+.leave-button,
 .confirm-button {
   border-radius: 5px;
   color: white;
@@ -46,7 +49,10 @@
 
 .cancel-button {
   background-color: black;
-  margin-right: 20px;
+}
+
+.leave-button {
+  background-color: #475569;
 }
 
 .confirm-button {

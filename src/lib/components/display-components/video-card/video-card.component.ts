@@ -36,6 +36,7 @@ export interface VideoCardParameters {
 
   // mediasfu functions
   getUpdatedAllParams: () => VideoCardParameters;
+  getCurrentParams?: () => any;
   // [key: string]: any;
 }
 
@@ -245,7 +246,7 @@ export class VideoCard implements OnInit, OnDestroy {
     this.syncThemeMode(this.parameters?.getUpdatedAllParams?.());
 
     this.audioLevelInterval = setInterval(() => {
-      const params = this.parameters.getUpdatedAllParams();
+      const params = (this.parameters.getCurrentParams?.() ?? this.parameters);
       const { audioDecibels, participants } = params;
       this.syncThemeMode(params);
       const existingEntry =
@@ -328,7 +329,7 @@ export class VideoCard implements OnInit, OnDestroy {
 
   async toggleVideo() {
     if (this.participant) {
-      const params = this.parameters.getUpdatedAllParams();
+      const params = (this.parameters.getCurrentParams?.() ?? this.parameters);
       await this.controlMediaService.controlMedia({
         participantId: this.participant.id || '',
         participantName: this.participant.name,

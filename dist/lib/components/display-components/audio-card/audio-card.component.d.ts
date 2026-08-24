@@ -16,6 +16,7 @@ export interface AudioCardParameters {
     member: string;
     eventType: string;
     getUpdatedAllParams(): AudioCardParameters;
+    getCurrentParams?: () => any;
 }
 export interface AudioCardOptions {
     controlUserMedia?: (options: ControlMediaOptions) => Promise<void>;

@@ -138,7 +138,7 @@ export class ConnectRecvTransport {
       nsock.emit(
         'consume',
         {
-          rtpCapabilities: device ? device.rtpCapabilities : null,
+          rtpCapabilities: device?.rtpCapabilities ?? null,
           remoteProducerId,
           serverConsumerTransportId,
         },

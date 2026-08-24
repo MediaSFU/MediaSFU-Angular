@@ -426,7 +426,9 @@ export class PreJoinPage implements OnInit {
         }
       }
 
-    if (!this.localLink && !this.hasCloudCredentials()) {
+    // A custom room callback is the credential boundary for proxy-backed apps.
+    // Only the built-in cloud client requires credentials in this browser.
+    if (!this.localLink && !this.createMediaSFURoom && !this.hasCloudCredentials()) {
       this.failMissingCloudCredentials();
       return;
     }
@@ -720,7 +722,8 @@ export class PreJoinPage implements OnInit {
       return;
     }
 
-    if (!this.hasCloudCredentials()) {
+    // Proxy-backed joins intentionally keep API credentials on the server.
+    if (!this.joinMediaSFURoom && !this.hasCloudCredentials()) {
       this.failMissingCloudCredentials();
       return;
     }

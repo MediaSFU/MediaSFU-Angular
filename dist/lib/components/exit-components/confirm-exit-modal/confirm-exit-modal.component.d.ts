@@ -140,7 +140,8 @@ export declare class ConfirmExitModal implements OnInit, OnChanges {
     getCombinedContentStyle(): any;
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
-    handleConfirmExit(): void;
+    isHostExit(): boolean;
+    handleConfirmExit(endRoomOnHostExit?: boolean): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ConfirmExitModal, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<ConfirmExitModal, "app-confirm-exit-modal", never, { "isConfirmExitModalVisible": { "alias": "isConfirmExitModalVisible"; "required": false; }; "onConfirmExitClose": { "alias": "onConfirmExitClose"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "exitEventOnConfirm": { "alias": "exitEventOnConfirm"; "required": false; }; "member": { "alias": "member"; "required": false; }; "ban": { "alias": "ban"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, never, true, never>;
 }

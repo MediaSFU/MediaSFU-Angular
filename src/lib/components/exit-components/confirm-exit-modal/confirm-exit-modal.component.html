@@ -11,7 +11,8 @@
       roomName,
       socket,
       islevel,
-      handleConfirmExit: handleConfirmExit.bind(this)
+      handleConfirmExit: handleConfirmExit.bind(this),
+      leaveWithoutEnding: handleConfirmExit.bind(this, false)
     }
   }"></ng-container>
 </ng-container>
@@ -31,14 +32,15 @@
     <hr />
     <div class="modal-body">
       <p class="confirm-exit-text">
-        {{ islevel === '2' ? 'This will end the event for all. Confirm exit.' : 'Are you sure you want to exit?' }}
+        {{ isHostExit() ? 'Leave room keeps the event active for everyone else and lets you rejoin. End for everyone closes it for all participants.' : 'Are you sure you want to exit?' }}
       </p>
     </div>
     <hr />
     <div class="modal-footer">
       <button class="cancel-button" (click)="onConfirmExitClose()">Cancel</button>
-      <button class="confirm-button" (click)="handleConfirmExit()">
-        {{ islevel === '2' ? 'End Event' : 'Exit' }}
+      <button *ngIf="isHostExit()" class="leave-button" (click)="handleConfirmExit(false)">Leave room</button>
+      <button class="confirm-button" (click)="handleConfirmExit(true)">
+        {{ isHostExit() ? 'End for everyone' : 'Exit' }}
       </button>
     </div>
   </div>

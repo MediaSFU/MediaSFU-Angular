@@ -16,6 +16,7 @@ export declare class ModernConfirmExitModalComponent implements OnInit {
     islevel: string;
     title?: string;
     confirmLabel?: string;
+    leaveLabel?: string;
     cancelLabel?: string;
     message?: string | ((context: {
         islevel: string;
@@ -28,15 +29,17 @@ export declare class ModernConfirmExitModalComponent implements OnInit {
     readonly faTimes: import("@fortawesome/fontawesome-common-types").IconDefinition;
     constructor(confirmExitService: ConfirmExit);
     ngOnInit(): void;
-    handleConfirmExit(): void;
+    isHostExit(): boolean;
+    handleConfirmExit(endRoomOnHostExit?: boolean): void;
     resolvedTitle(): string;
     resolvedMessage(): string;
     resolvedConfirmLabel(): string;
+    resolvedLeaveLabel(): string;
     resolvedCancelLabel(): string;
     resolvedOverlayStyle(): Record<string, string | number>;
     resolvedContentStyle(): Record<string, string | number>;
     private resolvePositionStyle;
     private normalizeStyle;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModernConfirmExitModalComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ModernConfirmExitModalComponent, "app-confirm-exit-modal", never, { "isConfirmExitModalVisible": { "alias": "isConfirmExitModalVisible"; "required": false; }; "onConfirmExitClose": { "alias": "onConfirmExitClose"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "exitEventOnConfirm": { "alias": "exitEventOnConfirm"; "required": false; }; "member": { "alias": "member"; "required": false; }; "ban": { "alias": "ban"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "title": { "alias": "title"; "required": false; }; "confirmLabel": { "alias": "confirmLabel"; "required": false; }; "cancelLabel": { "alias": "cancelLabel"; "required": false; }; "message": { "alias": "message"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModernConfirmExitModalComponent, "app-confirm-exit-modal", never, { "isConfirmExitModalVisible": { "alias": "isConfirmExitModalVisible"; "required": false; }; "onConfirmExitClose": { "alias": "onConfirmExitClose"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "exitEventOnConfirm": { "alias": "exitEventOnConfirm"; "required": false; }; "member": { "alias": "member"; "required": false; }; "ban": { "alias": "ban"; "required": false; }; "roomName": { "alias": "roomName"; "required": false; }; "socket": { "alias": "socket"; "required": false; }; "islevel": { "alias": "islevel"; "required": false; }; "title": { "alias": "title"; "required": false; }; "confirmLabel": { "alias": "confirmLabel"; "required": false; }; "leaveLabel": { "alias": "leaveLabel"; "required": false; }; "cancelLabel": { "alias": "cancelLabel"; "required": false; }; "message": { "alias": "message"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; }, {}, never, never, true, never>;
 }

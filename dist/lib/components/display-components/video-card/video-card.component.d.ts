@@ -15,6 +15,7 @@ export interface VideoCardParameters {
     islevel: string;
     audioDecibels: AudioDecibels[];
     getUpdatedAllParams: () => VideoCardParameters;
+    getCurrentParams?: () => any;
 }
 export interface VideoCardOptions {
     customStyle?: Partial<CSSStyleDeclaration>;

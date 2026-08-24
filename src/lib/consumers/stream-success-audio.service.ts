@@ -235,19 +235,20 @@ export class StreamSuccessAudio {
       prepopulateUserMedia,
     } = parameters;
 
-    localStreamAudio = stream;
-    updateLocalStreamAudio(localStreamAudio);
+    const replacementAudioStream = stream;
+    localStreamAudio = replacementAudioStream;
+    updateLocalStreamAudio(replacementAudioStream);
 
     // Add the audio stream track to the localStream
     if (localStream == null) {
-      localStream = new MediaStream([localStreamAudio.getAudioTracks()[0]]);
-      updateLocalStream(localStream);
+      localStream = new MediaStream([replacementAudioStream.getAudioTracks()[0]]);
     } else {
-      localStream.addTrack(localStreamAudio.getAudioTracks()[0]);
-      updateLocalStream(localStream);
+      localStream!.addTrack(replacementAudioStream.getAudioTracks()[0]);
     }
 
-    const audioTracked = localStream.getAudioTracks()[0];
+    const updatedLocalStream = localStream as MediaStream;
+    updateLocalStream(updatedLocalStream);
+    const audioTracked = updatedLocalStream.getAudioTracks()[0];
     defAudioID = audioTracked.getSettings().deviceId || '';
     userDefaultAudioInputDevice = defAudioID;
 
@@ -259,7 +260,7 @@ export class StreamSuccessAudio {
       params = aParams;
       audioParamse = { ...params };
 
-      audioParams = { track: localStream.getAudioTracks()[0], ...audioParamse };
+      audioParams = { track: updatedLocalStream.getAudioTracks()[0], ...audioParamse };
       updateAudioParams(audioParams);
 
       // Create transport if not created else connect transport

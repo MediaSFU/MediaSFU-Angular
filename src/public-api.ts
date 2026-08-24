@@ -463,6 +463,9 @@ export * from './lib/methods/permissions-methods/update-permission-config.servic
 export * from './lib/consumers/translation-consumer-switch.service';
 export * from './lib/methods/utils/translation-languages.util';
 export * from './lib/services/live-subtitle.service';
+// Headless composition service — the Angular equivalent of the React SDK
+// hook, with matching field names so the guide's recipes transfer.
+export * from './lib/services/mediasfu-headless.service';
 
 // Socket Receive Methods
 export * from './lib/producers/socket-receive-methods/panelists-updated.service';

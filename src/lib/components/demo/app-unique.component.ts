@@ -402,9 +402,32 @@ import { CustomMainContainerTestComponent } from '../test-overrides/custom-main-
 export class AppUniqueComponent implements OnInit {
   // Connection scenario
   connectionScenario: 'cloud' | 'hybrid' | 'ce' = 'cloud';
+  selectedExperience: 'generic' | 'broadcast' | 'conference' | 'webinar' | 'chat' = 'generic';
+  showConfig = true;
+  showPrebuiltUI = true;
+  enableFullCustomUI = false;
+  enableNoUIPreJoin = false;
+  enableCustomCards = false;
+  enableUICoreOverrides = false;
+  enableModalOverrides = false;
+  enableContainerStyling = false;
+  showDebugPanel = false;
+  sourceParameters: Record<string, unknown> | undefined;
   demoCredentials = {
     apiUserName: 'your-api-username',
     apiKey: 'your-api-key',
+  };
+  connectionPresets = {
+    cloud: { credentials: this.demoCredentials, localLink: '', connectMediaSFU: true },
+    hybrid: { credentials: this.demoCredentials, localLink: 'http://localhost:3000', connectMediaSFU: true },
+    ce: { credentials: undefined, localLink: 'http://localhost:3000', connectMediaSFU: false },
+  };
+  customVideoCard: undefined = undefined;
+  customAudioCard: undefined = undefined;
+  customMiniCard: undefined = undefined;
+  containerStyle: Record<string, string> = {
+    background: 'linear-gradient(135deg, #0f172a, #1e3a8a)',
+    minHeight: '100vh',
   };
 
   // UI overrides

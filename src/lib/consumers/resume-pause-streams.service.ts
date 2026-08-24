@@ -86,7 +86,7 @@ export class ResumePauseStreams {
 
       // Get the videoID of the host (islevel=2)
       let host = participants.find((obj: any) => obj.islevel === '2');
-      let hostVideoID = host ? host.videoID : null;
+      let hostVideoID = host?.videoID ?? null;
 
       // Get videoIDs of participants in dispActiveNames and screenproducerId
       let videosIDs = dispActiveNames.map((name: any) => {
@@ -96,7 +96,7 @@ export class ResumePauseStreams {
 
       // Add screenproducerId to allVideoIDs if it's not null or empty
       if (screenId) {
-        videosIDs.push(screenId);
+        videosIDs.push(screenId ?? null);
       }
 
       // Add hostVideoID to allVideoIDs if it's not null or empty (only if the user is not the host)

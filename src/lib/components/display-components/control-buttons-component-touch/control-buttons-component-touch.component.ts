@@ -205,27 +205,27 @@ export class ControlButtonsComponentTouch {
     };
 
     if (this.location === 'bottom') {
-      style.bottom = '0';
-      style.top = 'auto';
+      style['bottom'] = '0';
+      style['top'] = 'auto';
     } else if (this.location === 'center') {
-      style.top = '50%';
-      style.bottom = 'auto';
-      style.transform = 'translateY(-50%)';
+      style['top'] = '50%';
+      style['bottom'] = 'auto';
+      style['transform'] = 'translateY(-50%)';
     } else {
-      style.top = '0';
-      style.bottom = 'auto';
+      style['top'] = '0';
+      style['bottom'] = 'auto';
     }
 
     if (this.position === 'right') {
-      style.right = '0';
-      style.left = 'auto';
+      style['right'] = '0';
+      style['left'] = 'auto';
     } else if (this.position === 'middle') {
-      style.left = '50%';
-      style.right = 'auto';
-      style.transform = this.location === 'center' ? 'translate(-50%, -50%)' : 'translateX(-50%)';
+      style['left'] = '50%';
+      style['right'] = 'auto';
+      style['transform'] = this.location === 'center' ? 'translate(-50%, -50%)' : 'translateX(-50%)';
     } else {
-      style.left = '0';
-      style.right = 'auto';
+      style['left'] = '0';
+      style['right'] = 'auto';
     }
 
     return style;

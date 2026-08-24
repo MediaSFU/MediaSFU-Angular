@@ -35,8 +35,10 @@ import {
               title: resolvedTitle(),
               message: resolvedMessage(),
               confirmLabel: resolvedConfirmLabel(),
+              leaveLabel: resolvedLeaveLabel(),
               cancelLabel: resolvedCancelLabel(),
-              handleConfirmExit: handleConfirmExit.bind(this)
+              handleConfirmExit: handleConfirmExit.bind(this),
+              leaveWithoutEnding: handleConfirmExit.bind(this, false)
             }
           }
         "
@@ -93,9 +95,18 @@ import {
           </button>
 
           <button
+            *ngIf="isHostExit()"
+            type="button"
+            class="ms-modern-confirm-exit__action ms-modern-confirm-exit__action--secondary"
+            (click)="handleConfirmExit(false)"
+          >
+            {{ resolvedLeaveLabel() }}
+          </button>
+
+          <button
             type="button"
             class="ms-modern-confirm-exit__action ms-modern-confirm-exit__action--primary"
-            (click)="handleConfirmExit()"
+            (click)="handleConfirmExit(true)"
           >
             {{ resolvedConfirmLabel() }}
           </button>
@@ -262,6 +273,7 @@ export class ModernConfirmExitModalComponent implements OnInit {
   @Input() islevel = '';
   @Input() title?: string;
   @Input() confirmLabel?: string;
+  @Input() leaveLabel?: string;
   @Input() cancelLabel?: string;
   @Input() message?: string | ((context: { islevel: string }) => string);
   @Input() overlayStyle?: Partial<CSSStyleDeclaration>;
@@ -280,12 +292,17 @@ export class ModernConfirmExitModalComponent implements OnInit {
     }
   }
 
-  handleConfirmExit() {
+  isHostExit(): boolean {
+    return this.islevel === '2' && !this.ban;
+  }
+
+  handleConfirmExit(endRoomOnHostExit = true) {
     this.exitEventOnConfirm?.({
       socket: this.socket,
       member: this.member,
       roomName: this.roomName,
       ban: this.ban,
+      endRoomOnHostExit,
     });
     this.onConfirmExitClose();
   }
@@ -299,7 +316,7 @@ export class ModernConfirmExitModalComponent implements OnInit {
       return 'Ban participant';
     }
 
-    return this.islevel === '2' ? 'End Meeting' : 'Leave Meeting';
+    return this.isHostExit() ? 'Leave or end meeting' : 'Leave Meeting';
   }
 
   resolvedMessage(): string {
@@ -315,8 +332,8 @@ export class ModernConfirmExitModalComponent implements OnInit {
       return `Are you sure you want to remove ${this.member || 'this participant'} and block re-entry?`;
     }
 
-    return this.islevel === '2'
-      ? 'Are you sure you want to end the meeting for everyone?'
+    return this.isHostExit()
+      ? 'Leave room keeps the meeting active for everyone else and lets you rejoin. End for everyone closes it for all participants.'
       : 'Are you sure you want to leave the meeting?';
   }
 
@@ -329,7 +346,11 @@ export class ModernConfirmExitModalComponent implements OnInit {
       return 'Ban & Exit';
     }
 
-    return this.islevel === '2' ? 'End Meeting' : 'Leave';
+    return this.isHostExit() ? 'End for everyone' : 'Leave';
+  }
+
+  resolvedLeaveLabel(): string {
+    return this.leaveLabel || 'Leave room';
   }
 
   resolvedCancelLabel(): string {

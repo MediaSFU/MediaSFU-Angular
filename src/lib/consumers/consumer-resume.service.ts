@@ -216,8 +216,8 @@ export class ConsumerResume {
         const activeTranslationProducerIds = (parameters as any).activeTranslationProducerIds as Set<string> | undefined;
         const isTranslationAudio = Boolean(
           activeTranslationProducerIds?.has(remoteProducerId) ||
-          consumer.appData?.type === 'translation' ||
-          consumer.appData?.isTranslation,
+          consumer.appData?.['type'] === 'translation' ||
+          consumer.appData?.['isTranslation'],
         );
 
         // Check if the participant with audioID == remoteProducerId has a valid videoID
@@ -225,7 +225,7 @@ export class ConsumerResume {
         let name__ = participant.length > 0 ? participant[0].name || '' : '';
 
         if (isTranslationAudio && !name__) {
-          const translationMeta = consumer.appData?.translationMeta as {
+          const translationMeta = consumer.appData?.['translationMeta'] as {
             speakerName?: string;
             speakerId?: string;
             language?: string;

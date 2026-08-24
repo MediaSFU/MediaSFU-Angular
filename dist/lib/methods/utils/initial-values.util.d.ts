@@ -6,7 +6,7 @@ type Transport = types.Transport;
 type Device = types.Device;
 import { AParamsType, CoHostResponsibility, EventType, HParamsType, Participant, Poll, ScreenParamsType, Stream, VidCons, VParamsType, ConsumeSocket, MeetingRoomParams, UserRecordingParams, ScreenState, AudioDecibels, CustomMediaComponent, GridSizes, Message, WaitingRoomParticipant, Request, BreakoutParticipant, WhiteboardUser, Shape, ResponseJoinRoom, ComponentSizes, Transport as TransportType } from '../../@types/types';
 import { Socket } from 'socket.io-client';
-import { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
+import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import { TranslationRoomConfig } from '../../producers/socket-receive-methods/translation-receive-methods.service';
 export interface InitialValuesStateType {
     roomName: string;

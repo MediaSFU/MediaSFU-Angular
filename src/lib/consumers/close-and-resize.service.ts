@@ -313,7 +313,7 @@ export class CloseAndResize {
 
         if (participant) {
           //check if the participants videoID is not null or ""
-          if (participant.videoID !== null && participant.videoID !== '') {
+          if (participant?.videoID !== null && participant?.videoID !== '') {
             // do nothing
           } else {
             //remove the participant from the activeNames array
@@ -330,9 +330,9 @@ export class CloseAndResize {
 
       if (meetingDisplayType == 'video' && participant) {
         checker =
-          participant[0].videoID != null &&
-          participant[0].videoID != '' &&
-          participant[0].videoID != undefined;
+          participant?.videoID != null &&
+          participant?.videoID != '' &&
+          participant?.videoID != undefined;
       } else {
         checker = true;
         alt_checker = true;

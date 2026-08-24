@@ -132,23 +132,24 @@ export class ControlMedia {
 
       if (islevel === '2' || (coHost === member && mediaValue === true)) {
         // Check if the participant is not muted and is not a host
-        if (
-          participant &&
-          ((!participant.muted && participant.islevel !== '2' && type == 'audio') ||
-            (participant.islevel !== '2' && type == 'video' && participant['videoOn']))
-        ) {
+        const targetParticipant = participant;
+        const participantLevel = targetParticipant?.islevel;
+        const canControlAudio =
+          targetParticipant?.muted === false && participantLevel !== '2' && type === 'audio';
+        const canControlVideo =
+          participantLevel !== undefined && participantLevel !== '2' && type === 'video' &&
+          targetParticipant?.['videoOn'] === true;
+        if (canControlAudio || canControlVideo) {
           // Emit controlMedia event to the server
           socket.emit('controlMedia', { participantId, participantName, type, roomName });
         }
       } else {
         // Display an alert if the participant is not allowed to mute other participants
-        if (showAlert) {
-          showAlert({
+        showAlert?.({
             message: 'You are not allowed to control media for other participants.',
             type: 'danger',
             duration: 3000,
-          });
-        }
+        });
       }
     } catch (error) {
       console.log('controlMedia error', error);

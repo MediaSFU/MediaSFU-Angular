@@ -1,5 +1,6 @@
 import { OnChanges, OnInit, SimpleChanges, Injector } from '@angular/core';
 import { CustomMediaComponent } from '../../../@types/types';
+import { type ContainRect } from '../../screenboard-components/screenboard/canvas-coordinates.util';
 import * as i0 from "@angular/core";
 export interface FlexibleVideoOptions {
     customWidth: number;
@@ -73,11 +74,7 @@ export declare class FlexibleVideo implements OnInit, OnChanges {
     cellBorderRadius: number;
     enableGlow: boolean;
     key: number;
-    cardWidth: number;
-    cardHeight: number;
-    cardTop: number;
-    cardLeft: number;
-    canvasLeft: number;
+    screenContentRect: ContainRect;
     grid: any[][];
     private injectorCache;
     constructor(injector: Injector);
@@ -86,7 +83,10 @@ export declare class FlexibleVideo implements OnInit, OnChanges {
     updateDimensions(): void;
     generateGrid(): void;
     getContainerStyle(): {
+        width: string;
+        height: string;
         maxWidth: string;
+        maxHeight: string;
         left: string;
     };
     getCellStyle(component?: CustomMediaComponent): {
@@ -108,6 +108,7 @@ export declare class FlexibleVideo implements OnInit, OnChanges {
         position: string;
     };
     getScreenboardStyle(): {
+        top: string;
         left: string;
         width: string;
         height: string;

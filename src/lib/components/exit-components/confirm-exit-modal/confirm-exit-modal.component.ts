@@ -190,12 +190,17 @@ export class ConfirmExitModal implements OnInit, OnChanges {
     }
   }
 
-  handleConfirmExit() {
+  isHostExit(): boolean {
+    return this.islevel === '2' && !this.ban;
+  }
+
+  handleConfirmExit(endRoomOnHostExit = true) {
     this.exitEventOnConfirm({
       socket: this.socket,
       member: this.member,
       roomName: this.roomName,
       ban: this.ban,
+      endRoomOnHostExit,
     });
     this.onConfirmExitClose();
   }

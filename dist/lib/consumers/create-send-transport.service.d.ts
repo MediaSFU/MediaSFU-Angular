@@ -20,6 +20,7 @@ export interface CreateSendTransportParameters extends ConnectSendTransportParam
     updateLocalTransportCreated?: (localTransportCreated: boolean) => void;
     connectSendTransport: ConnectSendTransportType;
     getUpdatedAllParams: () => CreateSendTransportParameters;
+    getCurrentParams?: () => any;
     [key: string]: any;
 }
 export interface CreateSendTransportOptions {

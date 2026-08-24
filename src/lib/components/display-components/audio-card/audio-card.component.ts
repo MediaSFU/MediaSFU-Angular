@@ -39,6 +39,7 @@ export interface AudioCardParameters {
 
   // mediasfu functions
   getUpdatedAllParams(): AudioCardParameters;
+  getCurrentParams?: () => any;
 }
 
 export interface AudioCardOptions {
@@ -238,7 +239,7 @@ export class AudioCard implements OnInit, OnDestroy, OnChanges {
 
     if (this.parameters) {
       this.audioLevelInterval = setInterval(() => {
-        const params = this.parameters.getUpdatedAllParams();
+        const params = (this.parameters.getCurrentParams?.() ?? this.parameters);
         const { audioDecibels, participants } = params;
         this.syncThemeMode(params);
         const existingEntry = audioDecibels.find((entry: any) => entry.name == this.name);
