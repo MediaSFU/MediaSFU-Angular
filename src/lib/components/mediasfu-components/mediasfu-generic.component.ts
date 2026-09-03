@@ -9,6 +9,8 @@ import {
   OnDestroy,
   OnInit,
   Optional,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
@@ -45,6 +47,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
+import { resolveEmbeddedControlFractions } from './embedded-container-sizing';
 
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
 import { ControlButtonsComponent } from '../display-components/control-buttons-component/control-buttons-component.component';
@@ -498,6 +501,7 @@ type SidebarContent = 'none' | SidebarPanelContent;
     WithOverrideDirective,
   ],
   template: `
+    <ng-template #standardUiTemplate>
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -538,7 +542,7 @@ type SidebarContent = 'none' | SidebarPanelContent;
         </ng-container>
 
         <!-- Default Main Component -->
-        <ng-container *ngIf="returnUI && !customMainComponent">
+        <ng-container *ngIf="hasStandardUI && !customMainComponent">
           <ng-container
             *appWithOverride="
               'mainContainer';
@@ -561,7 +565,7 @@ type SidebarContent = 'none' | SidebarPanelContent;
                   [containerWidthFraction]="containerWidthFraction"
                   [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
-                  [defaultFraction]="1 - controlHeight.value"
+                  [defaultFraction]="mainContentHeightFraction"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
@@ -580,7 +584,7 @@ type SidebarContent = 'none' | SidebarPanelContent;
                       [mainSize]="mainHeightWidth.value"
                       [containerWidthFraction]="containerWidthFraction"
                       [containerHeightFraction]="containerHeightFraction"
-                      [defaultFraction]="1 - controlHeight.value"
+                      [defaultFraction]="mainContentHeightFraction"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [containerStyle]="mainScreenContainerStyle()"
                       [updateComponentSizes]="updateComponentSizes"
@@ -1307,7 +1311,7 @@ type SidebarContent = 'none' | SidebarPanelContent;
         </ng-container>
       </ng-template>
 
-      <ng-container *ngIf="returnUI && !customMainComponent">
+      <ng-container *ngIf="hasStandardUI && !customMainComponent">
       <app-modern-menu-modal
         *appWithOverride="
           'menuModal';
@@ -1926,6 +1930,12 @@ type SidebarContent = 'none' | SidebarPanelContent;
       >
       </ng-container>
     </ng-container>
+    </ng-template>
+
+    <ng-container
+      *ngIf="!renderUIExternally"
+      [ngTemplateOutlet]="standardUiTemplate"
+    ></ng-container>
   `,
   styles: [
     `
@@ -1941,6 +1951,9 @@ type SidebarContent = 'none' | SidebarPanelContent;
   providers: [CookieService]
 })
 export class MediasfuGeneric implements OnInit, OnDestroy {
+  @ViewChild('standardUiTemplate', { static: true })
+  standardUiTemplate!: TemplateRef<unknown>;
+
   @Input()
   PrejoinPage: any = WelcomePage;
   @Input() localLink = '';
@@ -1953,6 +1966,15 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   @Input() sourceParameters: { [key: string]: any } = {};
   @Input() updateSourceParameters? = (data: { [key: string]: any }) => { };
   @Input() returnUI? = true;
+  /**
+   * Keeps this component as the sole room engine while allowing
+   * ModernMediasfuGenericHeadComponent to instantiate its exact declared UI.
+   */
+  @Input() renderUIExternally = false;
+
+  get hasStandardUI(): boolean {
+    return this.returnUI !== false || this.renderUIExternally;
+  }
 
   /**
    * Emitted whenever the media graph changes — new/lost streams, a local track
@@ -1990,6 +2012,15 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
   });
 
   title = 'MediaSFU-Generic';
+
+  protected get mainContentHeightFraction(): number {
+    return resolveEmbeddedControlFractions({
+      containerHeightFraction: this.containerHeightFraction,
+      controlViewportFraction: this.controlHeight.value,
+      showControls:
+        this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+    }).mainFraction;
+  }
 
   protected readonly MainContainerComponentRef = MainContainerComponent;
   protected readonly MainAspectComponentRef = MainAspectComponent;
@@ -4897,6 +4928,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   shouldUseSidebar = (): boolean => {
     return (
+      this.hasStandardUI &&
       window.innerWidth >= 1200 &&
       this.checkOrientation() === 'landscape'
     );
@@ -6342,6 +6374,9 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
 
   getAllParams() {
     return {
+      // Renderer-only handle. TemplateRef retains this engine's declaration
+      // context, so an external outlet does not create another room engine.
+      renderModernMediasfuUITemplate: this.standardUiTemplate,
       localUIMode: this.localUIMode.value, // Local UI mode
 
       // Room Details
@@ -7283,7 +7318,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
         credentials: this.credentials,
         localLink: this.localLink,
         connectMediaSFU: this.connectMediaSFU,
-        returnUI: this.returnUI,
+        returnUI: this.hasStandardUI,
         noUIPreJoinOptions: this.noUIPreJoinOptions,
         joinMediaSFURoom: this.joinMediaSFURoom,
         createMediaSFURoom: this.createMediaSFURoom,
@@ -7338,7 +7373,7 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
     // Field initialisers run before Angular binds @Input()s, so autoWave cannot
     // be defaulted from returnUI where it is declared — it would read undefined.
     // ngOnInit is the first point the input is guaranteed bound.
-    this.autoWave.next(this.returnUI !== false);
+    this.autoWave.next(this.hasStandardUI);
     this.updateModernThemeDarkMode(this.resolvePreferredTheme());
 
     // Initialize UI overrides if provided
@@ -7476,6 +7511,13 @@ export class MediasfuGeneric implements OnInit, OnDestroy {
       ...this.getAllParams(),
       ...this.mediaSFUFunctions(),
     };
+
+    // The external head needs the declared TemplateRef before validation so it
+    // can render this engine's pre-join page. Publication stays deferred and
+    // coalesced through the existing source bridge.
+    if (this.renderUIExternally && this.sourceParameters !== null) {
+      this.publishSourceParameters(this.getCurrentParams());
+    }
   }
 
   ngOnDestroy() {

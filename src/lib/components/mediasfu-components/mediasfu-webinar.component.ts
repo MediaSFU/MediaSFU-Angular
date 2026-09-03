@@ -43,6 +43,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
+import { resolveEmbeddedControlFractions } from './embedded-container-sizing';
 
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
 import { ControlButtonsComponent } from '../display-components/control-buttons-component/control-buttons-component.component';
@@ -466,7 +467,7 @@ export type MediasfuWebinarOptions = {
                   [containerWidthFraction]="containerWidthFraction"
                   [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-                  [defaultFraction]="1 - controlHeight.value"
+                  [defaultFraction]="mainContentHeightFraction"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
@@ -484,7 +485,7 @@ export type MediasfuWebinarOptions = {
                       [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
-                      [defaultFraction]="1 - controlHeight.value"
+                      [defaultFraction]="mainContentHeightFraction"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [updateComponentSizes]="updateComponentSizes"
                     >
@@ -1021,6 +1022,13 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
   });
 
   title = 'MediaSFU-Webinar';
+
+  protected get mainContentHeightFraction(): number {
+    return resolveEmbeddedControlFractions({
+      containerHeightFraction: this.containerHeightFraction,
+      controlViewportFraction: this.controlHeight.value,
+    }).mainFraction;
+  }
 
   protected readonly MainContainerComponentRef = MainContainerComponent;
   protected readonly MainAspectComponentRef = MainAspectComponent;

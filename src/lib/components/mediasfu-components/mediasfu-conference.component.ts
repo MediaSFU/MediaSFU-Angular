@@ -44,6 +44,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { initialValuesState } from '../../methods/utils/initial-values.util';
+import { resolveEmbeddedControlFractions } from './embedded-container-sizing';
 
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
 import { ControlButtonsComponent } from '../display-components/control-buttons-component/control-buttons-component.component';
@@ -465,7 +466,7 @@ export type MediasfuConferenceOptions = {
               props: mainAspectOverrideProps
             "
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-            [defaultFraction]="1 - controlHeight.value"
+            [defaultFraction]="mainContentHeightFraction"
             [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
             [updateIsWideScreen]="updateIsWideScreen"
             [updateIsMediumScreen]="updateIsMediumScreen"
@@ -481,7 +482,7 @@ export type MediasfuConferenceOptions = {
               "
               [doStack]="true"
               [mainSize]="mainHeightWidth.value"
-              [defaultFraction]="1 - controlHeight.value"
+              [defaultFraction]="mainContentHeightFraction"
               [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
               [updateComponentSizes]="updateComponentSizes"
             >
@@ -1074,6 +1075,13 @@ export class MediasfuConference implements OnInit, OnDestroy {
   });
 
   title = 'MediaSFU-Conference';
+
+  protected get mainContentHeightFraction(): number {
+    return resolveEmbeddedControlFractions({
+      containerHeightFraction: this.containerHeightFraction,
+      controlViewportFraction: this.controlHeight.value,
+    }).mainFraction;
+  }
 
   // Component references for override directive
   protected readonly MainContainerComponentRef = MainContainerComponent;

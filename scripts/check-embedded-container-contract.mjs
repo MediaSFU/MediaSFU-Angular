@@ -4,11 +4,13 @@ import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const surfaces = ['generic', 'webinar', 'conference', 'broadcast', 'chat'];
+const sourceBySurface = new Map();
 for (const surface of surfaces) {
   const source = fs.readFileSync(
     path.join(root, 'src', 'lib', 'components', 'mediasfu-components', `mediasfu-${surface}.component.ts`),
     'utf8',
   );
+  sourceBySurface.set(surface, source);
   for (const fragment of [
     'containerWidthFraction?: number',
     'containerHeightFraction?: number',
@@ -27,6 +29,23 @@ for (const surface of surfaces) {
   assert.ok((source.match(/\[containerHeightFraction\]="containerHeightFraction"/g) || []).length >= 3,
     `${surface} does not forward height to all three layout boundaries`);
 }
+
+for (const surface of ['generic', 'webinar', 'conference']) {
+  const source = sourceBySurface.get(surface);
+  assert.ok(source.includes('mainContentHeightFraction'),
+    `${surface} does not normalize the fixed control strip for an embedded height`);
+  assert.ok(!source.includes('[defaultFraction]="1 - controlHeight.value"'),
+    `${surface} still double-scales the control strip`);
+}
+
+const viewportHeight = 900;
+const containerHeightFraction = 0.74;
+const controlViewportFraction = 40 / viewportHeight;
+const mainFraction = 1 - controlViewportFraction / containerHeightFraction;
+const mainHeight = viewportHeight * containerHeightFraction * mainFraction;
+const controlsHeight = viewportHeight * controlViewportFraction;
+assert.ok(mainHeight + controlsHeight <= viewportHeight * containerHeightFraction + Number.EPSILON,
+  'MainAspect and SubAspect exceed the embedded height');
 
 const viewport = 1500;
 const embedded = 1294;

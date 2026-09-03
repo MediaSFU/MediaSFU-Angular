@@ -167,6 +167,76 @@ Use `customMainComponent` for a completely different visible workspace while
 the room component keeps lifecycle ownership. Use the headless service when
 you also want a typed observable/action interface.
 
+## Reuse SDK panels in your own layout
+
+Headless mode can combine your application layout with exported SDK controls.
+Keep the room engine mounted with `[returnUI]="false"`, receive its parameter
+publications, and pass the latest room parameters to the panel you import.
+
+Keep modal visibility connected to the room:
+
+1. Open the panel through the room's matching updater, such as
+   `updateIsRecordingModalVisible(true)`.
+2. Bind the component's `isRecordingModalVisible` input (`[isRecordingModalVisible]`) to the current room
+   value, and make its `onClose` callback call
+   `updateIsRecordingModalVisible(false)`.
+3. Pass the current room parameters and the component's required callbacks,
+   including recording confirmation and start actions.
+4. Customize supported styles, wrappers, or overrides without replacing the
+   underlying room callbacks.
+
+Visibility props differ between components; use the exported component's
+contract, not a generic `isVisible` prop for every panel. Do not maintain a
+second independent visibility flag. With headless mode, built-in sidebar
+navigation is not your application's navigation.
+
+Opening a panel does not start recording or grant media permission. Keep
+confirmation, permission checks, and teardown under the room engine's control.
+
+### Render the complete standard UI from the headless engine
+
+Use `ModernMediasfuGenericHeadComponent` when your page needs the complete
+MediaSFU room UI at a different point in its layout without mounting a second
+room engine. The engine remains the only owner of sockets, tracks, room state,
+modal visibility, and sidebar navigation; the head instantiates its exact
+declared UI template.
+
+```ts
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  MediasfuGeneric,
+  MediasfuHeadlessService,
+  ModernMediasfuGenericHeadComponent,
+} from 'mediasfu-angular';
+
+@Component({
+  standalone: true,
+  imports: [AsyncPipe, NgIf, MediasfuGeneric, ModernMediasfuGenericHeadComponent],
+  providers: [MediasfuHeadlessService],
+  template: `
+    <app-modern-mediasfu-generic-head
+      *ngIf="room.parameters$ | async as parameters"
+      [parameters]="parameters">
+    </app-modern-mediasfu-generic-head>
+
+    <app-mediasfu-generic
+      [returnUI]="false"
+      [renderUIExternally]="true"
+      [sourceParameters]="room.sourceParameters"
+      [updateSourceParameters]="room.updateSourceParameters">
+    </app-mediasfu-generic>
+  `,
+})
+export class HostedRoomComponent {
+  constructor(readonly room: MediasfuHeadlessService) {}
+}
+```
+
+Do not mount another `MediasfuGeneric` inside the head. Keep modal actions on
+the room's published updaters so the standard close, sidebar, and teardown
+behavior remains intact.
+
 ## Feature-rich headless quick start
 
 Provide `MediasfuHeadlessService` at the room-screen level so each active room
@@ -306,6 +376,20 @@ timer, or change-detection path because it republishes. Pure reads use
 - [MediaSFU Open — deploy your own media server](https://github.com/MediaSFU/MediaSFUOpen)
 
 ## Working examples
+
+## Virtual backgrounds and breakout rooms in a custom Angular UI
+
+Keep the SDK dialog connected to the latest parameter publication; the room's
+visibility flag and matching updater must remain the single source of truth.
+For local preview, bind to `MediasfuHeadlessService.localVideo$`. It already
+resolves an active `virtualStream` ahead of the raw camera, matching what remote
+participants receive.
+
+For breakout rooms, reuse `BreakoutRoomsModal` with the current room parameters
+when you want the built-in planner. Save assignments before Start and render a
+visible validation message in your page. A custom breakout view must perform
+the SDK room transition; merely filtering participant cards does not move a
+participant or pause and resume the correct consumers.
 
 - [MediaSFU QuickStart Apps](https://github.com/MediaSFU/MediaSFU-QuickStart-Apps) — runnable Cloud, MediaSFU Open, custom-prejoin, backend-proxy, and custom-UI examples across SDKs.
 - [SpacesTek Initial](https://github.com/MediaSFU/SpacesTekInitial) → [Final](https://github.com/MediaSFU/SpacesTekFinal) → [Advanced](https://github.com/MediaSFU/SpacesTekAdvanced) — a staged path from a starter room to a product-owned Spaces-style experience.

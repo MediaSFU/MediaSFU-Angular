@@ -923,9 +923,13 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
           ctx!.save();
           try {
             ctx!.clearRect(0, 0, mediaCanvas.width, mediaCanvas.height);
+            ctx!.globalCompositeOperation = 'source-over';
             ctx!.drawImage(results.segmentationMask, 0, 0, mediaCanvas.width, mediaCanvas.height);
 
-            ctx!.globalCompositeOperation = 'source-out';
+            ctx!.globalCompositeOperation = 'source-in';
+            ctx!.drawImage(results.image, 0, 0, mediaCanvas.width, mediaCanvas.height);
+
+            ctx!.globalCompositeOperation = 'destination-over';
             const repeatPattern =
               virtualImage.width < mediaCanvas.width || virtualImage.height < mediaCanvas.height
                 ? 'repeat'
@@ -936,8 +940,6 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
             }
             ctx!.fillRect(0, 0, mediaCanvas.width, mediaCanvas.height);
 
-            ctx!.globalCompositeOperation = 'destination-atop';
-            ctx!.drawImage(results.image, 0, 0, mediaCanvas.width, mediaCanvas.height);
             markFirstFrameRendered();
           } finally {
             ctx!.restore();

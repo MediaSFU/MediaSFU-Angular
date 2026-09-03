@@ -10,3 +10,4 @@ ng-package.local.json
 # Local maintainer handoffs are not package documentation.
 conversation_summary_context.md
 .codex-notes/
+.local-validation/
