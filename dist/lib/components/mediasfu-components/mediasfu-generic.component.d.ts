@@ -1,4 +1,4 @@
-import { EventEmitter, Injector, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { EventEmitter, Injector, ChangeDetectorRef, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Socket } from 'socket.io-client';
 import { MainAspectComponent } from '../display-components/main-aspect-component/main-aspect-component.component';
@@ -438,6 +438,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     permissionUpdated?: PermissionUpdated;
     permissionConfigUpdated?: PermissionConfigUpdated;
     translationReceiveMethods?: TranslationReceiveMethods;
+    standardUiTemplate: TemplateRef<unknown>;
     PrejoinPage: any;
     localLink: string;
     connectMediaSFU: boolean;
@@ -456,6 +457,12 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         [key: string]: any;
     }) => void;
     returnUI?: boolean;
+    /**
+     * Keeps this component as the sole room engine while allowing
+     * ModernMediasfuGenericHeadComponent to instantiate its exact declared UI.
+     */
+    renderUIExternally: boolean;
+    get hasStandardUI(): boolean;
     /**
      * Emitted whenever the media graph changes — new/lost streams, a local track
      * toggling, screen share starting, consumers changing. Reasons are coalesced
@@ -483,6 +490,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     uiOverrides?: MediasfuUICustomOverrides;
     rootContainerStyle: () => Record<string, any>;
     title: string;
+    protected get mainContentHeightFraction(): number;
     protected readonly MainContainerComponentRef: typeof MainContainerComponent;
     protected readonly MainAspectComponentRef: typeof MainAspectComponent;
     protected readonly MainScreenComponentRef: typeof MainScreenComponent;
@@ -2105,6 +2113,7 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
         position?: "top" | "bottom" | "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
     }) => void;
     getAllParams(): {
+        renderModernMediasfuUITemplate: TemplateRef<unknown>;
         localUIMode: boolean;
         roomName: string;
         member: string;
@@ -2965,6 +2974,6 @@ export declare class MediasfuGeneric implements OnInit, OnDestroy {
     controlButtons: any[];
     connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuGeneric, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuGeneric, "app-mediasfu-generic", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "canUsePersonalTranslation": { "alias": "canUsePersonalTranslation"; "required": false; }; "personalTranslationUsername": { "alias": "personalTranslationUsername"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, { "mediaChanged": "mediaChanged"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuGeneric, "app-mediasfu-generic", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "renderUIExternally": { "alias": "renderUIExternally"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "canUsePersonalTranslation": { "alias": "canUsePersonalTranslation"; "required": false; }; "personalTranslationUsername": { "alias": "personalTranslationUsername"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, { "mediaChanged": "mediaChanged"; }, never, never, true, never>;
 }
 export {};

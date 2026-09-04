@@ -10779,7 +10779,7 @@ class ModifyCoHostSettings {
      * - A socket event is emitted to update the co-host information.
      * - The co-host modal is closed after updating the settings.
      */
-    async modifyCoHostSettings({ roomName,
+    async modifyCoHostSettings({ roomName, 
     // showAlert,
     selectedParticipant, coHost, coHostResponsibility, updateIsCoHostModalVisible, updateCoHostResponsibility, updateCoHost, socket, }) {
         return modifyCoHostSettings({
@@ -12529,7 +12529,7 @@ class ModifySettings {
      *
      * @throws Will show an alert if any setting is set to "approval" in demo mode (room name starts with "d").
      */
-    modifySettings = async ({
+    modifySettings = async ({ 
     // showAlert,
     roomName, audioSet, videoSet, screenshareSet, chatSet, socket, updateAudioSetting, updateVideoSetting, updateScreenshareSetting, updateChatSetting, updateIsSettingsModalVisible, }) => {
         return modifySettings({
@@ -16898,8 +16898,11 @@ class BackgroundModal {
                     ctx.save();
                     try {
                         ctx.clearRect(0, 0, mediaCanvas.width, mediaCanvas.height);
+                        ctx.globalCompositeOperation = 'source-over';
                         ctx.drawImage(results.segmentationMask, 0, 0, mediaCanvas.width, mediaCanvas.height);
-                        ctx.globalCompositeOperation = 'source-out';
+                        ctx.globalCompositeOperation = 'source-in';
+                        ctx.drawImage(results.image, 0, 0, mediaCanvas.width, mediaCanvas.height);
+                        ctx.globalCompositeOperation = 'destination-over';
                         const repeatPattern = virtualImage.width < mediaCanvas.width || virtualImage.height < mediaCanvas.height
                             ? 'repeat'
                             : 'no-repeat';
@@ -16908,8 +16911,6 @@ class BackgroundModal {
                             ctx.fillStyle = pat;
                         }
                         ctx.fillRect(0, 0, mediaCanvas.width, mediaCanvas.height);
-                        ctx.globalCompositeOperation = 'destination-atop';
-                        ctx.drawImage(results.image, 0, 0, mediaCanvas.width, mediaCanvas.height);
                         markFirstFrameRendered();
                     }
                     finally {
@@ -35700,6 +35701,25 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                 }]
         }] });
 
+/**
+ * Converts a viewport-relative control-strip fraction into the coordinate
+ * system of an embedded room so MainAspect and SubAspect exactly fill it.
+ */
+function resolveEmbeddedControlFractions({ containerHeightFraction = 1, controlViewportFraction = 0, showControls = true, }) {
+    const boundary = Math.max(0, Number(containerHeightFraction) || 0);
+    if (!showControls || boundary === 0) {
+        return {
+            mainFraction: boundary === 0 ? 0 : 1,
+            subViewportFraction: 0,
+        };
+    }
+    const subViewportFraction = Math.min(boundary, Math.max(0, Number(controlViewportFraction) || 0));
+    return {
+        mainFraction: Math.max(0, 1 - subViewportFraction / boundary),
+        subViewportFraction,
+    };
+}
+
 class ModernCoHostModalComponent {
     modifyCoHostSettingsService;
     isCoHostModalVisible = false;
@@ -42849,6 +42869,7 @@ class MediasfuGeneric {
     permissionUpdated;
     permissionConfigUpdated;
     translationReceiveMethods;
+    standardUiTemplate;
     PrejoinPage = WelcomePage;
     localLink = '';
     connectMediaSFU = true;
@@ -42860,6 +42881,14 @@ class MediasfuGeneric {
     sourceParameters = {};
     updateSourceParameters = (data) => { };
     returnUI = true;
+    /**
+     * Keeps this component as the sole room engine while allowing
+     * ModernMediasfuGenericHeadComponent to instantiate its exact declared UI.
+     */
+    renderUIExternally = false;
+    get hasStandardUI() {
+        return this.returnUI !== false || this.renderUIExternally;
+    }
     /**
      * Emitted whenever the media graph changes — new/lost streams, a local track
      * toggling, screen share starting, consumers changing. Reasons are coalesced
@@ -42892,6 +42921,13 @@ class MediasfuGeneric {
         ...this.containerStyle,
     });
     title = 'MediaSFU-Generic';
+    get mainContentHeightFraction() {
+        return resolveEmbeddedControlFractions({
+            containerHeightFraction: this.containerHeightFraction,
+            controlViewportFraction: this.controlHeight.value,
+            showControls: this.eventType.value === 'webinar' || this.eventType.value === 'conference',
+        }).mainFraction;
+    }
     MainContainerComponentRef = MainContainerComponent;
     MainAspectComponentRef = MainAspectComponent;
     MainScreenComponentRef = MainScreenComponent;
@@ -45350,7 +45386,8 @@ class MediasfuGeneric {
         return Number((40 / currentHeight).toFixed(3));
     }
     shouldUseSidebar = () => {
-        return (window.innerWidth >= 1200 &&
+        return (this.hasStandardUI &&
+            window.innerWidth >= 1200 &&
             this.checkOrientation() === 'landscape');
     };
     isMobileMenuShellActive = () => {
@@ -46446,6 +46483,9 @@ class MediasfuGeneric {
     };
     getAllParams() {
         return {
+            // Renderer-only handle. TemplateRef retains this engine's declaration
+            // context, so an external outlet does not create another room engine.
+            renderModernMediasfuUITemplate: this.standardUiTemplate,
             localUIMode: this.localUIMode.value, // Local UI mode
             // Room Details
             roomName: this.roomName.value,
@@ -47308,7 +47348,7 @@ class MediasfuGeneric {
                 credentials: this.credentials,
                 localLink: this.localLink,
                 connectMediaSFU: this.connectMediaSFU,
-                returnUI: this.returnUI,
+                returnUI: this.hasStandardUI,
                 noUIPreJoinOptions: this.noUIPreJoinOptions,
                 joinMediaSFURoom: this.joinMediaSFURoom,
                 createMediaSFURoom: this.createMediaSFURoom,
@@ -47342,7 +47382,7 @@ class MediasfuGeneric {
         // Field initialisers run before Angular binds @Input()s, so autoWave cannot
         // be defaulted from returnUI where it is declared — it would read undefined.
         // ngOnInit is the first point the input is guaranteed bound.
-        this.autoWave.next(this.returnUI !== false);
+        this.autoWave.next(this.hasStandardUI);
         this.updateModernThemeDarkMode(this.resolvePreferredTheme());
         // Initialize UI overrides if provided
         if (this.uiOverrides) {
@@ -47440,6 +47480,12 @@ class MediasfuGeneric {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),
         };
+        // The external head needs the declared TemplateRef before validation so it
+        // can render this engine's pre-join page. Publication stays deferred and
+        // coalesced through the existing source bridge.
+        if (this.renderUIExternally && this.sourceParameters !== null) {
+            this.publishSourceParameters(this.getCurrentParams());
+        }
     }
     ngOnDestroy() {
         this.sourcePublishActive = false;
@@ -49488,7 +49534,8 @@ class MediasfuGeneric {
         }
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuGeneric, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.Injector }, { token: UpdateMiniCardsGrid }, { token: MixStreams }, { token: DispStreams }, { token: StopShareScreen }, { token: CheckScreenShare }, { token: StartShareScreen }, { token: RequestScreenShare }, { token: ReorderStreams }, { token: PrepopulateUserMedia }, { token: GetVideos }, { token: RePort }, { token: Trigger }, { token: ConsumerResume }, { token: ConnectSendTransport }, { token: ConnectSendTransportAudio }, { token: ConnectSendTransportVideo }, { token: ConnectSendTransportScreen }, { token: ProcessConsumerTransports }, { token: ResumePauseStreams }, { token: Readjust }, { token: CheckGrid }, { token: GetEstimate }, { token: CalculateRowsAndColumns }, { token: AddVideosGrid }, { token: OnScreenChanges }, { token: ChangeVids }, { token: CompareActiveNames }, { token: CompareScreenStates }, { token: CreateSendTransport }, { token: ResumeSendTransportAudio }, { token: ReceiveAllPipedTransports }, { token: DisconnectSendTransportVideo }, { token: DisconnectSendTransportAudio }, { token: DisconnectSendTransportScreen }, { token: GetPipedProducersAlt }, { token: SignalNewConsumerTransport }, { token: ConnectRecvTransport }, { token: ReUpdateInter }, { token: UpdateParticipantAudioDecibels }, { token: CloseAndResize }, { token: AutoAdjust }, { token: SwitchUserVideoAlt }, { token: SwitchUserVideo }, { token: SwitchUserAudio }, { token: GetDomains }, { token: FormatNumber }, { token: ConnectIps }, { token: ConnectLocalIps }, { token: CreateDeviceClient }, { token: HandleCreatePoll }, { token: HandleEndPoll }, { token: HandleVotePoll }, { token: CaptureCanvasStream }, { token: ResumePauseAudioStreams }, { token: ProcessConsumerTransportsAudio }, { token: LaunchMenuModal }, { token: LaunchRecording }, { token: StartRecording }, { token: ConfirmRecording }, { token: LaunchWaiting }, { token: launchCoHost }, { token: LaunchMediaSettings }, { token: LaunchDisplaySettings }, { token: LaunchSettings }, { token: LaunchRequests }, { token: LaunchParticipants }, { token: LaunchMessages }, { token: LaunchConfirmExit }, { token: SendMessage }, { token: MuteParticipants }, { token: MessageParticipants }, { token: RemoveParticipants }, { token: LaunchPoll }, { token: LaunchBreakoutRooms }, { token: LaunchConfigureWhiteboard }, { token: StartMeetingProgressTimer }, { token: UpdateRecording }, { token: StopRecording }, { token: UserWaiting }, { token: PersonJoined }, { token: AllWaitingRoomMembers }, { token: RoomRecordParams }, { token: BanParticipant }, { token: UpdatedCoHost }, { token: ParticipantRequested }, { token: ScreenProducerId }, { token: UpdateMediaSettings }, { token: ProducerMediaPaused }, { token: ProducerMediaResumed }, { token: ProducerMediaClosed }, { token: ControlMediaHost }, { token: MeetingEnded }, { token: DisconnectUserSelf }, { token: ReceiveMessage }, { token: MeetingTimeRemaining }, { token: MeetingStillThere }, { token: StartRecords }, { token: ReInitiateRecording }, { token: RecordingNotice }, { token: TimeLeftRecording }, { token: StoppedRecording }, { token: HostRequestResponse }, { token: AllMembers }, { token: AllMembersRest }, { token: Disconnect }, { token: PollUpdated }, { token: BreakoutRoomUpdated }, { token: SocketManager }, { token: JoinRoomClient }, { token: JoinLocalRoom }, { token: UpdateRoomParametersClient }, { token: ClickVideo }, { token: ClickAudio }, { token: ClickScreenShare }, { token: SwitchVideoAlt }, { token: StreamSuccessVideo }, { token: StreamSuccessAudio }, { token: StreamSuccessScreen }, { token: StreamSuccessAudioSwitch }, { token: CheckPermission }, { token: UpdateConsumingDomains }, { token: ReceiveRoomMessages }, { token: UIOverrideResolverService }, { token: LiveSubtitleService }, { token: TranslationConsumerSwitch }, { token: PanelistsUpdated }, { token: PanelistFocusChanged }, { token: ReceiveControlMedia }, { token: AddedAsPanelist }, { token: RemovedFromPanelists }, { token: PermissionUpdated }, { token: PermissionConfigUpdated }, { token: TranslationReceiveMethods }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", canUsePersonalTranslation: "canUsePersonalTranslation", personalTranslationUsername: "personalTranslationUsername", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], ngImport: i0, template: `
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: MediasfuGeneric, isStandalone: true, selector: "app-mediasfu-generic", inputs: { PrejoinPage: "PrejoinPage", localLink: "localLink", connectMediaSFU: "connectMediaSFU", credentials: "credentials", useLocalUIMode: "useLocalUIMode", seedData: "seedData", useSeed: "useSeed", imgSrc: "imgSrc", sourceParameters: "sourceParameters", updateSourceParameters: "updateSourceParameters", returnUI: "returnUI", renderUIExternally: "renderUIExternally", noUIPreJoinOptions: "noUIPreJoinOptions", joinMediaSFURoom: "joinMediaSFURoom", createMediaSFURoom: "createMediaSFURoom", containerWidthFraction: "containerWidthFraction", containerHeightFraction: "containerHeightFraction", canUsePersonalTranslation: "canUsePersonalTranslation", personalTranslationUsername: "personalTranslationUsername", customVideoCard: "customVideoCard", customAudioCard: "customAudioCard", customMiniCard: "customMiniCard", customMainComponent: "customMainComponent", containerStyle: "containerStyle", uiOverrides: "uiOverrides" }, outputs: { mediaChanged: "mediaChanged" }, host: { listeners: { "window:resize": "handleResize()", "window:orientationchange": "handleResize()" } }, providers: [CookieService], viewQueries: [{ propertyName: "standardUiTemplate", first: true, predicate: ["standardUiTemplate"], descendants: true, static: true }], ngImport: i0, template: `
+    <ng-template #standardUiTemplate>
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -49529,7 +49576,7 @@ class MediasfuGeneric {
         </ng-container>
 
         <!-- Default Main Component -->
-        <ng-container *ngIf="returnUI && !customMainComponent">
+        <ng-container *ngIf="hasStandardUI && !customMainComponent">
           <ng-container
             *appWithOverride="
               'mainContainer';
@@ -49552,7 +49599,7 @@ class MediasfuGeneric {
                   [containerWidthFraction]="containerWidthFraction"
                   [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
-                  [defaultFraction]="1 - controlHeight.value"
+                  [defaultFraction]="mainContentHeightFraction"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
@@ -49571,7 +49618,7 @@ class MediasfuGeneric {
                       [mainSize]="mainHeightWidth.value"
                       [containerWidthFraction]="containerWidthFraction"
                       [containerHeightFraction]="containerHeightFraction"
-                      [defaultFraction]="1 - controlHeight.value"
+                      [defaultFraction]="mainContentHeightFraction"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [containerStyle]="mainScreenContainerStyle()"
                       [updateComponentSizes]="updateComponentSizes"
@@ -50298,7 +50345,7 @@ class MediasfuGeneric {
         </ng-container>
       </ng-template>
 
-      <ng-container *ngIf="returnUI && !customMainComponent">
+      <ng-container *ngIf="hasStandardUI && !customMainComponent">
       <app-modern-menu-modal
         *appWithOverride="
           'menuModal';
@@ -50917,7 +50964,13 @@ class MediasfuGeneric {
       >
       </ng-container>
     </ng-container>
-  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: i1.NgSwitch, selector: "[ngSwitch]", inputs: ["ngSwitch"] }, { kind: "directive", type: i1.NgSwitchCase, selector: "[ngSwitchCase]", inputs: ["ngSwitchCase"] }, { kind: "directive", type: i1.NgSwitchDefault, selector: "[ngSwitchDefault]" }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: TranslationSettingsModal, selector: "app-translation-settings-modal", inputs: ["isVisible", "onClose", "translationSupported", "translationConfig", "member", "islevel", "audioProducerId", "participants", "mySpokenLanguage", "mySpokenLanguageEnabled", "myDefaultOutputLanguage", "myDefaultListenLanguage", "listenPreferences", "availableTranslationChannels", "updateMySpokenLanguage", "updateMySpokenLanguageEnabled", "updateMyDefaultOutputLanguage", "updateMyDefaultListenLanguage", "updateListenPreferences", "socket", "roomName", "showAlert", "showSubtitlesOnCards", "updateShowSubtitlesOnCards", "canUsePersonalTranslation", "personalTranslationUsername", "overlayStyle", "contentStyle", "isDarkMode", "renderMode", "showHeader"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernSidebarPanelComponent, selector: "app-modern-sidebar-panel", inputs: ["visible", "width", "height", "title", "badgeText", "backLabel", "canNavigateBack", "contentKey"], outputs: ["navigateBack", "close"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
+    </ng-template>
+
+    <ng-container
+      *ngIf="!renderUIExternally"
+      [ngTemplateOutlet]="standardUiTemplate"
+    ></ng-container>
+  `, isInline: true, styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgComponentOutlet, selector: "[ngComponentOutlet]", inputs: ["ngComponentOutlet", "ngComponentOutletInputs", "ngComponentOutletInjector", "ngComponentOutletContent", "ngComponentOutletNgModule", "ngComponentOutletNgModuleFactory"], exportAs: ["ngComponentOutlet"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i1.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "directive", type: i1.NgSwitch, selector: "[ngSwitch]", inputs: ["ngSwitch"] }, { kind: "directive", type: i1.NgSwitchCase, selector: "[ngSwitchCase]", inputs: ["ngSwitchCase"] }, { kind: "directive", type: i1.NgSwitchDefault, selector: "[ngSwitchDefault]" }, { kind: "component", type: BreakoutRoomsModal, selector: "app-breakout-rooms-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onBreakoutRoomsClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: BackgroundModal, selector: "app-background-modal", inputs: ["isVisible", "parameters", "position", "backgroundColor", "isDarkMode", "onClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernCoHostModalComponent, selector: "app-co-host-modal", inputs: ["isCoHostModalVisible", "currentCohost", "participants", "coHostResponsibility", "position", "backgroundColor", "roomName", "showAlert", "updateCoHostResponsibility", "updateCoHost", "updateIsCoHostModalVisible", "socket", "onCoHostClose", "onModifyCoHost", "overlayStyle", "contentStyle", "customTemplate", "parameters", "renderMode", "showHeader"] }, { kind: "component", type: ModernAlertComponent, selector: "app-modern-alert-component", inputs: ["visible", "message", "type", "duration", "textColor", "position", "isDarkMode", "onHide", "alertStyle", "customTemplate"] }, { kind: "component", type: AudioGrid, selector: "app-audio-grid", inputs: ["componentsToRender", "containerStyle", "customTemplate"] }, { kind: "component", type: ControlButtonsComponentTouch, selector: "app-control-buttons-component-touch", inputs: ["buttons", "position", "location", "direction", "buttonsContainerStyle", "showAspect"] }, { kind: "component", type: ControlButtonsComponent, selector: "app-control-buttons-component", inputs: ["buttons", "buttonColor", "buttonBackgroundColor", "isDarkMode", "alignment", "vertical", "buttonsContainerStyle"] }, { kind: "component", type: FlexibleGrid, selector: "app-flexible-grid", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "backgroundColor", "containerStyle", "customTemplate", "isDarkMode", "enableGlassmorphism", "cellBorderRadius"] }, { kind: "component", type: FlexibleVideo, selector: "app-flexible-video", inputs: ["customWidth", "customHeight", "rows", "columns", "componentsToRender", "showAspect", "backgroundColor", "Screenboard", "annotateScreenStream", "localStreamScreen", "isDarkMode", "enableGlassmorphism", "cellBorderRadius", "enableGlow"] }, { kind: "component", type: ModernLoadingModalComponent, selector: "app-modern-loading-modal", inputs: ["isVisible", "backgroundColor", "displayColor", "isDarkMode", "loadingText", "showSpinner", "overlayStyle", "contentStyle", "spinnerStyle", "textStyle", "customTemplate"] }, { kind: "component", type: ModernPaginationComponent, selector: "app-modern-pagination", inputs: ["totalPages", "currentUserPage", "handlePageChange", "position", "location", "direction", "buttonsContainerStyle", "activePageStyle", "inactivePageStyle", "backgroundColor", "paginationHeight", "showAspect", "maxVisiblePages", "parameters"] }, { kind: "component", type: ModernParticipantsCounterBadgeComponent, selector: "app-modern-participants-counter-badge", inputs: ["participantsCount", "position", "showBadge", "backgroundColor", "textColor", "isDarkMode", "customStyle"] }, { kind: "component", type: SubAspectComponent, selector: "app-sub-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFractionSub", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernDisplaySettingsModalComponent, selector: "app-display-settings-modal", inputs: ["isDisplaySettingsModalVisible", "onDisplaySettingsClose", "onModifyDisplaySettings", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernEventSettingsModalComponent, selector: "app-event-settings-modal", inputs: ["isEventSettingsModalVisible", "onEventSettingsClose", "onModifyEventSettings", "position", "backgroundColor", "isDarkMode", "audioSetting", "videoSetting", "screenshareSetting", "chatSetting", "updateAudioSetting", "updateVideoSetting", "updateScreenshareSetting", "updateChatSetting", "updateIsSettingsModalVisible", "roomName", "socket", "showAlert", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmExitModalComponent, selector: "app-confirm-exit-modal", inputs: ["isConfirmExitModalVisible", "onConfirmExitClose", "position", "backgroundColor", "exitEventOnConfirm", "member", "ban", "roomName", "socket", "islevel", "title", "confirmLabel", "leaveLabel", "cancelLabel", "message", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: TranslationSettingsModal, selector: "app-translation-settings-modal", inputs: ["isVisible", "onClose", "translationSupported", "translationConfig", "member", "islevel", "audioProducerId", "participants", "mySpokenLanguage", "mySpokenLanguageEnabled", "myDefaultOutputLanguage", "myDefaultListenLanguage", "listenPreferences", "availableTranslationChannels", "updateMySpokenLanguage", "updateMySpokenLanguageEnabled", "updateMyDefaultOutputLanguage", "updateMyDefaultListenLanguage", "updateListenPreferences", "socket", "roomName", "showAlert", "showSubtitlesOnCards", "updateShowSubtitlesOnCards", "canUsePersonalTranslation", "personalTranslationUsername", "overlayStyle", "contentStyle", "isDarkMode", "renderMode", "showHeader"] }, { kind: "component", type: ModernMenuModalComponent, selector: "app-modern-menu-modal", inputs: ["backgroundColor", "isVisible", "isDarkMode", "onToggleTheme", "customButtons", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "title", "overlayStyle", "contentStyle", "customTemplate", "onClose", "renderMode", "showHeader", "showDefaultSections", "showBackButton", "backLabel", "onBack"] }, { kind: "component", type: ModernMessagesModalComponent, selector: "app-messages-modal", inputs: ["isMessagesModalVisible", "onMessagesClose", "onSendMessagePress", "messages", "position", "backgroundColor", "activeTabBackgroundColor", "eventType", "member", "islevel", "coHostResponsibility", "coHost", "startDirectMessage", "directMessageDetails", "updateStartDirectMessage", "updateDirectMessageDetails", "showAlert", "roomName", "socket", "chatSetting", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernConfirmHereModalComponent, selector: "app-confirm-here-modal", inputs: ["isConfirmHereModalVisible", "position", "backgroundColor", "displayColor", "isDarkMode", "onConfirmHereClose", "onSuppressConfirmHere", "socket", "localSocket", "roomName", "member", "countdownDuration", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: ModernShareEventModalComponent, selector: "app-share-event-modal", inputs: ["backgroundColor", "isShareEventModalVisible", "onShareEventClose", "shareButtons", "position", "roomName", "adminPasscode", "islevel", "eventType", "localLink", "isDarkMode", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernParticipantsModalComponent, selector: "app-participants-modal", inputs: ["isParticipantsModalVisible", "onParticipantsClose", "onParticipantsFilterChange", "participantsCounter", "onMuteParticipants", "onMessageParticipants", "onRemoveParticipants", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernPollModalComponent, selector: "app-poll-modal", inputs: ["isPollModalVisible", "onClose", "position", "backgroundColor", "member", "islevel", "polls", "poll", "socket", "roomName", "showAlert", "updateIsPollModalVisible", "handleCreatePoll", "handleEndPoll", "handleVotePoll", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRecordingModalComponent, selector: "app-recording-modal", inputs: ["isRecordingModalVisible", "onClose", "backgroundColor", "position", "confirmRecording", "startRecording", "parameters", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernRequestsModalComponent, selector: "app-requests-modal", inputs: ["isRequestsModalVisible", "requestCounter", "requestList", "roomName", "socket", "backgroundColor", "position", "parameters", "onRequestClose", "onRequestFilterChange", "onRequestItemPress", "updateRequestList", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernMediaSettingsModalComponent, selector: "app-media-settings-modal", inputs: ["isMediaSettingsModalVisible", "onMediaSettingsClose", "switchCameraOnPress", "switchVideoOnPress", "switchAudioOnPress", "parameters", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader", "onOpenBackgroundSidebar"] }, { kind: "component", type: MainAspectComponent, selector: "app-main-aspect-component", inputs: ["backgroundColor", "showControls", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "updateIsWideScreen", "updateIsMediumScreen", "updateIsSmallScreen", "containerStyle", "customTemplate"] }, { kind: "component", type: MainContainerComponent, selector: "app-main-container-component", inputs: ["backgroundColor", "containerWidthFraction", "containerHeightFraction", "marginLeft", "marginRight", "marginTop", "marginBottom", "padding", "containerStyle", "customTemplate"] }, { kind: "component", type: MainGridComponent, selector: "app-main-grid-component", inputs: ["backgroundColor", "mainSize", "height", "width", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: MainScreenComponent, selector: "app-main-screen-component", inputs: ["mainSize", "doStack", "containerWidthFraction", "containerHeightFraction", "defaultFraction", "showControls", "updateComponentSizes", "containerStyle", "customTemplate"] }, { kind: "component", type: ModernSidebarPanelComponent, selector: "app-modern-sidebar-panel", inputs: ["visible", "width", "height", "title", "badgeText", "backLabel", "canNavigateBack", "contentKey"], outputs: ["navigateBack", "close"] }, { kind: "component", type: OtherGridComponent, selector: "app-other-grid-component", inputs: ["backgroundColor", "width", "height", "showAspect", "timeBackgroundColor", "showTimer", "meetingProgressTime", "containerStyle", "customTemplate"] }, { kind: "component", type: ScreenboardModal, selector: "app-screenboard-modal", inputs: ["parameters", "isVisible", "onClose", "position", "backgroundColor", "overlayStyle", "contentStyle", "customTemplate"] }, { kind: "component", type: Whiteboard, selector: "app-whiteboard", inputs: ["customWidth", "customHeight", "parameters", "showAspect"] }, { kind: "component", type: ConfigureWhiteboardModal, selector: "app-configure-whiteboard-modal", inputs: ["isVisible", "parameters", "backgroundColor", "position", "isDarkMode", "onConfigureWhiteboardClose", "overlayStyle", "contentStyle", "customTemplate", "renderMode", "showHeader"] }, { kind: "component", type: ModernWaitingRoomModalComponent, selector: "app-waiting-room-modal", inputs: ["isWaitingModalVisible", "onWaitingRoomClose", "waitingRoomCounter", "onWaitingRoomFilterChange", "waitingRoomList", "updateWaitingList", "roomName", "socket", "position", "backgroundColor", "parameters", "overlayStyle", "contentStyle", "customTemplate", "onWaitingRoomItemPress", "renderMode", "showHeader"] }, { kind: "directive", type: WithOverrideDirective, selector: "[appWithOverride]", inputs: ["appWithOverride", "appWithOverrideDefault", "appWithOverrideProps", "appWithOverrideInjector"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: MediasfuGeneric, decorators: [{
             type: Component,
@@ -50961,6 +51014,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                         ModernWaitingRoomModalComponent,
                         WithOverrideDirective,
                     ], template: `
+    <ng-template #standardUiTemplate>
     <!-- Custom Main Component (if provided) - full control over styling -->
     <ng-container *ngIf="customMainComponent && validated.value">
       <ng-container
@@ -51001,7 +51055,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
         </ng-container>
 
         <!-- Default Main Component -->
-        <ng-container *ngIf="returnUI && !customMainComponent">
+        <ng-container *ngIf="hasStandardUI && !customMainComponent">
           <ng-container
             *appWithOverride="
               'mainContainer';
@@ -51024,7 +51078,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                   [containerWidthFraction]="containerWidthFraction"
                   [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="roomSurfaceColor()"
-                  [defaultFraction]="1 - controlHeight.value"
+                  [defaultFraction]="mainContentHeightFraction"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
@@ -51043,7 +51097,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                       [mainSize]="mainHeightWidth.value"
                       [containerWidthFraction]="containerWidthFraction"
                       [containerHeightFraction]="containerHeightFraction"
-                      [defaultFraction]="1 - controlHeight.value"
+                      [defaultFraction]="mainContentHeightFraction"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [containerStyle]="mainScreenContainerStyle()"
                       [updateComponentSizes]="updateComponentSizes"
@@ -51770,7 +51824,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
         </ng-container>
       </ng-template>
 
-      <ng-container *ngIf="returnUI && !customMainComponent">
+      <ng-container *ngIf="hasStandardUI && !customMainComponent">
       <app-modern-menu-modal
         *appWithOverride="
           'menuModal';
@@ -52389,8 +52443,17 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
       >
       </ng-container>
     </ng-container>
+    </ng-template>
+
+    <ng-container
+      *ngIf="!renderUIExternally"
+      [ngTemplateOutlet]="standardUiTemplate"
+    ></ng-container>
   `, providers: [CookieService], styles: [".MediaSFU{height:100vh;width:100vw;max-width:100vw;max-height:100vh;overflow:hidden}\n"] }]
-        }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: SendMessage }, { type: MuteParticipants }, { type: MessageParticipants }, { type: RemoveParticipants }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }, { type: UIOverrideResolverService }, { type: LiveSubtitleService }, { type: TranslationConsumerSwitch }, { type: PanelistsUpdated }, { type: PanelistFocusChanged }, { type: ReceiveControlMedia }, { type: AddedAsPanelist }, { type: RemovedFromPanelists }, { type: PermissionUpdated }, { type: PermissionConfigUpdated }, { type: TranslationReceiveMethods }], propDecorators: { PrejoinPage: [{
+        }], ctorParameters: () => [{ type: i0.ChangeDetectorRef }, { type: i0.Injector }, { type: UpdateMiniCardsGrid }, { type: MixStreams }, { type: DispStreams }, { type: StopShareScreen }, { type: CheckScreenShare }, { type: StartShareScreen }, { type: RequestScreenShare }, { type: ReorderStreams }, { type: PrepopulateUserMedia }, { type: GetVideos }, { type: RePort }, { type: Trigger }, { type: ConsumerResume }, { type: ConnectSendTransport }, { type: ConnectSendTransportAudio }, { type: ConnectSendTransportVideo }, { type: ConnectSendTransportScreen }, { type: ProcessConsumerTransports }, { type: ResumePauseStreams }, { type: Readjust }, { type: CheckGrid }, { type: GetEstimate }, { type: CalculateRowsAndColumns }, { type: AddVideosGrid }, { type: OnScreenChanges }, { type: ChangeVids }, { type: CompareActiveNames }, { type: CompareScreenStates }, { type: CreateSendTransport }, { type: ResumeSendTransportAudio }, { type: ReceiveAllPipedTransports }, { type: DisconnectSendTransportVideo }, { type: DisconnectSendTransportAudio }, { type: DisconnectSendTransportScreen }, { type: GetPipedProducersAlt }, { type: SignalNewConsumerTransport }, { type: ConnectRecvTransport }, { type: ReUpdateInter }, { type: UpdateParticipantAudioDecibels }, { type: CloseAndResize }, { type: AutoAdjust }, { type: SwitchUserVideoAlt }, { type: SwitchUserVideo }, { type: SwitchUserAudio }, { type: GetDomains }, { type: FormatNumber }, { type: ConnectIps }, { type: ConnectLocalIps }, { type: CreateDeviceClient }, { type: HandleCreatePoll }, { type: HandleEndPoll }, { type: HandleVotePoll }, { type: CaptureCanvasStream }, { type: ResumePauseAudioStreams }, { type: ProcessConsumerTransportsAudio }, { type: LaunchMenuModal }, { type: LaunchRecording }, { type: StartRecording }, { type: ConfirmRecording }, { type: LaunchWaiting }, { type: launchCoHost }, { type: LaunchMediaSettings }, { type: LaunchDisplaySettings }, { type: LaunchSettings }, { type: LaunchRequests }, { type: LaunchParticipants }, { type: LaunchMessages }, { type: LaunchConfirmExit }, { type: SendMessage }, { type: MuteParticipants }, { type: MessageParticipants }, { type: RemoveParticipants }, { type: LaunchPoll }, { type: LaunchBreakoutRooms }, { type: LaunchConfigureWhiteboard }, { type: StartMeetingProgressTimer }, { type: UpdateRecording }, { type: StopRecording }, { type: UserWaiting }, { type: PersonJoined }, { type: AllWaitingRoomMembers }, { type: RoomRecordParams }, { type: BanParticipant }, { type: UpdatedCoHost }, { type: ParticipantRequested }, { type: ScreenProducerId }, { type: UpdateMediaSettings }, { type: ProducerMediaPaused }, { type: ProducerMediaResumed }, { type: ProducerMediaClosed }, { type: ControlMediaHost }, { type: MeetingEnded }, { type: DisconnectUserSelf }, { type: ReceiveMessage }, { type: MeetingTimeRemaining }, { type: MeetingStillThere }, { type: StartRecords }, { type: ReInitiateRecording }, { type: RecordingNotice }, { type: TimeLeftRecording }, { type: StoppedRecording }, { type: HostRequestResponse }, { type: AllMembers }, { type: AllMembersRest }, { type: Disconnect }, { type: PollUpdated }, { type: BreakoutRoomUpdated }, { type: SocketManager }, { type: JoinRoomClient }, { type: JoinLocalRoom }, { type: UpdateRoomParametersClient }, { type: ClickVideo }, { type: ClickAudio }, { type: ClickScreenShare }, { type: SwitchVideoAlt }, { type: StreamSuccessVideo }, { type: StreamSuccessAudio }, { type: StreamSuccessScreen }, { type: StreamSuccessAudioSwitch }, { type: CheckPermission }, { type: UpdateConsumingDomains }, { type: ReceiveRoomMessages }, { type: UIOverrideResolverService }, { type: LiveSubtitleService }, { type: TranslationConsumerSwitch }, { type: PanelistsUpdated }, { type: PanelistFocusChanged }, { type: ReceiveControlMedia }, { type: AddedAsPanelist }, { type: RemovedFromPanelists }, { type: PermissionUpdated }, { type: PermissionConfigUpdated }, { type: TranslationReceiveMethods }], propDecorators: { standardUiTemplate: [{
+                type: ViewChild,
+                args: ['standardUiTemplate', { static: true }]
+            }], PrejoinPage: [{
                 type: Input
             }], localLink: [{
                 type: Input
@@ -52411,6 +52474,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
             }], updateSourceParameters: [{
                 type: Input
             }], returnUI: [{
+                type: Input
+            }], renderUIExternally: [{
                 type: Input
             }], mediaChanged: [{
                 type: Output
@@ -57842,6 +57907,12 @@ class MediasfuWebinar {
         ...this.containerStyle,
     });
     title = 'MediaSFU-Webinar';
+    get mainContentHeightFraction() {
+        return resolveEmbeddedControlFractions({
+            containerHeightFraction: this.containerHeightFraction,
+            controlViewportFraction: this.controlHeight.value,
+        }).mainFraction;
+    }
     MainContainerComponentRef = MainContainerComponent;
     MainAspectComponentRef = MainAspectComponent;
     MainScreenComponentRef = MainScreenComponent;
@@ -62389,7 +62460,7 @@ class MediasfuWebinar {
                   [containerWidthFraction]="containerWidthFraction"
                   [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-                  [defaultFraction]="1 - controlHeight.value"
+                  [defaultFraction]="mainContentHeightFraction"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
@@ -62407,7 +62478,7 @@ class MediasfuWebinar {
                       [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
-                      [defaultFraction]="1 - controlHeight.value"
+                      [defaultFraction]="mainContentHeightFraction"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [updateComponentSizes]="updateComponentSizes"
                     >
@@ -62974,7 +63045,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                   [containerWidthFraction]="containerWidthFraction"
                   [containerHeightFraction]="containerHeightFraction"
                   [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-                  [defaultFraction]="1 - controlHeight.value"
+                  [defaultFraction]="mainContentHeightFraction"
                   [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                   [updateIsWideScreen]="updateIsWideScreen"
                   [updateIsMediumScreen]="updateIsMediumScreen"
@@ -62992,7 +63063,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
                       [containerHeightFraction]="containerHeightFraction"
                       [doStack]="true"
                       [mainSize]="mainHeightWidth.value"
-                      [defaultFraction]="1 - controlHeight.value"
+                      [defaultFraction]="mainContentHeightFraction"
                       [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
                       [updateComponentSizes]="updateComponentSizes"
                     >
@@ -63757,6 +63828,12 @@ class MediasfuConference {
         ...this.containerStyle,
     });
     title = 'MediaSFU-Conference';
+    get mainContentHeightFraction() {
+        return resolveEmbeddedControlFractions({
+            containerHeightFraction: this.containerHeightFraction,
+            controlViewportFraction: this.controlHeight.value,
+        }).mainFraction;
+    }
     // Component references for override directive
     MainContainerComponentRef = MainContainerComponent;
     MainAspectComponentRef = MainAspectComponent;
@@ -68479,7 +68556,7 @@ class MediasfuConference {
               props: mainAspectOverrideProps
             "
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-            [defaultFraction]="1 - controlHeight.value"
+            [defaultFraction]="mainContentHeightFraction"
             [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
             [updateIsWideScreen]="updateIsWideScreen"
             [updateIsMediumScreen]="updateIsMediumScreen"
@@ -68495,7 +68572,7 @@ class MediasfuConference {
               "
               [doStack]="true"
               [mainSize]="mainHeightWidth.value"
-              [defaultFraction]="1 - controlHeight.value"
+              [defaultFraction]="mainContentHeightFraction"
               [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
               [updateComponentSizes]="updateComponentSizes"
             >
@@ -69115,7 +69192,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
               props: mainAspectOverrideProps
             "
             [backgroundColor]="'rgba(217, 227, 234, 0.99)'"
-            [defaultFraction]="1 - controlHeight.value"
+            [defaultFraction]="mainContentHeightFraction"
             [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
             [updateIsWideScreen]="updateIsWideScreen"
             [updateIsMediumScreen]="updateIsMediumScreen"
@@ -69131,7 +69208,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
               "
               [doStack]="true"
               [mainSize]="mainHeightWidth.value"
-              [defaultFraction]="1 - controlHeight.value"
+              [defaultFraction]="mainContentHeightFraction"
               [showControls]="eventType.value === 'webinar' || eventType.value === 'conference'"
               [updateComponentSizes]="updateComponentSizes"
             >
@@ -74883,8 +74960,48 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImpo
         }] });
 
 /**
+ * Instantiates the exact UI template declared by one existing MediasfuGeneric
+ * room engine. It owns no socket, media transport, state store, or modal state.
+ *
+ * Bind the engine with `[returnUI]="false"` and
+ * `[renderUIExternally]="true"`, publish its parameter bag, and pass the latest
+ * bag here. Rendering performs a pure `getCurrentParams()` read only.
+ */
+class ModernMediasfuGenericHeadComponent {
+    parameters;
+    get uiTemplate() {
+        const current = this.parameters?.getCurrentParams?.() ?? this.parameters;
+        return current?.renderModernMediasfuUITemplate;
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernMediasfuGenericHeadComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.20", type: ModernMediasfuGenericHeadComponent, isStandalone: true, selector: "app-modern-mediasfu-generic-head", inputs: { parameters: "parameters" }, ngImport: i0, template: `
+    <ng-container
+      *ngIf="uiTemplate as template"
+      [ngTemplateOutlet]="template"
+    ></ng-container>
+  `, isInline: true, dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }] });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.20", ngImport: i0, type: ModernMediasfuGenericHeadComponent, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'app-modern-mediasfu-generic-head',
+                    standalone: true,
+                    imports: [CommonModule],
+                    template: `
+    <ng-container
+      *ngIf="uiTemplate as template"
+      [ngTemplateOutlet]="template"
+    ></ng-container>
+  `,
+                }]
+        }], propDecorators: { parameters: [{
+                type: Input,
+                args: [{ required: true }]
+            }] } });
+
+/**
  * Generated bundle index. Do not edit.
  */
 
-export { AParams, AWS_POLLY_VOICES, AZURE_NEURAL_VOICES, AddPanelist, AddVideosGrid, AddedAsPanelist, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, BulkUpdateParticipantPermissions, CARTESIA_VOICES, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, CustomComponentInjectionService, DEEPGRAM_VOICES, DEFAULT_VOICE_GENDERS, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, ELEVENLABS_VOICES, EventSettingsModal, FlexibleGrid, FlexibleVideo, FocusPanelists, FormatNumber, GEMINI_VOICES, GOOGLE_VOICES, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, KOKORO_VOICES, LANGUAGE_METADATA, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LiveSubtitleService, LoadingModal, MEDIASFU_CONTAINER_STYLE, MEDIASFU_UI_OVERRIDES, MIN_QUALITY_LEVEL, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuHeadlessService, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModernMessagesModalComponent, ModernPollModalComponent, ModernRecordingModalComponent, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OPENAI_VOICES, OnScreenChanges, OtherGridComponent, Pagination, PanelistFocusChanged, PanelistsModalComponent, PanelistsUpdated, ParticipantRequested, ParticipantsModal, PermissionConfigUpdated, PermissionUpdated, PermissionsModalComponent, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, QUALITY_LEVELS, RIME_VOICES, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveControlMedia, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemovePanelist, RemoveParticipants, RemovedFromPanelists, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, SUPPORTED_LANGUAGE_CODES, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TTS_PROVIDERS, TimeLeftRecording, TranslationConsumerSwitch, TranslationReceiveMethods, TranslationSettingsModal, Trigger, UIOverrideResolverService, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateParticipantPermission, UpdatePermissionConfig, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VOICE_GENDERS, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, WithFunctionOverrideDirective, WithOverrideDirective, clearVoiceCache, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, fetchLanguagesViaSocket, fetchVoicesViaSocket, formatVoiceOption, getAllLanguages, getAvailableVoices, getDefaultVoice, getDefaultVoiceGender, getLanguageName, getLanguageNativeName, getLanguagesByRegion, getLanguagesWithGoodTTS, getModalPosition, getOverlayPosition, getSupportedLanguages, initialValuesState, isLanguageSupported, isValidLanguageCode, launchCoHost, meetsQualityThreshold, normalizeLanguageCode, setVoiceCacheTTL, sleep, updateMicLevel };
+export { AParams, AWS_POLLY_VOICES, AZURE_NEURAL_VOICES, AddPanelist, AddVideosGrid, AddedAsPanelist, AlertComponent, AllMembers, AllMembersRest, AllWaitingRoomMembers, AudioCard, AudioGrid, AutoAdjust, BackgroundModal, BanParticipant, BreakoutRoomUpdated, BreakoutRoomsModal, BulkUpdateParticipantPermissions, CARTESIA_VOICES, CalculateRowsAndColumns, CaptureCanvasStream, CardVideoDisplay, ChangeVids, CheckGrid, CheckLimitsAndMakeRequest, CheckPauseState, CheckPermission, CheckResumeState, CheckScreenShare, ClickAudio, ClickChat, ClickScreenShare, ClickVideo, CloseAndResize, CoHostModal, CompareActiveNames, CompareScreenStates, ConfigureWhiteboardModal, ConfirmExit, ConfirmExitModal, ConfirmHereModal, ConfirmRecording, ConnectIps, ConnectLocalIps, ConnectRecvTransport, ConnectSendTransport, ConnectSendTransportAudio, ConnectSendTransportScreen, ConnectSendTransportVideo, ConsumerResume, ControlButtonsAltComponent, ControlButtonsComponent, ControlButtonsComponentTouch, ControlMedia, ControlMediaHost, CreateDeviceClient, CreateRoomOnMediaSFU, CreateSendTransport, CustomButtons, CustomComponentInjectionService, DEEPGRAM_VOICES, DEFAULT_VOICE_GENDERS, Disconnect, DisconnectSendTransportAudio, DisconnectSendTransportScreen, DisconnectSendTransportVideo, DisconnectUserSelf, DispStreams, DisplaySettingsModal, ELEVENLABS_VOICES, EventSettingsModal, FlexibleGrid, FlexibleVideo, FocusPanelists, FormatNumber, GEMINI_VOICES, GOOGLE_VOICES, GeneratePageContent, GenerateRandomMessages, GenerateRandomParticipants, GenerateRandomPolls, GenerateRandomRequestList, GenerateRandomWaitingRoomList, GetDomains, GetEstimate, GetPipedProducersAlt, GetProducersPiped, GetVideos, HParams, HandleCreatePoll, HandleEndPoll, HandleVotePoll, HostRequestResponse, JoinConRoom, JoinConsumeRoom, JoinLocalRoom, JoinRoom, JoinRoomClient, JoinRoomOnMediaSFU, KOKORO_VOICES, LANGUAGE_METADATA, LaunchBackground, LaunchBreakoutRooms, LaunchConfigureWhiteboard, LaunchConfirmExit, LaunchDisplaySettings, LaunchMediaSettings, LaunchMenuModal, LaunchMessages, LaunchParticipants, LaunchPoll, LaunchRecording, LaunchRequests, LaunchSettings, LaunchWaiting, LiveSubtitleService, LoadingModal, MEDIASFU_CONTAINER_STYLE, MEDIASFU_UI_OVERRIDES, MIN_QUALITY_LEVEL, MainAspectComponent, MainContainerComponent, MainGridComponent, MainScreenComponent, MediaSettingsModal, MediasfuBroadcast, MediasfuChat, MediasfuConference, MediasfuGeneric, MediasfuHeadlessService, MediasfuWebinar, MeetingEnded, MeetingProgressTimer, MeetingStillThere, MeetingTimeRemaining, MenuModal, MenuParticipantsWidget, MenuRecordWidget, MenuWidget, MessageParticipants, MessageWidget, MessagesModal, MiniAudio, MiniAudioPlayer, MiniCard, MiniCardAudio, MixStreams, ModernMediasfuGenericHeadComponent, ModernMessagesModalComponent, ModernPollModalComponent, ModernRecordingModalComponent, ModifyCoHostSettings, ModifyDisplaySettings, ModifySettings, MuteParticipants, NewPipeProducer, OPENAI_VOICES, OnScreenChanges, OtherGridComponent, Pagination, PanelistFocusChanged, PanelistsModalComponent, PanelistsUpdated, ParticipantRequested, ParticipantsModal, PermissionConfigUpdated, PermissionUpdated, PermissionsModalComponent, PersonJoined, PollModal, PollUpdated, PreJoinPage, PrepopulateUserMedia, ProcessConsumerTransports, ProcessConsumerTransportsAudio, ProducerClosed, ProducerMediaClosed, ProducerMediaPaused, ProducerMediaResumed, QUALITY_LEVELS, RIME_VOICES, ReInitiateRecording, RePort, ReUpdateInter, Readjust, ReceiveAllPipedTransports, ReceiveControlMedia, ReceiveMessage, ReceiveRoomMessages, RecordPauseTimer, RecordResumeTimer, RecordStartTimer, RecordTimerWidget, RecordUpdateTimer, RecordingModal, RecordingNotice, RemovePanelist, RemoveParticipants, RemovedFromPanelists, ReorderStreams, RequestScreenShare, RequestsModal, RespondToRequests, RespondToWaiting, ResumePauseAudioStreams, ResumePauseStreams, ResumeSendTransportAudio, RoomRecordParams, SUPPORTED_LANGUAGE_CODES, ScreenParams, ScreenProducerId, ScreenShareWidget, Screenboard, ScreenboardModal, SendMessage, ShareEventModal, SignalNewConsumerTransport, SocketManager, SoundPlayer, StartMeetingProgressTimer, StartRecording, StartRecords, StartShareScreen, StopRecording, StopShareScreen, StoppedRecording, StreamSuccessAudio, StreamSuccessAudioSwitch, StreamSuccessScreen, StreamSuccessVideo, SubAspectComponent, SwitchAudio, SwitchUserAudio, SwitchUserVideo, SwitchUserVideoAlt, SwitchVideo, SwitchVideoAlt, TTS_PROVIDERS, TimeLeftRecording, TranslationConsumerSwitch, TranslationReceiveMethods, TranslationSettingsModal, Trigger, UIOverrideResolverService, UpdateConsumingDomains, UpdateMediaSettings, UpdateMiniCardsGrid, UpdateParticipantAudioDecibels, UpdateParticipantPermission, UpdatePermissionConfig, UpdateRecording, UpdateRoomParametersClient, UpdatedCoHost, UserWaiting, VOICE_GENDERS, VParams, ValidateAlphanumeric, VideoCard, WaitingRoomModal, WelcomePage, Whiteboard, WithFunctionOverrideDirective, WithOverrideDirective, clearVoiceCache, connectLocalSendTransportAudio, connectLocalSendTransportScreen, connectLocalSendTransportVideo, createLocalSendTransport, createResponseJoinRoom, disconnectLocalSendTransportAudio, disconnectLocalSendTransportScreen, disconnectLocalSendTransportVideo, fetchLanguagesViaSocket, fetchVoicesViaSocket, formatVoiceOption, getAllLanguages, getAvailableVoices, getDefaultVoice, getDefaultVoiceGender, getLanguageName, getLanguageNativeName, getLanguagesByRegion, getLanguagesWithGoodTTS, getModalPosition, getOverlayPosition, getSupportedLanguages, initialValuesState, isLanguageSupported, isValidLanguageCode, launchCoHost, meetsQualityThreshold, normalizeLanguageCode, setVoiceCacheTTL, sleep, updateMicLevel };
 //# sourceMappingURL=mediasfu-angular.mjs.map

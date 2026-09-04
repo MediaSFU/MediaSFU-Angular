@@ -409,6 +409,7 @@ export declare class MediasfuWebinar implements OnInit, OnDestroy {
     uiOverrides?: MediasfuUICustomOverrides;
     rootContainerStyle: () => Record<string, any>;
     title: string;
+    protected get mainContentHeightFraction(): number;
     protected readonly MainContainerComponentRef: typeof MainContainerComponent;
     protected readonly MainAspectComponentRef: typeof MainAspectComponent;
     protected readonly MainScreenComponentRef: typeof MainScreenComponent;

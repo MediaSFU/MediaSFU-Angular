@@ -1,6 +1,6 @@
 {
   "name": "mediasfu-angular",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "author": "MediaSFU",
   "license": "MIT",
   "description": "mediasfu-angular - Angular 17/18/19 WebRTC SDK for video conferencing, webinars, broadcasts, live streaming, chat, recording, whiteboard, and AI agents. Prebuilt rooms and fully custom UIs.",
@@ -41,7 +41,7 @@
     "zone.js": "^0.15.1"
   },
   "dependencies": {
-    "mediasfu-shared": "^1.1.0",
+    "mediasfu-shared": "^1.2.0",
     "tslib": "^2.8.1"
   },
   "module": "fesm2022/mediasfu-angular.mjs",
