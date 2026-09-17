@@ -355,28 +355,6 @@ Every action returns `{ ok, error }`; make `error` visible. Subscribe with
 timer, or change-detection path because it republishes. Pure reads use
 `getCurrentParams()`.
 
-## Release checklist
-
-- Test microphone/camera denial, no-device state, autoplay policy, device
-  switching, network loss, rejoin, and screen-share ending.
-- Mount every prepared audio component, not only the visible video page.
-- Gate moderation and session controls on permissions and current room state.
-- Stop app-created tracks and await Leave before destroying the room screen.
-- Keep reusable Cloud credentials and privileged operations on your server.
-
-## Documentation
-
-- [Detailed repository guide](README_DETAILED.md)
-- [Usage cookbook](USAGE_COOKBOOK.md)
-- [SDK guides and generated API references](https://mediasfu.com/docs/)
-- [Complete headless guide](https://mediasfu.com/docs/usage/headless)
-- [REST API Sandbox — run GET/POST requests and copy code](https://mediasfu.com/sandbox)
-- [Create and manage MediaSFU API keys](https://mediasfu.com/api-keys)
-- [Developer Console and room API guide](https://mediasfu.com/documentation)
-- [MediaSFU Open — deploy your own media server](https://github.com/MediaSFU/MediaSFUOpen)
-
-## Working examples
-
 ## Virtual backgrounds and breakout rooms in a custom Angular UI
 
 Keep the SDK dialog connected to the latest parameter publication; the room's
@@ -391,15 +369,53 @@ visible validation message in your page. A custom breakout view must perform
 the SDK room transition; merely filtering participant cards does not move a
 participant or pause and resume the correct consumers.
 
+## Host leave and rejoin
+
+Hosts can choose **Leave room** or **End for everyone**. **Leave room** keeps the room running so the host can rejoin later; **End for everyone** closes it for all participants. Programmatic callers pass `endRoomOnHostExit: false` to leave without ending the room; the default is `true`.
+
+## Release checklist
+
+- Test microphone/camera denial, no-device state, autoplay policy, device
+  switching, network loss, rejoin, and screen-share ending.
+- Mount every prepared audio component, not only the visible video page.
+- Gate moderation and session controls on permissions and current room state.
+- Stop app-created tracks and await Leave before destroying the room screen.
+- Keep reusable Cloud credentials and privileged operations on your server.
+
+## Troubleshooting
+
+| What you see | Likely cause | What to do |
+|---|---|---|
+| "Unable to connect. Check your credentials and try again." | The room service rejected the credentials, or your create/join backend returned an error. | Check the API username and key on your server, and make sure your create/join adapters pass the room service's response through. For MediaSFU Open, confirm that `localLink` points to a server the browser can reach. |
+| The camera or microphone never starts | The page is not a secure context, or the browser permission was denied. | Serve the app over HTTPS (or `localhost` during development) and allow camera and microphone access for the site. |
+| "You must turn on your video before you can start recording" | The recording is set to capture video while your camera is off. | Turn the camera on first, or switch the recording to audio only. The same applies to audio recordings and the microphone. |
+| "You can only re-configure recording after pausing it" | Recording settings are locked while a recording is running. | Pause the recording, change the settings, then resume. |
+| "You cannot turn off your camera while recording video…" | Turning the camera off would interrupt the recording. | Pause or stop the recording first. |
+| A message ending in "Access denied by host." | The host has restricted that action for participants. | Ask the host to change the participant's permissions. |
+| "Screen share is not allowed when whiteboard is active" | Screen sharing and the whiteboard cannot run at the same time. | Close the whiteboard, then start screen sharing. |
+
+## Documentation
+
+- [Detailed repository guide](README_DETAILED.md)
+- [Changelog](CHANGELOG.md)
+- [Usage cookbook](USAGE_COOKBOOK.md)
+- [SDK guides and generated API references](https://mediasfu.com/docs/)
+- [Complete headless guide](https://mediasfu.com/docs/usage/headless)
+- [REST API Sandbox — run GET/POST requests and copy code](https://mediasfu.com/sandbox)
+- [Create and manage MediaSFU API keys](https://mediasfu.com/api-keys)
+- [Developer Console and room API guide](https://mediasfu.com/documentation)
+- [MediaSFU Open — deploy your own media server](https://github.com/MediaSFU/MediaSFUOpen)
+
+## Working examples
+
+- [Familiar Calls](https://github.com/MediaSFU/mediasfu-familiar-calls) — chat-style audio and video calling with incoming-call accept/decline; includes an Angular app and one shared backend.
+- [Live Auction](https://github.com/MediaSFU/mediasfu-live-auction) — host and bidder views, timed lots, and live media; includes an Angular app.
+- [Watch Together](https://github.com/MediaSFU/mediasfu-watch-together) — a watch party with a realtime conversation floor and HLS audience; includes an Angular app.
 - [MediaSFU QuickStart Apps](https://github.com/MediaSFU/MediaSFU-QuickStart-Apps) — runnable Cloud, MediaSFU Open, custom-prejoin, backend-proxy, and custom-UI examples across SDKs.
 - [SpacesTek Initial](https://github.com/MediaSFU/SpacesTekInitial) → [Final](https://github.com/MediaSFU/SpacesTekFinal) → [Advanced](https://github.com/MediaSFU/SpacesTekAdvanced) — a staged path from a starter room to a product-owned Spaces-style experience.
 - [MediaSFU Agents](https://github.com/MediaSFU/Agents) — multimodal voice/vision agent starters across supported frameworks.
 - [MediaSFU VOIP](https://github.com/MediaSFU/VOIP) — telephony, dialer, room-lifecycle, and agent/human handoff reference clients.
 
 ## License
-
-### Host leave and rejoin
-
-Hosts now see **Leave room** and **End for everyone**. The first keeps the room active and allows rejoin. Programmatic callers pass `endRoomOnHostExit: false`; existing calls default to `true`.
 
 MIT. See [LICENSE](LICENSE).
