@@ -13,6 +13,7 @@ const requireText = (source, text, message) => {
 requireText(generic, '<ng-template #standardUiTemplate>', 'generic must declare its exact UI template');
 requireText(generic, '*ngIf="!renderUIExternally"', 'generic must suppress only its local outlet');
 requireText(generic, '*ngIf="hasStandardUI && !customMainComponent"', 'external rendering must retain the complete standard tree');
+requireText(generic, '*ngIf="hasStandardUI && !customMainComponent"', 'external rendering must retain the complete standard tree');
 requireText(generic, 'renderModernMediasfuUITemplate: this.standardUiTemplate', 'generic must publish the declared template');
 requireText(head, 'this.parameters?.getCurrentParams?.() ?? this.parameters', 'head must use the pure current reader');
 if (head.includes('getUpdatedAllParams')) throw new Error('head must never invoke the publishing getter');

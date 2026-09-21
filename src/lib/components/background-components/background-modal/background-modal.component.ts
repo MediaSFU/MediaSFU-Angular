@@ -15,6 +15,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as SelfieSegmentationPackage from '@mediapipe/selfie_segmentation';
 import type { SelfieSegmentation } from '@mediapipe/selfie_segmentation';
 import {
+  compositeVirtualBackgroundFrame,
+  DEFAULT_BACKGROUND_BLUR_PIXELS,
+  isVirtualBackgroundBlur,
+  VIRTUAL_BACKGROUND_BLUR,
+} from 'mediasfu-shared';
+import {
   ConnectSendTransportVideoParameters,
   ConnectSendTransportVideoType,
   CreateSendTransportParameters,
@@ -547,8 +553,10 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
 
       this.renderDefaultImages();
 
-      if (this.selectedImage) {
+      if (this.selectedImage && !isVirtualBackgroundBlur(this.selectedImage)) {
         await this.loadImageToCanvas(this.selectedImage, this.selectedImage);
+      } else if (isVirtualBackgroundBlur(this.selectedImage)) {
+        this.selectBlurBackground();
       } else {
         this.clearCanvas();
         this.backgroundCanvasRef.nativeElement.classList.remove('d-none');
@@ -640,6 +648,20 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
       defaultImagesContainer.appendChild(img);
     });
 
+    const blurBackground = document.createElement('div');
+    blurBackground.classList.add('img-thumbnail', 'm-1', 'd-flex', 'align-items-center', 'justify-content-center');
+    blurBackground.setAttribute('role', 'button');
+    blurBackground.setAttribute('aria-label', 'Blur background');
+    blurBackground.style.width = '76px';
+    blurBackground.style.minHeight = '60px';
+    blurBackground.style.cursor = 'pointer';
+    blurBackground.style.color = '#e2e8f0';
+    blurBackground.style.fontWeight = '600';
+    blurBackground.style.background = 'linear-gradient(135deg, rgba(96,165,250,.45), rgba(15,23,42,.92))';
+    blurBackground.textContent = 'Blur';
+    blurBackground.addEventListener('click', () => this.selectBlurBackground());
+    defaultImagesContainer.appendChild(blurBackground);
+
     const noBackgroundImg = document.createElement('div');
     noBackgroundImg.classList.add(
       'img-thumbnail',
@@ -678,6 +700,27 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
         await this.loadImageToCanvas(this.customImage, this.customImage);
       });
       defaultImagesContainer.appendChild(img);
+    }
+  }
+
+  selectBlurBackground() {
+    this.selectedImage = VIRTUAL_BACKGROUND_BLUR;
+    this.customImage = '';
+    this.updateSelectedImage(VIRTUAL_BACKGROUND_BLUR);
+    this.updateCustomImage('');
+    this.clearCanvas();
+    const canvas = this.backgroundCanvasRef?.nativeElement as HTMLCanvasElement | undefined;
+    const context = canvas?.getContext('2d');
+    if (canvas && context) {
+      context.fillStyle = '#1e293b';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = '#e2e8f0';
+      context.font = '600 26px Arial';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillText('Blur', canvas.width / 2, canvas.height / 2);
+      canvas.classList.remove('d-none');
+      this.videoPreviewRef?.nativeElement.classList.add('d-none');
     }
   }
 
@@ -852,11 +895,12 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
   async selfieSegmentationPreview(doSegmentation: boolean) {
     const refVideo = this.captureVideoRef.nativeElement;
     const previewVideo = this.videoPreviewRef.nativeElement;
+    const useBlur = isVirtualBackgroundBlur(this.selectedImage);
     const virtualImage = new Image();
     virtualImage.crossOrigin = 'anonymous';
-    virtualImage.src = this.selectedImage;
+    virtualImage.src = useBlur ? '' : this.selectedImage;
 
-    if (doSegmentation && this.selectedImage) {
+    if (doSegmentation && this.selectedImage && !useBlur) {
       await new Promise<void>((resolve) => {
         if (virtualImage.complete && virtualImage.naturalWidth > 0) {
           resolve();
@@ -917,33 +961,23 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
           mediaCanvas &&
           mediaCanvas.width > 0 &&
           mediaCanvas.height > 0 &&
-          virtualImage.width > 0 &&
-          virtualImage.height > 0
+          (useBlur || (virtualImage.width > 0 && virtualImage.height > 0))
         ) {
-          ctx!.save();
-          try {
-            ctx!.clearRect(0, 0, mediaCanvas.width, mediaCanvas.height);
-            ctx!.globalCompositeOperation = 'source-over';
-            ctx!.drawImage(results.segmentationMask, 0, 0, mediaCanvas.width, mediaCanvas.height);
-
-            ctx!.globalCompositeOperation = 'source-in';
-            ctx!.drawImage(results.image, 0, 0, mediaCanvas.width, mediaCanvas.height);
-
-            ctx!.globalCompositeOperation = 'destination-over';
-            const repeatPattern =
-              virtualImage.width < mediaCanvas.width || virtualImage.height < mediaCanvas.height
-                ? 'repeat'
-                : 'no-repeat';
-            const pat = ctx!.createPattern(virtualImage, repeatPattern);
-            if (pat) {
-              ctx!.fillStyle = pat;
-            }
-            ctx!.fillRect(0, 0, mediaCanvas.width, mediaCanvas.height);
-
-            markFirstFrameRendered();
-          } finally {
-            ctx!.restore();
-          }
+          const repeatPattern = !useBlur &&
+            (virtualImage.width < mediaCanvas.width || virtualImage.height < mediaCanvas.height)
+              ? 'repeat'
+              : 'no-repeat';
+          compositeVirtualBackgroundFrame({
+            ctx: ctx!,
+            segmentationMask: results.segmentationMask,
+            sourceImage: results.image,
+            backgroundImage: useBlur ? null : virtualImage,
+            width: mediaCanvas.width,
+            height: mediaCanvas.height,
+            repeatPattern,
+            blurFallbackPixels: useBlur ? DEFAULT_BACKGROUND_BLUR_PIXELS : 0,
+          });
+          markFirstFrameRendered();
         }
       } catch (error) {
         console.log('Error processing results:', error);

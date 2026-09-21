@@ -1,6 +1,6 @@
 import * as i0 from '@angular/core';
 import { Injectable, Input, Optional, Inject, Component, ViewChild, HostListener, Injector, EventEmitter, Output, ContentChildren, forwardRef, ViewEncapsulation, InjectionToken, TemplateRef, Directive } from '@angular/core';
-import { joinConsumeRoom, producerClosed, newPipeProducer, getOverlayPosition as getOverlayPosition$1, translationRoomConfig, translationConfigUpdated, translationLanguageSet, translationSubscribed, translationUnsubscribed, translationProducerReady, translationProducerClosed, translationChannelsAvailable, translationMemberState, translationError, translationTranscript, translationSpeakerOutputChanged, controlMedia, isSubtitleExpired, autoAdjust, calculateRowsAndColumns, changeVids, checkGrid, checkPermission, checkScreenShare, closeAndResize, compareActiveNames, compareScreenStates, connectIps, connectLocalIps, connectRecvTransport, connectSendTransport, connectSendTransportAudio, connectSendTransportScreen, connectSendTransportVideo, createSendTransport, disconnectSendTransportAudio, disconnectSendTransportVideo, disconnectSendTransportScreen, dispStreams, generatePageContent, getEstimate, getPipedProducersAlt, getProducersPiped, getVideos, mixStreams, onScreenChanges, processConsumerTransports, processConsumerTransportsAudio, readjust, receiveAllPipedTransports, reorderStreams, rePort, requestScreenShare, resumePauseAudioStreams, resumePauseStreams, resumeSendTransportAudio, reUpdateInter, signalNewConsumerTransport, startShareScreen, stopShareScreen, streamSuccessAudio, streamSuccessAudioSwitch, streamSuccessScreen, switchUserAudio, clickVideo, switchUserVideo, switchUserVideoAlt, trigger, updateMiniCardsGrid, updateParticipantAudioDecibels, aParams, hParams, screenParams, vParams, launchBackground, launchBreakoutRooms, breakoutRoomUpdated, launchCoHost as launchCoHost$1, modifyCoHostSettings, launchDisplaySettings, modifyDisplaySettings, launchConfirmExit, confirmExit, launchMediaSettings, launchMenuModal, launchMessages, launchParticipants, messageParticipants, muteParticipants, removeParticipants, handleCreatePoll, handleEndPoll, handleVotePoll, launchPoll, pollUpdated, checkPauseState, checkResumeState, confirmRecording, launchRecording, recordPauseTimer, recordResumeTimer, recordStartTimer, recordUpdateTimer, startRecording, stopRecording, updateRecording, launchRequests, respondToRequests, launchSettings, modifySettings, clickAudio, clickChat, clickScreenShare, switchAudio, switchVideo, switchVideoAlt, joinRoomOnMediaSFU, formatNumber, getModalPosition as getModalPosition$1, sleep as sleep$1, validateAlphanumeric, launchWaiting, respondToWaiting, launchConfigureWhiteboard, createDeviceClient, joinRoomClient, updateRoomParametersClient, joinConRoom, joinRoom, checkMediasfuURL, joinLocalRoom, allMembers, allMembersRest, allWaitingRoomMembers, banParticipant, controlMediaHost, disconnect, disconnectUserSelf, getDomains, hostRequestResponse, meetingEnded, meetingStillThere, meetingTimeRemaining, participantRequested, personJoined, producerMediaClosed, producerMediaPaused, producerMediaResumed, reInitiateRecording, receiveMessage, recordingNotice, roomRecordParams, screenProducerId, startRecords, stoppedRecording, timeLeftRecording, updateConsumingDomains, updateMediaSettings, updatedCoHost, userWaiting, connectSocket, connectLocalSocket, disconnectSocket, checkLimitsAndMakeRequest, createRoomOnMediaSFU, SUPPORTED_LANGUAGE_CODES as SUPPORTED_LANGUAGE_CODES$1, isLanguageSupported as isLanguageSupported$1, normalizeLanguageCode as normalizeLanguageCode$1, getLanguageName as getLanguageName$1, getLanguageNativeName as getLanguageNativeName$1, getSupportedLanguages as getSupportedLanguages$1, getLanguageMetadata, addPanelist, removePanelist, focusPanelists, updateParticipantPermission, bulkUpdateParticipantPermissions, updatePermissionConfig, isSpeakerInMyBreakoutRoom, pauseOriginalProducer, resumeOriginalProducer, isConsumingTranslationForSpeaker, getActiveTranslationConsumers, findOriginalProducerForSpeaker, stopConsumingTranslation, syncTranslationStateAfterBreakoutChange, panelistsUpdated, panelistFocusChanged, panelistControlMedia, addedAsPanelist, removedFromPanelists, permissionUpdated, permissionConfigUpdated, receiveRoomMessages, createResponseJoinRoom as createResponseJoinRoom$1, createLiveSubtitle, SoundPlayer as SoundPlayer$1, getRoomReadiness, getLocalVideoStream, getLocalAudioStream, getRemoteVideoStreams, getScreenShareStream, getAudioGridComponents, listParticipantMediaStates, getModerationPermissions, getRecordingState, getWhiteboardState, getPollState, getBreakoutState, leaveRoom, sendChatMessage, flipCamera, switchCamera, switchMicrophone, runMediaControl, setCoHost, respondToParticipantRequest, respondToWaitingParticipant, removeParticipant, muteEveryone, setParticipantMedia, stopParticipantScreenShare, disableParticipantVideo, muteParticipant, endRoomPoll, voteInRoomPoll, createRoomPoll, stopWhiteboard, startWhiteboard, stopRoomRecording, resumeRoomRecording, pauseRoomRecording, startRoomRecording, stopProducing, replaceProducerTrack, produceDisplay, produceElement, produceCanvas, produceMedia } from 'mediasfu-shared';
+import { joinConsumeRoom, producerClosed, newPipeProducer, getOverlayPosition as getOverlayPosition$1, translationRoomConfig, translationConfigUpdated, translationLanguageSet, translationSubscribed, translationUnsubscribed, translationProducerReady, translationProducerClosed, translationChannelsAvailable, translationMemberState, translationError, translationTranscript, translationSpeakerOutputChanged, controlMedia, isSubtitleExpired, autoAdjust, calculateRowsAndColumns, changeVids, checkGrid, checkPermission, checkScreenShare, closeAndResize, compareActiveNames, compareScreenStates, connectIps, connectLocalIps, connectRecvTransport, connectSendTransport, connectSendTransportAudio, connectSendTransportScreen, connectSendTransportVideo, createSendTransport, disconnectSendTransportAudio, disconnectSendTransportVideo, disconnectSendTransportScreen, dispStreams, generatePageContent, getEstimate, getPipedProducersAlt, getProducersPiped, getVideos, mixStreams, onScreenChanges, processConsumerTransports, processConsumerTransportsAudio, readjust, receiveAllPipedTransports, reorderStreams, rePort, requestScreenShare, resumePauseAudioStreams, resumePauseStreams, resumeSendTransportAudio, reUpdateInter, signalNewConsumerTransport, startShareScreen, stopShareScreen, streamSuccessAudio, streamSuccessAudioSwitch, streamSuccessScreen, switchUserAudio, clickVideo, switchUserVideo, switchUserVideoAlt, trigger, updateMiniCardsGrid, updateParticipantAudioDecibels, aParams, hParams, screenParams, vParams, launchBackground, launchBreakoutRooms, breakoutRoomUpdated, launchCoHost as launchCoHost$1, modifyCoHostSettings, launchDisplaySettings, modifyDisplaySettings, launchConfirmExit, confirmExit, launchMediaSettings, launchMenuModal, launchMessages, launchParticipants, messageParticipants, muteParticipants, removeParticipants, handleCreatePoll, handleEndPoll, handleVotePoll, launchPoll, pollUpdated, checkPauseState, checkResumeState, confirmRecording, launchRecording, recordPauseTimer, recordResumeTimer, recordStartTimer, recordUpdateTimer, startRecording, stopRecording, updateRecording, launchRequests, respondToRequests, launchSettings, modifySettings, clickAudio, clickChat, clickScreenShare, switchAudio, switchVideo, switchVideoAlt, joinRoomOnMediaSFU, formatNumber, getModalPosition as getModalPosition$1, sleep as sleep$1, validateAlphanumeric, launchWaiting, respondToWaiting, launchConfigureWhiteboard, createDeviceClient, joinRoomClient, updateRoomParametersClient, joinConRoom, joinRoom, checkMediasfuURL, joinLocalRoom, allMembers, allMembersRest, allWaitingRoomMembers, banParticipant, controlMediaHost, disconnect, disconnectUserSelf, getDomains, hostRequestResponse, meetingEnded, meetingStillThere, meetingTimeRemaining, participantRequested, personJoined, producerMediaClosed, producerMediaPaused, producerMediaResumed, reInitiateRecording, receiveMessage, recordingNotice, roomRecordParams, screenProducerId, startRecords, stoppedRecording, timeLeftRecording, updateConsumingDomains, updateMediaSettings, updatedCoHost, userWaiting, connectSocket, connectLocalSocket, disconnectSocket, isVirtualBackgroundBlur, VIRTUAL_BACKGROUND_BLUR, compositeVirtualBackgroundFrame, DEFAULT_BACKGROUND_BLUR_PIXELS, checkLimitsAndMakeRequest, createRoomOnMediaSFU, SUPPORTED_LANGUAGE_CODES as SUPPORTED_LANGUAGE_CODES$1, isLanguageSupported as isLanguageSupported$1, normalizeLanguageCode as normalizeLanguageCode$1, getLanguageName as getLanguageName$1, getLanguageNativeName as getLanguageNativeName$1, getSupportedLanguages as getSupportedLanguages$1, getLanguageMetadata, addPanelist, removePanelist, focusPanelists, updateParticipantPermission, bulkUpdateParticipantPermissions, updatePermissionConfig, isSpeakerInMyBreakoutRoom, pauseOriginalProducer, resumeOriginalProducer, isConsumingTranslationForSpeaker, getActiveTranslationConsumers, findOriginalProducerForSpeaker, stopConsumingTranslation, syncTranslationStateAfterBreakoutChange, panelistsUpdated, panelistFocusChanged, panelistControlMedia, addedAsPanelist, removedFromPanelists, permissionUpdated, permissionConfigUpdated, receiveRoomMessages, createResponseJoinRoom as createResponseJoinRoom$1, createLiveSubtitle, SoundPlayer as SoundPlayer$1, getRoomReadiness, getLocalVideoStream, getLocalAudioStream, getRemoteVideoStreams, getScreenShareStream, getAudioGridComponents, listParticipantMediaStates, getModerationPermissions, getRecordingState, getWhiteboardState, getPollState, getBreakoutState, leaveRoom, sendChatMessage, flipCamera, switchCamera, switchMicrophone, runMediaControl, setCoHost, respondToParticipantRequest, respondToWaitingParticipant, removeParticipant, muteEveryone, setParticipantMedia, stopParticipantScreenShare, disableParticipantVideo, muteParticipant, endRoomPoll, voteInRoomPoll, createRoomPoll, stopWhiteboard, startWhiteboard, stopRoomRecording, resumeRoomRecording, pauseRoomRecording, startRoomRecording, stopProducing, replaceProducerTrack, produceDisplay, produceElement, produceCanvas, produceMedia } from 'mediasfu-shared';
 export { createLiveSubtitle, isSubtitleExpired } from 'mediasfu-shared';
 import * as i1 from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -16583,8 +16583,11 @@ class BackgroundModal {
             }
             this.syncMainCanvasRef();
             this.renderDefaultImages();
-            if (this.selectedImage) {
+            if (this.selectedImage && !isVirtualBackgroundBlur(this.selectedImage)) {
                 await this.loadImageToCanvas(this.selectedImage, this.selectedImage);
+            }
+            else if (isVirtualBackgroundBlur(this.selectedImage)) {
+                this.selectBlurBackground();
             }
             else {
                 this.clearCanvas();
@@ -16670,6 +16673,19 @@ class BackgroundModal {
             });
             defaultImagesContainer.appendChild(img);
         });
+        const blurBackground = document.createElement('div');
+        blurBackground.classList.add('img-thumbnail', 'm-1', 'd-flex', 'align-items-center', 'justify-content-center');
+        blurBackground.setAttribute('role', 'button');
+        blurBackground.setAttribute('aria-label', 'Blur background');
+        blurBackground.style.width = '76px';
+        blurBackground.style.minHeight = '60px';
+        blurBackground.style.cursor = 'pointer';
+        blurBackground.style.color = '#e2e8f0';
+        blurBackground.style.fontWeight = '600';
+        blurBackground.style.background = 'linear-gradient(135deg, rgba(96,165,250,.45), rgba(15,23,42,.92))';
+        blurBackground.textContent = 'Blur';
+        blurBackground.addEventListener('click', () => this.selectBlurBackground());
+        defaultImagesContainer.appendChild(blurBackground);
         const noBackgroundImg = document.createElement('div');
         noBackgroundImg.classList.add('img-thumbnail', 'm-1', 'd-flex', 'align-items-center', 'justify-content-center');
         noBackgroundImg.style.width = '76px';
@@ -16701,6 +16717,26 @@ class BackgroundModal {
                 await this.loadImageToCanvas(this.customImage, this.customImage);
             });
             defaultImagesContainer.appendChild(img);
+        }
+    }
+    selectBlurBackground() {
+        this.selectedImage = VIRTUAL_BACKGROUND_BLUR;
+        this.customImage = '';
+        this.updateSelectedImage(VIRTUAL_BACKGROUND_BLUR);
+        this.updateCustomImage('');
+        this.clearCanvas();
+        const canvas = this.backgroundCanvasRef?.nativeElement;
+        const context = canvas?.getContext('2d');
+        if (canvas && context) {
+            context.fillStyle = '#1e293b';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = '#e2e8f0';
+            context.font = '600 26px Arial';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillText('Blur', canvas.width / 2, canvas.height / 2);
+            canvas.classList.remove('d-none');
+            this.videoPreviewRef?.nativeElement.classList.add('d-none');
         }
     }
     async handleImageUpload(event) {
@@ -16838,10 +16874,11 @@ class BackgroundModal {
     async selfieSegmentationPreview(doSegmentation) {
         const refVideo = this.captureVideoRef.nativeElement;
         const previewVideo = this.videoPreviewRef.nativeElement;
+        const useBlur = isVirtualBackgroundBlur(this.selectedImage);
         const virtualImage = new Image();
         virtualImage.crossOrigin = 'anonymous';
-        virtualImage.src = this.selectedImage;
-        if (doSegmentation && this.selectedImage) {
+        virtualImage.src = useBlur ? '' : this.selectedImage;
+        if (doSegmentation && this.selectedImage && !useBlur) {
             await new Promise((resolve) => {
                 if (virtualImage.complete && virtualImage.naturalWidth > 0) {
                     resolve();
@@ -16893,29 +16930,22 @@ class BackgroundModal {
                     mediaCanvas &&
                     mediaCanvas.width > 0 &&
                     mediaCanvas.height > 0 &&
-                    virtualImage.width > 0 &&
-                    virtualImage.height > 0) {
-                    ctx.save();
-                    try {
-                        ctx.clearRect(0, 0, mediaCanvas.width, mediaCanvas.height);
-                        ctx.globalCompositeOperation = 'source-over';
-                        ctx.drawImage(results.segmentationMask, 0, 0, mediaCanvas.width, mediaCanvas.height);
-                        ctx.globalCompositeOperation = 'source-in';
-                        ctx.drawImage(results.image, 0, 0, mediaCanvas.width, mediaCanvas.height);
-                        ctx.globalCompositeOperation = 'destination-over';
-                        const repeatPattern = virtualImage.width < mediaCanvas.width || virtualImage.height < mediaCanvas.height
-                            ? 'repeat'
-                            : 'no-repeat';
-                        const pat = ctx.createPattern(virtualImage, repeatPattern);
-                        if (pat) {
-                            ctx.fillStyle = pat;
-                        }
-                        ctx.fillRect(0, 0, mediaCanvas.width, mediaCanvas.height);
-                        markFirstFrameRendered();
-                    }
-                    finally {
-                        ctx.restore();
-                    }
+                    (useBlur || (virtualImage.width > 0 && virtualImage.height > 0))) {
+                    const repeatPattern = !useBlur &&
+                        (virtualImage.width < mediaCanvas.width || virtualImage.height < mediaCanvas.height)
+                        ? 'repeat'
+                        : 'no-repeat';
+                    compositeVirtualBackgroundFrame({
+                        ctx: ctx,
+                        segmentationMask: results.segmentationMask,
+                        sourceImage: results.image,
+                        backgroundImage: useBlur ? null : virtualImage,
+                        width: mediaCanvas.width,
+                        height: mediaCanvas.height,
+                        repeatPattern,
+                        blurFallbackPixels: useBlur ? DEFAULT_BACKGROUND_BLUR_PIXELS : 0,
+                    });
+                    markFirstFrameRendered();
                 }
             }
             catch (error) {

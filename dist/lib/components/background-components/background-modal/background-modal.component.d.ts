@@ -202,6 +202,7 @@ export declare class BackgroundModal implements OnChanges, OnInit, OnDestroy {
     onVisibilityChange: () => Promise<void>;
     preloadModel(): Promise<void>;
     renderDefaultImages(): void;
+    selectBlurBackground(): void;
     handleImageUpload(event: Event): Promise<void>;
     clearCanvas(): void;
     loadImageToCanvas(src: string, fullSrc: string): Promise<void>;
