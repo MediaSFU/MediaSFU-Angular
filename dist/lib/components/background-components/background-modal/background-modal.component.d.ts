@@ -108,6 +108,8 @@ export type BackgroundModalType = (options: BackgroundModalOptions) => HTMLEleme
  */
 export declare class BackgroundModal implements OnChanges, OnInit, OnDestroy {
     isVisible: boolean;
+    /** Best-effort processing in hidden browser tabs, for blur and images. */
+    keepProcessingWhenHidden: boolean;
     parameters: BackgroundModalParameters;
     position: string;
     backgroundColor: string;
@@ -157,7 +159,7 @@ export declare class BackgroundModal implements OnChanges, OnInit, OnDestroy {
     clonedStream: MediaStream | null;
     clonedTrack: MediaStreamTrack | null;
     private previewLoopVersion;
-    private previewAnimationFrameId;
+    private stopPreviewFrameLoop;
     private previewCaptureTimeoutId;
     updateCustomImage: (value: string) => void;
     updateSelectedImage: (value: string) => void;
@@ -1226,6 +1228,6 @@ export declare class BackgroundModal implements OnChanges, OnInit, OnDestroy {
         setProperty?: (property: string, value: string | null, priority?: string) => void;
     };
     static ɵfac: i0.ɵɵFactoryDeclaration<BackgroundModal, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<BackgroundModal, "app-background-modal", never, { "isVisible": { "alias": "isVisible"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "onClose": { "alias": "onClose"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; "renderMode": { "alias": "renderMode"; "required": false; }; "showHeader": { "alias": "showHeader"; "required": false; }; }, {}, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BackgroundModal, "app-background-modal", never, { "isVisible": { "alias": "isVisible"; "required": false; }; "keepProcessingWhenHidden": { "alias": "keepProcessingWhenHidden"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "position": { "alias": "position"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "isDarkMode": { "alias": "isDarkMode"; "required": false; }; "onClose": { "alias": "onClose"; "required": false; }; "overlayStyle": { "alias": "overlayStyle"; "required": false; }; "contentStyle": { "alias": "contentStyle"; "required": false; }; "customTemplate": { "alias": "customTemplate"; "required": false; }; "renderMode": { "alias": "renderMode"; "required": false; }; "showHeader": { "alias": "showHeader"; "required": false; }; }, {}, never, never, true, never>;
 }
 export {};

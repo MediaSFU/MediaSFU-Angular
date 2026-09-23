@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { resolveSidePanelForceFullDisplay } from 'mediasfu-shared';
 import { MiniCard } from '../components/display-components/mini-card/mini-card.component';
 import { VideoCard } from '../components/display-components/video-card/video-card.component';
 import { AudioCard } from '../components/display-components/audio-card/audio-card.component';
@@ -24,6 +25,8 @@ export interface AddVideosGridParameters
   keepBackground: boolean;
   virtualStream: MediaStream | null;
   forceFullDisplay: boolean;
+  shared?: boolean;
+  shareScreenStarted?: boolean;
   otherGridStreams: CustomMediaComponent[][];
   updateOtherGridStreams: (otherGridStreams: CustomMediaComponent[][]) => void;
 
@@ -137,6 +140,8 @@ export class AddVideosGrid {
       keepBackground,
       virtualStream,
       forceFullDisplay,
+      shared,
+      shareScreenStarted,
       otherGridStreams,
       updateOtherGridStreams,
       updateMiniCardsGrid,
@@ -158,6 +163,11 @@ export class AddVideosGrid {
     let participant_ = null;
 
     numtoadd = mainGridStreams.length;
+    const sidePanelForceFullDisplay = resolveSidePanelForceFullDisplay({
+      forceFullDisplay,
+      screenShareActive: !!(shared || shareScreenStarted),
+      itemCount: numtoadd + (removeAltGrid ? 0 : altGridStreams.length),
+    });
 
     if (removeAltGrid) {
       updateAddAltGrid(false);
@@ -244,7 +254,7 @@ export class AddVideosGrid {
                 videoStream: participant.stream ? participant.stream : null,
                 remoteProducerId: participant.stream ? participant.stream.id : null,
                 eventType,
-                forceFullDisplay: eventType == 'webinar' ? false : forceFullDisplay,
+                forceFullDisplay: eventType == 'webinar' ? false : sidePanelForceFullDisplay,
                 participant: participant,
                 showControls: false,
                 showInfo: false,
@@ -263,7 +273,7 @@ export class AddVideosGrid {
                 videoStream: participant.stream ? participant.stream : null,
                 remoteProducerId,
                 eventType,
-                forceFullDisplay,
+                forceFullDisplay: sidePanelForceFullDisplay,
                 participant: participant_,
                 showControls: eventType !== 'chat',
                 showInfo: true,
@@ -360,7 +370,7 @@ export class AddVideosGrid {
               videoStream: participant_ && participant_['stream'] ? participant_['stream'] : null,
               remoteProducerId,
               eventType,
-              forceFullDisplay,
+              forceFullDisplay: sidePanelForceFullDisplay,
               participant: participant_,
               showControls: eventType !== 'chat',
               showInfo: true,

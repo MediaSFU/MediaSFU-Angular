@@ -72,6 +72,7 @@ export interface ClickAudioParameters
 }
 
 export interface ClickAudioOptions {
+  audioProcessing?: { echoCancellation?: boolean; noiseSuppression?: boolean; autoGainControl?: boolean };
   parameters: ClickAudioParameters;
 }
 
@@ -197,9 +198,10 @@ export class ClickAudio {
    * The function makes use of several helper functions and state update functions passed in through the parameters.
    */
 
-  async clickAudio({ parameters }: ClickAudioOptions): Promise<void> {
+  async clickAudio({ parameters, audioProcessing }: ClickAudioOptions): Promise<void> {
     await sharedClickAudio(
       {
+        audioProcessing,
         parameters: {
           mediaDevices: navigator.mediaDevices,
           ...parameters,

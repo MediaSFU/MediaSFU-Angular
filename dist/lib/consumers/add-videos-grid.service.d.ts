@@ -10,6 +10,8 @@ export interface AddVideosGridParameters extends UpdateMiniCardsGridParameters, 
     keepBackground: boolean;
     virtualStream: MediaStream | null;
     forceFullDisplay: boolean;
+    shared?: boolean;
+    shareScreenStarted?: boolean;
     otherGridStreams: CustomMediaComponent[][];
     updateOtherGridStreams: (otherGridStreams: CustomMediaComponent[][]) => void;
     customVideoCard?: any;

@@ -50,6 +50,11 @@ export interface ClickAudioParameters extends DisconnectSendTransportAudioParame
     [key: string]: any;
 }
 export interface ClickAudioOptions {
+    audioProcessing?: {
+        echoCancellation?: boolean;
+        noiseSuppression?: boolean;
+        autoGainControl?: boolean;
+    };
     parameters: ClickAudioParameters;
 }
 export type ClickAudioType = (options: ClickAudioOptions) => Promise<void>;
@@ -167,7 +172,7 @@ export declare class ClickAudio {
      *
      * The function makes use of several helper functions and state update functions passed in through the parameters.
      */
-    clickAudio({ parameters }: ClickAudioOptions): Promise<void>;
+    clickAudio({ parameters, audioProcessing }: ClickAudioOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ClickAudio, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<ClickAudio>;
 }

@@ -494,6 +494,7 @@ export type SeedData = {
 };
 
 export interface MeetingRoomParams {
+  backendAudioDenoise?: { enabled: boolean; profile?: 'arnndn' }; // Optional; omitted uses the account preset.
   itemPageLimit: number; // Limit for items per page
   mediaType: 'audio' | 'video'; // Type of media, could be audio or video
   addCoHost: boolean; // Whether co-hosts can be added
@@ -534,6 +535,7 @@ export interface RecordingParams {
 }
 
 export interface CreateRoomOptions {
+  backendAudioDenoise?: { enabled: boolean; profile?: 'arnndn' };
   action: 'create' | 'join'; // Either 'create' or 'join' based on the requirement
   meetingID: string; // The meeting ID, initially an empty string
   duration: number; // Duration of the meeting in minutes
@@ -556,6 +558,7 @@ export interface CreateRoomOptions {
 }
 
 export interface CreateMediaSFURoomOptions {
+  backendAudioDenoise?: { enabled: boolean; profile?: 'arnndn' };
   action: 'create'; // 'create' action
   duration: number; // Duration of the meeting in minutes
   capacity: number; // Max number of participants allowed

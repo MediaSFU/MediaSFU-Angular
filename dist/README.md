@@ -363,6 +363,20 @@ For local preview, bind to `MediasfuHeadlessService.localVideo$`. It already
 resolves an active `virtualStream` ahead of the raw camera, matching what remote
 participants receive.
 
+The background dialog includes **Blur** alongside image backgrounds. Fully
+custom web UIs can invoke the same shared room lifecycle directly:
+
+```ts
+import { applyBackgroundBlur, clearVirtualBackground } from 'mediasfu-shared';
+
+await applyBackgroundBlur({ parameters: latestRoomParameters, blurPixels: 16 });
+await clearVirtualBackground({ parameters: latestRoomParameters });
+```
+
+Turn the camera on before applying an effect. Keep the parameters current and
+render `localVideo$`; do not create a second canvas pipeline or choose the raw
+camera stream yourself.
+
 For breakout rooms, reuse `BreakoutRoomsModal` with the current room parameters
 when you want the built-in planner. Save assignments before Start and render a
 visible validation message in your page. A custom breakout view must perform

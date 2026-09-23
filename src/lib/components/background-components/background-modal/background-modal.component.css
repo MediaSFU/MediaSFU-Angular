@@ -349,15 +349,17 @@
 
 .background-modal__actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .background-modal__action {
   border: none;
   border-radius: 999px;
-  padding: 11px 18px;
-  font-weight: 700;
+  min-height: 34px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
 }
 

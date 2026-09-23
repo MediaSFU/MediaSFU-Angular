@@ -470,8 +470,8 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     alertOverrideProps: () => {
         visible: boolean;
         message: string;
-        type: "danger" | "success" | "info" | "warning";
-        position: "center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
+        type: "success" | "danger" | "info" | "warning";
+        position: "top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
         duration: number;
         onHide: () => void;
         isDarkMode: boolean;
@@ -703,8 +703,8 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "danger" | "success" | "info" | "warning";
-            alertPosition: "center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
+            alertType: "success" | "danger" | "info" | "warning";
+            alertPosition: "top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -726,7 +726,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "all" | "video" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -1362,8 +1362,8 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             totalReqWait: number;
             alertVisible: boolean;
             alertMessage: string;
-            alertType: "danger" | "success" | "info" | "warning";
-            alertPosition: "center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
+            alertType: "success" | "danger" | "info" | "warning";
+            alertPosition: "top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
             alertDuration: number;
             progressTimerVisible: boolean;
             progressTimerValue: number;
@@ -1385,7 +1385,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
             recordingVideoOptions: string;
             recordingVideoType: string;
             recordingVideoOptimized: boolean;
-            recordingDisplayType: "video" | "media" | "all";
+            recordingDisplayType: "all" | "video" | "media";
             recordingAddHLS: boolean;
             recordingAddText: boolean;
             recordingCustomText: string;
@@ -2347,8 +2347,8 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     totalReqWait: BehaviorSubject<number>;
     alertVisible: BehaviorSubject<boolean>;
     alertMessage: BehaviorSubject<string>;
-    alertType: BehaviorSubject<"danger" | "success" | "info" | "warning">;
-    alertPosition: BehaviorSubject<"center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left">;
+    alertType: BehaviorSubject<"success" | "danger" | "info" | "warning">;
+    alertPosition: BehaviorSubject<"top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left">;
     alertDuration: BehaviorSubject<number>;
     progressTimerVisible: BehaviorSubject<boolean>;
     progressTimerValue: BehaviorSubject<number>;
@@ -2379,7 +2379,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
+    recordingDisplayType: BehaviorSubject<"all" | "video" | "media">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -2606,7 +2606,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "portrait" | "landscape";
+    checkOrientation: () => "landscape" | "portrait";
     showAlert: ({ message, type, duration, position, }: {
         message: string;
         type: "success" | "danger" | "info" | "warning";
@@ -2828,8 +2828,8 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "danger" | "success" | "info" | "warning";
-        alertPosition: "center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
+        alertType: "success" | "danger" | "info" | "warning";
+        alertPosition: "top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -2851,7 +2851,7 @@ export declare class MediasfuBroadcast implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "video" | "media" | "all";
+        recordingDisplayType: "all" | "video" | "media";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;

@@ -17,6 +17,7 @@ export interface SwitchAudioParameters extends SwitchUserAudioParameters {
 }
 
 export interface SwitchAudioOptions {
+  audioProcessing?: { echoCancellation?: boolean; noiseSuppression?: boolean; autoGainControl?: boolean };
   audioPreference: string;
   parameters: SwitchAudioParameters;
 }
@@ -83,9 +84,9 @@ export class SwitchAudio {
    * @returns {Promise<void>}
    */
 
-  async switchAudio({ audioPreference, parameters }: SwitchAudioOptions): Promise<void> {
+  async switchAudio({ audioPreference, parameters, audioProcessing }: SwitchAudioOptions): Promise<void> {
     await sharedSwitchAudio(
-      { audioPreference, parameters } as unknown as Parameters<typeof sharedSwitchAudio>[0],
+      { audioPreference, audioProcessing, parameters } as unknown as Parameters<typeof sharedSwitchAudio>[0],
     );
   }
 }

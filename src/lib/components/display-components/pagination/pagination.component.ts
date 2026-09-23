@@ -364,11 +364,7 @@ export class Pagination implements OnInit, OnChanges {
   componentSizes: ComponentSizes = {} as ComponentSizes;
 
   resolveParameters(): PaginationParameters {
-    if (this.parameters?.getUpdatedAllParams) {
-      return (this.parameters.getCurrentParams?.() ?? this.parameters);
-    }
-
-    return this.parameters;
+    return this.parameters.getCurrentParams?.() ?? this.parameters;
   }
 
   isDarkModeEnabled(): boolean {

@@ -11,6 +11,11 @@ export interface SwitchAudioParameters extends SwitchUserAudioParameters {
     [key: string]: any;
 }
 export interface SwitchAudioOptions {
+    audioProcessing?: {
+        echoCancellation?: boolean;
+        noiseSuppression?: boolean;
+        autoGainControl?: boolean;
+    };
     audioPreference: string;
     parameters: SwitchAudioParameters;
 }
@@ -69,7 +74,7 @@ export declare class SwitchAudio {
      * @param {SwitchAudioParams} options - The function parameters.
      * @returns {Promise<void>}
      */
-    switchAudio({ audioPreference, parameters }: SwitchAudioOptions): Promise<void>;
+    switchAudio({ audioPreference, parameters, audioProcessing }: SwitchAudioOptions): Promise<void>;
     static ɵfac: i0.ɵɵFactoryDeclaration<SwitchAudio, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<SwitchAudio>;
 }

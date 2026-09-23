@@ -310,11 +310,7 @@ export class ModernPaginationComponent implements OnInit, OnChanges {
   };
 
   resolveParameters(): ModernPaginationParameters {
-    if (this.parameters?.getUpdatedAllParams) {
-      return (this.parameters.getCurrentParams?.() ?? this.parameters);
-    }
-
-    return this.parameters;
+    return this.parameters.getCurrentParams?.() ?? this.parameters;
   }
 
   isDarkModeEnabled(): boolean {

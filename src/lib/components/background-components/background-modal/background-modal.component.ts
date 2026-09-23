@@ -19,6 +19,7 @@ import {
   DEFAULT_BACKGROUND_BLUR_PIXELS,
   isVirtualBackgroundBlur,
   VIRTUAL_BACKGROUND_BLUR,
+  startVirtualBackgroundFrameLoop,
 } from 'mediasfu-shared';
 import {
   ConnectSendTransportVideoParameters,
@@ -164,6 +165,8 @@ export type BackgroundModalType = (options: BackgroundModalOptions) => HTMLEleme
 })
 export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
   @Input() isVisible = false;
+  /** Best-effort processing in hidden browser tabs, for blur and images. */
+  @Input() keepProcessingWhenHidden = true;
   @Input() parameters: BackgroundModalParameters = {} as BackgroundModalParameters;
   @Input() position = 'topLeft';
   @Input() backgroundColor = '#f5f5f5';
@@ -219,7 +222,7 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
   clonedStream: MediaStream | null = null;
   clonedTrack: MediaStreamTrack | null = null;
   private previewLoopVersion = 0;
-  private previewAnimationFrameId: number | null = null;
+  private stopPreviewFrameLoop: (() => void) | null = null;
   private previewCaptureTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   updateCustomImage!: (value: string) => void;
@@ -472,10 +475,8 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
   private stopPreviewProcessing() {
     this.previewLoopVersion += 1;
 
-    if (this.previewAnimationFrameId !== null) {
-      cancelAnimationFrame(this.previewAnimationFrameId);
-      this.previewAnimationFrameId = null;
-    }
+    this.stopPreviewFrameLoop?.();
+    this.stopPreviewFrameLoop = null;
 
     if (this.previewCaptureTimeoutId !== null) {
       clearTimeout(this.previewCaptureTimeoutId);
@@ -943,6 +944,7 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
     this.updatePrevKeepBackground(this.keepBackground);
 
     if (!doSegmentation) {
+      this.stopPreviewProcessing();
       const tracks = this.processedStream?.getVideoTracks();
       if (tracks) {
         tracks.forEach((track: MediaStreamTrack) => track.stop());
@@ -1006,25 +1008,17 @@ export class BackgroundModal implements OnChanges, OnInit, OnDestroy {
         }
 
         startedProcessing = true;
-        void processFrame();
-      };
-
-      const processFrame = () => {
-        if (
-          previewLoopVersion !== this.previewLoopVersion ||
-          !this.selfieSegmentation ||
-          this.pauseSegmentation ||
-          !videoElement ||
-          videoElement.videoWidth == 0 ||
-          videoElement.videoHeight == 0
-        ) {
-          return;
-        }
-
-        void this.selfieSegmentation.send({ image: videoElement }).catch(() => undefined);
-
-        this.previewAnimationFrameId = requestAnimationFrame(() => {
-          processFrame();
+        const segmentation = this.selfieSegmentation;
+        if (!segmentation) return;
+        this.stopPreviewFrameLoop = startVirtualBackgroundFrameLoop({
+          owner: segmentation,
+          keepProcessingWhenHidden: this.keepProcessingWhenHidden,
+          shouldContinue: () => previewLoopVersion === this.previewLoopVersion &&
+            !this.pauseSegmentation &&
+            (videoElement.srcObject as MediaStream | null)?.getVideoTracks?.()[0]?.readyState === 'live',
+          processFrame: () => videoElement.videoWidth > 0 && videoElement.videoHeight > 0
+            ? segmentation.send({ image: videoElement })
+            : undefined,
         });
       };
 

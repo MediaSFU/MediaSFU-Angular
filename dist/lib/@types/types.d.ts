@@ -434,6 +434,10 @@ export type SeedData = {
     whiteboardUsers?: WhiteboardUser[];
 };
 export interface MeetingRoomParams {
+    backendAudioDenoise?: {
+        enabled: boolean;
+        profile?: 'arnndn';
+    };
     itemPageLimit: number;
     mediaType: 'audio' | 'video';
     addCoHost: boolean;
@@ -468,6 +472,10 @@ export interface RecordingParams {
     recordingVideoPausesCount?: number;
 }
 export interface CreateRoomOptions {
+    backendAudioDenoise?: {
+        enabled: boolean;
+        profile?: 'arnndn';
+    };
     action: 'create' | 'join';
     meetingID: string;
     duration: number;
@@ -489,6 +497,10 @@ export interface CreateRoomOptions {
     preferPCMA: boolean;
 }
 export interface CreateMediaSFURoomOptions {
+    backendAudioDenoise?: {
+        enabled: boolean;
+        profile?: 'arnndn';
+    };
     action: 'create';
     duration: number;
     capacity: number;
