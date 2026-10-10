@@ -144,3 +144,15 @@ On component destruction:
 - [MediaSFU API reference](https://mediasfu.com/docs/api-reference/)
 - [MediaSFU Open](https://github.com/MediaSFU/MediaSFUOpen)
 - [MediaSFU Sandbox](https://mediasfu.com/sandbox)
+
+## Camera simulcast and recording bitrate
+
+Camera simulcast is disabled automatically for `chat` rooms and rooms with a configured capacity of exactly two. This uses the room's configured capacity, not the number of participants currently connected. Larger rooms retain simulcast unless `simulcastOff: true` is supplied.
+
+Single-encoding mode uses the full-resolution camera layer and preserves its bitrate and frame-rate limits. Screen-sharing and audio encodings are unchanged. Enabling recording no longer adds a 20% camera bitrate or initial-bitrate uplift.
+
+The server's join-response `capacity` takes precedence. For servers that omit it, supply `roomCapacity: 2` as a client-side hint. Programmatic room creation also uses `noUIPreJoinOptions.capacity` as the hint. This option does not change server-side capacity or authorization.
+
+```html
+<app-mediasfu-generic [simulcastOff]="true" [roomCapacity]="2" />
+```

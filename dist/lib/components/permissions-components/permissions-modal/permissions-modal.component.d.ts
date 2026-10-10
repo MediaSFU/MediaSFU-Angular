@@ -79,9 +79,9 @@ export declare class PermissionsModalComponent implements OnInit, OnChanges {
     getConfigValue(level: 'level0' | 'level1', capability: keyof PermissionCapabilities): PermissionValue;
     isSelectedConfigOption(level: 'level0' | 'level1', capability: keyof PermissionCapabilities, value: PermissionValue): boolean;
     getCapabilityIcon(capability: keyof PermissionCapabilities): import("@fortawesome/fontawesome-common-types").IconDefinition;
-    getCapabilityName(capability: keyof PermissionCapabilities): "Chat" | "Microphone" | "Camera" | "Screen Share";
+    getCapabilityName(capability: keyof PermissionCapabilities): "Chat" | "Screen Share" | "Microphone" | "Camera";
     getStatusIcon(status: string): import("@fortawesome/fontawesome-common-types").IconDefinition;
-    getStatusColor(status: string): "#22c55e" | "#f59e0b" | "#ef4444";
+    getStatusColor(status: string): "#ef4444" | "#f59e0b" | "#22c55e";
     getOptionsForCapability(capability: keyof PermissionCapabilities): readonly PermissionValue[];
     static ɵfac: i0.ɵɵFactoryDeclaration<PermissionsModalComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<PermissionsModalComponent, "app-permissions-modal", never, { "isPermissionsModalVisible": { "alias": "isPermissionsModalVisible"; "required": false; }; "onPermissionsClose": { "alias": "onPermissionsClose"; "required": false; }; "parameters": { "alias": "parameters"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "position": { "alias": "position"; "required": false; }; }, {}, never, never, true, never>;

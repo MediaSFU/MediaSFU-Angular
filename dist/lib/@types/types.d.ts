@@ -525,6 +525,8 @@ export interface JoinMediaSFURoomOptions {
     userName: string;
 }
 export interface ResponseJoinLocalRoom {
+    /** Authoritative configured room capacity, when supplied by the server. */
+    capacity?: number;
     rtpCapabilities?: RtpCapabilities | null;
     isHost: boolean;
     eventStarted: boolean;
@@ -539,6 +541,8 @@ export interface ResponseJoinLocalRoom {
     allowRecord: boolean;
 }
 export interface ResponseJoinRoom {
+    /** Authoritative configured room capacity, when supplied by the server. */
+    capacity?: number;
     rtpCapabilities?: RtpCapabilities | null;
     success: boolean;
     roomRecvIPs: string[];

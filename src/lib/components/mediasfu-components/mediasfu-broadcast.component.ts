@@ -239,6 +239,10 @@ export type MediasfuBroadcastOptions = {
   sourceParameters?: { [key: string]: any };
   updateSourceParameters?: (data: { [key: string]: any }) => void;
   returnUI?: boolean;
+  /** Disable camera simulcast even in larger rooms. */
+  simulcastOff?: boolean;
+  /** Capacity hint for servers that omit capacity in their join response. */
+  roomCapacity?: number;
   noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   createMediaSFURoom?: CreateRoomOnMediaSFUType;
@@ -736,6 +740,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
    * polling.
    */
   @Output() mediaChanged = new EventEmitter<{ reasons: string[]; parameters: any }>();
+  @Input() simulcastOff = false;
+  @Input() roomCapacity?: number;
   @Input() noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
   @Input() joinMediaSFURoom?: JoinRoomOnMediaSFUType;
   @Input() createMediaSFURoom?: CreateRoomOnMediaSFUType;
@@ -4866,6 +4872,8 @@ export class MediasfuBroadcast implements OnInit, OnDestroy {
 
 
         this.updateRoomParametersClient.updateRoomParametersClient({
+          simulcastOff: this.simulcastOff,
+            roomCapacity: this.roomCapacity ?? (this.noUIPreJoinOptions && 'capacity' in this.noUIPreJoinOptions ? this.noUIPreJoinOptions.capacity : undefined),
           parameters: {
             ...this.getAllParams(),
             ...this.mediaSFUFunctions(),

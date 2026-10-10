@@ -187,6 +187,10 @@ export type MediasfuConferenceOptions = {
         [key: string]: any;
     }) => void;
     returnUI?: boolean;
+    /** Disable camera simulcast even in larger rooms. */
+    simulcastOff?: boolean;
+    /** Capacity hint for servers that omit capacity in their join response. */
+    roomCapacity?: number;
     noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
     joinMediaSFURoom?: JoinRoomOnMediaSFUType;
     createMediaSFURoom?: CreateRoomOnMediaSFUType;
@@ -416,6 +420,8 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         reasons: string[];
         parameters: any;
     }>;
+    simulcastOff: boolean;
+    roomCapacity?: number;
     noUIPreJoinOptions?: CreateMediaSFURoomOptions | JoinMediaSFURoomOptions;
     joinMediaSFURoom?: JoinRoomOnMediaSFUType;
     createMediaSFURoom?: CreateRoomOnMediaSFUType;
@@ -570,8 +576,8 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     protected alertOverrideProps: () => {
         visible: boolean;
         message: string;
-        type: "success" | "danger" | "info" | "warning";
-        position: "top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
+        type: "danger" | "success" | "info" | "warning";
+        position: "center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
         duration: number;
         onHide: () => void;
         isDarkMode: boolean;
@@ -1257,8 +1263,8 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     totalReqWait: BehaviorSubject<number>;
     alertVisible: BehaviorSubject<boolean>;
     alertMessage: BehaviorSubject<string>;
-    alertType: BehaviorSubject<"success" | "danger" | "info" | "warning">;
-    alertPosition: BehaviorSubject<"top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left">;
+    alertType: BehaviorSubject<"danger" | "success" | "info" | "warning">;
+    alertPosition: BehaviorSubject<"center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left">;
     alertDuration: BehaviorSubject<number>;
     progressTimerVisible: BehaviorSubject<boolean>;
     progressTimerValue: BehaviorSubject<number>;
@@ -1285,7 +1291,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     recordingVideoOptions: BehaviorSubject<string>;
     recordingVideoType: BehaviorSubject<string>;
     recordingVideoOptimized: BehaviorSubject<boolean>;
-    recordingDisplayType: BehaviorSubject<"all" | "video" | "media">;
+    recordingDisplayType: BehaviorSubject<"video" | "media" | "all">;
     recordingAddHLS: BehaviorSubject<boolean>;
     recordingNameTags: BehaviorSubject<boolean>;
     recordingBackgroundColor: BehaviorSubject<string>;
@@ -1514,7 +1520,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     updateAnnotateScreenStream: (value: boolean) => void;
     updateMainScreenCanvas: (value: HTMLCanvasElement | null) => void;
     updateIsScreenboardModalVisible: (value: boolean) => void;
-    checkOrientation: () => "landscape" | "portrait";
+    checkOrientation: () => "portrait" | "landscape";
     showAlert: ({ message, type, duration, position, }: {
         message: string;
         type: "success" | "danger" | "info" | "warning";
@@ -1736,8 +1742,8 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         totalReqWait: number;
         alertVisible: boolean;
         alertMessage: string;
-        alertType: "success" | "danger" | "info" | "warning";
-        alertPosition: "top" | "bottom" | "center" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
+        alertType: "danger" | "success" | "info" | "warning";
+        alertPosition: "center" | "bottom" | "top" | "top-right" | "top-left" | "bottom-right" | "bottom-left";
         alertDuration: number;
         progressTimerVisible: boolean;
         progressTimerValue: number;
@@ -1759,7 +1765,7 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
         recordingVideoOptions: string;
         recordingVideoType: string;
         recordingVideoOptimized: boolean;
-        recordingDisplayType: "all" | "video" | "media";
+        recordingDisplayType: "video" | "media" | "all";
         recordingAddHLS: boolean;
         recordingAddText: boolean;
         recordingCustomText: string;
@@ -2315,6 +2321,6 @@ export declare class MediasfuConference implements OnInit, OnDestroy {
     controlButtons: any[];
     connect_Socket(apiUserName: string, token: string, skipSockets?: boolean): Promise<Socket | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<MediasfuConference, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuConference, "app-mediasfu-conference", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, { "mediaChanged": "mediaChanged"; }, never, never, true, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MediasfuConference, "app-mediasfu-conference", never, { "PrejoinPage": { "alias": "PrejoinPage"; "required": false; }; "localLink": { "alias": "localLink"; "required": false; }; "connectMediaSFU": { "alias": "connectMediaSFU"; "required": false; }; "credentials": { "alias": "credentials"; "required": false; }; "useLocalUIMode": { "alias": "useLocalUIMode"; "required": false; }; "seedData": { "alias": "seedData"; "required": false; }; "useSeed": { "alias": "useSeed"; "required": false; }; "imgSrc": { "alias": "imgSrc"; "required": false; }; "sourceParameters": { "alias": "sourceParameters"; "required": false; }; "updateSourceParameters": { "alias": "updateSourceParameters"; "required": false; }; "returnUI": { "alias": "returnUI"; "required": false; }; "simulcastOff": { "alias": "simulcastOff"; "required": false; }; "roomCapacity": { "alias": "roomCapacity"; "required": false; }; "noUIPreJoinOptions": { "alias": "noUIPreJoinOptions"; "required": false; }; "joinMediaSFURoom": { "alias": "joinMediaSFURoom"; "required": false; }; "createMediaSFURoom": { "alias": "createMediaSFURoom"; "required": false; }; "containerWidthFraction": { "alias": "containerWidthFraction"; "required": false; }; "containerHeightFraction": { "alias": "containerHeightFraction"; "required": false; }; "customVideoCard": { "alias": "customVideoCard"; "required": false; }; "customAudioCard": { "alias": "customAudioCard"; "required": false; }; "customMiniCard": { "alias": "customMiniCard"; "required": false; }; "customMainComponent": { "alias": "customMainComponent"; "required": false; }; "containerStyle": { "alias": "containerStyle"; "required": false; }; "uiOverrides": { "alias": "uiOverrides"; "required": false; }; }, { "mediaChanged": "mediaChanged"; }, never, never, true, never>;
 }
 export {};

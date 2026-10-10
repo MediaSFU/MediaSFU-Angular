@@ -4,6 +4,11 @@
   "allowedNonPeerDependencies": [
     "mediasfu-shared"
   ],
+  "assets": [
+    "CHANGELOG.md",
+    "README_DETAILED.md",
+    "USAGE_COOKBOOK.md"
+  ],
   "lib": {
     "entryFile": "src/public-api.ts"
   }

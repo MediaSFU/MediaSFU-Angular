@@ -83,10 +83,14 @@ export interface UpdateRoomParametersClientParameters {
 }
 export type UpdateRoomParametersClientOptions = {
     parameters: UpdateRoomParametersClientParameters;
+    /** Disable camera simulcast even in larger rooms. */
+    simulcastOff?: boolean;
+    /** Capacity hint used only when the server does not return capacity. */
+    roomCapacity?: number;
 };
 export type UpdateRoomParametersClientType = (options: UpdateRoomParametersClientOptions) => void;
 export declare class UpdateRoomParametersClient {
-    updateRoomParametersClient: ({ parameters }: UpdateRoomParametersClientOptions) => void;
+    updateRoomParametersClient: ({ parameters, simulcastOff, roomCapacity }: UpdateRoomParametersClientOptions) => void;
     static ɵfac: i0.ɵɵFactoryDeclaration<UpdateRoomParametersClient, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<UpdateRoomParametersClient>;
 }
