@@ -39,6 +39,8 @@ export * from './lib/components/misc-components/confirm-here-modal/confirm-here-
 export * from './lib/components/misc-components/share-event-modal/share-event-modal.component';
 export * from './lib/components/misc-components/welcome-page/welcome-page.component';
 export * from './lib/components/misc-components/pre-join-page/pre-join-page.component';
+export * from './lib/components/misc-components/screen-audio-prompt/screen-audio-prompt.component';
+export * from './lib/components/misc-components/screen-audio-prompt/screen-audio-prompt.service';
 
 // Modern modal components
 export * from './lib/modern/modal-components/modern-messages-modal.component';
@@ -220,6 +222,28 @@ export * from './lib/components/display-components/video-card/video-card.compone
 export * from './lib/components/display-components/card-video-display/card-video-display.component';
 export * from './lib/components/display-components/mini-card-audio/mini-card-audio.component';
 export * from './lib/methods/utils/mini-audio-player/mini-audio-player.component';
+export * from './lib/methods/utils/screen-audio-player/screen-audio-player.component';
+
+// Screen-share audio and media-socket connection errors (runtime in mediasfu-shared).
+export {
+  connectSendTransportScreenAudio,
+  disconnectSendTransportScreenAudio,
+  toggleScreenAudio,
+  setScreenAudioVolume,
+  isScreenAudioProducer,
+  canCaptureDisplayAudio,
+  MediaSocketConnectError,
+  describeMediaSocketError,
+  isRetryableMediaSocketError,
+  isMediaSocketConnectError,
+} from 'mediasfu-shared';
+export type {
+  ScreenAudioChoice,
+  ScreenAudioMode,
+  MediaSocketConnectPhase,
+  MediaConnectionRejectionReason,
+  MediaSocketConnectErrorDetails,
+} from 'mediasfu-shared';
 export * from './lib/methods/utils/sound-player.service';
 
 

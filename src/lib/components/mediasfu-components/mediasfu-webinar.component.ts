@@ -8,7 +8,10 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
+import type { ScreenAudioChoice, ScreenAudioMode } from 'mediasfu-shared';
+import { ScreenAudioPromptService } from '../misc-components/screen-audio-prompt/screen-audio-prompt.service';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { MediasfuUICustomOverrides } from '../../@types/ui-overrides.types';
@@ -985,6 +988,23 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
   @Input() connectMediaSFU = true;
   @Input() credentials: { apiUserName: string; apiKey: string } = { apiUserName: '', apiKey: '' };
   @Input() useLocalUIMode = false;
+
+  /**
+   * Screen-share audio: `ask` (default) offers "Screen + audio" before the browser's picker, `always` requests the
+   * audio without asking, `never` shares video only. Applies only when the media server supports screen audio and
+   * the browser can capture it (Chromium desktop).
+   */
+  @Input('screenAudioMode') set screenAudioModeInput(value: ScreenAudioMode | undefined) {
+    if (value) this.screenAudioMode.next(value);
+  }
+
+  /** Set to `false` to never share the audio of a shared tab or screen. Default `true`. */
+  @Input('screenAudioEnabled') set screenAudioEnabledInput(value: boolean | undefined) {
+    if (typeof value === 'boolean') this.screenAudioEnabled.next(value);
+  }
+
+  /** Replaces the "Share audio too?" dialog. Resolve with `audio`, `video` (screen only) or `null` (cancel the share). */
+  @Input() screenAudioPrompt?: () => Promise<ScreenAudioChoice>;
   @Input() seedData?: SeedData;
   @Input() useSeed = false;
   @Input() imgSrc = 'https://mediasfu.com/images/logo192.png';
@@ -1485,6 +1505,9 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
         (() => {
           console.log('none');
         }),
+      screenAudioPrompt:
+        this.screenAudioPrompt ||
+        (() => this.screenAudioPromptService.ask({ isDarkMode: this.modernThemeDarkMode.value || undefined })),
       startShareScreen:
         this.startShareScreen?.startShareScreen ||
         (() => {
@@ -1866,6 +1889,13 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
   recordingPreferredOrientation = new BehaviorSubject<string>('landscape');
   recordingSupportForOtherOrientation = new BehaviorSubject<boolean>(false);
   recordingMultiFormatsSupport = new BehaviorSubject<boolean>(false);
+
+  // Screen-share audio
+  screenAudioProducer = new BehaviorSubject<Producer | null>(null); // Audio shared with the screen share, or null
+  supportsScreenAudio = new BehaviorSubject<boolean>(false); // The media server accepts screen-share audio
+  screenAudioEnabled = new BehaviorSubject<boolean>(true); // Ask the browser for the screen's audio when sharing
+  screenAudioMode = new BehaviorSubject<ScreenAudioMode>('ask'); // Offer "Screen + audio" before sharing
+  private screenAudioPromptService = inject(ScreenAudioPromptService);
 
   userRecordingParams = new BehaviorSubject<UserRecordingParams>({
     mainSpecs: {
@@ -2314,6 +2344,22 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
 
   updateRecordingMultiFormatsSupport = (value: boolean) => {
     this.recordingMultiFormatsSupport.next(value);
+  };
+
+  updateScreenAudioProducer = (value: Producer | null) => {
+    this.screenAudioProducer.next(value);
+  };
+
+  updateSupportsScreenAudio = (value: boolean) => {
+    this.supportsScreenAudio.next(value);
+  };
+
+  updateScreenAudioEnabled = (value: boolean) => {
+    this.screenAudioEnabled.next(value);
+  };
+
+  updateScreenAudioMode = (value: ScreenAudioMode) => {
+    this.screenAudioMode.next(value);
   };
 
   updateUserRecordingParams = (value: UserRecordingParams) => {
@@ -3838,6 +3884,10 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
       recordingPreferredOrientation: this.recordingPreferredOrientation.value,
       recordingSupportForOtherOrientation: this.recordingSupportForOtherOrientation.value,
       recordingMultiFormatsSupport: this.recordingMultiFormatsSupport.value,
+      screenAudioProducer: this.screenAudioProducer.value,
+      supportsScreenAudio: this.supportsScreenAudio.value,
+      screenAudioEnabled: this.screenAudioEnabled.value,
+      screenAudioMode: this.screenAudioMode.value,
 
       userRecordingParams: this.userRecordingParams.value,
       canRecord: this.canRecord.value,
@@ -4220,6 +4270,10 @@ export class MediasfuWebinar implements OnInit, OnDestroy {
       updateRecordingSupportForOtherOrientation:
         this.updateRecordingSupportForOtherOrientation.bind(this),
       updateRecordingMultiFormatsSupport: this.updateRecordingMultiFormatsSupport.bind(this),
+      updateScreenAudioProducer: this.updateScreenAudioProducer.bind(this),
+      updateSupportsScreenAudio: this.updateSupportsScreenAudio.bind(this),
+      updateScreenAudioEnabled: this.updateScreenAudioEnabled.bind(this),
+      updateScreenAudioMode: this.updateScreenAudioMode.bind(this),
 
       updateUserRecordingParams: this.updateUserRecordingParams.bind(this),
       updateCanRecord: this.updateCanRecord.bind(this),

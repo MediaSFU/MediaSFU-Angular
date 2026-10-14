@@ -12,6 +12,7 @@ import { CheckLimitsAndMakeRequest } from '../../../methods/utils/check-limits-a
 import { CreateRoomOnMediaSFU } from '../../../methods/utils/create-room-on-media-sfu.service';
 import { CreateRoomOnMediaSFUType, JoinRoomOnMediaSFUType, JoinRoomOnMediaSFU } from '../../../methods/utils/join-room-on-media-sfu.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { describeMediaSocketError } from 'mediasfu-shared';
 
 import { ModernButtonComponent } from '../../../modern/primitives/modern-button.component';
 import {
@@ -761,7 +762,7 @@ export class PreJoinPage implements OnInit {
     } catch (error) {
       this.parameters.updateIsLoadingModalVisible(false);
       this.pending.next(false);
-      this.error = `Unable to connect. ${(error as Error).message}`;
+      this.error = describeMediaSocketError(error, `Unable to connect. ${(error as Error).message}`);
   }
 }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MiniAudio } from '../components/display-components/mini-audio/mini-audio.component';
 import { MiniAudioPlayer } from '../methods/utils/mini-audio-player/mini-audio-player.component';
+import { ScreenAudioPlayer } from '../methods/utils/screen-audio-player/screen-audio-player.component';
+import { isScreenAudioProducer } from 'mediasfu-shared';
 import { Socket } from 'socket.io-client';
 import {
   ReorderStreamsType,
@@ -219,6 +221,43 @@ export class ConsumerResume {
           consumer.appData?.['type'] === 'translation' ||
           consumer.appData?.['isTranslation'],
         );
+
+        // Screen-share audio: play it, but never as the sharer's voice (no participant card, no speaking or
+        // audio-level state, no audStreamNames).
+        if (
+          !isTranslationAudio &&
+          isScreenAudioProducer({
+            producerId: remoteProducerId,
+            participants,
+            appData: consumer.appData as Record<string, unknown>,
+          })
+        ) {
+          const screenAudioStream = new MediaStream([track]);
+          const ownerName =
+            participants.find((p) => p.ScreenAudioID === remoteProducerId)?.name ||
+            participants.find((p) => p.ScreenOn && p.ScreenID)?.name ||
+            '';
+          audioOnlyStreams = [
+            ...audioOnlyStreams.filter((item: any) => item?.inputs?.remoteProducerId !== remoteProducerId),
+            {
+              component: ScreenAudioPlayer,
+              inputs: {
+                stream: screenAudioStream,
+                remoteProducerId,
+                consumer,
+                ownerName,
+                MiniAudioComponent: MiniAudio,
+              },
+            },
+          ];
+          updateAudioOnlyStreams(audioOnlyStreams);
+          allAudioStreams = [
+            ...allAudioStreams.filter((item) => item.producerId !== remoteProducerId),
+            { producerId: remoteProducerId, stream: screenAudioStream },
+          ];
+          updateAllAudioStreams(allAudioStreams);
+          return;
+        }
 
         // Check if the participant with audioID == remoteProducerId has a valid videoID
         let participant = participants.filter((p) => p.audioID === remoteProducerId);

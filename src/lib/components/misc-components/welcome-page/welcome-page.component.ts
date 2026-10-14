@@ -8,6 +8,11 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner'; // Import the zxing-ngx
 import { Socket } from 'socket.io-client';
 import { ConnectSocketType } from '../../../sockets/socket-manager.service';
 import { ShowAlert } from '../../../@types/types';
+import {
+  describeMediaSocketError,
+  isMediaSocketConnectError,
+  isNetworkOnlyMediaSocketError,
+} from 'mediasfu-shared';
 
 import { ModernButtonComponent } from '../../../modern/primitives/modern-button.component';
 import { ModernEntryShellComponent } from '../../../modern/primitives/modern-entry-shell.component';
@@ -180,15 +185,20 @@ export class WelcomePage implements OnInit {
         }
       }
     } catch (error) {
+      // Say why (rejected credentials, no minutes, offline, unreachable) instead of a generic failure.
       this.parameters.showAlert?.({
-        message: 'Unable to connect. Check your credentials and try again.',
+        message: describeMediaSocketError(error),
         type: 'danger',
-        duration: 3000,
+        duration: isMediaSocketConnectError(error) ? 6000 : 3000,
       });
 
-      unsuccessfulAttempts += 1;
-      this.cookieService.set('unsuccessfulAttempts', unsuccessfulAttempts.toString());
-      this.cookieService.set('lastRequestTimestamp', Date.now().toString());
+      // Only a refusal or an unknown failure counts toward the attempt limit; a device/network problem is not a
+      // credential guess.
+      if (!isNetworkOnlyMediaSocketError(error)) {
+        unsuccessfulAttempts += 1;
+        this.cookieService.set('unsuccessfulAttempts', unsuccessfulAttempts.toString());
+        this.cookieService.set('lastRequestTimestamp', Date.now().toString());
+      }
       this.parameters.updateIsLoadingModalVisible(false);
     }
   }

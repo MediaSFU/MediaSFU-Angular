@@ -383,6 +383,48 @@ visible validation message in your page. A custom breakout view must perform
 the SDK room transition; merely filtering participant cards does not move a
 participant or pause and resume the correct consumers.
 
+## Screen-share audio
+
+When someone shares a tab or screen in a Chromium desktop browser (Chrome, Edge,
+Opera, Brave), the room asks **Share audio too?** with **Screen + audio** and
+**Screen only**. The audio is published as its own track: everyone hears it,
+listeners see a "*name* · Screen audio" card they can mute for themselves, and
+the sharer is never shown as speaking because of it. It pauses and stops with
+the screen share, and recordings include it. Firefox, Safari and mobile browsers
+share video only, and media servers without screen-audio support keep
+video-only screen sharing.
+
+No setup is needed. To change the behaviour:
+
+```html
+<app-mediasfu-generic screenAudioMode="always"></app-mediasfu-generic>        <!-- 'ask' (default) | 'always' | 'never' -->
+<app-mediasfu-generic [screenAudioEnabled]="false"></app-mediasfu-generic>   <!-- never request screen audio -->
+```
+
+```ts
+import { toggleScreenAudio, setScreenAudioVolume } from 'mediasfu-angular';
+
+toggleScreenAudio({ parameters: latestRoomParameters }); // sharer: mute/unmute screen audio, keep sharing
+setScreenAudioVolume(0.5);                               // listener: screen-audio volume, 0..1
+```
+
+Replace the dialog with your own by binding `[screenAudioPrompt]` to a function
+that resolves `'audio'`, `'video'` (screen only) or `null` (cancel the share).
+The same inputs exist on the conference, webinar, broadcast and chat room
+components.
+
+## Connection errors
+
+`connectSocket` rejects with a `MediaSocketConnectError` that says where the
+connection stopped (`phase`: `before-open`, `after-open`, `rejected` or
+`timeout`), how long it took (`elapsedMs`), the browser's `online` state and,
+when the media server refused it, the `reason` and `stage`. The prebuilt join
+pages already show a clear message, such as "The room did not accept these
+credentials…" or "You appear to be offline…". In your own UI use
+`describeMediaSocketError(error)`, and don't retry when `error.retryable` is
+`false`: a refused credential will be refused again, so join the room again
+through your backend to get fresh credentials.
+
 ## Host leave and rejoin
 
 Hosts can choose **Leave room** or **End for everyone**. **Leave room** keeps the room running so the host can rejoin later; **End for everyone** closes it for all participants. Programmatic callers pass `endRoomOnHostExit: false` to leave without ending the room; the default is `true`.
@@ -401,6 +443,8 @@ Hosts can choose **Leave room** or **End for everyone**. **Leave room** keeps th
 | What you see | Likely cause | What to do |
 |---|---|---|
 | "Unable to connect. Check your credentials and try again." | The room service rejected the credentials, or your create/join backend returned an error. | Check the API username and key on your server, and make sure your create/join adapters pass the room service's response through. For MediaSFU Open, confirm that `localLink` points to a server the browser can reach. |
+| "The room did not accept these credentials…" | The media server refused the room credentials, often because the same name joined twice and the first secret was replaced. | Join the room again through your backend so it issues fresh credentials. Retrying the old ones will not succeed. |
+| "You appear to be offline…" or "Could not reach the media server…" | The device has no connection, or a network, firewall or proxy blocked the media server. | Check the connection and firewall, then retry. These failures do not count toward the join attempt limit. |
 | The camera or microphone never starts | The page is not a secure context, or the browser permission was denied. | Serve the app over HTTPS (or `localhost` during development) and allow camera and microphone access for the site. |
 | "You must turn on your video before you can start recording" | The recording is set to capture video while your camera is off. | Turn the camera on first, or switch the recording to audio only. The same applies to audio recordings and the microphone. |
 | "You can only re-configure recording after pausing it" | Recording settings are locked while a recording is running. | Pause the recording, change the settings, then resume. |

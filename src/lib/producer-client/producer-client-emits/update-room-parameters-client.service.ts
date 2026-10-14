@@ -89,6 +89,8 @@ export interface UpdateRoomParametersClientParameters {
   updateRecordingPreferredOrientation: (orientation: string) => void;
   updateRecordingSupportForOtherOrientation: (support: boolean) => void;
   updateRecordingMultiFormatsSupport: (support: boolean) => void;
+  /** Records whether the media server accepts screen-share audio (join response `supportsScreenAudio`). */
+  updateSupportsScreenAudio?: (supported: boolean) => void;
   updateRecordingVideoOptions: (options: string) => void;
   updateRecordingAudioOptions: (options: string) => void;
 }

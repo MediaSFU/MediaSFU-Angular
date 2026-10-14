@@ -247,6 +247,7 @@ export interface Participant {
   videoID: string;
   ScreenID?: string;
   ScreenOn?: boolean;
+  ScreenAudioID?: string; // Producer id of this participant's screen-share audio, when they share it.
   islevel?: string;
   isAdmin?: boolean;
   isHost?: boolean; // Community Edition support
@@ -619,6 +620,7 @@ export interface ResponseJoinRoom {
   banned?: boolean; // Indicates whether the user is banned from the room.
   suspended?: boolean; // Indicates whether the user is suspended from the room.
   noAdmin?: boolean; // Indicates whether the room has no host in it.
+  supportsScreenAudio?: boolean; // The media server accepts screen-share audio (mediaTag "screen-audio").
 }
 
 export interface AllMembersData {

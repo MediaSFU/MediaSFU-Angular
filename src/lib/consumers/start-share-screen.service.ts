@@ -8,6 +8,14 @@ export interface StartShareScreenParameters extends StreamSuccessScreenParameter
   onWeb: boolean;
   targetWidth?: number;
   targetHeight?: number;
+  /** The media server accepts screen-share audio (set from the join response). */
+  supportsScreenAudio?: boolean;
+  /** Set to false to never request the shared tab's or screen's audio. */
+  screenAudioEnabled?: boolean;
+  /** `ask` (default) shows the "Share audio too?" choice, `always` requests audio, `never` shares video only. */
+  screenAudioMode?: 'ask' | 'always' | 'never';
+  /** The "Share audio too?" dialog: resolves `audio`, `video` or `null` (cancel the share). */
+  screenAudioPrompt?: () => Promise<'audio' | 'video' | null>;
 
   // mediasfu functions
   streamSuccessScreen: StreamSuccessScreenType;
