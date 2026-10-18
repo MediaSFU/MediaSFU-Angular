@@ -1,5 +1,12 @@
 import { Component, Input, Inject, Optional, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+// Display names can be up to 80 characters; keep the tile readable: up to 12 characters, cut at a word when possible.
+const fitTileLabel = (label: string): string => {
+  if (label.length <= 12) return label;
+  const cut = label.lastIndexOf(' ', 12);
+  return `${(cut >= 4 ? label.slice(0, cut) : label.slice(0, 11)).trimEnd()}…`;
+};
 export interface MiniCardOptions {
   initials?: string;
   fontSize?: number;
@@ -178,7 +185,7 @@ export class MiniCard implements OnChanges {
       return '';
     }
 
-    return trimmedLabel.length > 10 ? trimmedLabel.substring(0, 10) : trimmedLabel;
+    return fitTileLabel(trimmedLabel);
   }
 
   getDisplayFontSize(): number {

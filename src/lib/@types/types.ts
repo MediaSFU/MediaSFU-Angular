@@ -252,6 +252,8 @@ export interface Participant {
   isAdmin?: boolean;
   isHost?: boolean; // Community Edition support
   name: string;
+  /** Readable name for labels (up to 80 characters); `name` stays the member identity. */
+  displayName?: string;
   muted?: boolean;
   isBanned?: boolean;
   isSuspended?: boolean;
@@ -577,6 +579,18 @@ export interface CreateMediaSFURoomOptions {
   bufferType?: 'images' | 'audio' | 'all'; // Type of buffer data
   directionSIP?: 'inbound' | 'outbound' | 'both'; // Direction of SIP
   preferPCMA?: boolean; // Whether to prefer PCMA codec for SIP
+  /**
+   * Preferred media continent. Without `regionStrict` this is best-effort: the room may be placed elsewhere when no
+   * healthy media server is available there.
+   */
+  region?: 'asia' | 'europe' | 'us' | 'general';
+  /**
+   * With a continent `region`, place media only there; the create fails (HTTP 503, code `region-unavailable`) instead
+   * of falling back. Needs a server release that supports it (older servers refuse with `region-strict-unsupported`).
+   */
+  regionStrict?: boolean;
+  /** Turn the room's waiting room on: participants wait until the host admits them. Default false. */
+  waitRoom?: boolean;
 }
 export interface JoinMediaSFURoomOptions {
   action: 'join'; // 'join' action

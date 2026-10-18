@@ -26,7 +26,7 @@
         class="video-card__status-dot"
         [class.video-card__status-dot--muted]="participant?.muted"
       ></span>
-      <span class="video-card__name" [style.color]="textColor">{{ participant?.name || name }}</span>
+      <span class="video-card__name" [style.color]="textColor">{{ participant?.displayName || participant?.name || name }}</span>
     </div>
     <div *ngIf="showWaveform" class="video-card__waveform">
       <div

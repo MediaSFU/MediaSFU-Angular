@@ -49,15 +49,15 @@ export class ParticipantListOthersItem {
   getParticipantDisplayName(): string {
     if (this.participant.islevel === '2') {
       return this.participant.name === this.member
-        ? `${this.participant.name} (you)`
-        : `${this.participant.name} (host)`;
+        ? `${this.participant.displayName || this.participant.name} (you)`
+        : `${this.participant.displayName || this.participant.name} (host)`;
     } else {
       if (this.participant.name === this.member) {
-        return `${this.participant.name} (you)`;
+        return `${this.participant.displayName || this.participant.name} (you)`;
       } else if (this.coHost === this.participant.name) {
-        return `${this.participant.name} (co-host)`;
+        return `${this.participant.displayName || this.participant.name} (co-host)`;
       } else {
-        return this.participant.name;
+        return this.participant.displayName || this.participant.name;
       }
     }
   }

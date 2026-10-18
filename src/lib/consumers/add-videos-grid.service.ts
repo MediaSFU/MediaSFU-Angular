@@ -208,7 +208,7 @@ export class AddVideosGrid {
           newComponents[0].push({
             component: customMiniCard || MiniCardComponentOverride,
             inputs: {
-              initials: participant.name,
+              initials: participant.displayName?.trim() || participant.name,
               fontSize: 20,
             },
           });
@@ -357,7 +357,7 @@ export class AddVideosGrid {
             newComponents[1].push({
               component: customMiniCard || MiniCardComponentOverride,
               inputs: {
-                initials: participant.name,
+                initials: participant.displayName?.trim() || participant.name,
                 fontSize: 20,
               },
             });

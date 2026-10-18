@@ -56,7 +56,7 @@
           [class.card__status-dot--speaking]="isSpeaking"
         ></span>
         <p [ngStyle]="{ color: textColor }" class="card__name" [class.card__name--muted]="participant?.muted">
-          {{ name }}
+          {{ participant?.displayName || name }}
         </p>
       </div>
       <div *ngIf="showWaveform" class="card__waveform">

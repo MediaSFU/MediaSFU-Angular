@@ -1,8 +1,8 @@
 <div class="participant-item">
   <div class="participant-item__identity">
-    <span class="participant-item__avatar">{{ participant.name.charAt(0).toUpperCase() }}</span>
+    <span class="participant-item__avatar">{{ (participant.displayName || participant.name).charAt(0).toUpperCase() }}</span>
     <p class="participant-item__name">
-      {{ participant.islevel === '2' ? participant.name + ' (host)' : participant.name }}
+      {{ participant.islevel === '2' ? (participant.displayName || participant.name) + ' (host)' : (participant.displayName || participant.name) }}
     </p>
   </div>
   <div *ngIf="!isBroadcast" class="participant-item__status" [class.participant-item__status--muted]="participant.muted">

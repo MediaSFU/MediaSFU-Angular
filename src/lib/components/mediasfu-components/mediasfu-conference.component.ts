@@ -6303,9 +6303,10 @@ export class MediasfuConference implements OnInit, OnDestroy {
           });
         });
 
-        socketDefault.on('personJoined', async ({ name }: { name: string }) => {
+        socketDefault.on('personJoined', async ({ name, displayName }: { name: string; displayName?: string }) => {
           this.personJoined.personJoined({
-            name,
+            // The notice only displays this name, so the readable label (displayName) rides in it.
+            name: displayName || this.participants.value.find((p) => p.name === name)?.displayName || name,
             showAlert: this.showAlert.bind(this),
           });
         });
